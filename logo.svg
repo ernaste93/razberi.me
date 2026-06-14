@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -15 230 215" fill="none" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- Lightbulb rays (gold) -->
+  <line x1="110" y1="5" x2="110" y2="-10" stroke="#E8A020" stroke-width="5"/>
+  <line x1="147" y1="17" x2="158" y2="6"  stroke="#E8A020" stroke-width="5"/>
+  <line x1="167" y1="52" x2="181" y2="46" stroke="#E8A020" stroke-width="5"/>
+  <line x1="171" y1="86" x2="185" y2="86" stroke="#E8A020" stroke-width="5"/>
+
+  <!-- Lightbulb right arc (gold) -->
+  <path d="M 110 150
+           C 125 150 138 143 142 131
+           C 151 111 162 93 165 72
+           C 169 50 158 25 141 13
+           C 128 4 114 2 110 5"
+        stroke="#E8A020" stroke-width="5"/>
+
+  <!-- Lightbulb inner filament hint (gold) -->
+  <path d="M 110 140 C 119 129 126 118 122 106 C 119 97 110 91 110 83"
+        stroke="#E8A020" stroke-width="4"/>
+
+  <!-- Brain main outline (navy) -->
+  <path d="M 110 5
+           C 103 2 87 2 71 12
+           C 52 24 40 49 47 74
+           C 49 86 59 96 56 110
+           C 53 122 42 130 42 142
+           C 42 155 55 160 70 160
+           C 87 160 99 154 110 150"
+        stroke="#1a2f5a" stroke-width="5"/>
+
+  <!-- Brain wrinkles (navy) -->
+  <path d="M 73 16  C 63 29 63 47 73 57" stroke="#1a2f5a" stroke-width="4"/>
+  <path d="M 73 57  C 62 67 61 83 71 93" stroke="#1a2f5a" stroke-width="4"/>
+  <path d="M 71 93  C 60 106 63 120 73 126" stroke="#1a2f5a" stroke-width="4"/>
+  <path d="M 89 11  C 82 25 81 42 87 54" stroke="#1a2f5a" stroke-width="3.5"/>
+  <path d="M 87 54  C 81 65 82 79 89 87" stroke="#1a2f5a" stroke-width="3.5"/>
+
+  <!-- Bulb base horizontal lines (navy) -->
+  <line x1="88"  y1="160" x2="132" y2="160" stroke="#1a2f5a" stroke-width="5"/>
+  <line x1="92"  y1="170" x2="128" y2="170" stroke="#1a2f5a" stroke-width="5"/>
+  <line x1="97"  y1="180" x2="123" y2="180" stroke="#1a2f5a" stroke-width="5"/>
+
+  <!-- Bulb bottom cap (navy) -->
+  <path d="M 97 180 Q 110 192 123 180" stroke="#1a2f5a" stroke-width="5"/>
+
+</svg>
