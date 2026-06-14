@@ -104,7 +104,20 @@ function stripHtml(html) {
   return div.textContent || div.innerText || '';
 }
 
-function setLoading(message = 'AI мисли...') {
+const loadingMessages = [
+  'Ей, сега ще ти кажа!',
+  'Чакай, мисля...',
+  'Момент, зареждам мозъка...',
+  'Хмм, нека се замисля...',
+  'На секундата!',
+  'Зареждам отговора...',
+];
+
+function randomLoading() {
+  return loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
+}
+
+function setLoading(message = randomLoading()) {
   aiOutput.innerHTML = `<p class="loading">${escapeHtml(message)}</p>`;
 }
 
@@ -150,7 +163,7 @@ async function explainText(text, mode = 'normal') {
   lastSelectedText = selectedText || 'целия урок';
   confusedCount += 1;
   confusedCountEl.textContent = confusedCount;
-  setLoading('Мисля по въпроса...');
+  setLoading(randomLoading());
 
   try {
     const data = await requestAiExplanation({
