@@ -1,0 +1,16 @@
+{
+  "name": "ai-tutor-basic-site",
+  "version": "0.2.0",
+  "description": "Basic Bulgarian AI tutor prototype with Anthropic Claude AI backend.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.52.0"
+  },
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  }
+}

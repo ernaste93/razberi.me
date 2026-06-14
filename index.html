@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Разбери.ме — AI помощник за учене</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">AI</div>
+      <div>
+        <strong>Разбери.ме</strong>
+        <span>AI помощник за учене</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#demo">Демо</a>
+      <a href="#subjects">Предмети</a>
+      <a href="#pricing">Цени</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Интерактивно учене за 7–12 клас</p>
+        <h1>Ученикът маркира какво не разбира. AI го обяснява по друг начин.</h1>
+        <p class="subhead">Първа версия на концепция: урок, въпроси, обяснение, мини тест и прогрес — без копиране на учебници.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#demo">Пробвай демото</a>
+          <a class="button secondary" href="#subjects">Виж предметите</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="score-ring">72%</div>
+        <p>Готовност по тема</p>
+        <ul>
+          <li>3 неясни понятия</li>
+          <li>12 решени въпроса</li>
+          <li>Следващо повторение: утре</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="subjects" class="subjects">
+      <h2>Първи възможни направления</h2>
+      <div class="subject-grid">
+        <article>
+          <span>🧬</span>
+          <h3>Биология</h3>
+          <p>Клетка, генетика, анатомия, екология, подготовка за медицина.</p>
+        </article>
+        <article>
+          <span>⚗️</span>
+          <h3>Химия</h3>
+          <p>Реакции, органична химия, pH, стехиометрия, фармация.</p>
+        </article>
+        <article>
+          <span>⚡</span>
+          <h3>Физика</h3>
+          <p>Сили, движение, електричество, оптика, инженерно мислене.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-layout">
+      <div class="lesson-panel">
+        <div class="lesson-top">
+          <div>
+            <p class="eyebrow">Демо урок</p>
+            <h2 id="lesson-title">Физика: Закон на Ом</h2>
+          </div>
+          <select id="lesson-select" aria-label="Избери урок">
+            <option value="physics">Физика</option>
+            <option value="chemistry">Химия</option>
+            <option value="biology">Биология</option>
+          </select>
+        </div>
+
+        <div class="tip">
+          Маркирай дума или изречение от урока и натисни <strong>„Обясни маркираното“</strong>.
+        </div>
+
+        <article id="lesson-content" class="lesson-content"></article>
+
+        <div class="lesson-actions">
+          <button id="explain-selection" class="button primary">Обясни маркираното</button>
+          <button id="simpler" class="button secondary">Обясни целия урок по-просто</button>
+          <button id="quiz-me" class="button secondary">Провери ме</button>
+        </div>
+      </div>
+
+      <aside class="ai-panel">
+        <div class="ai-header">
+          <div class="avatar">🤖</div>
+          <div>
+            <strong>AI помощник</strong>
+            <span id="ai-mode-label">demo fallback, без API</span>
+          </div>
+        </div>
+        <div id="ai-output" class="ai-output">
+          <p>Здравей! Избери част от урока, която не разбираш, и ще я обясня по друг начин.</p>
+        </div>
+        <div class="feedback-row">
+          <button id="understood">Разбрах</button>
+          <button id="still-confused">Още не</button>
+        </div>
+      </aside>
+    </section>
+
+    <section class="progress-section">
+      <h2>Примерен родителски dashboard</h2>
+      <div class="progress-grid">
+        <div class="metric">
+          <span>Решени задачи</span>
+          <strong id="tasks-count">12</strong>
+        </div>
+        <div class="metric">
+          <span>Неясни понятия</span>
+          <strong id="confused-count">3</strong>
+        </div>
+        <div class="metric">
+          <span>Увереност</span>
+          <strong id="confidence">72%</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+      <h2>Примерна оферта</h2>
+      <div class="price-card">
+        <p class="eyebrow">MVP идея</p>
+        <h3>Future Science AI</h3>
+        <p>Биология, химия и физика за ученици 8–12 клас с AI обяснения, тестове и прогрес.</p>
+        <strong>29 лв / месец</strong>
+        <small>Само примерна цена за демонстрация.</small>
+      </div>
+    </section>
+  </main>
+
+
+  <div id="help-chat" class="help-chat" aria-live="polite">
+    <button id="help-chat-toggle" class="help-chat-toggle" type="button" aria-label="Отвори AI помощник">
+      <span>💬</span>
+      <strong>Цъкни за помощ</strong>
+    </button>
+
+    <section class="help-chat-window" aria-label="AI помощник чат">
+      <header class="help-chat-header">
+        <div>
+          <strong>Цъкни за помощ</strong>
+          <span>Питай за урока или използвай маркиран текст</span>
+        </div>
+        <button id="help-chat-close" type="button" aria-label="Затвори чата">×</button>
+      </header>
+
+      <div id="help-chat-messages" class="help-chat-messages">
+        <div class="chat-message bot">
+          <p>Здравей! Маркирай неясна част от урока или ми задай въпрос. Ще опитам да го обясня по-просто.</p>
+        </div>
+      </div>
+
+      <form id="help-chat-form" class="help-chat-form">
+        <input id="help-chat-input" type="text" placeholder="Например: обясни ми йонна връзка..." autocomplete="off" />
+        <button id="help-chat-use-selection" type="button">Маркирано</button>
+        <button type="submit">Изпрати</button>
+      </form>
+    </section>
+  </div>
+
+  <footer>
+    <p>© Prototype. Образователна демонстрация. Не представлява официална оценка или учебник.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
