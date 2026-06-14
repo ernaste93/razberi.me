@@ -150,7 +150,7 @@ async function explainText(text, mode = 'normal') {
   lastSelectedText = selectedText || 'целия урок';
   confusedCount += 1;
   confusedCountEl.textContent = confusedCount;
-  setLoading('Опитвам реален AI. Ако backend/API key липсва, ще върна demo fallback...');
+  setLoading('Мисля по въпроса...');
 
   try {
     const data = await requestAiExplanation({
