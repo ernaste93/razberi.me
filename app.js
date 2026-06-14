@@ -110,6 +110,9 @@ function setLoading(message = 'AI мисли...') {
 
 function formatAiText(text) {
   return escapeHtml(text)
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/#{1,3} (.*?)(\n|$)/g, '<strong>$1</strong>$2')
     .replace(/\n{2,}/g, '</p><p>')
     .replace(/\n/g, '<br>');
 }
