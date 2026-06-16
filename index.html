@@ -17,8 +17,7 @@
         <a href="#"><img src="logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
       </div>
       <nav>
-        <a href="#" class="nav-btn">Начало</a>
-        <a href="#about" class="nav-btn">Кои сме ние?</a>
+        <a href="/about.html" class="nav-btn">Кои сме ние?</a>
         <a href="#subjects" class="nav-btn">Какво предлагаме?</a>
         <a href="#pricing" class="nav-btn">Цени</a>
       </nav>
@@ -58,23 +57,21 @@
         <div class="benefit-card benefit-card-orange">
           <h3>Ползи за ученика</h3>
           <ul>
-            <li>Обяснение по неговия начин, не само по учебника</li>
-            <li>Може да пита колкото пъти иска — без притеснение</li>
-            <li>Учи кога и откъдето иска — 24/7</li>
-            <li>Подготвено за НВО и Матури</li>
-            <li>Среща с учител онлайн — когато има нужда от жива помощ</li>
-            <li>Учи в своето темпо — без стрес и без бързане</li>
+            <li><strong>Учи по начин, който разбира</strong><br><span class="benefit-desc">Разбери.Ме обяснява материала по неговия начин - не само по учебника. Детето може да пита колкото пъти има нужда, без притеснение и без страх, че „не е разбрало".</span></li>
+            <li><strong>Учи в своето темпо</strong><br><span class="benefit-desc">Без стрес, без бързане и без натиск. Ученикът може да се връща към трудните теми, когато пожелае, и да напредва стъпка по стъпка.</span></li>
+            <li><strong>Получава подкрепа, когато му е нужна</strong><br><span class="benefit-desc">Може да учи когато и откъдето иска - вкъщи, на път или преди контролно.</span></li>
+            <li>Има достъп до учител при нужда<br><span class="benefit-desc">Когато има нужда от жива помощ, може да се включи в онлайн среща с учител.</span></li>
+            <li><strong>Подготвя се целенасочено за изпити</strong><br><span class="benefit-desc">Съдържание и упражнения, съобразени с НВО и матурите, за да се чувства по-уверен и подготвен.</span></li>
           </ul>
         </div>
         <div class="benefit-card benefit-card-blue">
           <h3>Ползи за родителя</h3>
           <ul>
-            <li>Знаеш с какво се затруднява детето ти</li>
-            <li>Спестяваш стотици лева от частни уроци</li>
-            <li>Следиш напредъка в реално време</li>
-            <li>Без ангажименти — спираш кога искаш</li>
-            <li>Подробни статистики — кои теми владее и кои не</li>
-            <li>Спокойствие, че детето не е само пред трудния урок</li>
+            <li><strong>Знаеш къде детето има нужда от помощ</strong><br><span class="benefit-desc">Виждаш с кои теми се затруднява, какво вече владее и къде има нужда от допълнително обяснение.</span></li>
+            <li><strong>Следиш напредъка в реално време</strong><br><span class="benefit-desc">Получаваш ясна картина как се развива детето - без да чакаш контролно, бележник или родителска среща.</span></li>
+            <li><strong>Спестяваш пари от частни уроци</strong><br><span class="benefit-desc">Разбери.Ме помага при ежедневното учене и подготовка, така че не всяко затруднение да води до допълнителен частен урок.</span></li>
+            <li><strong>Имаш спокойствие, че детето не е само</strong><br><span class="benefit-desc">Когато урокът е труден, детето получава обяснение, подкрепа и възможност да продължи напред, вместо да се отказва.</span></li>
+            <li><strong>Ползваш го без дългосрочен ангажимент</strong><br><span class="benefit-desc">Започваш, когато имаш нужда, и спираш, когато решиш - без обвързване.</span></li>
           </ul>
         </div>
       </div>
@@ -385,6 +382,22 @@
     });
 
     updateAuthUI();
+  </script>
+  <script>
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.4s ease';
+    window.addEventListener('load', () => { document.body.style.opacity = '1'; });
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('scroll-top-btn').classList.toggle('visible', window.scrollY > 200);
+    });
+
+    document.querySelector('a[href="/about.html"]').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.body.style.transition = 'opacity 0.35s ease';
+      document.body.style.opacity = '0';
+      setTimeout(() => { window.location.href = '/about.html'; }, 350);
+    });
   </script>
 </body>
 </html>

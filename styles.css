@@ -651,10 +651,12 @@ footer { padding: 30px 6vw; border-top: 1px solid var(--line); color: var(--mute
 /* Benefits section */
 .benefits-section { padding: 16px 0; }
 .benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.benefit-card { border-radius: 24px; padding: 36px 32px; box-shadow: var(--shadow); }
+.benefit-card { border-radius: 24px; padding: 36px 32px; box-shadow: var(--shadow); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: default; }
+.benefit-card:hover { transform: scale(1.03) translateY(-6px); box-shadow: 0 24px 60px rgba(16,24,40,0.22); }
 .benefit-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 20px; color: white; text-align: center; }
 .benefit-card ul { list-style: none; padding: 0; }
-.benefit-card li { padding: 10px 0; font-size: 17px; border-bottom: 1px solid rgba(255,255,255,0.2); color: white; text-align: center; }
+.benefit-card li { padding: 10px 0; font-size: 18px; border-bottom: 1px solid rgba(255,255,255,0.2); color: white; text-align: center; }
+.benefit-desc { font-size: 15px; opacity: 0.85; font-weight: 400; line-height: 1.6; }
 .benefit-card li:last-child { border-bottom: none; }
 .benefit-card li::before { content: "✓ "; font-weight: 700; }
 
@@ -785,10 +787,17 @@ footer { padding: 30px 6vw; border-top: 1px solid var(--line); color: var(--mute
   padding: 0 0 3px 0;
   cursor: pointer;
   box-shadow: 0 18px 45px rgba(26, 47, 90, 0.28);
-  transition: background 0.18s ease, transform 0.18s ease;
+  transition: background 0.18s ease, transform 0.18s ease, opacity 0.35s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .scroll-top-btn:hover {

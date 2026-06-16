@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Кои сме ние – Разбери.ме</title>
+  <link rel="icon" type="image/png" href="logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(24px); }
+    }
+
+    .about-card {
+      margin: 16px 0 40px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(16,24,40,0.10);
+      padding: 52px 56px;
+      max-width: 800px;
+      width: 100%;
+      animation: fadeUp 0.5s ease both;
+    }
+    .about-card.leaving { animation: fadeDown 0.35s ease both; }
+
+    .about-card h1 { font-size: 32px; font-weight: 800; color: var(--nav); margin-bottom: 24px; text-align: center; }
+    .about-card h2 { font-size: 32px; font-weight: 800; color: var(--accent); margin: 32px 0 10px; }
+    .about-card p { font-size: 16px; line-height: 1.8; color: var(--muted); margin-bottom: 12px; text-align: center; }
+    .about-card .highlight { font-size: 18px; font-weight: 600; color: var(--nav); font-style: italic; margin: 24px 0; text-align: center; }
+    .about-back { text-align: center; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main" style="position:relative;">
+      <div class="brand">
+        <a href="/"><img src="logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <nav style="position:absolute; left:50%; transform:translateX(-50%);">
+
+        <a href="/" class="nav-btn" id="home-link">Начало</a>
+        <a href="/about.html" class="nav-btn">Кои сме ние?</a>
+        <a href="/#subjects" class="nav-btn">Какво предлагаме?</a>
+        <a href="/#pricing" class="nav-btn">Цени</a>
+      </nav>
+      <div class="topbar-right" style="margin-left:auto;">
+        <div id="auth-header">
+          <a href="/auth.html" class="nav-btn nav-btn-gold">Вход</a>
+        </div>
+      </div>
+    </div>
+    <div class="topbar-secondary">
+      <span class="ts-chip">Разбиране, не наизустяване<span class="ts-tooltip">Не зубрене, а истинско разбиране — обясненията са пригодени точно за нивото на твоето дете.</span></span>
+      <span class="ts-chip">Учи докато четеш<span class="ts-tooltip">Маркирай неразбраното и получи обяснение на момента, не след урока, а докато четеш.</span></span>
+      <span class="ts-chip">Доказани резултати<span class="ts-tooltip">Учениците усвояват материала по-задълбочено и влизат на изпитите с повече увереност.</span></span>
+      <span class="ts-chip">НВО и Матури<span class="ts-tooltip">Помагаме на детето ти да изгради уменията за НВО и Матури, за да влезе подготвено на всеки изпит.</span></span>
+    </div>
+  </header>
+
+  <main style="padding: 0 4vw; display:flex; justify-content:center;">
+    <div class="about-card">
+      <h1><span style="color:var(--accent)">Кои сме ние</span><span style="color:var(--gold)">?</span></h1>
+
+      <p><span style="color:var(--accent)">Разбери.</span><span style="color:var(--gold)">Ме</span> е създаден от хора, които вярват, че всяко дете може да разбере всяко нещо, стига да му се обясни по правилния начин.</p>
+
+      <p>Видяхме как децата се борят с учебния материал не защото не са способни, а защото учебникът обяснява само по един начин. Видяхме родители, които плащат стотици лева на месец за частни уроци, само за да може детето им да догони класа. Видяхме деца, които се срамуват да вдигнат ръка и да кажат "не разбирам" за трети път пред целия клас. За съжаление, това е проблем на системата, а не на детето.</p>
+
+      <h2 style="text-align:center"><span style="color:var(--accent)">Защо го създадохме</span><span style="color:var(--gold)">?</span></h2>
+      <p>За да дадем на всяко дете инструмент, който се адаптира към него, а не обратното.</p>
+      <p>Образованието в България не се е променило съществено от десетилетия. Учебниците са написани по един начин. Ако този начин не работи за твоето дете, алтернативите са скъпи и ограничени. Частните учители струват 20–40 евро на час. Не всяко семейство може да си го позволи. Не всяко дете живее в голям град с достъп до добри учители.</p>
+      <p>Вярваме, че това трябва да се промени.</p>
+
+      <h2 style="text-align:center"><span style="color:var(--accent)">Нашата мисия</span><span style="color:var(--gold)">?</span></h2>
+      <p>Да направим качественото образование достъпно за всяко дете в България, независимо от града, училището или бюджета на семейството. <span style="color:var(--accent)">Разбери.</span><span style="color:var(--gold)">Ме</span> е личен учебен помощник, достъпен по всяко време, без срам, без чакане, на цената на един частен урок на месец.</p>
+
+      <h2 style="text-align:center"><span style="color:var(--accent)">Как работим</span><span style="color:var(--gold)">?</span></h2>
+      <p>Не сме просто още един образователен сайт с видеа и тестове. <span style="color:var(--accent)">Разбери.</span><span style="color:var(--gold)">Ме</span> чете заедно с ученика, слуша какво не разбира и обяснява по различен начин, толкова пъти, колкото е нужно. Адаптира се към нивото и темпото на всяко дете. Не осъжда. Не се уморява. Не бърза.</p>
+
+      <div class="about-back">
+        <a href="/" id="back-link" class="nav-btn nav-btn-gold" style="display:inline-block;padding:12px 32px;font-size:15px">← Обратно към началото</a>
+      </div>
+    </div>
+  </main>
+
+  <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Върни се горе" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+
+  <script>
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.4s ease';
+    window.addEventListener('load', () => { document.body.style.opacity = '1'; });
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('scroll-top-btn').classList.toggle('visible', window.scrollY > 200);
+    });
+
+    ['back-link', 'home-link'].forEach(id => {
+      document.getElementById(id).addEventListener('click', function(e) {
+        e.preventDefault();
+        document.body.style.transition = 'opacity 0.35s ease';
+        document.body.style.opacity = '0';
+        setTimeout(() => { window.location.href = '/'; }, 350);
+      });
+    });
+  </script>
+</body>
+</html>
