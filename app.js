@@ -59,15 +59,34 @@ let currentLesson = 'physics';
 let confusedCount = 3;
 let tasksCount = 12;
 let lastSelectedText = '';
+let aiPanelHistory = [];
 
 const lessonSelect = document.getElementById('lesson-select');
 const lessonTitle = document.getElementById('lesson-title');
 const lessonContent = document.getElementById('lesson-content');
 const aiOutput = document.getElementById('ai-output');
-const confusedCountEl = document.getElementById('confused-count');
-const tasksCountEl = document.getElementById('tasks-count');
-const confidenceEl = document.getElementById('confidence');
+const confusedCountEl = { textContent: '' };
+const tasksCountEl = { textContent: '' };
+const confidenceEl = { textContent: '' };
 const aiModeLabel = document.getElementById('ai-mode-label');
+const aiPanel = document.getElementById('ai-panel');
+
+function showAiPanel() {
+  if (!aiPanel) return;
+  aiPanel.classList.add('visible');
+  updatePanelCounter();
+  // Заключи височината на помощника = височината на урока
+  const lessonPanel = document.querySelector('.lesson-panel');
+  if (lessonPanel) {
+    const h = lessonPanel.offsetHeight;
+    aiPanel.style.height = h + 'px';
+  }
+}
+
+document.getElementById('ai-panel-close')?.addEventListener('click', () => {
+  aiPanel?.classList.remove('visible');
+});
+
 const helpChat = document.getElementById('help-chat');
 const helpChatToggle = document.getElementById('help-chat-toggle');
 const helpChatClose = document.getElementById('help-chat-close');
@@ -121,6 +140,97 @@ function setLoading(message = randomLoading()) {
   aiOutput.innerHTML = `<p class="loading">${escapeHtml(message)}</p>`;
 }
 
+function scrollAiToBottom() {
+  aiOutput.scrollTop = aiOutput.scrollHeight;
+}
+
+let thinkingEl = null;
+function showThinking() {
+  thinkingEl = document.createElement('div');
+  thinkingEl.className = 'thinking-bubble';
+  thinkingEl.innerHTML = '<span>💡</span>';
+  aiOutput.appendChild(thinkingEl);
+  scrollAiToBottom();
+}
+function removeThinking() {
+  thinkingEl?.remove();
+  thinkingEl = null;
+}
+
+function appendUserBubble(text) {
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;justify-content:flex-end;margin:8px 0';
+  const bubble = document.createElement('span');
+  bubble.style.cssText = 'background:var(--accent);color:white;padding:8px 14px;border-radius:16px 16px 4px 16px;font-size:14px;max-width:80%;';
+  bubble.textContent = text;
+  div.appendChild(bubble);
+  aiOutput.appendChild(div);
+  scrollAiToBottom();
+}
+
+function stripMarkdown(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/^#{1,3}\s+/gm, '')
+    .replace(/^[-*]\s+/gm, '• ');
+}
+
+function appendBotBubble(text, speed = 8, onDone = null) {
+  const clean = stripMarkdown(text);
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;justify-content:flex-start;margin:8px 0';
+  const bubble = document.createElement('span');
+  bubble.style.cssText = 'background:var(--soft);color:var(--text);padding:8px 14px;border-radius:16px 16px 16px 4px;font-size:14px;max-width:80%;line-height:1.5;';
+  div.appendChild(bubble);
+  aiOutput.appendChild(div);
+  scrollAiToBottom();
+  let i = 0;
+  function tick() {
+    if (i < clean.length) {
+      bubble.textContent += clean[i++];
+      scrollAiToBottom();
+      setTimeout(tick, speed);
+    } else if (onDone) {
+      onDone();
+    }
+  }
+  tick();
+}
+
+function typewriterAppend(text, speed = 8, onDone = null) {
+  const clean = stripMarkdown(text);
+  const p = document.createElement('p');
+  aiOutput.appendChild(p);
+  scrollAiToBottom();
+  let i = 0;
+  function tick() {
+    if (i < clean.length) {
+      p.textContent += clean[i++];
+      scrollAiToBottom();
+      setTimeout(tick, speed);
+    } else if (onDone) {
+      onDone();
+    }
+  }
+  tick();
+}
+
+function setFeedbackDisabled(disabled) {
+  const row = document.querySelector('.feedback-row');
+  if (row) row.classList.toggle('disabled', disabled);
+}
+
+function showInputHint() {
+  const hint = document.createElement('p');
+  hint.style.cssText = 'text-align:center;font-size:13px;color:var(--muted);margin:8px 0 4px;opacity:0;transition:opacity 0.4s ease;';
+  hint.textContent = '✏️ Напиши отговора си в полето по-долу';
+  aiOutput.appendChild(hint);
+  scrollAiToBottom();
+  requestAnimationFrame(() => { hint.style.opacity = '1'; });
+  setFeedbackDisabled(true);
+}
+
 function formatAiText(text) {
   return escapeHtml(text)
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -152,6 +262,155 @@ async function requestAiExplanation({ selectedText, mode = 'normal', chatHistory
   return data;
 }
 
+const CHAT_FREE_LIMIT = 3;
+let userIsLoggedIn = false;
+
+const MARK_FREE_LIMIT = 3;
+const PANEL_FREE_LIMIT = 10;
+
+function getChatUsageCount() {
+  return parseInt(localStorage.getItem('chat_usage') || '0', 10);
+}
+function incrementChatUsage() {
+  localStorage.setItem('chat_usage', getChatUsageCount() + 1);
+}
+
+function getMarkUsageCount() {
+  return parseInt(localStorage.getItem('mark_usage') || '0', 10);
+}
+function incrementMarkUsage() {
+  localStorage.setItem('mark_usage', getMarkUsageCount() + 1);
+}
+
+function getPanelUsageCount() {
+  return parseInt(localStorage.getItem('panel_usage') || '0', 10);
+}
+function incrementPanelUsage() {
+  localStorage.setItem('panel_usage', getPanelUsageCount() + 1);
+}
+
+function updatePanelCounter() {
+  const counter = document.getElementById('ai-usage-counter');
+  if (!counter) return;
+  if (userIsLoggedIn) { counter.textContent = ''; return; }
+  const remaining = Math.max(0, PANEL_FREE_LIMIT - getPanelUsageCount());
+  counter.textContent = `Оставащ брой безплатни опити: ${remaining}`;
+}
+
+function isPanelLimitReached() {
+  return !userIsLoggedIn && getPanelUsageCount() >= PANEL_FREE_LIMIT;
+}
+
+function lockPanelInput() {
+  const input = document.getElementById('ai-free-input');
+  const submitBtn = document.querySelector('#ai-free-form button[type="submit"]');
+  if (input) { input.disabled = true; input.placeholder = 'Регистрирай се за неограничен достъп'; }
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '0.4'; }
+  // Lock feedback buttons
+  document.getElementById('understood').disabled = true;
+  document.getElementById('still-confused').disabled = true;
+  setFeedbackDisabled(true);
+  // Lock explain button
+  lockMarkButton();
+}
+
+function showLimitCard() {
+  lockPanelInput();
+
+  const card = document.createElement('div');
+  card.style.cssText = 'background:var(--card);border:1.5px solid var(--gold);border-radius:16px;padding:16px 14px 12px;margin:12px 0;';
+
+  const title = document.createElement('p');
+  title.style.cssText = 'font-weight:700;font-size:14px;color:var(--text);margin:0 0 14px;text-align:center;';
+  title.textContent = 'Внимание — Вашите кредити се изчерпаха';
+  card.appendChild(title);
+
+  const btnRow = document.createElement('div');
+  btnRow.style.cssText = 'display:flex;gap:8px;justify-content:center;';
+
+  const thankBubble = document.createElement('span');
+  thankBubble.style.cssText = 'background:var(--soft);color:var(--text);padding:8px 14px;border-radius:20px;font-size:14px;cursor:pointer;font-weight:600;';
+  thankBubble.textContent = 'Благодаря';
+  thankBubble.addEventListener('click', () => aiPanel?.classList.remove('visible'));
+
+  const regBubble = document.createElement('a');
+  regBubble.href = '/auth.html';
+  regBubble.style.cssText = 'background:var(--accent);color:white;padding:8px 14px;border-radius:20px;font-size:14px;text-decoration:none;font-weight:600;';
+  regBubble.textContent = 'Регистрирай се →';
+
+  btnRow.appendChild(thankBubble);
+  btnRow.appendChild(regBubble);
+  card.appendChild(btnRow);
+
+  aiOutput.appendChild(card);
+  scrollAiToBottom();
+}
+
+function lockMarkButton() {
+  const explainBtn = document.getElementById('explain-selection');
+  const tooltip = document.getElementById('explain-tooltip');
+  if (explainBtn) {
+    explainBtn.disabled = true;
+    explainBtn.style.opacity = '0.45';
+    explainBtn.style.cursor = 'not-allowed';
+  }
+  if (tooltip) tooltip.classList.remove('tooltip-hidden');
+}
+
+function updateMarkButtonState() {
+  if (!userIsLoggedIn && getMarkUsageCount() >= MARK_FREE_LIMIT) {
+    lockMarkButton();
+  }
+}
+
+function applyAuthState(loggedIn) {
+  userIsLoggedIn = loggedIn;
+  const explainBtn = document.getElementById('explain-selection');
+  const lessonContentEl = document.getElementById('lesson-content');
+  const useSelectionBtn = document.getElementById('help-chat-use-selection');
+
+  const tooltip = document.getElementById('explain-tooltip');
+  if (!loggedIn) {
+    if (lessonContentEl) lessonContentEl.style.userSelect = '';
+    // Грей аут на "Маркирано" бутона в чата
+    if (useSelectionBtn) {
+      useSelectionBtn.disabled = true;
+      useSelectionBtn.style.opacity = '0.45';
+      useSelectionBtn.style.cursor = 'not-allowed';
+    }
+    const useSelTooltip = document.getElementById('use-selection-tooltip');
+    if (useSelTooltip) useSelTooltip.classList.remove('tooltip-hidden');
+  } else {
+    if (explainBtn) {
+      explainBtn.disabled = false;
+      explainBtn.style.opacity = '';
+      explainBtn.style.cursor = '';
+    }
+    if (tooltip) tooltip.classList.add('tooltip-hidden');
+    if (lessonContentEl) lessonContentEl.style.userSelect = '';
+    if (useSelectionBtn) {
+      useSelectionBtn.disabled = false;
+      useSelectionBtn.style.opacity = '';
+      useSelectionBtn.style.cursor = '';
+    }
+    const useSelTooltip = document.getElementById('use-selection-tooltip');
+    if (useSelTooltip) useSelTooltip.classList.add('tooltip-hidden');
+  }
+}
+
+// Инициализирай auth при зареждане
+(async () => {
+  try {
+    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co', 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    applyAuthState(!!session);
+  } catch { applyAuthState(false); }
+  updateMarkButtonState();
+  updatePanelCounter();
+  if (isPanelLimitReached()) lockPanelInput();
+})();
+
 async function explainText(text, mode = 'normal') {
   const selectedText = text.trim();
 
@@ -160,10 +419,13 @@ async function explainText(text, mode = 'normal') {
     return;
   }
 
+  showAiPanel();
+  aiPanelHistory = [];
   lastSelectedText = selectedText || 'целия урок';
   confusedCount += 1;
   confusedCountEl.textContent = confusedCount;
-  setLoading(randomLoading());
+  aiOutput.innerHTML = `<p><span class="selected">Маркирано:</span> ${escapeHtml(selectedText || 'целия урок')}</p>`;
+  showThinking();
 
   try {
     const data = await requestAiExplanation({
@@ -172,18 +434,22 @@ async function explainText(text, mode = 'normal') {
     });
 
     if (aiModeLabel) aiModeLabel.textContent = `реален AI: ${data.model || 'model'}`;
-    aiOutput.innerHTML = `
-      <p><span class="selected">Маркирано:</span> ${escapeHtml(selectedText || 'целия урок')}</p>
-      <p>${formatAiText(data.explanation)}</p>
-    `;
+    const marker = '[ОТГОВОРИ]';
+    const hasQuestion = data.explanation.includes(marker);
+    const cleanExplanation = data.explanation.replace(marker, '').trim();
+    const limitReached = isPanelLimitReached();
+    removeThinking();
+    aiPanelHistory.push({ role: 'assistant', content: cleanExplanation });
+    const afterDone = () => {
+      if (hasQuestion) showInputHint();
+      if (limitReached) setTimeout(showLimitCard, 400);
+    };
+    typewriterAppend(cleanExplanation, 8, afterDone);
   } catch (error) {
     if (aiModeLabel) aiModeLabel.textContent = 'demo fallback, без API';
     const fallback = mockExplainText(selectedText || 'целия урок', mode);
-    aiOutput.innerHTML = `
-      <p class="warning"><strong>Backend/API не отговори:</strong> ${escapeHtml(error.message)}</p>
-      <p><span class="selected">Demo fallback:</span> ${escapeHtml(selectedText || 'целия урок')}</p>
-      ${fallback}
-    `;
+    aiOutput.innerHTML = '';
+    typewriterAppend(fallback.replace(/<[^>]*>/g, ''));
   }
 }
 
@@ -237,8 +503,53 @@ lessonSelect.addEventListener('change', (e) => {
   aiOutput.innerHTML = '<p>Избери част от новия урок, която не разбираш, и ще я обясня по друг начин.</p>';
 });
 
+function hasSeenMarkConfirm() {
+  return localStorage.getItem('mark_confirmed') === '1';
+}
+
+function showMarkConfirm(onYes) {
+  const overlay = document.getElementById('mark-confirm-overlay');
+  overlay.style.display = 'flex';
+
+  document.getElementById('mark-confirm-yes').onclick = () => {
+    overlay.style.display = 'none';
+    localStorage.setItem('mark_confirmed', '1');
+    onYes();
+  };
+  document.getElementById('mark-confirm-no').onclick = () => {
+    overlay.style.display = 'none';
+  };
+  overlay.onclick = (e) => {
+    if (e.target === overlay) overlay.style.display = 'none';
+  };
+}
+
 document.getElementById('explain-selection').addEventListener('click', () => {
-  explainText(getSelectedText());
+  const capturedText = getSelectedText();
+
+  if (!userIsLoggedIn) {
+    if (isPanelLimitReached()) {
+      showAiPanel();
+      showLimitCard();
+      return;
+    }
+
+    const doExplain = () => {
+      incrementMarkUsage();
+      incrementPanelUsage();
+      if (getMarkUsageCount() >= MARK_FREE_LIMIT) lockMarkButton();
+      updatePanelCounter();
+      explainText(capturedText);
+    };
+
+    if (!hasSeenMarkConfirm()) {
+      showMarkConfirm(doExplain);
+    } else {
+      doExplain();
+    }
+  } else {
+    explainText(capturedText);
+  }
 });
 
 document.getElementById('simpler').addEventListener('click', () => {
@@ -257,18 +568,108 @@ document.getElementById('quiz-me').addEventListener('click', () => {
 });
 
 document.getElementById('understood').addEventListener('click', () => {
+  if (isPanelLimitReached()) { showLimitCard(); return; }
   if (confusedCount > 0) confusedCount -= 1;
   confusedCountEl.textContent = confusedCount;
-  aiOutput.innerHTML += '<p><strong>Супер.</strong> Записвам, че тази част вече е по-ясна. След малко ще ти я върна като кратко упражнение.</p>';
+  appendUserBubble('Разбрах');
+  setTimeout(() => appendBotBubble('Супер! Записвам, че тази част вече е по-ясна. След малко ще ти я върна като кратко упражнение.'), 300);
 });
 
 document.getElementById('still-confused').addEventListener('click', () => {
+  if (isPanelLimitReached()) { showLimitCard(); return; }
   const selected = getSelectedText() || lastSelectedText || 'тази част';
-  aiOutput.innerHTML += `<p><strong>Няма проблем.</strong> Ще сменя подхода: представи си ${escapeHtml(selected)} чрез пример от ежедневието, после ще го проверим с един лесен въпрос.</p>`;
+  appendUserBubble('Още не разбирам');
+  setTimeout(() => appendBotBubble(`Няма проблем. Ще сменя подхода: представи си „${selected}" чрез пример от ежедневието, после ще го проверим с един лесен въпрос.`), 300);
+});
+
+document.getElementById('ai-free-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const input = document.getElementById('ai-free-input');
+  const question = input.value.trim();
+  if (!question) return;
+  if (isPanelLimitReached()) return;
+  input.value = '';
+  incrementPanelUsage();
+  updatePanelCounter();
+  setFeedbackDisabled(false);
+  showAiPanel();
+  appendUserBubble(question);
+  aiPanelHistory.push({ role: 'user', content: question });
+  showThinking();
+  setTimeout(async () => {
+    try {
+      const data = await requestAiExplanation({
+        selectedText: question,
+        mode: 'chat',
+        chatHistory: aiPanelHistory,
+      });
+      removeThinking();
+      const marker = '[ОТГОВОРИ]';
+      const hasQuestion = data.explanation.includes(marker);
+      const cleanExplanation = data.explanation.replace(marker, '').trim();
+      aiPanelHistory.push({ role: 'assistant', content: cleanExplanation });
+      const limitReached = isPanelLimitReached();
+      const afterDone = () => {
+        if (hasQuestion) showInputHint();
+        if (limitReached) setTimeout(showLimitCard, 400);
+      };
+      appendBotBubble(cleanExplanation, 8, afterDone);
+    } catch (err) {
+      removeThinking();
+      appendBotBubble(`Грешка: ${err.message}`);
+    }
+  }, 300);
 });
 
 renderLesson(currentLesson);
 
+// Cookie banner
+(function() {
+  const banner = document.getElementById('cookie-banner');
+  const modal = document.getElementById('cookie-modal');
+  if (!banner) return;
+
+  if (!localStorage.getItem('cookie_consent')) {
+    banner.style.display = 'block';
+  }
+
+  function dismissBanner() { banner.style.display = 'none'; }
+  function dismissModal() { modal.style.display = 'none'; }
+
+  function saveConsent(analytics, marketing) {
+    localStorage.setItem('cookie_consent', JSON.stringify({
+      necessary: true,
+      analytics,
+      marketing,
+      date: new Date().toISOString()
+    }));
+  }
+
+  document.getElementById('cookie-accept')?.addEventListener('click', () => {
+    saveConsent(true, true);
+    dismissBanner();
+  });
+
+  document.getElementById('cookie-decline')?.addEventListener('click', () => {
+    saveConsent(false, false);
+    dismissBanner();
+  });
+
+  document.getElementById('cookie-customize')?.addEventListener('click', () => {
+    modal.style.display = 'flex';
+  });
+
+  document.getElementById('cookie-save')?.addEventListener('click', () => {
+    const analytics = document.getElementById('toggle-analytics')?.checked ?? false;
+    const marketing = document.getElementById('toggle-marketing')?.checked ?? false;
+    saveConsent(analytics, marketing);
+    dismissModal();
+    dismissBanner();
+  });
+
+  document.getElementById('cookie-modal-close')?.addEventListener('click', dismissModal);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) dismissModal(); });
+})();
 
 function addChatMessage(role, text, className = '') {
   if (!helpChatMessages) return null;
@@ -312,6 +713,16 @@ function getChatFallback(question) {
 async function sendHelpChatQuestion(question) {
   const cleanQuestion = question.trim();
   if (!cleanQuestion) return;
+
+  // Лимит за нелогнати
+  if (!userIsLoggedIn) {
+    const usage = getChatUsageCount();
+    if (usage >= CHAT_FREE_LIMIT) {
+      addChatMessage('bot', `Достигна безплатния лимит от ${CHAT_FREE_LIMIT} въпроса. [Влез или се регистрирай](/auth.html) за неограничен достъп.`);
+      return;
+    }
+    incrementChatUsage();
+  }
 
   addChatMessage('user', cleanQuestion);
   chatHistory.push({ role: 'user', content: cleanQuestion });
