@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Борис Христов · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-hristov-chesten-krast-q1',
+      lessonUrl:  '/lessons/bel12-hristov-chesten-krast.html',
+      lessonName: 'Христов — Честен кръст',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 12',
+      title:      'Куиз — Борис Христов — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel12-hristov-chesten-krast-quiz-2.html',
+      questions: [
+        { q:'Какво означава „честен кръст" в народната традиция?', opts:['Красив кръст','Кръст на гроб','Клетвена формула — заклевам се на кръста','Знак за чест в бойния строй'], correct:2, explanation:'„Честен кръст" е народна клетвена формула — „кълна се честен кръст" означава полагане на сериозна, обвързваща клетва.' },
+        { q:'Каква е централната тема на стихотворението?', opts:['Любовта и раздялата','Моралният избор — верността към себе си и отказът от компромис','Раздвоението и кризата на идентичността','Родовата памет и наследството'], correct:1, explanation:'Темата е моралният избор: говорителят е заклел се на честта, отказва да предаде себе си или другите, дори с цената на самотата.' },
+        { q:'Как се различава тонът на Христов от тона на Яворов?', opts:['Яворов е по-спокоен, Христов е по-тревожен','И двамата са меланхолични','Яворов е тревожен и раздвоен, Христов е спокойно твърд и решен','Христов е по-символичен от Яворов'], correct:2, explanation:'Яворов е в средата на кризата — не знае кой е. Христов е след нея — знае кой е и е избрал. Тонът на Христов е твърд, ясен, без колебание.' },
+        { q:'Кой стих изразява основата на моралната устойчивост на говорителя?', opts:['„Честен кръст — не ще предам"','„Лесно е да се огъне онзи, що не знае кой е. Аз зная."','„Светът е пълен с примамки"','„Ако трябва — сам"'], correct:1, explanation:'„Лесно е да се огъне онзи, що не знае кой е. Аз зная." — яснотата за собствената идентичност е защита от изкушенията.' },
+        { q:'Какво представляват изкушенията в строфа 3?', opts:['Любовта, природата, смъртта','Злато, слава, лесен ден','Власт, красота, мъдрост','Дом, семейство, приятели'], correct:1, explanation:'„Светът е пълен с примамки — злато, слава, лесен ден." Конкретните изкушения са назовани директно, без метафори.' },
+        { q:'Какво означава метафората „да платя с душата си"?', opts:['Да даря пари','Да приема смъртта','Да направя морален компромис, унищожавайки себе си','Да се помоли на Бога'], correct:2, explanation:'„Да платя с душата си" = да направя компромис с честта. Приемането на изкушенията означава да пожертваш моралната си идентичност.' },
+        { q:'Каква е структурата на финала — „Ако трябва — сам. Ако трябва — срещу всичко. Но честен."?', opts:['Антитеза','Метафора','Градация с анафора','Риторичен въпрос'], correct:2, explanation:'Градация — всяко следващо условие е по-тежко (самота → противопоставяне на всичко). Анафора — „ако трябва" се повтаря. Финалното „но честен" е кулминацията.' },
+        { q:'Как се различава езикът на Христов от езика на символистите (Яворов, Дебелянов)?', opts:['Христов е по-сложен и образен','Христов е директен, разговорен, прост — без украса и сложни метафори','Христов използва повече символи','Езикът им е еднакъв'], correct:1, explanation:'Христов съзнателно избягва символистичната украса. Пише кратко, пряко, разговорно — всяка дума е конкретна и ясна.' },
+        { q:'Кое от следните НЕ е мотив в „Честен кръст"?', opts:['Верността към себе си','Отказът от компромис','Раздвоението и кризата на идентичността','Честта като водеща ценност'], correct:2, explanation:'Раздвоението и кризата са тема на Яворов. При Христов говорителят е преодолял кризата — знае кой е и е избрал.' },
+        { q:'Каква е разликата между Христов и Яворов по темата „Изборът и раздвоението"?', opts:['Двамата са в еднаква ситуация','Яворов е избрал, Христов е раздвоен','Яворов е раздвоен и не може да избере; Христов е избрал и декларира избора си','Нито единият не се занимава с тази тема'], correct:2, explanation:'Яворов (Две души) завършва с „не зная кой съм аз самин" — неразрешена криза. Христов (Честен кръст) завършва с „но честен" — направеният избор е декларация.' }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

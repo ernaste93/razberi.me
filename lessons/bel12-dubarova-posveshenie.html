@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Петя Дубарова — "Посвещение" · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 12 клас</a>
+        <span>›</span>
+        Петя Дубарова — "Посвещение"
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 12 КЛАС · ТЕМА 3</div>
+          <div class="lesson-title">Петя Дубарова — "Посвещение"</div>
+          <div class="lesson-meta">Любовна и изповедна лирика · Съвременна българска поезия · ~10 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p>Петя Дубарова (1962–1979) е една от най-трагичните и едновременно най-вдъхновяващите фигури в българската литература. Родена е в Бургас и загива на 17 години при трагична случайност — преди да е завършила гимназия. Въпреки краткия си живот тя оставя след себе си стихосбирката <strong>"Ако обичам"</strong>, издадена посмъртно, която съдържа стихотворения, писани между 14-та и 17-та й година.</p>
+              <p>Поезията на Дубарова поразява с <strong>удивителна зрялост</strong>, несъответстваща на нейната възраст. Тя пише за любовта, природата, смисъла на живота, за отношенията между хората — с дълбочина, която не е типична за юношеска лирика. Критиците отбелязват философска нотка в творчеството й, която предсказва голям поетичен талант, прекъснат преждевременно.</p>
+              <p>Поради трагичната й съдба произведенията й придобиват особено измерение: когато тя посвещава стихове на любовта и живота, читателят знае, че тя го прави буквално преди края. Това придава на всяко нейно стихотворение допълнителна емоционална тежест.</p>
+              <p>Петя Дубарова е родена в Бургас, учи в Езиковата гимназия там и пише стихове от ранна юношеска възраст. Посмъртното издание на стихосбирката й е посрещнато с огромен читателски интерес и оказва дълготрайно влияние върху следващите поколения млади читатели в България.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Контекст — Юношеска лирика и посмъртно значение</div>
+            <div class="lesson-body">
+              <p>За да разберем "Посвещение", трябва да го разгледаме в два контекста — <strong>литературен</strong> и <strong>биографичен</strong>.</p>
+              <p>От литературна гледна точка стихотворението принадлежи към традицията на <strong>изповедната лирика</strong> — поезия, в която авторът говори пряко за своите чувства, вярвания и отношение към света. Темата за посвещението — даряването на нещо ценно на любовта — е класическа в световната литература.</p>
+              <p>От биографична гледна точка обаче "Посвещение" придобива допълнително значение. Дубарова буквално е посветила краткия си живот на поезията и любовта — и тъй като е починала толкова млада, стихотворението се чете като неволно пророческо завещание.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📚</div><div class="key-point-text"><strong>Стихосбирка "Ако обичам":</strong> Единственото й издание, излязло посмъртно. Съдържа стихове, писани в юношеска възраст, но с рядка зрялост.</div></div>
+              <div class="key-point"><div class="key-point-icon">⏳</div><div class="key-point-text"><strong>Мотивът за краткостта:</strong> Бързотечността на времето и младостта е централен за творчеството й — нещо, което придобива особено значение предвид ранната й смърт.</div></div>
+              <div class="key-point"><div class="key-point-icon">💡</div><div class="key-point-text"><strong>Изповедна лирика:</strong> Дубарова пише пряко за своите чувства, без алегорична завоалираност. Читателят усеща директен емоционален контакт с авторката.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стихотворението</div>
+            <div class="poem-block">Посвещавам ги на любовта —
+тези стихове. На вятъра в косите,
+на дъжда, що пее за листата,
+на зората, която пали светлините.
+
+На смеха ти. На топлото ти рамо.
+На тишината между нас двамата.
+На всичко, що се казва само
+с очи — без думи, без слова.
+
+Посвещавам ги на пролетта,
+която ще дойде, когато аз я няма.
+На тази болка, сладка и света,
+която се нарича просто: обичам.
+<div class="poem-author">— Петя Дубарова</div></div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Строфа по строфа — текстов анализ</div>
+            <div class="lesson-body">
+              <p><strong>Първа строфа:</strong> Стихотворението започва с ключовия жест — посвещението. "Посвещавам ги на любовта" е деклариране на намерение: стиховете са дар на любовта, разбирана широко — не само като романтично чувство, а като принцип на съществуването. Следват природни образи: вятърът в косите, дъждът, зората. Природата е одушевена — дъждът "пее", зората "пали светлините". Тези образи въвеждат мотивите за светлината и за движението на времето.</p>
+              <p><strong>Втора строфа:</strong> Тук се преминава от природата към конкретния любим човек. "На смеха ти. На топлото ти рамо." — изреченията са кратки, синтактически опростени, но изпълнени с емоция. "Тишината между нас двамата" е особено силен образ: тишината тук не е празнота, а пълнота — тя е езикът на дълбоката близост. Финалният стих "с очи — без думи, без слова" подчертава, че най-дълбокото общуване надхвърля езика.</p>
+              <p><strong>Трета строфа:</strong> Тук тонът се променя — появяват се нотки на предчувствие. "На пролетта, / която ще дойде, когато аз я няма" — говорителят предвижда собственото си отсъствие. Тази строфа е онова, което прави стихотворението толкова трогателно в светлината на биографията на Дубарова. Финалните два стиха дефинират любовта като "болка, сладка и света" — противоречие, оксиморон, улавящ двойствената природа на любовта: тя носи и радост, и страдание едновременно.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства — подробно</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">🌿</div><div class="key-point-text"><strong>Олицетворение (персонификация):</strong> "дъждът, що пее за листата" и "зората, която пали светлините" — природните явления получават човешки действия. Това одушевява природата и я прави участник в любовното чувство.</div></div>
+              <div class="key-point"><div class="key-point-icon">🔄</div><div class="key-point-text"><strong>Анафора:</strong> "Посвещавам ги на..." се повтаря в началото на първа и трета строфа, придавайки на стихотворението тържествен, ритуален тон — като молитва или клетва.</div></div>
+              <div class="key-point"><div class="key-point-icon">⚡</div><div class="key-point-text"><strong>Оксиморон:</strong> "болка, сладка и света" — противоречието между болка и сладост улавя двойствената природа на любовта: тя едновременно боли и радва, изтощава и обогатява.</div></div>
+              <div class="key-point"><div class="key-point-icon">🖌️</div><div class="key-point-text"><strong>Епитет:</strong> "топлото ти рамо", "сладка и света болка" — епитетите са насочени към сетивата (топлина) и към ценностите (светост), обогатявайки конкретните образи с емоционална дълбочина.</div></div>
+              <div class="key-point"><div class="key-point-icon">📣</div><div class="key-point-text"><strong>Лирическо обръщение:</strong> "На смеха ти. На топлото ти рамо." — говорителят се обръща директно към любимия с второ лице, създавайки интимна близост.</div></div>
+              <div class="key-point"><div class="key-point-icon">🌅</div><div class="key-point-text"><strong>Метафора:</strong> "болка... която се нарича просто: обичам" — любовта е метафорично определена като болка. Любовта не е само радост, тя е и уязвимост, и страдание.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и основни мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Посвещението на поезията и живота на любовта — разбирана широко като любов към конкретния човек, към природата и към самия живот.</p>
+              <p><strong>Идея:</strong> Любовта е най-висшият смисъл на съществуването — тя заслужава да й бъде посветено всичко, включително поезията, младостта и самият живот. Дори когато носи болка, тя остава свещена.</p>
+              <p><strong>Основни мотиви:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Посвещението като дар:</strong> актът на посвещаване е ключов — стиховете са дар, живота е дар, любовта е дар.</li>
+                <li><strong>Природата като съучастник:</strong> вятърът, дъждът, зората, пролетта — природата не е фон, а активен участник в любовното чувство.</li>
+                <li><strong>Младостта и бързотечността на времето:</strong> "пролетта, / която ще дойде, когато аз я няма" — предчувствие за кратковременността.</li>
+                <li><strong>Светлината:</strong> зората пали светлините — светлината е метафора на любовта и живота.</li>
+                <li><strong>Тишината като пълнота:</strong> "тишината между нас двамата" — мълчанието е форма на дълбоко споделяне.</li>
+                <li><strong>Двойствеността на любовта:</strong> тя е и болка, и сладост, и страдание, и радост.</li>
+              </ul>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Лирическият говорител</div>
+            <div class="lesson-body">
+              <p>Лирическият говорител в "Посвещение" е млада жена, обичаща с цялата си същност. Тя не се колебае и не се срамува — тя декларира открито: "Посвещавам ги на любовта." Тази тържественост на тона придава на стихотворението характер на клетва или молитва.</p>
+              <p>Говорителят се обръща към конкретен любим ("смеха ти", "топлото ти рамо"), но едновременно с това мисли отвъд личното — посвещава стиховете и на природата, и на пролетта, която ще дойде след нея. Тоест лирическото "аз" е едновременно интимно и универсално.</p>
+              <p>Особено важно е предчувствието в трета строфа — "когато аз я няма". Говорителят съзнава своята смъртност и крехкост, но не го казва с ужас, а с тиха примиреност. Това е белег на духовна зрялост, несъответстваща на хронологичната възраст на авторката.</p>
+              <p>В биографичен план, знаейки, че Дубарова е починала на 17 години, читателят не може да не се вълнува от тези стихове — те са буквалното посвещение на живота й.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Специфика — Биографичният контекст и неговото значение</div>
+            <div class="lesson-body">
+              <p>При анализа на Дубарова е важно да умееш да разграничаваш двете нива на четене:</p>
+              <p><strong>Литературно ниво:</strong> "Посвещение" е стихотворение за любовта, посветено на конкретен любим и на живота изобщо. Говорителят е млад, влюбен, с предчувствие за краткостта на всичко хубаво.</p>
+              <p><strong>Биографично ниво:</strong> Знаейки, че авторката е починала на 17 години, читателят чете стихотворението като буквална последна воля — стиховете й са нейното посвещение към живота. "Пролетта, която ще дойде, когато аз я няма" придобива потресаващо буквален смисъл.</p>
+              <p>На матура се очаква да можеш да работиш и с двете нива, без да свеждаш литературния анализ единствено до биографията.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Петя Дубарова (1962–1979), от Бургас, починала на 17 години. Единствена стихосбирка: "Ако обичам" (посмъртна).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Тема:</strong> Посвещението на поезията и живота на любовта — към конкретния човек, природата и живота изобщо.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Идея:</strong> Любовта е най-висшият смисъл — дори като болка тя остава свещена и заслужава пълно посвещение.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Оксиморон:</strong> "болка, сладка и света" — ключовото художествено средство, улавящо двойствената природа на любовта.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Анафора:</strong> "Посвещавам ги на..." — повторението придава тържествен, ритуален тон, подобен на молитва.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Предчувствие:</strong> "пролетта, която ще дойде, когато аз я няма" — мотивът за кратковременността, придобиващ буквален смисъл в биографичен контекст.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Природата:</strong> Вятърът, дъждът, зората, пролетта са одушевени чрез олицетворение и са съучастници в любовното чувство.</div></div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel12-dubarova-posveshenie-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel12-dubarova-posveshenie-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel12-dubarova-posveshenie-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Петя Дубарова — "Посвещение"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+</body>
+</html>

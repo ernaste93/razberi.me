@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Виктор Пасков — Балада за Георг Хених · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    .summary-block {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin: 16px 0;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .summary-block-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: #0369a1; margin-bottom: 10px;
+    }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    #btn-ask-znaiko {
+      position: fixed;
+      bottom: 28px;
+      right: 32px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 99px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    #selection-tooltip {
+      position: fixed;
+      z-index: 9999;
+      display: none;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    #selection-tooltip.show {
+      display: block;
+      pointer-events: auto;
+    }
+    #explain-selection {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px;
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 99px;
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+      transition: opacity .12s, transform .12s;
+    }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after {
+      content: '';
+      position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 12 клас</a>
+        <span>›</span>
+        Балада за Георг Хених — Виктор Пасков
+      </div>
+
+      <section class="demo-layout" style="margin:0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 12 КЛАС · ТЕМА 9</div>
+          <div class="lesson-title">„Балада за Георг Хених" — Виктор Пасков</div>
+          <div class="lesson-meta">Автобиографична повест · Проза · ~12 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. ЗА АВТОРА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Виктор Пасков (1949–2009)</strong> е роден в София в семейство, тясно свързано с музиката. Завършва драматургия и сценарно майсторство, работи като сценарист, журналист и писател. Произведенията му са отличени с множество национални и международни награди.</p>
+              <p>„Балада за Георг Хених" (1987) е дебютната му книга и едновременно с това — най-значимото му произведение. Тя му донася международна известност: преведена е на над 20 езика и е отличена с редица европейски литературни награди. В България книгата се превръща в литературна сензация — публикувана е в период на отслабваща комунистическа цензура и е приета с огромен читателски интерес.</p>
+              <p>Пасков умира в <strong>2009 г.</strong> в Берлин. Освен „Балада за Георг Хених" е автор на „Германия — мъртва душа" и на редица сценарии за български игрални и документални филми.</p>
+            </div>
+
+            <!-- ══ 2. ЖАНР И КОНТЕКСТ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Жанр и контекст</div>
+            <div class="lesson-body">
+              <p>„Балада за Георг Хених" е <strong>автобиографична повест</strong> с елементи на роман. Жанровото определяне е усложнено от заглавието: <strong>„балада"</strong> е лирически жанр с трагична история и повтарящ се рефрен. Пасков използва думата умишлено — творбата му има трагичен финал, лирична интонация и музикална структура.</p>
+              <p>Написана е от <strong>гледната точка на дете</strong> — малкия Виктор разказва от спомена. Тази детска гледна точка е изключително важна: тя позволява искреност, директност, понякога жестока честност, недостъпна за „умния" възрастен разказвач.</p>
+              <p>Контекстът е <strong>социалистическа България, края на 50-те и 60-те години на XX в.</strong> — сив, монотонен, задушаващ. На фона на тази сивота изкуството и музиката на Хених светят с особена сила.</p>
+            </div>
+
+            <!-- ══ 3. РЕЗЮМЕ НА СЮЖЕТА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Резюме на сюжета</div>
+            <div class="summary-block">
+              <div class="summary-block-title">Резюме на сюжета</div>
+              <p>Малкият <strong>Виктор</strong> израства в социалистическа София — в панелен блок, сред музиканти и интелигенти, потиснати от режима. Семейството му е свързано с музиката, но животът около тях е сив и еднообразен.</p>
+              <p>В блока се нанася <strong>Георг Хених</strong> — германец, цигулар с изключително дарование. Той е „другият" — по произход, по начин на живот, по разбиране за изкуството. Детето е очаровано от него и от неговата музика. Между тях се завързва особена дружба, преминаваща всякакви граници — на възраст, на националност, на социален статус.</p>
+              <p>Хених свири с вдъхновение, но животът в комунистическа България го смазва постепенно. Системата не разбира и не приема гения — той е чужденец, „нежелан елемент". Мечтата му за истинска музикална кариера е задушена от бюрократични пречки и идеологически ограничения.</p>
+              <p>Накрая Хених <strong>изчезва</strong> — дали умира, дали е принуден да замине, дали е погълнат от системата, не е казано директно. Баладата завършва трагично. Но музиката и спомената за Хених остават у малкия Виктор завинаги — като наследство, като задължение, като светлина.</p>
+            </div>
+
+            <!-- ══ 4. АНАЛИЗ НА ОБРАЗИТЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Анализ на образите</div>
+            <div class="lesson-body">
+              <p><strong>Георг Хених</strong> е централният образ на повестта. Той е <strong>гениалният художник-странник</strong> — човек, чието място не е в затворения свят на социализма. Хених е едновременно реална личност и символ: на свободата, на изкуството, на всичко, което системата унищожава. Той е „другият" по всяко измерение — германец в България, музикант в свят на бюрокрация, свободен дух в клетка.</p>
+              <p>Образът на Хених е изграден чрез <strong>детската перцепция на малкия Виктор</strong>. Детето го вижда почти като вълшебно същество. Именно тази наивна искреност прави образа толкова въздействащ — нямаме критичния поглед на възрастния, имаме директното, незамаглено детско преклонение.</p>
+              <p><strong>Малкият Виктор (разказвачът)</strong> е детето, чрез чиито очи виждаме всичко. Той е любопитен, чувствителен, отворен. Срещата с Хених го формира духовно. В края на повестта — вече възрастен — той носи в себе си тази среща като определяща.</p>
+              <p><strong>Родителите и съседите</strong> представляват „нормалния" свят около Хених — свят, който се е приспособил към системата и не разбира (или не смее да разбере) неговата свобода.</p>
+              <p><strong>Цигулката</strong> е повече от инструмент — тя е символ на душата на Хених, на неговата идентичност. Когато музиката замлъкне, Хених изчезва.</p>
+            </div>
+
+            <!-- ══ 5. ХУДОЖЕСТВЕНИ СРЕДСТВА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">👦</div>
+                <div class="key-point-text"><strong>Детска гледна точка</strong> — разказвачът е дете, което вижда света с наивна искреност. Тя позволява да се покаже жестокостта на системата по-директно, отколкото би могъл да го стори „знаещ" възрастен разказвач.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎻</div>
+                <div class="key-point-text"><strong>Символика на цигулката</strong> — цигулката е душата на Хених, неговата идентичност и единствената му свобода. Когато тя замлъква, той изчезва.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Контраст</strong> — сивото ежедневие на социализма срещу блясъка на изкуството; затвореният свят на блока срещу безграничността на музиката; дребнавостта на системата срещу величието на гения.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎵</div>
+                <div class="key-point-text"><strong>Музикалност на прозата</strong> — Пасков пише с ритъм, с повторения, с лирически отстъпи. Прозата му „звучи" — в съзвучие с темата за музиката.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📖</div>
+                <div class="key-point-text"><strong>Автобиографичен разказвач</strong> — Пасков = малкият Виктор. Смесването на авторска биография и художествена измислица придава особена достоверност и емоционална сила на разказа.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Жанрово заглавие като метафора</strong> — „балада" в заглавието не е случайна дума. Цялата повест е изградена като балада: с трагична история, с повторяема структура (животът на Хених е цикъл от надежда и разочарование), с трагичен финал.</div>
+              </div>
+            </div>
+
+            <!-- ══ 6. ТЕМА, ИДЕЯ, МОТИВИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и основни мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Съдбата на художника в условията на тоталитарна система; изкуството като смисъл на живота; детството като пространство на пробуждане и открития.</p>
+              <p><strong>Идея:</strong> Гениалността и свободата на духа са несъвместими с тоталитарната система. Художникът е обречен — но изкуството му надживява смъртта му. Паметта и музиката побеждават забравата и мрака.</p>
+              <p><strong>Основни мотиви:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Изкуството като смисъл</strong> — за Хених музиката не е занаят, а начин на съществуване</li>
+                <li><strong>„Другостта"</strong> — Хених е „чужденец" по всички параметри; срещата с него учи детето да цени различното</li>
+                <li><strong>Детството като откритие</strong> — детето открива красотата, изкуството и трагедията за пръв път</li>
+                <li><strong>Паметта като съхранение</strong> — спомена за Хених е начинът да го запазим живи; повестта е акт на памет</li>
+                <li><strong>Системата срещу личността</strong> — социализмът като машина за унищожаване на таланта и свободата</li>
+                <li><strong>Трагичната съдба на художника</strong> — баладата е традиционно трагична; Хених я „изживява"</li>
+              </ul>
+            </div>
+
+            <!-- ══ 7. РАЗКАЗВАЧ И ГЛЕДНА ТОЧКА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Разказвач и гледна точка</div>
+            <div class="lesson-body">
+              <p>Повестта е разказана от <strong>първо лице</strong> — малкият Виктор е едновременно разказвач и персонаж. Тази позиция е изключително важна: тя е <strong>детска гледна точка</strong>, която вижда директно, без идеологически филтри.</p>
+              <p>Едновременно с това разказвачът е <strong>възрастен, гледащ назад</strong> — той разказва от позицията на спомена. Тази двойна времева перспектива (дете в миналото / възрастен в настоящето) е характерна за автобиографичната проза.</p>
+              <p>Ключов ефект: детето не разбира напълно какво се случва с Хених — но читателят разбира. Тази разлика между детската наивност и читателското знание създава трагичен ефект, по-силен от директното описание на ужасите.</p>
+              <p>Заглавието „балада" подсказва, че разказвачът-възрастен вижда живота на Хених ретроспективно като завършена трагична история — „балада", която той е длъжен да разкаже.</p>
+            </div>
+
+            <!-- ══ 8. НАЙ-ВАЖНОТО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Виктор Пасков (1949–2009), роден в София. „Балада за Георг Хених" (1987) е дебютната му книга, преведена на над 20 езика.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Жанр:</strong> Автобиографична повест с елементи на балада — трагична история, лирична интонация, музикална структура.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Централен образ:</strong> Георг Хених — германец, гениален цигулар, „другият", чиято свобода е несъвместима с тоталитарната система.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Разказвач:</strong> Малкият Виктор — детска гледна точка, автобиографична, от спомена. Детето не разбира всичко, но читателят разбира.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Символ:</strong> Цигулката = душата на Хених. Музиката = свободата. Когато музиката млъква, Хених изчезва.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Тема:</strong> Съдбата на художника в тоталитарна система; изкуството като смисъл; детството като пространство на откритие.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Идея:</strong> Гениалността е несъвместима с тоталитаризма. Но изкуството надживява художника — то остава в паметта на тези, които са го докоснало.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Контраст:</strong> Сивото ежедневие на социализма срещу блясъка на изкуството — основен структурен принцип на повестта.</div></div>
+            </div>
+
+          </div><!-- /#lesson-content -->
+
+          <!-- ── QUIZ CTA ── -->
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel12-paskov-balada-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel12-paskov-balada-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel12-paskov-balada-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div><!-- /.lesson-panel -->
+
+        <!-- AI PANEL -->
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+      btnTop.classList.toggle('visible', window.scrollY > 200);
+    });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = '„Балада за Георг Хених" — Виктор Пасков';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+</body>
+</html>

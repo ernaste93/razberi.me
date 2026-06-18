@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Виктор Пасков · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-paskov-balada-q1',
+      lessonUrl:  '/lessons/bel12-paskov-balada.html',
+      lessonName: 'Пасков — Балада за Георг Хених',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 9',
+      title:      'Куиз — Виктор Пасков — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel12-paskov-balada-quiz-2.html',
+      questions: [
+        { q:'Кой е Георг Хених в повестта?', opts:['Български учител по музика','Германски цигулар, живеещ в блока на малкия Виктор','Съсед-пенсионер без особени умения','Баща на разказвача'], correct:1, explanation:'Георг Хених е германец и гениален цигулар, който живее в блока на семейство Пасков. Той е централният образ на повестта.' },
+        { q:'Каква е гледната точка в „Балада за Георг Хених"?', opts:['Всезнаещ разказвач от трето лице','Детска гледна точка — малкият Виктор разказва от спомена','Гледната точка на Хених','Неутрален журналистически разказвач'], correct:1, explanation:'Разказвачът е малкият Виктор — детска гледна точка от спомена. Тя позволява искреност и директност, недостъпна за възрастния разказвач.' },
+        { q:'Кога е публикувана „Балада за Георг Хених" и какво означава това за Пасков?', opts:['1960 г., позната само в България','1987 г., дебют на Пасков, преведена на над 20 езика','2000 г., написана след падането на комунизма','1975 г., забранена от цензурата'], correct:1, explanation:'„Балада за Георг Хених" е публикувана през 1987 г. и е дебютната книга на Пасков. Преведена е на над 20 езика и носи международна известност на автора.' },
+        { q:'Какво символизира цигулката на Хених?', opts:['Неговото немско потекло','Душата му, неговата идентичност и свобода','Материалното богатство','Връзката с родителите му'], correct:1, explanation:'Цигулката е символ на душата на Хених. Тя е единствената му свобода в потисническата система. Когато музиката замлъква, той изчезва.' },
+        { q:'Какъв е основният контраст в повестта?', opts:['Бедността срещу богатството на Хених','Сивото ежедневие на социализма срещу блясъка на изкуството','Детството срещу старостта','България срещу Германия като страни'], correct:1, explanation:'Основният контраст е между сивото, потиснато ежедневие на комунистическа България и блясъка, свободата и красотата, въплъщавани от изкуството на Хених.' },
+        { q:'Защо думата „балада" е в заглавието на повестта?', opts:['Защото Хених свири балади на цигулка','Защото е традиционно българско заглавие','Защото повестта има трагична история, лирична интонация и трагичен финал — като баладата','Защото е написана в поетична форма'], correct:2, explanation:'„Балада" е жанр с трагична история и трагичен финал. Пасков използва думата умишлено — животът на Хених е балада: трагична, с повторяема структура, завършваща с изчезването му.' },
+        { q:'Какво се случва с Хених в края на повестта?', opts:['Той се завръща в Германия с успех','Става известен цигулар в България','Изчезва — унищожен от системата, остава само в паметта','Се жени и остава да живее в блока'], correct:2, explanation:'Хених изчезва — дали умира, дали е прогонен, не е казано директно. Системата го смазва. Но музиката и спомена за него остават у малкия Виктор завинаги.' },
+        { q:'Каква е основната тема на повестта?', opts:['Трудностите на живота в панелен блок','Съдбата на художника в тоталитарна система и изкуството като смисъл на живота','Приятелството между деца от различни националности','Музикалното образование в социализма'], correct:1, explanation:'Основната тема е съдбата на художника (Хених) в условията на тоталитаризма, и изкуството като единственият истински смисъл на живота — смисъл, неразбираем за системата.' },
+        { q:'Коя от следните характеристики НЕ е черта на образа на Хених?', opts:['Гениален цигулар','„Другият" — чужденец по произход и дух','Приспособен към изискванията на системата','Свободен дух в затворен свят'], correct:2, explanation:'Хених е всичко, но НЕ е приспособен. Именно неспособността му да се приспособи към системата е причина за трагичния му край.' },
+        { q:'Каква е идеята на повестта?', opts:['Германците са по-добри музиканти от българите','Децата разбират изкуството по-добре от възрастните','Гениалността е несъвместима с тоталитаризма, но изкуството надживява художника чрез паметта','Социализмът имаше и положителни страни'], correct:2, explanation:'Идеята е, че тоталитарната система унищожава гениалността и свободата. Но изкуството — и паметта за него — надживяват дори смъртта на художника. Повестта е самата тази памет.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

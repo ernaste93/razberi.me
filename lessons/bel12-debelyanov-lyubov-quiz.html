@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Димчо Дебелянов · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Supabase auth -->
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG — единственото което се сменя при нов куиз ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-debelyanov-lyubov-q1',
+      lessonUrl:  '/lessons/bel12-debelyanov-lyubov.html',
+      lessonName: 'Дебелянов — Любовта',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 1',
+      title:      'Куиз — Димчо Дебелянов — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel12-debelyanov-lyubov-quiz-2.html',
+      questions: [
+        { q:'Кое художествено средство е водещо в стихотворението „Аз искам да те помня все така"?', opts:['Метафора','Анафора','Хипербола','Алитерация'], correct:1, explanation:'Анафората — „Аз искам да те помня все така" в началото на всяка строфа — е главното средство. Създава ритъм и засилва копнежа.' },
+        { q:'Каква е темата на стихотворението?', opts:['Любовта като бурна страст','Любовта като спомен и идеализиран образ','Раздялата и гневът','Смъртта на любимата'], correct:1, explanation:'Любовта е представена като желан спомен — говорителят иска да запази идеализирания образ на любимата в паметта си.' },
+        { q:'Към кое литературно направление принадлежи Дебелянов?', opts:['Романтизъм','Реализъм','Символизъм','Сентиментализъм'], correct:2, explanation:'Дебелянов е представител на българския символизъм (1905–1920), за който са характерни меланхолията и бягството от реалността.' },
+        { q:'Какъв парадокс се разкрива в третата строфа?', opts:['Обича, но не иска да бъде обичан','Любимата е близо, но я пренебрегва','Крие самотата си, искайки тя да го помни щастлив','Не помни кой е тя'], correct:2, explanation:'Той иска тя да не знае „колко самин е пустата му, блудна, скитна младост" — крие истинското си нещастие.' },
+        { q:'Какво символизира „лик твой нека бъде мой звездоглед"?', opts:['Любимата е красива като звезда','Образът й е ориентир, дава му сила и посока','Гледа звездите и мисли за нея','Тя живее далеч'], correct:1, explanation:'Метафората „звездоглед" означава, че образът й е като звезда — ориентир и светлина, която го насочва дори към смъртта.' },
+        { q:'Как завършва стихотворението?', opts:['С надежда за среща','С отчаяние и тъга','С приемане на смъртта без страх','С молба към Бога'], correct:2, explanation:'„Да срещна и смъртта — не отчаян" — спомена за любимата дава сила да приеме смъртта с достойнство.' },
+        { q:'Кога е роден Дебелянов и как завършва живота му?', opts:['Роден 1870, умира от болест','Роден 1887, загива на Първата световна война','Роден 1895, умира при катастрофа','Роден 1880, доживява до старост'], correct:1, explanation:'Роден в Копривщица 1887 г., загива на Първата световна война 1916 г. на 29-годишна възраст.' },
+        { q:'Как е изобразена любимата в стихотворението?', opts:['Активна, страстна','Реален човек с недостатъци','Статичен идеализиран образ — тиха, усмихната, прощаваща','Жена, която го изоставила'], correct:2, explanation:'Тя е идеализиран, замръзнал образ: „усмихната, спокойна и мълчалива", „задрямала", „очите изпълнени с прошка".' },
+        { q:'Коя черта НЕ е характерна за символизма?', opts:['Меланхолия и тъга','Бягство от реалността','Точно описание на социалната действителност','Музикалност на езика'], correct:2, explanation:'Точното описание на социалната действителност е характерно за реализма. Символизмът търси красота в мечтата и спомена.' },
+        { q:'Каква е градацията в последната строфа на стихотворението?', opts:['Любима → майка → приятел','Нощта → ранния разсъмва → смъртта','Радостта → тъгата → отчаянието','Спомен → сън → забрава'], correct:1, explanation:'Нощта (тъмнина) → ранния разсъмва (надежда) → смъртта (краят). Образът на любимата дава сила да се преминат всички етапи.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

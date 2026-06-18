@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Елин Пелин „Ветрената мелница" · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-elin-pelin-vetrena-melnitsa-q2',
+      lessonUrl:  '/lessons/bel12-elin-pelin-vetrena-melnitsa.html',
+      lessonName: 'Елин Пелин — Ветрената мелница',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 7',
+      title:      'Куиз — Елин Пелин „Ветрената мелница" — Тест 2',
+      sub:        '10 въпроса · Избери верния отговор',
+      quizNum:    2,
+      nextQuizUrl: '/lessons/bel12-elin-pelin-vetrena-melnitsa-quiz-3.html',
+      passScore:  8,
+      questions: [
+        { q:'Какъв е жанрът на „Ветрената мелница"?', opts:['Поема','Роман','Разказ','Повест'], correct:2, explanation:'„Ветрената мелница" е разказ — кратка прозаична форма с единно действие, концентрирана около централния герой и неговата мечта.' },
+        { q:'Каква е функцията на финалния образ — мелницата, която работи след смъртта на Корчан?', opts:['Да покаже, че животът продължава без значение','Да символизира безсмъртието на творческото дело — мечтата надживява твореца','Да покаже ефективността на ветрената мелница','Да изрази тъгата на хората от селото'], correct:1, explanation:'Финалният образ е смислово кулминационен — мелницата, въртяща се след смъртта на Корчан, е символ на безсмъртието на делото. Творецът умира, творението живее.' },
+        { q:'Каква е отношение на Корчан към смъртта в разказа?', opts:['Страхува се от смъртта и тя го парализира','Смъртта го завари в момента на осъщественото дело — умира щастлив, видял мечтата си осъществена','Той предизвиква смъртта, за да не види провала','Умира разочарован, защото мелницата не работи'], correct:1, explanation:'Корчан умира в момента на триумфа — когато крилата се завъртат за пръв път. Смъртта е „добра смърт" — на осъщественото дело, не на провала.' },
+        { q:'Кое е най-важното противопоставяне в разказа?', opts:['Корчан срещу чорбаджията','Мечтата и трудът срещу осмиването и пасивността на другите','Мелницата срещу воденицата','Селото срещу града'], correct:1, explanation:'Основното противопоставяне е между Корчан с неговата мечта и труд — и хората около него, осмиващи го като луд. Това е конфликт между творческата личност и средата.' },
+        { q:'Как можем да определим Корчан в контекста на мотива за твореца?', opts:['Неуспял мечтател, победен от реалността','Народен творец — индивидуалност, надхвърляща колектива с делото си','Самовлюбен индивидуалист без полза за общността','Религиозен мъченик'], correct:1, explanation:'Корчан е архетип на народния творец — индивидуалността, чиято мечта и труд надхвърлят живота и остават като дело за общността. Мотивът за твореца е универсален.' },
+        { q:'Коя черта на критическия реализъм е налице в „Ветрената мелница"?', opts:['Романтизация на народния живот','Изобразяване на простия човек с достойнство и дълбочина, без идеализация','Директна политическа критика','Свръхестествени елементи'], correct:1, explanation:'Критическият реализъм при Елин Пелин показва простия човек (Корчан) с достойнство и вътрешна дълбочина — без идеализация, но и без снизхождение.' },
+        { q:'Каква е ролята на другите герои (съселяните) в разказа?', opts:['Главни герои с индивидуален развой','Помощници на Корчан','Контрастен фон, чрез чието осмиване се откроява величието на мечтателя','Антагонисти, активно пречещи на Корчан'], correct:2, explanation:'Съселяните не са индивидуализирани — функционират като контрастен фон. Чрез тяхното осмиване и неверие се откроява уникалността и величието на Корчан.' },
+        { q:'Как е решен мотивът за безсмъртието в „Ветрената мелница"?', opts:['Чрез религиозно спасение','Чрез памет и слава сред хората','Чрез делото — мелницата продължава да работи', 'Чрез потомство — Корчан оставя деца'], correct:2, explanation:'Безсмъртието е чрез делото — мелницата продължава да работи, т.е. трудът на Корчан живее след него. Не религиозно, не чрез слава, а чрез конкретното творческо дело.' },
+        { q:'Кое от следните НЕ е характерно за дядо Корчан?', opts:['Мечтателство','Упоритост и трудолюбие','Богатство и власт в селото','Осмяност от другите'], correct:2, explanation:'Корчан не е богат или властен — той е прост, беден мечтател. Богатството и властта са характеристики на чорбаджийския тип, не на народния творец.' },
+        { q:'Каква е темпоралната структура на разказа?', opts:['Действието се развива в рамките на един ден','Обхваща целия живот на Корчан от младост до смърт','Разказан е само финалният ден','Действието е в бъдещето'], correct:1, explanation:'Разказът обхваща целия живот на Корчан — от зараждането на мечтата до смъртта в момента на осъщественото дело. Тази широка темпорална рамка подчертава делото като смисъл на живота.' }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

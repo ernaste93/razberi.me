@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Никола Вапцаров · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-vaptsarov-vyara-q2',
+      lessonUrl:  '/lessons/bel12-vaptsarov-vyara.html',
+      lessonName: 'Вапцаров — Вяра',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 4',
+      title:      'Куиз — Никола Вапцаров — Тест 2',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    2,
+      nextQuizUrl: '/lessons/bel12-vaptsarov-vyara-quiz-3.html',
+      questions: [
+        {
+          q: 'В кой град е роден Никола Вапцаров?',
+          opts: ['Пловдив', 'Велинград', 'Банско', 'Самоков'],
+          correct: 2,
+          explanation: 'Вапцаров е роден в Банско — планинско градче в Пиринска Македония. Детството му в работническа среда определя темите на цялото му творчество.'
+        },
+        {
+          q: 'Какво е значението на думата „прозаизми" в поетиката на Вапцаров?',
+          opts: [
+            'Употреба на поетичен, украсен език',
+            'Въвеждане на разговорни, ежедневни думи и изрази в поетическия текст',
+            'Писане на проза вместо поезия',
+            'Избягване на рими и ритъм'
+          ],
+          correct: 1,
+          explanation: 'Прозаизмите са разговорни, ежедневни думи, нетипични за "висок" поетичен стил. Вапцаров ги въвежда съзнателно — езикът му трябва да е близо до работниците, не до интелектуалния елит.'
+        },
+        {
+          q: 'Каква е темата за колектива в „Вяра" — как е изразена?',
+          opts: [
+            'Само чрез местоимението „аз"',
+            'Чрез местоимението „ние" и обръщението към „вас"',
+            'Чрез описание на тълпата',
+            'Чрез споменаване на конкретни имена'
+          ],
+          correct: 1,
+          explanation: '„Ние" е ключово местоимение у Вапцаров. В „Вяра" говорителят не е самотен индивид — той говори от името на колектив и се обръща към „вас". Борбата е колективна, не индивидуална.'
+        },
+        {
+          q: 'Кое е точното твърдение за „Моторни песни"?',
+          opts: [
+            'Издадена е посмъртно, 1950 г.',
+            'Издадена е приживе, 1940 г., и е единствената книга на Вапцаров',
+            'Книгата съдържа само разкази, не стихове',
+            'Вапцаров издава три стихосбирки, „Моторни песни" е последната'
+          ],
+          correct: 1,
+          explanation: '„Моторни песни" е издадена приживе — 1940 г. Това е единствената поетична книга на Вапцаров. Той е разстрелян само две години по-късно, на 1942 г.'
+        },
+        {
+          q: 'Какво означава „синтактичен паралелизъм" като средство?',
+          opts: [
+            'Повторение на едни и същи думи',
+            'Еднаква граматична структура на последователни изречения или стихове',
+            'Противопоставяне на две идеи',
+            'Нарастване по сила на изразните средства'
+          ],
+          correct: 1,
+          explanation: 'Синтактичният паралелизъм е еднаква граматична структура при последователни изречения. В „Вяра": „Вярвам..." + „Вярвам..." — еднаква конструкция, съзнателно повторена. Усилва убедителността и ритъма.'
+        },
+        {
+          q: 'Как се отнася Вапцаров към смъртта в „Вяра" — страхува ли се?',
+          opts: [
+            'Да, смъртта го плаши и той я отхвърля',
+            'Не — той я приема като „нещо светло", ако е за правда',
+            'Отнася се към нея с безразличие',
+            'Смъртта не е спомената в стихотворението'
+          ],
+          correct: 1,
+          explanation: 'Вапцаров не се страхува от смъртта — той я преосмисля. Ако смъртта е жертва за правда и справедливост, тя е „нещо светло". Това е характерна позиция за революционната лирика: смъртта в борбата е достоен край.'
+        },
+        {
+          q: 'Каква е разликата между говорителя у Вапцаров и говорителя у Дебелянов?',
+          opts: [
+            'И двамата са самотни страдащи индивиди',
+            'При Вапцаров говорителят е колективен, борчески; при Дебелянов — самотен, меланхоличен',
+            'При Дебелянов говорителят е колективен; при Вапцаров — самотен',
+            'Разлика няма — и двамата изразяват едни и същи чувства'
+          ],
+          correct: 1,
+          explanation: 'Контрастът е фундаментален: Дебелянов — самотен, меланхоличен, бягащ в спомена; Вапцаров — член на колектив, активен, устремен напред. Два противоположни типа лирически говорители.'
+        },
+        {
+          q: 'Кое от следните НЕ е тема в „Вяра" на Вапцаров?',
+          opts: [
+            'Колективната борба',
+            'Надеждата за промяна',
+            'Носталгията по детството и родния дом',
+            'Смъртта като жертва'
+          ],
+          correct: 2,
+          explanation: 'Носталгията по детството е характерна за Дебелянов, не за Вапцаров. В „Вяра" темите са: колективната борба, надеждата, вярата в промяната и смъртта като достойна жертва.'
+        },
+        {
+          q: 'Как е обоснована вярата в строфа 3 на „Вяра"?',
+          opts: [
+            'С религиозно откровение',
+            'С научни доказателства',
+            'С личното изстрадано преживяване — „защото съм бил с вас"',
+            'С цитат от класически текст'
+          ],
+          correct: 2,
+          explanation: '„Вярвам, защото съм бил с вас" — вярата не идва от идеология или книги, а от живото колективно преживяване. Говорителят е вярвал, защото е страдал и се е борил заедно с „вас" — с работниците.'
+        },
+        {
+          q: 'Защо Вапцаров е смятан за авангарден поет?',
+          opts: [
+            'Защото пише само сонети',
+            'Защото въвежда темите за машините, работниците и разговорния език в поезията',
+            'Защото следва символистичната традиция',
+            'Защото пише на чужд език'
+          ],
+          correct: 1,
+          explanation: 'Вапцаров е авангарден, защото нарушава традицията: въвежда машини, фабрики, работници в поезията; използва разговорен, директен език вместо „поетичен". Заглавието „Моторни песни" само по себе си е авангардно.'
+        },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

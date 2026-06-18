@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Христо Фотев — "Колко си хубава!" · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 12 клас</a>
+        <span>›</span>
+        Христо Фотев — "Колко си хубава!"
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 12 КЛАС · ТЕМА 2</div>
+          <div class="lesson-title">Христо Фотев — "Колко си хубава!"</div>
+          <div class="lesson-meta">Любовна лирика · Съвременна българска поезия · ~10 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p>Христо Фотев (1934–2002) е един от най-значимите български лирици на ХХ век. Роден е във Варна и почти целият му живот е свързан с този черноморски град — затова нерядко го определят като "варненски поет" или като представител на т.нар. <strong>Варненска поетическа школа</strong>, наред с имена като Николай Кънчев и Иван Динков.</p>
+              <p>Фотев завършва Висшия институт за театрално изкуство в София, работи като журналист и редактор, но призванието му е поезията. Дебютира през 1958 г. и до края на живота си издава над двадесет стихосбирки. Сред най-известните му заглавия са "Аритметика на любовта", "Черно море", "Свободен куплет", "Нощна птица".</p>
+              <p>Поезията на Фотев е преди всичко <strong>изповедна</strong>. Той пише за любовта, за морето, за ежедневието, за смъртта — винаги с непосредственост и емоционална искреност. Стиховете му избягват усложнената метафорика на символизма и предпочитат конкретния образ, живото усещане, разговорната интонация. Любовта при Фотев е земна и чувствена — тя не е спомен или идеал, а жив, пулсиращ миг.</p>
+              <p>Фотев е носител на множество литературни награди, включително наградата "Христо Г. Данов" и наградата на Съюза на българските писатели. Признат е за класик на съвременната българска лирика.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Контекст — Съвременна любовна лирика</div>
+            <div class="lesson-body">
+              <p>За да разберем "Колко си хубава!", трябва да я поставим в контекста на <strong>съвременната българска любовна поезия</strong> и да я сравним с по-ранните традиции. Символизмът (Дебелянов, Траянов) изгражда образа на любовта като носталгия, далечен идеал или непостижима мечта. Лирическите любими при символистите са мистични, ефирни фигури.</p>
+              <p>Фотев прави обратното — той <strong>приземява</strong> любовта. Неговата любима е конкретна жена с конкретно тяло, конкретна усмивка. Радостта от красотата е непосредствена, почти детска по своята откритост.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">🌊</div><div class="key-point-text"><strong>Варненска школа:</strong> поети от Варна, обединени от интерес към морето, ежедневието и изповедната лирика.</div></div>
+              <div class="key-point"><div class="key-point-icon">❤️</div><div class="key-point-text"><strong>Земна любов:</strong> за разлика от символизма, любовта при Фотев е конкретна, чувствена, преживявана в настоящия момент.</div></div>
+              <div class="key-point"><div class="key-point-icon">🗣️</div><div class="key-point-text"><strong>Разговорна интонация:</strong> Фотев използва прост, достъпен език с ритъм, близък до говоримата реч — това го прави особено четивен и харесван.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стихотворението</div>
+            <div class="poem-block">Колко си хубава! Очите ти светят
+като две слънца в синьото небе.
+Косите ти като водопади летят
+и пеят песен само за мене.
+
+Устните ти са като зрели вишни,
+ръцете ти са бели като сняг.
+Аз не мога да намеря думи лишни,
+за да те обичам повече от сряк.
+
+Колко си хубава! Сърцето ми бие
+само за тебе нощем и деня.
+Любовта ни двамата покрива
+и свят по-хубав няма за меня.
+<div class="poem-author">— Христо Фотев</div></div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Строфа по строфа — текстов анализ</div>
+            <div class="lesson-body">
+              <p><strong>Първа строфа:</strong> Стихотворението започва с възклицание — "Колко си хубава!" — което задава тона на цялата творба: непосредствена, необуздана радост от красотата на любимата. Следва поредица от сравнения: очите са като "две слънца в синьото небе", косите са като "водопади". Образите са ярки, чувствени, природни. Забележителна е финалната реплика на строфата — "пеят песен само за мене" — субективното присвояване на красотата на любимата.</p>
+              <p><strong>Втора строфа:</strong> Описанието продължава с нови сравнения: устните са "като зрели вишни" (асоциация с вкус и зрялост), ръцете са "бели като сняг" (чистота и нежност). Говорителят признава, че му липсват думи — но дори тази невъзможност е изразена с радост, а не с болка. Любовта е толкова пълна, че надхвърля думите.</p>
+              <p><strong>Трета строфа:</strong> Анафората "Колко си хубава!" от началото се повтаря — по този начин се затваря кръгът и се подчертава ключовата емоция. Сърцето на говорителя бие "само за тебе нощем и деня" — постоянство, пълна отдаденост. Финалното двустишие е обобщение: любовта покрива "двамата" и прави света най-хубавото място.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства — подробно</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">❗</div><div class="key-point-text"><strong>Възклицание (екскламация):</strong> "Колко си хубава!" е основният емоционален акцент на творбата — изразява непосредствена, неудържана радост. Повторението му в трета строфа засилва ефекта.</div></div>
+              <div class="key-point"><div class="key-point-icon">🔁</div><div class="key-point-text"><strong>Анафора:</strong> Повторението на "Колко си хубава!" в началото на първа и трета строфа създава рефренна структура и обединява творбата тематично.</div></div>
+              <div class="key-point"><div class="key-point-icon">🌿</div><div class="key-point-text"><strong>Сравнение:</strong> Очите — "като две слънца"; косите — "като водопади"; устните — "като зрели вишни"; ръцете — "бели като сняг". Всички сравнения са с природни явления, което подчертава естествената, земна красота на любимата.</div></div>
+              <div class="key-point"><div class="key-point-icon">🖌️</div><div class="key-point-text"><strong>Епитет:</strong> "синьото небе", "зрели вишни", "бели" ръце — епитетите са конкретни и сетивни, насочени към зрението, вкуса и допира.</div></div>
+              <div class="key-point"><div class="key-point-icon">🎵</div><div class="key-point-text"><strong>Персонификация:</strong> "Косите ти като водопади летят / и пеят песен само за мене" — косите придобиват способността да пеят, което придава музикалност на образа.</div></div>
+              <div class="key-point"><div class="key-point-icon">📐</div><div class="key-point-text"><strong>Ямбичен ритъм:</strong> Стихотворението е изградено предимно в ямб — метрична схема с редуване на неударена и ударена сричка. Ямбът придава бодрост и лекота на звученето, подходящо за радостна любовна лирика.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и основни мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Красотата на любимата и радостта от любовта в настоящия момент.</p>
+              <p><strong>Идея:</strong> Истинската любов е непосредствена, чувствена и всепоглъщаща — тя не е носталгия по миналото, нито копнеж по недостижимото, а жива, пълнокръвна радост от красотата на любимия човек точно сега, в този миг.</p>
+              <p><strong>Основни мотиви:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Красотата</strong> — описвана чрез конкретни телесни детайли и природни сравнения.</li>
+                <li><strong>Непосредствеността на чувството</strong> — любовта не е опосредена от размисъл или меланхолия, тя е жива емоция.</li>
+                <li><strong>Радостта</strong> — за разлика от тъгуващата лирика на символизма, тук доминира чистата радост.</li>
+                <li><strong>Чувствеността</strong> — образите са насочени към сетивата: зрение ("очите светят"), слух ("пеят песен"), вкус ("зрели вишни"), допир ("бели ръце").</li>
+                <li><strong>Обичта към единствената</strong> — мотивът за изключителността: "само за мене", "само за тебе".</li>
+              </ul>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Лирическият говорител</div>
+            <div class="lesson-body">
+              <p>Лирическият говорител в "Колко си хубава!" е влюбен мъж, обзет от неудържима радост. Той се обръща директно към любимата — стихотворението е в <strong>второ лице</strong> ("Колко си хубава!", "очите ти", "косите ти"), което създава усещане за непосредствен диалог, за присъствие на любимата тук и сега.</p>
+              <p>Говорителят не крие чувствата си зад символи или алегории. Той е открит, дори наивен в своята искреност — признава, че не може да намери думи, и го казва без срам. Тази детска, незащитена откритост е една от най-трогателните черти на лирическото "аз" при Фотев.</p>
+              <p>Говорителят е изцяло фокусиран върху любимата — нейната красота запълва целия му свят ("свят по-хубав няма за меня"). Това е любов, която не оставя място за нищо друго, любов, която е достатъчна сама по себе си.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Сравнение с Димчо Дебелянов</div>
+            <div class="lesson-body">
+              <p>Сравнението между Фотев и Дебелянов е класическа матурна тема и е важно да го познаваш добре:</p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>При Дебелянов</strong> любовта е <em>спомен</em> — тя принадлежи на миналото, недостижима е, носи тъга. Лирическият говорител копнее по нещо изгубено.</li>
+                <li><strong>При Фотев</strong> любовта е <em>жив миг</em> — тя е тук, сега, конкретна и радостна. Говорителят не копнее, а се радва.</li>
+                <li><strong>При Дебелянов</strong> любимата е идеализирана, почти мистична фигура. <strong>При Фотев</strong> любимата е реална жена с реално тяло.</li>
+                <li><strong>При Дебелянов</strong> доминира меланхолията. <strong>При Фотев</strong> доминира радостта и чувствеността.</li>
+              </ul>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Христо Фотев (1934–2002), варненски поет, представител на Варненската поетическа школа.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Тема:</strong> Красотата на любимата и непосредствената радост от любовта.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Идея:</strong> Любовта е жив, пълнокръвен миг — не носталгия, а радостно присъствие.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Главно средство:</strong> Възклицание и анафора — "Колко си хубава!" задава тона и се повтаря като рефрен.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Сравнения:</strong> Очите — слънца; косите — водопади; устните — зрели вишни; ръцете — сняг. Всички са с природни образи.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Ритъм:</strong> Ямбичен — придава бодрост и лекота, подходящи за радостна любовна лирика.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Разлика с Дебелянов:</strong> При Дебелянов — любовта е спомен и тъга; при Фотев — любовта е жив, чувствен и радостен миг.</div></div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel12-fotev-lyubov-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel12-fotev-lyubov-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel12-fotev-lyubov-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Христо Фотев — "Колко си хубава!"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+</body>
+</html>

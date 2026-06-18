@@ -7,8 +7,9 @@
   <link rel="icon" type="image/png" href="logos/tab_transparent.png?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+
   <style>
     body { display: flex; flex-direction: column; min-height: 100vh; background: var(--bg) url('/logos/background.png') center top / cover fixed; }
     .auth-wrap {
@@ -278,19 +279,22 @@
       const grade = selectedRole === 'student' ? parseInt(document.getElementById('reg-grade').value) : null;
       const goal = selectedRole === 'student' ? selectedGoal : null;
 
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({
+        email, password,
+        options: { data: { full_name: name } }
+      });
       if (error) return showMsg(error.message, 'error');
 
       const userId = data.user?.id;
       if (userId) {
-        await supabase.from('profiles').insert({
+        await supabase.from('profiles').upsert({
           id: userId,
           email,
           full_name: name,
           role: selectedRole,
           grade,
           goal,
-        });
+        }, { onConflict: 'id' });
       }
 
       showMsg('Профилът е създаден! Провери имейла си за потвърждение.', 'success');

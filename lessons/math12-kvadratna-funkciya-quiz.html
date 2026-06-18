@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Квадратна функция · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-kvadratna-funkciya',
+      lessonUrl:  '/lessons/math12-kvadratna-funkciya.html',
+      lessonName: 'Квадратна функция',
+      eyebrow:    'МАТЕМАТИКА · МАТУРА · ФУНКЦИИ',
+      title:      'Куиз — Квадратна функция',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      questions: [
+        {
+          q: 'Кое е вярно за функцията f(x) = −3x² + 6x − 1?',
+          opts: ['Параболата е отворена нагоре', 'Параболата е отворена надолу', 'Функцията е линейна', 'Върхът е минимум'],
+          correct: 1,
+          explanation: 'Водещият коефициент a = −3 < 0, затова параболата е отворена надолу и върхът е максимум.'
+        },
+        {
+          q: 'Каква е дискриминантата на x² − 6x + 9 = 0?',
+          opts: ['D = 0', 'D = 36', 'D = −36', 'D = 72'],
+          correct: 0,
+          explanation: 'D = b² − 4ac = (−6)² − 4·1·9 = 36 − 36 = 0. Има точно един (двоен) корен.'
+        },
+        {
+          q: 'Намери върха на f(x) = x² − 4x + 7.',
+          opts: ['V(2, 3)', 'V(−2, 3)', 'V(2, 7)', 'V(4, 7)'],
+          correct: 0,
+          explanation: 'x₀ = −(−4)/(2·1) = 2; y₀ = 4 − 8 + 7 = 3. Върхът е V(2, 3).'
+        },
+        {
+          q: 'Кои са корените на x² − 5x + 6 = 0?',
+          opts: ['x₁ = 1, x₂ = 6', 'x₁ = −2, x₂ = −3', 'x₁ = 2, x₂ = 3', 'x₁ = −1, x₂ = 6'],
+          correct: 2,
+          explanation: 'D = 25 − 24 = 1; x₁ = (5+1)/2 = 3; x₂ = (5−1)/2 = 2. Проверка с Виета: 2+3=5=−b/a ✓ и 2·3=6=c/a ✓'
+        },
+        {
+          q: 'Каква е оста на симетрия на f(x) = 2x² + 8x − 3?',
+          opts: ['x = 2', 'x = −2', 'x = 4', 'x = −4'],
+          correct: 1,
+          explanation: 'Оста на симетрия: x = −b/(2a) = −8/(2·2) = −8/4 = −2.'
+        },
+        {
+          q: 'Запиши f(x) = x² + 6x + 11 в канонична форма.',
+          opts: ['f(x) = (x+3)² + 2', 'f(x) = (x−3)² + 2', 'f(x) = (x+3)² − 2', 'f(x) = (x+6)² + 11'],
+          correct: 0,
+          explanation: 'x₀ = −6/2 = −3; y₀ = 9 − 18 + 11 = 2. Каноничната форма е f(x) = (x+3)² + 2.'
+        },
+        {
+          q: 'За f(x) = x² − 4, кога функцията е отрицателна?',
+          opts: ['За x < −2 или x > 2', 'За −2 < x < 2', 'За всички x', 'Никога'],
+          correct: 1,
+          explanation: 'Нулите са x = ±2. Тъй като a = 1 > 0, параболата е под x-оста между нулите: −2 < x < 2.'
+        },
+        {
+          q: 'Ако x₁ и x₂ са корените на x² − 7x + 10 = 0, намери x₁ · x₂.',
+          opts: ['7', '−7', '10', '−10'],
+          correct: 2,
+          explanation: 'По формулата на Виета: x₁ · x₂ = c/a = 10/1 = 10.'
+        },
+        {
+          q: 'Колко реални корена има f(x) = x² + 2x + 5?',
+          opts: ['Два различни корена', 'Точно един корен', 'Няма реални корени', 'Безкрайно много'],
+          correct: 2,
+          explanation: 'D = 4 − 20 = −16 < 0. При отрицателна дискриминанта няма реални корени — параболата не пресича x-оста.'
+        },
+        {
+          q: 'При a > 0, функцията f(x) = ax² + bx + c е намаляваща в интервала:',
+          opts: ['(x₀, +∞)', '(−∞, x₀)', '(0, +∞)', '(−∞, 0)'],
+          correct: 1,
+          explanation: 'При a > 0 параболата е с минимум в върха x₀. Вляво от върха — в (−∞, x₀) — функцията намалява. Вдясно от върха нараства.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

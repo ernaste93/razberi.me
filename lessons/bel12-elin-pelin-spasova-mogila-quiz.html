@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Елин Пелин · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-elin-pelin-spasova-mogila-q1',
+      lessonUrl:  '/lessons/bel12-elin-pelin-spasova-mogila.html',
+      lessonName: 'Елин Пелин — Спасова могила',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 6',
+      title:      'Куиз — Елин Пелин „Спасова могила" — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel12-elin-pelin-spasova-mogila-quiz-2.html',
+      passScore:  8,
+      questions: [
+        { q:'Как се казва истинското им на Елин Пелин?', opts:['Пенчо Стоянов','Димитър Иванов Стоянов','Иван Димитров Пелин','Стоян Михайловски'], correct:1, explanation:'Елин Пелин е псевдоним. Истинското му им е Димитър Иванов Стоянов. Роден е в с. Байлово, Софийско.' },
+        { q:'Към кое литературно направление принадлежи Елин Пелин?', opts:['Символизъм','Романтизъм','Критически реализъм','Просвещение'], correct:2, explanation:'Елин Пелин е представител на критическия реализъм — изобразява социалните противоречия в българското село без идеализация.' },
+        { q:'Какъв е жанрът на „Спасова могила"?', opts:['Поема','Повест','Роман','Разказ'], correct:3, explanation:'„Спасова могила" е разказ — кратка прозаична творба с единно действие, малък брой герои и концентриран конфликт.' },
+        { q:'Около кой народен празник се развива действието?', opts:['Великден','Гергьовден','Спасовден','Коледа'], correct:2, explanation:'Действието се развива около Спасовден — народният празник на Христовото Възнесение, когато хората се събират на могилата.' },
+        { q:'Какво символизира Спасовата могила в разказа?', opts:['Богатството на чорбаджията','Сакралното общностно пространство на народа','Военна крепост','Границата между две села'], correct:1, explanation:'Могилата е символ на сакралното общностно пространство — духовна точка, около която се организира животът на общността.' },
+        { q:'Каква е позицията на чорбаджията в разказа?', opts:['Подкрепя народния обичай','Иска да прогони хората от могилата като „своя земя"','Организира молебена','Защитава традицията'], correct:1, explanation:'Чорбаджията твърди, че земята около могилата е негова, и иска да забрани на хората да се събират там за обичая.' },
+        { q:'Кое художествено средство е основен двигател на конфликта в разказа?', opts:['Анафора','Метафора','Контраст (чорбаджия срещу народ)','Градация'], correct:2, explanation:'Контрастът между чорбаджийската алчност/власт и народната вяра/традиция е централното художествено и смислово противопоставяне в разказа.' },
+        { q:'Как завършва конфликтът в разказа?', opts:['Чорбаджията прогонва хората','Народът запалва имота на чорбаджията','Народната вяра устоява, традицията не е сломена','Свещеникът арбитрира и двете страни се примиряват'], correct:2, explanation:'Народната вяра и традицията устояват — хората отказват да напуснат сакралното място, а чорбаджийската власт не успява да победи духовното.' },
+        { q:'Как е изграден образът на народа в разказа?', opts:['Като индивидуализирани герои с имена','Като колективен образ — носител на традицията','Като пасивна, безгласна маса','Като бунтовна тълпа'], correct:1, explanation:'Народът при Елин Пелин функционира като колективен образ — общността, носителят на традицията, без индивидуализиране на конкретни герои.' },
+        { q:'Каква е основната идея на разказа?', opts:['Традицията е пречка за прогреса','Чорбаджиите са неизбежна необходимост за селото','Народната вяра е по-силна от властта на парите','Религията трябва да е отделена от обичая'], correct:2, explanation:'Основната идея е, че народната вяра и традицията са духовна спойка на общността, по-силна от имуществената власт на чорбаджията.' }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

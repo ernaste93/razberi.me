@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Елин Пелин · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-elin-pelin-spasova-mogila-q2',
+      lessonUrl:  '/lessons/bel12-elin-pelin-spasova-mogila.html',
+      lessonName: 'Елин Пелин — Спасова могила',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 6',
+      title:      'Куиз — Елин Пелин „Спасова могила" — Тест 2',
+      sub:        '10 въпроса · Избери верния отговор',
+      quizNum:    2,
+      nextQuizUrl: '/lessons/bel12-elin-pelin-spasova-mogila-quiz-3.html',
+      passScore:  8,
+      questions: [
+        { q:'В кое село е роден Елин Пелин?', opts:['с. Жеравна','с. Клисура','с. Байлово','с. Арбанаси'], correct:2, explanation:'Елин Пелин е роден в с. Байлово, Софийско. Селското му детство оказва огромно влияние върху творчеството му — селският бит и хората са в центъра на разказите му.' },
+        { q:'Кои са годините на живот на Елин Пелин?', opts:['1850–1920','1877–1949','1890–1955','1863–1930'], correct:1, explanation:'Елин Пелин е роден през 1877 г. и умира през 1949 г. Живее дълъг живот и твори активно до края на XIX и средата на XX век.' },
+        { q:'Какъв е конфликтът в „Спасова могила" на най-дълбоко идейно ниво?', opts:['Между две семейства за наследство','Между собствеността и духовното — между парите и вярата','Между православни и католици','Между младото и старото поколение'], correct:1, explanation:'На идейно ниво конфликтът е между материалното (собствеността на чорбаджията) и духовното (вярата и традицията на народа). Елин Пелин утвърждава примата на духовното.' },
+        { q:'Каква роля играе природата в „Спасова могила"?', opts:['Декорация без смислова функция','Сакрално пространство, което подкрепя духовността на обичая','Символ на заплахата от чорбаджията','Метафора за свободата на народа'], correct:1, explanation:'Природата около могилата е сакрализирана — не е просто декор, а участва в изграждането на сакралното общностно пространство, в което традицията е жива.' },
+        { q:'Как е охарактеризиран чорбаджията като тип в разказа?', opts:['Добродушен, но погрешно разбираем','Въплъщение на алчността и безчувствеността към традицията','Трагичен герой с вина и разкаяние','Образован и прогресивен човек'], correct:1, explanation:'Чорбаджията е тип — събирателен образ на алчността. Той не е индивидуализиран, а функционира като символ на имуществената власт, противопоставена на народната духовност.' },
+        { q:'Кой е Спасовден и с какво е свързан?', opts:['Ден на Св. Спас — местен светия','Народното название на Христовото Възнесение — 40 дни след Великден','Предхристиянски пролетен празник','Ден на Петдесетница (Духовден)'], correct:1, explanation:'Спасовден е народното название на Христовото Възнесение — Възнесение Господне, отбелязвано 40 дни след Великден. Свързан е с народни обичаи и събирания на открито.' },
+        { q:'Каква е функцията на диалога в „Спасова могила"?', opts:['Само забавление и темп','Разкрива характерите и противопоставя ценностните системи на героите','Заменя описанието на природата','Въвежда нов сюжетен обрат'], correct:1, explanation:'Диалогът при Елин Пелин е инструмент за характеризация — чрез речта на чорбаджията и народа се разкриват тяхните различни ценности и светогледи.' },
+        { q:'Какво е значението на пространството „могила" за общността в разказа?', opts:['Обикновено хълмче без значение','Място на колективна памет, вяра и идентичност на общността','Имот на чорбаджията с практическа стойност','Военна наблюдателница от миналото'], correct:1, explanation:'Могилата не е само географска точка — тя е символно пространство на колективната памет, вяра и идентичност. Затова опитът да се отнеме е атака срещу общността.' },
+        { q:'Как е характерно за Елин Пелин да изгражда конфликта в разказите си?', opts:['Интроспекция и вътрешен монолог на героите','Социален конфликт, изграден чрез типове — представители на противоположни обществени позиции','Натуралистично описание на насилието','Психологически усложнени герои без ясна морална оценка'], correct:1, explanation:'Елин Пелин изгражда конфликта чрез типове — чорбаджия срещу народ, алчност срещу вяра. Критическият реализъм работи с представителни типове, а не с психологически портрети.' },
+        { q:'Каква е социалната среда, изобразена в „Спасова могила"?', opts:['Градският елит','Работническата класа','Селото в края на XIX–нач. XX век с неговите социални противоречия','Духовенството и Православната църква'], correct:2, explanation:'Елин Пелин изобразява българското село — с неговата традиция, вяра и социални противоречия между богатите (чорбаджии) и простия народ.' }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

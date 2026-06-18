@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Йордан Йовков · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-yovkov-pesenta-na-koleletata-q1',
+      lessonUrl:  '/lessons/bel12-yovkov-pesenta-na-koleletata.html',
+      lessonName: 'Йовков — Песента на колелетата',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 8',
+      title:      'Куиз — Йордан Йовков — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel12-yovkov-pesenta-na-koleletata-quiz-2.html',
+      passScore:  8,
+      questions: [
+        {
+          q: 'Какво е занятието на Сали Яшар?',
+          opts: ['Ковач', 'Кираджия (превозвач с волска кола)', 'Търговец на добитък', 'Воденичар'],
+          correct: 1,
+          explanation: 'Сали Яшар е кираджия — превозвач, чийто поминък е да транспортира стоки с волска кола по пътищата.'
+        },
+        {
+          q: 'Какво е необикновеното при колата на Сали Яшар?',
+          opts: ['Изработена е от рядко дърво', 'Движи се много бързо', 'Колелата й пеят (издават мелодично скърцане)', 'Воловете й са бели'],
+          correct: 2,
+          explanation: 'Колелата на Сали Яшар „пеят" — издават мелодично скърцане, което хората приемат като нещо вълшебно и неповторимо.'
+        },
+        {
+          q: 'Каква е тайната зад песента на колелата?',
+          opts: ['Колата е смазана с особено масло', 'Сали Яшар обича Рада и любовта му изпълва дори колелата с красота', 'Колелата са изработени от звучно дърво', 'Сали Яшар пее, докато кара'],
+          correct: 1,
+          explanation: 'Сали Яшар знае тайната: колелата пеят, защото той обича Рада. Любовта му е символично изразена чрез звука на колелата.'
+        },
+        {
+          q: 'Защо колелата спират да пеят?',
+          opts: ['Колата е повредена', 'Сали Яшар се разболява', 'Рада се омъжва за друг и надеждата на Сали Яшар угасва', 'Воловете умират'],
+          correct: 2,
+          explanation: 'Когато Рада се омъжва за друг мъж, Сали Яшар губи надеждата. Колелата — огледало на душата му — спират да пеят.'
+        },
+        {
+          q: 'В кой сборник е включен разказът „Песента на колелетата"?',
+          opts: ['„Старопланински легенди"', '„Вечери в Антимовския хан"', '„Женско сърце" (1935)', '„Жетварят"'],
+          correct: 2,
+          explanation: '„Песента на колелетата" е включена в сборника „Женско сърце" (1935) — един от последните сборници на Йовков.'
+        },
+        {
+          q: 'Какво символизират пеещите колела в разказа?',
+          opts: ['Богатството и успеха на кираджията', 'Душата на Сали Яшар — неговата любов и жизнена сила', 'Добрата поддръжка на волската кола', 'Красотата на природата около пътя'],
+          correct: 1,
+          explanation: 'Колелата са централният символ — те са „огледало" на душата на Сали Яшар. Пеят, когато обича; млъкват, когато изгубва надеждата.'
+        },
+        {
+          q: 'Как завършва разказът?',
+          opts: ['Сали Яшар умира от тъга', 'Рада се връща при Сали Яшар', 'Колелата пеят отново — с ново, различно значение', 'Сали Яшар изоставя кираджийството'],
+          correct: 2,
+          explanation: 'В края колелата пеят отново, но вече с различно значение — не от радостна надежда, а от смирение и приемане на живота такъв, какъвто е.'
+        },
+        {
+          q: 'Кое художествено средство е в основата на образа на пеещите колела?',
+          opts: ['Хипербола', 'Алитерация', 'Персонификация и символика', 'Ирония'],
+          correct: 2,
+          explanation: 'Колелата „пеят" — персонификация (предмет с човешко качество). Едновременно те са символ на душата на Сали Яшар — символика.'
+        },
+        {
+          q: 'Кога е роден и кога умира Йордан Йовков?',
+          opts: ['1870–1945', '1880–1937', '1895–1960', '1865–1930'],
+          correct: 1,
+          explanation: 'Йордан Йовков е роден през 1880 г. и умира от болест през 1937 г. на 57-годишна възраст.'
+        },
+        {
+          q: 'Коя е основната идея на разказа?',
+          opts: ['Кираджийството е тежък и неблагодарен труд', 'Красотата живее в душата на обикновения трудов човек и любовта я пробужда', 'Жените носят нещастие на мъжете', 'Традиционният бит трябва да бъде запазен'],
+          correct: 1,
+          explanation: 'Йовков показва, че поетичното начало се съдържа в обикновения живот. Любовта прави дори простия труд красив — когато тя изчезне, красотата се трансформира, но не изчезва напълно.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

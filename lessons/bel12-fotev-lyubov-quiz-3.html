@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Христо Фотев · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-fotev-lyubov-q3',
+      lessonUrl:  '/lessons/bel12-fotev-lyubov.html',
+      lessonName: 'Фотев — "Колко си хубава!"',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 2',
+      title:      'Куиз — Христо Фотев — Тест 3',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        {
+          q: 'Каква е разликата в изображението на любимата при Фотев спрямо Дебелянов?',
+          opts: [
+            'При Фотев тя е абстрактна идея; при Дебелянов е конкретна жена',
+            'При Фотев тя е конкретна, телесна жена; при Дебелянов — замръзнал, идеализиран образ в паметта',
+            'И при двамата любимата е изобразена еднакво',
+            'При Дебелянов тя е по-жива и чувствена'
+          ],
+          correct: 1,
+          explanation: 'Ключова разлика: при Фотев любимата е физически присъстваща, описват се конкретни части от тялото й. При Дебелянов тя е „замръзнал образ" в паметта — тиха, неподвижна, идеализирана.'
+        },
+        {
+          q: 'Какво изразяват множеството сравнения с природни явления в "Колко си хубава!"?',
+          opts: [
+            'Че природата е по-красива от любимата',
+            'Стремеж да се придаде грандиозност и яркост на красотата на любимата',
+            'Тъга по изгубената природна хармония',
+            'Критика към прекалената чувственост'
+          ],
+          correct: 1,
+          explanation: 'Сравненията с природни явления (слънца, водопади) служат за усилване — красотата на любимата е изравнена с мощта и яркостта на природата. Хиперболизира се нейното въздействие върху говорителя.'
+        },
+        {
+          q: 'Кое твърдение за "Колко си хубава!" е НЕВЯРНО?',
+          opts: [
+            'Стихотворението е написано от Христо Фотев',
+            'Тонът е радостен и непосредствен',
+            'Стихотворението е изградено като тъжно сбогуване с любимата',
+            'Лирическият говорител се обръща директно към любимата'
+          ],
+          correct: 2,
+          explanation: 'Стихотворението НЕ е тъжно сбогуване. То е открито признание за красотата на любимата, изпълнено с радост. Нито раздяла, нито тъга — само непосредствено ликуване от присъствието й.'
+        },
+        {
+          q: 'Каква е ролята на восклицателния знак в заглавието "Колко си хубава!"?',
+          opts: [
+            'Граматична конвенция без особено значение',
+            'Изразява изненада и учудване от красотата',
+            'Показва, че говорителят е ядосан',
+            'Бележи край на изречение'
+          ],
+          correct: 1,
+          explanation: 'Восклицателният знак в заглавието задава емоционалния регистър на цялото стихотворение. Той изразява изненада, учудване, неудържана радост — красотата на любимата е като откритие, към което говорителят реагира спонтанно.'
+        },
+        {
+          q: 'Каква е структурата на стихотворението "Колко си хубава!" откъм броя на строфите?',
+          opts: ['2 строфи', '3 строфи', '4 строфи', '5 строфи'],
+          correct: 1,
+          explanation: 'Стихотворението е изградено от 3 строфи. Анафорният стих "Колко си хубава!" открива първа и трета строфа, придавайки на стихотворението рефренна, почти песенна структура.'
+        },
+        {
+          q: 'Кое понятие описва способността на косите да "пеят" в стихотворението на Фотев?',
+          opts: ['Метафора', 'Хипербола', 'Персонификация (олицетворение)', 'Алитерация'],
+          correct: 2,
+          explanation: 'Персонификацията (олицетворението) приписва на неодушевен или нечовешки обект човешка способност. Косите "пеят" — придадена им е способност, характерна само за хората.'
+        },
+        {
+          q: 'Каква е общата черта между Фотев и Дебелянов като поети?',
+          opts: [
+            'И двамата са символисти',
+            'И двамата пишат любовна лирика, макар с различен тон и виждане',
+            'И двамата загиват трагично млади',
+            'И двамата са от Варна'
+          ],
+          correct: 1,
+          explanation: 'Общото е, че и двамата пишат любовна лирика. Различното е всичко останало: при Дебелянов — меланхолия и спомен; при Фотев — радост и непосредственост. Двамата представляват противоположните полюси на любовната лирика в програмата.'
+        },
+        {
+          q: 'Какво е характерно за образа на природата в поезията на Фотев спрямо Дебелянов?',
+          opts: [
+            'При Фотев природата е тъжна и меланхолична; при Дебелянов е радостна',
+            'При Фотев природата е живо, радостно присъствие, служещо за сравнения; при Дебелянов е символ на тъга',
+            'И при двамата природата играе еднаква роля',
+            'При Дебелянов природата е по-конкретна и телесна'
+          ],
+          correct: 1,
+          explanation: 'При Фотев природата е инструмент за изразяване на радост и красота — слънца, водопади са живи и ярки. При Дебелянов природните образи (нощта, ранния разсъмва) носят меланхолия и тъга.'
+        },
+        {
+          q: 'Каква е ролята на чувствеността в поезията на Фотев?',
+          opts: [
+            'Чувствеността е грях, от който говорителят се срамува',
+            'Чувствеността е централна — тялото и сетивата са основен начин за познание на красотата',
+            'Чувствеността е само повърхностна украса без значение',
+            'Чувствеността е скрита и алегорична'
+          ],
+          correct: 1,
+          explanation: 'При Фотев чувствеността е централна — красотата се познава чрез конкретни телесни образи (очи, уста, коси). Тялото не е срамно, а е пътят към разбирането на любовта. Това контрастира с абстрактния идеализъм на символизма.'
+        },
+        {
+          q: 'Как "Колко си хубава!" демонстрира различния подход към любовта спрямо символизма?',
+          opts: [
+            'Няма разлика — и Фотев е символист',
+            'Символизмът се занимава с настоящето, Фотев — с миналото',
+            'Символизмът бяга от реалността в спомени и символи; Фотев прегръща реалното, непосредственото присъствие',
+            'Фотев е по-песимистичен от символистите'
+          ],
+          correct: 2,
+          explanation: 'Символизмът търси красота в спомена, мечтата и символите — далеч от реалността. Фотев прави обратното: прегръща реалното присъствие на любимата, описва конкретните й черти и изпитва радост тук и сега. Поезията му е антисимволистична по дух.'
+        },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

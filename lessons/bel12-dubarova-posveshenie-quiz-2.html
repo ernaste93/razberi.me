@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Петя Дубарова · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-dubarova-posveshenie-q2',
+      lessonUrl:  '/lessons/bel12-dubarova-posveshenie.html',
+      lessonName: 'Дубарова — "Посвещение"',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 3',
+      title:      'Куиз — Петя Дубарова — Тест 2',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    2,
+      nextQuizUrl: '/lessons/bel12-dubarova-posveshenie-quiz-3.html',
+      questions: [
+        {
+          q: 'Кога е издадена стихосбирката "Ако обичам" на Петя Дубарова?',
+          opts: [
+            'Приживе, когато е на 16 години',
+            'Посмъртно, след трагичната й смърт',
+            'Десет години след смъртта й',
+            'Никога не е издадена официално'
+          ],
+          correct: 1,
+          explanation: 'Стихосбирката "Ако обичам" е издадена посмъртно — след смъртта на Дубарова през 1979 г. Именно посмъртното издание прави поезията й достъпна и я превръща в легенда.'
+        },
+        {
+          q: 'Кои са годините на живота на Петя Дубарова?',
+          opts: ['1960–1978', '1962–1979', '1965–1982', '1958–1975'],
+          correct: 1,
+          explanation: 'Петя Дубарова е родена на 24 октомври 1962 г. и загива на 4 декември 1979 г. на 17 години. Стиховете й обхващат само 3–4 години активно писане.'
+        },
+        {
+          q: 'Какъв е лирическият адресат в "Посвещение" — на кого са посветени стиховете?',
+          opts: [
+            'Само на конкретния любим',
+            'На природата — вятъра и дъжда',
+            'На любовта в широк смисъл — към любим, природа и живот',
+            'На бъдещите читатели'
+          ],
+          correct: 2,
+          explanation: 'Стиховете са посветени на любовта в нейната пълнота — към конкретния любим ("смеха ти", "топлото ти рамо"), но и към природните явления (вятъра, дъжда, зората) и към живота изобщо.'
+        },
+        {
+          q: 'Каква е ролята на природата в стихотворението "Посвещение"?',
+          opts: [
+            'Природата е само фон без символна стойност',
+            'Природата е включена сред посвещенията — тя е самостоятелен обект на любовта',
+            'Природата символизира смъртта и тлението',
+            'Природата е противопоставена на любовта'
+          ],
+          correct: 1,
+          explanation: 'В "Посвещение" природата не е просто фон — тя е сред обектите, на които са посветени стиховете (вятърът, дъждът, зората). Природата е равноправна с любимия — обичта обхваща целия свят.'
+        },
+        {
+          q: 'С кой термин се описва приписването на душа и чувства на природата ("дъждът, що пее")?',
+          opts: ['Метафора', 'Оксиморон', 'Олицетворение', 'Градация'],
+          correct: 2,
+          explanation: 'Олицетворението (персонификацията) приписва на неодушевени явления (дъжд) човешки способности (да пее). При Дубарова природата е одушевена и участва в любовното преживяване.'
+        },
+        {
+          q: 'Какво означава думата "посвещение" в заглавието на стихотворението?',
+          opts: [
+            'Извинение',
+            'Религиозен обред',
+            'Дар, принос — стиховете са предложени като дар на любовта',
+            'Сбогуване'
+          ],
+          correct: 2,
+          explanation: '"Посвещение" означава акт на даряване, принасяне. Стиховете са "посветени" — дарени на любовта. В биографичен контекст: стиховете на Дубарова буквално стават неин последен дар преди края.'
+        },
+        {
+          q: 'Каква е ролята на бъдещето в "Посвещение" ("на пролетта, която ще дойде, когато аз я няма")?',
+          opts: [
+            'Говорителят се радва на бъдещето',
+            'Говорителят предвижда собственото си отсъствие — бъдещето е без него',
+            'Пролетта символизира надежда и завръщане',
+            'Бъдещето е неясно и неопределено'
+          ],
+          correct: 1,
+          explanation: 'Думите "когато аз я няма" изразяват предчувствие за собствения край. Говорителят знае, че ще дойде пролет, но той/тя няма да бъде там. В светлината на биографията на Дубарова тези стихове са потресаващо пророчески.'
+        },
+        {
+          q: 'Какъв тон придава анафората "Посвещавам ги на..." на стихотворението?',
+          opts: [
+            'Гневен и бунтарски',
+            'Тъжен и жалостив',
+            'Тържествен, ритуален, като молитва или клетва',
+            'Игривен и лек'
+          ],
+          correct: 2,
+          explanation: 'Повторението "Посвещавам ги на..." придава тържественост и ритуалност — като жрец, принасящ дар. Стихотворението звучи като молитва или клетва, не просто като лирична изповед.'
+        },
+        {
+          q: 'Как се отнася Дубарова към любовта — само като радост или и като болка?',
+          opts: [
+            'Само като чиста радост без страдание',
+            'Само като страдание и тъга',
+            'Като двойствено чувство — едновременно болка и сладост (оксиморон)',
+            'Като нещо, което трябва да бъде избягвано'
+          ],
+          correct: 2,
+          explanation: 'Оксиморонът "болка, сладка и света" изразява двойствеността на любовта при Дубарова. Тя е едновременно болезнена и прекрасна — "свещена болка". Тази зрялост на виждането е изненадваща за 17-годишна поетеса.'
+        },
+        {
+          q: 'Коя черта на "Посвещение" показва зрялост, нетипична за юношеска поезия?',
+          opts: [
+            'Простият език и конкретните образи',
+            'Предчувствието за смъртта, оксиморонното виждане на любовта и философската дълбочина',
+            'Любовта към природата',
+            'Използването на рима'
+          ],
+          correct: 1,
+          explanation: 'Предчувствието за собствения край, оксиморонът "болка сладка и света", философското осмисляне на любовта — всичко това надхвърля нормалната за юношеска поезия дълбочина. Именно затова Дубарова е изключение.'
+        },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

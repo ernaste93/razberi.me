@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Борис Христов · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-hristov-chesten-krast-q3',
+      lessonUrl:  '/lessons/bel12-hristov-chesten-krast.html',
+      lessonName: 'Христов — Честен кръст',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 12',
+      title:      'Куиз — Борис Христов — Тест 3',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        { q:'Какво означава изразът „аз зная" в контекста на стихотворението?', opts:['Говорителят знае отговорите на всички въпроси','Говорителят има ясна представа за собствената си идентичност и ценности','Говорителят е арогантен','Говорителят знае бъдещето'], correct:1, explanation:'„Аз зная" е отговор на изкушенията и натиска. Ясната идентичност — знанието кой си и какво цениш — е основата, от която говорителят черпи силата да устои.' },
+        { q:'Коя е характерната особеност на лексиката в „Честен кръст"?', opts:['Архаична и книжна','Символистична и образна','Директна, разговорна, проста — без украса','Наситена с чуждици'], correct:2, explanation:'Христов съзнателно пише с прост, разговорен, пряк език. Всяка дума е конкретна. Това е съзнателен избор, противопоставен на символистичната украса и метафоричност.' },
+        { q:'Как изграждат морален образ Христов и Вазов по различен начин?', opts:['Вазов пише за личния избор, Христов — за националния','И двамата изграждат образа на самотния герой','Вазов изгражда морал чрез епически образи и патриотизъм; Христов — чрез изповедна лична клетва','Разлика в изграждането на морален образ няма'], correct:2, explanation:'Вазов (напр. „Опълченците на Шипка") изгражда морала чрез колективния патриотичен подвиг. Христов е интимен и личен — клетвата е лична, изповедна, без масовост.' },
+        { q:'Каква е жанровата характеристика на „Честен кръст"?', opts:['Ода','Елегия','Лирическа изповед с характер на клетва','Балада'], correct:2, explanation:'„Честен кръст" е лирическа изповед — говорителят говори от първо лице за личен морален ангажимент. Клетвената формула в заглавието определя основния регистър на произведението.' },
+        { q:'Кое твърдение за „Честен кръст" и Яворовите „Две души" е ВЯРНО?', opts:['И двете завършват с неразрешена криза','И двете говорят за любовна раздяла','„Две души" завършва с кризата на идентичността; „Честен кръст" — с декларацията на направения избор','Двете произведения са жанрово идентични'], correct:2, explanation:'Яворов в „Две души" (моделна лирика за раздвоение) не разрешава кризата. Христов в „Честен кръст" е след кризата — изборът е направен и декларира го с клетва.' },
+        { q:'Каква е ролята на конкретните изкушения (злато, слава, лесен ден) в стихотворението?', opts:['Украсяват стихотворението','Представляват мечтите на говорителя','Назовават реалните примамки, на които говорителят отказва да се поддаде','Описват природата'], correct:2, explanation:'Изброявайки конкретно изкушенията (злато, слава, лесен ден), Христов избягва абстракцията. Читателят веднага разпознава реалните съблазни — и отказът им придобива конкретна тежест.' },
+        { q:'Какво прави говорителят специален измежду всички лирически говорители в програмата за 12 клас?', opts:['Той е единственият, описващ природата','Той е единственият с ясен и направен избор — без колебание или криза','Той е единственият любовен говорител','Той е единственият патриот'], correct:1, explanation:'За разлика от Яворов (раздвоение), Дебелянов (меланхолия), дори Смирненски (копнеж) — говорителят на Христов е приключил с търсенето. Изборът е направен. Това е неговата изключителна характеристика.' },
+        { q:'Каква е разликата между „Честен кръст" и творчеството на символистите по отношение на образния свят?', opts:['Символистите са по-конкретни','Разлика в образния свят няма','Символистите строят сложни многопластови образи; Христов е пределно пряк — заглавието изчерпва централния образ','Христов е по-сложен и образен'], correct:2, explanation:'Символизмът разчита на многозначни образи, внушения, музикалност. Христов свежда образния свят до минимум — „честен кръст" е едновременно заглавие, рефрен и изчерпателен централен образ.' },
+        { q:'Как се проявява анафората в „Честен кръст"?', opts:['Чрез повторение в края на стихове','Чрез повторение в средата на стихове','Чрез повторение на „ако трябва" и „честен кръст" в началото на стихове или строфи','Чрез рима'], correct:2, explanation:'Анафората е повторение в началото на стих или строфа. В „Честен кръст" „ако трябва" и рефренът „честен кръст" се повтарят по този начин, създавайки ритъм на решителност.' },
+        { q:'Коя е темата, която обединява „Честен кръст" с произведенията на Вапцаров, макар да я разглеждат по различен начин?', opts:['Любовта','Природата и родината','Смисълът на личния избор и вярността към ценности в свят на натиск','Смъртта и безсмъртието'], correct:2, explanation:'И Вапцаров, и Христов поставят въпроса за ценностите и верността им под натиск. Но Вапцаров го прави в колективен политически план, Христов — в личен и универсален морален план.' }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

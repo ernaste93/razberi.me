@@ -3,52 +3,109 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Разбери.ме</title>
+  <title>Разбери.Ме — Твоят приятел в ученето</title>
+  <meta name="description" content="Разбери.Ме помага на ученици от 7 до 12 клас да разберат трудните уроци по-лесно. Маркирай каквото не разбираш и получи обяснение веднага." />
+  <meta property="og:title" content="Разбери.Ме — Твоят приятел в ученето" />
+  <meta property="og:description" content="Помагаме на ученици от 7 до 12 клас да разберат трудните уроци по-лесно. Пробвай без регистрация." />
+  <meta property="og:image" content="https://www.razberi.me/logos/square_logo.png" />
+  <meta property="og:url" content="https://www.razberi.me/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="bg_BG" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Разбери.Ме — Твоят приятел в ученето" />
+  <meta name="twitter:description" content="Помагаме на ученици от 7 до 12 клас да разберат трудните уроци по-лесно." />
+  <meta name="twitter:image" content="https://www.razberi.me/logos/square_logo.png" />
   <link rel="icon" type="image/png" href="logos/tab_transparent.png?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+
 </head>
 <body>
   <header class="topbar">
-    <div class="topbar-main">
+    <div class="topbar-main" style="position:relative;">
       <div class="brand">
         <a href="#"><img src="logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
       </div>
-      <nav>
-        <a href="/about.html" class="nav-btn">Кои сме ние?</a>
+      <nav style="position:absolute;left:50%;transform:translateX(-50%);">
+        <a href="#how" class="nav-btn">Как работи?</a>
         <a href="#subjects" class="nav-btn">Какво предлагаме?</a>
         <a href="#pricing" class="nav-btn">Цени</a>
       </nav>
-      <div class="topbar-right">
-        <div id="auth-header">
-          <a href="/auth.html" class="nav-btn nav-btn-gold" id="btn-login">Вход</a>
-          <span id="btn-user" style="display:none">
-            <span id="user-name" style="font-size:14px;font-weight:600;color:var(--accent)"></span>
-            <button class="nav-btn" id="btn-logout" style="font-size:13px">Изход</button>
-          </span>
+      <div class="topbar-right" style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <div id="auth-header" style="display:flex;align-items:center;gap:8px;">
+          <!-- Гост -->
+          <a href="/probvai.html" class="nav-btn nav-btn-gold" id="btn-try">Пробвай безплатно</a>
+          <a href="/auth.html" class="nav-btn nav-btn-outline" id="btn-login">Вход</a>
+          <!-- Влязъл потребител -->
+          <a href="/dnevnik.html" class="nav-btn" id="btn-dnevnik" style="display:none;">Дневник</a>
+          <div class="user-menu" id="user-menu" style="display:none;">
+            <button class="user-chip" id="user-chip" aria-expanded="false">
+              <span class="user-avatar" id="user-avatar">?</span>
+              <script>var _i=localStorage.getItem('userInitials');if(_i)document.getElementById('user-avatar').textContent=_i;</script>
+              <span class="user-chevron">▾</span>
+            </button>
+            <div class="user-dropdown" id="user-dropdown">
+              <div class="user-email">
+                <div class="user-fullname" id="user-fullname-label"></div>
+                <div class="user-emailaddr" id="user-email-label"></div>
+              </div>
+              <a href="/urotsi.html">Към уроците</a>
+              <a href="/settings.html">Настройки</a>
+              <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+              <div class="dropdown-divider"></div>
+              <button id="btn-logout">Изход</button>
+            </div>
+          </div>
         </div>
-        <div class="topbar-contact">
-          <a href="tel:0899123456">📞 0899 123 456</a>
-          <a href="mailto:info@razberi.me">✉️ info@razberi.me</a>
-        </div>
+        <button class="burger-btn" id="burger-btn" aria-label="Меню">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-    </div>
-    <div class="topbar-secondary">
-      <span class="ts-chip">Разбиране, не наизустяване<span class="ts-tooltip">Не зубрене, а истинско разбиране — обясненията са пригодени точно за нивото на твоето дете.</span></span>
-      <span class="ts-chip">Учи докато четеш<span class="ts-tooltip">Маркирай неразбраното и получи обяснение на момента, не след урока, а докато четеш.</span></span>
-      <span class="ts-chip">Доказани резултати<span class="ts-tooltip">Учениците усвояват материала по-задълбочено и влизат на изпитите с повече увереност.</span></span>
-      <span class="ts-chip">НВО и Матури<span class="ts-tooltip">Помагаме на детето ти да изгради уменията за НВО и Матури, за да влезе подготвено на всеки изпит.</span></span>
     </div>
   </header>
 
+  <div class="menu-backdrop"></div>
+  <nav class="mobile-drawer">
+    <a href="#how" class="drawer-link">Как работи?</a>
+    <a href="#subjects" class="drawer-link">Какво предлагаме?</a>
+    <a href="#pricing" class="drawer-link">Цени</a>
+    <div class="drawer-divider"></div>
+    <a href="/probvai.html" class="drawer-cta">Пробвай безплатно</a>
+    <a href="/auth.html" class="drawer-login">Вход</a>
+  </nav>
+
   <main>
-    <!-- INTRO BANNER -->
+    <!-- INTRO -->
     <div class="intro-banner">
       <p class="intro-headline">Трудният урок вече има лесно обяснение.</p>
-      <p class="intro-sub"><span class="brand-blue">Разбери.</span><span class="brand-orange">Ме</span> помага на ученици от 7 до 12 клас да разберат трудните теми, да се упражняват повече и да се подготвят максимално добре и структурирано по математика, БЕЛ, физика, химия, биология и история по интерактивен, интересен и модерен начин.</p>
-      <a href="#how" class="nav-btn nav-btn-gold" style="display:inline-block;margin-top:20px;font-size:17px;padding:13px 36px">Как работи?</a>
+      <p class="intro-sub"><span class="brand-blue">Разбери.</span><span class="brand-orange">Ме</span> помага на ученици от 7 до 12 клас да разберат трудните теми и да се подготвят целенасочено за НВО, матури и кандидатстване. Започваме с БЕЛ, математика, биология и химия.</p>
+<p class="intro-strip-headline" style="margin-top:28px;">Маркирай каквото не разбираш. Получи обяснение веднага.</p>
+      <div class="intro-strip-chips" id="chips-container">
+        <div class="chip-step">
+          <span class="ts-chip" data-tip="Отвори урока в Разбери.Ме — ясен, структуриран материал, готов за четене.">📖 Четеш</span>
+          <div class="chip-step-preview"></div>
+        </div>
+        <span class="intro-chip-arrow" data-arrow>→</span>
+        <div class="chip-step">
+          <span class="ts-chip" data-tip="Маркирай дума, изречение или задача, които не са ти ясни.">❓ Маркираш</span>
+          <div class="chip-step-preview"></div>
+        </div>
+        <span class="intro-chip-arrow" data-arrow>→</span>
+        <div class="chip-step">
+          <span class="ts-chip" data-tip="Получаваш обяснение по-просто, с пример и стъпки.">💡 Разбираш</span>
+          <div class="chip-step-preview"></div>
+        </div>
+      </div>
+      <div class="chip-preview-wrap" id="chip-preview-wrap">
+        <div class="chip-preview">
+          <div id="chip-preview" class="chip-preview-inner"></div>
+        </div>
+      </div>
+      <div style="margin-top:32px;text-align:center;">
+        <a href="#how" class="nav-btn nav-btn-gold" style="padding:11px 28px;font-size:15px;">Виж как работи</a>
+      </div>
     </div>
 
     <!-- BENEFITS -->
@@ -82,200 +139,209 @@
     <!-- ПРОБЛЕМЪТ -->
     <!-- РЕШЕНИЕТО -->
     <section id="how" class="solution-section">
-      <p class="eyebrow" style="text-align:center">Как работи Разбери.Ме?</p>
-      <h2 style="text-align:center;max-width:620px;margin:0 auto 48px">Личен помощник за детето ти — достъпен по всяко време, без срам, без чакане.</h2>
+      <h2 style="text-align:center;max-width:700px;margin:0 auto 16px">Как <span style="color:var(--accent)">Разбери.</span><span style="color:var(--gold)">Ме</span> прави трудния урок по-лесен за разбиране?</h2>
+      <p style="text-align:center;color:var(--muted);font-size:16px;max-width:620px;margin:0 auto 28px">Детето учи урока, маркира това, което не разбира, получава обяснение веднага и проверява знанията си с кратък тест.</p>
       <div class="solution-steps">
         <div class="solution-step">
           <div class="step-num">1</div>
           <h3>Избира тема</h3>
-          <p>Детето избира предмет, клас и тема — получава структуриран учебен материал, готов за четене.</p>
+          <p>Детето избира предмет, клас и урок — и започва с ясен, структуриран материал.</p>
         </div>
         <div class="solution-step">
           <div class="step-num">2</div>
           <h3>Чете и маркира</h3>
-          <p>Чете урока. Ако нещо не му е ясно — маркира го и помощникът го обяснява по разбираем за ученика начин.</p>
+          <p>Когато нещо не е ясно, маркира думата, изречението или задачата.</p>
         </div>
         <div class="solution-step">
           <div class="step-num">3</div>
-          <h3>Продължава с урока</h3>
-          <p>След обяснението продължава от там, откъдето е спрял — без да губи нишката на урока.</p>
+          <h3>Получава обяснение</h3>
+          <p>Разбери.Ме обяснява по-просто, с пример и стъпки — на разбираем за ученика език.</p>
         </div>
         <div class="solution-step">
           <div class="step-num">4</div>
-          <h3>Прави куиз</h3>
-          <p>След урока решава кратък тест, базиран на прочетеното — за да провери дали наистина го е разбрал.</p>
+          <h3>Проверява дали е разбрал</h3>
+          <p>След урока решава кратък тест, за да види какво е усвоил и къде има нужда от още упражнение.</p>
         </div>
       </div>
       <div class="hero-actions" style="justify-content:center;margin-top:48px">
-        <a class="button btn-orange-to-blue" href="#demo">Пробвай безплатно</a>
-        <a class="button btn-blue-to-orange" href="#demo">Виж демото</a>
+        <a class="button btn-orange-to-blue" href="/probvai.html">Пробвай безплатно</a>
       </div>
-    </section>
-
-    <!-- ДЕМО -->
-    <section id="demo" class="demo-layout">
-      <div class="lesson-panel">
-        <div class="lesson-top">
-          <div>
-            <p class="eyebrow">Демо урок</p>
-            <h2 id="lesson-title">Физика: Закон на Ом</h2>
-          </div>
-          <select id="lesson-select" aria-label="Избери урок">
-            <option value="physics">Физика</option>
-            <option value="chemistry">Химия</option>
-            <option value="biology">Биология</option>
-          </select>
-        </div>
-
-        <div class="tip">
-          Маркирай дума или изречение от урока и натисни <strong>„Обясни маркираното“</strong>.
-        </div>
-
-        <article id="lesson-content" class="lesson-content"></article>
-
-        <div class="lesson-actions">
-          <div class="tooltip-wrap" id="explain-selection-wrap">
-            <button id="explain-selection" class="button primary">Обясни маркираното</button>
-            <div class="tooltip-bubble" id="explain-tooltip">
-              <strong>Маркирай и разбери</strong>
-              <p>Избери дума или изречение от урока и получи обяснение по друг начин — точно за теб.</p>
-              <p>Функцията е достъпна след регистрация и абонамент.</p>
-              <a href="/auth.html">Регистрирай се →</a>
-            </div>
-          </div>
-          <button id="simpler" class="button secondary">Обясни целия урок по-просто</button>
-          <button id="quiz-me" class="button secondary">Провери ме</button>
-        </div>
-      </div>
-
-      <aside class="ai-panel" id="ai-panel">
-        <div class="ai-header">
-          <div class="avatar">🤖</div>
-          <div>
-            <strong>Помощник</strong>
-          </div>
-          <span id="ai-usage-counter" style="margin-left:auto;margin-right:8px;font-size:12px;font-weight:600;background:rgba(255,255,255,0.25);color:white;padding:3px 10px;border-radius:20px;white-space:nowrap;"></span>
-          <button id="ai-panel-close" style="background:none;border:none;font-size:22px;cursor:pointer;color:white;padding:0 4px;" aria-label="Затвори">×</button>
-        </div>
-        <div id="ai-output" class="ai-output">
-          <p>Здравей! Избери част от урока, която не разбираш, и ще я обясня по друг начин.</p>
-        </div>
-        <div class="feedback-row">
-          <button id="understood">Разбрах</button>
-          <button id="still-confused">Още не</button>
-        </div>
-        <form class="ai-free-form" id="ai-free-form">
-          <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
-          <button type="submit">→</button>
-        </form>
-      </aside>
     </section>
 
     <!-- ПОЛЗИ -->
     <!-- ПРЕДМЕТИ -->
     <section id="subjects" class="subjects">
-      <h2>Какво покриваме</h2>
+      <h2>Предмети, с които започваме</h2>
+      <div class="subjects-intro">
+        <p style="text-align:center;color:var(--muted);font-size:16px;margin:0 0 10px">Започваме с предметите, които най-често са важни за НВО, матури и кандидатстване след 12 клас — БЕЛ, математика, биология и химия.</p>
+        <p style="text-align:center;color:var(--muted);font-size:16px;margin:0">Всеки урок е структуриран така, че ученикът не просто да прочете материала, а да го разбере, упражни и да види къде има нужда от още помощ.</p>
+      </div>
       <div class="subject-grid">
         <article>
-          <span>🧬</span>
+          <span class="subject-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </span>
+          <h3>БЕЛ</h3>
+          <p>Разбиране на текст, граматика, правопис, литература и подготовка за НВО и матура.</p>
+          <div class="subject-topics">Текст · Граматика · Литература</div>
+          <div class="subject-tags">НВО · Матура</div>
+        </article>
+        <article>
+          <span class="subject-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21L12 3l9 18H3z"/><line x1="6.5" y1="14" x2="17.5" y2="14"/>
+            </svg>
+          </span>
+          <h3>Математика</h3>
+          <p>Задачи, формули и решения стъпка по стъпка — с ясни обяснения и примери.</p>
+          <div class="subject-topics">Задачи · Формули · Решения</div>
+          <div class="subject-tags">НВО · Матура</div>
+        </article>
+        <article>
+          <span class="subject-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 2a10 10 0 0 0 0 20"/><line x1="2" y1="12" x2="22" y2="12"/>
+            </svg>
+          </span>
           <h3>Биология</h3>
-          <p>Клетка, генетика, анатомия, екология — подготовка за НВО и медицина.</p>
+          <p>Клетка, генетика, анатомия, екология и теми, важни за матура и кандидатстване.</p>
+          <div class="subject-topics">Клетка · Генетика · Анатомия</div>
+          <div class="subject-tags">Матура · Кандидатстване</div>
         </article>
         <article>
-          <span>⚗️</span>
+          <span class="subject-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 3h6v8l3.5 7a1 1 0 0 1-.9 1.5H6.4a1 1 0 0 1-.9-1.5L9 11V3z"/><line x1="6" y1="6" x2="9" y2="6"/><line x1="15" y1="6" x2="18" y2="6"/>
+            </svg>
+          </span>
           <h3>Химия</h3>
-          <p>Реакции, органична химия, pH, стехиометрия — стъпка по стъпка.</p>
-        </article>
-        <article>
-          <span>⚡</span>
-          <h3>Физика</h3>
-          <p>Сили, движение, електричество, оптика — с примери от реалния свят.</p>
+          <p>Вещества, реакции, pH, органична химия и задачи — обяснени ясно и подредено.</p>
+          <div class="subject-topics">Реакции · pH · Органична химия</div>
+          <div class="subject-tags">Матура · Кандидатстване</div>
         </article>
       </div>
-      <p style="text-align:center;color:var(--muted);margin-top:24px;font-size:15px">Математика, История, Литература и още — очаквайте скоро.</p>
+
+      <div class="subjects-cta">
+        <div class="subjects-cta-text">
+          <p>Виж как работи с примерен урок</p>
+          <span>Пробвай без регистрация — отнема под 1 минута.</span>
+        </div>
+        <a href="/probvai.html" class="nav-btn nav-btn-gold" style="white-space:nowrap;padding:12px 28px;font-size:15px;">Пробвай примерен урок</a>
+      </div>
     </section>
 
     <!-- ЦЕНИ -->
     <section id="pricing" class="pricing">
       <h2>Прости и честни цени</h2>
-      <p style="text-align:center;color:var(--muted);margin-top:-12px;margin-bottom:40px">По-малко от един частен урок на месец.</p>
-      <div class="pricing-grid">
+      <div class="teacher-note" style="margin-top:-4px;margin-bottom:32px;font-size:14px;font-weight:500;">Без дългосрочен ангажимент. Спираш, когато решиш.</div>
+      <div class="pricing-grid pricing-grid-3">
+
+        <!-- План 1 -->
         <div class="price-card">
-          <p class="eyebrow">Безплатно</p>
-          <h3>Пробвай</h3>
-          <strong class="price-amount">0 лв</strong>
+          <p class="eyebrow">Ученик</p>
+          <strong class="price-amount"><span id="price-student">€30</span><span class="price-period"> / месец</span></strong>
+          <p class="price-desc">Личен учебен помощник за самостоятелно учене.</p>
           <ul>
-            <li>10 безплатни обяснения</li>
-            <li>Демо урок без регистрация</li>
-            <li>Без карта</li>
+            <li>Обяснения по уроците</li>
+            <li>Маркиране на неясни части</li>
+            <li>Упражнения и кратки тестове</li>
+            <li>Всички налични предмети</li>
+            <li>Достъп 24/7</li>
+            <li>Самостоятелен ученически профил</li>
           </ul>
-          <a href="#demo" class="button secondary" style="display:block;text-align:center;margin-top:20px">Пробвай сега</a>
+          <div class="price-spacer"></div>
+          <a href="/auth.html" class="nav-btn nav-btn-outline price-btn">Избери план</a>
         </div>
+
+        <!-- План 2 — Featured -->
         <div class="price-card price-card-featured">
-          <p class="eyebrow">Абонамент</p>
-          <h3>Пълен достъп</h3>
-          <strong class="price-amount">39 лв<span style="font-size:16px;font-weight:400"> / месец</span></strong>
+          <div class="price-badge">Препоръчан</div>
+          <p class="eyebrow">Ученик + Родител</p>
+          <strong class="price-amount"><span id="price-family">€50</span><span class="price-period"> / месец</span></strong>
+          <p class="price-desc">За родители, които искат да следят напредъка на детето.</p>
           <ul>
-            <li>Неограничени обяснения</li>
-            <li>Всички предмети</li>
-            <li>Родителски dashboard</li>
-            <li>Подготовка НВО и Матури</li>
+            <li>Всичко от „Ученик"</li>
+            <li>Родителски профил</li>
+            <li>Проследяване на напредъка</li>
+            <li>Статистики по теми и предмети</li>
+            <li>Подготовка за НВО, матури и кандидатстване</li>
+            <li>Ясна картина къде детето има нужда от помощ</li>
           </ul>
-          <a href="/auth.html" class="button primary" style="display:block;text-align:center;margin-top:20px">Регистрирай се</a>
+          <div class="price-spacer"></div>
+          <a href="/auth.html" class="nav-btn nav-btn-gold price-btn">Избери план</a>
         </div>
+
+        <!-- План 3 -->
+        <div class="price-card price-card-teacher">
+          <p class="eyebrow">С Учител</p>
+          <strong class="price-amount"><span id="price-teacher">от €99</span><span class="price-period"> / месец</span></strong>
+          <p class="price-desc">Пълен достъп + жива помощ от учител.</p>
+          <ul>
+            <li>Всичко от „Ученик + Родител"</li>
+            <li>1 онлайн среща с учител месечно</li>
+            <li>60 минути индивидуална помощ</li>
+            <li>Насоки според трудните теми</li>
+            <li>Възможност за допълнителни срещи</li>
+          </ul>
+          <div class="price-spacer"></div>
+          <a href="/auth.html" class="nav-btn nav-btn-outline price-btn">Заяви план с учител</a>
+        </div>
+
       </div>
+
+      <div class="teacher-note" id="price-teacher-note">Планът с учител започва от €99 и включва 1 среща месечно.<br>Допълнителни срещи: 2 / месец — от €149 &nbsp;·&nbsp; 4 / месец — от €249</div>
     </section>
 
     <!-- CTA -->
     <section class="cta-section">
-      <h2>Дай на детето си инструмента, който му липсва.</h2>
-      <p>Пробвай безплатно — без карта, без ангажимент.</p>
-      <a href="#demo" class="button primary">Пробвай демото</a>
+      <h2>Когато урокът е труден, детето не трябва да остава само.</h2>
+      <p>Пробвай Разбери.Ме без карта и без ангажимент.</p>
+      <a href="/probvai.html" class="nav-btn nav-btn-gold" style="font-size:16px;padding:14px 36px;">Пробвай демото</a>
     </section>
   </main>
 
-
   <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Върни се горе" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
 
-  <div id="help-chat" class="help-chat" aria-live="polite">
-    <button id="help-chat-toggle" class="help-chat-toggle" type="button" aria-label="Отвори помощника">
-      <span>💬</span>
-      <strong>Цъкни за помощ</strong>
-    </button>
+  <footer class="site-footer">
+    <div class="footer-grid">
 
-    <section class="help-chat-window" aria-label="Чат с помощника">
-      <header class="help-chat-header">
-        <div>
-          <strong>Цъкни за помощ</strong>
-          <span>Питай за урока или използвай маркиран текст</span>
-        </div>
-        <button id="help-chat-close" type="button" aria-label="Затвори чата">×</button>
-      </header>
-
-      <div id="help-chat-messages" class="help-chat-messages">
-        <div class="chat-message bot">
-          <p>Здравей! Маркирай неясна част от урока или ми задай въпрос. Ще опитам да го обясня по-просто.</p>
-        </div>
+      <div class="footer-brand">
+        <img src="logos/transparent_logo.png" alt="Разбери.Ме" class="footer-logo" />
+        <p>Твоят приятел в ученето. Помагаме на ученици от 7 до 12 клас да разбират трудните уроци по-лесно, в своето темпо и с подкрепа при нужда.</p>
       </div>
 
-      <form id="help-chat-form" class="help-chat-form">
-        <input id="help-chat-input" type="text" placeholder="Например: обясни ми йонна връзка..." autocomplete="off" />
-        <div class="tooltip-wrap" id="use-selection-wrap">
-          <button id="help-chat-use-selection" type="button">Маркирано</button>
-          <div class="tooltip-bubble" id="use-selection-tooltip" style="bottom: calc(100% + 10px); top: auto;">
-            <strong>Маркирай и разбери</strong>
-            <p>Избери текст от урока и изпрати го директно тук за обяснение.</p>
-            <p>Достъпно след регистрация и абонамент.</p>
-            <a href="/auth.html">Регистрирай се →</a>
-          </div>
-        </div>
-        <button type="submit">Изпрати</button>
-      </form>
-    </section>
-  </div>
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <a href="/#how">Как работи</a>
+        <a href="/#subjects">Предмети</a>
+        <a href="/#pricing">Цени</a>
+        <a href="/probvai.html">Пробвай демото</a>
+      </div>
 
-  <footer>
-    <p>© Prototype. Образователна демонстрация. Не представлява официална оценка или учебник.</p>
+      <div class="footer-col">
+        <h4>За родители</h4>
+        <a href="/#how">Ползи за родителя</a>
+        <a href="/#pricing">Проследяване на напредъка</a>
+        <a href="/#pricing">Планове с учител</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Контакт</h4>
+        <a href="tel:+359899123456">0899 123 456</a>
+        <a href="mailto:info@razberi.me">info@razberi.me</a>
+      </div>
+
+    </div>
+    <div class="footer-bottom">
+      <span>© Разбери.Ме. Всички права запазени.</span>
+      <span>
+        <a href="/privacy.html" style="color:var(--muted);text-decoration:none;">Политика за поверителност</a>
+        &nbsp;·&nbsp;
+        <a href="/terms.html" style="color:var(--muted);text-decoration:none;">Условия за ползване</a>
+      </span>
+    </div>
   </footer>
 
   <!-- Confirmation modal за безплатни маркирания -->
@@ -352,11 +418,21 @@
       'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l'
     );
 
+    function getInitials(name, email) {
+      if (name && name.trim()) {
+        const parts = name.trim().split(' ');
+        return parts.length >= 2
+          ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+          : parts[0].slice(0, 2).toUpperCase();
+      }
+      return email ? email.slice(0, 2).toUpperCase() : '??';
+    }
+
     async function updateAuthUI() {
       const { data: { session } } = await supabase.auth.getSession();
-      const btnLogin = document.getElementById('btn-login');
-      const btnUser = document.getElementById('btn-user');
-      const userName = document.getElementById('user-name');
+      const btnLogin  = document.getElementById('btn-login');
+      const btnTry    = document.getElementById('btn-try');
+      const userMenu  = document.getElementById('user-menu');
 
       if (session) {
         const { data: profile } = await supabase
@@ -365,19 +441,41 @@
           .eq('id', session.user.id)
           .single();
 
+        const name = profile?.full_name || '';
+        const email = session.user.email;
+        const initials = getInitials(name, email);
+        document.getElementById('user-avatar').textContent = initials;
+        document.getElementById('user-fullname-label').textContent = name || email.split('@')[0];
+        localStorage.setItem('userInitials', initials);
+
+        const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
         btnLogin.style.display = 'none';
-        btnUser.style.display = 'flex';
-        btnUser.style.alignItems = 'center';
-        btnUser.style.gap = '8px';
-        userName.textContent = profile?.full_name || session.user.email;
+        btnTry.style.display = 'none';
+        userMenu.style.display = 'block';
+        document.getElementById('btn-dnevnik').style.display = '';
+        document.getElementById('btn-admin').style.display = ADMIN_EMAILS.includes(email) ? '' : 'none';
       } else {
         btnLogin.style.display = '';
-        btnUser.style.display = 'none';
+        btnTry.style.display = '';
+        userMenu.style.display = 'none';
+        document.getElementById('btn-dnevnik').style.display = 'none';
       }
     }
 
+    // Dropdown toggle
+    document.getElementById('user-chip')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const menu = document.getElementById('user-menu');
+      const open = menu.classList.toggle('open');
+      document.getElementById('user-chip').setAttribute('aria-expanded', open);
+    });
+    document.addEventListener('click', () => {
+      document.getElementById('user-menu')?.classList.remove('open');
+    });
+
     document.getElementById('btn-logout')?.addEventListener('click', async () => {
       await supabase.auth.signOut();
+      document.getElementById('user-menu')?.classList.remove('open');
       updateAuthUI();
     });
 
@@ -392,12 +490,107 @@
       document.getElementById('scroll-top-btn').classList.toggle('visible', window.scrollY > 200);
     });
 
+    // Бургер drawer
+    const burgerBtn = document.getElementById('burger-btn');
+    const backdrop  = document.querySelector('.menu-backdrop');
+    const drawer    = document.querySelector('.mobile-drawer');
+
+    function openMenu() {
+      document.body.classList.add('menu-open');
+      burgerBtn.setAttribute('aria-expanded', 'true');
+      burgerBtn.classList.add('open');
+    }
+    function closeMenu() {
+      document.body.classList.remove('menu-open');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+      burgerBtn.classList.remove('open');
+    }
+
+    burgerBtn.addEventListener('click', () => document.body.classList.contains('menu-open') ? closeMenu() : openMenu());
+    backdrop.addEventListener('click', closeMenu);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    drawer.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMenu));
+
     document.querySelector('a[href="/about.html"]').addEventListener('click', function(e) {
       e.preventDefault();
       document.body.style.transition = 'opacity 0.35s ease';
       document.body.style.opacity = '0';
       setTimeout(() => { window.location.href = '/about.html'; }, 350);
     });
+  </script>
+  <script>
+    const chips = document.querySelectorAll('.ts-chip[data-tip]');
+    const preview = document.getElementById('chip-preview');
+    const wrap = document.getElementById('chip-preview-wrap');
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const isMobileLayout = () => window.innerWidth <= 540;
+
+    if (isTouch) {
+      let activeChip = null;
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const mobile = isMobileLayout();
+          const stepPreview = chip.closest('.chip-step')?.querySelector('.chip-step-preview');
+
+          if (activeChip === chip) {
+            activeChip = null;
+            if (mobile && stepPreview) {
+              stepPreview.classList.remove('visible');
+            } else {
+              wrap.classList.remove('visible');
+            }
+          } else {
+            // Скрий предишния
+            if (activeChip) {
+              const prev = activeChip.closest('.chip-step')?.querySelector('.chip-step-preview');
+              if (prev) prev.classList.remove('visible');
+              wrap.classList.remove('visible');
+            }
+            activeChip = chip;
+            if (mobile && stepPreview) {
+              stepPreview.textContent = chip.dataset.tip;
+              stepPreview.classList.add('visible');
+            } else {
+              preview.textContent = chip.dataset.tip;
+              wrap.classList.add('visible');
+            }
+          }
+        });
+      });
+      document.addEventListener('click', e => {
+        if (!e.target.closest('.ts-chip')) {
+          activeChip = null;
+          wrap.classList.remove('visible');
+          document.querySelectorAll('.chip-step-preview').forEach(p => p.classList.remove('visible'));
+        }
+      });
+    } else {
+      chips.forEach(chip => {
+        chip.addEventListener('mouseenter', () => {
+          preview.textContent = chip.dataset.tip;
+          wrap.classList.add('visible');
+        });
+        chip.addEventListener('mouseleave', () => {
+          wrap.classList.remove('visible');
+        });
+      });
+    }
+  </script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co', 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data } = await sb.from('settings').select('key, value').in('key', ['price_student','price_family','price_teacher','price_teacher_note']);
+    if (data) {
+      data.forEach(({ key, value }) => {
+        if (key === 'price_teacher_note') {
+          const el = document.getElementById('price-teacher-note');
+          if (el) el.innerHTML = value;
+        } else {
+          const el = document.getElementById(key.replace('_', '-'));
+          if (el) el.textContent = value;
+        }
+      });
+    }
   </script>
 </body>
 </html>

@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Админ панел – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .admin-page { max-width: 1100px; margin: 0 auto; padding: 24px 24px 80px; }
+
+    .admin-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .admin-title { font-size: 22px; font-weight: 800; color: var(--text); }
+    .admin-sub   { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    .admin-tabs {
+      display: flex; gap: 4px; margin-bottom: 24px;
+      background: rgba(255,255,255,0.7); border: 1px solid var(--line);
+      border-radius: 14px; padding: 5px;
+      width: fit-content;
+    }
+    .admin-tab {
+      padding: 8px 20px; border-radius: 10px; border: none;
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      cursor: pointer; background: transparent; color: var(--muted);
+      transition: background .15s, color .15s;
+    }
+    .admin-tab.active { background: #fff; color: var(--accent); box-shadow: 0 2px 8px rgba(16,24,40,0.08); }
+    .admin-tab:hover:not(.active) { color: var(--text); }
+
+    .tab-section { display: none; }
+    .tab-section.active {
+      display: block;
+      animation: tabFadeIn .18s ease both;
+    }
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .admin-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.95); border: 1px solid var(--line);
+      border-radius: 16px; padding: 18px 20px;
+      box-shadow: 0 4px 16px rgba(16,24,40,0.07);
+    }
+    .stat-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
+    .stat-value { font-size: 30px; font-weight: 800; color: var(--text); line-height: 1; }
+
+    .prices-card {
+      background: rgba(255,255,255,0.95); border: 1px solid var(--line);
+      border-radius: 20px; padding: 24px;
+      box-shadow: 0 4px 16px rgba(16,24,40,0.07);
+      margin-bottom: 24px;
+    }
+    .prices-card h2 { font-size: 16px; font-weight: 800; color: var(--text); margin: 0 0 18px; }
+    .price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .price-row label { font-size: 13px; font-weight: 700; color: var(--muted); width: 160px; flex-shrink: 0; }
+    .price-input {
+      flex: 1; padding: 9px 14px; border: 1.5px solid var(--line);
+      border-radius: 10px; font-family: inherit; font-size: 14px;
+      background: var(--bg); color: var(--text); outline: none;
+    }
+    .price-input:focus { border-color: var(--accent); }
+    .price-note-input {
+      width: 100%; padding: 9px 14px; border: 1.5px solid var(--line);
+      border-radius: 10px; font-family: inherit; font-size: 13px;
+      background: var(--bg); color: var(--text); outline: none;
+      resize: vertical; min-height: 60px;
+    }
+    .price-note-input:focus { border-color: var(--accent); }
+    .btn-save-prices {
+      margin-top: 16px; padding: 10px 24px;
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 10px;
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: opacity .15s;
+    }
+    .btn-save-prices:hover { opacity: .85; }
+    .btn-save-prices:disabled { opacity: .5; cursor: default; }
+    .save-msg { font-size: 13px; color: #16a34a; margin-left: 12px; display: none; }
+
+    .users-card {
+      background: rgba(255,255,255,0.95); border: 1px solid var(--line);
+      border-radius: 20px; padding: 24px;
+      box-shadow: 0 4px 16px rgba(16,24,40,0.07);
+    }
+
+    .users-toolbar {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+    }
+    .search-input {
+      flex: 1; padding: 9px 14px; border: 1.5px solid var(--line);
+      border-radius: 10px; font-family: inherit; font-size: 14px;
+      background: var(--bg); color: var(--text); outline: none;
+    }
+    .search-input:focus { border-color: var(--accent); }
+    .filter-select {
+      padding: 9px 14px; border: 1.5px solid var(--line); border-radius: 10px;
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      background: var(--bg); color: var(--text); cursor: pointer; outline: none;
+    }
+
+    .users-table { width: 100%; border-collapse: collapse; }
+    .users-table th {
+      text-align: left; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .07em;
+      color: var(--muted); padding: 0 12px 10px; border-bottom: 1px solid var(--line);
+    }
+    .users-table td {
+      padding: 12px; border-bottom: 1px solid var(--line);
+      font-size: 14px; color: var(--text); vertical-align: middle;
+    }
+    .users-table tr:last-child td { border-bottom: none; }
+    .users-table tr:hover td { background: var(--soft); }
+
+    .user-avatar-sm {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800; flex-shrink: 0;
+    }
+    .user-info { display: flex; align-items: center; gap: 10px; }
+    .user-name  { font-weight: 700; font-size: 14px; }
+    .user-email { font-size: 12px; color: var(--muted); }
+
+    .role-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 99px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+    }
+    .role-badge.student { background: #eff6ff; color: #1d4ed8; }
+    .role-badge.parent  { background: #f0fdf4; color: #15803d; }
+
+    .plan-toggle {
+      display: inline-flex; border-radius: 10px; overflow: hidden;
+      border: 1.5px solid var(--line);
+    }
+    .plan-btn {
+      padding: 6px 14px; font-family: inherit; font-size: 12px; font-weight: 700;
+      border: none; cursor: pointer; transition: background .15s, color .15s;
+      background: var(--bg); color: var(--muted);
+    }
+    .plan-btn.active-free    { background: #fee2e2; color: #dc2626; }
+    .plan-btn.active-paid    { background: #dcfce7; color: #16a34a; }
+    .plan-btn:disabled       { opacity: .5; cursor: default; }
+
+    .empty-row td { text-align: center; color: var(--muted); padding: 40px; }
+    .loading-row td { text-align: center; color: var(--muted); padding: 32px; }
+
+    /* ── User detail slide panel ── */
+    .user-detail-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.25); z-index: 900;
+    }
+    .user-detail-overlay.open { display: block; }
+    .user-detail-panel {
+      position: fixed; top: 0; right: 0; bottom: 0; width: 400px;
+      background: #fff; box-shadow: -8px 0 40px rgba(0,0,0,0.12);
+      overflow-y: auto; z-index: 901; padding: 28px 28px 60px;
+      transform: translateX(100%);
+      transition: transform .25s cubic-bezier(.4,0,.2,1);
+    }
+    .user-detail-panel.open { transform: translateX(0); }
+    .udp-close {
+      position: absolute; top: 16px; right: 16px;
+      border: none; background: var(--soft); border-radius: 8px;
+      width: 32px; height: 32px; font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); transition: background .15s;
+    }
+    .udp-close:hover { background: var(--line); }
+    .udp-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 800; margin-bottom: 12px;
+    }
+    .udp-name  { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 2px; }
+    .udp-email { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .udp-section { margin-bottom: 20px; }
+    .udp-section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted); margin-bottom: 10px;
+    }
+    .udp-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px;
+    }
+    .udp-row:last-child { border-bottom: none; }
+    .udp-row-label { color: var(--muted); font-weight: 600; }
+    .udp-row-val   { font-weight: 700; color: var(--text); }
+    .udp-sub-card {
+      background: var(--soft); border-radius: 12px; padding: 12px 14px;
+      margin-bottom: 8px; font-size: 13px;
+    }
+    .udp-sub-head { font-weight: 800; margin-bottom: 4px; display: flex; justify-content: space-between; }
+    .udp-sub-dates { color: var(--muted); font-size: 12px; }
+    .udp-badge-active   { color: #16a34a; font-weight: 700; }
+    .udp-badge-cancelled{ color: #dc2626; font-weight: 700; }
+    .udp-empty { color: var(--muted); font-size: 13px; padding: 8px 0; }
+    tr.clickable-row { cursor: pointer; }
+    tr.clickable-row:hover td { background: #f0f4ff; }
+    .btn-delete-user {
+      padding: 5px 10px; border: none; border-radius: 8px;
+      background: #fee2e2; color: #dc2626; font-size: 12px; font-weight: 700;
+      cursor: pointer; margin-left: 8px; transition: background .15s;
+    }
+    .btn-delete-user:hover { background: #fca5a5; }
+
+    .confirm-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4); z-index: 1000;
+      align-items: center; justify-content: center;
+    }
+    .confirm-overlay.open { display: flex; animation: tabFadeIn .18s ease both; }
+    .confirm-modal {
+      background: #fff; border-radius: 20px; padding: 32px;
+      max-width: 380px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .confirm-modal h3 { font-size: 18px; font-weight: 800; margin: 0 0 8px; color: var(--text); }
+    .confirm-modal p  { font-size: 14px; color: var(--muted); margin: 0 0 24px; }
+    .confirm-btns { display: flex; gap: 10px; justify-content: center; }
+    .btn-cancel-delete {
+      padding: 10px 22px; border: 1.5px solid var(--line); border-radius: 10px;
+      background: var(--bg); color: var(--text); font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .btn-confirm-delete {
+      padding: 10px 22px; border: none; border-radius: 10px;
+      background: #dc2626; color: #fff; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity .15s;
+    }
+    .btn-confirm-delete:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ── Filter panel ── */
+    .toolbar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .btn-filter {
+      padding: 9px 14px; border: 1.5px solid var(--line); border-radius: 10px;
+      background: var(--bg); color: var(--muted); cursor: pointer;
+      font-size: 14px; display: flex; align-items: center; gap: 6px;
+      font-family: inherit; font-weight: 700; transition: border-color .15s, color .15s;
+      white-space: nowrap;
+    }
+    .btn-filter:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-filter.has-filters { border-color: var(--accent); color: var(--accent); background: #eff6ff; }
+    .filter-panel {
+      display: none; background: var(--soft); border: 1px solid var(--line);
+      border-radius: 14px; padding: 16px 20px; margin-bottom: 14px;
+      display: none;
+    }
+    .filter-panel.open { display: flex; flex-wrap: wrap; gap: 20px; }
+    .filter-group { display: flex; flex-direction: column; gap: 6px; min-width: 140px; }
+    .filter-group label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+    .filter-group select {
+      padding: 7px 12px; border: 1.5px solid var(--line); border-radius: 8px;
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      background: #fff; color: var(--text); cursor: pointer; outline: none;
+    }
+    .filter-group select:focus { border-color: var(--accent); }
+    .btn-clear-filters {
+      align-self: flex-end; padding: 7px 16px; border: none; border-radius: 8px;
+      background: #fee2e2; color: #dc2626; font-family: inherit; font-size: 12px;
+      font-weight: 700; cursor: pointer;
+    }
+
+    /* ── Finance tab ── */
+    .fin-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 14px; }
+    .fin-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-bottom: 24px; }
+    .fin-card {
+      background: rgba(255,255,255,0.95); border: 1px solid var(--line);
+      border-radius: 16px; padding: 20px; box-shadow: 0 4px 16px rgba(16,24,40,0.07);
+    }
+    .fin-card.profit { border-color: #86efac; background: #f0fdf4; }
+    .fin-card.loss   { border-color: #fca5a5; background: #fef2f2; }
+    .fin-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 4px; }
+    .fin-value { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1.1; }
+    .fin-sub   { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    .costs-card {
+      background: rgba(255,255,255,0.95); border: 1px solid var(--line);
+      border-radius: 20px; padding: 24px; box-shadow: 0 4px 16px rgba(16,24,40,0.07);
+      margin-bottom: 20px;
+    }
+    .costs-card h2 { font-size: 15px; font-weight: 800; margin: 0 0 16px; }
+    .cost-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .cost-row label { font-size: 13px; font-weight: 700; color: var(--muted); width: 180px; flex-shrink: 0; }
+    .cost-input {
+      width: 120px; padding: 8px 12px; border: 1.5px solid var(--line);
+      border-radius: 8px; font-family: inherit; font-size: 14px;
+      background: var(--bg); color: var(--text); outline: none;
+    }
+    .cost-input:focus { border-color: var(--accent); }
+    .cost-note { font-size: 12px; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <nav style="display:flex;align-items:center;gap:4px;margin:0 auto;">
+        <a href="/urotsi.html" class="nav-btn">Уроци</a>
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <span class="nav-btn" style="background:var(--soft);font-weight:800;color:var(--accent);">Админ</span>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="admin-page">
+
+      <div class="admin-header">
+        <div>
+          <div class="admin-title">Админ панел</div>
+          <div class="admin-sub">Управление на потребители и абонаменти</div>
+        </div>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="users">Потребители</button>
+        <button class="admin-tab" data-tab="finances">Финанси</button>
+        <button class="admin-tab" data-tab="prices">Цени</button>
+      </div>
+
+      <!-- ── Таб: Потребители ── -->
+      <div class="tab-section active" id="tab-users">
+        <div class="admin-stats">
+          <div class="stat-card">
+            <div class="stat-label">Общо потребители</div>
+            <div class="stat-value" id="stat-total">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Активни абонаменти</div>
+            <div class="stat-value" id="stat-paid" style="color:#16a34a;">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Безплатен план</div>
+            <div class="stat-value" id="stat-free" style="color:var(--muted);">—</div>
+          </div>
+        </div>
+        <div class="users-card">
+          <div class="toolbar-row">
+            <input type="text" class="search-input" id="search" placeholder="Търси по ime или имейл…" />
+            <button class="btn-filter" id="btn-filter-toggle">⚙ Филтри</button>
+          </div>
+          <div class="filter-panel" id="filter-panel">
+            <div class="filter-group">
+              <label>Роля</label>
+              <select id="filter-role">
+                <option value="all">Всички</option>
+                <option value="student">Ученик</option>
+                <option value="parent">Родител</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Абонамент</label>
+              <select id="filter-plan">
+                <option value="all">Всички</option>
+                <option value="active">Активен</option>
+                <option value="free">Безплатен</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Клас</label>
+              <select id="filter-grade">
+                <option value="all">Всички</option>
+                <option value="8">8 клас</option>
+                <option value="9">9 клас</option>
+                <option value="10">10 клас</option>
+                <option value="11">11 клас</option>
+                <option value="12">12 клас</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Месеци активен</label>
+              <select id="filter-months">
+                <option value="all">Всички</option>
+                <option value="0">Нов (под 1 м.)</option>
+                <option value="1">1–3 месеца</option>
+                <option value="3">3–6 месеца</option>
+                <option value="6">Над 6 месеца</option>
+              </select>
+            </div>
+            <button class="btn-clear-filters" id="btn-clear-filters">✕ Изчисти</button>
+          </div>
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Потребител</th>
+                <th>Роля</th>
+                <th>Клас</th>
+                <th>Регистрация</th>
+                <th>Месеци</th>
+                <th>Абонамент</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody">
+              <tr class="loading-row"><td colspan="7">Зарежда…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Таб: Финанси ── -->
+      <div class="tab-section" id="tab-finances">
+        <div class="fin-grid">
+          <div class="fin-card">
+            <div class="fin-label">МРР (приблиз.)</div>
+            <div class="fin-value" id="fin-mrr">—</div>
+            <div class="fin-sub" id="fin-mrr-sub">активни × базова цена</div>
+          </div>
+          <div class="fin-card">
+            <div class="fin-label">Месечни разходи</div>
+            <div class="fin-value" id="fin-costs">—</div>
+            <div class="fin-sub">хостинг + Supabase + API + друго</div>
+          </div>
+          <div class="fin-card" id="fin-profit-card">
+            <div class="fin-label">Чиста печалба</div>
+            <div class="fin-value" id="fin-profit">—</div>
+            <div class="fin-sub">МРР − разходи</div>
+          </div>
+        </div>
+        <div class="fin-grid-2">
+          <div class="fin-card">
+            <div class="fin-label">Знайко — реален API разход</div>
+            <div class="fin-value" id="fin-api-real">—</div>
+            <div class="fin-sub" id="fin-api-real-sub">от началото</div>
+          </div>
+          <div class="fin-card">
+            <div class="fin-label">Знайко — общо запитвания</div>
+            <div class="fin-value" id="fin-api-queries">—</div>
+            <div class="fin-sub" id="fin-api-queries-sub">от всички потребители</div>
+          </div>
+        </div>
+        <div class="costs-card">
+          <h2>Месечни разходи</h2>
+          <div class="cost-row">
+            <label>Хостинг (Render)</label>
+            <input type="number" class="cost-input" id="cost-hosting" placeholder="0" min="0" />
+            <span class="cost-note">€ / месец</span>
+          </div>
+          <div class="cost-row">
+            <label>Supabase</label>
+            <input type="number" class="cost-input" id="cost-supabase" placeholder="0" min="0" />
+            <span class="cost-note">€ / месец</span>
+          </div>
+          <div class="cost-row">
+            <label>Anthropic API</label>
+            <input type="number" class="cost-input" id="cost-api" placeholder="0" min="0" />
+            <span class="cost-note">€ / месец</span>
+          </div>
+          <div class="cost-row">
+            <label>Учители</label>
+            <input type="number" class="cost-input" id="cost-teachers" placeholder="0" min="0" />
+            <span class="cost-note">€ / месец</span>
+          </div>
+          <div class="cost-row">
+            <label>Друго</label>
+            <input type="number" class="cost-input" id="cost-other" placeholder="0" min="0" />
+            <span class="cost-note">€ / месец</span>
+          </div>
+          <div style="margin-top:16px;display:flex;align-items:center;gap:12px;">
+            <button class="btn-save-prices" id="btn-save-costs">Запази</button>
+            <span class="save-msg" id="save-costs-msg">Запазено!</span>
+          </div>
+        </div>
+        <div class="costs-card">
+          <h2>Разбивка по потребители</h2>
+          <div id="fin-breakdown" style="color:var(--muted);font-size:14px;">Зарежда…</div>
+        </div>
+        <div class="costs-card">
+          <h2>Знайко — разход по потребители</h2>
+          <div id="api-usage-table" style="color:var(--muted);font-size:14px;">Зарежда…</div>
+        </div>
+      </div>
+
+      <!-- ── Таб: Цени ── -->
+      <div class="tab-section" id="tab-prices">
+        <div class="prices-card">
+          <h2>Цени</h2>
+          <div class="price-row">
+            <label>Ученик</label>
+            <input type="text" class="price-input" id="pi-student" placeholder="€30" />
+          </div>
+          <div class="price-row">
+            <label>Ученик + Родител</label>
+            <input type="text" class="price-input" id="pi-family" placeholder="€50" />
+          </div>
+          <div class="price-row">
+            <label>С Учител</label>
+            <input type="text" class="price-input" id="pi-teacher" placeholder="от €99" />
+          </div>
+          <div style="margin-bottom:4px;">
+            <label style="font-size:13px;font-weight:700;color:var(--muted);">Бележка под цените</label>
+          </div>
+          <textarea class="price-note-input" id="pi-teacher-note" placeholder="Планът с учител..."></textarea>
+          <div style="display:flex;align-items:center;">
+            <button class="btn-save-prices" id="btn-save-prices">Запази цените</button>
+            <span class="save-msg" id="save-msg">Запазено!</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="user-detail-overlay" id="udp-overlay"></div>
+  <div class="user-detail-panel" id="udp-panel">
+    <button class="udp-close" id="udp-close">✕</button>
+    <div class="udp-avatar" id="udp-avatar"></div>
+    <div class="udp-name"  id="udp-name"></div>
+    <div class="udp-email" id="udp-email"></div>
+
+    <div class="udp-section">
+      <div class="udp-section-title">Профил</div>
+      <div id="udp-profile-rows"></div>
+    </div>
+
+    <div class="udp-section">
+      <div class="udp-section-title">История на абонамента</div>
+      <div id="udp-subs"></div>
+    </div>
+
+    <div class="udp-section">
+      <div class="udp-section-title">Знайко — API използване</div>
+      <div id="udp-api"></div>
+    </div>
+  </div>
+
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-modal">
+      <h3>Изтриване на потребител</h3>
+      <p id="confirm-msg">Сигурен ли си?</p>
+      <div class="confirm-btns">
+        <button class="btn-cancel-delete" id="btn-cancel-delete">Откажи</button>
+        <button class="btn-confirm-delete" id="btn-confirm-delete" disabled>Да, изтрий (3)</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+
+    (async () => {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; return; }
+    if (!['kirilmodev@gmail.com'].includes(session.user.email)) { window.location.href = '/'; return; }
+
+    // ── Helpers ──────────────────────────────────────────────
+    function monthsAgo(dateStr) {
+      const ms = Date.now() - new Date(dateStr).getTime();
+      return Math.floor(ms / (1000 * 60 * 60 * 24 * 30.44));
+    }
+
+    // ── Helpers ──────────────────────────────────────────────
+    function getInitials(name, email) {
+      if (name && name.trim()) {
+        const parts = name.trim().split(/\s+/);
+        return parts.length >= 2
+          ? (parts[0][0] + parts[1][0]).toUpperCase()
+          : parts[0].slice(0, 2).toUpperCase();
+      }
+      return (email || '?').slice(0, 2).toUpperCase();
+    }
+
+    // ── Load users ───────────────────────────────────────────
+    let allUsers = [];
+
+    async function loadUsers() {
+      const { data, error } = await sb
+        .from('profiles')
+        .select('id, full_name, email, role, grade, plan, is_admin, created_at')
+        .order('created_at', { ascending: false });
+      if (error) {
+        document.getElementById('users-tbody').innerHTML =
+          `<tr class="empty-row"><td colspan="6" style="color:#dc2626;">Грешка: ${error.message}</td></tr>`;
+        console.error(error);
+        return;
+      }
+      allUsers = data || [];
+      updateStats();
+      renderTable();
+    }
+
+    function updateStats() {
+      const paid = allUsers.filter(u => u.plan === 'active').length;
+      document.getElementById('stat-total').textContent = allUsers.length;
+      document.getElementById('stat-paid').textContent  = paid;
+      document.getElementById('stat-free').textContent  = allUsers.length - paid;
+    }
+
+    function renderTable() {
+      const search  = document.getElementById('search').value.toLowerCase();
+      const planF   = document.getElementById('filter-plan').value;
+      const roleF   = document.getElementById('filter-role').value;
+      const gradeF  = document.getElementById('filter-grade').value;
+      const monthsF = document.getElementById('filter-months').value;
+
+      const filtered = allUsers.filter(u => {
+        const name  = (u.full_name || '').toLowerCase();
+        const email = (u.email || '').toLowerCase();
+        if (search && !name.includes(search) && !email.includes(search)) return false;
+        if (planF  !== 'all' && u.plan !== planF) return false;
+        if (roleF  !== 'all' && u.role !== roleF) return false;
+        if (gradeF !== 'all' && String(u.grade) !== gradeF) return false;
+        if (monthsF !== 'all') {
+          const m = monthsAgo(u.created_at);
+          if (monthsF === '0' && m >= 1) return false;
+          if (monthsF === '1' && (m < 1 || m >= 3)) return false;
+          if (monthsF === '3' && (m < 3 || m >= 6)) return false;
+          if (monthsF === '6' && m < 6) return false;
+        }
+        return true;
+      });
+
+      // Update filter button style
+      const hasFilters = planF !== 'all' || roleF !== 'all' || gradeF !== 'all' || monthsF !== 'all';
+      document.getElementById('btn-filter-toggle').classList.toggle('has-filters', hasFilters);
+
+      const tbody = document.getElementById('users-tbody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="6">Няма намерени потребители.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(u => {
+        const initials = getInitials(u.full_name, u.email);
+        const date     = new Date(u.created_at).toLocaleDateString('bg-BG', { day:'numeric', month:'short', year:'numeric' });
+        const months   = monthsAgo(u.created_at);
+        const isPaid   = u.plan === 'active';
+        return `
+          <tr class="clickable-row" onclick="openUserDetail('${u.id}')">
+            <td>
+              <div class="user-info">
+                <div class="user-avatar-sm">${initials}</div>
+                <div>
+                  <div class="user-name">${u.full_name || '—'}</div>
+                  <div class="user-email">${u.email || ''}</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="role-badge ${u.role}">${u.role === 'student' ? 'Ученик' : 'Родител'}</span></td>
+            <td>${u.grade ? u.grade + ' кл.' : '—'}</td>
+            <td style="color:var(--muted);font-size:13px;">${date}</td>
+            <td style="font-size:13px;color:var(--muted);">${months} м.</td>
+            <td>
+              <div class="plan-toggle">
+                <button class="plan-btn ${!isPaid ? 'active-free' : ''}"
+                  onclick="setPlan('${u.id}', 'free', this)"
+                  ${!isPaid ? 'disabled' : ''}>Безплатен</button>
+                <button class="plan-btn ${isPaid ? 'active-paid' : ''}"
+                  onclick="setPlan('${u.id}', 'active', this)"
+                  ${isPaid ? 'disabled' : ''}>Активен</button>
+              </div>
+            </td>
+            <td>
+              ${!u.is_admin ? `<button class="btn-delete-user" onclick="event.stopPropagation();deleteUser('${u.id}', '${u.email}')">Изтрий</button>` : ''}
+            </td>
+          </tr>`;
+      }).join('');
+    }
+
+    // ── Toggle plan ──────────────────────────────────────────
+    window.setPlan = async (userId, plan, btn) => {
+      const row  = btn.closest('tr');
+      const btns = row.querySelectorAll('.plan-btn');
+      btns.forEach(b => b.disabled = true);
+
+      const { error } = await sb.from('profiles').update({ plan }).eq('id', userId);
+      if (error) { alert('Грешка: ' + error.message); btns.forEach(b => b.disabled = false); return; }
+
+      if (plan === 'active') {
+        // New subscription — get price from settings
+        const { data: ps } = await sb.from('settings').select('value').eq('key','price_student').maybeSingle();
+        const price = parseFloat(ps?.value) || 30;
+        await sb.from('subscriptions').insert({ user_id: userId, plan: 'student', price_eur: price, status: 'active' });
+      } else {
+        // Cancel active subscription
+        await sb.from('subscriptions')
+          .update({ status: 'cancelled', cancelled_at: new Date().toISOString() })
+          .eq('user_id', userId).eq('status', 'active');
+      }
+
+      const user = allUsers.find(u => u.id === userId);
+      if (user) user.plan = plan;
+      updateStats(); renderTable(); loadFinances();
+    };
+
+    // ── User detail panel ────────────────────────────────────
+    function openPanel()  {
+      document.getElementById('udp-overlay').classList.add('open');
+      document.getElementById('udp-panel').classList.add('open');
+    }
+    function closePanel() {
+      document.getElementById('udp-overlay').classList.remove('open');
+      document.getElementById('udp-panel').classList.remove('open');
+    }
+    document.getElementById('udp-close').addEventListener('click', closePanel);
+    document.getElementById('udp-overlay').addEventListener('click', closePanel);
+
+    window.openUserDetail = async (userId) => {
+      const u = allUsers.find(u => u.id === userId);
+      if (!u) return;
+
+      const initials = getInitials(u.full_name, u.email);
+      document.getElementById('udp-avatar').textContent = initials;
+      document.getElementById('udp-name').textContent   = u.full_name || '—';
+      document.getElementById('udp-email').textContent  = u.email || '';
+
+      const fmtDate = d => d ? new Date(d).toLocaleDateString('bg-BG', { day:'numeric', month:'long', year:'numeric' }) : '—';
+
+      document.getElementById('udp-profile-rows').innerHTML = `
+        <div class="udp-row"><span class="udp-row-label">Роля</span><span class="udp-row-val">${u.role === 'student' ? 'Ученик' : 'Родител'}</span></div>
+        <div class="udp-row"><span class="udp-row-label">Клас</span><span class="udp-row-val">${u.grade ? u.grade + ' клас' : '—'}</span></div>
+        <div class="udp-row"><span class="udp-row-label">Абонамент</span><span class="udp-row-val">${u.plan === 'active' ? '<span style="color:#16a34a;">Активен</span>' : 'Безплатен'}</span></div>
+        <div class="udp-row"><span class="udp-row-label">Регистриран</span><span class="udp-row-val">${fmtDate(u.created_at)}</span></div>
+        <div class="udp-row"><span class="udp-row-label">Активен</span><span class="udp-row-val">${monthsAgo(u.created_at)} месеца</span></div>
+      `;
+
+      document.getElementById('udp-subs').innerHTML = '<div class="udp-empty">Зарежда…</div>';
+      document.getElementById('udp-api').innerHTML  = '<div class="udp-empty">Зарежда…</div>';
+      openPanel();
+
+      // Load subscriptions
+      const { data: subs } = await sb.from('subscriptions')
+        .select('plan, price_eur, status, started_at, cancelled_at')
+        .eq('user_id', userId)
+        .order('started_at', { ascending: false });
+
+      if (!subs || subs.length === 0) {
+        document.getElementById('udp-subs').innerHTML = '<div class="udp-empty">Няма история на абонамент.</div>';
+      } else {
+        document.getElementById('udp-subs').innerHTML = subs.map(s => `
+          <div class="udp-sub-card">
+            <div class="udp-sub-head">
+              <span>${s.plan === 'student' ? 'Ученик' : s.plan}</span>
+              <span class="${s.status === 'active' ? 'udp-badge-active' : 'udp-badge-cancelled'}">
+                ${s.status === 'active' ? 'Активен' : 'Спрян'}
+              </span>
+            </div>
+            <div class="udp-sub-dates">
+              От: ${fmtDate(s.started_at)}
+              ${s.cancelled_at ? ' · До: ' + fmtDate(s.cancelled_at) : ''}
+            </div>
+            <div style="margin-top:4px;font-weight:700;">€${parseFloat(s.price_eur).toFixed(2)} / месец</div>
+          </div>`).join('');
+      }
+
+      // Load API usage
+      const { data: usage } = await sb.from('api_usage')
+        .select('input_tokens, output_tokens, cost_usd, created_at')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+
+      if (!usage || usage.length === 0) {
+        document.getElementById('udp-api').innerHTML = '<div class="udp-empty">Няма запитвания към Знайко.</div>';
+      } else {
+        const total = usage.reduce((s, r) => ({ cost: s.cost + r.cost_usd, tokens: s.tokens + r.input_tokens + r.output_tokens }), { cost: 0, tokens: 0 });
+        const last  = new Date(usage[0].created_at).toLocaleDateString('bg-BG', { day:'numeric', month:'long', year:'numeric' });
+        document.getElementById('udp-api').innerHTML = `
+          <div class="udp-row"><span class="udp-row-label">Общо запитвания</span><span class="udp-row-val">${usage.length}</span></div>
+          <div class="udp-row"><span class="udp-row-label">Общо токени</span><span class="udp-row-val">${total.tokens.toLocaleString()}</span></div>
+          <div class="udp-row"><span class="udp-row-label">Общ разход</span><span class="udp-row-val">$${total.cost.toFixed(4)}</span></div>
+          <div class="udp-row"><span class="udp-row-label">Последно</span><span class="udp-row-val">${last}</span></div>
+        `;
+      }
+    };
+
+    // ── Delete user ──────────────────────────────────────────
+    let pendingDeleteId = null;
+
+    window.deleteUser = (userId, email) => {
+      pendingDeleteId = userId;
+      document.getElementById('confirm-msg').textContent =
+        `Ще изтриеш "${email}". Това действие е необратимо.`;
+
+      const overlay  = document.getElementById('confirm-overlay');
+      const btn      = document.getElementById('btn-confirm-delete');
+      overlay.classList.add('open');
+      btn.disabled = true;
+
+      let secs = 3;
+      btn.textContent = `Да, изтрий (${secs})`;
+      const interval = setInterval(() => {
+        secs--;
+        if (secs > 0) {
+          btn.textContent = `Да, изтрий (${secs})`;
+        } else {
+          clearInterval(interval);
+          btn.disabled = false;
+          btn.textContent = 'Да, изтрий';
+        }
+      }, 1000);
+
+      document.getElementById('btn-cancel-delete').onclick = () => {
+        clearInterval(interval);
+        overlay.classList.remove('open');
+        pendingDeleteId = null;
+      };
+    };
+
+    document.getElementById('btn-confirm-delete').addEventListener('click', async () => {
+      if (!pendingDeleteId) return;
+      const { error } = await sb.from('profiles').delete().eq('id', pendingDeleteId);
+      document.getElementById('confirm-overlay').classList.remove('open');
+      if (error) { alert('Грешка: ' + error.message); return; }
+      allUsers = allUsers.filter(u => u.id !== pendingDeleteId);
+      pendingDeleteId = null;
+      updateStats();
+      renderTable();
+    });
+
+    // ── Filter controls ───────────────────────────────────────
+    document.getElementById('search').addEventListener('input', renderTable);
+    document.getElementById('filter-plan').addEventListener('change', renderTable);
+    document.getElementById('filter-role').addEventListener('change', renderTable);
+    document.getElementById('filter-grade').addEventListener('change', renderTable);
+    document.getElementById('filter-months').addEventListener('change', renderTable);
+
+    document.getElementById('btn-filter-toggle').addEventListener('click', () => {
+      document.getElementById('filter-panel').classList.toggle('open');
+    });
+    document.getElementById('btn-clear-filters').addEventListener('click', () => {
+      ['filter-role','filter-plan','filter-grade','filter-months'].forEach(id => {
+        document.getElementById(id).value = 'all';
+      });
+      document.getElementById('btn-filter-toggle').classList.remove('has-filters');
+      renderTable();
+    });
+
+    loadUsers();
+
+    // ── Finances ─────────────────────────────────────────────
+    const COST_KEYS = ['cost_hosting','cost_supabase','cost_api','cost_teachers','cost_other'];
+
+    async function loadFinances() {
+      // Load prices + costs from settings
+      const { data: settings } = await sb.from('settings').select('key, value')
+        .in('key', ['price_student', ...COST_KEYS]);
+      if (!settings) return;
+
+      const s = Object.fromEntries(settings.map(r => [r.key, parseFloat(r.value) || 0]));
+
+      // Fill cost inputs
+      COST_KEYS.forEach(k => {
+        const el = document.getElementById(k.replace('_', '-').replace('cost-', 'cost-'));
+        if (el && s[k]) el.value = s[k];
+      });
+
+      // Revenue: active users × base price
+      const activeCount = allUsers.filter(u => u.plan === 'active' && !u.is_admin).length;
+      const basePrice   = s['price_student'] || 30;
+      const mrr         = activeCount * basePrice;
+      const totalCosts  = COST_KEYS.reduce((sum, k) => sum + (s[k] || 0), 0);
+      const profit      = mrr - totalCosts;
+
+      document.getElementById('fin-mrr').textContent    = `€${mrr}`;
+      document.getElementById('fin-mrr-sub').textContent = `${activeCount} активни × €${basePrice}`;
+      document.getElementById('fin-costs').textContent  = `€${totalCosts}`;
+      document.getElementById('fin-profit').textContent = `€${profit}`;
+      const card = document.getElementById('fin-profit-card');
+      card.classList.toggle('profit', profit >= 0);
+      card.classList.toggle('loss',   profit < 0);
+
+      // Breakdown
+      const students = allUsers.filter(u => u.role === 'student' && u.plan === 'active' && !u.is_admin).length;
+      const parents  = allUsers.filter(u => u.role === 'parent'  && u.plan === 'active' && !u.is_admin).length;
+      const avgMonths = activeCount > 0
+        ? Math.round(allUsers.filter(u => u.plan === 'active' && !u.is_admin).reduce((s, u) => s + monthsAgo(u.created_at), 0) / activeCount)
+        : 0;
+      document.getElementById('fin-breakdown').innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+          <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Ученици (платени)</div><div style="font-size:22px;font-weight:800;">${students}</div></div>
+          <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Родители (платени)</div><div style="font-size:22px;font-weight:800;">${parents}</div></div>
+          <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Средно месеци</div><div style="font-size:22px;font-weight:800;">${avgMonths} м.</div></div>
+        </div>
+        <div id="monthly-table-wrap">Зарежда месечна статистика…</div>
+        <p style="margin-top:12px;font-size:12px;color:var(--muted);">* Точни данни след Stripe интеграцията.</p>`;
+
+      // Monthly breakdown from subscriptions table
+      const { data: subs } = await sb.from('subscriptions').select('user_id, plan, price_eur, status, started_at, cancelled_at');
+      const apiCostPerUser = activeCount > 0 ? (s['cost_api'] || 0) / activeCount : 0;
+
+      if (subs && subs.length > 0) {
+        const months = {};
+        subs.forEach(sub => {
+          const m = sub.started_at.slice(0, 7);
+          if (!months[m]) months[m] = { new: 0, cancelled: 0, value: 0, renewed: 0, apiCost: 0 };
+          months[m].new++;
+          months[m].value += sub.price_eur;
+          months[m].apiCost += apiCostPerUser;
+          if (sub.cancelled_at) {
+            const cm = sub.cancelled_at.slice(0, 7);
+            if (!months[cm]) months[cm] = { new: 0, cancelled: 0, value: 0, renewed: 0, apiCost: 0 };
+            months[cm].cancelled++;
+          }
+        });
+        const rows = Object.entries(months).sort((a,b) => b[0].localeCompare(a[0])).map(([m, d]) => {
+          const [y, mo] = m.split('-');
+          const label  = new Date(+y, +mo-1).toLocaleDateString('bg-BG', { month: 'long', year: 'numeric' });
+          const netVal = d.value - d.apiCost;
+          const netColor = netVal >= 0 ? '#16a34a' : '#dc2626';
+          return `<tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:10px 8px;font-weight:700;">${label}</td>
+            <td style="padding:10px 8px;color:#16a34a;font-weight:700;">+${d.new}</td>
+            <td style="padding:10px 8px;color:var(--muted);">${d.renewed}</td>
+            <td style="padding:10px 8px;color:#dc2626;">−${d.cancelled}</td>
+            <td style="padding:10px 8px;font-weight:700;">€${d.value.toFixed(2)}</td>
+            <td style="padding:10px 8px;color:#dc2626;">−€${d.apiCost.toFixed(2)}</td>
+            <td style="padding:10px 8px;font-weight:800;color:${netColor};">€${netVal.toFixed(2)}</td>
+          </tr>`;
+        }).join('');
+        document.getElementById('monthly-table-wrap').innerHTML = `
+          <table style="width:100%;border-collapse:collapse;font-size:13px;">
+            <thead><tr style="border-bottom:2px solid var(--line);">
+              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Месец</th>
+              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Нови</th>
+              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Подновени</th>
+              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Спрени</th>
+              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Приход</th>
+              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">API разход</th>
+              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Нето</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+          </table>`;
+      } else {
+        document.getElementById('monthly-table-wrap').innerHTML = '<p style="color:var(--muted);font-size:13px;">Все още няма данни. Данните се попълват автоматично при смяна на абонамент.</p>';
+      }
+    }
+
+    async function loadApiUsage() {
+      const { data: usage } = await sb.from('api_usage')
+        .select('user_id, input_tokens, output_tokens, cost_usd, created_at');
+
+      if (!usage || usage.length === 0) {
+        document.getElementById('fin-api-real').textContent = '$0.000';
+        document.getElementById('fin-api-queries').textContent = '0';
+        document.getElementById('api-usage-table').innerHTML =
+          '<p style="color:var(--muted);font-size:13px;">Все още няма данни. Появяват се след първото запитване към Знайко.</p>';
+        return;
+      }
+
+      // Aggregate totals
+      const totalCost    = usage.reduce((s, r) => s + (r.cost_usd || 0), 0);
+      const totalQueries = usage.length;
+      document.getElementById('fin-api-real').textContent    = '$' + totalCost.toFixed(4);
+      document.getElementById('fin-api-real-sub').textContent = `${totalQueries} запитвания общо`;
+      document.getElementById('fin-api-queries').textContent  = totalQueries;
+      document.getElementById('fin-api-queries-sub').textContent =
+        'средно $' + (totalCost / totalQueries).toFixed(5) + ' / запитване';
+
+      // Group by user_id
+      const byUser = {};
+      usage.forEach(r => {
+        if (!byUser[r.user_id]) byUser[r.user_id] = { queries: 0, tokens: 0, cost: 0, last: r.created_at };
+        byUser[r.user_id].queries++;
+        byUser[r.user_id].tokens  += (r.input_tokens || 0) + (r.output_tokens || 0);
+        byUser[r.user_id].cost    += (r.cost_usd || 0);
+        if (r.created_at > byUser[r.user_id].last) byUser[r.user_id].last = r.created_at;
+      });
+
+      // Sort by cost desc
+      const sorted = Object.entries(byUser).sort((a, b) => b[1].cost - a[1].cost);
+
+      const avgCost = totalCost / (allUsers.filter(u => u.plan === 'active').length || 1);
+
+      const rows = sorted.map(([uid, d]) => {
+        const user   = allUsers.find(u => u.id === uid);
+        const name   = user ? (user.full_name || user.email) : uid.slice(0, 8) + '…';
+        const email  = user?.email || '';
+        const lastDt = new Date(d.last).toLocaleDateString('bg-BG', { day: 'numeric', month: 'short' });
+        const isHigh = d.cost > avgCost * 2.5 && totalQueries > 5;
+        const costColor = isHigh ? '#dc2626' : 'var(--text)';
+        const flag      = isHigh ? ' <span title="Висок разход" style="color:#dc2626;">⚠</span>' : '';
+        return `<tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:10px 8px;">
+            <div style="font-weight:700;font-size:13px;">${name}${flag}</div>
+            <div style="font-size:11px;color:var(--muted);">${email}</div>
+          </td>
+          <td style="padding:10px 8px;font-size:13px;text-align:right;">${d.queries}</td>
+          <td style="padding:10px 8px;font-size:13px;text-align:right;">${d.tokens.toLocaleString()}</td>
+          <td style="padding:10px 8px;font-size:13px;font-weight:700;color:${costColor};text-align:right;">$${d.cost.toFixed(4)}</td>
+          <td style="padding:10px 8px;font-size:12px;color:var(--muted);text-align:right;">${lastDt}</td>
+        </tr>`;
+      }).join('');
+
+      document.getElementById('api-usage-table').innerHTML = `
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead><tr style="border-bottom:2px solid var(--line);">
+            <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Потребител</th>
+            <th style="text-align:right;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Запитвания</th>
+            <th style="text-align:right;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Токени</th>
+            <th style="text-align:right;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Разход ($)</th>
+            <th style="text-align:right;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Последно</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+        <p style="margin-top:10px;font-size:11px;color:var(--muted);">⚠ маркира потребители с разход над 2.5× средния.</p>`;
+    }
+
+    document.getElementById('btn-save-costs').addEventListener('click', async () => {
+      const btn = document.getElementById('btn-save-costs');
+      btn.disabled = true;
+      const rows = COST_KEYS.map(k => ({
+        key: k,
+        value: String(parseFloat(document.getElementById(k.replace('cost_','cost-')).value) || 0)
+      }));
+      const { error } = await sb.from('settings').upsert(rows, { onConflict: 'key' });
+      btn.disabled = false;
+      if (error) { alert('Грешка: ' + error.message); return; }
+      const msg = document.getElementById('save-costs-msg');
+      msg.style.display = 'inline';
+      setTimeout(() => { msg.style.display = 'none'; }, 2500);
+      loadFinances();
+    });
+
+    // Load finances when tab is opened
+    document.querySelector('[data-tab="finances"]').addEventListener('click', () => {
+      loadFinances();
+      loadApiUsage();
+    });
+
+    // ── Prices ───────────────────────────────────────────────
+    async function loadPrices() {
+      const { data } = await sb.from('settings').select('key, value')
+        .in('key', ['price_student','price_family','price_teacher','price_teacher_note']);
+      if (!data) return;
+      data.forEach(({ key, value }) => {
+        const map = { price_student: 'pi-student', price_family: 'pi-family', price_teacher: 'pi-teacher', price_teacher_note: 'pi-teacher-note' };
+        const el = document.getElementById(map[key]);
+        if (el) el.value = value;
+      });
+    }
+
+    document.getElementById('btn-save-prices').addEventListener('click', async () => {
+      const btn = document.getElementById('btn-save-prices');
+      btn.disabled = true;
+      const rows = [
+        { key: 'price_student',      value: document.getElementById('pi-student').value.trim() },
+        { key: 'price_family',       value: document.getElementById('pi-family').value.trim() },
+        { key: 'price_teacher',      value: document.getElementById('pi-teacher').value.trim() },
+        { key: 'price_teacher_note', value: document.getElementById('pi-teacher-note').value.trim() },
+      ].filter(r => r.value);
+
+      const { error } = await sb.from('settings').upsert(rows, { onConflict: 'key' });
+      btn.disabled = false;
+      if (error) { alert('Грешка: ' + error.message); return; }
+      const msg = document.getElementById('save-msg');
+      msg.style.display = 'inline';
+      setTimeout(() => { msg.style.display = 'none'; }, 2500);
+    });
+
+    loadPrices();
+    })();
+  </script>
+
+  <script>
+    document.querySelectorAll('.admin-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.admin-tab').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelectorAll('.tab-section').forEach(function(s) { s.classList.remove('active'); });
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

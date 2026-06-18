@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Христо Фотев · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-fotev-lyubov-q1',
+      lessonUrl:  '/lessons/bel12-fotev-lyubov.html',
+      lessonName: 'Фотев — "Колко си хубава!"',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 2',
+      title:      'Куиз — Христо Фотев — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel12-fotev-lyubov-quiz-2.html',
+      questions: [
+        {
+          q: 'Кои са годините на живота на Христо Фотев?',
+          opts: ['1904–1968', '1934–2002', '1920–1980', '1945–2010'],
+          correct: 1,
+          explanation: 'Христо Фотев е роден през 1934 г. и починал през 2002 г. Целият му живот е свързан с Варна.'
+        },
+        {
+          q: 'С кой град е свързан животът и творчеството на Христо Фотев?',
+          opts: ['София', 'Пловдив', 'Варна', 'Бургас'],
+          correct: 2,
+          explanation: 'Фотев е роден и живял във Варна — затова го определят като "варненски поет" и представител на Варненската поетическа школа.'
+        },
+        {
+          q: 'Какво художествено средство е основен емоционален акцент в "Колко си хубава!"?',
+          opts: ['Метафора', 'Ирония', 'Възклицание (екскламация)', 'Хипербола'],
+          correct: 2,
+          explanation: 'Възклицанието "Колко си хубава!" е основният емоционален акцент — изразява непосредствена, неудържана радост. То се повтаря в началото на първа и трета строфа.'
+        },
+        {
+          q: 'С какво са сравнени очите на любимата в стихотворението?',
+          opts: ['С две звезди', 'С две слънца', 'С две езера', 'С два диаманта'],
+          correct: 1,
+          explanation: 'В стихотворението очите на любимата са сравнени с "две слънца в синьото небе" — ярък природен образ, изразяващ тяхното сияние.'
+        },
+        {
+          q: 'С какво са сравнени устните на любимата в "Колко си хубава!"?',
+          opts: ['С рози', 'С зрели вишни', 'С малини', 'С червени маков цвят'],
+          correct: 1,
+          explanation: 'Устните на любимата са сравнени с "зрели вишни" — образ, свързан с вкуса и зрялостта, характерен за чувствената поезия на Фотев.'
+        },
+        {
+          q: 'Какъв стихотворен метър използва Фотев в "Колко си хубава!"?',
+          opts: ['Хорей', 'Дактил', 'Ямб', 'Анапест'],
+          correct: 2,
+          explanation: 'Стихотворението е изградено предимно в ямб — метрична схема с редуване на неударена и ударена сричка, която придава бодрост и лекота на звученето.'
+        },
+        {
+          q: 'Какво художествено средство е употребено в стиха "Косите ти като водопади летят / и пеят песен само за мене"?',
+          opts: ['Само сравнение', 'Само метафора', 'Сравнение и персонификация', 'Антитеза'],
+          correct: 2,
+          explanation: 'Тук има сравнение ("като водопади") и персонификация — косите получават способността да "пеят", което е присъщо на хора, не на неживи обекти.'
+        },
+        {
+          q: 'Каква е основната разлика между любовната лирика на Фотев и тази на Дебелянов?',
+          opts: [
+            'При Фотев любовта е тъжна, при Дебелянов е радостна',
+            'При Фотев любовта е жив, чувствен миг; при Дебелянов — спомен и копнеж',
+            'И двамата изобразяват любовта като абстрактен идеал',
+            'При Дебелянов любовта е земна, при Фотев е мистична'
+          ],
+          correct: 1,
+          explanation: 'Ключовата разлика: при Фотев любовта е непосредствена, чувствена, преживявана сега; при Дебелянов любовта е носталгия по нещо изгубено или недостижим идеал.'
+        },
+        {
+          q: 'Какво означава понятието "анафора" и как е използвана в стихотворението?',
+          opts: [
+            'Противопоставяне на два образа; използвана при описание на ръцете и очите',
+            'Повторение в края на стиховете; използвано в последната строфа',
+            'Повторение в началото на строфи или стихове; "Колко си хубава!" е повторено в начало на първа и трета строфа',
+            'Метафорично название; използвано за описание на косите'
+          ],
+          correct: 2,
+          explanation: 'Анафората е повторение в началото на строфи или стихове. В "Колко си хубава!" фразата "Колко си хубава!" се повтаря в началото на първа и трета строфа, създавайки рефренна структура.'
+        },
+        {
+          q: 'Към кого се обръща лирическият говорител в "Колко си хубава!"?',
+          opts: [
+            'Към себе си (вътрешен монолог)',
+            'Към абстрактен образ на красотата',
+            'Директно към любимата (в второ лице)',
+            'Към природата'
+          ],
+          correct: 2,
+          explanation: 'Лирическият говорител се обръща директно към любимата — стихотворението е изградено в второ лице ("колко си хубава", "очите ти", "косите ти"), което създава усещане за непосредствено присъствие и диалог.'
+        },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

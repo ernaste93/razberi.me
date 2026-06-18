@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Йордан Йовков · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-yovkov-pesenta-na-koleletata-q3',
+      lessonUrl:  '/lessons/bel12-yovkov-pesenta-na-koleletata.html',
+      lessonName: 'Йовков — Песента на колелетата',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 8',
+      title:      'Куиз — Йордан Йовков — Тест 3',
+      sub:        '10 въпроса · Избери верния отговор',
+      quizNum:    3,
+      passScore:  8,
+      questions: [
+        {
+          q: 'Кое от следните е вярно за разказа „Песента на колелетата"?',
+          opts: ['Написан е в стихотворна форма', 'Има щастлив романтичен край — Рада и Сали Яшар се женят', 'Разказа е проза с лирически тон, без щастлив романтичен финал', 'Главен герой е Рада, а не Сали Яшар'],
+          correct: 2,
+          explanation: 'Разказът е проза с характерен за Йовков лиричен тон. Финалът не е романтичен триумф — Рада се омъжва за друг, но Сали Яшар открива нов смисъл в красотата.'
+        },
+        {
+          q: 'Каква е разликата между „пеенето" в началото и „пеенето" в края на разказа?',
+          opts: ['Няма разлика — колелата винаги пеят по един и същи начин', 'В началото пеят от любовна радост и надежда; в края — от смирено приемане и по-зряла красота', 'В началото пеят тихо, в края — силно', 'В началото не пеят, в края пеят за пръв път'],
+          correct: 1,
+          explanation: 'Двете „пеения" са символично различни: началното е от любовна надежда и жизнена радост; финалното — от по-дълбоко, смирено осмисляне. Красотата се задълбочава, не изчезва.'
+        },
+        {
+          q: 'Как пейзажът функционира в разказа?',
+          opts: ['Не се описва природа', 'Пейзажът е само фон', 'Пейзажът е лиризиран и съответства на вътрешното състояние на героя', 'Пейзажът е реалистично точен без символика'],
+          correct: 2,
+          explanation: 'При Йовков пейзажът е лиризиран — природата отразява и подсилва вътрешния свят на героя. Добруджанският пейзаж е не просто фон, а емоционален контекст.'
+        },
+        {
+          q: 'Какъв е повествователният глас в разказа?',
+          opts: ['Първо лице — Сали Яшар разказва сам', 'Второ лице — обръщение към читателя', 'Трето лице, всезнаещ разказвач с лиричен тон', 'Множество разказвачи'],
+          correct: 2,
+          explanation: 'Разказвачът е от трето лице, всезнаещ, с характерния за Йовков лиричен, топъл тон. Тонът е ключов — той превръща обикновения живот в поетично пространство.'
+        },
+        {
+          q: 'С кой световен мотив се свързва централната тема на разказа?',
+          opts: ['Мотивът за трагичната смърт', 'Мотивът за красотата, живееща в обикновеното', 'Мотивът за социалната справедливост', 'Мотивът за пътешествието'],
+          correct: 1,
+          explanation: 'Мотивът за красотата, скрита в обикновеното — в труда, в простия човек, в ежедневието — е универсален. При Йовков той е „добруджанизиран" чрез конкретния образ на кираджията и пеещите колела.'
+        },
+        {
+          q: 'Какво характеризира художествения свят на Йовков като цяло?',
+          opts: ['Мрак, песимизъм и безнадеждност', 'Красота в обикновения живот, хуманизъм и вяра в достойнството на човека', 'Политически ангажирана критика на обществото', 'Комични ситуации и сатира'],
+          correct: 1,
+          explanation: 'Йовков е известен с хуманизма си — той вижда красота в обикновените хора и ежедневния живот. Неговият свят е пропит с вяра в достойнството и поетичността на простия човек.'
+        },
+        {
+          q: 'Каква е значимостта на заглавието „Песента на колелетата"?',
+          opts: ['Описва буквалното скърцане на колелата', 'Метафорично назовава централния символ — пеенето е символ на душата, любовта и красотата', 'Посочва музикален жанр', 'Е ирония — колелата всъщност не пеят'],
+          correct: 1,
+          explanation: 'Заглавието е метафорично — „песента" не е буквална мелодия, а символ на душата на Сали Яшар, на неговата любов и способността му да вижда красота в обикновения труд.'
+        },
+        {
+          q: 'Кое твърдение за Йовков е НЕВЯРНО?',
+          opts: ['Роден е в Добруджа', 'Участва в балканските войни', 'Умира през 1937 г.', 'Пише само поезия'],
+          correct: 3,
+          explanation: 'Йовков е прозаик, не поет. Прославя се с разкази и повести. Твърдението, че пише само поезия, е невярно — той е един от най-значимите български прозаици.'
+        },
+        {
+          q: 'Как разказът „Песента на колелетата" разширява понятието за красота?',
+          opts: ['Красотата е само в природата', 'Красотата е само в изкуството', 'Красотата живее в душата на обикновения труд и любовта е ключът, който я отключва', 'Красотата е достъпна само за образованите'],
+          correct: 2,
+          explanation: 'Йовков разширява красотата отвъд изкуството и природата — тя живее в душата на простия кираджия, в пеенето на колелата, в обикновения труд. Любовта е ключът, който я открива и прави видима.'
+        },
+        {
+          q: 'Каква е разликата между вярата при Далчев и вярата при Вапцаров?',
+          opts: ['И двамата имат еднаква вяра в Бога', 'При Вапцаров вярата е в Бога, при Далчев — в борбата', 'При Далчев вярата е лична и изгубена; при Вапцаров — колективна и борческа', 'Нито един от двамата не пише за вяра'],
+          correct: 2,
+          explanation: 'Далчев: лична, изгубена вяра в Бога, търсена в тишина. Вапцаров: колективна, борческа вяра в промяната и бъдещето — категорична и непоколебима.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

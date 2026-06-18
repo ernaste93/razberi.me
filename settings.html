@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Настройки – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── page title ── */
+    .settings-page { max-width: 1100px; margin: 16px auto 80px; padding: 0 24px; }
+
+    .settings-intro { margin-bottom: 16px; }
+    .settings-intro h1 { font-size: 22px; font-weight: 800; color: var(--text); margin: 0 0 2px; }
+    .settings-intro p  { font-size: 14px; color: var(--muted); margin: 0; }
+
+    /* ── two-column layout ── */
+    .settings-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* ── DARK sidebar ── */
+    .settings-sidebar {
+      background: var(--accent);
+      border-radius: 28px;
+      padding: 20px 12px;
+      position: sticky;
+      top: 24px;
+      box-shadow: 0 12px 40px rgba(16,24,40,0.18);
+    }
+    [data-theme="dark"] .settings-sidebar { background: #0f1e3d; box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+
+    .sb-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,0.4);
+      padding: 8px 14px 4px;
+    }
+    .sb-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 14px;
+      background: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.65);
+      cursor: pointer;
+      text-align: left;
+      transition: background .15s, color .15s;
+    }
+    .sb-item svg { width: 18px; height: 18px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .sb-item:hover  { background: rgba(255,255,255,0.1); color: #fff; }
+    .sb-item.active { background: rgba(255,255,255,0.15); color: #fff; font-weight: 700; }
+    .sb-divider { border: none; border-top: 1px solid rgba(255,255,255,0.12); margin: 8px 8px; }
+
+    /* ── WHITE content panel ── */
+    .settings-panel {
+      display: none;
+      background: rgba(255,255,255,0.97);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 40px 44px;
+      box-shadow: 0 8px 40px rgba(16,24,40,0.07);
+    }
+    [data-theme="dark"] .settings-panel { background: var(--card); }
+    .settings-panel.active { display: block; }
+
+    .panel-head { margin-bottom: 28px; }
+    .panel-head h2 { font-size: 21px; font-weight: 800; color: var(--text); margin: 0 0 5px; }
+    .panel-head p  { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+    /* form */
+    .field-stack { display: flex; flex-direction: column; gap: 18px; }
+    .field       { display: flex; flex-direction: column; gap: 6px; }
+    .field label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--muted);
+    }
+    .field input {
+      padding: 12px 15px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 15px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .field input:focus   { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,47,90,.07); }
+    .field input:disabled { opacity: .45; cursor: not-allowed; background: var(--soft); }
+    .field-hint { font-size: 12px; color: var(--muted); }
+
+    .panel-divider { border: none; border-top: 1px solid var(--line); margin: 32px 0; }
+
+    /* buttons */
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 11px 24px; border: none; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity .18s, transform .15s; }
+    .btn:hover    { opacity: .87; transform: translateY(-1px); }
+    .btn-primary  { background: var(--accent); color: #fff; }
+    .btn-ghost    { background: none; border: 1.5px solid var(--line); color: var(--muted); }
+    .btn-gold     { background: var(--gold); color: #fff; }
+    .btn-danger   { background: #dc2626; color: #fff; }
+    .btn-row      { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+
+    /* toggles */
+    .tog-list { display: flex; flex-direction: column; }
+    .tog-row  { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .tog-row:last-child { border-bottom: none; }
+    .tog-lbl  { font-size: 15px; font-weight: 600; color: var(--text); }
+    .tog-desc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .tog { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .tog input { opacity: 0; width: 0; height: 0; }
+    .tog-sl { position: absolute; inset: 0; background: var(--line); border-radius: 999px; cursor: pointer; transition: background .2s; }
+    .tog-sl::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.18); }
+    .tog input:checked + .tog-sl { background: var(--accent); }
+    .tog input:checked + .tog-sl::before { transform: translateX(20px); }
+
+
+    /* plan box */
+    .plan-box { background: var(--soft); border: 1px solid var(--line); border-radius: 16px; padding: 20px 24px; margin-bottom: 6px; }
+    .plan-box-lbl  { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 6px; }
+    .plan-box-name { font-size: 22px; font-weight: 800; color: var(--accent); }
+    .plan-box-sub  { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+    /* danger */
+    .danger-section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #dc2626;
+      margin-bottom: 10px;
+    }
+    .danger-box { border: 1px solid #fca5a5; border-radius: 14px; padding: 16px 20px; background: #fff8f8; }
+    .danger-box-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .danger-box-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .danger-box-desc  { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .btn-delete-acct {
+      flex-shrink: 0;
+      padding: 9px 18px;
+      background: none;
+      border: 1.5px solid #fca5a5;
+      border-radius: 10px;
+      color: #dc2626;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .18s, border-color .18s;
+      white-space: nowrap;
+    }
+    .btn-delete-acct:hover { background: #fff0f0; border-color: #dc2626; }
+
+    /* progress placeholder */
+    .progress-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; text-align: center; color: var(--muted); gap: 12px; }
+    .progress-placeholder svg { width: 48px; height: 48px; opacity: .35; stroke: var(--accent); fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+    .progress-placeholder p { font-size: 14px; margin: 0; }
+
+    /* feedback */
+    .fmsg { padding: 10px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; margin-top: 12px; display: none; }
+    .fmsg.ok  { background: #f0fff4; color: #15803d; display: block; }
+    .fmsg.err { background: #fff0f0; color: #dc2626; display: block; }
+
+    /* mobile */
+    /* ── Add child modal ── */
+    .modal-backdrop {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,22,40,0.45);
+      backdrop-filter: blur(3px);
+      z-index: 800;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-card {
+      background: white;
+      border-radius: 24px;
+      padding: 36px 36px 32px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 24px 60px rgba(15,22,40,0.2);
+    }
+    .modal-card h3 { font-size: 19px; font-weight: 800; color: var(--text); margin: 0 0 4px; }
+    .modal-card .modal-desc { font-size: 14px; color: var(--muted); margin: 0 0 24px; }
+    .modal-divider { border: none; border-top: 1px solid var(--line); margin: 20px 0; }
+
+    /* ── Confirm delete modal ── */
+    .modal-backdrop {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-backdrop .modal-card,
+    .modal-backdrop .confirm-modal-card {
+      transform: translateY(12px) scale(0.97);
+      transition: transform .22s ease, opacity .22s ease;
+      opacity: 0;
+    }
+    .modal-backdrop.open .modal-card,
+    .modal-backdrop.open .confirm-modal-card {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .confirm-modal-card {
+      background: white;
+      border-radius: 24px;
+      padding: 32px 32px 28px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 24px 60px rgba(15,22,40,0.22);
+      text-align: center;
+    }
+    .confirm-modal-icon {
+      width: 52px; height: 52px;
+      background: #fff0f0;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .confirm-modal-icon svg { width: 26px; height: 26px; stroke: #dc2626; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .confirm-modal-card h3 { font-size: 18px; font-weight: 800; color: var(--text); margin: 0 0 10px; }
+    .confirm-modal-card p  { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0 0 8px; }
+    .confirm-modal-card .confirm-warning {
+      background: #fff5f5;
+      border: 1px solid #fca5a5;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #dc2626;
+      margin: 16px 0 24px;
+      text-align: left;
+      line-height: 1.55;
+    }
+    .confirm-btn-row { display: flex; gap: 10px; }
+    .confirm-btn-row .btn { flex: 1; justify-content: center; }
+    .child-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+    }
+    .child-card-info .child-name { font-size: 15px; font-weight: 700; color: var(--text); }
+    .child-card-info .child-grade { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .btn-remove { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 18px; padding: 4px; border-radius: 8px; transition: color .15s, background .15s; }
+    .btn-remove:hover { color: #dc2626; background: #fff0f0; }
+
+    @media (max-width: 780px) {
+      .settings-layout { grid-template-columns: 1fr; }
+      .settings-sidebar { position: static; display: flex; gap: 4px; overflow-x: auto; padding: 10px 8px; border-radius: 20px; flex-wrap: nowrap; }
+      .sb-section-label, .sb-divider { display: none; }
+      .sb-item { white-space: nowrap; flex-shrink: 0; border-radius: 12px; padding: 9px 13px; }
+      .settings-panel { padding: 28px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/" id="home-link"><img src="logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html" style="font-weight:700;color:var(--accent);">Моят профил</a>
+            <a href="/settings.html?tab=children">Децата ми</a>
+            <a href="/settings.html?tab=subscription">Абонамент</a>
+            <a href="/settings.html?tab=notifications">Известия</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="settings-page">
+
+      <div class="settings-intro">
+        <h1>Настройки</h1>
+        <p>Управлявай профила, децата и абонамента си.</p>
+      </div>
+
+      <div class="settings-layout">
+
+        <!-- ── DARK SIDEBAR ── -->
+        <aside class="settings-sidebar">
+          <div class="sb-section-label">Основно</div>
+
+          <button class="sb-item active" data-panel="children">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Децата ми
+          </button>
+          <button class="sb-item" data-panel="progress">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Напредък
+          </button>
+          <button class="sb-item" data-panel="subscription">
+            <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Абонамент
+          </button>
+
+          <div class="sb-divider"></div>
+          <div class="sb-section-label">Акаунт</div>
+
+          <button class="sb-item" data-panel="profile">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Профил
+          </button>
+          <button class="sb-item" data-panel="notifications">
+            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            Известия
+          </button>
+          <button class="sb-item" data-panel="privacy">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Поверителност и данни
+          </button>
+          <button class="sb-item" data-panel="security">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Сигурност
+          </button>
+          <button class="sb-item" data-panel="accounts">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
+            Управление на акаунти
+          </button>
+        </aside>
+
+        <!-- ── WHITE PANELS ── -->
+        <div>
+
+          <!-- Децата ми -->
+          <div class="settings-panel active" id="panel-children">
+            <div class="panel-head">
+              <h2>Децата ми</h2>
+              <p>Добави профил на детето, за да изберете клас, предмети и да следите напредъка му.</p>
+            </div>
+            <div id="children-list">
+              <div style="display:flex;align-items:center;gap:24px;background:var(--soft);border:1px dashed var(--line);border-radius:16px;padding:24px 28px;margin-bottom:24px;">
+                <svg style="width:48px;height:48px;flex-shrink:0;stroke:var(--muted);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <div>
+                  <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;">Все още няма добавено дете</div>
+                  <div style="font-size:14px;color:var(--muted);line-height:1.55;">Добавете профил на детето, за да изберете клас, предмети и да следите напредъка му на едно място.</div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-gold" id="btn-add-child">+ Добави дете</button>
+          </div>
+
+          <!-- Напредък -->
+          <div class="settings-panel" id="panel-progress">
+            <div class="panel-head">
+              <h2>Напредък</h2>
+              <p>Преглед на активността и постиженията на детето ти.</p>
+            </div>
+            <div class="progress-placeholder">
+              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <p>Напредъкът ще се появи след като детето ви започне да ползва платформата.</p>
+            </div>
+          </div>
+
+          <!-- Абонамент -->
+          <div class="settings-panel" id="panel-subscription">
+            <div class="panel-head">
+              <h2>Абонамент</h2>
+              <p>Виж текущия план, плащанията и възможностите за промяна.</p>
+            </div>
+            <div class="plan-box">
+              <div class="plan-box-lbl">Активен план</div>
+              <div class="plan-box-name" id="current-plan">—</div>
+              <div class="plan-box-sub"  id="plan-sub">Зареждане...</div>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-primary">Промени план</button>
+              <button class="btn btn-ghost">История на плащанията</button>
+            </div>
+          </div>
+
+          <!-- Профил -->
+          <div class="settings-panel" id="panel-profile">
+            <div class="panel-head">
+              <h2>Профил</h2>
+              <p>Име, имейл адрес и основни данни за акаунта.</p>
+            </div>
+            <div class="field-stack">
+              <div class="field">
+                <label>Пълно име</label>
+                <input type="text" id="s-name" placeholder="Иван Иванов" />
+              </div>
+              <div class="field">
+                <label>Имейл адрес</label>
+                <input type="email" id="s-email" disabled />
+                <span class="field-hint">Имейлът не може да се промени оттук.</span>
+              </div>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-primary" id="save-profile">Запази промените</button>
+            </div>
+            <div class="fmsg" id="msg-profile"></div>
+          </div>
+
+          <!-- Известия -->
+          <div class="settings-panel" id="panel-notifications">
+            <div class="panel-head">
+              <h2>Известия</h2>
+              <p>Избери кога да получаваш имейли за напредък, трудни теми и напомняния.</p>
+            </div>
+            <div class="tog-list">
+              <div class="tog-row">
+                <div>
+                  <div class="tog-lbl">Обобщение за седмицата</div>
+                  <div class="tog-desc">Кратък отчет за активността и напредъка на детето.</div>
+                </div>
+                <label class="tog"><input type="checkbox" id="notif-weekly" checked /><span class="tog-sl"></span></label>
+              </div>
+              <div class="tog-row">
+                <div>
+                  <div class="tog-lbl">Напомняния за учене</div>
+                  <div class="tog-desc">Напомняния при пропуснати дни.</div>
+                </div>
+                <label class="tog"><input type="checkbox" id="notif-remind" /><span class="tog-sl"></span></label>
+              </div>
+              <div class="tog-row">
+                <div>
+                  <div class="tog-lbl">Новини и обновления</div>
+                  <div class="tog-desc">Нови предмети, функции и промоции.</div>
+                </div>
+                <label class="tog"><input type="checkbox" id="notif-news" /><span class="tog-sl"></span></label>
+              </div>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-primary" id="save-notif">Запази</button>
+            </div>
+            <div class="fmsg" id="msg-notif"></div>
+          </div>
+
+
+          <!-- Поверителност и данни -->
+          <div class="settings-panel" id="panel-privacy">
+            <div class="panel-head">
+              <h2>Поверителност и данни</h2>
+              <p>Управлявай бисквитките, данните и предпочитанията си.</p>
+            </div>
+
+            <div class="tog-list">
+              <div class="tog-row">
+                <div>
+                  <div class="tog-lbl">Аналитични бисквитки</div>
+                  <div class="tog-desc">Помагат ни да подобряваме платформата анонимно.</div>
+                </div>
+                <label class="tog"><input type="checkbox" id="priv-analytics" /><span class="tog-sl"></span></label>
+              </div>
+            </div>
+
+            <div style="margin:20px 0 0;display:flex;gap:16px;">
+              <a href="/privacy.html" style="font-size:13px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;">Политика за поверителност</a>
+              <a href="/terms.html"   style="font-size:13px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;">Условия за ползване</a>
+            </div>
+
+          </div>
+
+          <!-- Управление на акаунти -->
+          <div class="settings-panel" id="panel-accounts">
+            <div class="panel-head">
+              <h2>Управление на акаунти</h2>
+              <p>Изтрий главния профил или профил на ученик.</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div class="danger-box">
+                <div class="danger-box-row">
+                  <div>
+                    <div class="danger-box-title">Изтриване на главния профил</div>
+                    <div class="danger-box-desc">Изтрива вашия акаунт и всички свързани данни без възможност за възстановяване.</div>
+                  </div>
+                  <button class="btn-delete-acct" id="btn-delete">Изтрий акаунта</button>
+                </div>
+              </div>
+              <div class="danger-box">
+                <div class="danger-box-row">
+                  <div>
+                    <div class="danger-box-title">Изтриване на профил на ученик</div>
+                    <div class="danger-box-desc">Изберете кой ученически профил да бъде изтрит заедно с целия му напредък.</div>
+                  </div>
+                  <button class="btn-delete-acct" id="btn-delete-child-pick">Изтрий ученик</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Сигурност -->
+          <div class="settings-panel" id="panel-security">
+            <div class="panel-head">
+              <h2>Сигурност</h2>
+              <p>Парола и защита на акаунта.</p>
+            </div>
+            <div class="field-stack">
+              <div class="field">
+                <label>Имейл адрес</label>
+                <input type="email" id="sec-email" disabled />
+              </div>
+            </div>
+            <div class="panel-divider"></div>
+            <h3 style="font-size:16px;font-weight:700;color:var(--text);margin:0 0 6px;">Смяна на парола</h3>
+            <p style="font-size:14px;color:var(--muted);margin:0 0 20px;">Ще изпратим линк за нулиране на паролата на вашия имейл.</p>
+            <button class="btn btn-ghost" id="btn-reset-pw">✉ Изпрати линк за нулиране</button>
+            <div class="fmsg" id="msg-pw"></div>
+          </div>
+
+        </div><!-- /panels -->
+      </div><!-- /layout -->
+    </div><!-- /page -->
+  </main>
+
+  <!-- Confirm delete ACCOUNT modal -->
+  <div class="modal-backdrop" id="modal-confirm-account-delete">
+    <div class="confirm-modal-card">
+      <div class="confirm-modal-icon">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+      </div>
+      <h3>Изтриване на акаунт</h3>
+      <p>Всички данни — профил, напредък, история — ще бъдат изтрити без възможност за възстановяване.</p>
+      <div class="confirm-warning">
+        ⚠️ Ще бъдат изтрити:<br>
+        · Профилът ви и данните на децата<br>
+        · Целият напредък и статистика<br>
+        · История на уроците и обясненията<br>
+        · Абонаментът (без възстановяване)
+      </div>
+      <div class="field" style="margin-bottom:20px;">
+        <label style="font-size:12px;font-weight:700;color:var(--muted);">За потвърждение напишете <strong style="color:#dc2626;">ИЗТРИЙ</strong></label>
+        <input type="text" id="delete-confirm-input" placeholder="ИЗТРИЙ" autocomplete="off"
+          style="padding:11px 14px;border:1.5px solid var(--line);border-radius:11px;font-family:inherit;font-size:15px;background:var(--bg);color:var(--text);outline:none;margin-top:6px;transition:border-color .18s;" />
+      </div>
+      <div class="confirm-btn-row">
+        <button class="btn btn-ghost" id="btn-acct-delete-cancel">Отказ</button>
+        <button class="btn btn-danger" id="btn-acct-delete-confirm" disabled style="opacity:.45;cursor:not-allowed;">Изтрий акаунта</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm delete child modal -->
+  <div class="modal-backdrop" id="modal-confirm-delete">
+    <div class="confirm-modal-card">
+      <div class="confirm-modal-icon">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+      </div>
+      <h3>Премахване на дете</h3>
+      <p>Сигурни ли сте, че искате да премахнете <strong id="confirm-child-name"></strong> от акаунта?</p>
+      <div class="confirm-warning">
+        ⚠️ Това действие е необратимо. Ще бъдат изтрити:<br>
+        · Целият напредък и статистика<br>
+        · История на уроците и обясненията<br>
+        · Всички данни за активността
+      </div>
+      <div class="confirm-btn-row">
+        <button class="btn btn-ghost" id="btn-confirm-cancel">Отказ</button>
+        <button class="btn btn-danger" id="btn-confirm-delete">Да, изтрий</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pick child to delete modal -->
+  <div class="modal-backdrop" id="modal-pick-child">
+    <div class="confirm-modal-card" style="max-width:420px;width:90%;">
+      <h3 style="margin-bottom:6px;">Изтрий профил на ученик</h3>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">Изберете кой профил да бъде изтрит.</p>
+      <div id="pick-child-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;"></div>
+      <div class="confirm-btn-row">
+        <button class="btn btn-ghost" id="btn-pick-child-cancel">Затвори</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add child modal -->
+  <div class="modal-backdrop" id="modal-add-child">
+    <div class="modal-card">
+      <h3>Добави дете</h3>
+      <p class="modal-desc">Въведете основна информация за детето.</p>
+      <div class="field-stack">
+        <div class="field">
+          <label>Име на детето</label>
+          <input type="text" id="child-name" placeholder="Иван" />
+        </div>
+        <div class="field">
+          <label>Имейл на детето</label>
+          <input type="email" id="child-email" placeholder="ivan@example.com" />
+          <span class="field-hint">Детето ще се логва с този имейл в своя дашборд.</span>
+        </div>
+        <div class="field">
+          <label>Парола</label>
+          <input type="password" id="child-password" placeholder="Минимум 6 символа" />
+          <span class="field-hint">Изберете парола за акаунта на детето.</span>
+        </div>
+        <div class="field">
+          <label>Клас</label>
+          <select id="child-grade" style="padding:12px 15px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:15px;background:var(--bg);color:var(--text);outline:none;">
+            <option value="7">7. клас</option>
+            <option value="8">8. клас</option>
+            <option value="9">9. клас</option>
+            <option value="10">10. клас</option>
+            <option value="11">11. клас</option>
+            <option value="12">12. клас</option>
+          </select>
+        </div>
+      </div>
+      <div class="fmsg" id="msg-add-child"></div>
+      <div class="btn-row" style="margin-top:24px;justify-content:flex-end;">
+        <button class="btn btn-ghost" id="btn-cancel-child">Отказ</button>
+        <button class="btn btn-gold" id="btn-save-child">Запази</button>
+      </div>
+    </div>
+  </div>
+
+  <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Върни се горе"
+    onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient(
+      'https://wbcppvfgtvkrsfmclmjp.supabase.co',
+      'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l'
+    );
+
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+    const user = session.user;
+    window._sb = sb;
+    window._userId = user.id;
+
+    function getInitials(name, email) {
+      if (name && name.trim()) {
+        const p = name.trim().split(' ');
+        return p.length >= 2 ? (p[0][0] + p[p.length-1][0]).toUpperCase() : p[0].slice(0,2).toUpperCase();
+      }
+      return email ? email.slice(0,2).toUpperCase() : '??';
+    }
+
+    // Показваме инициалите от имейла веднага
+    document.getElementById('user-avatar').textContent = getInitials('', user.email);
+    document.getElementById('user-email-label').textContent  = user.email;
+    document.getElementById('s-email').value   = user.email;
+    document.getElementById('sec-email').value = user.email;
+
+    const { data: prof } = await sb.from('profiles').select('*').eq('id', user.id).single();
+    const fullName = prof?.full_name || '';
+    document.getElementById('user-fullname-label').textContent = fullName || user.email.split('@')[0];
+    // Обновяваме с истинското име и кешираме
+    const initials = getInitials(fullName, user.email);
+    document.getElementById('user-avatar').textContent = initials;
+    localStorage.setItem('userInitials', initials);
+    if (prof) {
+      document.getElementById('s-name').value = fullName;
+      const planMap = { student: 'Ученик', student_parent: 'Ученик + Родител', teacher: 'С Учител' };
+      document.getElementById('current-plan').textContent = planMap[prof.plan] || 'Безплатен';
+      document.getElementById('plan-sub').textContent = planMap[prof.plan] ? 'Активен абонамент.' : 'Нямате активен абонамент.';
+    } else {
+      document.getElementById('current-plan').textContent = 'Безплатен';
+      document.getElementById('plan-sub').textContent = 'Нямате активен абонамент.';
+    }
+
+    document.getElementById('save-profile').onclick = async () => {
+      const name = document.getElementById('s-name').value.trim();
+      const btn  = document.getElementById('save-profile');
+      btn.disabled = true;
+      btn.textContent = 'Запазване...';
+
+      const { error } = await sb.from('profiles').update({ full_name: name }).eq('id', user.id);
+
+      btn.disabled = false;
+      btn.textContent = 'Запази промените';
+
+      if (!error) {
+        const initials = getInitials(name, user.email);
+        document.getElementById('user-avatar').textContent = initials;
+        localStorage.setItem('userInitials', initials);
+        const label = document.getElementById('user-fullname-label');
+        if (label) label.textContent = name || user.email.split('@')[0];
+      }
+      msg('msg-profile', error ? error.message : 'Запазено успешно!', !!error);
+    };
+
+    document.getElementById('btn-reset-pw').onclick = async () => {
+      const { error } = await sb.auth.resetPasswordForEmail(user.email);
+      msg('msg-pw', error ? error.message : 'Линкът е изпратен на ' + user.email, !!error);
+    };
+
+    document.getElementById('btn-logout').onclick = async () => {
+      await sb.auth.signOut(); window.location.href = '/';
+    };
+
+    document.getElementById('btn-delete').onclick = () => {
+      document.getElementById('delete-confirm-input').value = '';
+      document.getElementById('btn-acct-delete-confirm').disabled = true;
+      document.getElementById('btn-acct-delete-confirm').style.opacity = '.45';
+      document.getElementById('btn-acct-delete-confirm').style.cursor = 'not-allowed';
+      openModal('modal-confirm-account-delete');
+    };
+
+    document.getElementById('delete-confirm-input').addEventListener('input', function() {
+      const ok = this.value.trim() === 'ИЗТРИЙ';
+      const btn = document.getElementById('btn-acct-delete-confirm');
+      btn.disabled = !ok;
+      btn.style.opacity = ok ? '1' : '.45';
+      btn.style.cursor  = ok ? 'pointer' : 'not-allowed';
+      this.style.borderColor = this.value.length > 0 ? (ok ? '#15803d' : '#fca5a5') : 'var(--line)';
+    });
+
+    document.getElementById('btn-acct-delete-cancel').onclick = () => closeModal('modal-confirm-account-delete');
+
+    document.getElementById('btn-acct-delete-confirm').onclick = () => {
+      closeModal('modal-confirm-account-delete', () => {
+        alert('За окончателно изтриване се свържете с info@razberi.me');
+      });
+    };
+
+    function msg(id, txt, err) {
+      const el = document.getElementById(id);
+      el.textContent = txt;
+      el.className = 'fmsg ' + (err ? 'err' : 'ok');
+      setTimeout(() => { el.className = 'fmsg'; }, 4000);
+    }
+  </script>
+
+  <script>
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity .35s ease';
+    window.addEventListener('load', () => document.body.style.opacity = '1');
+
+    document.getElementById('home-link').addEventListener('click', e => {
+      e.preventDefault();
+      document.body.style.opacity = '0';
+      setTimeout(() => window.location.href = '/', 320);
+    });
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('scroll-top-btn').classList.toggle('visible', window.scrollY > 200);
+    });
+
+
+    // Tab switching
+    document.querySelectorAll('.sb-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+      });
+    });
+
+    // URL ?tab=
+    const urlTab = new URLSearchParams(location.search).get('tab');
+    if (urlTab) {
+      const btn = document.querySelector('[data-panel="' + urlTab + '"]');
+      if (btn) btn.click();
+    }
+
+    // ── Add child modal ──
+    let children = JSON.parse(localStorage.getItem('children') || '[]');
+
+    function renderChildren() {
+      const list = document.getElementById('children-list');
+      if (children.length === 0) {
+        list.innerHTML = `
+          <div style="display:flex;align-items:center;gap:24px;background:var(--soft);border:1px dashed var(--line);border-radius:16px;padding:24px 28px;margin-bottom:24px;">
+            <svg style="width:48px;height:48px;flex-shrink:0;stroke:var(--muted);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <div>
+              <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;">Все още няма добавено дете</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.55;">Добавете профил на детето, за да изберете клас, предмети и да следите напредъка му на едно място.</div>
+            </div>
+          </div>`;
+      } else {
+        list.innerHTML = children.map((c, i) => `
+          <div class="child-card">
+            <div class="child-card-info">
+              <div class="child-name">${c.name}</div>
+              <div class="child-grade">${c.grade}. клас · ${c.email}</div>
+            </div>
+          </div>`).join('') + '<div style="margin-bottom:16px;"></div>';
+      }
+
+    }
+
+    function openModal(id)  { document.getElementById(id).classList.add('open'); }
+    function closeModal(id, cb) {
+      const el = document.getElementById(id);
+      el.classList.remove('open');
+      setTimeout(cb || function(){}, 240);
+    }
+
+    function renderPickerModal() {
+      const list = document.getElementById('pick-child-list');
+      if (!list) return;
+      if (children.length === 0) {
+        list.innerHTML = `<div style="text-align:center;padding:20px 0;font-size:14px;color:var(--muted);">Няма добавени ученици.</div>`;
+      } else {
+        list.innerHTML = children.map((c, i) => `
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);">
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--text);">${c.name}</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:2px;">${c.grade}. клас · ${c.email}</div>
+            </div>
+            <button class="btn-delete-acct" style="flex-shrink:0;" onclick="pickAndDelete(${i})">Изтрий</button>
+          </div>`).join('');
+      }
+    }
+
+    document.getElementById('btn-delete-child-pick').addEventListener('click', () => {
+      renderPickerModal();
+      openModal('modal-pick-child');
+    });
+
+    document.getElementById('btn-pick-child-cancel').addEventListener('click', () => {
+      closeModal('modal-pick-child');
+    });
+
+    window.pickAndDelete = function(i) {
+      closeModal('modal-pick-child', () => deleteChild(i));
+    };
+
+    let pendingDeleteIndex = null;
+
+    window.deleteChild = function(i) {
+      pendingDeleteIndex = i;
+      document.getElementById('confirm-child-name').textContent = children[i].name;
+      openModal('modal-confirm-delete');
+    };
+
+    document.getElementById('btn-confirm-cancel').addEventListener('click', () => {
+      closeModal('modal-confirm-delete', () => { pendingDeleteIndex = null; });
+    });
+
+    document.getElementById('btn-confirm-delete').addEventListener('click', () => {
+      if (pendingDeleteIndex === null) return;
+      const idx = pendingDeleteIndex;
+      closeModal('modal-confirm-delete', () => {
+        children.splice(idx, 1);
+        localStorage.setItem('children', JSON.stringify(children));
+        pendingDeleteIndex = null;
+        renderChildren();
+      });
+    });
+
+    renderChildren();
+
+    document.getElementById('btn-add-child').addEventListener('click', () => {
+      document.getElementById('child-name').value = '';
+      document.getElementById('child-email').value = '';
+      document.getElementById('child-password').value = '';
+      document.getElementById('child-grade').value = '7';
+      document.getElementById('msg-add-child').className = 'fmsg';
+      openModal('modal-add-child');
+      setTimeout(() => document.getElementById('child-name').focus(), 50);
+    });
+
+    document.getElementById('btn-cancel-child').addEventListener('click', () => {
+      closeModal('modal-add-child');
+    });
+
+    document.getElementById('modal-add-child').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeModal('modal-add-child');
+    });
+
+    document.getElementById('btn-save-child').addEventListener('click', () => {
+      const name  = document.getElementById('child-name').value.trim();
+      const email = document.getElementById('child-email').value.trim();
+      const pass  = document.getElementById('child-password').value;
+      const grade = document.getElementById('child-grade').value;
+      const m = document.getElementById('msg-add-child');
+
+      if (!name) {
+        m.textContent = 'Моля въведете името на детето.';
+        m.className = 'fmsg err';
+        return;
+      }
+      if (!email || !email.includes('@')) {
+        m.textContent = 'Моля въведете валиден имейл.';
+        m.className = 'fmsg err';
+        return;
+      }
+      if (pass.length < 6) {
+        m.textContent = 'Паролата трябва да е поне 6 символа.';
+        m.className = 'fmsg err';
+        return;
+      }
+      if (children.some(c => c.email === email)) {
+        m.textContent = 'Вече има дете с този имейл.';
+        m.className = 'fmsg err';
+        return;
+      }
+
+      children.push({ name, email, grade });
+      localStorage.setItem('children', JSON.stringify(children));
+      closeModal('modal-add-child', () => renderChildren());
+    });
+
+  </script>
+</body>
+</html>

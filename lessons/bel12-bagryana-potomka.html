@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Елисавета Багряна — Потомка · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    .poem-block {
+      background: var(--soft); border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0;
+      font-style: italic; font-size: 14px; line-height: 2; color: var(--text);
+      white-space: pre-line;
+    }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    #btn-ask-znaiko {
+      position: fixed;
+      bottom: 28px;
+      right: 32px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 99px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    #selection-tooltip {
+      position: fixed;
+      z-index: 9999;
+      display: none;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    #selection-tooltip.show {
+      display: block;
+      pointer-events: auto;
+    }
+    #explain-selection {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px;
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 99px;
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+      transition: opacity .12s, transform .12s;
+    }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after {
+      content: '';
+      position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 12 клас</a>
+        <span>›</span>
+        Потомка — Елисавета Багряна
+      </div>
+
+      <section class="demo-layout" style="margin:0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 12 КЛАС · ТЕМА 11</div>
+          <div class="lesson-title">Родовата памет и свободата в поезията на Елисавета Багряна</div>
+          <div class="lesson-meta">„Потомка" · Модернизъм · ~9 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Елисавета Багряна (1893–1991)</strong> е роден с истинско им Елисавета Белчева. Живее близо 100 години и е свидетел на цял век от историята на България. Счита се за <strong>първата значима жена-поетеса в българската литература</strong> и за един от символите на женската независимост и творческа свобода.</p>
+              <p>Творчеството й е пронизано от няколко трайни теми: <strong>свободата</strong> (лична, женска, духовна), <strong>природата</strong> като стихия и живот, <strong>любовта</strong> като страст и избор, <strong>историческата памет</strong> и родовото наследство. Тя пише в условията на консервативно общество, в което жената поетеса е рядкост — и точно затова нейните теми имат и биографична, и социална дълбочина.</p>
+              <p>Принадлежи към <strong>модернизма</strong> — литературно направление, което търси нови форми и теми, скъсва с традицията, утвърждава личността и субективния поглед. За разлика от символизма (Яворов, Дебелянов), модернизмът при Багряна е по-витален, по-телесен, по-свободолюбив.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Контекст: родова памет и историческо наследство</div>
+            <div class="lesson-body">
+              <p>„Потомка" е стихотворение за нещо, което е едновременно лично и универсално: <strong>какво носим в кръвта си от предците</strong>? Багряна разглежда наследството не като задължение или тежест, а като <strong>зов</strong> — непреодолима привличаща сила, по-силна от разума и волята.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🧬</div>
+                <div class="key-point-text"><strong>Родовата памет</strong> — говорителката усеща в себе си характера, духа, темперамента на предшествениците си. Те не са мъртви — те живеят в нея.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🐎</div>
+                <div class="key-point-text"><strong>Коня като символ</strong> — конят е централният образ. В „Потомка" конят = свобода, движение, непокорност. Прабабата е яздила коне — говорителката усеща същия импулс.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">👁️</div>
+                <div class="key-point-text"><strong>Прабабата</strong> — централният образ на предшественика. Тя е номадка, езичница, жена с „диви очи" и непокорна душа. Говорителката я разпознава в себе си.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌊</div>
+                <div class="key-point-text"><strong>Разривът</strong> — говорителката живее в съвременното общество, но усеща непреодолим разрив между него и вътрешния си зов. Тя не „принадлежи" напълно нито на традицията, нито на модерността.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стихотворението</div>
+            <div class="poem-block">Не зная колко кръв чужда
+тече, тече в мойта кръв —
+кръв на скитници и бродници,
+кръв на хайдути и борци.
+
+Прабаба ми е яздила кон
+с диви очи и разпусната коса —
+тя никой път не е знаела,
+тя никой дом не е имала.
+
+И аз сега по гладки плочи
+на волен, хубав, шумен град,
+вървя — и нещо в мен трепти
+неспокойно, нестихващо, странно.
+
+Трепти — и вика: ела,
+ела при мен, яхни кон,
+стегни юздите, нека скочим
+в ширините на полето.
+
+Но аз вървя по гладки плочи
+и нищо не казвам никому,
+и само чуват бялата стая
+и тъмнината на нощта.
+<div class="poem-author">— Елисавета Багряна</div></div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Строфа по строфа</div>
+            <div class="lesson-body">
+              <p><strong>Строфа 1 — Кръвта на предците:</strong> „Не зная колко кръв чужда тече в мойта кръв" — говорителката признава, че не може да идентифицира напълно наследството си. „Кръв на скитници и бродници, кръв на хайдути и борци" — натрупване, анафора. Предците са непокорни, подвижни, бунтарски — не спокойни селяни, а свободолюбиви хора в движение.</p>
+              <p><strong>Строфа 2 — Прабабата:</strong> Конкретният образ на предшественика. „Яздила кон с диви очи и разпусната коса" — физическата свобода, неукротимостта. „Никой път не е знаела, никой дом не е имала" — номадски начин на живот. Тя е противоположност на установения ред, дома, пътя — тя е вечното движение.</p>
+              <p><strong>Строфа 3 — Говорителката в съвременността:</strong> „По гладки плочи на волен, хубав, шумен град" — градската цивилизация, реда, гладките пътища (символ на опитомяването). Но „нещо в мен трепти / неспокойно, нестихващо, странно" — зовът на предците е вътре, той не мълчи.</p>
+              <p><strong>Строфа 4 — Зовът:</strong> Тремтенето получава глас. „Ела, ела при мен, яхни кон, стегни юздите" — директно обръщение, призив. „Нека скочим в ширините на полето" — свободата е конкретна, физическа, пространствена. Полето срещу гладките плочи.</p>
+              <p><strong>Строфа 5 — Отказът и мълчанието:</strong> „Но аз вървя по гладки плочи" — повторение. Говорителката не следва зова. „Нищо не казвам никому" — потискането е публично мълчание. „Само чуват бялата стая и тъмнината на нощта" — тайната се споделя само с интимното, с нощта. Неизпълненият зов остава вътрешна тайна.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства — подробно</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🗣️</div>
+                <div class="key-point-text"><strong>Лирическо обръщение</strong> — „ела, ела при мен" е директно обръщение към говорителката от страна на вътрешния зов. Необичайно — самото раздвоение получава глас.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Анафора</strong> — „кръв на..." (строфа 1), „тя никой..." (строфа 2), „ела, ела..." (строфа 4). Повторението засилва натрупването, ритъма, настойчивостта на зова.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎨</div>
+                <div class="key-point-text"><strong>Епитети</strong> — „диви очи", „разпусната коса" (за прабабата = дивост, свобода); „гладки плочи" (за цивилизацията = укротеност); „неспокойно, нестихващо, странно" (за зова = тройна характеристика).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🐎</div>
+                <div class="key-point-text"><strong>Символика на коня</strong> — конят е символ на свободата, движението, непокорството в цялото стихотворение. „Яхни кон" = приеми свободата, последвай инстинкта.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌃</div>
+                <div class="key-point-text"><strong>Контрастните пространства</strong> — „гладки плочи на шумен град" (цивилизацията, укротеността) срещу „ширините на полето" (природата, свободата). Пространственият контраст изразява вътрешния конфликт.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Рефрен (почти)</strong> — „вървя по гладки плочи" се повтаря в строфи 3 и 5. Повторението означава: нищо не се е променило, зовът е чут, но не е последван.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌙</div>
+                <div class="key-point-text"><strong>Символите на нощта и стаята</strong> — „бялата стая" и „тъмнината на нощта" са пространствата на интимното, тайното, неизказаното. Там говорителката е честна с себе си.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и основни мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Родовата памет като непреодолим вътрешен зов и конфликтът между наследения свободолюбив дух и изискванията на съвременния живот.</p>
+              <p><strong>Идея:</strong> Човек е повече от своето настояще — в него живеят предците му, техните ценности и импулси. Свободата не е само лична — тя е наследена, вградена в кръвта. И въпреки че зовът може да бъде потиснат (говорителката вървя по гладките плочи), той никога не млъква напълно.</p>
+              <p><strong>Основни мотиви:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Свободата като наследство</strong> — не избор, а кръвна принадлежност</li>
+                <li><strong>Женската идентичност</strong> — прабабата е модел на свободна жена</li>
+                <li><strong>Родовата памет</strong> — предците живеят в потомците</li>
+                <li><strong>Разривът</strong> — между традицията и модерността, между зова и действителността</li>
+                <li><strong>Мълчанието</strong> — тайното пазене на зова, невъзможността да го изкажеш публично</li>
+              </ul>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Лирическият говорител</div>
+            <div class="lesson-body">
+              <p>Лирическият говорител е жена, живееща в съвременния град, усещаща в себе си наследения дух на свободолюбиви предци. Тя е разкъсана между два свята: единият е реалният, цивилизованият, в който „вървя по гладки плочи"; другият е вътрешният, атавистичният, в който „нещо трепти" и вика.</p>
+              <p>Важна особеност: говорителката <strong>не последва зова</strong>. Тя е осъзната за него, но остава в рамките на цивилизованото. Това не е слабост — то е изборът на съвременния човек, натоварен с историческа памет. Мълчанието в края е едновременно потискане и чест.</p>
+              <p>Говорителката е изразително женска — прабабата е женски образ, конят е женски символ на свободата в контекста на стихотворението, а мълчанието пред социума е познато женско преживяване.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Багряна и другите автори в програмата</div>
+            <div class="lesson-body">
+              <p>Полезно е да сравниш Багряна с другите автори:</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔵</div>
+                <div class="key-point-text"><strong>Яворов</strong> — раздвоен между живота и смъртта, в криза на идентичността. При Багряна раздвоението е между зова и социалния ред — по-жизнено, по-телесно.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🟣</div>
+                <div class="key-point-text"><strong>Дебелянов</strong> — любовта като идеализиран спомен, пасивен. При Багряна свободата е активна, физическа, свързана с движение и пространство.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🟠</div>
+                <div class="key-point-text"><strong>Б. Христов</strong> — морален избор, почтеност, съвременен директен тон. При Багряна изборът е исторически и родов, не само личен.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Елисавета Багряна (1893–1991), истинско им Елисавета Белчева. Първата значима жена-поетеса в България.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Направление:</strong> Модернизъм — по-витален, по-свободолюбив от символизма.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Тема:</strong> Родовата памет и свободата като наследство от предците — конфликт между зова и цивилизацията.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Централен образ:</strong> Прабабата — номадка с диви очи, символ на наследената свободолюбива природа.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Символ на коня:</strong> Конят = свобода, движение, непокорност. „Яхни кон" = следвай вътрешния зов.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Контраст:</strong> „Гладки плочи на шумен град" (укротеност) срещу „ширините на полето" (свобода).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Финал:</strong> Говорителката не последва зова — мълчи и потиска вътрешното. Нощта и бялата стая са единствените свидетели.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Главни средства:</strong> Лирическо обръщение, анафора, контрастни пространства, символика на коня.</div></div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel12-bagryana-potomka-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel12-bagryana-potomka-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel12-bagryana-potomka-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+      btnTop.classList.toggle('visible', window.scrollY > 200);
+    });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Родовата памет и свободата — Елисавета Багряна „Потомка"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+</body>
+</html>

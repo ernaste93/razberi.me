@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Никола Вапцаров · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-vaptsarov-vyara-q1',
+      lessonUrl:  '/lessons/bel12-vaptsarov-vyara.html',
+      lessonName: 'Вапцаров — Вяра',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 4',
+      title:      'Куиз — Никола Вапцаров — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel12-vaptsarov-vyara-quiz-2.html',
+      questions: [
+        {
+          q: 'Кое художествено средство е водещо в „Вяра"?',
+          opts: ['Метафора', 'Анафора', 'Градация', 'Антитеза'],
+          correct: 1,
+          explanation: 'Анафората — повторението на „Вярвам" в началото на стихове и строфи — е главното структурно средство. Създава ритъм, убедителност и воля.'
+        },
+        {
+          q: 'Каква е вярата, изразена в стихотворението?',
+          opts: ['Религиозна вяра в Бога', 'Вяра в промяната, в човека и в борбата', 'Вяра в любовта и семейството', 'Вяра в неизбежната смърт'],
+          correct: 1,
+          explanation: 'Вярата у Вапцаров е светска — вяра в човека, в победата на справедливостта и в смисъла на революционната борба. Не е религиозна.'
+        },
+        {
+          q: 'Коя строфа обосновава вярата на говорителя?',
+          opts: ['Строфа 1', 'Строфа 2', 'Строфа 3', 'Строфа 5'],
+          correct: 2,
+          explanation: 'Строфа 3 съдържа „Вярвам, защото съм бил с вас" — вярата е обоснована с изстраданото колективно преживяване, не с абстрактни идеали.'
+        },
+        {
+          q: 'Как е представена смъртта в последната строфа?',
+          opts: ['Като трагедия и загуба', 'Като нещо, което трябва да се избегне', 'Като „нещо светло", ако е дадена за правда', 'Като несправедливост'],
+          correct: 2,
+          explanation: '„Смъртта ще бъде нещо светло" — ако е жертва за правда, смъртта се преосмисля от трагедия в достойнство и смисъл.'
+        },
+        {
+          q: 'Каква е разликата между „Вяра" и „История" на Вапцаров?',
+          opts: [
+            '„История" е по-оптимистична, „Вяра" — по-тъжна',
+            '„Вяра" е за надеждата и убеждението, „История" — за борбата и завета към следващите поколения',
+            'В „История" няма колективно „ние"',
+            'Двете стихотворения имат еднакъв акцент'
+          ],
+          correct: 1,
+          explanation: '„Вяра" акцентира на надеждата и непоколебимото убеждение. „История" — на борбата и завета да продължат следващите поколения.'
+        },
+        {
+          q: 'Кога е роден Никола Вапцаров и как завършва животът му?',
+          opts: [
+            'Роден 1887, загива на Балканската война',
+            'Роден 1909, разстрелян на 33 г. за комунистическа дейност',
+            'Роден 1900, умира от болест',
+            'Роден 1920, доживява до края на социализма'
+          ],
+          correct: 1,
+          explanation: 'Вапцаров е роден в Банско през 1909 г. и е разстрелян на 23 юли 1942 г. на 33-годишна възраст заради участие в комунистическото движение.'
+        },
+        {
+          q: 'Какво означава „бурното море на нашата борба"?',
+          opts: [
+            'Буквален морски пейзаж',
+            'Метафора за революционната борба като стихия, премината заедно',
+            'Символ на смъртта',
+            'Образ на родната природа'
+          ],
+          correct: 1,
+          explanation: '„Бурното море" е метафора — борбата е представена като морска стихия, опасна и мощна, но премината заедно от колектива.'
+        },
+        {
+          q: 'Коя черта НЕ е характерна за поезията на Вапцаров?',
+          opts: [
+            'Разговорен, прозаичен език',
+            'Колективно „ние"',
+            'Меланхолия и символистичен стил',
+            'Теми от работническия живот'
+          ],
+          correct: 2,
+          explanation: 'Меланхолията и символистичният стил са характерни за Дебелянов и другите символисти. Вапцаров съзнателно ги отхвърля — той е авангарден поет с борчески патос.'
+        },
+        {
+          q: 'Как се казва единствената поетична книга на Вапцаров?',
+          opts: ['„Стихотворения"', '„Борба и вяра"', '„Моторни песни"', '„Песни за родината"'],
+          correct: 2,
+          explanation: '„Моторни песни" (1940) е единствената книга на Вапцаров, издадена приживе. Заглавието отразява темите — машините, работниците, индустриалната цивилизация.'
+        },
+        {
+          q: 'Какво е характерно за лирическия говорител у Вапцаров?',
+          opts: [
+            'Самотен страдащ индивид',
+            'Аристократичен наблюдател',
+            'Член на колектив, говорещ от името на „ние"',
+            'Религиозен мистик'
+          ],
+          correct: 2,
+          explanation: 'За разлика от символистите, говорителят у Вапцаров не е самотен — той е член на работническия колектив, говори с „ние" и се обръща към „вас".'
+        },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Уроци – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .urotsi-page { max-width: 1100px; margin: 16px auto 80px; padding: 0 24px; }
+
+    .urotsi-intro { margin-bottom: 24px; }
+    .urotsi-intro h1 { font-size: 22px; font-weight: 800; color: var(--text); margin: 0 0 2px; }
+    .urotsi-intro p  { font-size: 14px; color: var(--muted); margin: 0; }
+
+    /* Subject tabs */
+    .subject-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .subject-tab {
+      padding: 8px 18px;
+      border-radius: 99px;
+      border: 1.5px solid var(--line);
+      background: rgba(255,255,255,0.85);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .subject-tab:hover { border-color: var(--accent); color: var(--accent); }
+    .subject-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* Subject section */
+    .subject-section { margin-bottom: 32px; animation: secFadeIn .2s ease both; }
+    @keyframes secFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .subject-section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .subject-section-icon {
+      width: 38px; height: 38px;
+      border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .subject-section-name { font-size: 17px; font-weight: 800; color: var(--text); }
+    .subject-section-sub  { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+    /* Topic group */
+    .topic-group { margin-bottom: 20px; }
+    .topic-group-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+      padding-left: 2px;
+    }
+
+    /* Lesson cards grid */
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .lesson-card {
+      background: rgba(255,255,255,0.95);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: 0 3px 12px rgba(16,24,40,0.06);
+      cursor: pointer;
+      transition: box-shadow .18s, transform .18s;
+      text-decoration: none;
+      display: block;
+    }
+    .lesson-card:hover {
+      box-shadow: 0 8px 24px rgba(16,24,40,0.13);
+      transform: translateY(-2px);
+    }
+    .lesson-card.locked {
+      opacity: .55;
+      cursor: default;
+      pointer-events: none;
+    }
+    .lesson-card.locked:hover { transform: none; box-shadow: 0 3px 12px rgba(16,24,40,0.06); }
+
+    .lesson-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .lesson-status {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .lesson-tag-sm {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--muted);
+      background: var(--soft);
+      padding: 3px 8px;
+      border-radius: 99px;
+    }
+    .lesson-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .lesson-card-meta {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lesson-card-pct {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .mini-bar-wrap {
+      flex: 1;
+      height: 4px;
+      background: var(--soft);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .mini-bar-fill {
+      height: 100%;
+      border-radius: 99px;
+    }
+    .mini-bar-label { font-size: 11px; font-weight: 700; color: var(--muted); }
+
+    /* Coming soon card */
+    .lesson-card-soon {
+      background: var(--soft);
+      border: 1.5px dashed var(--line);
+      border-radius: 16px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 800px) {
+      .lessons-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 500px) {
+      .lessons-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/" id="home-link"><img src="logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn" style="font-weight:700;color:var(--accent);">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/settings.html?tab=children">Децата ми</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="urotsi-page">
+
+      <div class="urotsi-intro">
+        <h1>Уроци</h1>
+        <p id="grade-label">12. клас · 4 предмета</p>
+      </div>
+
+      <!-- Subject filter tabs -->
+      <div class="subject-tabs">
+        <button class="subject-tab active" data-subject="all">Всички</button>
+        <button class="subject-tab" data-subject="bel">БЕЛ</button>
+        <button class="subject-tab" data-subject="math">Математика</button>
+        <button class="subject-tab" data-subject="bio">Биология</button>
+        <button class="subject-tab" data-subject="chem">Химия</button>
+      </div>
+
+      <!-- БЕЛ -->
+      <div class="subject-section" data-section="bel">
+        <div class="subject-section-head">
+          <div class="subject-section-icon" style="background:#e8edf7;color:#1e3a5f;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="subject-section-name">Български език и литература</div>
+            <div class="subject-section-sub" id="bel-progress-sub">12 от 12 урока достъпни · 0% завършени</div>
+          </div>
+        </div>
+
+        <div class="topic-group">
+          <div class="topic-group-label">Тема 1 — Любовта</div>
+          <div class="lessons-grid">
+            <a href="/lessons/bel12-debelyanov-lyubov.html" class="lesson-card" id="card-bel12-debelyanov-lyubov">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~8 мин</div>
+              </div>
+              <div class="lesson-card-title">Димчо Дебелянов — „Аз искам да те помня все така"</div>
+              <div class="lesson-card-meta">Символизъм · Лирика · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-debelyanov-lyubov"></div>
+            </a>
+            <a href="/lessons/bel12-fotev-lyubov.html" class="lesson-card" id="card-bel12-fotev-lyubov">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~7 мин</div>
+              </div>
+              <div class="lesson-card-title">Христо Фотев — „Колко си хубава!"</div>
+              <div class="lesson-card-meta">Модернизъм · Лирика · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-fotev-lyubov"></div>
+            </a>
+            <a href="/lessons/bel12-dubarova-posveshenie.html" class="lesson-card" id="card-bel12-dubarova-posveshenie">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~6 мин</div>
+              </div>
+              <div class="lesson-card-title">Петя Дубарова — „Посвещение"</div>
+              <div class="lesson-card-meta">Лирика · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-dubarova-posveshenie"></div>
+            </a>
+          </div>
+        </div>
+
+        <div class="topic-group">
+          <div class="topic-group-label">Тема 2 — Вярата и надеждата</div>
+          <div class="lessons-grid">
+            <a href="/lessons/bel12-vaptsarov-vyara.html" class="lesson-card" id="card-bel12-vaptsarov-vyara">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~8 мин</div>
+              </div>
+              <div class="lesson-card-title">Никола Вапцаров — „Вяра"</div>
+              <div class="lesson-card-meta">Авангард · Лирика · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-vaptsarov-vyara"></div>
+            </a>
+            <a href="/lessons/bel12-dalchev-molitva.html" class="lesson-card" id="card-bel12-dalchev-molitva">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~7 мин</div>
+              </div>
+              <div class="lesson-card-title">Атанас Далчев — „Молитва"</div>
+              <div class="lesson-card-meta">Предметизъм · Лирика · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-dalchev-molitva"></div>
+            </a>
+            <a href="/lessons/bel12-elin-pelin-spasova-mogila.html" class="lesson-card" id="card-bel12-elin-pelin-spasova-mogila">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~8 мин</div>
+              </div>
+              <div class="lesson-card-title">Елин Пелин — „Спасова могила"</div>
+              <div class="lesson-card-meta">Критически реализъм · Разказ · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-elin-pelin-spasova-mogila"></div>
+            </a>
+          </div>
+        </div>
+
+        <div class="topic-group">
+          <div class="topic-group-label">Тема 3 — Трудът и творчеството</div>
+          <div class="lessons-grid">
+            <a href="/lessons/bel12-elin-pelin-vetrena-melnitsa.html" class="lesson-card" id="card-bel12-elin-pelin-vetrena-melnitsa">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~8 мин</div>
+              </div>
+              <div class="lesson-card-title">Елин Пелин — „Ветрената мелница"</div>
+              <div class="lesson-card-meta">Критически реализъм · Разказ · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-elin-pelin-vetrena-melnitsa"></div>
+            </a>
+            <a href="/lessons/bel12-yovkov-pesenta-na-koleletata.html" class="lesson-card" id="card-bel12-yovkov-pesenta-na-koleletata">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~8 мин</div>
+              </div>
+              <div class="lesson-card-title">Йордан Йовков — „Песента на колелетата"</div>
+              <div class="lesson-card-meta">Реализъм · Разказ · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-yovkov-pesenta-na-koleletata"></div>
+            </a>
+            <a href="/lessons/bel12-paskov-balada.html" class="lesson-card" id="card-bel12-paskov-balada">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~9 мин</div>
+              </div>
+              <div class="lesson-card-title">Виктор Пасков — „Балада за Георг Хених"</div>
+              <div class="lesson-card-meta">Автобиографична проза · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-paskov-balada"></div>
+            </a>
+          </div>
+        </div>
+
+        <div class="topic-group">
+          <div class="topic-group-label">Тема 4 — Изборът и раздвоението</div>
+          <div class="lessons-grid">
+            <a href="/lessons/bel12-yavorov-dve-dushi.html" class="lesson-card" id="card-bel12-yavorov-dve-dushi">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~8 мин</div>
+              </div>
+              <div class="lesson-card-title">Пейо Яворов — „Две души"</div>
+              <div class="lesson-card-meta">Символизъм · Лирика · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-yavorov-dve-dushi"></div>
+            </a>
+            <a href="/lessons/bel12-bagryana-potomka.html" class="lesson-card" id="card-bel12-bagryana-potomka">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~7 мин</div>
+              </div>
+              <div class="lesson-card-title">Елисавета Багряна — „Потомка"</div>
+              <div class="lesson-card-meta">Модернизъм · Лирика · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-bagryana-potomka"></div>
+            </a>
+            <a href="/lessons/bel12-hristov-chesten-krast.html" class="lesson-card" id="card-bel12-hristov-chesten-krast">
+              <div class="lesson-card-top">
+                <div class="lesson-tag-sm">~6 мин</div>
+              </div>
+              <div class="lesson-card-title">Борис Христов — „Честен кръст"</div>
+              <div class="lesson-card-meta">Съвременна лирика · Куиз 10 въпроса</div>
+              <div id="quiz-result-bel12-hristov-chesten-krast"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Математика -->
+      <div class="subject-section" data-section="math">
+        <div class="subject-section-head">
+          <div class="subject-section-icon" style="background:#f3f0ff;color:#5b21b6;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21L12 3l9 18H3z"/><line x1="6.5" y1="14" x2="17.5" y2="14"/>
+            </svg>
+          </div>
+          <div>
+            <div class="subject-section-name">Математика</div>
+            <div class="subject-section-sub">Очаква се скоро</div>
+          </div>
+        </div>
+        <div class="lessons-grid">
+          <a href="/lessons/math12-kvadratna-funkciya.html" class="lesson-card" id="card-math12-kvadratna-funkciya">
+            <div class="lesson-card-top">
+              <div class="lesson-tag-sm">~10 мин</div>
+            </div>
+            <div class="lesson-card-title">Квадратна функция</div>
+            <div class="lesson-card-meta">Парабола · Дискриминанта · Виета · Куиз 10 въпроса</div>
+            <div id="quiz-result-math12-kvadratna-funkciya"></div>
+          </a>
+          <div class="lesson-card-soon">🔒 Тригонометрични функции <span style="margin-left:auto;font-size:11px;">Скоро</span></div>
+          <div class="lesson-card-soon">🔒 Производна и приложения <span style="margin-left:auto;font-size:11px;">Скоро</span></div>
+          <div class="lesson-card-soon">🔒 Квадратни неравенства <span style="margin-left:auto;font-size:11px;">Скоро</span></div>
+          <div class="lesson-card-soon">🔒 Показателна и логаритмична функция <span style="margin-left:auto;font-size:11px;">Скоро</span></div>
+          <div class="lesson-card-soon">🔒 Прогресии <span style="margin-left:auto;font-size:11px;">Скоро</span></div>
+          <div class="lesson-card-soon">🔒 Комбинаторика и вероятности <span style="margin-left:auto;font-size:11px;">Скоро</span></div>
+        </div>
+      </div>
+
+      <!-- Биология -->
+      <div class="subject-section" data-section="bio">
+        <div class="subject-section-head">
+          <div class="subject-section-icon" style="background:#f0fdf4;color:#15803d;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 2a10 10 0 0 0 0 20"/><line x1="2" y1="12" x2="22" y2="12"/>
+            </svg>
+          </div>
+          <div>
+            <div class="subject-section-name">Биология и здравно образование</div>
+            <div class="subject-section-sub">Очаква се скоро</div>
+          </div>
+        </div>
+        <div class="lessons-grid">
+          <div class="lesson-card-soon">🔒 Молекулярна биология — ДНК и РНК</div>
+          <div class="lesson-card-soon">🔒 Генетика — Менделови закони</div>
+          <div class="lesson-card-soon">🔒 Размножаване и развитие</div>
+        </div>
+      </div>
+
+      <!-- Химия -->
+      <div class="subject-section" data-section="chem">
+        <div class="subject-section-head">
+          <div class="subject-section-icon" style="background:#fff7ed;color:#c2410c;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 3h6v8l3.5 7a1 1 0 0 1-.9 1.5H6.4a1 1 0 0 1-.9-1.5L9 11V3z"/><line x1="6" y1="6" x2="9" y2="6"/><line x1="15" y1="6" x2="18" y2="6"/>
+            </svg>
+          </div>
+          <div>
+            <div class="subject-section-name">Химия и опазване на околната среда</div>
+            <div class="subject-section-sub">Очаква се скоро</div>
+          </div>
+        </div>
+        <div class="lessons-grid">
+          <div class="lesson-card-soon">🔒 Органична химия — въглеводороди</div>
+          <div class="lesson-card-soon">🔒 Биохимия</div>
+          <div class="lesson-card-soon">🔒 Опазване на околната среда</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    // ── Показва прогрес от тестовете върху картата ──
+    (function () {
+      const belKeys = [
+        'bel12-debelyanov-lyubov',
+        'bel12-fotev-lyubov',
+        'bel12-dubarova-posveshenie',
+        'bel12-vaptsarov-vyara',
+        'bel12-dalchev-molitva',
+        'bel12-elin-pelin-spasova-mogila',
+        'bel12-elin-pelin-vetrena-melnitsa',
+        'bel12-yovkov-pesenta-na-koleletata',
+        'bel12-paskov-balada',
+        'bel12-yavorov-dve-dushi',
+        'bel12-bagryana-potomka',
+        'bel12-hristov-chesten-krast',
+      ];
+      belKeys.forEach(key => {
+        const t1 = localStorage.getItem('quiz_' + key + '-q1');
+        const t2 = localStorage.getItem('quiz_' + key + '-q2');
+        const t3 = localStorage.getItem('quiz_' + key + '-q3');
+        const done = [t1, t2, t3].filter(Boolean).length;
+        const el = document.getElementById('quiz-result-' + key);
+        if (!el) return;
+        if (done === 0) return;
+        const allPassed = [t1, t2, t3].every(r => !r || JSON.parse(r).passed);
+        const color = done === 3 && allPassed ? '#16a34a' : done === 3 ? '#d97706' : 'var(--accent)';
+        const label = done === 3 ? (allPassed ? '✓ Всички тестове' : `${done}/3 теста`) : `${done}/3 теста`;
+        el.innerHTML = `<div style="display:flex;align-items:center;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">
+          <span style="font-size:11px;font-weight:700;color:${color};">${label}</span>
+        </div>`;
+      });
+      // Единични куизове (math и др.)
+      ['math12-kvadratna-funkciya'].forEach(key => {
+        const raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        const { correct, total, grade, passed } = JSON.parse(raw);
+        const el = document.getElementById('quiz-result-' + key);
+        if (!el) return;
+        const color = grade >= 5 ? '#16a34a' : grade >= 4 ? '#d97706' : '#dc2626';
+        el.innerHTML = `<div style="display:flex;align-items:center;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">
+          <span style="font-size:11px;font-weight:700;color:${color};">${passed ? '✓' : '✗'} Куиз: ${correct}/${total} · Оценка ${grade}/6</span>
+        </div>`;
+      });
+    })();
+
+    document.querySelectorAll('.subject-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const subject = tab.dataset.subject;
+        document.querySelectorAll('.subject-section').forEach(sec => {
+          const show = subject === 'all' || sec.dataset.section === subject;
+          if (show) {
+            sec.style.display = '';
+            sec.style.animation = 'none';
+            void sec.offsetWidth;
+            sec.style.animation = '';
+          } else {
+            sec.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

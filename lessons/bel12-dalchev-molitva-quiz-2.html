@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Атанас Далчев · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-dalchev-molitva-q2',
+      lessonUrl:  '/lessons/bel12-dalchev-molitva.html',
+      lessonName: 'Далчев — Молитва',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 5',
+      title:      'Куиз — Атанас Далчев — Тест 2',
+      sub:        '10 въпроса · Избери верния отговор',
+      quizNum:    2,
+      nextQuizUrl: '/lessons/bel12-dalchev-molitva-quiz-3.html',
+      passScore:  8,
+      questions: [
+        {
+          q: 'Кой е жанрът на „Молитва" от Далчев?',
+          opts: ['Ода', 'Лирически монолог-изповед', 'Епиграма', 'Балада'],
+          correct: 1,
+          explanation: '„Молитва" е лирически монолог с изповеден характер — говорителят се обръща директно към Бога и разкрива вътрешния си свят.'
+        },
+        {
+          q: 'Как се характеризира отношението на говорителя към Бога в „Молитва"?',
+          opts: ['Гняв и обвинение', 'Пълно равнодушие', 'Копнеж и търсене въпреки липсата на вяра', 'Безусловна и непоколебима вяра'],
+          correct: 2,
+          explanation: 'Говорителят не е нито вярващ, нито атеист — той копнее по Бога и се моли именно защото е загубил вярата. Отношението е амбивалентно: скръб, копнеж, надежда.'
+        },
+        {
+          q: 'Кой е говорителят в „Молитва"?',
+          opts: ['Свещеник, загубил паството си', 'Лирически аз — страдащ човек в духовна криза', 'Исторически герой от Средновековието', 'Дете, което търси майка си'],
+          correct: 1,
+          explanation: 'Говорителят е лирическото аз — обобщен образ на страдащ, самотен човек в духовна криза, търсещ смисъл и Бог.'
+        },
+        {
+          q: 'Кое определение най-точно описва „предметизма" на Далчев?',
+          opts: ['Поезия, изградена изцяло от каталози с предмети', 'Употреба на конкретни образи на вещи и места за изразяване на дълбоки екзистенциални теми', 'Натуралистично описание на бита без философски подтекст', 'Символично кодиране на природни явления'],
+          correct: 1,
+          explanation: 'При Далчев конкретната вещ (прозорец, стая, стена) е носител на философски и екзистенциален смисъл — предметът не е украса, а същност.'
+        },
+        {
+          q: 'Коя стилистична фигура е налице в повторението „умора, Господи, умора"?',
+          opts: ['Хипербола', 'Епифора', 'Анадиплосис (повторение за усилване)', 'Литота'],
+          correct: 2,
+          explanation: 'Повторението на думата „умора" в начало и край на обръщението е анадиплосис с усилваща функция — подчертава кулминацията на изтощението.'
+        },
+        {
+          q: 'В кой период от историята на България твори Далчев?',
+          opts: ['Епохата на Възраждането', 'Края на XIX век', 'Първата половина на XX век (между двете световни войни)', 'Социализмът след 1944 г.'],
+          correct: 2,
+          explanation: 'Далчев твори главно между двете световни войни и след тях — период на духовна криза, разочарование и търсене на смисъл, което отеква в поезията му.'
+        },
+        {
+          q: 'Каква е структурата на обръщението в „Молитва"?',
+          opts: ['Говорителят говори за Бога в трето лице', 'Директно лирическо обръщение към Бога (второ лице)', 'Диалог между говорителя и Бога', 'Монолог без адресат'],
+          correct: 1,
+          explanation: 'Стихотворението е директно обръщение към Бога — „Ти", „Те", „Господи" — което му придава характера на истинска молитва.'
+        },
+        {
+          q: 'Какво означава образът „оставен сам и гладен" в контекста на стихотворението?',
+          opts: ['Буквален глад — говорителят е беден', 'Духовна и екзистенциална самота и лишеност от смисъл', 'Критика на социалните условия', 'Носталгия по детството'],
+          correct: 1,
+          explanation: '„Сам и гладен" е метафора — говорителят е духовно самотен и лишен от вяра, от смисъл, от Бога. Не е буквален глад, а духовна лишеност.'
+        },
+        {
+          q: 'Как се проявява антитезата в „Молитва"?',
+          opts: ['Противопоставяне на деня и нощта', 'Контраст между вяра и безверие — говорителят се моли, въпреки че е без вяра', 'Опозиция между богатство и бедност', 'Противопоставяне на младостта и старостта'],
+          correct: 1,
+          explanation: 'Основната антитеза е между молитвата (изразяваща вяра) и декларираното безверие — парадоксът, който прави произведението толкова дълбоко.'
+        },
+        {
+          q: 'Кога умира Атанас Далчев?',
+          opts: ['1945 г.', '1960 г.', '1978 г.', '1990 г.'],
+          correct: 2,
+          explanation: 'Атанас Далчев умира през 1978 г. — живее дълъг живот (1904–1978) и твори в продължение на десетилетия.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

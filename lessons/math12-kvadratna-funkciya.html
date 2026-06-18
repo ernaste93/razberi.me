@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Квадратна функция · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    /* Math-specific styles */
+    .formula-block {
+      background: #f0f4ff;
+      border: 1.5px solid #c7d2fe;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+    .formula-block .formula-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; display: block;
+    }
+    .formula-inline {
+      background: #eef2ff; color: var(--accent);
+      padding: 1px 7px; border-radius: 6px;
+      font-weight: 700; font-size: 13px;
+    }
+    .example-block {
+      background: var(--soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 13px; line-height: 1.8;
+    }
+    .example-block strong { color: var(--accent); }
+    .example-step {
+      display: flex; gap: 10px; align-items: flex-start; justify-content: flex-start;
+      padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; width: 100%;
+    }
+    .example-step:last-child { border-bottom: none; }
+    .example-step > div:last-child { flex: 1; }
+    .step-num {
+      width: 22px; height: 22px; border-radius: 50%; background: var(--accent);
+      color: #fff; font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+    }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;
+    }
+    .compare-card {
+      border: 1.5px solid var(--line); border-radius: 12px; padding: 14px;
+      text-align: center; font-size: 13px;
+    }
+    .compare-card.pos { border-color: #86efac; background: #f0fdf4; }
+    .compare-card.neg { border-color: #fca5a5; background: #fff5f5; }
+    .compare-card .cc-title { font-weight: 800; font-size: 15px; margin-bottom: 6px; }
+    .compare-card.pos .cc-title { color: #16a34a; }
+    .compare-card.neg .cc-title { color: #dc2626; }
+
+    /* Floating Знайко button */
+    #btn-ask-znaiko {
+      position: fixed; bottom: 28px; right: 32px; z-index: 999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 20px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    /* Floating selection tooltip */
+    #selection-tooltip {
+      position: fixed; z-index: 9999; display: none;
+      transform: translateX(-50%);
+    }
+    #selection-tooltip.show { display: block; }
+    #explain-selection {
+      background: var(--accent); color: #fff; border: none;
+      padding: 7px 14px; border-radius: 20px; font-family: inherit;
+      font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+    }
+    #explain-selection::after {
+      content: ''; position: absolute; left: 50%; bottom: -6px;
+      transform: translateX(-50%);
+      border: 6px solid transparent; border-top-color: var(--accent); border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <nav style="display:flex;align-items:center;gap:4px;margin:0 auto;">
+        <a href="/urotsi.html" class="nav-btn">Уроци</a>
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Математика</a>
+        <span>›</span>
+        Квадратна функция
+      </div>
+
+      <section class="demo-layout">
+
+        <div class="lesson-panel">
+          <div id="lesson-content">
+
+            <div class="lesson-tag">Математика · Матура</div>
+            <h1 class="lesson-title">Квадратна функция</h1>
+            <div class="lesson-meta">Функции · Парабола · ~10 мин</div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 1. Определение -->
+            <div class="section-title">Определение</div>
+            <div class="lesson-body">
+              <p>Квадратна функция е всяка функция от вид:</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Стандартен вид</span>
+              f(x) = ax² + bx + c
+            </div>
+            <div class="lesson-body">
+              <p>където <span class="formula-inline">a, b, c</span> са реални числа и <span class="formula-inline">a ≠ 0</span>. Ако <span class="formula-inline">a = 0</span>, функцията се превръща в линейна — вече не е квадратна.</p>
+              <p>Примери: <span class="formula-inline">f(x) = x² − 4x + 3</span>, <span class="formula-inline">f(x) = −2x² + 1</span>, <span class="formula-inline">f(x) = 3x²</span></p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 2. Графика -->
+            <div class="section-title">Графиката — параболата</div>
+            <div class="lesson-body">
+              <p>Графиката на квадратна функция е <strong>парабола</strong>. Формата й зависи от знака на водещия коефициент <span class="formula-inline">a</span>:</p>
+            </div>
+            <div class="compare-grid">
+              <div class="compare-card pos">
+                <div class="cc-title">a &gt; 0</div>
+                <div style="font-size:28px;margin:6px 0;">∪</div>
+                <div>Параболата е отворена <strong>нагоре</strong>. Върхът е минимум.</div>
+              </div>
+              <div class="compare-card neg">
+                <div class="cc-title">a &lt; 0</div>
+                <div style="font-size:28px;margin:6px 0;">∩</div>
+                <div>Параболата е отворена <strong>надолу</strong>. Върхът е максимум.</div>
+              </div>
+            </div>
+            <div class="lesson-body">
+              <p>Колкото по-голямо е <span class="formula-inline">|a|</span>, толкова по-„тясна" е параболата. При <span class="formula-inline">|a| = 1</span> е „стандартната" ширина.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 3. Дискриминанта -->
+            <div class="section-title">Дискриминантата D</div>
+            <div class="lesson-body">
+              <p>Дискриминантата показва колко реални корена (нули) има квадратната функция:</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Дискриминанта</span>
+              D = b² − 4ac
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">✅</div>
+                <div class="key-point-text"><strong>D &gt; 0</strong> — два различни реални корена. Параболата пресича x-оста в две точки.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>D = 0</strong> — точно един корен (двоен). Параболата докосва x-оста в един точка — това е върхът.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❌</div>
+                <div class="key-point-text"><strong>D &lt; 0</strong> — няма реални корени. Параболата не пресича x-оста (цялата е над или под нея).</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 4. Нули -->
+            <div class="section-title">Намиране на нулите (корените)</div>
+            <div class="lesson-body">
+              <p>При <span class="formula-inline">D ≥ 0</span> нулите се намират по формулата:</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Формула за корени</span>
+              x₁,₂ = (−b ± √D) / 2a
+            </div>
+            <div class="example-block">
+              <strong>Пример:</strong> Намери нулите на f(x) = x² − 5x + 6
+              <div style="margin-top:10px;">
+                <div class="example-step"><div class="step-num">1</div><div>D = (−5)² − 4·1·6 = 25 − 24 = 1</div></div>
+                <div class="example-step"><div class="step-num">2</div><div>x₁ = (5 + 1) / 2 = 3 &nbsp;&nbsp; x₂ = (5 − 1) / 2 = 2</div></div>
+                <div class="example-step"><div class="step-num">3</div><div>Нулите са x = 2 и x = 3. Параболата пресича x-оста в точки (2, 0) и (3, 0).</div></div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 5. Връх -->
+            <div class="section-title">Върхът на параболата</div>
+            <div class="lesson-body">
+              <p>Върхът е най-важната точка на параболата — минимумът (при a &gt; 0) или максимумът (при a &lt; 0).</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Координати на върха</span>
+              x₀ = −b / 2a &nbsp;&nbsp;&nbsp; y₀ = f(x₀) = −D / 4a
+            </div>
+            <div class="example-block">
+              <strong>Пример:</strong> Намери върха на f(x) = 2x² − 8x + 3
+              <div style="margin-top:10px;">
+                <div class="example-step"><div class="step-num">1</div><div>x₀ = −(−8) / (2·2) = 8 / 4 = 2</div></div>
+                <div class="example-step"><div class="step-num">2</div><div>y₀ = 2·4 − 8·2 + 3 = 8 − 16 + 3 = −5</div></div>
+                <div class="example-step"><div class="step-num">3</div><div>Върхът е V(2, −5). Тъй като a = 2 &gt; 0, това е минимум.</div></div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 6. Ос на симетрия -->
+            <div class="section-title">Ос на симетрия</div>
+            <div class="lesson-body">
+              <p>Параболата е симетрична спрямо вертикалната права, минаваща през върха:</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Ос на симетрия</span>
+              x = −b / 2a = x₀
+            </div>
+            <div class="lesson-body">
+              <p>Това означава, че ако имаш две нули x₁ и x₂, оста на симетрия минава точно по средата между тях: <span class="formula-inline">x₀ = (x₁ + x₂) / 2</span>.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 7. Канонична форма -->
+            <div class="section-title">Канонична форма</div>
+            <div class="lesson-body">
+              <p>Каноничната (вертексна) форма е особено удобна, защото директно се чете върхът:</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Канонична форма</span>
+              f(x) = a(x − x₀)² + y₀
+            </div>
+            <div class="lesson-body">
+              <p>Минимумът/максимумът е <span class="formula-inline">y₀</span> и се постига при <span class="formula-inline">x = x₀</span>.</p>
+            </div>
+            <div class="example-block">
+              <strong>Пример:</strong> Запиши f(x) = x² + 4x + 7 в канонична форма
+              <div style="margin-top:10px;">
+                <div class="example-step"><div class="step-num">1</div><div>x₀ = −4 / (2·1) = −2</div></div>
+                <div class="example-step"><div class="step-num">2</div><div>y₀ = f(−2) = 4 − 8 + 7 = 3</div></div>
+                <div class="example-step"><div class="step-num">3</div><div>f(x) = (x + 2)² + 3 &nbsp;&nbsp;(Върхът е V(−2, 3), минимум)</div></div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 8. Монотонност -->
+            <div class="section-title">Монотонност</div>
+            <div class="lesson-body">
+              <p>Монотонността зависи от знака на <span class="formula-inline">a</span> и положението спрямо върха:</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📈</div>
+                <div class="key-point-text">При <strong>a &gt; 0</strong>: намалява в (−∞, x₀] и нараства в [x₀, +∞)</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📉</div>
+                <div class="key-point-text">При <strong>a &lt; 0</strong>: нараства в (−∞, x₀] и намалява в [x₀, +∞)</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 9. Формули на Виета -->
+            <div class="section-title">Формули на Виета</div>
+            <div class="lesson-body">
+              <p>Ако x₁ и x₂ са корените на <span class="formula-inline">ax² + bx + c = 0</span>, то:</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Формули на Виета</span>
+              x₁ + x₂ = −b/a &nbsp;&nbsp;&nbsp;&nbsp; x₁ · x₂ = c/a
+            </div>
+            <div class="lesson-body">
+              <p>Тези формули са изключително полезни при матурата — позволяват да проверяваш или намираш корени без да решаваш цялото уравнение.</p>
+            </div>
+            <div class="example-block">
+              <strong>Пример:</strong> За x² − 7x + 12 = 0 намери x₁ + x₂ и x₁ · x₂ без да решаваш уравнението.
+              <div style="margin-top:10px;">
+                <div class="example-step"><div class="step-num">1</div><div>a = 1, b = −7, c = 12</div></div>
+                <div class="example-step"><div class="step-num">2</div><div>x₁ + x₂ = −(−7)/1 = 7</div></div>
+                <div class="example-step"><div class="step-num">3</div><div>x₁ · x₂ = 12/1 = 12</div></div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- Най-важното -->
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Стандартен вид:</strong> f(x) = ax² + bx + c, a ≠ 0</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>a &gt; 0</strong> → парабола нагоре (∪), минимум; <strong>a &lt; 0</strong> → парабола надолу (∩), максимум</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Дискриминанта:</strong> D = b² − 4ac. D &gt; 0 → два корена; D = 0 → един корен; D &lt; 0 → няма корени</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Корени:</strong> x₁,₂ = (−b ± √D) / 2a</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Връх:</strong> x₀ = −b/2a, y₀ = f(x₀)</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Канонична форма:</strong> f(x) = a(x − x₀)² + y₀</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Виета:</strong> x₁ + x₂ = −b/a и x₁ · x₂ = c/a</div>
+              </div>
+            </div>
+
+            <!-- Quiz CTA -->
+            <div class="lesson-panel" style="margin-top:0; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+              <div>
+                <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+                <div style="font-size:13px;color:var(--muted);">10 въпроса · след като си прочел урока</div>
+              </div>
+              <a href="/lessons/math12-kvadratna-funkciya-quiz.html" style="display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:14px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;">Към куиза →</a>
+            </div>
+
+          </div><!-- /#lesson-content -->
+        </div><!-- /.lesson-panel -->
+
+        <!-- AI PANEL -->
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай формула или текст от урока и цъкни <strong>„Обясни"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+    </div>
+  </main>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Квадратна функция — стандартен вид, парабола, дискриминанта, връх, Виета';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+
+</body>
+</html>

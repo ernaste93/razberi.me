@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Атанас Далчев — Молитва · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 12 клас</a>
+        <span>›</span>
+        Молитва — Атанас Далчев
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 12 КЛАС · ТЕМА 5</div>
+          <div class="lesson-title">„Молитва" — Атанас Далчев</div>
+          <div class="lesson-meta">„Молитва" · Философска лирика · ~8 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Атанас Далчев (1904–1978)</strong> е роден в Солун в семейство на български учители. Израства в България след Първата световна война. Завършва философия в Софийския университет — образованието му оставя дълбок отпечатък върху поетичното му мислене.</p>
+              <p>Далчев е не само поет, но и изтъкнат <strong>преводач</strong> — превежда Бодлер, Рилке, Верхарн, Пасколи. Познаването на европейската поезия обогатява неговия собствен поетичен свят, но той не ги имитира — създава нещо коренно различно.</p>
+              <p>Основните му теми са: <strong>самотата, нещата (предметизъм), времето, смъртта, Бог и вярата, духовната криза</strong>. Публикува сравнително малко стихотворения, но всяко от тях е философски наситено и стилистично издялано.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Далчев и предметизмът — контекст и направление</div>
+            <div class="lesson-body">
+              <p>Далчев е представител на т.нар. <strong>„философска лирика"</strong> и е свързан с понятието <strong>„предметизъм"</strong> — особено негово поетическо виждане, коренно различно от символизма.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🪑</div>
+                <div class="key-point-text"><strong>Предметизъм</strong> — вместо мъгли, символи и настроения (символизъм), Далчев описва конкретни предмети: стени, прозорци, стаи, порти, прах. Обикновеното носи дълбок екзистенциален смисъл.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔇</div>
+                <div class="key-point-text"><strong>Тишина и сдържаност</strong> — за разлика от патоса на романтизма или борческия дух на Вапцаров, Далчев е тих, медитативен. Думите са малко, но тежат.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧠</div>
+                <div class="key-point-text"><strong>Философска дълбочина</strong> — зад всеки образ стои философски въпрос: за смисъла, за времето, за Бога, за смъртта, за самотата. Поезията мисли, не само чувства.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🚪</div>
+                <div class="key-point-text"><strong>Затвореното пространство</strong> — стаите, домовете, дворовете са любими места. Те са образи на душевното затворничество и самотата.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стихотворението „Молитва"</div>
+            <div class="poem-block">Господи, аз съм се отдалечил
+от Тебе твърде много. Може би
+животът ме е много наранил
+и аз вече нямам сили да Те любя.
+
+Но Ти, Господи, не ме забравяй —
+защото аз, макар и без вяра,
+все пак Те помня. Аз Ти се молех
+когато бях дете, ти помниш ли?
+
+Тогава аз Те обичах, Господи.
+Но след това дойдоха тъмни времена
+и дето бях оставен сам и гладен,
+изгубих аз пътя, що води към Тебе.
+
+И сега, Господи, в тоз мрак голям
+аз съм като дете, що е изгубено —
+умора, Господи, умора — и бих искал
+при Тебе пак, о, ако можеш, вземи ме.
+<div class="poem-author">— Атанас Далчев</div></div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Строфа по строфа</div>
+            <div class="lesson-body">
+              <p><strong>Строфа 1 — Признанието за отдалечаване:</strong> Говорителят се обръща директно към Бога с думите „Господи, аз съм се отдалечил от Тебе твърде много." Причината е назована веднага: „животът ме е много наранил" — страданието е причината за загубата на вярата. Не грехът, не гордостта — а болката. Признанието „нямам сили да Те любя" е изключително честно и неприкрашено.</p>
+              <p><strong>Строфа 2 — Молбата и парадоксът:</strong> Ключова строфа. Говорителят моли: „не ме забравяй — защото аз, макар и без вяра, все пак Те помня." Парадоксът е поразителен: моли се без вяра. Помни Бога, но не може да Го обича. Обръщението „Ти помниш ли?" — риторичен въпрос, изпълнен с носталгия и надежда, но и с лека горчивина.</p>
+              <p><strong>Строфа 3 — Историята на изгубването:</strong> Говорителят разказва как е изгубил вярата: „дойдоха тъмни времена" и беше „оставен сам и гладен". Антитезата е ясна: детската вяра (топло, закриляно) срещу зрелостта (тъмно, само, гладно). Изгубването на вярата е представено не като избор, а като следствие от страданието.</p>
+              <p><strong>Строфа 4 — Изповедта и молбата за завръщане:</strong> Финалът е смирен и съкрушен. „Аз съм като дете, що е изгубено" — сравнението разкрива беззащитност и копнеж. Повтореното „умора, Господи, умора" е кулминация на изповедта. Последното изречение „ако можеш, вземи ме" е молба за завръщане — неуверена, дори несигурна в собственото си право да иска.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🙏</div>
+                <div class="key-point-text"><strong>Лирическо обръщение към Бога</strong> — „Господи" се повтаря в почти всяка строфа. Директното обръщение превръща стихотворението в истинска молитва-изповед.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📖</div>
+                <div class="key-point-text"><strong>Изповедна форма</strong> — говорителят изповядва не прегрешения, а слабостта си: липсата на вяра, умората, загубеността. Молитвата е терапевтична, не обредна.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Антитеза вяра/безверие</strong> — „макар и без вяра, все пак Те помня". Да помниш Бога без да вярваш — централният парадокс на стихотворението.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❓</div>
+                <div class="key-point-text"><strong>Риторичен въпрос</strong> — „Ти помниш ли?" — говорителят питa Бога, а не отговаря. Въпросът носи дълбока носталгия и несигурност.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">👦</div>
+                <div class="key-point-text"><strong>Сравнение с изгубено дете</strong> — „аз съм като дете, що е изгубено" — централният образ на финала. Детето символизира невинността, беззащитността и копнежа по дома.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Повторение „умора, Господи, умора"</strong> — повторението не е украса, а мимезис: имитира самото преживяване на изтощение. Думата е казана два пъти, защото една не е достатъчна.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌑</div>
+                <div class="key-point-text"><strong>Метафора на тъмнината</strong> — „тъмни времена", „тоз мрак голям" — тъмнината е метафора за духовната криза и загубата на смисъл.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и основни мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Духовната криза — загубата на вяра вследствие на страданието и копнежът по завръщане към Бога.</p>
+              <p><strong>Идея:</strong> Дори когато вярата е изгубена, копнежът по нея остава; и в самото обръщане към Бога, дори без вяра, се крие зародишът на завръщането.</p>
+              <p><strong>Основни мотиви:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Бог и молитвата</strong> — обръщението е директно, лично, несакрализирано</li>
+                <li><strong>Духовната самота</strong> — „оставен сам и гладен", „изгубен" в мрак</li>
+                <li><strong>Вината и признанието</strong> — говорителят не се оправдава, а признава</li>
+                <li><strong>Детството като рай</strong> — детската вяра е загубеният рай</li>
+                <li><strong>Умората</strong> — не физическа, а екзистенциална: умора от живот без смисъл</li>
+                <li><strong>Търсенето на смисъл</strong> — молбата „вземи ме" е молба за ориентир</li>
+              </ul>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Лирическият говорител</div>
+            <div class="lesson-body">
+              <p>Лирическият говорител е <strong>зрял човек в духовна криза</strong>. Той не е атеист — не отрича Бога, а изповядва, че е изгубил пътя към Него. Разграничението е важно: <em>загубил вяра</em> е различно от <em>отрекъл Бога</em>.</p>
+              <p>Говорителят е изненадващо честен: „нямам сили да Те любя". Тази честност е сама по себе си форма на молитва — по-искрена от много официални изповеди. Далчев не украсява слабостта, а я поднася голо и директно.</p>
+              <p>Парадоксалността на позицията му — „без вяра, но все пак Те помня" — е духовно сложна. Той се моли, за да намери вярата, не защото я притежава. Молитвата е търсене, а не изражение на постигнатото.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Далчев спрямо другите автори от 12. клас</div>
+            <div class="lesson-body">
+              <p>Полезно е да се сравни подходът на Далчев с другите автори:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🌫️</div>
+                  <div class="key-point-text"><strong>Спрямо символизма (Дебелянов)</strong> — символистите говорят за Бога и вечността чрез символи и настроения. Далчев говори директно, с конкретни думи и признания.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⚙️</div>
+                  <div class="key-point-text"><strong>Спрямо Вапцаров</strong> — при Вапцаров вярата е колективна, борческа, насочена към бъдещето. При Далчев вярата е лична, изгубена и търсена отново в тишина.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🪑</div>
+                  <div class="key-point-text"><strong>Предметизмът</strong> — докато другите говорят за абстрактни идеи, Далчев изгражда духовното преживяване чрез конкретен образ: детето, мрака, умората.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Атанас Далчев (1904–1978), роден в Солун, философска лирика, предметизъм, преводач на Бодлер и Рилке.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Тема:</strong> Духовната криза — загубата на вяра поради страдание и копнежът по завръщане към Бога.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Парадоксът:</strong> Говорителят се моли без вяра — „макар и без вяра, все пак Те помня". Молитвата е търсене, а не изражение на постигнатото.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Причина за загубата:</strong> Не грехът, а страданието — „животът ме е много наранил", „оставен сам и гладен".</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Централен образ:</strong> Изгубеното дете — „аз съм като дете, що е изгубено" — символ на беззащитност и копнеж по завръщане.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Кулминация:</strong> „Умора, Господи, умора" — екзистенциална умора, повторена двукратно за усилване.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Предметизъм:</strong> Далчев противопоставя символизма — описва конкретното, не абстрактното. Стаи, прах, стени, мрак — конкретни образи с дълбок смисъл.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Спрямо Вапцаров:</strong> Вапцаров — колективна, борческа вяра в бъдещето; Далчев — лична, изгубена вяра в Бога, търсена в тишина.</div></div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel12-dalchev-molitva-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel12-dalchev-molitva-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel12-dalchev-molitva-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = '„Молитва" — Атанас Далчев';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+</body>
+</html>

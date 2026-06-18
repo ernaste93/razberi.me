@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Йордан Йовков — Песента на колелетата · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    .summary-block {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin: 16px 0;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .summary-block-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: #0369a1; margin-bottom: 10px;
+    }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    #btn-ask-znaiko {
+      position: fixed;
+      bottom: 28px;
+      right: 32px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 99px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    #selection-tooltip {
+      position: fixed;
+      z-index: 9999;
+      display: none;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    #selection-tooltip.show {
+      display: block;
+      pointer-events: auto;
+    }
+    #explain-selection {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px;
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 99px;
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+      transition: opacity .12s, transform .12s;
+    }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after {
+      content: '';
+      position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 12 клас</a>
+        <span>›</span>
+        Песента на колелетата — Йордан Йовков
+      </div>
+
+      <section class="demo-layout" style="margin:0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 12 КЛАС · ТЕМА 8</div>
+          <div class="lesson-title">„Песента на колелетата" — Йордан Йовков</div>
+          <div class="lesson-meta">Разказ · Проза · ~10 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. ЗА АВТОРА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Йордан Йовков (1880–1937)</strong> е роден в Жеравна, Котленско, но израства в Добруджа — земя, която превръща в свой литературен свят. Завършва право, но истинско призвание открива в литературата. Работи като учител и журналист; дипломатическата служба го отвежда в Румъния.</p>
+              <p>Участва в <strong>Балканските войни (1912–1913)</strong> и <strong>Първата световна война (1915–1918)</strong> — преживяванията от фронта пораждат военните му разкази, а красотата на добруджанските полета и хората от народа вдъхват живот на следващите му сборници.</p>
+              <p>Умира от болест на <strong>57-годишна възраст</strong>, оставяйки зад себе си поразително по обем и дълбочина творчество, създадено предимно между двете световни войни. Основни теми: <strong>красотата в обикновения живот, любовта, трудът като достойнство, войната, нравственото величие на простия човек</strong>.</p>
+              <p>Сборниците му включват „Старопланински легенди", „Женско сърце", „Вечери в Антимовския хан", „Жетварят" и „Ако можеха да говорят". „Песента на колелетата" е включена в сборника <strong>„Женско сърце" (1935)</strong>.</p>
+            </div>
+
+            <!-- ══ 2. ЖАНР И КОНТЕКСТ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Жанр и контекст</div>
+            <div class="lesson-body">
+              <p>„Песента на колелетата" е <strong>разказ</strong> — кратка прозаична творба с един централен сюжет и ограничен брой герои. Характерно за Йовков е, че дори в кратките форми успява да вложи дълбок лиризъм и философски смисъл.</p>
+              <p>Творбата принадлежи към <strong>реалистично-лиричната проза</strong> — описва реален бит (кираджийството, волската кола, пътищата) с поетичен поглед върху него. Йовков не идеализира живота, но открива в него красота, невидима за обикновения наблюдател.</p>
+              <p>Контекстът е <strong>следосвобожденска България</strong> — свят на занаятчии и кираджии, на малки общности, в които личните съдби се преплитат тясно. Любовта в този свят не се декларира с думи — тя се изразява чрез работа, чрез присъствие, чрез пеещи колела.</p>
+            </div>
+
+            <!-- ══ 3. РЕЗЮМЕ НА СЮЖЕТА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Резюме на сюжета</div>
+            <div class="summary-block">
+              <div class="summary-block-title">Резюме на сюжета</div>
+              <p><strong>Сали Яшар</strong> е прочут кираджия (превозвач с волска кола), чиято кола е известна с едно необикновено качество — колелата й <strong>пеят</strong>. Щом тегленият от волове повоз потегли, от него се носи мелодично скърцане, което хората приемат като нещо вълшебно и неповторимо.</p>
+              <p>Самият Сали Яшар знае тайната на тази песен: колелата пеят, защото той <strong>обича Рада</strong> — красивата момиче от селото. Любовта му е мълчалива, скрита, изразена само чрез работата му и чрез звука на колелата. Рада е символ на красотата, която дава смисъл на труда му.</p>
+              <p>Когато Рада се <strong>омъжва за друг</strong>, надеждата на Сали Яшар угасва. И колелата — сякаш усетили промяната в душата му — <strong>спират да пеят</strong>. Повозът продължава да се движи, но песента е изчезнала.</p>
+              <p>В края на разказа колелата <strong>пеят отново</strong>. Но вече с различно значение — не от радостно очакване и надежда, а от нещо друго: може би от смирение, може би от приемане на живота такъв, какъвто е. Красотата се завръща, но трансформирана от преживяното.</p>
+            </div>
+
+            <!-- ══ 4. АНАЛИЗ НА ОБРАЗИТЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Анализ на образите</div>
+            <div class="lesson-body">
+              <p><strong>Сали Яшар</strong> е централният образ на разказа. Той е представител на <strong>простия трудов човек</strong> — кираджия, чийто живот е тясно свързан с пътя, с воловете и с колата. Но у него живее нещо поетично: способността да обича дълбоко и тихо, без думи. Любовта му не е изказана — тя е вградена в звука на колелата. Йовков изгражда образа му като морално чист, трудолюбив, с достойнство в мълчанието.</p>
+              <p><strong>Рада</strong> е образ на женската красота и на идеала, към който се стреми Сали Яшар. Тя не е главен герой — присъствието й е по-скоро символично. Тя не е показана като сложен характер, а като олицетворение на любовта, която вдъхновява и след това се губи.</p>
+              <p><strong>Волската кола и колелата</strong> са централният символ на разказа (виж следващия раздел). Те не са просто превозно средство — те са „огледало" на душевното състояние на Сали Яшар.</p>
+            </div>
+
+            <!-- ══ 5. ХУДОЖЕСТВЕНИ СРЕДСТВА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔮</div>
+                <div class="key-point-text"><strong>Символика</strong> — колелата символизират душата на Сали Яшар. Тяхната „песен" е неговата любов; тяхното мълчание — неговата скръб. Певшите колела са централният символ на разказа.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎵</div>
+                <div class="key-point-text"><strong>Персонификация</strong> — колелата „пеят", „мълчат", сякаш имат душа и чувства. Чрез персонификацията Йовков придава лиричност на реалистичното описание.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🖼️</div>
+                <div class="key-point-text"><strong>Портрет</strong> — Сали Яшар е описан чрез поведението и труда си, не директно. Йовков предпочита „разкриващия" портрет — героят се показва чрез постъпките си.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌄</div>
+                <div class="key-point-text"><strong>Пейзаж</strong> — пътят, полето, природата са неотделима част от разказа. Те не са декор — те са контекстът, в който се разгръща душевният живот на героя.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Контраст</strong> — пеещите колела (надежда, любов) срещу мълчащите колела (загуба, тъга). Контрастът е основна структурна ос на разказа.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📖</div>
+                <div class="key-point-text"><strong>Лиричност в прозата</strong> — Йовков използва ритмизиран език, образни сравнения и музикалност, нетипични за обикновената реалистична проза. Разказът се чете почти като поема в проза.</div>
+              </div>
+            </div>
+
+            <!-- ══ 6. ТЕМА, ИДЕЯ, МОТИВИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и основни мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Любовта като вдъхновение за труда и красотата в обикновения живот; загубата на любовта и намирането на нов смисъл.</p>
+              <p><strong>Идея:</strong> Красотата не живее в богатството или в изключителното — тя живее в душата на обикновения трудов човек. Когато душата е изпълнена с любов, дори скърцащите колела стават музика. А когато любовта се губи — тя не изчезва безследно, а се трансформира в нещо друго: в смирение, в мъдрост, в приемане.</p>
+              <p><strong>Основни мотиви:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Трудът като достойнство</strong> — кираджийството не е просто занаят; то е начин на живот, изразяващ характера на Сали Яшар</li>
+                <li><strong>Любовта като вдъхновение</strong> — любовта към Рада е скрита, но тя е двигателят на цялото</li>
+                <li><strong>Красотата в простото</strong> — пеещите колела са символ на поетичното начало в обикновения живот</li>
+                <li><strong>Загубата и приемането</strong> — Рада се омъжва за друг; болката е реална, но животът продължава</li>
+                <li><strong>Пътят</strong> — физически и духовен; пътят на Сали Яшар е и пътят на неговата душа</li>
+              </ul>
+            </div>
+
+            <!-- ══ 7. РАЗКАЗВАЧ И ГЛЕДНА ТОЧКА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Разказвач и гледна точка</div>
+            <div class="lesson-body">
+              <p>Разказът е воден от <strong>всезнаещ разказвач от трето лице</strong> — характерна черта за реалистичната проза на Йовков. Разказвачът знае мислите и чувствата на Сали Яшар, но ги разкрива постепенно, сдържано.</p>
+              <p>Гледната точка е <strong>съчувстваща, но неутрална</strong>. Йовков не осъжда нито Рада (за избора й), нито Сали Яшар (за мълчаливата му любов). Той просто проследява как животът протича и как хората се справят с него.</p>
+              <p>Важна черта: Йовков рядко коментира директно — той показва и оставя читателя да разбере. Когато колелата спират да пеят, не се обяснява защо — читателят вече знае.</p>
+            </div>
+
+            <!-- ══ 8. НАЙ-ВАЖНОТО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Йордан Йовков (1880–1937), роден в Жеравна/Добруджа. Участник в Балканските и Първата световна война. Умира на 57 г.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Сборник:</strong> „Женско сърце" (1935). Жанр: разказ с лирични елементи.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Централен герой:</strong> Сали Яшар — кираджия, чиито колела пеят, защото обича Рада.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Централен символ:</strong> Пеещите колела = душата на Сали Яшар = неговата любов и жизнена сила.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Сюжет накратко:</strong> Колелата пеят (любовта живее) → Рада се омъжва за друг (колелата млъкват) → Колелата пеят отново (приемане и смисъл).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Тема:</strong> Красотата в обикновения живот; любовта като вдъхновение за труда; трансформацията на болката.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Художествени средства:</strong> Символика (колелата), персонификация, контраст (пеене/мълчание), лиричност в прозата.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Идея:</strong> Поетичното начало живее в обикновения трудов живот. Когато душата е пълна с любов, дори простите неща стават красиви.</div></div>
+            </div>
+
+          </div><!-- /#lesson-content -->
+
+          <!-- ── QUIZ CTA ── -->
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel12-yovkov-pesenta-na-koleletata-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel12-yovkov-pesenta-na-koleletata-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel12-yovkov-pesenta-na-koleletata-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div><!-- /.lesson-panel -->
+
+        <!-- AI PANEL -->
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+      btnTop.classList.toggle('visible', window.scrollY > 200);
+    });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = '„Песента на колелетата" — Йордан Йовков';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+</body>
+</html>

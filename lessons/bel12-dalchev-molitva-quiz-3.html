@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Атанас Далчев · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-dalchev-molitva-q3',
+      lessonUrl:  '/lessons/bel12-dalchev-molitva.html',
+      lessonName: 'Далчев — Молитва',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 5',
+      title:      'Куиз — Атанас Далчев — Тест 3',
+      sub:        '10 въпроса · Избери верния отговор',
+      quizNum:    3,
+      passScore:  8,
+      questions: [
+        {
+          q: 'Каква е основната разлика между молитвата в религиозен смисъл и „Молитва" на Далчев?',
+          opts: ['Религиозната молитва е по-дълга', 'При Далчев молитвата е израз на съмнение и търсене, а не на вяра', 'Далчев отрича Бога напълно', 'Нняма разлика — стихотворението е ортодоксална молитва'],
+          correct: 1,
+          explanation: 'Традиционната молитва изхожда от вяра. При Далчев молитвата е парадоксална — говорителят се моли именно защото е изгубил вярата и иска да я намери отново.'
+        },
+        {
+          q: 'Коя тема НЕ е характерна за „Молитва"?',
+          opts: ['Духовна криза', 'Самота и страдание', 'Любовта към жената', 'Търсенето на Бога'],
+          correct: 2,
+          explanation: 'Любовта към жената не е тема на „Молитва". Стихотворението се занимава с духовна криза, самота, вина и търсенето на Бога.'
+        },
+        {
+          q: 'Как завършва „Молитва" — какво е финалното настроение?',
+          opts: ['Радостно — говорителят е намерил вярата', 'Гневно — говорителят обвинява Бога', 'Смирено и уморено — копнеж без разрешение', 'Иронично — говорителят се подиграва с вярата'],
+          correct: 2,
+          explanation: 'Финалното настроение е на уморено смирение и копнеж — говорителят не постига духовно възкресение, а остава в молба и търсене.'
+        },
+        {
+          q: 'Кое от следните НЕ е характерна черта на стила на Далчев?',
+          opts: ['Конкретни образи на места и вещи', 'Изповедна лирика', 'Пищна метафорика и украсен език', 'Философска дълбочина в обикновеното'],
+          correct: 2,
+          explanation: 'Далчев избягва пищния украсен стил на символистите. Стилът му е сдържан, прецизен, конкретен — силата е в точния образ, а не в украсата.'
+        },
+        {
+          q: 'В кой град е роден Атанас Далчев?',
+          opts: ['София', 'Пловдив', 'Солун', 'Варна'],
+          correct: 2,
+          explanation: 'Далчев е роден в Солун (дн. Гърция) — тогава град с многобройно българско население. Семейството му се преселва в България след войните.'
+        },
+        {
+          q: 'Каква роля играе самотата в „Молитва"?',
+          opts: ['Е наказание от Бога за греховете на говорителя', 'Е следствие от страданието и загубата на вяра — говорителят е изоставен без духовна подкрепа', 'Е съзнателен избор на говорителя', 'Не е тема в стихотворението'],
+          correct: 1,
+          explanation: 'Самотата е централна — говорителят е „оставен сам", без вяра, без Бог. Тя е и причина, и следствие на духовната криза.'
+        },
+        {
+          q: 'Кой е адресатът на молитвата в стихотворението?',
+          opts: ['Майката на говорителя', 'Любимата', 'Бог', 'Читателят'],
+          correct: 2,
+          explanation: 'Адресатът е Бог — стихотворението е молитва, директно обръщение към Него: „Господи", „Ти", „Те".'
+        },
+        {
+          q: 'Как изразява Далчев духовната криза чрез конкретни образи?',
+          opts: ['Описва разрушени храмове', 'Използва образи на самота, тъмнина и пустота в пространството', 'Описва войни и катастрофи', 'Цитира философски текстове'],
+          correct: 1,
+          explanation: 'Далчев „предметизира" духовната криза — образите на пуста стая, тъмен прозорец, самотно пространство носят екзистенциалния смисъл на загубата на вяра.'
+        },
+        {
+          q: 'Каква е функцията на лирическото обръщение (апострофа) в „Молитва"?',
+          opts: ['Само стилистичен похват без смислова роля', 'Създава директна емоционална връзка между говорителя и Бога, прави молитвата лична и интимна', 'Изразява ирония и дистанция', 'Заимства от народната песен'],
+          correct: 1,
+          explanation: 'Обръщението към Бога е смислово и структурно ядро — то превръща текста в истинска молитва и създава интимна, изповедна връзка между говорителя и адресата.'
+        },
+        {
+          q: 'С коя своя черта Далчев е свързан с модернизма от началото на XX век?',
+          opts: ['Възпяване на героичното минало', 'Изследване на индивидуалната духовна криза и отчуждението', 'Утвърждаване на колективните ценности', 'Описание на природата в идилично настроение'],
+          correct: 1,
+          explanation: 'Модернизмът изследва индивидуалната психология, духовната криза и отчуждението — теми, централни и за Далчев. „Молитва" е образцово модернистично произведение.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

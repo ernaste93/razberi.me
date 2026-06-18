@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Елин Пелин „Ветрената мелница" · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-elin-pelin-vetrena-melnitsa-q1',
+      lessonUrl:  '/lessons/bel12-elin-pelin-vetrena-melnitsa.html',
+      lessonName: 'Елин Пелин — Ветрената мелница',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 7',
+      title:      'Куиз — Елин Пелин „Ветрената мелница" — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel12-elin-pelin-vetrena-melnitsa-quiz-2.html',
+      passScore:  8,
+      questions: [
+        { q:'Как се казва централният герой в „Ветрената мелница"?', opts:['Дядо Йордан','Дядо Корчан','Дядо Влас','Дядо Стоян'], correct:1, explanation:'Дядо Корчан е централният герой — мечтателят и трудолюбивият, посветил живота си на ветрената мелница.' },
+        { q:'Каква е мечтата на дядо Корчан?', opts:['Да построи воденица на реката','Да купи земя от чорбаджията','Да построи ветрена мелница на хълма','Да отиде в града'], correct:2, explanation:'Дядо Корчан мечтае да построи ветрена мелница на хълма над селото — мечта, смятана от другите за безумие.' },
+        { q:'Как реагират хората около Корчан на неговата мечта?', opts:['Помагат му с ентусиазъм','Осмиват го и не вярват','Молят го да спре','Финансират строежа'], correct:1, explanation:'Хората около Корчан смятат мечтата му за безумие и го осмиват — той строи сам, без подкрепа.' },
+        { q:'Какво се случва в момента, когато мелницата е завършена?', opts:['Корчан се радва години наред','Мелницата се срутва','Корчан умира','Хората отказват да я ползват'], correct:2, explanation:'В момента на завършването на мелницата и първото въртене на крилата дядо Корчан умира — делото надживява твореца.' },
+        { q:'Какво символизира ветрената мелница в разказа?', opts:['Алчността на Корчан','Безсмъртието на труда и мечтата','Технологичния прогрес','Чорбаджийската власт'], correct:1, explanation:'Мелницата символизира безсмъртието на труда — тя продължава да работи след смъртта на Корчан, въплъщавайки неговата мечта.' },
+        { q:'Какво символизира вятърът в разказа?', opts:['Опасността и заплахата','Бедността на Корчан','Свободата и природната сила','Смъртта'], correct:2, explanation:'Вятърът е символ на свободата и природната сила — Корчан не го побеждава, а го впряга в служба на хората чрез мелницата.' },
+        { q:'Коя е основната идея на разказа?', opts:['Мечтите са вредни и водят до смърт','Трудът и мечтата правят човека безсмъртен чрез делото','Ветрените мелници са по-добри от воденичните','Старите хора не трябва да мечтаят'], correct:1, explanation:'Основната идея е, че трудът и мечтата дават смисъл на живота и правят човека безсмъртен — творението надживява твореца.' },
+        { q:'Към коя тема в учебната програма принадлежи „Ветрената мелница"?', opts:['Вярата и надеждата','Любовта и раздялата','Трудът и творчеството','Войната и мира'], correct:2, explanation:'„Ветрената мелница" е включена в темата за Труда и творчеството — разказва за смисъла на живота чрез делото и мечтата.' },
+        { q:'Как е изграден образът на дядо Корчан от автора?', opts:['Като злодей с тъмно минало','Като народен творец — мечтател и трудолюбив, недооценен приживе','Като богаташ с власт','Като свещеник'], correct:1, explanation:'Корчан е изграден като народен творец — мечтател и трудолюбив, осмиван от другите, но безсмъртен чрез делото си.' },
+        { q:'Какво е характерно за разказвача в „Ветрената мелница"?', opts:['Гледа на Корчан с ирония и присмех','Директно морализира за ценността на труда','Всезнаещ от трето лице, лиричен и съчувстващ, без пряк коментар','Разказва от първо лице като очевидец'], correct:2, explanation:'Елин Пелин използва всезнаещ разказвач от трето лице — тонът е лиричен и съчувстващ, финалният образ е показан без директен морален коментар.' }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

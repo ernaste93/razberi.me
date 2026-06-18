@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Йордан Йовков · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-yovkov-pesenta-na-koleletata-q2',
+      lessonUrl:  '/lessons/bel12-yovkov-pesenta-na-koleletata.html',
+      lessonName: 'Йовков — Песента на колелетата',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 8',
+      title:      'Куиз — Йордан Йовков — Тест 2',
+      sub:        '10 въпроса · Избери верния отговор',
+      quizNum:    2,
+      nextQuizUrl: '/lessons/bel12-yovkov-pesenta-na-koleletata-quiz-3.html',
+      passScore:  8,
+      questions: [
+        {
+          q: 'Как се казва женският образ, в която е влюбен Сали Яшар?',
+          opts: ['Марийка', 'Гена', 'Рада', 'Елена'],
+          correct: 2,
+          explanation: 'Рада е женският образ в разказа — красавицата, чиято любов (или надеждата за нея) вдъхновява Сали Яшар и кара колелата да пеят.'
+        },
+        {
+          q: 'В кой регион на България е роден Йордан Йовков?',
+          opts: ['Тракия', 'Добруджа', 'Македония', 'Родопите'],
+          correct: 1,
+          explanation: 'Йовков е роден в Добруджа — регион с богата народна традиция. Добруджанският пейзаж и бит оказват силно влияние върху творчеството му.'
+        },
+        {
+          q: 'Какви войни преживява Йовков и как те влияят на творчеството му?',
+          opts: ['Не участва във войни', 'Участва в балканските войни и Първата световна война — военният опит формира темите за красотата и трагизма', 'Участва само в Освободителната война', 'Участва в Руско-турската война'],
+          correct: 1,
+          explanation: 'Йовков участва в балканските войни и Първата световна война. Военният опит формира контраста между ужаса на войната и красотата на мирния живот — ключова тема в творчеството му.'
+        },
+        {
+          q: 'Каква е функцията на образа на Рада в разказа?',
+          opts: ['Главен герой с психологическа дълбочина', 'Символ на красотата — нейното присъствие пробужда поетичното в обикновения живот', 'Антагонист, унищожаващ Сали Яшар', 'Исторически достоверен женски образ'],
+          correct: 1,
+          explanation: 'Рада функционира като символ на красотата, а не като психологически разработен характер. Тя е катализаторът — нейното присъствие/отсъствие управлява пеенето на колелата.'
+        },
+        {
+          q: 'Как е структурирана фабулата на разказа?',
+          opts: ['Линейно — едно събитие следва друго без промени', 'Три фази: колелата пеят (любов и надежда) → млъкват (загуба) → пеят отново (смирение)', 'Разказана е само любовната история', 'Разказана е само биографията на Сали Яшар'],
+          correct: 1,
+          explanation: 'Фабулата е тричастна: пеенето на колелата свързано с любовта → тяхното млъкване при загубата на Рада → пеенето отново с ново значение. Тази структура изгражда смисловата дъга на разказа.'
+        },
+        {
+          q: 'Какво значение има промяната в пеенето на колелата в края?',
+          opts: ['Сали Яшар е поправил колата', 'Пеят отново — но с различно значение: не от любовна надежда, а от приемане и смирение пред красотата на живота', 'Рада се е върнала', 'Колелата пеят от страдание'],
+          correct: 1,
+          explanation: 'Финалната промяна е смислово ключова — колелата пеят не от радостна любовна надежда, а от по-дълбоко смирено приемане. Красотата не изчезва, тя се трансформира.'
+        },
+        {
+          q: 'С каква традиция в българската литература се свързва Йовков?',
+          opts: ['Символизъм', 'Реализъм с хуманистичен патос и идеализация на красивото', 'Авангардизъм', 'Пролетарска поезия'],
+          correct: 1,
+          explanation: 'Йовков принадлежи към реализма, но с характерен хуманистичен патос — идеализира красотата в обикновения живот и търси поетичното в ежедневното и трудовото.'
+        },
+        {
+          q: 'Какво е значението на труда при Йовков в „Песента на колелетата"?',
+          opts: ['Трудът е тягостно бреме', 'Трудът е само средство за препитание', 'Трудът е форма на красота — в него живее поетичното начало', 'Трудът е противопоставен на красотата'],
+          correct: 2,
+          explanation: 'При Йовков трудът не е само прагматичен — той е форма на красота. Кираджийството на Сали Яшар е поетизирано чрез пеенето на колелата: трудът и красотата са неделими.'
+        },
+        {
+          q: 'Каква е ролята на портрета в разказа?',
+          opts: ['Портретите са само физически описания', 'Портретите разкриват душата на героя — Сали Яшар е описан така, че вътрешната му красота е видима отвън', 'Портретите служат за комична характеризация', 'Няма портретни описания'],
+          correct: 1,
+          explanation: 'При Йовков портретът е прозорец към душата — физическото описание на Сали Яшар разкрива неговата вътрешна красота, поетичност и достойнство.'
+        },
+        {
+          q: 'Как любовта функционира в разказа?',
+          opts: ['Като разрушителна сила', 'Като вдъхновение, което пробужда красотата дори в обикновения труд', 'Като социален договор', 'Като тема без символично значение'],
+          correct: 1,
+          explanation: 'Любовта е вдъхновение — тя прави обикновения труд красив. Пеенето на колелата е материализация на любовта на Сали Яшар. Когато любовта угасне, красотата се трансформира, но не изчезва.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

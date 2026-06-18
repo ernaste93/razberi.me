@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Елин Пелин · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-elin-pelin-spasova-mogila-q3',
+      lessonUrl:  '/lessons/bel12-elin-pelin-spasova-mogila.html',
+      lessonName: 'Елин Пелин — Спасова могила',
+      eyebrow:    'БЕЛ · 12 КЛАС · ТЕМА 6',
+      title:      'Куиз — Елин Пелин „Спасова могила" — Тест 3',
+      sub:        '9 въпроса · Избери верния отговор',
+      quizNum:    3,
+      passScore:  7,
+      questions: [
+        { q:'Кой художествен похват използва Елин Пелин, за да разкрие вярата на народа?', opts:['Иронично описание','Пряко авторско твърдение','Описание на колективното поведение и обичая в действие','Монолог на свещеника'], correct:2, explanation:'Вярата не е декларирана директно — тя се показва чрез колективното действие: хората се събират, извършват обичая, отказват да се разотидат. Показване вместо разказване.' },
+        { q:'Кое от следните НЕ е тема на „Спасова могила"?', opts:['Вярата и традицията','Конфликтът между пари и духовност','Любовта и ревността','Сакралното пространство'], correct:2, explanation:'Любовта и ревността не са теми на „Спасова могила". Разказът се занимава с вярата, традицията и конфликта между имуществената власт и общностната духовност.' },
+        { q:'Какво прави „Спасова могила" типичен разказ на критическия реализъм?', opts:['Идеализира селото и народния бит','Разкрива социалния антагонизъм между богатство и народна традиция без романтизация','Съдържа свръхестествени елементи','Разказва за любовта в идилична природа'], correct:1, explanation:'Критическият реализъм показва социалните противоречия без украса. Елин Пелин не идеализира нито народа, нито изкуствено осъжда чорбаджията — конфликтът е социален факт.' },
+        { q:'Каква е ролята на обичая в разказа?', opts:['Пречка за модернизацията на селото','Спойката на общността и изразен на колективната идентичност','Религиозен ритуал без социална функция','Забавление и игра'], correct:1, explanation:'Обичаят на Спасовден е смислово ядро — той е изразен на колективната идентичност и традицията, по-силен от правото на собственост.' },
+        { q:'Какъв е повествователният тон в „Спасова могила"?', opts:['Патетично и героично', 'Иронично и саркастично', 'Реалистично и с лирични нотки при описанието на природата и обичая', 'Дидактично и морализаторско'], correct:2, explanation:'Тонът е реалистичен, но с лирични нотки — особено при описанието на природата и народния обичай. Авторът не морализира директно, а показва.' },
+        { q:'Кое от следните НЕ е характерно за образа на чорбаджията в „Спасова могила"?', opts:['Алчност', 'Стремеж към власт чрез собственост', 'Разкаяние и духовно обновление', 'Противопоставяне на народната традиция'], correct:2, explanation:'Чорбаджията не преживява разкаяние или духовно обновление — той е тип, представляващ алчността и властта на парите, без психологическа трансформация.' },
+        { q:'Как природата действа в разказа спрямо конфликта?', opts:['Природата е на страната на чорбаджията', 'Природата е неутрална', 'Природата е сакрализирана и подкрепя духовността на обичая, ставайки мълчалив съюзник на народа', 'Природата причинява конфликта'], correct:2, explanation:'Пейзажът при Елин Пелин не е декор — сакрализираното пространство на могилата с природата около нея е мълчалив аргумент в полза на народа и традицията.' },
+        { q:'С кое понятие най-точно се свързва темата за традицията в „Спасова могила"?', opts:['Регресия', 'Колективна памет и идентичност', 'Суеверие', 'Религиозен фанатизъм'], correct:1, explanation:'Традицията в „Спасова могила" е форма на колективна памет и идентичност — тя свързва общността с нейния духовен и исторически корен.' },
+        { q:'Кой конфликт е универсален в разказа и надхвърля конкретния исторически момент?', opts:['Конфликтът между две религии', 'Конфликтът между материалното и духовното', 'Конфликтът между мъжа и жената', 'Конфликтът между природата и технологиите'], correct:1, explanation:'Конфликтът между материалното (собственост, пари, власт) и духовното (вяра, традиция, общностна идентичност) е универсален и актуален извън конкретния исторически контекст.' }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>
