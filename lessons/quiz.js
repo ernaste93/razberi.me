@@ -280,5 +280,25 @@
     }
   }
 
-  renderQ();
+  showIntro();
+
+  function showIntro() {
+    const quizNum = cfg.quizNum || 1;
+    const area = document.getElementById('quiz-area');
+    area.style.display = 'none';
+    const res = document.getElementById('quiz-results');
+    res.style.display = 'block';
+    res.innerHTML = `
+      <div style="text-align:center;padding:12px 0 24px;">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">${cfg.eyebrow || ''}</div>
+        <div style="font-size:28px;font-weight:800;color:var(--text);margin-bottom:8px;">Тест ${quizNum}</div>
+        <div style="font-size:15px;color:var(--muted);margin-bottom:32px;">${cfg.lessonName} · 10 въпроса</div>
+        <button id="btn-start-quiz" style="padding:14px 40px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;">Започни Тест ${quizNum} →</button>
+      </div>`;
+    document.getElementById('btn-start-quiz').addEventListener('click', () => {
+      res.style.display = 'none';
+      area.style.display = 'block';
+      renderQ();
+    });
+  }
 })();
