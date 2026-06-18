@@ -173,20 +173,22 @@
            </div>`
         : ''}`;
 
+    const nextBtn = cfg.nextQuizUrl
+      ? `<a href="${cfg.nextQuizUrl}" class="btn-continue">Премини към Тест ${(cfg.quizNum||1)+1} →</a>`
+      : `<a href="/urotsi.html" class="btn-continue">Към уроците →</a>`;
+
     let btns = '';
     if (passed) {
-      const nextBtn = cfg.nextQuizUrl
-        ? `<a href="${cfg.nextQuizUrl}" class="btn-continue">Тест ${(cfg.quizNum||1)+1} →</a>`
-        : `<a href="/urotsi.html" class="btn-continue">Към уроците →</a>`;
       btns = nextBtn;
     } else if (attemptNum === 1) {
       btns = `
         <a href="${cfg.lessonUrl}" class="btn-lesson">← Прочети урока отново</a>
-        <button class="btn-retry" id="btn-retry">↩ Опитай пак (2-ри опит)</button>`;
+        <button class="btn-retry" id="btn-retry">↩ Опитай пак (остава 1 опит)</button>
+        ${cfg.nextQuizUrl ? nextBtn : ''}`;
     } else {
       btns = `
         <a href="${cfg.lessonUrl}" class="btn-lesson">← Обратно към урока</a>
-        <a href="/urotsi.html" class="btn-continue">Към уроците →</a>`;
+        ${nextBtn}`;
     }
 
     const wrongTexts = qs
@@ -284,6 +286,20 @@
 
   function showIntro() {
     const quizNum = cfg.quizNum || 1;
+    const prev = localStorage.getItem('quiz_' + cfg.lessonKey);
+    const prevData = prev ? JSON.parse(prev) : null;
+
+    let prevHtml = '';
+    if (prevData) {
+      const color = prevData.passed ? '#16a34a' : '#d97706';
+      const icon = prevData.passed ? '✓' : '✗';
+      const attempts = prevData.attempt || 1;
+      const attemptsLabel = attempts >= 2 ? ` · ${attempts} опита` : ` · 1 опит`;
+      prevHtml = `<div style="display:inline-block;margin-bottom:24px;padding:8px 18px;background:${prevData.passed ? '#f0fdf4' : '#fffbeb'};border:1.5px solid ${color};border-radius:10px;font-size:13px;font-weight:600;color:${color};">
+        ${icon} Предишен резултат: ${prevData.correct}/${prevData.total} · Оценка ${prevData.grade}/6${attemptsLabel}
+      </div>`;
+    }
+
     const area = document.getElementById('quiz-area');
     area.style.display = 'none';
     const res = document.getElementById('quiz-results');
@@ -292,8 +308,9 @@
       <div style="text-align:center;padding:12px 0 24px;">
         <div style="font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">${cfg.eyebrow || ''}</div>
         <div style="font-size:28px;font-weight:800;color:var(--text);margin-bottom:8px;">Тест ${quizNum}</div>
-        <div style="font-size:15px;color:var(--muted);margin-bottom:32px;">${cfg.lessonName} · 10 въпроса</div>
-        <button id="btn-start-quiz" style="padding:14px 40px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;">Започни Тест ${quizNum} →</button>
+        <div style="font-size:15px;color:var(--muted);margin-bottom:20px;">${cfg.lessonName} · 10 въпроса</div>
+        ${prevHtml}
+        <div><button id="btn-start-quiz" style="padding:14px 40px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;">${prevData ? 'Опитай отново →' : 'Започни Тест ' + quizNum + ' →'}</button></div>
       </div>`;
     document.getElementById('btn-start-quiz').addEventListener('click', () => {
       res.style.display = 'none';

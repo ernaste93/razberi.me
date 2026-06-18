@@ -263,5 +263,30 @@
   </script>
   <script src="/lessons/time-tracker.js"></script>
   <script src="/lessons/lesson-ai.js"></script>
+
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        var color = d.passed ? '#16a34a' : '#d97706';
+        var icon = d.passed ? '✓' : '✗';
+        a.style.position = 'relative';
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + icon + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) {
+          a.style.background = '#16a34a';
+          a.style.color = '#fff';
+          a.style.borderColor = '#16a34a';
+        } else {
+          a.style.borderColor = '#d97706';
+          a.style.color = '#92400e';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

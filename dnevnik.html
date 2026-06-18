@@ -379,11 +379,11 @@
         topicsDone: 5,
         topicsTotal: 12,
         topics: [
-          { name: 'Любовта (Дебелянов, Фотев, Дубарова)', pct: 90, semester: 1, done: true },
-          { name: 'Вярата и надеждата', pct: 82, semester: 1, done: true },
-          { name: 'Трудът и творчеството', pct: 71, semester: 1, done: true },
-          { name: 'Изборът и раздвоението', pct: 65, semester: 1, done: true },
-          { name: 'Правописна и пунктуационна норма', pct: 58, semester: 1, done: true },
+          { name: 'Любовта (Дебелянов, Фотев, Дубарова)', pct: 0, semester: 1, done: false },
+          { name: 'Вярата и надеждата', pct: 0, semester: 1, done: false },
+          { name: 'Трудът и творчеството', pct: 0, semester: 1, done: false },
+          { name: 'Изборът и раздвоението', pct: 0, semester: 1, done: false },
+          { name: 'Правописна и пунктуационна норма', pct: 0, semester: 1, done: false },
           { name: 'Граматична и лексикална норма', pct: 0, semester: 2, done: false },
           { name: 'Интерпретативно съчинение', pct: 0, semester: 2, done: false },
           { name: 'Есе на свободна тема', pct: 0, semester: 2, done: false },
@@ -394,13 +394,13 @@
         short: 'Мат',
         icon: '📐',
         color: '#7c3aed',
-        pct: 61,
-        topicsDone: 3,
+        pct: 0,
+        topicsDone: 0,
         topicsTotal: 10,
         topics: [
-          { name: 'Функции — преговор', pct: 80, semester: 1, done: true },
-          { name: 'Тригонометрични функции', pct: 55, semester: 1, done: true, flag: true },
-          { name: 'Производна и приложения', pct: 48, semester: 1, done: true, flag: true },
+          { name: 'Функции — преговор', pct: 0, semester: 1, done: false },
+          { name: 'Тригонометрични функции', pct: 0, semester: 1, done: false, flag: true },
+          { name: 'Производна и приложения', pct: 0, semester: 1, done: false, flag: true },
           { name: 'Комбинаторика', pct: 0, semester: 1, done: false },
           { name: 'Вероятности', pct: 0, semester: 2, done: false },
           { name: 'Статистика', pct: 0, semester: 2, done: false },
@@ -411,14 +411,14 @@
         short: 'Био',
         icon: '🧬',
         color: '#16a34a',
-        pct: 85,
-        topicsDone: 4,
+        pct: 0,
+        topicsDone: 0,
         topicsTotal: 8,
         topics: [
-          { name: 'Молекулярна биология — ДНК и РНК', pct: 92, semester: 1, done: true },
-          { name: 'Репликация, транскрипция, транслация', pct: 88, semester: 1, done: true },
-          { name: 'Генетика — Менделови закони', pct: 84, semester: 1, done: true },
-          { name: 'Мутации и популационна генетика', pct: 76, semester: 1, done: true },
+          { name: 'Молекулярна биология — ДНК и РНК', pct: 0, semester: 1, done: false },
+          { name: 'Репликация, транскрипция, транслация', pct: 0, semester: 1, done: false },
+          { name: 'Генетика — Менделови закони', pct: 0, semester: 1, done: false },
+          { name: 'Мутации и популационна генетика', pct: 0, semester: 1, done: false },
           { name: 'Размножаване и развитие', pct: 0, semester: 2, done: false },
           { name: 'Еволюция', pct: 0, semester: 2, done: false },
         ]
@@ -428,12 +428,12 @@
         short: 'Хим',
         icon: '⚗️',
         color: '#ea580c',
-        pct: 48,
-        topicsDone: 2,
+        pct: 0,
+        topicsDone: 0,
         topicsTotal: 8,
         topics: [
-          { name: 'Органична химия — въглеводороди', pct: 62, semester: 1, done: true },
-          { name: 'Кислородни органични съединения', pct: 45, semester: 1, done: true, flag: true },
+          { name: 'Органична химия — въглеводороди', pct: 0, semester: 1, done: false },
+          { name: 'Кислородни органични съединения', pct: 0, semester: 1, done: false, flag: true },
           { name: 'Биохимия', pct: 0, semester: 1, done: false },
           { name: 'Лекарства и горива', pct: 0, semester: 2, done: false },
           { name: 'Полимери', pct: 0, semester: 2, done: false },
@@ -441,6 +441,44 @@
         ]
       }
     ];
+
+    // ── Зареди реални BEL данни от localStorage ──
+    const BEL_TOPICS = [
+      { name: 'Любовта (Дебелянов)', keys: ['bel12-debelyanov-lyubov'] },
+      { name: 'Любовта (Фотев)',     keys: ['bel12-fotev-lyubov'] },
+      { name: 'Любовта (Дубарова)', keys: ['bel12-dubarova-posveshenie'] },
+      { name: 'Вярата (Вапцаров)',   keys: ['bel12-vaptsarov-vyara'] },
+      { name: 'Трудът (Далчев)',     keys: ['bel12-dalchev-molitva'] },
+      { name: 'Спасова могила',      keys: ['bel12-elin-pelin-spasova-mogila'] },
+      { name: 'Ветрена мелница',     keys: ['bel12-elin-pelin-vetrena-melnitsa'] },
+      { name: 'Песента на колелетата', keys: ['bel12-yovkov-pesenta-na-koleletata'] },
+      { name: 'Балада за Георг Хених', keys: ['bel12-paskov-balada'] },
+      { name: 'Две души (Яворов)',   keys: ['bel12-yavorov-dve-dushi'] },
+      { name: 'Потомка (Багряна)',   keys: ['bel12-bagryana-potomka'] },
+      { name: 'Честен кръст (Христов)', keys: ['bel12-hristov-chesten-krast'] },
+    ];
+
+    (function loadRealBelData() {
+      const topicResults = BEL_TOPICS.map(topic => {
+        const quizzes = [1,2,3].map(n => {
+          const raw = localStorage.getItem('quiz_' + topic.keys[0] + '-q' + n);
+          return raw ? JSON.parse(raw) : null;
+        }).filter(Boolean);
+        if (!quizzes.length) return { name: topic.name, pct: 0, done: false, semester: 1 };
+        const avgPct = Math.round(quizzes.reduce((s, q) => s + q.pct, 0) / quizzes.length);
+        const allPassed = quizzes.every(q => q.passed);
+        return { name: topic.name, pct: avgPct, done: true, semester: 1, flag: !allPassed && avgPct < 60 };
+      });
+
+      const donePcts = topicResults.filter(t => t.done).map(t => t.pct);
+      const realPct = donePcts.length ? Math.round(donePcts.reduce((a,b) => a+b, 0) / donePcts.length) : 0;
+      const realDone = topicResults.filter(t => t.done).length;
+
+      subjects[0].topics = topicResults;
+      subjects[0].pct = realPct || subjects[0].pct;
+      subjects[0].topicsDone = realDone;
+      subjects[0].topicsTotal = BEL_TOPICS.length;
+    })();
 
     function gradeFromPct(pct) {
       if (pct >= 85) return 6;
