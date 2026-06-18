@@ -20,9 +20,7 @@
   }
 
   // ── Page transitions ─────────────────────────────────────
-  document.body.style.opacity = '0';
-  document.body.style.transition = 'opacity 0.32s ease';
-  window.addEventListener('load', function () { document.body.style.opacity = '1'; });
+  document.body.style.transition = 'opacity 0.22s ease';
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href]');
     if (!a) return;
