@@ -332,8 +332,8 @@
         </div>
       </div>
 
-      <!-- Activity chart -->
-      <div class="chart-card">
+      <!-- Activity chart — скрита докато няма реални данни -->
+      <div class="chart-card" id="chart-card" style="display:none;">
         <div class="chart-head">
           <div class="chart-title">Активност и успеваемост</div>
           <div class="chart-filters">
@@ -558,11 +558,15 @@
     document.getElementById('topics-done').textContent = totalDone;
     document.getElementById('topics-total').textContent = 'от ' + totalAll + ' теми за годината';
 
-    // ── Chart ──
+    // ── Chart — показва се само при реални данни ──
+    if (totalDone > 0) {
+      document.getElementById('chart-card').style.display = '';
+    }
+
     const weekLabels  = ['Пон', 'Вт', 'Ср', 'Чет', 'Пет', 'Съб', 'Нед'];
-    const weekData    = [0, 72, 65, 80, 0, 88, 76];
-    const monthLabels = ['1 юни', '5 юни', '10 юни', '15 юни', '17 юни'];
-    const monthData   = [60, 65, 71, 76, 80];
+    const weekData    = [0, 0, 0, 0, 0, 0, 0];
+    const monthLabels = [];
+    const monthData   = [];
 
     const ctx = document.getElementById('activity-chart').getContext('2d');
     let chart = buildChart(monthLabels, monthData);
