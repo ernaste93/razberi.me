@@ -225,7 +225,8 @@
       <!-- Subject filter tabs -->
       <div class="subject-tabs">
         <button class="subject-tab active" data-subject="all">Всички</button>
-        <button class="subject-tab" data-subject="bel">БЕЛ</button>
+        <button class="subject-tab" data-subject="bel">БЕЛ 12 клас</button>
+        <button class="subject-tab" data-subject="bel-pregovor">БЕЛ Преговор</button>
         <button class="subject-tab" data-subject="math">Математика</button>
         <button class="subject-tab" data-subject="bio">Биология</button>
         <button class="subject-tab" data-subject="chem">Химия</button>
@@ -245,13 +246,7 @@
           </div>
         </div>
 
-        <!-- БЕЛ под-табове -->
-        <div style="display:flex;gap:8px;margin-bottom:20px;" id="bel-sub-tabs">
-          <button id="bel-btn-12klas" onclick="belSubSwitch('12klas')" style="padding:6px 16px;border-radius:99px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">12 клас</button>
-          <button id="bel-btn-pregovor" onclick="belSubSwitch('pregovor')" style="padding:6px 16px;border-radius:99px;border:1.5px solid var(--line);background:rgba(255,255,255,0.85);color:var(--muted);font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Преговор от 11 клас</button>
-        </div>
-
-        <div id="bel-sub-12klas">
+        <div>
         <div class="topic-group">
           <div class="topic-group-label">Тема 1 — Любовта</div>
           <div class="lessons-grid">
@@ -371,11 +366,26 @@
             </a>
           </div>
 
-        </div><!-- /bel-sub-12klas -->
+        </div>
 
-        <div id="bel-sub-pregovor" style="display:none;">
-        <div class="topic-group" style="margin-top:0;">
-          <div class="topic-group-label" style="background:#f5f0ff;color:#5b21b6;border-color:#ddd6fe;">Родното и чуждото</div>
+      </div><!-- /bel section -->
+
+      <!-- БЕЛ Преговор от 11 клас -->
+      <div class="subject-section" data-section="bel-pregovor">
+        <div class="subject-section-head">
+          <div class="subject-section-icon" style="background:#f5f0ff;color:#5b21b6;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="subject-section-name">БЕЛ — Преговор от 11 клас</div>
+            <div class="subject-section-sub">15 произведения + езикови теми · матурна подготовка</div>
+          </div>
+        </div>
+
+        <div class="topic-group">
+          <div class="topic-group-label">Родното и чуждото</div>
           <div class="lessons-grid">
             <a href="/lessons/bel11-talev-zhelezniyat-svetilnik.html" class="lesson-card" id="card-bel11-talev-zhelezniyat-svetilnik">
               <div class="lesson-card-title">Димитър Талев — „Железният светилник"</div>
@@ -520,9 +530,7 @@
             </a>
           </div>
         </div>
-        </div><!-- /bel-sub-pregovor -->
-
-      </div>
+      </div><!-- /bel-pregovor section -->
 
       <!-- Математика -->
       <div class="subject-section" data-section="math">
@@ -757,18 +765,6 @@
       });
     });
 
-    // БЕЛ под-табове
-    function belSubSwitch(sub) {
-      document.getElementById('bel-sub-12klas').style.display = sub === '12klas' ? 'block' : 'none';
-      document.getElementById('bel-sub-pregovor').style.display = sub === 'pregovor' ? 'block' : 'none';
-      var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#1e3a5f';
-      document.getElementById('bel-btn-12klas').style.cssText = sub === '12klas'
-        ? 'padding:6px 16px;border-radius:99px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;'
-        : 'padding:6px 16px;border-radius:99px;border:1.5px solid var(--line);background:rgba(255,255,255,0.85);color:var(--muted);font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;';
-      document.getElementById('bel-btn-pregovor').style.cssText = sub === 'pregovor'
-        ? 'padding:6px 16px;border-radius:99px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;'
-        : 'padding:6px 16px;border-radius:99px;border:1.5px solid var(--line);background:rgba(255,255,255,0.85);color:var(--muted);font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;';
-    }
   </script>
 </body>
 </html>
