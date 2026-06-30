@@ -246,9 +246,9 @@
         </div>
 
         <!-- БЕЛ под-табове -->
-        <div style="display:flex;gap:8px;margin-bottom:20px;">
-          <button class="bel-sub-tab active" data-bel-sub="12klas" style="padding:6px 16px;border-radius:99px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">12 клас</button>
-          <button class="bel-sub-tab" data-bel-sub="pregovor" style="padding:6px 16px;border-radius:99px;border:1.5px solid var(--line);background:rgba(255,255,255,0.85);color:var(--muted);font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Преговор от 11 клас</button>
+        <div style="display:flex;gap:8px;margin-bottom:20px;" id="bel-sub-tabs">
+          <button id="bel-btn-12klas" onclick="belSubSwitch('12klas')" style="padding:6px 16px;border-radius:99px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">12 клас</button>
+          <button id="bel-btn-pregovor" onclick="belSubSwitch('pregovor')" style="padding:6px 16px;border-radius:99px;border:1.5px solid var(--line);background:rgba(255,255,255,0.85);color:var(--muted);font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;">Преговор от 11 клас</button>
         </div>
 
         <div id="bel-sub-12klas">
@@ -758,21 +758,17 @@
     });
 
     // БЕЛ под-табове
-    document.querySelectorAll('.bel-sub-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.bel-sub-tab').forEach(t => {
-          t.style.background = 'rgba(255,255,255,0.85)';
-          t.style.borderColor = 'var(--line)';
-          t.style.color = 'var(--muted)';
-        });
-        tab.style.background = 'var(--accent)';
-        tab.style.borderColor = 'var(--accent)';
-        tab.style.color = '#fff';
-        const sub = tab.dataset.belSub;
-        document.getElementById('bel-sub-12klas').style.display = sub === '12klas' ? 'block' : 'none';
-        document.getElementById('bel-sub-pregovor').style.display = sub === 'pregovor' ? 'block' : 'none';
-      });
-    });
+    function belSubSwitch(sub) {
+      document.getElementById('bel-sub-12klas').style.display = sub === '12klas' ? 'block' : 'none';
+      document.getElementById('bel-sub-pregovor').style.display = sub === 'pregovor' ? 'block' : 'none';
+      var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#1e3a5f';
+      document.getElementById('bel-btn-12klas').style.cssText = sub === '12klas'
+        ? 'padding:6px 16px;border-radius:99px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;'
+        : 'padding:6px 16px;border-radius:99px;border:1.5px solid var(--line);background:rgba(255,255,255,0.85);color:var(--muted);font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;';
+      document.getElementById('bel-btn-pregovor').style.cssText = sub === 'pregovor'
+        ? 'padding:6px 16px;border-radius:99px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;'
+        : 'padding:6px 16px;border-radius:99px;border:1.5px solid var(--line);background:rgba(255,255,255,0.85);color:var(--muted);font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;';
+    }
   </script>
 </body>
 </html>
