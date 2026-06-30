@@ -20,14 +20,37 @@
     .urotsi-intro p  { font-size: 14px; color: var(--muted); margin: 0; }
 
     /* Subject tabs */
+    .class-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .class-tab {
+      padding: 8px 22px;
+      border-radius: 99px;
+      border: 1.5px solid var(--line);
+      background: rgba(255,255,255,0.85);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .class-tab:hover { border-color: var(--accent); color: var(--accent); }
+    .class-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
     .subject-tabs {
       display: flex;
       gap: 8px;
       margin-bottom: 24px;
       flex-wrap: wrap;
+      padding-left: 4px;
+      border-left: 3px solid var(--line);
     }
     .subject-tab {
-      padding: 8px 18px;
+      padding: 6px 16px;
       border-radius: 99px;
       border: 1.5px solid var(--line);
       background: rgba(255,255,255,0.85);
@@ -43,6 +66,7 @@
     }
     .subject-tab:hover { border-color: var(--accent); color: var(--accent); }
     .subject-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .subject-tab.soon { opacity: 0.45; cursor: default; pointer-events: none; }
 
     /* Subject section */
     .subject-section { margin-bottom: 32px; animation: secFadeIn .2s ease both; }
@@ -219,17 +243,29 @@
 
       <div class="urotsi-intro">
         <h1>Уроци</h1>
-        <p id="grade-label">12. клас · 4 предмета</p>
+        <p id="grade-label">Матурна подготовка</p>
       </div>
 
-      <!-- Subject filter tabs -->
-      <div class="subject-tabs">
-        <button class="subject-tab active" data-subject="all">Всички</button>
-        <button class="subject-tab" data-subject="bel">БЕЛ 12 клас</button>
-        <button class="subject-tab" data-subject="bel-pregovor">БЕЛ Преговор</button>
-        <button class="subject-tab" data-subject="math">Математика</button>
-        <button class="subject-tab" data-subject="bio">Биология</button>
-        <button class="subject-tab" data-subject="chem">Химия</button>
+      <!-- Клас tabs (outer) -->
+      <div class="class-tabs">
+        <button class="class-tab active" data-class="12" type="button">12 клас</button>
+        <button class="class-tab" data-class="11" type="button">11 клас · Преговор</button>
+      </div>
+
+      <!-- Предмет tabs за 12 клас -->
+      <div class="subject-tabs" id="stabs-12">
+        <button class="subject-tab active" data-subject="bel" type="button">БЕЛ</button>
+        <button class="subject-tab" data-subject="math" type="button">Математика</button>
+        <button class="subject-tab" data-subject="bio" type="button">Биология</button>
+        <button class="subject-tab" data-subject="chem" type="button">Химия</button>
+      </div>
+
+      <!-- Предмет tabs за 11 клас -->
+      <div class="subject-tabs" id="stabs-11" style="display:none;">
+        <button class="subject-tab active" data-subject="bel-pregovor" type="button">БЕЛ</button>
+        <button class="subject-tab soon" type="button">Математика · скоро</button>
+        <button class="subject-tab soon" type="button">Биология · скоро</button>
+        <button class="subject-tab soon" type="button">Химия · скоро</button>
       </div>
 
       <!-- БЕЛ -->
@@ -745,24 +781,49 @@
       });
     })();
 
-    document.querySelectorAll('.subject-tab').forEach(tab => {
+    function showSection(sectionId) {
+      document.querySelectorAll('.subject-section').forEach(sec => {
+        const show = sec.dataset.section === sectionId;
+        if (show) {
+          sec.style.display = '';
+          sec.style.animation = 'none';
+          void sec.offsetWidth;
+          sec.style.animation = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+    }
+
+    // Outer class tabs
+    document.querySelectorAll('.class-tab').forEach(tab => {
       tab.addEventListener('click', () => {
-        document.querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.class-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        const subject = tab.dataset.subject;
-        document.querySelectorAll('.subject-section').forEach(sec => {
-          const show = subject === 'all' || sec.dataset.section === subject;
-          if (show) {
-            sec.style.display = '';
-            sec.style.animation = 'none';
-            void sec.offsetWidth;
-            sec.style.animation = '';
-          } else {
-            sec.style.display = 'none';
-          }
-        });
+        const cls = tab.dataset.class;
+        const stabs12 = document.getElementById('stabs-12');
+        const stabs11 = document.getElementById('stabs-11');
+        stabs12.style.display = cls === '12' ? '' : 'none';
+        stabs11.style.display = cls === '11' ? '' : 'none';
+        const activeRow = cls === '12' ? stabs12 : stabs11;
+        const firstActive = activeRow.querySelector('.subject-tab:not(.soon)');
+        activeRow.querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
+        firstActive.classList.add('active');
+        showSection(firstActive.dataset.subject);
       });
     });
+
+    // Inner subject tabs
+    document.querySelectorAll('.subject-tab:not(.soon)').forEach(tab => {
+      tab.addEventListener('click', () => {
+        tab.closest('.subject-tabs').querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        showSection(tab.dataset.subject);
+      });
+    });
+
+    // Initial state: show БЕЛ 12 клас
+    showSection('bel');
 
   </script>
 </body>
