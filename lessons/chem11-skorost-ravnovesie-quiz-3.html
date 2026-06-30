@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Скорост и равновесие — Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-skorost-ravnovesie-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem11-skorost-ravnovesie.html',
+      lessonName:  'Скорост и равновесие',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Скорост и равновесие — Тест 3',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Процесът Хабер за синтез на NH₃ се провежда при 400–500°C, а не при 200°C (по-голям Kc). Защо?',
+          options: ['При 200°C реакцията е ендотермична', 'При 200°C реакцията е прекалено бавна дори с катализатор', 'При 400°C Kc е по-голяма', 'При 200°C налягането е нестабилно'],
+          correct: 1,
+          explanation: 'Kc е по-голяма при ниска T (реакцията е екзотермична → T↓ благоприятства продуктите). Но при 200°C реакцията е изключително бавна — икономически непрактично. Компромисът: 400–500°C + Fe катализатор → разумна скорост при приемлив добив (~15–25%). Катализаторът не е алтернатива на оптималните условия.'
+        },
+        {
+          q: 'Защо храната се развалá по-бавно в хладилника?',
+          options: ['В хладилника няма кислород', 'При ниска температура биохимичните реакции (гниене) са по-бавни', 'Хладилникът изсушава храната', 'Студеният въздух убива бактериите'],
+          correct: 1,
+          explanation: 'Правилото на Вант Хоф: при T↓ с 10°C скоростта намалява 2–4 пъти. Биохимичните реакции на гниене (ензимни) са много по-бавни при 4°C (хладилник) отколкото при 25°C (стайна). При −18°C (фризер) реакциите са практически спрени.'
+        },
+        {
+          q: 'Каталитичният конвертор в автомобилите (Pt, Pd катализатори) преобразува CO + NO → CO₂ + N₂. Как катализаторът помага?',
+          options: ['Изразходва се и заменя NO с CO₂', 'Намалява Ea → реакцията протича при по-ниска T (в изпускателната тръба)', 'Измества равновесието само при висока T', 'Катализаторът не помага при газови реакции'],
+          correct: 1,
+          explanation: 'Без катализатор CO + NO реакция изисква много висока T (>600°C). Платиновият/паладиевият катализатор намалява Ea → реакцията протича при ~300–400°C — температурата на изпускателните газове. Катализаторът не се изразходва, регенерира се непрекъснато.'
+        },
+        {
+          q: 'Пещерни сталактити (CaCO₃) се образуват много бавно — хиляди години. Коя от следните би ускорила процеса?',
+          options: ['Намаляване на концентрацията на CO₂ в пещерата', 'Повишаване на температурата (T↑ → CaCO₃ se утаява по-бързо)', 'Повишаване на [Ca²⁺] и [CO₃²⁻] в разтвора', 'Добавяне на HCl'],
+          correct: 2,
+          explanation: 'Ca²⁺ + CO₃²⁻ → CaCO₃(тв) — скоростта на утаяване зависи от концентрацията на йоните. По-висок [Ca²⁺] или [CO₃²⁻] → по-бързо утаяване. При T↑ CaCO₃ всъщност е по-малко разтворим → утаява по-бързо. HCl би разтворил CaCO₃.'
+        },
+        {
+          q: 'Защо ракетното гориво (H₂ + O₂) може да стои в резервоара без да реагира при стайна температура?',
+          options: ['H₂ и O₂ не реагират никога', 'Реакцията изисква висока Ea — без запалване тя е прекалено бавна', 'Реакцията е ендотермична при стайна температура', 'Налягането е недостатъчно'],
+          correct: 1,
+          explanation: '2H₂ + O₂ → 2H₂O е силно екзотермична (ΔH = −484 kJ/mol), но изисква висока Ea за иницииране. При стайна температура много малко молекули имат достатъчно енергия → реакцията протича невероятно бавно. При запалване (искра) → реакцията ескалира — верижна реакция с огромно отделяне на енергия.'
+        },
+        {
+          q: 'За реакцията A ⇌ B (Kc = 100). Ако [A] = 0,1 M при равновесие, какво е [B]?',
+          options: ['0,001 M', '10 M', '1 M', '100 M'],
+          correct: 1,
+          explanation: 'Kc = [B]/[A] = 100. [B] = 100 × [A] = 100 × 0,1 = 10 M. Kc = 100 >> 1 означава, че при равновесие продуктът (B) преобладава значително над реагента (A). [B] е 100 пъти по-голяма от [A].'
+        },
+        {
+          q: 'Ако реакцията 2A ⇌ B е с Kc = 4 и [A] = 1 M, [B] = 4 M — намираме се в равновесие. Ако добавим А до [A] = 2 M, системата:',
+          options: ['Е пак в равновесие (Kc не се е променил)', 'Ще се измести напред (→ образуват се повече B), докато се установи ново равновесие', 'Ще се измести назад (←)', 'Kc ще стане 8'],
+          correct: 1,
+          explanation: 'При [A] = 2 M и [B] = 4 M: Q = [B]/[A]² = 4/4 = 1 < Kc = 4. Q < Kc означава, че системата НЕ е в равновесие и ще се измести напред (→), образувайки повече B, докато Q = Kc = 4 отново. Добавянето на реагент винаги измества равновесието напред.'
+        },
+        {
+          q: 'Инхибиторите на ензимите са вещества, блокиращи активния център. Каква е тяхната роля от кинетична гледна точка?',
+          options: ['Намаляват Ea', 'Повишават Ea или блокират субстрата — забавят реакцията', 'Не влияят на скоростта', 'Увеличават концентрацията на субстрата'],
+          correct: 1,
+          explanation: 'Инхибиторите са антикатализатори — забавят реакцията. Конкурентните инхибитори заемат активния център (блокират субстрата → намалява ефективната концентрация). Некомпетитивните променят формата на ензима → ефективна Ea нараства. Лекарства, пестициди и токсини действат като инхибитори.'
+        },
+        {
+          q: 'Реакцията SO₂(г) + ½O₂(г) ⇌ SO₃(г) е ключова стъпка в производството на H₂SO₄ (контактен процес). Оптималните условия за максимален добив на SO₃ са:',
+          options: ['Ниско налягане и висока температура', 'Висока температура без катализатор', 'Умерена температура (~450°C), висока P, V₂O₅ катализатор', 'Ниска T и ниска P'],
+          correct: 2,
+          explanation: 'Реакцията е екзотермична (ΔH < 0). T↓ → Kc↑ (повече SO₃), но реакцията е бавна. V₂O₅ катализатор позволява разумна T ~450°C. P↑ измества равновесието → (3/2 mol газ → 1 mol газ). Компромис: ~450°C, 1–2 atm, V₂O₅ → ~98% добив.'
+        },
+        {
+          q: 'Защо хлебът „втасва" (тестото се надига) и колко химия има в процеса?',
+          options: ['Физичен процес — тестото просто се разширява', 'Мая ферментира захарта: C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂↑; CO₂ образува мехурчета', 'NaHCO₃ освобождава O₂', 'Водородни връзки в глутена се разрушават'],
+          correct: 1,
+          explanation: 'Дрождите (мая) провеждат анаеробна ферментация: C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂. CO₂ газът се задържа от глутеновата мрежа на тестото → образуват мехурчета → тестото набъбва. При печене алкохолът изпарява, CO₂ се разширява → пухкав хляб. Набухвателят (NaHCO₃ + киселина) дава CO₂ по химичен, а не биологичен път.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

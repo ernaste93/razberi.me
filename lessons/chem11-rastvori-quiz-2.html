@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Разтвори и рН — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-rastvori-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/chem11-rastvori-quiz-3.html',
+      lessonUrl:   '/lessons/chem11-rastvori.html',
+      lessonName:  'Разтвори и рН',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Разтвори и рН — Тест 2',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Колко грама NaOH (Mr = 40) са нужни за 2 L разтвор с концентрация 0,5 mol/L?',
+          options: ['20 g', '40 g', '80 g', '10 g'],
+          correct: 1,
+          explanation: 'n = c × V = 0,5 mol/L × 2 L = 1 mol. m = n × Mr = 1 mol × 40 g/mol = 40 g. Трябват 40 g NaOH за приготвяне на 2 L разтвор с 0,5 M концентрация.'
+        },
+        {
+          q: 'В реакцията CH₃COOH + H₂O ⇌ CH₃COO⁻ + H₃O⁺, оцетната киселина действа като:',
+          options: ['Основа по Брьонстед', 'Киселина по Брьонстед', 'Неутрален разтворител', 'Редуктор'],
+          correct: 1,
+          explanation: 'По Брьонстед-Лоури киселината е донор на протон (H⁺). Оцетната киселина (CH₃COOH) отдава протон на водата (акцептор-основа), образувайки CH₃COO⁻ (конюгирана основа) и H₃O⁺ (конюгирана киселина).'
+        },
+        {
+          q: 'При смесване на 100 mL 1M HCl и 100 mL 1M NaOH, какво е рН на получения разтвор?',
+          options: ['1', '7', '13', '3'],
+          correct: 1,
+          explanation: 'Моловете H⁺ от HCl: 0,1 L × 1 mol/L = 0,1 mol. Молове OH⁻ от NaOH: 0,1 L × 1 mol/L = 0,1 mol. H⁺ и OH⁻ се неутрализират напълно: H⁺ + OH⁻ → H₂O. Получава се 0,1 M NaCl — неутрален разтвор с рН = 7.'
+        },
+        {
+          q: 'Кой разтвор е с рН = 11?',
+          options: ['0,001 M HCl', '0,001 M NaOH', '0,1 M HCl', '1 M NaCl'],
+          correct: 1,
+          explanation: '0,001 M NaOH → [OH⁻] = 10⁻³ mol/L → рОН = 3 → рН = 14 − 3 = 11. NaOH е силна основа (дисоциира напълно). 0,001 M HCl би имал рН = 3. NaCl дава неутрален разтвор.'
+        },
+        {
+          q: 'Кое описва правилно теорията на Луис за киселини?',
+          options: ['Киселина отдава OH⁻', 'Киселина отдава H⁺', 'Киселина е акцептор на електронна двойка', 'Киселина е донор на електронна двойка'],
+          correct: 2,
+          explanation: 'По Луис, киселината е акцептор на електронна двойка (Lewis acid), а основата е донор на електронна двойка. Тази теория е най-обхватна и включва реакции без протонен обмен — например BF₃ + NH₃ (BF₃ е киселина на Луис).'
+        },
+        {
+          q: 'Ако рН = 2, колко пъти по-кисел е разтворът от разтвор с рН = 4?',
+          options: ['2 пъти', '10 пъти', '100 пъти', '0,5 пъти'],
+          correct: 2,
+          explanation: 'рН скалата е логаритмична. рН = 2 → [H⁺] = 10⁻² mol/L; рН = 4 → [H⁺] = 10⁻⁴ mol/L. Разликата: 10⁻²/10⁻⁴ = 10² = 100 пъти. Всяка единица рН отговаря на 10-кратна промяна в [H⁺].'
+        },
+        {
+          q: 'Кое от следните е неелектролит?',
+          options: ['KNO₃', 'HCl', 'C₆H₁₂O₆ (глюкоза)', 'NaOH'],
+          correct: 2,
+          explanation: 'Глюкозата (C₆H₁₂O₆) е органично вещество с ковалентни връзки — не се дисоциира на йони при разтваряне и не провежда ток. KNO₃, HCl и NaOH са електролити — образуват йони при разтваряне.'
+        },
+        {
+          q: 'Реакцията H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O. Колко мола KOH са нужни за 0,5 mol H₂SO₄?',
+          options: ['0,5 mol', '1 mol', '2 mol', '0,25 mol'],
+          correct: 1,
+          explanation: 'От стехиометрията: 1 mol H₂SO₄ реагира с 2 mol KOH. За 0,5 mol H₂SO₄: n(KOH) = 2 × 0,5 = 1 mol. H₂SO₄ е двуосновна киселина и неутрализира 2 mol OH⁻.'
+        },
+        {
+          q: 'Кое описва хидролизата на CH₃COONa?',
+          options: ['Образува кисел разтвор (рН < 7)', 'Образува основен разтвор (рН > 7)', 'Образува неутрален разтвор (рН = 7)', 'Не реагира с вода'],
+          correct: 1,
+          explanation: 'CH₃COONa е сол от слаба киселина (CH₃COOH) и силна основа (NaOH). При разтваряне CH₃COO⁻ хидролизира: CH₃COO⁻ + H₂O ⇌ CH₃COOH + OH⁻, отделяйки OH⁻ — разтворът е основен (рН > 7).'
+        },
+        {
+          q: 'Фенолфталеинът е безцветен при рН < 8,3 и малинено-червен при рН > 8,3. В стомашен сок (рН ≈ 2) фенолфталеинът е:',
+          options: ['Малинено-червен', 'Жълт', 'Безцветен', 'Лилав'],
+          correct: 2,
+          explanation: 'Стомашният сок има рН ≈ 1–2 (кисела среда). При рН < 8,3 фенолфталеинът е безцветен (недисоциирана форма). Малинено-червен цвят се появява само при рН > 8,3 (основна среда).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тригонометрични функции · Математика 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    .formula-block { background: #f0f4ff; border: 1.5px solid #c7d2fe; border-radius: 12px; padding: 16px 20px; margin: 16px 0; text-align: center; font-size: 17px; font-weight: 800; color: var(--accent); letter-spacing: 0.02em; }
+    .formula-block .formula-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; display: block; }
+    .formula-inline { background: #eef2ff; color: var(--accent); padding: 1px 7px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .example-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.8; }
+    .example-block strong { color: var(--accent); }
+    .example-step { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; width: 100%; }
+    .example-step:last-child { border-bottom: none; }
+    .example-step > div:last-child { flex: 1; }
+    .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .values-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
+    .values-table th { background: var(--accent); color: #fff; padding: 8px 10px; font-weight: 700; text-align: center; }
+    .values-table td { padding: 7px 10px; text-align: center; border-bottom: 1px solid var(--line); color: var(--text); }
+    .values-table tr:nth-child(even) td { background: var(--soft); }
+    .values-table td:first-child { font-weight: 700; color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>/</span>
+        <a href="/urotsi.html">Математика · Преговор 11 клас</a><span>/</span>
+        <span>Тригонометрични функции</span>
+      </div>
+      <div class="lesson-tag">Математика · 11 клас · Преговор</div>
+      <h1 class="lesson-title">Тригонометрични функции</h1>
+      <div class="lesson-meta">Функции · Графики · Формули · ~10 мин четене</div>
+      <div class="lesson-divider"></div>
+
+      <!-- 1. Определения -->
+      <div class="section-title">1. Определения — правоъгълен триъгълник и единична окръжност</div>
+      <div class="lesson-body">
+        <p>Тригонометрията е клон на математиката, който изучава връзките между ъглите и страните на триъгълниците. Думата идва от гръцките думи <em>trigonon</em> (триъгълник) и <em>metron</em> (мяра). Тригонометричните функции обаче надхвърлят триъгълниците — те описват всички периодични явления: звукови вълни, електрически токове, движение на махало и много повече.</p>
+        <p><strong>Определение чрез правоъгълен триъгълник:</strong> Разгледайте правоъгълен триъгълник с остър ъгъл α. Страните са: <em>противолежащ катет</em> (срещу ъгъл α), <em>прилежащ катет</em> (до ъгъл α) и <em>хипотенуза</em> (срещу правия ъгъл).</p>
+      </div>
+
+      <div class="formula-block">
+        <span class="formula-label">Определения чрез правоъгълен триъгълник</span>
+        sin α = противолежащ катет / хипотенуза
+        <br/>
+        cos α = прилежащ катет / хипотенуза
+        <br/>
+        tan α = противолежащ катет / прилежащ катет
+        <br/>
+        cot α = прилежащ катет / противолежащ катет
+      </div>
+
+      <div class="lesson-body">
+        <p><strong>Определение чрез единична окръжност:</strong> Единичната окръжност е окръжност с радиус 1 и център в началото O(0, 0) на координатната система. За всеки ъгъл α (измерен от положителната полуос Ox, обратно на часовниковата стрелка) съществува точка P(x, y) на окръжността. Дефинираме:</p>
+      </div>
+
+      <div class="formula-block">
+        <span class="formula-label">Определения чрез единична окръжност</span>
+        sin α = y-координата на P &nbsp;&nbsp;|&nbsp;&nbsp; cos α = x-координата на P
+        <br/>
+        tan α = sin α / cos α = y/x &nbsp;&nbsp;|&nbsp;&nbsp; cot α = cos α / sin α = x/y
+      </div>
+
+      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">📐</div>
+          <div class="key-point-text"><strong>sin α</strong> е y-координатата на точката на единичната окръжност. Стойностите са в интервала [−1, 1].</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📐</div>
+          <div class="key-point-text"><strong>cos α</strong> е x-координатата на същата точка. Стойностите са в интервала [−1, 1].</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📐</div>
+          <div class="key-point-text"><strong>tan α = sin α / cos α</strong> — не е дефиниран при cos α = 0, т.е. при α = 90° + 180°·k, k ∈ ℤ.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📐</div>
+          <div class="key-point-text"><strong>cot α = cos α / sin α</strong> — не е дефиниран при sin α = 0, т.е. при α = 180°·k, k ∈ ℤ.</div>
+        </div>
+      </div>
+
+      <div class="lesson-divider"></div>
+
+      <!-- 2. Стойности -->
+      <div class="section-title">2. Таблица на стойностите за стандартни ъгли</div>
+      <div class="lesson-body">
+        <p>Следните стойности трябва да знаете наизуст. Те се появяват постоянно в задачите — без тях не можете да решите тригонометрични уравнения бързо.</p>
+        <p><strong>Трик за запомняне на sin:</strong> sin 0° = √0/2 = 0, sin 30° = √1/2 = 1/2, sin 45° = √2/2, sin 60° = √3/2, sin 90° = √4/2 = 1. Просто броите под корена от 0 до 4! За cos четете таблицата наобратно — cos 0° = 1, cos 90° = 0.</p>
+      </div>
+
+      <table class="values-table">
+        <thead>
+          <tr>
+            <th>Функция</th>
+            <th>0°</th>
+            <th>30°</th>
+            <th>45°</th>
+            <th>60°</th>
+            <th>90°</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>sin</td>
+            <td>0</td>
+            <td>1/2</td>
+            <td>√2/2</td>
+            <td>√3/2</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>cos</td>
+            <td>1</td>
+            <td>√3/2</td>
+            <td>√2/2</td>
+            <td>1/2</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>tan</td>
+            <td>0</td>
+            <td>√3/3</td>
+            <td>1</td>
+            <td>√3</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>cot</td>
+            <td>—</td>
+            <td>√3</td>
+            <td>1</td>
+            <td>√3/3</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">💡</div>
+          <div class="key-point-text"><strong>tan 30° = √3/3:</strong> това е същото като 1/√3. Рационализирате: 1/√3 · √3/√3 = √3/3.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">💡</div>
+          <div class="key-point-text"><strong>tan 60° = √3:</strong> защото tan 60° = sin 60° / cos 60° = (√3/2) / (1/2) = √3.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">💡</div>
+          <div class="key-point-text"><strong>tan 45° = 1:</strong> при 45° синусът и косинусът са равни (и двата са √2/2), затова делението дава 1.</div>
+        </div>
+      </div>
+
+      <div class="lesson-divider"></div>
+
+      <!-- 3. Основни формули -->
+      <div class="section-title">3. Основна тригонометрична формула и производни тъждества</div>
+      <div class="lesson-body">
+        <p>Най-важната формула в тригонометрията произтича директно от уравнението на единичната окръжност x² + y² = 1. Като заместим x = cos α и y = sin α, получаваме:</p>
+      </div>
+
+      <div class="formula-block">
+        <span class="formula-label">Основно питагорейско тъждество</span>
+        sin²α + cos²α = 1
+      </div>
+
+      <div class="lesson-body">
+        <p>От основното тъждество, разделяйки последователно на cos²α и на sin²α, получаваме две допълнителни тъждества:</p>
+      </div>
+
+      <div class="formula-block">
+        <span class="formula-label">Производни питагорейски тъждества</span>
+        1 + tan²α = 1/cos²α &nbsp;&nbsp;&nbsp;&nbsp; (при cos α ≠ 0)
+        <br/>
+        1 + cot²α = 1/sin²α &nbsp;&nbsp;&nbsp;&nbsp; (при sin α ≠ 0)
+      </div>
+
+      <div class="formula-block">
+        <span class="formula-label">Определения чрез sin и cos</span>
+        tan α = sin α / cos α &nbsp;&nbsp;&nbsp;&nbsp; cot α = cos α / sin α &nbsp;&nbsp;&nbsp;&nbsp; tan α · cot α = 1
+      </div>
+
+      <div class="example-block">
+        <strong>Задача 1:</strong> Ако sin α = 3/5 и α е в I квадрант, намери cos α и tan α.
+        <div class="example-step">
+          <div class="step-num">1</div>
+          <div>Прилагаме основното тъждество: sin²α + cos²α = 1 → (3/5)² + cos²α = 1 → 9/25 + cos²α = 1</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">2</div>
+          <div>cos²α = 1 − 9/25 = 16/25, следователно cos α = ±4/5</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">3</div>
+          <div>Тъй като α е в I квадрант, cos α > 0 → cos α = 4/5</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">4</div>
+          <div><strong>Отговор:</strong> tan α = sin α / cos α = (3/5) / (4/5) = 3/4</div>
+        </div>
+      </div>
+
+      <div class="lesson-divider"></div>
+
+      <!-- 4. Формули за събиране -->
+      <div class="section-title">4. Формули за събиране, изваждане и двоен ъгъл</div>
+      <div class="lesson-body">
+        <p>Формулите за събиране позволяват да намерим стойността на тригонометрична функция за сума или разлика на два ъгъла. Те са от съществено значение при опростяване на изрази и намиране на стойности за ъгли като 15°, 75°, 105° и т.н.</p>
+      </div>
+
+      <div class="formula-block">
+        <span class="formula-label">Формули за сума и разлика</span>
+        sin(α + β) = sin α · cos β + cos α · sin β
+        <br/>
+        sin(α − β) = sin α · cos β − cos α · sin β
+        <br/>
+        cos(α + β) = cos α · cos β − sin α · sin β
+        <br/>
+        cos(α − β) = cos α · cos β + sin α · sin β
+      </div>
+
+      <div class="lesson-body">
+        <p><strong>Мнемоника за sin(α + β):</strong> „Синус-косинус, косинус-синус — знакът е същият." За cos(α + β): „Косинус-косинус минус синус-синус — знакът се обръща."</p>
+        <p>Когато заместим β = α (двоен ъгъл), получаваме много важните формули:</p>
+      </div>
+
+      <div class="formula-block">
+        <span class="formula-label">Формули за двоен ъгъл</span>
+        sin 2α = 2 · sin α · cos α
+        <br/>
+        cos 2α = cos²α − sin²α = 1 − 2sin²α = 2cos²α − 1
+      </div>
+
+      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">📌</div>
+          <div class="key-point-text"><strong>cos 2α = 1 − 2sin²α</strong> е полезна форма, когато трябва да изразите cos 2α само чрез sin α (при намиране на sin²α).</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📌</div>
+          <div class="key-point-text"><strong>cos 2α = 2cos²α − 1</strong> е удобна форма за изразяване на cos²α чрез cos 2α: cos²α = (1 + cos 2α) / 2.</div>
+        </div>
+      </div>
+
+      <div class="example-block">
+        <strong>Задача 2:</strong> Намери стойността на sin 75°.
+        <div class="example-step">
+          <div class="step-num">1</div>
+          <div>Представяме: 75° = 45° + 30°</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">2</div>
+          <div>sin(45° + 30°) = sin 45° · cos 30° + cos 45° · sin 30°</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">3</div>
+          <div>= (√2/2) · (√3/2) + (√2/2) · (1/2) = √6/4 + √2/4</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">4</div>
+          <div><strong>Отговор:</strong> sin 75° = (√6 + √2) / 4</div>
+        </div>
+      </div>
+
+      <div class="example-block">
+        <strong>Задача 3:</strong> Ако cos α = 4/5 и α е в I квадрант, намери sin 2α и cos 2α.
+        <div class="example-step">
+          <div class="step-num">1</div>
+          <div>Намираме sin α: sin²α = 1 − cos²α = 1 − 16/25 = 9/25 → sin α = 3/5 (в I квадрант sin > 0)</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">2</div>
+          <div>sin 2α = 2 · sin α · cos α = 2 · (3/5) · (4/5) = 24/25</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">3</div>
+          <div><strong>Отговор:</strong> cos 2α = cos²α − sin²α = 16/25 − 9/25 = 7/25</div>
+        </div>
+      </div>
+
+      <div class="lesson-divider"></div>
+
+      <!-- 5. Графики -->
+      <div class="section-title">5. Графики на тригонометричните функции</div>
+      <div class="lesson-body">
+        <p>Всяка тригонометрична функция е периодична — след определен интервал графиката се повтаря. Познаването на ключовите свойства на графиките е задължително за задачите с уравнения и неравенства.</p>
+      </div>
+
+      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">📈</div>
+          <div class="key-point-text">
+            <strong>y = sin x:</strong> Период 2π (360°). Домейн: всички реални числа ℝ. Множество на стойностите: [−1, 1]. Функцията е <strong>нечетна</strong> (sin(−x) = −sin x), симетрична спрямо началото. Нули при x = 180°·k. Максимум 1 при x = 90° + 360°·k, минимум −1 при x = 270° + 360°·k.
+          </div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📈</div>
+          <div class="key-point-text">
+            <strong>y = cos x:</strong> Период 2π (360°). Домейн: ℝ. Множество на стойностите: [−1, 1]. Функцията е <strong>четна</strong> (cos(−x) = cos x), симетрична спрямо оста Oy. Нули при x = 90° + 180°·k. Максимум 1 при x = 360°·k, минимум −1 при x = 180° + 360°·k. Графиката на cos x е графиката на sin x, изместена с 90° наляво.
+          </div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📈</div>
+          <div class="key-point-text">
+            <strong>y = tan x:</strong> Период π (180°). Домейн: ℝ \ {90° + 180°·k}. Множество на стойностите: (−∞, +∞). Функцията е <strong>нечетна</strong>. Вертикални асимптоти при x = 90° + 180°·k. Нули при x = 180°·k. Функцията е строго нарастваща в рамките на всеки период.
+          </div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📈</div>
+          <div class="key-point-text">
+            <strong>y = cot x:</strong> Период π (180°). Домейн: ℝ \ {180°·k}. Множество на стойностите: (−∞, +∞). Функцията е <strong>нечетна</strong>. Вертикални асимптоти при x = 180°·k. Нули при x = 90° + 180°·k. Функцията е строго намаляваща в рамките на всеки период.
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson-body">
+        <p><strong>Важно сравнение:</strong> sin и cos имат период <strong>2π</strong> и ограничена амплитуда, докато tan и cot имат период <strong>π</strong> и неограничена амплитуда. Тази разлика е ключова за задачите с брой решения в даден интервал.</p>
+      </div>
+
+      <div class="lesson-divider"></div>
+
+      <!-- 6. Знаци по квадранти -->
+      <div class="section-title">6. Знаци на функциите по квадранти</div>
+      <div class="lesson-body">
+        <p>Знакът на всяка тригонометрична функция зависи от квадранта, в който се намира ъгълът. Това е критично при задачи, в които се иска да се намери непозната функция при известна друга.</p>
+      </div>
+
+      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">I</div>
+          <div class="key-point-text"><strong>I квадрант (0° – 90°):</strong> sin, cos, tan, cot — всички са <strong>положителни</strong>.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">II</div>
+          <div class="key-point-text"><strong>II квадрант (90° – 180°):</strong> само <strong>sin е положителен</strong>; cos, tan, cot са отрицателни.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">III</div>
+          <div class="key-point-text"><strong>III квадрант (180° – 270°):</strong> sin и cos са отрицателни; <strong>tan и cot са положителни</strong>.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">IV</div>
+          <div class="key-point-text"><strong>IV квадрант (270° – 360°):</strong> sin, tan, cot са отрицателни; само <strong>cos е положителен</strong>.</div>
+        </div>
+      </div>
+
+      <div class="lesson-body">
+        <p><strong>Мнемоника ASTC:</strong> „<strong>A</strong>ll <strong>S</strong>tudents <strong>T</strong>ake <strong>C</strong>alculus" — I квадрант: All (всички), II квадрант: Sin, III квадрант: Tan, IV квадрант: Cos. Или на български: „<strong>В</strong>сички <strong>С</strong>ладкиши <strong>Т</strong>атко <strong>С</strong>варя" — Всички, Sin, Tan, Cos.</p>
+      </div>
+
+      <div class="lesson-divider"></div>
+
+      <!-- 7. Решен пример — уравнение -->
+      <div class="section-title">7. Приложение на формулите — решена задача</div>
+
+      <div class="example-block">
+        <strong>Задача 4:</strong> Опростете израза: (sin²α − 1) / cos²α + 1.
+        <div class="example-step">
+          <div class="step-num">1</div>
+          <div>Знаем, че sin²α + cos²α = 1, следователно sin²α − 1 = −cos²α.</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">2</div>
+          <div>Заместваме: (−cos²α) / cos²α + 1 = −1 + 1 = 0</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">3</div>
+          <div><strong>Отговор:</strong> Изразът е равен на 0 за всички допустими стойности на α.</div>
+        </div>
+      </div>
+
+      <div class="example-block">
+        <strong>Задача 5:</strong> Докажете тъждеството: (sin α + cos α)² = 1 + sin 2α.
+        <div class="example-step">
+          <div class="step-num">1</div>
+          <div>Разкриваме скобата вляво: (sin α + cos α)² = sin²α + 2·sin α·cos α + cos²α</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">2</div>
+          <div>Прилагаме тъждеството sin²α + cos²α = 1 и формулата за двоен ъгъл 2·sin α·cos α = sin 2α:</div>
+        </div>
+        <div class="example-step">
+          <div class="step-num">3</div>
+          <div>= 1 + sin 2α ✓ — тъждеството е доказано.</div>
+        </div>
+      </div>
+
+      <div class="lesson-divider"></div>
+
+      <!-- 8. Ключови факти -->
+      <div class="section-title">8. Ключови факти — преговор за теста</div>
+
+      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">📌</div>
+          <div class="key-point-text"><strong>sin²α + cos²α = 1</strong> е основното тъждество. Използва се за намиране на непозната функция от позната. Трябва да го знаете наизуст.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📌</div>
+          <div class="key-point-text"><strong>Таблицата за 30°, 45°, 60°</strong> — задължителна. Без нея не може да решите уравнения или да намерите точни стойности. Учете я с трика „0, 1, 2, 3, 4 под корена, делено на 2".</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📌</div>
+          <div class="key-point-text"><strong>sin(α ± β)</strong> — знакът е същият (+ при +, − при −); <strong>cos(α ± β)</strong> — знакът се обръща (при cos(α + β) имате минус между произведенията).</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📌</div>
+          <div class="key-point-text"><strong>sin 2α = 2 sin α cos α</strong> и <strong>cos 2α = cos²α − sin²α</strong> — трите форми на cos 2α трябва да знаете всичките.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📌</div>
+          <div class="key-point-text"><strong>Период:</strong> sin и cos имат период 2π (360°); tan и cot имат период π (180°). Важно за броя решения в интервал.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📌</div>
+          <div class="key-point-text"><strong>Четност/нечетност:</strong> cos е четна (cos(−x) = cos x); sin, tan, cot са нечетни (f(−x) = −f(x)). Използва се за опростяване на изрази с отрицателни ъгли.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">📌</div>
+          <div class="key-point-text"><strong>Знаци по квадранти (ASTC):</strong> всичко е + в I, само sin е + в II, само tan е + в III, само cos е + в IV. Ключово при избор на знак за cos α от sin²α + cos²α = 1.</div>
+        </div>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <a href="/lessons/math11-trigonometriya-quiz.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:#fff;border-radius:99px;font-weight:800;font-size:14px;text-decoration:none;">
+          Към тест 1 →
+        </a>
+        <a href="/urotsi.html" style="font-size:13px;color:var(--muted);text-decoration:none;">← Всички уроци</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="znaiko-panel" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.45);align-items:flex-end;justify-content:center;">
+    <div style="background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:680px;padding:24px;max-height:80vh;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <strong style="font-size:16px;">💡 Знайко</strong>
+        <button onclick="document.getElementById('znaiko-panel').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);">✕</button>
+      </div>
+      <div id="chat-messages" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
+      <div style="display:flex;gap:8px;">
+        <input id="chat-input" type="text" placeholder="Задай въпрос..." style="flex:1;padding:10px 16px;border:1.5px solid var(--line);border-radius:99px;font-family:inherit;font-size:14px;outline:none;" />
+        <button id="chat-send" style="padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:99px;font-family:inherit;font-weight:700;cursor:pointer;">Изпрати</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.getElementById('btn-ask-znaiko').addEventListener('click', () => {
+      document.getElementById('znaiko-panel').style.display = 'flex';
+    });
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Тригонометрични функции — sin, cos, tan, cot, формули, графики';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

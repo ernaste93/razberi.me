@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Неорганични съединения · Химия 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    .chem-box { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0; font-size: 14px; line-height: 1.8; }
+    .chem-formula { font-family: 'Courier New', monospace; background: var(--soft); border-radius: 8px; padding: 10px 16px; margin: 10px 0; font-size: 14px; display: inline-block; }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>/</span>
+        <a href="/urotsi.html">Химия · Преговор 11 клас</a><span>/</span>
+        <span>Неорганични съединения</span>
+      </div>
+
+      <div class="lesson-tag">Химия · 11 клас · Преговор</div>
+      <h1 class="lesson-title">Оксиди, киселини, основи и соли — свойства и реакции</h1>
+      <div class="lesson-meta">Класификация на неорганичните съединения, химични свойства · ~10 мин четене</div>
+      <div class="lesson-divider"></div>
+
+      <div class="section-title">Оксиди</div>
+      <div class="lesson-body">
+        <p><strong>Оксидите</strong> са бинарни съединения на даден елемент с кислород. Делят се на <strong>основни оксиди</strong> (оксиди на метали с ниска валентност — реагират с киселини и вода), <strong>киселинни оксиди</strong> (оксиди на неметали и метали с висока валентност — реагират с основи и вода) и <strong>амфотерни оксиди</strong> (реагират и с двете).</p>
+      </div>
+
+      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">🟦</div>
+          <div class="key-point-text"><strong>Основни оксиди:</strong> Na₂O, CaO, MgO, FeO, CuO. Реагират с киселини → сол+вода; с вода → основа (ако са разтворими): CaO + H₂O → Ca(OH)₂.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">🟥</div>
+          <div class="key-point-text"><strong>Киселинни оксиди:</strong> SO₂, SO₃, CO₂, N₂O₅, P₂O₅, SiO₂ (с изключения). Реагират с основи → сол+вода; с вода → киселина: SO₃ + H₂O → H₂SO₄.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">🟩</div>
+          <div class="key-point-text"><strong>Амфотерни оксиди:</strong> Al₂O₃, ZnO, Cr₂O₃. Реагират и с киселини, и с основи: Al₂O₃ + 6HCl → 2AlCl₃ + 3H₂O; Al₂O₃ + 2NaOH → 2NaAlO₂ + H₂O.</div>
+        </div>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div class="section-title">Киселини</div>
+      <div class="lesson-body">
+        <p><strong>Киселините</strong> са вещества, съдържащи водород, заменим с метал, при реакция с метал/основа се получава сол. По Арениус — отделят H⁺ в разтвор. Класификация: <strong>безкислородни</strong> (HCl, HBr, HI, H₂S, HF, HCN) и <strong>кислородни</strong> (HNO₃, H₂SO₄, H₃PO₄, H₂CO₃, HClO₄). По сила: силни (HCl, HNO₃, H₂SO₄) и слаби (CH₃COOH, H₂CO₃, H₃PO₄).</p>
+      </div>
+
+      <div class="chem-box">
+        <strong>Химични свойства на киселините:</strong><br/>
+        <div class="chem-formula">Кис. + метал → сол + H₂↑  (само металите пред H в реда на активност)</div><br/>
+        <div class="chem-formula">Кис. + основен оксид → сол + H₂O</div><br/>
+        <div class="chem-formula">Кис. + основа → сол + H₂O  (неутрализация)</div><br/>
+        <div class="chem-formula">Кис. + сол → нова кис. + нова сол  (ако нова кис. е по-слаба/нелетлива)</div>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div class="section-title">Основи (хидроксиди)</div>
+      <div class="lesson-body">
+        <p><strong>Основите</strong> съдържат OH⁻ групи. По Арениус — отделят OH⁻ в разтвор. Разтворимите основи се наричат <strong>алкали</strong> (NaOH, KOH, Ca(OH)₂, Ba(OH)₂). Неразтворими основи: Fe(OH)₃, Cu(OH)₂, Al(OH)₃. Амфотерни: Al(OH)₃, Zn(OH)₂ — реагират и с киселини, и с основи.</p>
+      </div>
+
+      <div class="chem-box">
+        <strong>Химични свойства на основите:</strong><br/>
+        <div class="chem-formula">Осн. + киселинен оксид → сол + H₂O:  2NaOH + CO₂ → Na₂CO₃ + H₂O</div><br/>
+        <div class="chem-formula">Осн. + киселина → сол + H₂O:  NaOH + HCl → NaCl + H₂O</div><br/>
+        <div class="chem-formula">Осн. + сол → нова основа + нова сол (ако нова осн. е неразт.)</div><br/>
+        <div class="chem-formula">Неразтв. основи → оксид + H₂O (при нагряване):  Cu(OH)₂ → CuO + H₂O</div>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div class="section-title">Соли</div>
+      <div class="lesson-body">
+        <p><strong>Солите</strong> са йонни съединения от метален катион (или NH₄⁺) и киселинен анион. Образуват се при реакция на киселина с основа (неутрализация) или на метал с киселина. Видове: <strong>средни соли</strong> (NaCl, CaSO₄, K₂CO₃), <strong>кисели соли</strong> (NaHCO₃, NaHSO₄ — с H в аниона), <strong>основни соли</strong> (MgOHCl — с OH в структурата).</p>
+      </div>
+
+      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">🧂</div>
+          <div class="key-point-text"><strong>NaCl</strong> (натриев хлорид): кухненска сол. Електролит, проводник в разтвор. Получава се: HCl + NaOH → NaCl + H₂O.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">🫧</div>
+          <div class="key-point-text"><strong>Na₂CO₃</strong> (натриев карбонат): „сода" за пране. Основна сол — хидролизира до основна среда. Na₂CO₃ + H₂O ⇌ NaHCO₃ + NaOH.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">🏗️</div>
+          <div class="key-point-text"><strong>CaSO₄ · 2H₂O</strong> (гипс): при нагряване губи вода и образува хемихидрат (CaSO₄·½H₂O), който при овлажняване отново се втвърдява — използва се в строителството.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">🌿</div>
+          <div class="key-point-text"><strong>Ca₃(PO₄)₂</strong> (калциев фосфат): основна съставка на костите и зъбите. Слабо разтворим.</div>
+        </div>
+      </div>
+
+      <div class="chem-box">
+        <strong>Реакции на солите:</strong><br/>
+        <div class="chem-formula">Сол + киселина → нова сол + нова кис.:  CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑</div><br/>
+        <div class="chem-formula">Сол + основа → нова сол + нова осн.:  CuSO₄ + 2NaOH → Cu(OH)₂↓ + Na₂SO₄</div><br/>
+        <div class="chem-formula">Сол₁ + Сол₂ → нови соли (при утайка/газ):  BaCl₂ + Na₂SO₄ → BaSO₄↓ + 2NaCl</div><br/>
+        <div class="chem-formula">Сол + метал → нова сол + метал:  Fe + CuSO₄ → FeSO₄ + Cu</div>
+      </div>
+
+      <div class="lesson-body">
+        <p>Генетичната връзка между класовете: метал → основен оксид → основа → сол (и обратно). Неметал → киселинен оксид → киселина → сол. Тези трансформации обединяват цялата неорганична химия в логична система.</p>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <a href="/lessons/chem11-neorganichni-saedinenia-quiz.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:#fff;border-radius:99px;font-weight:800;font-size:14px;text-decoration:none;">
+          Към тест 1 →
+        </a>
+        <a href="/urotsi.html" style="font-size:13px;color:var(--muted);text-decoration:none;">← Всички уроци</a>
+      </div>
+    </div>
+  </main>
+
+  <button id="btn-ask-znaiko" onclick="document.getElementById('znaiko-panel').style.display='flex'">
+    💡 Цъкни за помощ
+  </button>
+
+  <div id="znaiko-panel" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.45);align-items:flex-end;justify-content:center;">
+    <div style="background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:680px;padding:24px;max-height:80vh;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <strong style="font-size:16px;">💡 Знайко</strong>
+        <button onclick="document.getElementById('znaiko-panel').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);">✕</button>
+      </div>
+      <div id="chat-messages" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
+      <div style="display:flex;gap:8px;">
+        <input id="chat-input" type="text" placeholder="Задай въпрос..." style="flex:1;padding:10px 16px;border:1.5px solid var(--line);border-radius:99px;font-family:inherit;font-size:14px;outline:none;" />
+        <button id="chat-send" style="padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:99px;font-family:inherit;font-weight:700;cursor:pointer;">Изпрати</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script src="/app.js"></script>
+</body>
+</html>

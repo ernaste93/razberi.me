@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Строеж и функции на клетката — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-kletkata-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio11-kletkata-quiz-2.html',
+      lessonUrl:   '/lessons/bio11-kletkata.html',
+      lessonName:  'Строеж и функции на клетката',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Строеж и функции на клетката — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Коя е основната структурна и функционална единица на живите организми?',
+          options: ['Органът', 'Тъканта', 'Клетката', 'Молекулата'],
+          correct: 2,
+          explanation: 'Клетката е основна структурна и функционална единица на живота. Клетъчната теория е формулирана от Шлайден и Шван (1838–1839). Всички живи организми са изградени от клетки.'
+        },
+        {
+          q: 'Кой модел описва строежа на клетъчната мембрана?',
+          options: ['Двойна спирала', 'Течна мозайка', 'Кристална решетка', 'Ламеларна структура'],
+          correct: 1,
+          explanation: 'Моделът на течната мозайка (Сингер и Никълсън, 1972) описва клетъчната мембрана като фосфолипиден двоен слой с белтъци, свободно движещи се в него. Той обяснява гъвкавостта и функционалността на мембраната.'
+        },
+        {
+          q: 'Кой органел е наречен „електроцентрала на клетката"?',
+          options: ['Рибозома', 'Голджи апарат', 'Лизозома', 'Митохондрия'],
+          correct: 3,
+          explanation: 'Митохондриите синтезират по-голямата część от клетъчния АТФ чрез аеробно дишане. Те имат двойна мембрана: вътрешната образува кристи, увеличаващи повърхността за АТФ синтеза.'
+        },
+        {
+          q: 'В кой органел протича синтезът на белтъци?',
+          options: ['Митохондрия', 'Лизозома', 'Рибозома', 'Вакуола'],
+          correct: 2,
+          explanation: 'Рибозомите са немембранни органели, изградени от рРНК и белтъци. Те извършват транслация — синтез на белтъци по матрица от информационна РНК. Намират се свободно в цитоплазмата или прикрепени към гранулирания ЕПР.'
+        },
+        {
+          q: 'Коя структура отделя клетката от околната среда и регулира преноса на вещества?',
+          options: ['Клетъчна стена', 'Клетъчна мембрана', 'Ядрена обвивка', 'Ендоплазмен ретикулум'],
+          correct: 1,
+          explanation: 'Клетъчната мембрана (плазмалема) е фосфолипидна двойна обвивка, изпълняваща бариерна, транспортна и рецепторна функция. Тя регулира избирателно преминаването на вещества в и от клетката.'
+        },
+        {
+          q: 'Кои клетки нямат оформено клетъчно ядро?',
+          options: ['Животински клетки', 'Растителни клетки', 'Прокариотни клетки', 'Гъбни клетки'],
+          correct: 2,
+          explanation: 'Прокариотите (бактерии и архебактерии) нямат оформено ядро с мембрана — ДНК им е свободна в цитоплазмата. Еукариотите (животни, растения, гъби, протисти) имат ядро с двойна мембрана.'
+        },
+        {
+          q: 'Каква е функцията на апарата на Голджи?',
+          options: ['Синтез на АТФ', 'Разграждане на клетъчни отпадъци', 'Модифициране, сортиране и опаковане на белтъци', 'Съхраняване на генетична информация'],
+          correct: 2,
+          explanation: 'Апаратът на Голджи действа като „пощенска станция" — получава белтъци от ЕПР, модифицира ги (гликозилиране, фосфорилиране), сортира и опакова в везикули за транспорт до местоназначението им.'
+        },
+        {
+          q: 'Кои органели имат собствена ДНК и рибозоми?',
+          options: ['Лизозоми и вакуоли', 'Митохондрии и хлоропласти', 'Рибозоми и апарат на Голджи', 'Центриоли и микротубули'],
+          correct: 1,
+          explanation: 'Митохондриите и хлоропластите съдържат собствена кръгова ДНК и рибозоми. Това подкрепя ендосимбионтната теория — те произхождат от прокариоти, погълнати от предшественик на еукариотите.'
+        },
+        {
+          q: 'Каква е ролята на лизозомите в клетката?',
+          options: ['Синтез на липиди', 'Производство на АТФ', 'Разграждане на отпадъци и чужди частици', 'Транспорт на белтъци'],
+          correct: 2,
+          explanation: 'Лизозомите са везикули с кисела среда (pH ~5), съдържащи хидролитични ензими. Те разграждат клетъчни отпадъци (автофагия), погълнати чужди частици и бактерии (хетерофагия) и участват в апоптоза.'
+        },
+        {
+          q: 'Какъв органел присъства в растителните клетки, но ЛИПСВА при животинските?',
+          options: ['Митохондрия', 'Рибозома', 'Хлоропласт', 'Апарат на Голджи'],
+          correct: 2,
+          explanation: 'Хлоропластите са характерни само за растителните клетки и провеждат фотосинтеза. Животинските клетки нямат хлоропласти и не могат да синтезират органични вещества от неорганични чрез светлина.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

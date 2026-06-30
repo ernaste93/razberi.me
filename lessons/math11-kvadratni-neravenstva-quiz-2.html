@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Квадратни неравенства — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math11-kvadratni-neravenstva-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/math11-kvadratni-neravenstva-quiz-3.html',
+      lessonUrl:   '/lessons/math11-kvadratni-neravenstva.html',
+      lessonName:  'Квадратни неравенства',
+      eyebrow:     'МАТЕМАТИКА · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Квадратни неравенства — Тест 2',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Реши неравенството: x² − 3x + 2 < 0',
+          opts: ['x < 1 или x > 2', '1 < x < 2', 'x > 2', 'x < 1'],
+          correct: 1,
+          explanation: 'Корените на x²−3x+2=0 са x₁=1 и x₂=2 (по Виета: 1+2=3, 1·2=2). За < 0 при a > 0 решението е между корените: 1 < x < 2.'
+        },
+        {
+          q: 'Реши неравенството: x² − 5x + 6 ≥ 0',
+          opts: ['2 ≤ x ≤ 3', 'x ≤ 2 или x ≥ 3', 'x > 3', 'x < 2'],
+          correct: 1,
+          explanation: 'Корените са x₁=2 и x₂=3. За ≥ 0 при a > 0 решението е извън или на корените: x ≤ 2 или x ≥ 3. При знак ≥ включваме самите корени в решението.'
+        },
+        {
+          q: 'Определи дискриминанта на: 2x² + 3x + 1',
+          opts: ['D = 1', 'D = 17', 'D = 7', 'D = −1'],
+          correct: 0,
+          explanation: 'D = b² − 4ac = 3² − 4·2·1 = 9 − 8 = 1. Корените: x = (−3 ± 1)/4, следователно x₁ = −1/2 и x₂ = −1.'
+        },
+        {
+          q: 'Реши: −x² + 4 ≥ 0',
+          opts: ['x ≤ −2 или x ≥ 2', '−2 ≤ x ≤ 2', 'x ≤ 2', 'Няма решение'],
+          correct: 1,
+          explanation: '−x² + 4 ≥ 0 ⟺ x² ≤ 4 ⟺ −2 ≤ x ≤ 2. Внимание: коефициентът пред x² е −1 (отрицателен), затова параболата е с клони надолу. При D > 0 неравенството ≥ 0 се изпълнява между корените.'
+        },
+        {
+          q: 'Реши: x² + 2x + 1 > 0',
+          opts: ['x ≠ −1', 'x > −1', 'x < −1', 'Всяко x'],
+          correct: 0,
+          explanation: 'x² + 2x + 1 = (x+1)². Квадратът е ≥ 0 за всяко x, и > 0 само когато (x+1) ≠ 0, т.е. x ≠ −1. Решение: x ∈ ℝ \\ {−1}.'
+        },
+        {
+          q: 'Реши: 2x² − 8 > 0',
+          opts: ['−2 < x < 2', 'x < −2 или x > 2', 'x > 2', 'x > 0'],
+          correct: 1,
+          explanation: '2x² − 8 > 0 ⟺ x² > 4 ⟺ |x| > 2 ⟺ x < −2 или x > 2. Корените на 2x²−8=0 са x = ±2. При a = 2 > 0 и знак >, решението е извън корените.'
+        },
+        {
+          q: 'Реши: x² + x − 2 ≤ 0',
+          opts: ['x ≤ −2 или x ≥ 1', '−2 ≤ x ≤ 1', 'x ≤ −1', 'x ≥ 1'],
+          correct: 1,
+          explanation: 'Корените на x²+x−2=0: D=1+8=9, x=(−1±3)/2, т.е. x₁=−2, x₂=1. При ≤ 0 и a > 0: решението е между корените включително: −2 ≤ x ≤ 1.'
+        },
+        {
+          q: 'За кои стойности на x е вярно: x² < 9?',
+          opts: ['x < 3', '−3 < x < 3', 'x > −3', 'x < −3 или x > 3'],
+          correct: 1,
+          explanation: 'x² < 9 ⟺ x² − 9 < 0 ⟺ (x−3)(x+3) < 0. Корените са −3 и 3. При < 0 и a > 0: решението е между корените: −3 < x < 3, или еквивалентно |x| < 3.'
+        },
+        {
+          q: 'Ако D = 0, каква е геометричната интерпретация на параболата y = ax² + bx + c?',
+          opts: [
+            'Параболата не пресича оста Ox',
+            'Параболата докосва оста Ox в една точка',
+            'Параболата пресича оста Ox в две точки',
+            'Параболата е симетрична спрямо Ox'
+          ],
+          correct: 1,
+          explanation: 'При D = 0 параболата докосва оста Ox в точно една точка — двойния корен x = −b/(2a). Тази точка е върхът на параболата. Геометрично: параболата е „тангентна" към оста Ox.'
+        },
+        {
+          q: 'Реши: (x − 1)(x + 3) > 0',
+          opts: ['−3 < x < 1', 'x < −3 или x > 1', 'x > 1', 'x < −3'],
+          correct: 1,
+          explanation: 'Произведението е > 0 когато двата множителя имат еднакъв знак. Корените: x₁ = −3 и x₂ = 1. При a > 0 (водещ коефициент = 1) и > 0: x < −3 или x > 1.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

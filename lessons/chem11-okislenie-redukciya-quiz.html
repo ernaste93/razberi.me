@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Окислително-редукционни реакции — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-okislenie-redukciya-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem11-okislenie-redukciya-quiz-2.html',
+      lessonUrl:   '/lessons/chem11-okislenie-redukciya.html',
+      lessonName:  'Окислително-редукционни реакции',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Окислително-редукционни реакции — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Какво е окислението в редокс реакция?',
+          options: ['Приемане на електрони', 'Отдаване на електрони', 'Намаляване на степента на окисление', 'Приемане на протони'],
+          correct: 1,
+          explanation: 'Окислението е процес на отдаване на електрони, при което степента на окисление на атома нараства. Лесно се запомня: OIL RIG — Oxidation Is Loss (of electrons), Reduction Is Gain (of electrons).'
+        },
+        {
+          q: 'В реакцията Zn + CuSO₄ → ZnSO₄ + Cu, кой е редукторът?',
+          options: ['Cu²⁺', 'SO₄²⁻', 'Zn', 'Cu'],
+          correct: 2,
+          explanation: 'Цинкът (Zn⁰) отдава 2 електрона: Zn → Zn²⁺ + 2e⁻ — той се окислява и е редуктор. Cu²⁺ приема 2 електрона и се редуцира до Cu⁰ — то е окислителят. Редукторът се окислява; окислителят се редуцира.'
+        },
+        {
+          q: 'Каква е степента на окисление на S в H₂SO₄?',
+          options: ['+4', '+6', '+2', '−2'],
+          correct: 1,
+          explanation: 'H₂SO₄: H(+1)×2 + S(x) + O(−2)×4 = 0 → 2 + x − 8 = 0 → x = +6. Серният атом в сярната киселина е в степен на окисление +6 — максималната за серата.'
+        },
+        {
+          q: 'Кое от следните е типичен окислител?',
+          options: ['H₂ (водород)', 'C (въглерод)', 'KMnO₄ (калиев перманганат)', 'Zn (цинк)'],
+          correct: 2,
+          explanation: 'KMnO₄ (калиев перманганат) е силен окислител — Mn е в степен +7 (максимална) и лесно приема електрони, редуцирайки се до Mn²⁺ (в кисела) или MnO₂ (в неутрална/слабо алкална). H₂, C и Zn са редуктори.'
+        },
+        {
+          q: 'В реакцията 2Fe + 3Cl₂ → 2FeCl₃, каква е С.О. на Fe в продукта?',
+          options: ['0', '+2', '+3', '+1'],
+          correct: 2,
+          explanation: 'В FeCl₃: Cl е −1 (три Cl атома × −1 = −3), следователно Fe = +3 за неутрална молекула. Fe се окислява от 0 до +3, отдавайки 3 електрона. Cl₂ е окислителят (редуцира се от 0 до −1).'
+        },
+        {
+          q: 'Каква е С.О. на Cr в K₂Cr₂O₇?',
+          options: ['+3', '+4', '+6', '+7'],
+          correct: 2,
+          explanation: 'K₂Cr₂O₇: K(+1)×2 + 2Cr(x) + O(−2)×7 = 0 → 2 + 2x − 14 = 0 → 2x = 12 → x = +6. Хромът в дихромат е +6. При редокс реакции K₂Cr₂O₇ е окислител — Cr(+6) се редуцира до Cr(+3).'
+        },
+        {
+          q: 'В реакцията 2H₂ + O₂ → 2H₂O, кое вещество се окислява?',
+          options: ['O₂', 'H₂', 'H₂O', 'Нито едно'],
+          correct: 1,
+          explanation: 'H₂: H е в С.О. 0 → в H₂O H е +1. Водородът се окислява (0 → +1). O₂: O е 0 → в H₂O O е −2. Кислородът се редуцира (0 → −2). H₂ е редуктор, O₂ е окислител.'
+        },
+        {
+          q: 'С.О. на N в NH₃?',
+          options: ['+3', '0', '−3', '+5'],
+          correct: 2,
+          explanation: 'NH₃: N(x) + H(+1)×3 = 0 → x + 3 = 0 → x = −3. Азотът в амоняка е −3 (минималната С.О. за N). В NO₂ азотът е +4, в N₂O₅ — +5, в N₂ — 0.'
+        },
+        {
+          q: 'При корозия на желязото (4Fe + 3O₂ + 6H₂O → 4Fe(OH)₃), Fe се:',
+          options: ['Редуцира (приема e⁻)', 'Окислява (отдава e⁻)', 'Не участва в редокс', 'Намалява С.О.'],
+          correct: 1,
+          explanation: 'Fe⁰ → Fe³⁺: степента на окисление нараства от 0 до +3, т.е. Fe отдава 3 електрона — окислява се. O₂ приема електрони (0 → −2) — редуцира се. Корозията е бавна редокс реакция.'
+        },
+        {
+          q: 'В реакцията Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag, какво е вярно?',
+          options: ['Cu се редуцира', 'Ag⁺ е редуктор', 'Cu е редуктор, Ag⁺ е окислител', 'NO₃⁻ се окислява'],
+          correct: 2,
+          explanation: 'Cu⁰ → Cu²⁺ + 2e⁻ (окислява се — Cu е редуктор). Ag⁺ + e⁻ → Ag⁰ (редуцира се — Ag⁺ е окислителят). NO₃⁻ е зрителен йон — не участва в редокс. Тази реакция е пример за изместване на метал от сол.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

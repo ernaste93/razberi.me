@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Показателна и логаритмична функция — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math11-pokazatelna-logaritmichna-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/math11-pokazatelna-logaritmichna-quiz-2.html',
+      lessonUrl:   '/lessons/math11-pokazatelna-logaritmichna.html',
+      lessonName:  'Показателна и логаритмична функция',
+      eyebrow:     'МАТЕМАТИКА · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Показателна и логаритмична функция — Тест 1',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Какво е log₂ 8?',
+          opts: ['2', '3', '4', '6'],
+          correct: 1,
+          explanation: 'log₂ 8 = 3, защото 2³ = 8. Логаритъмът отговаря на въпроса: „на каква степен трябва да вдигнем основата, за да получим дадено число?" Тук основата е 2, а числото — 8.'
+        },
+        {
+          q: 'Каква е областта на дефиниране на функцията f(x) = log₃ x?',
+          opts: ['x ∈ ℝ', 'x > 0', 'x ≥ 0', 'x > 1'],
+          correct: 1,
+          explanation: 'Логаритмичната функция е дефинирана само за положителни числа: x > 0. Не може да се вземе логаритъм от 0 или отрицателно число в реалните числа.'
+        },
+        {
+          q: 'Коя е функцията, обратна на f(x) = 2ˣ?',
+          opts: ['f⁻¹(x) = x/2', 'f⁻¹(x) = log₂ x', 'f⁻¹(x) = 2/x', 'f⁻¹(x) = x²'],
+          correct: 1,
+          explanation: 'Показателната функция y = 2ˣ и логаритмичната функция y = log₂ x са обратни една на друга. Ако 2ˣ = y, тогава x = log₂ y. Графиките им са симетрични спрямо правата y = x.'
+        },
+        {
+          q: 'Какво е log₁₀ 1?',
+          opts: ['0', '1', '10', '−1'],
+          correct: 0,
+          explanation: 'log₁₀ 1 = 0, защото 10⁰ = 1. Логаритъмът от 1 при всяка допустима основа a > 0, a ≠ 1 е равен на 0: logₐ 1 = 0.'
+        },
+        {
+          q: 'Показателната функция f(x) = aˣ при a > 1 е:',
+          opts: ['Намаляваща', 'Нарастваща', 'Константна', 'Периодична'],
+          correct: 1,
+          explanation: 'При a > 1 показателната функция f(x) = aˣ е строго нарастваща — колкото по-голямо е x, толкова по-голяма е стойността. При 0 < a < 1 функцията е намаляваща.'
+        },
+        {
+          q: 'Какво е logₐ a?',
+          opts: ['0', 'a', '1', '1/a'],
+          correct: 2,
+          explanation: 'logₐ a = 1, защото a¹ = a. Логаритъмът на основата по самата нея е винаги 1. Сравни: logₐ 1 = 0, тъй като a⁰ = 1.'
+        },
+        {
+          q: 'Какво е ln e?',
+          opts: ['0', '1', 'e', '2'],
+          correct: 1,
+          explanation: 'ln e = logₑ e = 1, защото e¹ = e. Натуралният логаритъм ln x е логаритъм с основа e ≈ 2.718. ln e = 1 е основно свойство, подобно на logₐ a = 1.'
+        },
+        {
+          q: 'При какво условие е дефинирана функцията f(x) = logₐ x (с основа a)?',
+          opts: ['a > 0', 'a > 0 и a ≠ 1', 'a ≠ 0', 'a ≥ 1'],
+          correct: 1,
+          explanation: 'Основата a на логаритъм трябва да е строго положителна и различна от 1: a > 0 и a ≠ 1. При a = 1 функцията 1ˣ = 1 е константна и не е обратима.'
+        },
+        {
+          q: 'Колко е 2⁰?',
+          opts: ['0', '1', '2', '−1'],
+          correct: 1,
+          explanation: '2⁰ = 1. Всяко ненулево число на степен 0 е равно на 1: aⁿ⁻ⁿ = aⁿ/aⁿ = 1, оттук a⁰ = 1. Единственото изключение е 0⁰, което е неопределено.'
+        },
+        {
+          q: 'Графиката на f(x) = 2ˣ минава ли през точката (0, 1)?',
+          opts: ['Не', 'Да', 'Зависи от x', 'Само за x > 0'],
+          correct: 1,
+          explanation: 'f(0) = 2⁰ = 1, следователно точката (0, 1) лежи на графиката. Всяка показателна функция f(x) = aˣ минава през точката (0, 1), тъй като a⁰ = 1 за всяко a ≠ 0.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

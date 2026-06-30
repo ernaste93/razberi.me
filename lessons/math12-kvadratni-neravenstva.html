@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Квадратни неравенства · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    .formula-block {
+      background: #f0f4ff;
+      border: 1.5px solid #c7d2fe;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+    .formula-block .formula-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; display: block;
+    }
+    .formula-inline {
+      background: #eef2ff; color: var(--accent);
+      padding: 1px 7px; border-radius: 6px;
+      font-weight: 700; font-size: 13px;
+    }
+    .example-block {
+      background: var(--soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 13px; line-height: 1.8;
+    }
+    .example-block strong { color: var(--accent); }
+    .example-step {
+      display: flex; gap: 10px; align-items: flex-start; justify-content: flex-start;
+      padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; width: 100%;
+    }
+    .example-step:last-child { border-bottom: none; }
+    .example-step > div:last-child { flex: 1; }
+    .step-num {
+      width: 22px; height: 22px; border-radius: 50%; background: var(--accent);
+      color: #fff; font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+    }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;
+    }
+    .compare-card {
+      border: 1.5px solid var(--line); border-radius: 12px; padding: 14px;
+      text-align: center; font-size: 13px;
+    }
+    .compare-card.pos { border-color: #86efac; background: #f0fdf4; }
+    .compare-card.neg { border-color: #fca5a5; background: #fff5f5; }
+    .compare-card .cc-title { font-weight: 800; font-size: 15px; margin-bottom: 6px; }
+    .compare-card.pos .cc-title { color: #16a34a; }
+    .compare-card.neg .cc-title { color: #dc2626; }
+
+    #btn-ask-znaiko {
+      position: fixed; bottom: 28px; right: 32px; z-index: 999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 20px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    #selection-tooltip {
+      position: fixed; z-index: 9999; display: none;
+      transform: translateX(-50%);
+    }
+    #selection-tooltip.show { display: block; }
+    #explain-selection {
+      background: var(--accent); color: #fff; border: none;
+      padding: 7px 14px; border-radius: 20px; font-family: inherit;
+      font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+    }
+    #explain-selection::after {
+      content: ''; position: absolute; left: 50%; bottom: -6px;
+      transform: translateX(-50%);
+      border: 6px solid transparent; border-top-color: var(--accent); border-bottom: none;
+    }
+
+    .sign-scheme {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; margin: 16px 0; font-size: 14px; font-weight: 700;
+      flex-wrap: wrap;
+    }
+    .sign-cell {
+      padding: 8px 14px; border: 1.5px solid var(--line);
+      background: var(--soft); text-align: center; min-width: 60px;
+    }
+    .sign-cell.pos { background: #f0fdf4; color: #16a34a; border-color: #86efac; }
+    .sign-cell.neg { background: #fff5f5; color: #dc2626; border-color: #fca5a5; }
+    .sign-cell.root { background: #eef2ff; color: var(--accent); border-color: #c7d2fe; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <nav style="display:flex;align-items:center;gap:4px;margin:0 auto;">
+        <a href="/urotsi.html" class="nav-btn">Уроци</a>
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Математика</a>
+        <span>›</span>
+        Квадратни неравенства
+      </div>
+
+      <section class="demo-layout">
+
+        <div class="lesson-panel">
+          <div id="lesson-content">
+
+            <div class="lesson-tag">МАТЕМАТИКА · 12 КЛАС</div>
+            <h1 class="lesson-title">Квадратни неравенства</h1>
+            <div class="lesson-meta">ax² + bx + c &gt; 0 · Метод на параболата · Знакова схема · ~15 мин</div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 1. Определение -->
+            <div class="section-title">1. Какво е квадратно неравенство?</div>
+            <div class="lesson-body">
+              <p>Квадратното неравенство е неравенство от вида <span class="formula-inline">ax² + bx + c &gt; 0</span> (или с &lt;, ≥, ≤), където <span class="formula-inline">a ≠ 0</span>. За разлика от квадратното уравнение, търсим <strong>интервал</strong> от стойности на x, при които неравенството е изпълнено.</p>
+              <p>Решаването се основава на графиката на парабола <span class="formula-inline">y = ax² + bx + c</span> и нейното положение спрямо оста Ox.</p>
+            </div>
+
+            <div class="formula-block">
+              <span class="formula-label">Стандартна форма</span>
+              ax² + bx + c &gt; 0 &nbsp;(или &lt; 0, ≥ 0, ≤ 0)&nbsp; при a ≠ 0
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 2. Метод на параболата -->
+            <div class="section-title">2. Метод на параболата — алгоритъм</div>
+            <div class="lesson-body">
+              <p>Основният метод за решаване на квадратни неравенства е <strong>методът на параболата</strong>. Той се прилага в 4 стъпки:</p>
+            </div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">①</div>
+                <div class="key-point-text"><strong>Намери дискриминантата:</strong> D = b² − 4ac. Тя определя колко реални корена има свързаното уравнение ax² + bx + c = 0.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">②</div>
+                <div class="key-point-text"><strong>Намери корените</strong> x₁ и x₂ (ако D ≥ 0): x₁,₂ = (−b ± √D) / (2a). Приеми x₁ &lt; x₂.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">③</div>
+                <div class="key-point-text"><strong>Нарисувай параболата мислено</strong> (или на лист): ако a &gt; 0, отваря се нагоре; ако a &lt; 0 — надолу.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">④</div>
+                <div class="key-point-text"><strong>Отчети знака на тричлена</strong> по интервали и запиши решението.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 3. Знакова схема -->
+            <div class="section-title">3. Знакова схема — ключ към решението</div>
+            <div class="lesson-body">
+              <p>Знаковата схема показва знака на израза <span class="formula-inline">ax² + bx + c</span> в различните интервали. Тя зависи от знака на <span class="formula-inline">a</span> и от корените x₁, x₂.</p>
+            </div>
+
+            <div class="compare-grid">
+              <div class="compare-card pos">
+                <div class="cc-title">a &gt; 0 (парабола нагоре)</div>
+                <div>− − при x &lt; x₁</div>
+                <div>+ + при x₁ &lt; x &lt; x₂</div>
+                <div>+ + при x &gt; x₂</div>
+                <div style="margin-top:6px;font-size:12px;color:#555;">Тричленът е <strong>отрицателен между корените</strong> и положителен извън тях.</div>
+              </div>
+              <div class="compare-card neg">
+                <div class="cc-title">a &lt; 0 (парабола надолу)</div>
+                <div>+ + при x &lt; x₁</div>
+                <div>+ + при x₁ &lt; x &lt; x₂</div>
+                <div>− − при x &gt; x₂</div>
+                <div style="margin-top:6px;font-size:12px;color:#555;">Тричленът е <strong>положителен между корените</strong> и отрицателен извън тях.</div>
+              </div>
+            </div>
+
+            <div class="formula-block" style="font-size:14px;">
+              <span class="formula-label">Знакова схема при a &gt; 0 и корени x₁ &lt; x₂</span>
+              <div class="sign-scheme">
+                <div class="sign-cell neg">(−∞, x₁)<br/>f(x) &lt; 0</div>
+                <div class="sign-cell root">x₁<br/>f = 0</div>
+                <div class="sign-cell pos">(x₁, x₂)<br/>f(x) &gt; 0</div>
+                <div class="sign-cell root">x₂<br/>f = 0</div>
+                <div class="sign-cell neg">(x₂, +∞)<br/>f(x) &lt; 0</div>
+              </div>
+            </div>
+
+            <div class="lesson-body">
+              <p><strong>Внимание:</strong> Тази схема е за <span class="formula-inline">a &lt; 0</span> (парабола надолу) — тричленът е отрицателен извън корените и положителен между тях. За <span class="formula-inline">a &gt; 0</span> е обратното: отрицателен между корените, положителен извън тях.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 4. Примери -->
+            <div class="section-title">4. Решени примери</div>
+
+            <div class="example-block">
+              <strong>Пример 1:</strong> Реши неравенството x² − 5x + 6 &gt; 0
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>D = 25 − 24 = 1 &gt; 0 → два корена: x₁ = (5 − 1)/2 = 2, x₂ = (5 + 1)/2 = 3</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>a = 1 &gt; 0 → парабола нагоре → тричленът е отрицателен между корените [2, 3] и положителен извън тях.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div>Търсим x² − 5x + 6 &gt; 0 → положителна стойност → извън корените.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">4</div>
+                <div><strong>Решение:</strong> x ∈ (−∞, 2) ∪ (3, +∞)</div>
+              </div>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример 2:</strong> Реши неравенството x² − 5x + 6 ≤ 0
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>Корените са същите: x₁ = 2, x₂ = 3. a = 1 &gt; 0 → парабола нагоре.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>Тричленът е ≤ 0 (отрицателен или нула) точно между корените и в самите корени.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div><strong>Решение:</strong> x ∈ [2, 3] (затворен интервал, включва корените)</div>
+              </div>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример 3:</strong> Реши неравенството −x² + 4x − 3 &gt; 0
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>a = −1 &lt; 0. D = 16 − 12 = 4. Корени: x₁ = (−4 + 2)/(−2) = 1, x₂ = (−4 − 2)/(−2) = 3.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>a &lt; 0 → парабола надолу → тричленът е положителен между корените.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div><strong>Решение:</strong> x ∈ (1, 3)</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 5. Специални случаи -->
+            <div class="section-title">5. Специални случаи (D = 0 и D &lt; 0)</div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>D = 0 (един корен x₀):</strong> Параболата докосва Ox в един точка. При a &gt; 0: тричленът е ≥ 0 за всички x (нула само при x = x₀). При a &lt; 0: ≤ 0 за всички x.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>D &lt; 0 (без реални корени):</strong> Параболата не пресича Ox. При a &gt; 0: тричленът е &gt; 0 за всички x (неравенство &gt; 0 има решение ℝ; &lt; 0 — няма решение). При a &lt; 0: обратното.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Трик:</strong> Ако забравиш правилото — провери с конкретна стойност! Напр. за x = 0 в тричлена: ако резултатът е положителен, интервалът около 0 е в решението.</div>
+              </div>
+            </div>
+
+            <div class="formula-block" style="font-size:14px;">
+              <span class="formula-label">Обобщение — при a &gt; 0</span>
+              D &gt; 0: решение на ax²+bx+c &lt; 0 е (x₁, x₂) ; &gt; 0 е (−∞,x₁)∪(x₂,+∞)
+              <br/>
+              D = 0: ax²+bx+c &lt; 0 няма решение ; &gt; 0 е x ≠ x₀ (т.е. x ∈ ℝ \ {x₀})
+              <br/>
+              D &lt; 0: ax²+bx+c &lt; 0 няма решение ; &gt; 0 е x ∈ ℝ
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 6. Приложения -->
+            <div class="section-title">6. Приложения и задачи от матурата</div>
+            <div class="lesson-body">
+              <p>На матурата квадратните неравенства се срещат в различни контексти:</p>
+            </div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📐</div>
+                <div class="key-point-text"><strong>Параметрични задачи:</strong> „За кои стойности на параметъра a уравнението/неравенството има решение?" — прилагаш условие за знака на D.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📐</div>
+                <div class="key-point-text"><strong>Задачи с дроби:</strong> При неравенство f(x)/g(x) &gt; 0 се прилага знакова схема за числителя и знаменателя поотделно.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📐</div>
+                <div class="key-point-text"><strong>Системи от неравенства:</strong> Решаваш всяко поотделно и намираш пресечението на решенията.</div>
+              </div>
+            </div>
+
+            <div class="example-block">
+              <strong>Задача от матурен тип:</strong> За кои x ∈ ℝ е изпълнено x² − 3x − 10 ≤ 0?
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>D = 9 + 40 = 49. Корени: x₁ = (3 − 7)/2 = −2, x₂ = (3 + 7)/2 = 5.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>a = 1 &gt; 0, парабола нагоре → отрицателна (или нула) между корените.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div><strong>Решение:</strong> x ∈ [−2, 5]</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 7. Най-важното -->
+            <div class="section-title">7. Най-важното за матурата</div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>a &gt; 0 → парабола нагоре:</strong> тричленът е отрицателен между корените x₁ и x₂, положителен извън тях.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>a &lt; 0 → парабола надолу:</strong> тричленът е положителен между корените, отрицателен извън тях.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>При ≥ и ≤:</strong> корените се включват в решението (затворени скоби []). При &gt; и &lt;: корените се изключват (отворени скоби ()).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>D &lt; 0:</strong> ако a &gt; 0, тричленът е винаги положителен (неравенство &gt; 0 е изпълнено за всички x). Ако a &lt; 0 — винаги отрицателен.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Провери с число:</strong> след намиране на решението, избери произволно x от решението и провери дали неравенството е изпълнено. Бързо откри грешка!</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- Quiz CTA -->
+            <div class="lesson-panel" style="margin-top:0; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+              <div>
+                <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+                <div style="font-size:13px;color:var(--muted);">30 въпроса в 3 части · след като си прочел урока</div>
+              </div>
+              <a href="/lessons/math12-kvadratni-neravenstva-quiz.html" style="display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:14px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;">Към куиза →</a>
+            </div>
+
+          </div>
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай формула или текст от урока и цъкни <strong>„Обясни"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+    </div>
+  </main>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Квадратни неравенства — метод на параболата, знакова схема, интервали';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+
+</body>
+</html>

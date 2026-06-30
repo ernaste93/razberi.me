@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Клетъчно дишане — Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-dishane-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bio11-dishane.html',
+      lessonName:  'Клетъчно дишане',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Клетъчно дишане — Тест 3',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Сравнение: фотосинтеза спрямо клетъчно дишане. Кое твърдение е ВЯРНО?',
+          options: ['И двата процеса протичат само в растенията', 'Фотосинтезата изгражда глюкоза от CO₂ и H₂O; дишането разгражда глюкоза до CO₂ и H₂O', 'И двата процеса произвеждат O₂', 'Дишането протича в хлоропластите'],
+          correct: 1,
+          explanation: 'Фотосинтезата (анаболизъм) изгражда глюкоза от CO₂ и H₂O, използвайки светлинна енергия. Дишането (катаболизъм) разгражда глюкоза до CO₂ и H₂O, освобождавайки енергия под формата на АТФ. Те са метаболитно противоположни процеси, свързани чрез глюкозата.'
+        },
+        {
+          q: 'Ако клетка е отровена с цианид (блокира Комплекс IV на ЕТВ), какво ще се случи?',
+          options: ['Само гликолизата ще спре', 'Цялото аеробно дишане ще се блокира и клетката ще умре поради недостиг на АТФ', 'Ще се ускори ферментацията', 'Митохондриите ще се удвоят'],
+          correct: 1,
+          explanation: 'Цианидът блокира Комплекс IV (цитохром с оксидаза), което спира потока на електрони до O₂ и прекъсва ЕТВ. Без функционираща ЕТВ АТФ синтазата не работи, протонният градиент изчезва и производството на ~32–34 АТФ спира. Клетката разчита само на 2 АТФ от гликолизата — недостатъчно за оцеляване.'
+        },
+        {
+          q: 'Дрождите могат да ферментират захари в безкислородна среда. Какъв е крайният продукт?',
+          options: ['Лактат и H₂O', 'Етанол и CO₂', 'Пируват и НАДH', 'Ацетил-КоА и CO₂'],
+          correct: 1,
+          explanation: 'Дрождите извършват алкохолна ферментация: глюкоза → 2 пируват → 2 ацеталдехид → 2 етанол + 2 CO₂. Отделеният CO₂ кара хляба да „втасва", а етанолът е основата на производството на вино, бира и спиртни напитки.'
+        },
+        {
+          q: 'Защо аеробното дишане е ~19 пъти по-ефективно от анаеробното?',
+          options: ['Защото е по-бързо', 'Защото използва O₂ и произвежда ~38 АТФ срещу само 2 АТФ при ферментацията', 'Защото протича при по-висока температура', 'Защото не произвежда CO₂'],
+          correct: 1,
+          explanation: 'Аеробното дишане произвежда ~38 АТФ на молекула глюкоза (2 от гликолизата + 2 от Кребс цикъла + ~34 от окислително фосфорилиране). Анаеробното произвежда само 2 АТФ (от гликолизата). Ключовото е окислителното фосфорилиране — то извлича по-голямата енергия чрез O₂.'
+        },
+        {
+          q: 'Тренировките с висок интензитет водят до „кислородния дълг" след тренировката. Защо?',
+          options: ['Тялото трябва да произведе повече хлорофил', 'Натрупаният лактат трябва да се окисли аеробно след тренировката, изисквайки допълнителен O₂', 'Митохондриите трябва да се разградят', 'Гликолизата продължава да работи след тренировката'],
+          correct: 1,
+          explanation: 'По време на интензивно усилие лактатът се натрупва (млечно-кисела ферментация). След тренировката тялото трябва аеробно да окисли или конвертира лактата обратно — процес, изискващ допълнителен кислород. Оттук идва повишеното дишане след тренировка ("кислороден дълг" или EPOC).'
+        },
+        {
+          q: 'Коя е разликата между субстратно фосфорилиране и окислително фосфорилиране?',
+          options: ['Субстратното е по-бавно', 'Субстратното синтезира АТФ директно при ензимни реакции (гликолиза, Кребс); окислителното — чрез ЕТВ и АТФ синтаза', 'Окислителното не изисква O₂', 'Двата термина означават едно и също'],
+          correct: 1,
+          explanation: 'Субстратното фосфорилиране е директен синтез на АТФ при ензимни реакции (в гликолизата и цикъла на Кребс) — произвежда малко АТФ. Окислителното фосфорилиране използва енергията от ЕТВ за синтез на АТФ чрез АТФ синтаза — произвежда огромно мнозинство от клетъчния АТФ.'
+        },
+        {
+          q: 'Кои органели биха пострадали НАЙ-МНОГО при спиране на аеробното дишане?',
+          options: ['Лизозомите', 'Клетките с висока енергийна потребност (мускулни клетки, неврони)', 'Растителните клетки с хлоропласти', 'Клетките с малко митохондрии'],
+          correct: 1,
+          explanation: 'Клетките с висока енергийна потребност — мускулни клетки и особено неврони — зависят критично от постоянен приток на АТФ. Те имат много митохондрии. При спиране на аеробното дишане именно тези клетки страдат най-много, защото само 2 АТФ от гликолизата са крайно недостатъчни.'
+        },
+        {
+          q: 'Растение в тъмнина — може ли да провежда клетъчно дишане?',
+          options: ['Не, защото дишането зависи от светлината', 'Да, клетъчното дишане протича денонощно, независимо от светлината', 'Само при наличие на CO₂', 'Само хлоропластите дишат в тъмнина'],
+          correct: 1,
+          explanation: 'Клетъчното дишане е непрекъснат процес, протичащ денонощно в ВСИЧКИ живи клетки — и на растенията, и на животните. То не зависи от светлината. Фотосинтезата пък изисква светлина. В тъмнина растението само диша (поглъща O₂ и отделя CO₂).'
+        },
+        {
+          q: 'Кой процес е общ за фотосинтезата и клетъчното дишане?',
+          options: ['Фиксация на CO₂', 'Електронно-транспортна верига', 'Фотолиза на вода', 'Гликолиза'],
+          correct: 1,
+          explanation: 'И фотосинтезата (в тилакоидните мембрани), и клетъчното дишане (по вътрешната митохондриална мембрана) използват електронно-транспортна верига (ЕТВ) и протонен градиент за синтез на АТФ чрез хемиосмоза. Разликата е в посоката и изходния источник на електрони.'
+        },
+        {
+          q: 'Нетният добив на АТФ от ЦЯЛОТО аеробно дишане на 1 молекула глюкоза е приблизително:',
+          options: ['2 АТФ', '8 АТФ', '36–38 АТФ', '100 АТФ'],
+          correct: 2,
+          explanation: 'Общият добив от аеробното дишане е ~36–38 АТФ: 2 от гликолизата + 2 от цикъла на Кребс + ~32–34 от окислителното фосфорилиране. Точното число варира, защото зависи от ефективността на протонния градиент и транспортните механизми.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

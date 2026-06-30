@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Химична връзка — Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-himichna-vrazka-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem11-himichna-vrazka.html',
+      lessonName:  'Химична връзка',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Химична връзка — Тест 3',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Защо двойната спирала на ДНК се поддържа стабилна?',
+          options: ['Чрез ковалентни връзки между базите', 'Чрез йонни връзки', 'Чрез водородни връзки между азотните бази', 'Чрез метална връзка'],
+          correct: 2,
+          explanation: 'Двойната спирала на ДНК се поддържа от водородни връзки между комплементарните азотни бази: А–Т образуват 2 водородни връзки, G–C образуват 3. Тези слаби, но многобройни взаимодействия осигуряват стабилност и позволяват денатурация.'
+        },
+        {
+          q: 'Кое вещество е изградено от атоми, свързани с ковалентни връзки в гигантска мрежа (атомна кристална решетка)?',
+          options: ['NaCl', 'Диамант (C)', 'Cu', 'H₂O'],
+          correct: 1,
+          explanation: 'Диамантът е изграден от въглеродни атоми, свързани с тетраедрична sp³ хибридизация чрез ковалентни С–С връзки в гигантска 3D мрежа. Затова е изключително твърд. NaCl е йонна решетка, Cu — метална, H₂O — молекулна.'
+        },
+        {
+          q: 'Защо HF има по-висока точка на кипене от HCl, въпреки по-малката молекулна маса?',
+          options: ['HF е по-плътен', 'HF образува по-силни водородни връзки (F е най-електроотрицателен)', 'HF е йонно съединение', 'HF има двойна връзка'],
+          correct: 1,
+          explanation: 'Флуорът е най-електроотрицателният елемент (ЕО = 4,0), затова H–F···F водородните връзки са много по-силни от H–Cl (Cl е по-малко електроотрицателен). HF кипи при 19,5°C, а HCl при −85°C.'
+        },
+        {
+          q: 'Ако свържем Fe-кабел с Cu-кабел и ги загреем, защо се появяват проблеми?',
+          options: ['Fe и Cu образуват йонна връзка', 'Различните коефициенти на топлинно разширение — но металната връзка е ненарушена', 'Образуват се ковалентни връзки', 'Металите не могат да бъдат свързани'],
+          correct: 1,
+          explanation: 'Fe и Cu са и двата метала с метална връзка. Проблемът при съединяването им е различният коефициент на топлинно разширение и контактна корозия (галванична двойка). Металната връзка сама по себе си съществува и в сплавите.'
+        },
+        {
+          q: 'Кое от следните е правилно за σ (сигма) и π (пи) връзки?',
+          options: ['σ е по-слаба от π', 'Двойна връзка = 2σ', 'Единичната връзка е σ; двойната е σ+π', 'π се образува при директно застъпване по оста'],
+          correct: 2,
+          explanation: 'Единичната ковалентна връзка е σ (директно застъпване по оста на връзката). Двойната е 1σ + 1π, тройната — 1σ + 2π. σ връзките са по-здрави от π. π се образуват при странично (латерално) застъпване на орбитали.'
+        },
+        {
+          q: 'Защо графитът е добър проводник на електричество, а диамантът не е?',
+          options: ['Графитът е метал', 'В графита има делокализирани π-електрони в слоевете', 'Диамантът има йонна структура', 'Графитът съдържа водородни връзки'],
+          correct: 1,
+          explanation: 'В графита всеки С е sp²-хибридизиран и образува 3 σ-връзки. Четвъртият електрон участва в делокализирана π-система в рамките на слоя — тези свободни електрони провеждат ток. В диаманта всички 4 валентни е са в σ-връзки, няма свободни.'
+        },
+        {
+          q: 'Защо NaCl се разтваря добре във вода, а масло не?',
+          options: ['NaCl е газ', 'Водата е полярна и разтваря йонни/полярни вещества (подобното разтваря подобното)', 'Маслото е йонно', 'NaCl е неполярно'],
+          correct: 1,
+          explanation: 'Принципът „подобното разтваря подобното" (similia similibus solvuntur): Водата е полярна и разтваря йонни (NaCl) и полярни вещества чрез хидратация на йоните. Маслото е неполярно — предпочита неполярни разтворители (бензин, хексан).'
+        },
+        {
+          q: 'Молекулата BF₃ е тригонална планарна. Дипол-моментите на трите B–F връзки:',
+          options: ['Се събират до голям общ дипол-момент', 'Се компенсират взаимно — молекулата е неполярна', 'Правят молекулата йонна', 'Са нулеви, защото F не е електроотрицателен'],
+          correct: 1,
+          explanation: 'В тригонална планарна симетрия (120° между връзките) трите полярни B–F дипол-момента са симетрично наредени и векторната им сума е нула. Затова BF₃ е неполярна молекула, въпреки полярните си връзки — подобно на CO₂.'
+        },
+        {
+          q: 'Кое от следните правилно описва водородната връзка?',
+          options: ['X–H···Y, при X,Y = F, O или N; сила ~10–40 kJ/mol', 'X–H···Y, при X,Y = C или S; по-силна от ковалентната', 'Образува се между метални атоми', 'Изисква метален катион'],
+          correct: 0,
+          explanation: 'Водородната връзка се образува между X–H (X = F, O, N — силно електроотрицателни) и електроотрицателен акцептор Y (F, O или N). Силата й е 10–40 kJ/mol — много по-слаба от ковалентната (200–400 kJ/mol), но по-силна от Ван дер Ваалс взаимодействията.'
+        },
+        {
+          q: 'Сплавта бронз (Cu+Sn) е твърда и якo. Каква химична връзка я изгражда?',
+          options: ['Ковалентна', 'Йонна', 'Метална', 'Водородна'],
+          correct: 2,
+          explanation: 'Сплавите са метални системи — атомите на различните метали (Cu и Sn) участват в обща металната връзка с общо „електронно море". Различните размери на атомите затрудняват плъзгането на слоевете, което прави сплавта по-твърда от чистите метали.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

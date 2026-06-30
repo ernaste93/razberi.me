@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Нервна система — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-nervna-sistema-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio11-nervna-sistema-quiz-2.html',
+      lessonUrl:   '/lessons/bio11-nervna-sistema.html',
+      lessonName:  'Нервна система',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Нервна система — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Коя е структурната и функционална единица на нервната система?',
+          options: ['Синапс', 'Неврон', 'Аксон', 'Дендрит'],
+          correct: 1,
+          explanation: 'Невронът е основна структурна и функционална единица на нервната система. Той е специализирана нервна клетка, способна да приема, обработва и предава нервни сигнали. В мозъка имаме около 86 милиарда неврона.'
+        },
+        {
+          q: 'Кои са двете главни части на нервната система?',
+          options: ['Симпатикова и парасимпатикова', 'Централна и периферна', 'Соматична и вегетативна', 'Сетивна и двигателна'],
+          correct: 1,
+          explanation: 'Нервната система се дели на Централна (ЦНС — главен и гръбначен мозък) и Периферна (ПНС — всички нервни влакна извън ЦНС). ПНС включва черепно-мозъчните (12 двойки) и гръбначно-мозъчните нерви (31 двойки).'
+        },
+        {
+          q: 'Каква е функцията на дендритите?',
+          options: ['Провеждат нервни импулси ОТ тялото на неврона', 'Приемат нервни сигнали и ги провеждат КЪМ тялото на неврона', 'Синтезират невротрансмитери', 'Образуват миелинова обвивка'],
+          correct: 1,
+          explanation: 'Дендритите са разклонения на неврона, приемащи нервни сигнали от рецептори или от синапси с други неврони и провеждащи ги КЪМ тялото (сомата) на неврона. Аксонът провежда импулса в обратна посока — ОТ тялото КЪМ следващата клетка.'
+        },
+        {
+          q: 'Какво е синапс?',
+          options: ['Структурна единица на нервната система', 'Специализирана връзка между неврони (или неврон и ефектор) за предаване на нервен сигнал', 'Обвивка около аксона', 'Зона на гръбначния мозък'],
+          correct: 1,
+          explanation: 'Синапсът е специализирана връзка, през която нервният сигнал се предава от един неврон към следващия (или към мускул/жлеза). При химическите синапси сигналът се пренася чрез невротрансмитери, отделяни от пресинаптичната мембрана и свързващи се с рецептори на постсинаптичната.'
+        },
+        {
+          q: 'Кои са петте звена на рефлекторната дъга в правилен ред?',
+          options: ['Ефектор → Нервен център → Аферентен нерв → Рецептор → Еферентен нерв', 'Рецептор → Аферентен нерв → Нервен център → Еферентен нерв → Ефектор', 'Нервен център → Рецептор → Аферентен нерв → Ефектор → Еферентен нерв', 'Рецептор → Еферентен нерв → Нервен център → Аферентен нерв → Ефектор'],
+          correct: 1,
+          explanation: 'Правилната последователност е: Рецептор (приема стимул) → Аферентен нерв (пренася КЪМ ЦНС) → Нервен център (обработва) → Еферентен нерв (пренася ОТ ЦНС) → Ефектор (мускул/жлеза, изпълнява отговора). Ключово: аферентен = към центъра, еферентен = от центъра.'
+        },
+        {
+          q: 'Каква е ролята на миелиновата обвивка около аксоните?',
+          options: ['Синтезира невротрансмитери', 'Ускорява провеждането на нервния импулс чрез салтаторна проводимост', 'Приема нервни сигнали от дендритите', 'Образува синапси'],
+          correct: 1,
+          explanation: 'Миелиновата обвивка (от клетките на Швана в ПНС) изолира аксона и позволява салтаторна проводимост — импулсът „скача" между нодите на Ранвие (прекъсвания в миелина), достигайки скорост до 120 m/s. Немиелинизираните влакна провеждат много по-бавно (~1 m/s).'
+        },
+        {
+          q: 'Кой невротрансмитер е основен при нервно-мускулните синапси?',
+          options: ['Допамин', 'Серотонин', 'Ацетилхолин', 'ГАМК'],
+          correct: 2,
+          explanation: 'Ацетилхолинът (АЦХ) е основният невротрансмитер на нервно-мускулните синапси и парасимпатиковата нервна система. При освобождаването му мускулните клетки се деполяризират и се съкращават. Инхибирането на АЦХестеразата (ензима, разграждащ АЦХ) причинява мускулен спазъм.'
+        },
+        {
+          q: 'Рефлексът е:',
+          options: ['Съзнателен, целенасочен отговор на организма', 'Автоматичен, стереотипен отговор на стимул, без участие на съзнанието', 'Процес само в главния мозък', 'Хормонален отговор на стимул'],
+          correct: 1,
+          explanation: 'Рефлексът е автоматичен, стереотипен отговор на организма на определен стимул, осъществяван без участие на съзнанието. Рефлексите са бързи защитни механизми — например дергане на ръката при допир с горещо или мигащ рефлекс при заплаха за окото.'
+        },
+        {
+          q: 'Симпатиковата нервна система се активира при:',
+          options: ['Покой, храносмилане, сън', 'Стрес, опасност, физическа активност ("бий или бягай")', 'Парасимпатикова инхибиция', 'Само при рефлекторни реакции'],
+          correct: 1,
+          explanation: 'Симпатиковата нервна система е частта от вегетативната НС, активираща „бий или бягай" реакцията: ускорява сърдечния ритъм, разширява зениците, инхибира храносмилането, освобождава адреналин. Парасимпатиковата е противоположна — действа при покой.'
+        },
+        {
+          q: 'Кой дял на главния мозък отговаря за координацията на движенията?',
+          options: ['Мозъчна кора', 'Малък мозък (церебелум)', 'Хипоталамус', 'Продълговат мозък'],
+          correct: 1,
+          explanation: 'Малкият мозък (церебелум) е отговорен за координацията на движенията, равновесието и прецизната моторика. Уврежданата му води до атаксия (несигурна, некоординирана походка). Мозъчната кора взема решения за движение; малкият мозък ги прецизира.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

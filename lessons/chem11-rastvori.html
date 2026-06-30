@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Разтвори и електролитна дисоциация · Химия 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    .chem-box { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0; font-size: 14px; line-height: 1.8; }
+    .chem-formula { font-family: 'Courier New', monospace; background: var(--soft); border-radius: 8px; padding: 10px 16px; margin: 10px 0; font-size: 14px; display: inline-block; }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>/</span>
+        <a href="/urotsi.html">Химия · Преговор 11 клас</a><span>/</span>
+        <span>Разтвори и електролитна дисоциация</span>
+      </div>
+
+      <div class="lesson-tag">Химия · 11 клас · Преговор</div>
+      <h1 class="lesson-title">Разтвори, електролитна дисоциация, рН и киселинност</h1>
+      <div class="lesson-meta">Разтвори, електролити, рН скала, киселини и основи · ~10 мин четене</div>
+      <div class="lesson-divider"></div>
+
+      <div class="section-title">Разтвори — основни понятия</div>
+      <div class="lesson-body">
+        <p><strong>Разтворът</strong> е хомогенна смес от две или повече вещества. Разтворителят е компонентът, присъстващ в по-голямо количество (обикновено вода), а разтвореното вещество е в по-малко количество. Водата е „универсален разтворител" заради полярната си природа и способността да образува водородни връзки.</p>
+        <p><strong>Концентрацията</strong> на разтвора изразява количеството разтворено вещество в единица обем или маса разтворител. Най-използваните единици: молна концентрация (mol/L или М), масова концентрация (g/L), масово съдържание (%).</p>
+        <p>Формула за молна концентрация: <strong>c = n/V</strong>, където n е количеството вещество в молове, V — обемът в литри.</p>
+      </div>
+
+      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">💧</div>
+          <div class="key-point-text"><strong>Ненаситен разтвор:</strong> може да разтвори още вещество при дадена температура.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">⚖️</div>
+          <div class="key-point-text"><strong>Наситен разтвор:</strong> намерил се е равновесие между разтваряне и кристализация — не може да приема повече вещество.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">💎</div>
+          <div class="key-point-text"><strong>Пренаситен разтвор:</strong> нестабилно — съдържа повече разтворено вещество от равновесното; при разбъркване или добавяне на „зародиш" кристализира.</div>
+        </div>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div class="section-title">Електролитна дисоциация</div>
+      <div class="lesson-body">
+        <p><strong>Електролитите</strong> са вещества, чиито разтвори провеждат електричество, защото се дисоциират на йони. Дисоциацията е разпадането на молекулата (или йонната двойка) на свободни йони под действие на разтворителя.</p>
+        <p><strong>Силните електролити</strong> се дисоциират напълно (степен на дисоциация α ≈ 1). Примери: силни киселини (HCl, H₂SO₄, HNO₃), силни основи (NaOH, KOH, Ca(OH)₂), повечето соли (NaCl, KNO₃).</p>
+        <p><strong>Слабите електролити</strong> се дисоциират частично (α << 1). Примери: слаби киселини (CH₃COOH, H₂CO₃, HF), слаби основи (NH₃·H₂O), вода (H₂O).</p>
+      </div>
+
+      <div class="chem-box">
+        <div class="chem-formula">HCl(водн) → H⁺ + Cl⁻         (пълна дисоциация)</div><br/>
+        <div class="chem-formula">NaOH(водн) → Na⁺ + OH⁻       (пълна дисоциация)</div><br/>
+        <div class="chem-formula">CH₃COOH ⇌ CH₃COO⁻ + H⁺       (частична, ⇌)</div><br/>
+        <div class="chem-formula">H₂SO₄ → 2H⁺ + SO₄²⁻          (двустепенна)</div>
+      </div>
+
+      <div class="lesson-body">
+        <p>Неелектролитите не се дисоциират и не провеждат ток: захар (C₁₂H₂₂O₁₁), глюкоза, алкохол, ацетон. Водата сама по себе си е много слаб електролит: H₂O ⇌ H⁺ + OH⁻, с константа на равновесие Kw = [H⁺][OH⁻] = 10⁻¹⁴ при 25°C.</p>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div class="section-title">рН скала и киселинност</div>
+      <div class="lesson-body">
+        <p>Концентрацията на водородните йони [H⁺] определя киселинността на разтвора. За удобство се използва <strong>рН скалата</strong>, въведена от Søren Sørensen:</p>
+        <p style="text-align:center;font-size:16px;font-weight:700;">рН = −log[H⁺]</p>
+        <p>Ако [H⁺] = 10⁻⁷ mol/L → рН = 7 (неутрален разтвор, чиста вода при 25°C). рН < 7 → кисел разтвор ([H⁺] > [OH⁻]). рН > 7 → основен разтвор ([H⁺] < [OH⁻]).</p>
+      </div>
+
+      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">🔴</div>
+          <div class="key-point-text"><strong>рН 0–6,9:</strong> Кисел разтвор. Стомашен сок: pH ≈ 1–2; оцет: pH ≈ 2,4–3,4; кафе: pH ≈ 5; дъждовна вода: pH ≈ 5,6.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">🟢</div>
+          <div class="key-point-text"><strong>рН 7:</strong> Неутрален. Чиста вода при 25°C. [H⁺] = [OH⁻] = 10⁻⁷ mol/L.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">🔵</div>
+          <div class="key-point-text"><strong>рН 7,1–14:</strong> Основен разтвор. Кръв: pH ≈ 7,4; сода: pH ≈ 11–12; белина: pH ≈ 12–13.</div>
+        </div>
+      </div>
+
+      <div class="lesson-body">
+        <p>Аналогично: <strong>рОН = −log[OH⁻]</strong> и при 25°C: <strong>рН + рОН = 14</strong> (произтичащо от Kw = 10⁻¹⁴).</p>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div class="section-title">Теории за киселини и основи</div>
+      <div class="lesson-body">
+        <p><strong>Теория на Арениус:</strong> Киселините отделят H⁺ йони в разтвор, основите — OH⁻ йони. Ограничена само до водни разтвори.</p>
+        <p><strong>Теория на Брьонстед-Лоури (по-обширна):</strong> Киселина е донор на протон (H⁺), основа е акцептор на протон. Не е ограничена до водни разтвори. Всеки киселинно-основен процес включва конюгирани двойки: HA + B ⇌ A⁻ + BH⁺.</p>
+        <p><strong>Теория на Луис (най-обширна):</strong> Киселина е акцептор на електронна двойка, основа е донор. Включва и реакции без протонен обмен.</p>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div class="section-title">Реакция на неутрализация</div>
+      <div class="lesson-body">
+        <p>Реакцията между киселина и основа се нарича <strong>неутрализация</strong>. Получават се сол и вода. Нетната йонна уравнение на всяка неутрализация е: H⁺ + OH⁻ → H₂O.</p>
+      </div>
+
+      <div class="chem-box">
+        <div class="chem-formula">HCl + NaOH → NaCl + H₂O</div><br/>
+        <div class="chem-formula">H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O</div><br/>
+        <div class="chem-formula">CH₃COOH + NaOH → CH₃COONa + H₂O</div>
+      </div>
+
+      <div class="lesson-body">
+        <p><strong>Хидролиза на соли:</strong> Соли, образувани от слаба киселина и силна основа (CH₃COONa), дават основен разтвор при разтваряне. Соли от силна киселина и слаба основа (NH₄Cl) — кисел разтвор. Солите от силна киселина и силна основа (NaCl) дават неутрален разтвор.</p>
+        <p>Индикаторите (лакмус, фенолфталеин, метилоранж) са слаби органични киселини/основи, чийто цвят зависи от рН. Лакмусът е червен при рН < 7 и тъмносин при рН > 7.</p>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <a href="/lessons/chem11-rastvori-quiz.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:#fff;border-radius:99px;font-weight:800;font-size:14px;text-decoration:none;">
+          Към тест 1 →
+        </a>
+        <a href="/urotsi.html" style="font-size:13px;color:var(--muted);text-decoration:none;">← Всички уроци</a>
+      </div>
+    </div>
+  </main>
+
+  <button id="btn-ask-znaiko" onclick="document.getElementById('znaiko-panel').style.display='flex'">
+    💡 Цъкни за помощ
+  </button>
+
+  <div id="znaiko-panel" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.45);align-items:flex-end;justify-content:center;">
+    <div style="background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:680px;padding:24px;max-height:80vh;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <strong style="font-size:16px;">💡 Знайко</strong>
+        <button onclick="document.getElementById('znaiko-panel').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);">✕</button>
+      </div>
+      <div id="chat-messages" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
+      <div style="display:flex;gap:8px;">
+        <input id="chat-input" type="text" placeholder="Задай въпрос..." style="flex:1;padding:10px 16px;border:1.5px solid var(--line);border-radius:99px;font-family:inherit;font-size:14px;outline:none;" />
+        <button id="chat-send" style="padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:99px;font-family:inherit;font-weight:700;cursor:pointer;">Изпрати</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Фотосинтеза — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-fotosinteza-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio11-fotosinteza-quiz-2.html',
+      lessonUrl:   '/lessons/bio11-fotosinteza.html',
+      lessonName:  'Фотосинтеза',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Фотосинтеза — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'В кой органел протича фотосинтезата?',
+          options: ['Митохондрия', 'Хлоропласт', 'Рибозома', 'Вакуола'],
+          correct: 1,
+          explanation: 'Фотосинтезата протича в хлоропластите — зелени двумембранни органели, съдържащи пигмента хлорофил. Хлорофилът поглъща светлинна енергия, необходима за синтеза на органични молекули.'
+        },
+        {
+          q: 'Кое е обобщеното уравнение на фотосинтезата?',
+          options: ['C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + енергия', '6CO₂ + 6H₂O + светлина → C₆H₁₂O₆ + 6O₂', '6O₂ + светлина → 6CO₂ + 6H₂O', 'C₆H₁₂O₆ → 2C₃H₄O₃ + 2АТФ'],
+          correct: 1,
+          explanation: 'Обобщеното уравнение на фотосинтезата е: 6CO₂ + 6H₂O + светлинна енергия → C₆H₁₂O₆ + 6O₂. Въглеродният диоксид и водата се превръщат в глюкоза и кислород с помощта на светлинна енергия.'
+        },
+        {
+          q: 'Кой е основният фотосинтетичен пигмент?',
+          options: ['Каротин', 'Ксантофил', 'Хлорофил а', 'Хлорофил б'],
+          correct: 2,
+          explanation: 'Хлорофил а е основният пигмент на фотосинтезата. Той поглъща предимно червена (~680 нм) и синьо-виолетова светлина и е единственият пигмент, способен директно да задейства фотохимичните реакции в реакционния център.'
+        },
+        {
+          q: 'Къде протича светлинната фаза на фотосинтезата?',
+          options: ['В стромата на хлоропласта', 'В тилакоидните мембрани', 'В матрикса на митохондрията', 'В ендоплазмения ретикулум'],
+          correct: 1,
+          explanation: 'Светлинната фаза протича в тилакоидните мембрани на хлоропласта, където са наредени молекулите на хлорофила, фотосистемите и белтъчните комплекси на електронно-транспортната верига.'
+        },
+        {
+          q: 'Кой е страничен продукт на светлинната фаза, отделян в атмосферата?',
+          options: ['CO₂', 'Глюкоза', 'O₂', 'АТФ'],
+          correct: 2,
+          explanation: 'Кислородът (O₂) се отделя като страничен продукт на фотолизата на водата в светлинната фаза: 2H₂O → 4H⁺ + 4e⁻ + O₂. Практически целият атмосферен кислород е биогенен — резултат от фотосинтезата.'
+        },
+        {
+          q: 'Каква е ролята на ензима РуБиСКО в Калвиновия цикъл?',
+          options: ['Синтез на АТФ', 'Фиксация на CO₂ към RuBP', 'Разграждане на глюкоза', 'Фотолиза на вода'],
+          correct: 1,
+          explanation: 'РуБиСКО (рибулозо-1,5-бисфосфат карбоксилаза/оксигеназа) е ензимът, фиксиращ CO₂ като го прикрепя към петвъглеродния акцептор RuBP. Той е най-разпространеният ензим на Земята и е ключова стъпка в тъмнинната фаза.'
+        },
+        {
+          q: 'Какво се произвежда в светлинната фаза и се използва в тъмнинната?',
+          options: ['CO₂ и H₂O', 'АТФ и НАДФH', 'Глюкоза и O₂', 'G3P и RuBP'],
+          correct: 1,
+          explanation: 'В светлинната фаза се синтезират АТФ (чрез фотофосфорилиране) и НАДФH (чрез редукция на НАДФ⁺). Тези две молекули се използват в тъмнинната фаза (Калвинов цикъл) за фиксиране на CO₂ и синтез на глюкоза.'
+        },
+        {
+          q: 'Какви светлинни вълни поглъща НАЙ-ДОБРЕ хлорофилът?',
+          options: ['Зелена и жълта', 'Червена и синьо-виолетова', 'Инфрачервена и ултравиолетова', 'Оранжева и жълта'],
+          correct: 1,
+          explanation: 'Хлорофилът поглъща предимно червена (~660–700 нм) и синьо-виолетова (~430–450 нм) светлина. Зелената светлина се отразява, поради което листата ни изглеждат зелени. Оттук идва и зеленият цвят на растенията.'
+        },
+        {
+          q: 'Какви са стековете от тилакоиди в хлоропласта?',
+          options: ['Строми', 'Грани', 'Кристи', 'Ламели'],
+          correct: 1,
+          explanation: 'Тилакоидите са наредени в стекове, наречени грани (ед.ч. гран). В тилакоидните мембрани са наредени хлорофилните молекули и фотосистемите. Стромата е течната матрица около граните, където протича Калвиновият цикъл.'
+        },
+        {
+          q: 'Коя от следните НЕ е лимитиращ фактор за фотосинтезата?',
+          options: ['Концентрацията на CO₂', 'Интензитетът на светлината', 'Концентрацията на O₂ в клетката', 'Температурата'],
+          correct: 2,
+          explanation: 'Концентрацията на O₂ в клетката не е лимитиращ фактор за фотосинтезата — O₂ е страничен продукт. Лимитиращи фактори са: интензитет на светлината, концентрация на CO₂ (субстрат за Калвиновия цикъл) и температура (ензимна активност).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

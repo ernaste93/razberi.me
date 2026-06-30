@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Показателна и логаритмична функция — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math11-pokazatelna-logaritmichna-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/math11-pokazatelna-logaritmichna-quiz-3.html',
+      lessonUrl:   '/lessons/math11-pokazatelna-logaritmichna.html',
+      lessonName:  'Показателна и логаритмична функция',
+      eyebrow:     'МАТЕМАТИКА · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Показателна и логаритмична функция — Тест 2',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Изчисли: log₂ 32',
+          opts: ['4', '5', '6', '3'],
+          correct: 1,
+          explanation: 'log₂ 32 = 5, защото 2⁵ = 32. Проверка: 2¹=2, 2²=4, 2³=8, 2⁴=16, 2⁵=32. Удобен начин: разложи 32 = 2·16 = 2·2·8 = 2·2·2·4 = 2⁵.'
+        },
+        {
+          q: 'Реши уравнението: 2ˣ = 16',
+          opts: ['x = 3', 'x = 4', 'x = 8', 'x = 2'],
+          correct: 1,
+          explanation: '2ˣ = 16 = 2⁴, следователно x = 4. Принципът: ако основите са еднакви, степените са равни — aˣ = aⁿ ⟹ x = n. Ключово е да запишем дясната страна като степен на 2.'
+        },
+        {
+          q: 'Пресметни: log₃ 27 + log₃ 3',
+          opts: ['5', '4', '3', '6'],
+          correct: 1,
+          explanation: 'log₃ 27 = 3 (тъй като 3³ = 27) и log₃ 3 = 1 (тъй като 3¹ = 3). Сумата е 3 + 1 = 4. Свойство: logₐ m + logₐ n = logₐ(m·n), затова log₃ 27 + log₃ 3 = log₃ 81 = 4.'
+        },
+        {
+          q: 'Опрости: log₅ 125 − log₅ 5',
+          opts: ['1', '2', '3', '4'],
+          correct: 1,
+          explanation: 'log₅ 125 = 3 (тъй като 5³ = 125) и log₅ 5 = 1. Разликата е 3 − 1 = 2. Свойство: logₐ m − logₐ n = logₐ(m/n), затова log₅ 125 − log₅ 5 = log₅ 25 = 2.'
+        },
+        {
+          q: 'Пресметни: 3 · log₂ 4',
+          opts: ['3', '6', '8', '12'],
+          correct: 1,
+          explanation: 'log₂ 4 = 2 (тъй като 2² = 4). Следователно 3 · log₂ 4 = 3 · 2 = 6. Свойство: n · logₐ m = logₐ mⁿ, затова 3·log₂ 4 = log₂ 4³ = log₂ 64 = 6.'
+        },
+        {
+          q: 'Реши: log x = 2 (десетичен логаритъм)',
+          opts: ['x = 20', 'x = 100', 'x = 10', 'x = 1000'],
+          correct: 1,
+          explanation: 'log x = 2 означава log₁₀ x = 2, следователно x = 10² = 100. „log" без основа означава десетичен логаритъм (основа 10). При „ln" основата е e ≈ 2.718.'
+        },
+        {
+          q: 'Кое е вярно за функцията y = (1/2)ˣ?',
+          opts: [
+            'Нарастваща, стойностите й са отрицателни',
+            'Намаляваща, стойностите й са положителни',
+            'Нарастваща, стойностите й са положителни',
+            'Намаляваща, стойностите й са отрицателни'
+          ],
+          correct: 1,
+          explanation: 'При 0 < a < 1 (тук a = 1/2) показателната функция e намаляваща. Всички стойности са положителни: (1/2)ˣ > 0 за всяко x. При x→+∞ функцията → 0, при x→−∞ функцията → +∞.'
+        },
+        {
+          q: 'Пресметни: log₁₀ 0.001',
+          opts: ['−3', '3', '−2', '−1'],
+          correct: 0,
+          explanation: 'log₁₀ 0.001 = log₁₀ 10⁻³ = −3. Тъй като 0.001 = 1/1000 = 10⁻³. За отрицателни степени: logₐ(1/aⁿ) = logₐ a⁻ⁿ = −n.'
+        },
+        {
+          q: 'Опрости: logₐ(a⁵)',
+          opts: ['5a', 'a⁵', '5', '1/5'],
+          correct: 2,
+          explanation: 'logₐ(aⁿ) = n (основно свойство). Следователно logₐ(a⁵) = 5. Обяснение: ако aˣ = a⁵, тогава x = 5. Свойството произтича директно от дефиницията на логаритъм.'
+        },
+        {
+          q: 'Реши: 3ˣ⁺¹ = 9',
+          opts: ['x = 0', 'x = 1', 'x = 2', 'x = −1'],
+          correct: 1,
+          explanation: '9 = 3², следователно 3ˣ⁺¹ = 3². При еднакви основи: x + 1 = 2 → x = 1. Проверка: 3¹⁺¹ = 3² = 9. Ключът е да изразим двете страни като степени на една и съща основа.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Клетъчно дишане — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-dishane-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio11-dishane-quiz-2.html',
+      lessonUrl:   '/lessons/bio11-dishane.html',
+      lessonName:  'Клетъчно дишане',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Клетъчно дишане — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Кое е обобщеното уравнение на аеробното клетъчно дишане?',
+          options: ['6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂', 'C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + АТФ', 'C₆H₁₂O₆ → 2C₃H₄O₃ + 2АТФ', '6O₂ + 6H₂O → 6CO₂ + C₆H₁₂O₆'],
+          correct: 1,
+          explanation: 'При аеробното клетъчно дишане: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ~38 АТФ. Глюкозата се окислява напълно до CO₂ и H₂O, а освободената енергия се съхранява в АТФ. Това е обратното на уравнението на фотосинтезата.'
+        },
+        {
+          q: 'Къде протича гликолизата?',
+          options: ['В митохондриалния матрикс', 'В цитоплазмата', 'По вътрешната митохондриална мембрана', 'В ядрото'],
+          correct: 1,
+          explanation: 'Гликолизата протича в цитоплазмата и не изисква митохондрии. Затова тя може да протича при аеробни И анаеробни условия. Тя е универсален клетъчен процес — протича при всички живи организми, включително прокариоти.'
+        },
+        {
+          q: 'Кой е крайният продукт на гликолизата?',
+          options: ['Ацетил-КоА', 'Цитрат', 'Пируват', 'Лактат'],
+          correct: 2,
+          explanation: 'Гликолизата разгражда 1 молекула глюкоза (6C) до 2 молекули пируват (3C). Произвеждат се и 2 нетни АТФ и 2 НАДH. При наличие на O₂ пируватът постъпва в митохондрията; без O₂ претърпява ферментация.'
+        },
+        {
+          q: 'Каква молекула е АТФ и защо е важна?',
+          options: ['Структурен белтък', 'Универсална енергийна валута на клетката', 'Генетичен материал', 'Ензим за разграждане на глюкоза'],
+          correct: 1,
+          explanation: 'АТФ (аденозинтрифосфат) е универсалната „енергийна валута" на всички живи клетки. Химичната енергия се „складира" в АТФ и се освобождава при хидролиза до АДФ + Pᵢ. АТФ захранва мускулното съкращение, активния транспорт, синтеза на макромолекули и всички енергоизискващи процеси.'
+        },
+        {
+          q: 'Къде протича цикълът на Кребс?',
+          options: ['В цитоплазмата', 'В ядрото', 'В митохондриалния матрикс', 'По вътрешната митохондриална мембрана'],
+          correct: 2,
+          explanation: 'Цикълът на Кребс (цикълът на лимонената киселина) протича в митохондриалния матрикс. Там ацетил-КоА се свързва с оксалоацетат и преминава серия от реакции, отделяйки CO₂ и зареждайки НАДH и ФАДH₂ с електрони.'
+        },
+        {
+          q: 'Кой е крайният акцептор на електрони в електронно-транспортната верига?',
+          options: ['CO₂', 'НАДH', 'O₂', 'АТФ'],
+          correct: 2,
+          explanation: 'Кислородът (O₂) е крайният акцептор на електрони в електронно-транспортната верига. Той приема електрони и протони, образувайки вода (H₂O). Без O₂ веригата спира и аеробното дишане е невъзможно.'
+        },
+        {
+          q: 'Колко АТФ (нетно) се произвеждат само от гликолизата?',
+          options: ['0', '2', '4', '36'],
+          correct: 1,
+          explanation: 'Гликолизата произвежда нетно 2 АТФ на молекула глюкоза. В началото се инвестират 2 АТФ, а по-късно се произвеждат 4 АТФ — нетният добив е 2 АТФ. Те са единственият АТФ при анаеробни условия (плюс ферментацията регенерира НАД⁺).'
+        },
+        {
+          q: 'Каква е разликата между аеробно и анаеробно клетъчно дишане?',
+          options: ['Аеробното протича в цитоплазмата, анаеробното — в митохондриите', 'Аеробното изисква O₂ и произвежда ~38 АТФ; анаеробното не изисква O₂ и произвежда само 2 АТФ', 'Двата процеса произвеждат еднакво количество АТФ', 'Анаеробното е по-бързо и по-ефективно'],
+          correct: 1,
+          explanation: 'Аеробното дишане изисква кислород, протича в митохондриите (след гликолизата) и произвежда ~38 АТФ. Анаеробното дишане (ферментация) не изисква O₂, протича само в цитоплазмата и произвежда само 2 АТФ от гликолизата, но е по-бързо.'
+        },
+        {
+          q: 'Каква е ролята на НАДH и ФАДH₂ в клетъчното дишане?',
+          options: ['Директно синтезират АТФ', 'Пренасят електрони до електронно-транспортната верига', 'Разграждат глюкоза до пируват', 'Фиксират CO₂ в митохондриите'],
+          correct: 1,
+          explanation: 'НАДH и ФАДH₂ са преносители на електрони (редуктивна сила). Те пренасят електрони от гликолизата и цикъла на Кребс до електронно-транспортната верига по вътрешната митохондриална мембрана, където тяхната енергия се използва за синтез на АТФ.'
+        },
+        {
+          q: 'Каква е функцията на АТФ синтазата?',
+          options: ['Разграждане на глюкоза', 'Транспорт на O₂', 'Синтез на АТФ от АДФ + Pᵢ, задвижван от поток на H⁺ йони', 'Фотолиза на вода'],
+          correct: 2,
+          explanation: 'АТФ синтазата е ензимен комплекс по вътрешната митохондриална мембрана. H⁺ йони, изпомпани в интермембранното пространство от ЕТВ, се „връщат" в матрикса през АТФ синтазата, задвижвайки синтеза на АТФ от АДФ и неорганичен фосфат (Pᵢ) — процес наречен хемиосмоза.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

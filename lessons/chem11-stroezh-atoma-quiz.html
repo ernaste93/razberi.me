@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Строеж на атома — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-stroezh-atoma-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem11-stroezh-atoma-quiz-2.html',
+      lessonUrl:   '/lessons/chem11-stroezh-atoma.html',
+      lessonName:  'Строеж на атома',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Строеж на атома — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Какво определя атомният номер (Z) на даден елемент?',
+          options: ['Броят на протоните в ядрото', 'Броят на неутроните в ядрото', 'Броят на електроните в последното ниво', 'Масовото число'],
+          correct: 0,
+          explanation: 'Атомният номер Z е равен на броя на протоните в ядрото. В неутрален атом Z е равен и на броя на електроните. Масовото число A = Z + N (неутрони).'
+        },
+        {
+          q: 'Колко електрона може да побере p-поднивото?',
+          options: ['2', '6', '10', '14'],
+          correct: 1,
+          explanation: 'P-поднивото има 3 орбитали (px, py, pz), всяка от които побира по 2 електрона, общо 6 електрона. S-поднивото побира 2, d-поднивото — 10, f-поднивото — 14.'
+        },
+        {
+          q: 'Каква е електронната конфигурация на натрия (Na, Z=11)?',
+          options: ['1s² 2s² 2p⁶ 3s¹', '1s² 2s² 2p⁵ 3s²', '1s² 2s² 2p⁶ 3p¹', '1s² 2s⁶ 2p³'],
+          correct: 0,
+          explanation: 'Натрият има 11 електрона. Запълват се: 1s²(2) + 2s²(4) + 2p⁶(10) + 3s¹(11). Валентният електрон е в 3s орбитала, което обяснява активните метални свойства на Na.'
+        },
+        {
+          q: 'Кое квантово число определя формата на орбитала?',
+          options: ['Главното (n)', 'Орбиталното (l)', 'Магнитното (ml)', 'Спиновото (ms)'],
+          correct: 1,
+          explanation: 'Орбиталното (азимутно) квантово число l определя формата на орбитала: l=0 → s (сферична), l=1 → p (гирообразна), l=2 → d, l=3 → f.'
+        },
+        {
+          q: 'Кой от следните елементи е в 3-ти период и IA група?',
+          options: ['Калий (K)', 'Натрий (Na)', 'Литий (Li)', 'Рубидий (Rb)'],
+          correct: 1,
+          explanation: 'Натрий (Na, Z=11) е в 3-ти период (n=3) и IA група (1 валентен електрон в s-орбитала). Литий е в 2-ри период, калий — в 4-ти, рубидий — в 5-ти период.'
+        },
+        {
+          q: 'Изотопите на един елемент се различават по:',
+          options: ['Броя на протоните', 'Броя на неутроните', 'Броя на валентните електрони', 'Химичните си свойства'],
+          correct: 1,
+          explanation: 'Изотопите имат еднакъв брой протони (същи Z), но различен брой неутрони (различно N). Химичните им свойства са практически еднакви, тъй като зависят от електроните.'
+        },
+        {
+          q: 'Кой елемент има конфигурация [Ar] 3d⁶ 4s²?',
+          options: ['Хром (Cr)', 'Желязо (Fe)', 'Никел (Ni)', 'Манган (Mn)'],
+          correct: 1,
+          explanation: 'Желязото (Fe, Z=26) има конфигурация [Ar] 3d⁶ 4s². Аргонът [Ar] покрива първите 18 електрона, после се запълват: 3d⁶(24) и 4s²(26).'
+        },
+        {
+          q: 'Как се променя атомният радиус по период отляво надясно?',
+          options: ['Нараства', 'Намалява', 'Остава постоянен', 'Първо нараства, после намалява'],
+          correct: 1,
+          explanation: 'По период атомният радиус намалява, защото броят на протоните нараства и ядрото привлича електроните по-силно, но те са на едно и също енергийно ниво.'
+        },
+        {
+          q: 'Какъв е максималният брой електрони в 3-то енергийно ниво?',
+          options: ['8', '18', '32', '2'],
+          correct: 1,
+          explanation: 'В 3-то ниво са достъпни 3s (2e), 3p (6e) и 3d (10e), общо 18 електрона. Формулата е 2n²: за n=3 → 2×9=18.'
+        },
+        {
+          q: 'Принципът на Паули гласи, че:',
+          options: ['Електроните заемат орбиталите по един преди да се сдвоят', 'Два електрона в един атом не могат да имат еднакви четири квантови числа', 'Орбиталите се запълват с нарастваща енергия', 'Електроните имат еднакъв спин в една орбитала'],
+          correct: 1,
+          explanation: 'Принципът на Паули (изключение на Паули) гласи, че два електрона в един и същ атом не могат да имат напълно еднакви четири квантови числа. Затова всяка орбитала побира най-много 2 електрона с противоположни спинове.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

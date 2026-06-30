@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Планиметрия · Математика 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    .formula-block { background: #f0f4ff; border: 1.5px solid #c7d2fe; border-radius: 12px; padding: 16px 20px; margin: 16px 0; text-align: center; font-size: 17px; font-weight: 800; color: var(--accent); letter-spacing: 0.02em; }
+    .formula-block .formula-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; display: block; }
+    .formula-inline { background: #eef2ff; color: var(--accent); padding: 1px 7px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .example-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.8; }
+    .example-block strong { color: var(--accent); }
+    .values-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
+    .values-table th { background: var(--accent); color: #fff; padding: 8px 10px; font-weight: 700; text-align: left; }
+    .values-table td { padding: 7px 10px; border-bottom: 1px solid var(--line); color: var(--text); }
+    .values-table tr:nth-child(even) td { background: var(--soft); }
+    .values-table td:first-child { font-weight: 700; color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>/</span>
+        <a href="/urotsi.html">Математика · Преговор 11 клас</a><span>/</span>
+        <span>Планиметрия</span>
+      </div>
+      <div class="lesson-tag">Математика · 11 клас · Преговор</div>
+      <h1 class="lesson-title">Планиметрия — Триъгълници, четириъгълници, окръжност</h1>
+      <div class="lesson-meta">Геометрия в равнината · Теореми · Формули · ~12 мин четене</div>
+      <div class="lesson-divider"></div>
+
+      <div class="lesson-body">
+        <div class="section-title">1. Триъгълник — основи</div>
+        <p>Триъгълникът е затворена геометрична фигура с три страни и три ъгъла. Сумата на ъглите на всеки триъгълник е <span class="formula-inline">180°</span>. Това е едно от фундаменталните свойства на равнинната геометрия (геометрия на Евклид).</p>
+
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">📐</div>
+            <div class="key-point-text"><strong>Правоъгълен триъгълник:</strong> един ъгъл е 90°. Страната срещу правия ъгъл се казва хипотенуза, другите две — катети.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">🔺</div>
+            <div class="key-point-text"><strong>Равнобедрен триъгълник:</strong> две страни (бедра) са равни. Ъглите при основата са равни.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">🔷</div>
+            <div class="key-point-text"><strong>Равностранен триъгълник:</strong> трите страни са равни. Всеки ъгъл е 60°.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📏</div>
+            <div class="key-point-text"><strong>Остроъгълен/тъпоъгълен:</strong> всички ъгли остри — остроъгълен; един ъгъл тъп (>90°) — тъпоъгълен.</div>
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top:20px;">2. Теоремата на Питагор</div>
+        <p>В правоъгълен триъгълник с катети <em>a</em> и <em>b</em> и хипотенуза <em>c</em> важи:</p>
+        <div class="formula-block">
+          <span class="formula-label">Теорема на Питагор</span>
+          a² + b² = c²
+        </div>
+        <p>Обратното също важи: ако a² + b² = c², тогава триъгълникът е правоъгълен с хипотенуза c.</p>
+
+        <div class="example-block">
+          <strong>Пример:</strong> В правоъгълен триъгълник катетите са 3 и 4. Хипотенузата = √(9 + 16) = √25 = 5. Тройката (3, 4, 5) е „Питагорова тройка" — цели числа, удовлетворяващи Питагоровата теорема. Други: (5, 12, 13), (8, 15, 17).
+        </div>
+
+        <div class="section-title" style="margin-top:20px;">3. Лице и периметър на триъгълник</div>
+        <table class="values-table">
+          <thead><tr><th>Формула</th><th>Кога се използва</th></tr></thead>
+          <tbody>
+            <tr><td>S = (a · h) / 2</td><td>Основа a и съответна височина h</td></tr>
+            <tr><td>S = (1/2) · a · b · sin C</td><td>Две страни a, b и ъгъл C между тях</td></tr>
+            <tr><td>S = √(p(p−a)(p−b)(p−c))</td><td>Хероновата формула (p = периметър/2)</td></tr>
+            <tr><td>P = a + b + c</td><td>Периметърът — сбор на трите страни</td></tr>
+          </tbody>
+        </table>
+
+        <div class="section-title" style="margin-top:20px;">4. Важни точки и линии в триъгълника</div>
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">📍</div>
+            <div class="key-point-text"><strong>Медиана:</strong> отсечка от връх до средата на срещуположната страна. Трите медиани се пресичат в центъра на тежестта (центроид), който дели всяка медиана в отношение 2:1.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📍</div>
+            <div class="key-point-text"><strong>Ъглополовяща:</strong> дели ъгъла наполовина. Трите ъглополовящи се пресичат в инцентъра — центъра на вписаната окръжност.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📍</div>
+            <div class="key-point-text"><strong>Височина:</strong> перпендикуляр от връх към срещуположната страна. Трите височини се пресичат в ортоцентъра.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📍</div>
+            <div class="key-point-text"><strong>Средна линия:</strong> свързва средите на две страни. Успоредна е на третата страна и равна на половината й.</div>
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top:20px;">5. Теорема на синусите и косинусите</div>
+        <div class="formula-block">
+          <span class="formula-label">Теорема на синусите</span>
+          a/sin A = b/sin B = c/sin C = 2R
+        </div>
+        <div class="formula-block">
+          <span class="formula-label">Теорема на косинусите</span>
+          c² = a² + b² − 2ab · cos C
+        </div>
+        <p>Теоремата на косинусите е обобщение на Питагоровата теорема. При C = 90°, cos 90° = 0 и получаваме c² = a² + b².</p>
+
+        <div class="lesson-divider"></div>
+
+        <div class="section-title">6. Четириъгълници</div>
+        <p>Четириъгълниците са затворени геометрични фигури с четири страни. Сумата на ъглите на всеки четириъгълник е <span class="formula-inline">360°</span>.</p>
+
+        <table class="values-table">
+          <thead><tr><th>Фигура</th><th>Свойства</th><th>Лице</th><th>Периметър</th></tr></thead>
+          <tbody>
+            <tr><td>Квадрат</td><td>4 равни страни, 4 прави ъгъла</td><td>a²</td><td>4a</td></tr>
+            <tr><td>Правоъгълник</td><td>2 двойки равни страни, 4 прави ъгъла</td><td>a · b</td><td>2(a+b)</td></tr>
+            <tr><td>Успоредник</td><td>2 двойки успоредни страни</td><td>a · h</td><td>2(a+b)</td></tr>
+            <tr><td>Ромб</td><td>4 равни страни, диагоналите ⊥</td><td>d₁ · d₂ / 2</td><td>4a</td></tr>
+            <tr><td>Трапец</td><td>1 двойка успоредни страни (основи)</td><td>(a+b)·h/2</td><td>a+b+c+d</td></tr>
+          </tbody>
+        </table>
+
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">✅</div>
+            <div class="key-point-text"><strong>Успоредник:</strong> диагоналите се разделят наполовина. Срещуположните страни и ъгли са равни.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">✅</div>
+            <div class="key-point-text"><strong>Ромб:</strong> диагоналите са взаимно перпендикулярни биссектриси. Лице = d₁·d₂/2, където d₁ и d₂ са диагоналите.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">✅</div>
+            <div class="key-point-text"><strong>Трапец:</strong> средната линия (свързва средите на бедрата) е равна на средното аритметично на двете основи: m = (a+b)/2.</div>
+          </div>
+        </div>
+
+        <div class="lesson-divider"></div>
+
+        <div class="section-title">7. Окръжност</div>
+        <p>Окръжността е множеството от всички точки, намиращи се на разстояние r (радиус) от фиксирана точка O (център). Не бъркай окръжността (линията) с кръга (запълнената фигура).</p>
+
+        <div class="formula-block">
+          <span class="formula-label">Основни формули</span>
+          Дължина: L = 2πr &nbsp;|&nbsp; Лице на кръг: S = πr²
+        </div>
+
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">⭕</div>
+            <div class="key-point-text"><strong>Хорда:</strong> отсечка, свързваща две точки от окръжността. Диаметърът е най-дългата хорда.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">⭕</div>
+            <div class="key-point-text"><strong>Дъга:</strong> частта от окръжността между две точки. Централният ъгъл = ъгълът при центъра, стъпващ на дъгата.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">⭕</div>
+            <div class="key-point-text"><strong>Вписан ъгъл:</strong> ъгъл с връх на окръжността. Вписаният ъгъл е равен на половината от централния ъгъл, стъпващ на същата дъга.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">⭕</div>
+            <div class="key-point-text"><strong>Тангента:</strong> права, докосваща окръжността в точно една точка. Тангентата е перпендикулярна на радиуса в точката на допиране.</div>
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top:20px;">8. Вписана и описана окръжност</div>
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">🔵</div>
+            <div class="key-point-text"><strong>Вписана окръжност в триъгълник:</strong> докосва трите страни. Центърът е пресечната точка на ъглополовящите. Радиус r = S/p, където S е лицето и p = периметър/2.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">🔵</div>
+            <div class="key-point-text"><strong>Описана окръжност около триъгълник:</strong> минава през трите върха. Центърът е пресечната точка на срединните перпендикуляри. Радиус R = abc/(4S).</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">🔵</div>
+            <div class="key-point-text"><strong>В правоъгълен триъгълник:</strong> описаната окръжност има радиус R = хипотенуза/2 (центърът е средата на хипотенузата).</div>
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top:20px;">9. Подобни фигури</div>
+        <p>Две фигури са подобни, ако имат еднакъв вид (еднакви ъгли) но различен размер. Коефициентът на подобност k = отношение на съответни страни. Лицата се отнасят като k².</p>
+
+        <div class="example-block">
+          <strong>Пример за сходство на триъгълници (AAA):</strong> Ако два триъгълника имат три чифта равни ъгли, те са подобни. Тъй като сумата на ъглите е 180°, достатъчно е да имат два равни ъгъла (AA).
+        </div>
+
+        <div class="section-title" style="margin-top:20px;">10. Обобщение — ключови формули</div>
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">📌</div>
+            <div class="key-point-text"><strong>Питагор:</strong> a² + b² = c² (правоъгълен триъгълник)</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📌</div>
+            <div class="key-point-text"><strong>Лице на триъгълник:</strong> S = (основа × височина) / 2</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📌</div>
+            <div class="key-point-text"><strong>Лице на кръг:</strong> S = πr²; Обиколка: L = 2πr</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📌</div>
+            <div class="key-point-text"><strong>Сума на ъглите:</strong> триъгълник = 180°; четириъгълник = 360°; n-ъгълник = (n−2)·180°</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📌</div>
+            <div class="key-point-text"><strong>Вписан ъгъл = 1/2 × централен ъгъл</strong> (стъпващи на еднаква дъга)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <a href="/lessons/math11-planimeriya-quiz.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:#fff;border-radius:99px;font-weight:800;font-size:14px;text-decoration:none;">Към тест 1 →</a>
+        <a href="/urotsi.html" style="font-size:13px;color:var(--muted);text-decoration:none;">← Всички уроци</a>
+      </div>
+    </div>
+  </main>
+  <button id="btn-ask-znaiko" onclick="document.getElementById('znaiko-panel').style.display='flex'">💡 Цъкни за помощ</button>
+  <div id="znaiko-panel" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.45);align-items:flex-end;justify-content:center;">
+    <div style="background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:680px;padding:24px;max-height:80vh;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <strong style="font-size:16px;">💡 Знайко</strong>
+        <button onclick="document.getElementById('znaiko-panel').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;">✕</button>
+      </div>
+      <div id="chat-messages" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
+      <div style="display:flex;gap:8px;">
+        <input id="chat-input" type="text" placeholder="Задай въпрос..." style="flex:1;padding:10px 16px;border:1.5px solid var(--line);border-radius:99px;font-family:inherit;font-size:14px;outline:none;" />
+        <button id="chat-send" style="padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:99px;font-family:inherit;font-weight:700;cursor:pointer;">Изпрати</button>
+      </div>
+    </div>
+  </div>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script src="/app.js"></script>
+</body>
+</html>

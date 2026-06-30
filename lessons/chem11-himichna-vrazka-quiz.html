@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Химична връзка — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-himichna-vrazka-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem11-himichna-vrazka-quiz-2.html',
+      lessonUrl:   '/lessons/chem11-himichna-vrazka.html',
+      lessonName:  'Химична връзка',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Химична връзка — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Кой вид химична връзка се образува при споделяне на електронна двойка между два атома?',
+          options: ['Йонна', 'Ковалентна', 'Метална', 'Водородна'],
+          correct: 1,
+          explanation: 'Ковалентната връзка се образува при споделяне на една или повече двойки електрони между два атома. Характерна е за неметалите. Йонната включва прехвърляне, а не споделяне на електрони.'
+        },
+        {
+          q: 'Каква е химичната връзка в молекулата Cl₂?',
+          options: ['Полярна ковалентна', 'Йонна', 'Неполярна ковалентна', 'Метална'],
+          correct: 2,
+          explanation: 'В Cl₂ двата хлорни атома имат еднаква електроотрицателност, затова електронната двойка се споделя равномерно. Връзката е неполярна ковалентна. При различни атоми с различна ЕО се получава полярна ковалентна.'
+        },
+        {
+          q: 'Между кои атоми се образува йонна връзка?',
+          options: ['C и H', 'Na и Cl', 'O и O', 'N и H'],
+          correct: 1,
+          explanation: 'Йонната връзка се образува между Na (метал, ниска ЕО, отдава e⁻) и Cl (неметал, висока ЕО, приема e⁻). Разликата в ЕО е голяма (>1,7), което води до пълно прехвърляне на електрон.'
+        },
+        {
+          q: 'Каква геометрия има молекулата H₂O?',
+          options: ['Линейна', 'Тетраедрична', 'Ъглова', 'Тригонална планарна'],
+          correct: 2,
+          explanation: 'Водата има 2 свързващи двойки (О–Н) и 2 несвързващи двойки. По теорията VSEPR, несвързващите двойки отблъскват свързващите, придавайки на молекулата ъглова форма с ъгъл ≈104,5°.'
+        },
+        {
+          q: 'Коя от следните молекули образува водородни връзки?',
+          options: ['CH₄', 'CCl₄', 'NH₃', 'CO₂'],
+          correct: 2,
+          explanation: 'NH₃ образува водородни връзки, защото азотът е силно електроотрицателен (N–H···N). CH₄ и CCl₄ нямат О, N или F директно свързани с H. CO₂ е неполярна молекула без О–H връзки.'
+        },
+        {
+          q: 'Каква е връзката в N₂ (молекулярен азот)?',
+          options: ['Единична ковалентна', 'Двойна ковалентна', 'Тройна ковалентна', 'Йонна'],
+          correct: 2,
+          explanation: 'Азотът има 5 валентни електрона. За да достигне октет, всеки N трябва да сподели 3 двойки с другия N. Тройната връзка N≡N е много здрава (946 kJ/mol), което прави N₂ химически инертен при стайна температура.'
+        },
+        {
+          q: 'Какво е „електронното море" при металната връзка?',
+          options: ['Наредените метални йони в решетката', 'Делокализираните свободни електрони', 'Свързващите електронни двойки', 'Несвързващите електронни двойки'],
+          correct: 1,
+          explanation: 'При металната връзка валентните електрони се „освобождават" от атомите и се движат свободно из цялата метална решетка. Тези делокализирани електрони образуват „електронното море", което свързва металните катиони.'
+        },
+        {
+          q: 'Кое свойство на металите се обяснява с металната връзка?',
+          options: ['Разтворимост във вода', 'Електрическа проводимост', 'Реакция с киселини', 'Цвят на пламъка'],
+          correct: 1,
+          explanation: 'Свободните (делокализирани) електрони в металите се движат насочено под действие на електрическо напрежение, осигурявайки електрическа проводимост. Това е пряк резултат от металната връзка и „електронното море".'
+        },
+        {
+          q: 'Кое от следните е пример за донорно-акцепторна (координатна) ковалентна връзка?',
+          options: ['H–H', 'Na–Cl', 'NH₄⁺', 'O=O'],
+          correct: 2,
+          explanation: 'При образуването на NH₄⁺ от NH₃ и H⁺, азотът (донор) предоставя и двата електрона на несвързващата си двойка за формиране на нова N–H връзка с H⁺ (акцептор). Резултатът е координатна ковалентна връзка.'
+        },
+        {
+          q: 'При каква разлика в електроотрицателности се образува йонна връзка?',
+          options: ['ΔEN < 0,4', 'ΔEN = 0,4–1,7', 'ΔEN > 1,7', 'ΔEN = 0'],
+          correct: 2,
+          explanation: 'При ΔEN > 1,7 разликата в електроотрицателности е толкова голяма, че по-силният атом „отнема" практически напълно електрона от другия — образува се йонна връзка. При по-малки разлики се образуват полярна или неполярна ковалентна връзка.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Неорганични съединения — Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-neorganichni-saedinenia-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem11-neorganichni-saedinenia.html',
+      lessonName:  'Неорганични съединения',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Неорганични съединения — Тест 3',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Производството на цимент включва нагряване на CaCO₃. Какво се получава?',
+          options: ['CaO + CO₂', 'Ca(OH)₂ + CO', 'CaCl₂ + O₂', 'Ca + CO₂ + O₂'],
+          correct: 0,
+          explanation: 'CaCO₃ → CaO + CO₂ при ~850–1000°C (термично разлагане). CaO (вар) е основен оксид — ключов компонент в производството на цимент. При добавяне на вода CaO + H₂O → Ca(OH)₂ (гасена вар), която втвърдява при реакция с CO₂ от въздуха.'
+        },
+        {
+          q: 'Защо NaHCO₃ (сода бикарбонат) реагира с оцет (CH₃COOH) с отделяне на мехурчета?',
+          options: ['Образува се H₂ газ', 'CO₂ се отделя от нестабилна H₂CO₃', 'O₂ се отделя', 'Реакцията е неутрализация без газ'],
+          correct: 1,
+          explanation: 'CH₃COOH + NaHCO₃ → CH₃COONa + H₂O + CO₂↑. Първо: НCO₃⁻ + H⁺ → H₂CO₃; след това H₂CO₃ → H₂O + CO₂ (нестабилна). Мехурчетата са CO₂. Тази реакция се използва в готварството (набухватели) и в пожарогасители.'
+        },
+        {
+          q: 'При добавяне на AgNO₃ към разтвор на NaCl се образува бяла утайка. Какво е тя?',
+          options: ['NaNO₃', 'AgCl', 'AgNO₃', 'NaAg'],
+          correct: 1,
+          explanation: 'AgNO₃ + NaCl → AgCl↓ (бяла утайка) + NaNO₃. AgCl е неразтворима сол (Ksp = 1,8×10⁻¹⁰) — белеещ на светлина (фотографски ефект). Реакцията е качествена за хлоридни йони Cl⁻ в аналитичната химия.'
+        },
+        {
+          q: 'Защо варовик (CaCO₃) се разтваря в дъждовна вода (съдържаща CO₂)?',
+          options: ['CaCO₃ е разтворим', 'CO₂ + H₂O → H₂CO₃, която реагира: CaCO₃ + H₂CO₃ → Ca(HCO₃)₂', 'Варовикът реагира с O₂', 'pH на дъждовната вода е > 7'],
+          correct: 1,
+          explanation: 'CaCO₃ + CO₂ + H₂O → Ca(HCO₃)₂ (разтворим). Тази реакция причинява карстови явления (пещери, stalaktiti). Процесът е обратим: при нагряване Ca(HCO₃)₂ → CaCO₃↓ + CO₂ + H₂O (образуване на котлен камък).'
+        },
+        {
+          q: 'При производството на стъкло се използва SiO₂ + Na₂CO₃ → Na₂SiO₃ + CO₂. Каква е тази реакция?',
+          options: ['Основен + основен оксид', 'Киселинен оксид + сол → нова сол + киселинен оксид (по-летлив CO₂)', 'Неутрализация', 'Редокс реакция'],
+          correct: 1,
+          explanation: 'SiO₂ (киселинен оксид) изтласква CO₂ (по-летлив киселинен оксид) от Na₂CO₃ при висока температура. SiO₂ + Na₂CO₃ → Na₂SiO₃ (натриев силикат, „течно стъкло") + CO₂↑. Принцип: по-нелетлива киселина изтласква по-летлива.'
+        },
+        {
+          q: 'Защо концентрираната H₂SO₄ не се разрежда с пръскане на вода върху нея?',
+          options: ['Не е опасно — може', 'Разреждането е силно екзотермично — се добавя киселина към водата, не вода към киселина', 'H₂SO₄ не реагира с вода', 'Водата утаява H₂SO₄'],
+          correct: 1,
+          explanation: 'Разреждането на H₂SO₄ е силно екзотермично. Ако се добави вода към концентрирана H₂SO₄, освободената топлина предизвиква бурно кипене и пръски. ПРАВИЛО: добавяй КИСЕЛИНА към ВОДАТА (бавно, при разбъркване), не обратно. Водата поглъща топлината безопасно.'
+        },
+        {
+          q: 'Коя от следните соли ще утаи Fe(OH)₃ от разтвор на FeCl₃?',
+          options: ['NaCl', 'NaOH', 'HCl', 'Na₂SO₄'],
+          correct: 1,
+          explanation: 'NaOH предоставя OH⁻ йони: FeCl₃ + 3NaOH → Fe(OH)₃↓ (кафяво-червена утайка) + 3NaCl. Fe(OH)₃ е неразтворим. NaCl, HCl и Na₂SO₄ не образуват неразтворими съединения с Fe³⁺. Fe(OH)₃ е качествен реагент за Fe³⁺.'
+        },
+        {
+          q: 'Какво вещество се образува, когато Na₂CO₃ реагира с CO₂ и H₂O?',
+          options: ['NaOH', 'NaHCO₃', 'Na₂O', 'Na₂SO₄'],
+          correct: 1,
+          explanation: 'Na₂CO₃ + CO₂ + H₂O → 2NaHCO₃. Средната сол карбонат се превръща в кисела сол бикарбонат при реакция с CO₂ и вода. Обратното: при нагряване 2NaHCO₃ → Na₂CO₃ + CO₂ + H₂O (реакцията в набухватели).'
+        },
+        {
+          q: 'Кое от следните е правилно за качествена реакция за SO₄²⁻?',
+          options: ['AgNO₃ → бяла утайка', 'BaCl₂ → бяла утайка от BaSO₄', 'NaOH → газ с мирис', 'HCl → утайка'],
+          correct: 1,
+          explanation: 'Качествена реакция за SO₄²⁻: добавяме BaCl₂ → Ba²⁺ + SO₄²⁻ → BaSO₄↓ (бяла утайка). BaSO₄ не се разтваря в HCl (за разлика от BaCO₃). AgNO₃ е за Cl⁻ (AgCl — бяла утайка); NH₃ с NaOH дава газ с мирис (за NH₄⁺).'
+        },
+        {
+          q: 'Защо се добавя вар (Ca(OH)₂) към кисели почви в земеделието?',
+          options: ['За добавяне на калций за растежа', 'Ca(OH)₂ е основа — неутрализира почвената киселинност и повишава pH', 'Варта убива вредители', 'За намаляване на азота в почвата'],
+          correct: 1,
+          explanation: 'Киселите почви (рН < 6) намаляват достъпността на хранителни вещества. Ca(OH)₂ е основа: Ca(OH)₂ + 2H⁺ (в почвата) → Ca²⁺ + 2H₂O, повишавайки рН. Оптималното рН за повечето култури е 6–7. Процесът се нарича варуване на почвата.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Клетъчно дишане · Биология 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Биология 11 клас</a>
+        <span>›</span>
+        Клетъчно дишане
+      </div>
+      <section class="demo-layout" style="margin:0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">⚡ БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Клетъчно дишане</div>
+          <div class="lesson-meta">Гликолиза · Цикъл на Кребс · Окислително фосфорилиране · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">1. Какво е клетъчното дишане?</div>
+            <div class="lesson-body">
+              <p>Клетъчното дишане е процес, при който живите клетки разграждат органични молекули (предимно глюкоза) и освобождават химическата им енергия под формата на <strong>АТФ</strong> (аденозинтрифосфат) — универсалната енергийна валута на клетката. Процесът не е горене, а контролирано биохимично окисление, протичащо при телесна температура.</p>
+              <p>Обобщеното уравнение на аеробното клетъчно дишане е:</p>
+              <p style="background:var(--soft);padding:12px 16px;border-radius:10px;font-weight:600;text-align:center;">C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ~38 АТФ</p>
+              <p>Клетъчното дишане се различава от белодробното (газообменното) дишане — то е молекулярен процес, протичащ в клетките. Съществуват два основни типа: <strong>аеробно</strong> (с кислород, много АТФ) и <strong>анаеробно</strong> (без кислород, малко АТФ — например ферментация).</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">2. Гликолиза — начален етап</div>
+            <div class="lesson-body">
+              <p><strong>Гликолизата</strong> е първият етап на клетъчното дишане и протича в <strong>цитоплазмата</strong> — не изисква митохондрии. Тя може да протича при наличие или без наличие на кислород (аеробно и анаеробно).</p>
+              <p>При гликолизата 1 молекула глюкоза (6 въглеродна) се разгражда до 2 молекули <strong>пируват</strong> (3 въглеродна) чрез серия от 10 ензимни реакции.</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">⚡</div>
+                  <div class="key-point-text"><strong>Нетна добив:</strong> 2 АТФ и 2 НАДH на молекула глюкоза. В начало се изразходват 2 АТФ (инвестиция), а в края се произвеждат 4 АТФ (добив), нетно = 2 АТФ.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔄</div>
+                  <div class="key-point-text"><strong>НАДH</strong> е редуцирана форма на НАД⁺ (никотинамид аденин динуклеотид) — преносител на електрони, необходим за следващите етапи на дишането.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">📍</div>
+                  <div class="key-point-text"><strong>Местоположение: цитоплазма</strong>. Ако кислород е наличен → пируватът постъпва в митохондрията. Ако кислород липсва → настъпва ферментация (анаеробно дишане).</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">3. Пируватно декарбоксилиране (преходна реакция)</div>
+            <div class="lesson-body">
+              <p>Преди да влезе в цикъла на Кребс, пируватът преминава <strong>декарбоксилиране</strong> в митохондриалния матрикс. Ензимният комплекс <strong>пируват дехидрогеназа</strong> превръща пирувата (3C) в <strong>ацетил-КоА</strong> (2C), отделяйки CO₂ и НАДH.</p>
+              <p style="background:var(--soft);padding:12px 16px;border-radius:10px;font-weight:600;text-align:center;">Пируват (3C) + КоА → Ацетил-КоА (2C) + CO₂ + НАДH</p>
+              <p>От 2 молекули пируват (от 1 глюкоза) се получават 2 ацетил-КоА + 2 CO₂ + 2 НАДH. Ацетил-КоА е ключовата „входна точка" за цикъла на Кребс.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">4. Цикъл на Кребс (лимонена киселина)</div>
+            <div class="lesson-body">
+              <p>Цикълът на Кребс (цикъл на лимонената киселина) протича в <strong>матрикса на митохондриите</strong>. Ацетил-КоА (2C) се свързва с оксалоацетат (4C), образувайки <strong>цитрат (лимонена киселина, 6C)</strong> — откъдето идва и другото му название.</p>
+              <p>В хода на цикъла въглеродните атоми се окисляват постепенно, отделяйки CO₂, и се произвеждат носители на електрони:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🔋</div>
+                  <div class="key-point-text"><strong>На 1 ацетил-КоА (на 1 цикъл):</strong> 3 НАДH + 1 ФАДH₂ + 1 АТФ (или ГТФ) + 2 CO₂.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⚡</div>
+                  <div class="key-point-text"><strong>На 1 молекула глюкоза (2 цикъла):</strong> 6 НАДH + 2 ФАДH₂ + 2 АТФ + 4 CO₂.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">♻️</div>
+                  <div class="key-point-text">В края на всеки цикъл <strong>оксалоацетатът се регенерира</strong>, за да приеме следващата молекула ацетил-КоА — оттук идва понятието „цикъл".</div>
+                </div>
+              </div>
+              <p>Цикълът на Кребс сам по себе си произвежда малко АТФ. Основната му роля е да <strong>зареди НАДH и ФАДH₂</strong> с електрони, които ще задвижат следващия етап.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">5. Окислително фосфорилиране и електронно-транспортна верига</div>
+            <div class="lesson-body">
+              <p>Окислителното фосфорилиране е третият и най-производителен етап — тук се произвежда по-голямата част от АТФ. Протича по <strong>вътрешната мембрана на митохондрията</strong> (кристите).</p>
+              <p>Процесът е в две части:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">⛓️</div>
+                  <div class="key-point-text"><strong>Електронно-транспортна верига (ЕТВ)</strong> — НАДH и ФАДH₂ предават електроните си на серия от белтъчни комплекси (I, II, III, IV). Освободената енергия изпомпва H⁺ йони от матрикса в интермембранното пространство, създавайки <strong>протонен градиент</strong>.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🌀</div>
+                  <div class="key-point-text"><strong>АТФ синтаза (хемиосмоза)</strong> — H⁺ йони се „връщат" обратно в матрикса през АТФ синтазата, задвижвайки синтеза на АТФ от АДФ + Pᵢ. Финалният акцептор на електрони е <strong>O₂</strong> → образува се H₂O.</div>
+                </div>
+              </div>
+              <p><strong>Добив от окислителното фосфорилиране:</strong> ~32–34 АТФ на молекула глюкоза (всеки НАДH дава ~2,5 АТФ, всеки ФАДH₂ — ~1,5 АТФ).</p>
+              <p>Кислородът е <strong>краен акцептор на електрони</strong> в ЕТВ. При липса на O₂ веригата спира и аеробното дишане е невъзможно.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">6. Анаеробно дишане — ферментация</div>
+            <div class="lesson-body">
+              <p>При липса на кислород пируватът не може да влезе в митохондрията и вместо това претърпява <strong>ферментация</strong> в цитоплазмата. Ферментацията е по-малко ефективна от аеробното дишане — произвежда само 2 АТФ.</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🍺</div>
+                  <div class="key-point-text"><strong>Алкохолна ферментация</strong> (дрожди, растения при анаеробни условия): Пируват → Ацеталдехид → Етанол + CO₂. Използва се при производство на хляб, бира, вино.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🏃</div>
+                  <div class="key-point-text"><strong>Млечно-кисела ферментация</strong> (мускули при интензивно усилие, млечнокисели бактерии): Пируват → Лактат (млечна киселина). Натрупването на лактат е свързано с мускулна умора.</div>
+                </div>
+              </div>
+              <p>Основната цел на ферментацията е да <strong>регенерира НАД⁺</strong> от НАДH, за да може гликолизата да продължи при липса на кислород.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">7. Обобщен добив на АТФ</div>
+            <div class="lesson-body">
+              <p>При пълното аеробно окисление на 1 молекула глюкоза:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">1️⃣</div>
+                  <div class="key-point-text"><strong>Гликолиза (цитоплазма):</strong> 2 АТФ + 2 НАДH.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">2️⃣</div>
+                  <div class="key-point-text"><strong>Преходна реакция (матрикс):</strong> 0 АТФ + 2 НАДH + 2 CO₂.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">3️⃣</div>
+                  <div class="key-point-text"><strong>Цикъл на Кребс (матрикс):</strong> 2 АТФ + 6 НАДH + 2 ФАДH₂ + 4 CO₂.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">4️⃣</div>
+                  <div class="key-point-text"><strong>Окислително фосфорилиране (вътрешна мембрана):</strong> ~32–34 АТФ.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⚡</div>
+                  <div class="key-point-text"><strong>ОБЩО: ~36–38 АТФ</strong> на молекула глюкоза при аеробно дишане, срещу само 2 АТФ при анаеробно.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">8. Обобщение — най-важното</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🍬</div>
+                <div class="key-point-text"><strong>Гликолиза (цитоплазма)</strong> — глюкоза → 2 пируват + 2 АТФ + 2 НАДH; не изисква O₂.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Цикъл на Кребс (митохондриален матрикс)</strong> — ацетил-КоА → CO₂ + НАДH + ФАДH₂ + 2 АТФ.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Окислително фосфорилиране (вътрешна митохондриална мембрана)</strong> — ~32–34 АТФ чрез ЕТВ и АТФ синтаза; O₂ е краен акцептор.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏃</div>
+                <div class="key-point-text"><strong>Ферментация</strong> — при анаеробни условия; само 2 АТФ; алкохолна (дрожди) или млечно-кисела (мускули, бактерии).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔋</div>
+                <div class="key-point-text"><strong>АТФ</strong> е универсалната енергийна валута; аеробното дишане е ~19 пъти по-ефективно от анаеробното.</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bio11-dishane-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bio11-dishane-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bio11-dishane-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Клетъчно дишане';
+    window.LESSON_SUBJECT = 'Биология';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed?'✓':'✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

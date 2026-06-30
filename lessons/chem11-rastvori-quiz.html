@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Разтвори и рН — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-rastvori-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem11-rastvori-quiz-2.html',
+      lessonUrl:   '/lessons/chem11-rastvori.html',
+      lessonName:  'Разтвори и рН',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Разтвори и рН — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Какво е рН на неутрален разтвор при 25°C?',
+          options: ['0', '7', '14', '1'],
+          correct: 1,
+          explanation: 'При 25°C неутралният разтвор (чиста вода) има [H⁺] = [OH⁻] = 10⁻⁷ mol/L. рН = −log(10⁻⁷) = 7. При рН < 7 разтворът е кисел, при рН > 7 — основен.'
+        },
+        {
+          q: 'Кое от следните е силен електролит?',
+          options: ['CH₃COOH (оцетна киселина)', 'NH₃ (амоняк)', 'HCl (солна киселина)', 'H₂O (вода)'],
+          correct: 2,
+          explanation: 'HCl (солна киселина) е силна киселина — дисоциира напълно: HCl → H⁺ + Cl⁻. Оцетната киселина и амонякът са слаби електролити (частична дисоциация). Водата е много слаб електролит (Kw = 10⁻¹⁴).'
+        },
+        {
+          q: 'Каква е молната концентрация на разтвор с 0,2 mol NaCl в 500 mL разтвор?',
+          options: ['0,1 mol/L', '0,2 mol/L', '0,4 mol/L', '1 mol/L'],
+          correct: 2,
+          explanation: 'c = n/V = 0,2 mol / 0,5 L = 0,4 mol/L. Внимание: 500 mL = 0,5 L! Концентрацията е 0,4 M (0,4 mol/L).'
+        },
+        {
+          q: 'Реакцията HCl + NaOH → NaCl + H₂O е:',
+          options: ['Редокс реакция', 'Реакция на неутрализация', 'Реакция на разлагане', 'Реакция на съединяване'],
+          correct: 1,
+          explanation: 'Реакцията между киселина (HCl) и основа (NaOH) се нарича неутрализация. Нетното йонно уравнение е: H⁺ + OH⁻ → H₂O. Продуктите са сол (NaCl) и вода. Степените на окисление не се променят — не е редокс.'
+        },
+        {
+          q: 'Лакмусовата хартия оцветява се в червено при:',
+          options: ['рН > 7', 'рН = 7', 'рН < 7', 'рН > 12'],
+          correct: 2,
+          explanation: 'Лакмусът е индикатор, който е червен в кисела среда (рН < 7), лилав при неутрална (рН ≈ 7) и тъмносин в основна (рН > 7). Киселините превръщат синия лакмус в червен.'
+        },
+        {
+          q: 'Ако [H⁺] = 0,001 mol/L, какво е рН?',
+          options: ['1', '3', '7', '11'],
+          correct: 1,
+          explanation: 'рН = −log[H⁺] = −log(0,001) = −log(10⁻³) = 3. Разтворът е кисел (рН = 3 < 7). Пример: оцет има рН ≈ 2,4–3,4.'
+        },
+        {
+          q: 'Кое от следните вещества е слаба киселина?',
+          options: ['HNO₃', 'H₂SO₄', 'HCl', 'H₂CO₃'],
+          correct: 3,
+          explanation: 'Въглената киселина (H₂CO₃) е слаба киселина — дисоциира частично (H₂CO₃ ⇌ H⁺ + HCO₃⁻). HNO₃, H₂SO₄ и HCl са силни киселини — дисоциират напълно.'
+        },
+        {
+          q: 'Какво се получава при разтваряне на NH₄Cl (амониев хлорид) — сол от слаба основа и силна киселина?',
+          options: ['Неутрален разтвор (рН = 7)', 'Кисел разтвор (рН < 7)', 'Основен разтвор (рН > 7)', 'Буферен разтвор'],
+          correct: 1,
+          explanation: 'NH₄Cl се образува от слаба основа (NH₃) и силна киселина (HCl). При разтваряне NH₄⁺ хидролизира: NH₄⁺ + H₂O ⇌ NH₃ + H₃O⁺, отделяйки H⁺ йони. Разтворът е кисел (рН < 7).'
+        },
+        {
+          q: 'Какво изразява рОН?',
+          options: ['рОН = −log[H⁺]', 'рОН = −log[OH⁻]', 'рОН = рН − 14', 'рОН = 7 при кисел разтвор'],
+          correct: 1,
+          explanation: 'рОН = −log[OH⁻] е аналог на рН за хидроксидните йони. При 25°C: рН + рОН = 14 (произтича от Kw = [H⁺][OH⁻] = 10⁻¹⁴). При рН = 3 → рОН = 11.'
+        },
+        {
+          q: 'Кой вид разтвор не може да приема повече разтворено вещество?',
+          options: ['Ненаситен', 'Наситен', 'Пренаситен', 'Буферен'],
+          correct: 1,
+          explanation: 'Наситеният разтвор е в равновесие — скоростта на разтваряне е равна на скоростта на кристализация. Не може да приеме повече вещество при същата температура. Ненаситеният може; пренаситеният е нестабилен с повече вещество от равновесното.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

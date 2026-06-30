@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Строеж на атома — Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-stroezh-atoma-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem11-stroezh-atoma.html',
+      lessonName:  'Строеж на атома',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Строеж на атома — Тест 3',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Радиовъглеродното датиране използва изотопа ¹⁴C. Защо ¹⁴C е радиоактивен, а ¹²C не е?',
+          options: ['¹⁴C има повече протони', '¹⁴C има нестабилно съотношение неутрони/протони', '¹⁴C е в различна група', '¹⁴C има по-малко електрони'],
+          correct: 1,
+          explanation: '¹⁴C има 6 протона и 8 неутрона — нестабилно съотношение, което води до β-разпад. ¹²C има 6 протона и 6 неутрона — стабилна ядрена конфигурация. И двата изотопа имат еднакъв брой електрони и химични свойства.'
+        },
+        {
+          q: 'Флуорът (F, Z=9) има най-висока електроотрицателност. Коя конфигурация е негова?',
+          options: ['1s² 2s² 2p⁵', '1s² 2s² 2p⁶', '1s² 2s² 2p⁴', '1s² 2s⁵'],
+          correct: 0,
+          explanation: 'Флуорът има 9 електрона: 1s²(2) + 2s²(4) + 2p⁵(9). Има 7 валентни електрона (2s²2p⁵), което го прави силен окислител и елемент с най-висока електроотрицателност по Полинг (4,0).'
+        },
+        {
+          q: 'Кой елемент е в 4-ти период, IA група и реагира бурно с вода?',
+          options: ['Натрий (Na)', 'Калий (K)', 'Рубидий (Rb)', 'Цезий (Cs)'],
+          correct: 1,
+          explanation: 'Калий (K, Z=19) е в 4-ти период и IA група с конфигурация [Ar] 4s¹. Реагира бурно с вода: 2K + 2H₂O → 2KOH + H₂↑. Натрий е в 3-ти, рубидий — в 5-ти, цезий — в 6-ти период.'
+        },
+        {
+          q: 'Хромът (Cr, Z=24) има конфигурация [Ar] 3d⁵ 4s¹, а не очакваната [Ar] 3d⁴ 4s². Защо?',
+          options: ['Грешка в периодичната система', 'Полузапълненото d-подниво е особено стабилно', 'Хромът е в p-блока', 'Четири d-електрона са нестабилни'],
+          correct: 1,
+          explanation: 'Полузапълненото d⁵ подниво (всяка от 5-те орбитали с по 1 електрон) има допълнителна стабилизация поради обменна енергия. Затова хромът „взима" 1 електрон от 4s за 3d. Подобно е и при медта (Cu): [Ar] 3d¹⁰ 4s¹.'
+        },
+        {
+          q: 'Кои елементи имат сходни химични свойства с натрий (Na)?',
+          options: ['Магнезий (Mg) и калций (Ca)', 'Литий (Li) и калий (K)', 'Хлор (Cl) и флуор (F)', 'Кислород (O) и сяра (S)'],
+          correct: 1,
+          explanation: 'Литий и калий са в IA група заедно с натрий — всички имат 1 валентен електрон в s-орбитала. Елементите от една група имат сходни химични свойства, тъй като имат еднакъв брой валентни електрони.'
+        },
+        {
+          q: 'Кой от следните йони има електронна конфигурация като неон (Ne, Z=10)?',
+          options: ['Na⁺', 'Mg²⁺', 'Al³⁺', 'Всички изброени'],
+          correct: 3,
+          explanation: 'Na⁺ (11−1=10 е⁻), Mg²⁺ (12−2=10 е⁻) и Al³⁺ (13−3=10 е⁻) имат по 10 електрона, т.е. конфигурацията на Ne (1s²2s²2p⁶). Тези йони са изоелектронни с неон.'
+        },
+        {
+          q: 'Защо благородните газове са химически инертни?',
+          options: ['Имат много голяма маса', 'Имат напълно запълнени валентни орбитали', 'Имат нечетен брой електрони', 'Намират се в d-блока'],
+          correct: 1,
+          explanation: 'Благородните газове (He, Ne, Ar, Kr, Xe, Rn) имат напълно запълнени s и p орбитали на последното ниво (октет/дублет за He). Това ги прави изключително стабилни и практически нереактивни при нормални условия.'
+        },
+        {
+          q: 'Скандий (Sc, Z=21) е първият преходен метал. Каква е конфигурацията му?',
+          options: ['[Ar] 3d¹ 4s²', '[Ar] 3d² 4s¹', '[Ar] 4s² 4p¹', '[Ar] 3d³'],
+          correct: 0,
+          explanation: 'Скандий (Z=21): след [Ar] (18е) се запълват 3d и 4s. Аргонът + 3d¹ + 4s² = 21 електрона. Конфигурацията е [Ar] 3d¹ 4s². Именно 3d¹ правят Sc преходен метал.'
+        },
+        {
+          q: 'Кой от следните процеси е правилно описан?',
+          options: ['Na → Na⁺ + e⁻ (редукция)', 'Cl + e⁻ → Cl⁻ (редукция)', 'Fe²⁺ → Fe³⁺ + e⁻ (редукция)', 'Cu²⁺ + 2e⁻ → Cu (окисление)'],
+          correct: 1,
+          explanation: 'Cl + e⁻ → Cl⁻ е редукция (приемане на електрон, намаляване на степента на окисление от 0 до −1). Na → Na⁺ + e⁻ е окисление. Fe²⁺ → Fe³⁺ е окисление. Cu²⁺ + 2e⁻ → Cu е редукция, не окисление.'
+        },
+        {
+          q: 'Кой период в периодичната система съдържа f-елементи (лантаноиди и актиноиди)?',
+          options: ['4-ти и 5-ти период', '5-ти и 6-ти период', '6-ти и 7-ми период', '3-ти и 4-ти период'],
+          correct: 2,
+          explanation: 'Лантаноидите (Ce–Lu) са в 6-ти период, а актиноидите (Th–Lr) — в 7-ми период. При тях се запълва 4f (лантаноиди) и 5f (актиноиди) поднивото. Всички актиноиди са радиоактивни.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

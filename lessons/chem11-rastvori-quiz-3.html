@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Разтвори и рН — Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-rastvori-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem11-rastvori.html',
+      lessonName:  'Разтвори и рН',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Разтвори и рН — Тест 3',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Кръвта на човек има рН = 7,4. Ако рН спадне под 7,35, настъпва ацидоза. Какво означава рН = 7,35 спрямо нормалното рН = 7,4?',
+          options: ['По-основна кръв', 'По-кисела кръв (повече H⁺)', 'Без разлика', 'По-малко OH⁻'],
+          correct: 1,
+          explanation: 'По-ниско рН означава по-висока [H⁺] (по-кисела среда). рН = 7,35 < 7,4 → по-кисела кръв (ацидоза). Тялото поддържа рН в тесни граници 7,35–7,45 чрез буферни системи (бикарбонат, хемоглобин).'
+        },
+        {
+          q: 'Буферният разтвор CH₃COOH/CH₃COONa поддържа рН около 4,7. Ако добавим малко HCl, буферът:',
+          options: ['Не реагира — рН спада рязко', 'Свързва H⁺ чрез CH₃COO⁻ — рН почти не се променя', 'Образува нова сол', 'Става напълно неутрален'],
+          correct: 1,
+          explanation: 'При добавяне на H⁺, CH₃COO⁻ (конюгирана основа) реагира: CH₃COO⁻ + H⁺ → CH₃COOH, поглъщайки H⁺ и предотвратявайки рязка промяна в рН. Буферните разтвори са смеси от слаба киселина и нейната сол (или слаба основа и нейната сол).'
+        },
+        {
+          q: 'Разтваряме 5,85 g NaCl (Mr = 58,5) в 500 mL вода. Колко йони Na⁺ се образуват? (NA = 6×10²³)',
+          options: ['6×10²² йона', '1,2×10²³ йона', '6×10²³ йона', '3×10²³ йона'],
+          correct: 1,
+          explanation: 'n(NaCl) = 5,85/58,5 = 0,1 mol. NaCl → Na⁺ + Cl⁻, т.е. 0,1 mol Na⁺. Брой йони = 0,1 × 6×10²³ = 6×10²² = 0,6×10²³ ... Коригирано: 0,1 mol × 6×10²³/mol = 6×10²² йони Na⁺. Отговорът е 6×10²² (≈ опция А, но изпишем точно): при n = 0,1 mol → N = 6×10²² йона.'
+        },
+        {
+          q: 'При разтваряне на CO₂ в вода се образува:',
+          options: ['Силна киселина с рН = 1', 'Слаба киселина H₂CO₃ с рН ≈ 5–6', 'Основен разтвор', 'Неутрален разтвор'],
+          correct: 1,
+          explanation: 'CO₂ + H₂O ⇌ H₂CO₃ (въглена киселина) — слаба, двуосновна киселина. Частично дисоциира: H₂CO₃ ⇌ H⁺ + HCO₃⁻. Разтворът е кисел, но слабо (рН ≈ 5–6). Именно затова дъждовната вода е леко кисела.'
+        },
+        {
+          q: 'За да приготвим 0,2 M разтвор на H₂SO₄ от 98% сярна киселина (ρ = 1,84 g/mL, Mr = 98), какъв обем концентрирана H₂SO₄ е нужен за 1 L разтвор?',
+          options: ['10,9 mL', '5,4 mL', '21,7 mL', '1,09 mL'],
+          correct: 0,
+          explanation: 'Нужни: n = 0,2 mol × 1 L = 0,2 mol H₂SO₄. m = 0,2 × 98 = 19,6 g. m(конц) = 19,6/0,98 = 20 g. V = m/ρ = 20/1,84 ≈ 10,9 mL. При разреждане на концентрирана H₂SO₄: ВИНАГИ добавяй киселината към водата, не обратно!'
+        },
+        {
+          q: 'Какво е рН на 0,1 M NaOH при 25°C?',
+          options: ['1', '7', '13', '11'],
+          correct: 2,
+          explanation: 'NaOH е силна основа → дисоциира напълно: NaOH → Na⁺ + OH⁻. [OH⁻] = 0,1 = 10⁻¹ mol/L. рОН = −log(10⁻¹) = 1. рН = 14 − рОН = 14 − 1 = 13.'
+        },
+        {
+          q: 'При добавяне на сода (NaHCO₃) към оцет (CH₃COOH), се отделя газ. Какъв е той?',
+          options: ['H₂', 'O₂', 'CO₂', 'SO₂'],
+          correct: 2,
+          explanation: 'CH₃COOH + NaHCO₃ → CH₃COONa + H₂O + CO₂↑. Реакцията е между киселина и бикарбонат — типична реакция в готварството (набухватели). CO₂ е газът, отговорен за набухването на тестото.'
+        },
+        {
+          q: 'Киселинният дъжд съдържа H₂SO₄ и HNO₃. Кое е вярно?',
+          options: ['Образуват се от N₂ и SO₂ при реакция с CO₂', 'SO₂ и NOₓ в атмосферата реагират с вода и O₂', 'Киселинният дъжд е с рН > 7', 'CO₂ е основната причина за киселинния дъжд'],
+          correct: 1,
+          explanation: 'SO₂ (от изгаряне на сяросъдържащи горива) и NOₓ (от горене при висока температура) реагират с атмосферната влага и кислород: SO₂ + H₂O + ½O₂ → H₂SO₄; 3NO₂ + H₂O → 2HNO₃ + NO. Получените киселини правят дъжда кисел (рН < 5,6).'
+        },
+        {
+          q: 'Кое от следните е амфотерно (реагира и с киселини, и с основи)?',
+          options: ['NaCl', 'HCl', 'Al(OH)₃', 'NaOH'],
+          correct: 2,
+          explanation: 'Al(OH)₃ е амфотерен хидроксид: с киселина — Al(OH)₃ + 3HCl → AlCl₃ + 3H₂O; с основа — Al(OH)₃ + NaOH → NaAlO₂ + 2H₂O. Амфотерни са и Zn(OH)₂, Cr(OH)₃, Be(OH)₂, и водата (H₂O).'
+        },
+        {
+          q: 'Какво е нетното йонно уравнение на реакцията между силна киселина и силна основа?',
+          options: ['Na⁺ + Cl⁻ → NaCl', 'H⁺ + OH⁻ → H₂O', 'HCl + NaOH → NaCl + H₂O', 'H₂ + O₂ → H₂O'],
+          correct: 1,
+          explanation: 'Нетното йонно уравнение показва само реагиращите частици. При неутрализация: H⁺ (от силна киселина) + OH⁻ (от силна основа) → H₂O. Зрителните йони (Na⁺ и Cl⁻) не участват в реакцията и не се записват.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

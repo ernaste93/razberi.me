@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Скорост и равновесие — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-skorost-ravnovesie-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem11-skorost-ravnovesie-quiz-2.html',
+      lessonUrl:   '/lessons/chem11-skorost-ravnovesie.html',
+      lessonName:  'Скорост и равновесие',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Скорост и равновесие — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Как влияе повишаването на температурата върху скоростта на химичната реакция?',
+          options: ['Намалява я — частиците се движат по-бавно', 'Увеличава я — повече частици имат Е > Ea', 'Не влияе', 'Само ускорява ендотермичните реакции'],
+          correct: 1,
+          explanation: 'При по-висока температура кинетичната енергия на частиците нараства. По-голям дял от тях преодолява активационната бариера Ea. По правилото на Вант Хоф: при T↑ с 10°C скоростта нараства 2–4 пъти.'
+        },
+        {
+          q: 'Какво е активационна енергия (Ea)?',
+          options: ['Общата енергия на реагентите', 'Минималната енергия, необходима за успешен сблъсък', 'Топлинния ефект на реакцията', 'Енергията, отделена при реакция'],
+          correct: 1,
+          explanation: 'Активационната енергия Ea е минималният енергиен праг, който реагиращите частици трябва да преодолеят, за да се получат продукти. При сблъсък с E < Ea частиците просто се отблъскват без реакция. Катализаторът намалява Ea.'
+        },
+        {
+          q: 'Какво прави катализаторът?',
+          options: ['Увеличава активационната енергия', 'Намалява Ea и ускорява реакцията, без да се изразходва', 'Измества равновесието към продуктите', 'Увеличава Kc'],
+          correct: 1,
+          explanation: 'Катализаторът предоставя алтернативен механизъм с по-ниска Ea — повече частици имат достатъчно енергия. Катализаторът не се изразходва (регенерира се) и не измества равновесието — само ускорява достигането му. Kc не се променя.'
+        },
+        {
+          q: 'За реакцията A + B ⇌ C, как се записва Kc?',
+          options: ['Kc = [A][B]/[C]', 'Kc = [C]/([A][B])', 'Kc = [C][A]/[B]', 'Kc = [A]+[B]-[C]'],
+          correct: 1,
+          explanation: 'Константата на равновесие: Kc = [продукти]/[реагенти], като концентрациите са в степен на съответните стехиометрични коефициенти. За A + B ⇌ C: Kc = [C]/([A][B]). Kc зависи само от температурата.'
+        },
+        {
+          q: 'Какво означава, ако Kc >> 1?',
+          options: ['Реакцията е много бавна', 'Равновесието е изместено към реагентите', 'Равновесието е изместено към продуктите', 'Реакцията е необратима'],
+          correct: 2,
+          explanation: 'Kc >> 1 означава, че в числителя (концентрации на продукти) е много по-голям от знаменателя (реагенти) — т.е. при равновесие преобладават продуктите. Kc << 1 → преобладават реагентите. Kc ≈ 1 → смесица приблизително поравно.'
+        },
+        {
+          q: 'Принципът на Льо Шателие гласи, че:',
+          options: ['Скоростта на реакцията нараства с температурата', 'При нарушаване на равновесие системата се противопоставя на нарушението', 'Катализаторът измества равновесието', 'Kc е постоянна при всякаква температура'],
+          correct: 1,
+          explanation: 'Принципът на Льо Шателие (1884): ако равновесна система бъде нарушена, тя реагира така, че частично да компенсира нарушението. Намаляване на реагент → равновесие към реагентите; T↑ → равновесие към ендо реакция; P↑ → към по-малко молове газ.'
+        },
+        {
+          q: 'За N₂ + 3H₂ ⇌ 2NH₃ (екзотермична), какво се случва при повишаване на T?',
+          options: ['Повече NH₃ се образува', 'По-малко NH₃ (равновесие ← към реагентите)', 'Kc не се променя', 'Реакцията спира'],
+          correct: 1,
+          explanation: 'Реакцията е екзотермична (ΔH < 0, отделя топлина). При T↑, системата се противопоставя — измества равновесието в посоката на ендотермичната обратна реакция (← поглъща топлина). Резултат: по-малко NH₃ при по-висока T. Kc намалява при T↑ за екзо реакция.'
+        },
+        {
+          q: 'Как влияе повишаването на налягане на N₂ + 3H₂ ⇌ 2NH₃?',
+          options: ['Намалява добива на NH₃', 'Увеличава добива на NH₃ (4 mol газ → 2 mol газ)', 'Не влияе (твърди вещества)', 'Измества равновесие ← към реагентите'],
+          correct: 1,
+          explanation: 'Ляво: 1+3 = 4 mol газ; дясно: 2 mol газ. При P↑ равновесието се измества към страната с по-малко молове газ (→ дясно) → повече NH₃. Затова синтезът на амоняк се провежда при 150–200 atm. Налягането не влияе, ако броят молове газ от двете страни е равен.'
+        },
+        {
+          q: 'Какво е химичното равновесие?',
+          options: ['Реагентите са напълно изразходвани', 'Скоростите на правата и обратната реакция са равни, концентрациите не се изменят', 'Реакцията е спряла напълно', 'Концентрацията на продуктите е нула'],
+          correct: 1,
+          explanation: 'Химичното равновесие е динамично — реакцията не е спряла, а правата и обратната реакция протичат с еднакви скорости (v₁ = v₂). Концентрациите на всички вещества са постоянни, но ненулеви. Равновесието е динамично, не статично.'
+        },
+        {
+          q: 'Защо реакцията Zn + HCl е по-бърза с цинков прах, отколкото с цинкова бучка?',
+          options: ['Цинковият прах е по-чист', 'По-голяма повърхност → повече контакт между реагентите', 'Прахът е с по-голяма маса', 'Бучката реагира в ендотермичен процес'],
+          correct: 1,
+          explanation: 'За хетерогенни реакции (различни фазове — твърдо и течно) скоростта зависи от контактната повърхност. Цинковият прах има огромна повърхност спрямо бучката при еднаква маса → повече молекули HCl достигат до Zn едновременно → по-бърза реакция.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Планиметрия — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math11-planimeriya-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/math11-planimeriya-quiz-3.html',
+      lessonUrl:   '/lessons/math11-planimeriya.html',
+      lessonName:  'Планиметрия',
+      eyebrow:     'МАТЕМАТИКА · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Планиметрия — Тест 2',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      questions: [
+        {
+          q: 'В правоъгълен триъгълник катетите са 6 и 8. Колко е хипотенузата?',
+          opts: ['10', '12', '14', '√48'],
+          correct: 0,
+          explanation: 'c = √(6² + 8²) = √(36 + 64) = √100 = 10. Тройката (6, 8, 10) е Питагорова — кратна на (3, 4, 5). Теоремата на Питагор: a² + b² = c².'
+        },
+        {
+          q: 'Намери лицето на правоъгълен триъгълник с катети 5 и 12.',
+          opts: ['30 кв.ед.', '60 кв.ед.', '65 кв.ед.', '15 кв.ед.'],
+          correct: 0,
+          explanation: 'S = (основа × височина)/2 = (5 × 12)/2 = 60/2 = 30 кв.ед. В правоъгълен триъгълник двата катета са и основа и височина.'
+        },
+        {
+          q: 'Намери диагонала на квадрат със страна 4.',
+          opts: ['4√2', '8', '4', '2√2'],
+          correct: 0,
+          explanation: 'Диагоналът на квадрат: d = a√2 = 4√2. Доказателство: по Питагор d² = a² + a² = 2a² → d = a√2. За a = 4: d = 4√2 ≈ 5.66.'
+        },
+        {
+          q: 'Равностранен триъгълник има страна 6. Намери лицето му.',
+          opts: ['9√3', '18', '9', '6√3'],
+          correct: 0,
+          explanation: 'Лице на равностранен триъгълник: S = (a²√3)/4 = (36√3)/4 = 9√3. Или: височината h = (6·√3)/2 = 3√3; S = (6·3√3)/2 = 9√3.'
+        },
+        {
+          q: 'Трапец с основи 5 и 9 и височина 4. Колко е лицето?',
+          opts: ['28', '24', '56', '36'],
+          correct: 0,
+          explanation: 'S = (a + b) · h / 2 = (5 + 9) · 4 / 2 = 14 · 2 = 28 кв.ед. Формулата за трапец е средното аритметично на основите, умножено по височината.'
+        },
+        {
+          q: 'Окръжност с радиус 7. Колко е лицето на кръга?',
+          opts: ['14π', '49π', '7π', '49'],
+          correct: 1,
+          explanation: 'S = πr² = π · 7² = 49π ≈ 153.94 кв.ед. Не бъркай с обиколката: L = 2πr = 14π.'
+        },
+        {
+          q: 'Ромб с диагонали 10 и 8. Намери лицето.',
+          opts: ['40', '80', '18', '32'],
+          correct: 0,
+          explanation: 'S = d₁ · d₂ / 2 = 10 · 8 / 2 = 40 кв.ед. Диагоналите на ромба се пресичат перпендикулярно и взаимно се разделят наполовина.'
+        },
+        {
+          q: 'Каква е дължината на дъга с централен ъгъл 60° и радиус 6?',
+          opts: ['π', '2π', '3π', '6π'],
+          correct: 1,
+          explanation: 'l = (α/360°) · 2πr = (60/360) · 2π · 6 = (1/6) · 12π = 2π. Дъгата е 1/6 от пълната обиколка, тъй като 60° е 1/6 от 360°.'
+        },
+        {
+          q: 'В успоредник с основа 8 и ъгъл 30°, ако бедрото е 5, намери лицето.',
+          opts: ['20', '40', '10', '25'],
+          correct: 0,
+          explanation: 'Височина h = бедро · sin 30° = 5 · 1/2 = 2.5. S = основа · h = 8 · 2.5 = 20 кв.ед. Използваме тригонометрия за да намерим височината от бедрото и ъгъла.'
+        },
+        {
+          q: 'Трапец с основи 4 и 10. Колко е дължината на средната линия?',
+          opts: ['5', '7', '6', '14'],
+          correct: 1,
+          explanation: 'Средната линия на трапец свързва средите на двете бедра и е равна на средното аритметично на двете основи: m = (a + b)/2 = (4 + 10)/2 = 7. Средната линия е успоредна на двете основи.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

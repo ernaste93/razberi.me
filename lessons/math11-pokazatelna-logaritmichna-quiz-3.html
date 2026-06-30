@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Показателна и логаритмична функция — Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math11-pokazatelna-logaritmichna-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/math11-pokazatelna-logaritmichna.html',
+      lessonName:  'Показателна и логаритмична функция',
+      eyebrow:     'МАТЕМАТИКА · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Показателна и логаритмична функция — Тест 3',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Реши неравенството: 2ˣ > 8',
+          opts: ['x > 2', 'x > 3', 'x < 3', 'x > 4'],
+          correct: 1,
+          explanation: '8 = 2³, следователно 2ˣ > 2³. Тъй като f(x) = 2ˣ е нарастваща (основата 2 > 1), неравенството на степените пази посоката: x > 3.'
+        },
+        {
+          q: 'Реши неравенството: log₂ x < 3',
+          opts: ['x < 8', '0 < x < 8', 'x > 8', 'x < 3'],
+          correct: 1,
+          explanation: 'log₂ x < 3 ⟺ x < 2³ = 8. Тъй като log₂ е нарастваща функция (основата 2 > 1), посоката на неравенство се запазва. Областта на дефиниране изисква x > 0, затова: 0 < x < 8.'
+        },
+        {
+          q: 'Популация бактерии се удвоява всеки час. След колко часа 100 бактерии ще станат 3200?',
+          opts: ['4 часа', '5 часа', '6 часа', '32 часа'],
+          correct: 1,
+          explanation: '100 · 2ⁿ = 3200 → 2ⁿ = 32 = 2⁵ → n = 5. Моделът на геометрично нарастване: N(t) = N₀ · aᵗ. Тук N₀=100, a=2, N=3200, намираме t=5 часа.'
+        },
+        {
+          q: 'Реши: log₃ x = −2',
+          opts: ['x = −9', 'x = 1/9', 'x = 9', 'x = 6'],
+          correct: 1,
+          explanation: 'log₃ x = −2 ⟺ x = 3⁻² = 1/9. Отрицателен логаритъм означава число между 0 и 1. Проверка: log₃(1/9) = log₃(3⁻²) = −2. Аргументът x = 1/9 > 0, затова е допустим.'
+        },
+        {
+          q: 'Опрости: log₂ 4 + log₂ 8 − log₂ 2',
+          opts: ['3', '4', '5', '6'],
+          correct: 2,
+          explanation: 'log₂ 4 = 2, log₂ 8 = 3, log₂ 2 = 1. Изразът: 2 + 3 − 1 = 4. Или директно: log₂(4·8/2) = log₂(16) = 4. Свойствата на логаритмите позволяват събиране и изваждане чрез умножение и деление.'
+        },
+        {
+          q: 'Реши уравнението: 4ˣ = 2ˣ⁺³',
+          opts: ['x = 2', 'x = 3', 'x = 4', 'x = 6'],
+          correct: 1,
+          explanation: '4ˣ = (2²)ˣ = 2²ˣ. Следователно 2²ˣ = 2ˣ⁺³ → 2x = x + 3 → x = 3. Ключово: изразяваме 4 = 2² и получаваме степени с еднаква основа, след което сравняваме показателите.'
+        },
+        {
+          q: 'Радиоактивен елемент се разполовява на всеки 10 години. Колко от 1000 г ще останат след 30 години?',
+          opts: ['250 г', '125 г', '500 г', '100 г'],
+          correct: 1,
+          explanation: 'За 30 години имаме 30/10 = 3 периода на полуразпад. Останалото количество: 1000 · (1/2)³ = 1000/8 = 125 г. Моделът: N(t) = N₀ · (1/2)^(t/T), където T е периодът на полуразпад.'
+        },
+        {
+          q: 'Реши: log(x + 1) + log(x − 1) = log 3 (десетичен логаритъм)',
+          opts: ['x = 1', 'x = 2', 'x = 3', 'x = −2'],
+          correct: 1,
+          explanation: 'log(x+1) + log(x−1) = log((x+1)(x−1)) = log(x²−1) = log 3 → x²−1 = 3 → x² = 4 → x = ±2. Тъй като аргументите трябва да са > 0: x+1>0 и x−1>0 → x>1. Следователно x = 2.'
+        },
+        {
+          q: 'Кое от следните неравенства е вярно за всяко x > 0, x ≠ 1?',
+          opts: ['log x > 0', 'ln x > 0', 'log x може да е < 0', 'ln x = log x'],
+          correct: 2,
+          explanation: 'log x (основа 10) може да е отрицателен: за 0 < x < 1 имаме log x < 0 (напр. log 0.1 = −1). Логаритъмът е > 0 само за x > 1, = 0 за x = 1, < 0 за 0 < x < 1.'
+        },
+        {
+          q: 'Намери x от уравнението: 5^(2x−1) = 25',
+          opts: ['x = 1', 'x = 1.5', 'x = 2', 'x = 3'],
+          correct: 1,
+          explanation: '25 = 5², следователно 5^(2x−1) = 5² → 2x − 1 = 2 → 2x = 3 → x = 3/2 = 1.5. Проверка: 5^(2·1.5−1) = 5^(3−1) = 5² = 25. Методът: изравняваме основите и сравняваме показателите.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

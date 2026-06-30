@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ендокринна система · Биология 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Биология 11 клас</a>
+        <span>›</span>
+        Ендокринна система
+      </div>
+      <section class="demo-layout" style="margin:0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">💊 БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Ендокринна система</div>
+          <div class="lesson-meta">Хормони · Жлези с вътрешна секреция · Регулация · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">1. Какво е ендокринната система?</div>
+            <div class="lesson-body">
+              <p>Ендокринната система е съвкупност от <strong>жлези с вътрешна секреция</strong> (ендокринни жлези), които отделят <strong>хормони</strong> директно в кръвта. Хормоните са химични пратеници, пренасяни от кръвта до <strong>прицелните органи</strong>, където упражняват своите ефекти.</p>
+              <p>За разлика от жлезите с <strong>външна секреция</strong> (например слюнчените или потните жлези), ендокринните жлези НЯМАТ изводни канали — секретират директно в кръвта. Ендокринната система работи в тясна връзка с нервната система, но е по-бавна и с по-продължителен ефект.</p>
+              <p>Хормоните действат само върху прицелни клетки, имащи специфични <strong>рецептори</strong> за тях. Количеството хормони в кръвта се регулира предимно чрез <strong>отрицателна обратна връзка</strong>.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">2. Хипофиза — „майката на жлезите"</div>
+            <div class="lesson-body">
+              <p>Хипофизата е малка жлеза (~1 cm) в основата на мозъка, директно свързана с хипоталамуса. Тя е „дирижентът" на ендокринната система, тъй като произвежда хормони, регулиращи другите ендокринни жлези.</p>
+              <p>Хипофизата се дели на предна (аденохипофиза) и задна (неврохипофиза) дяла:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🌱</div>
+                  <div class="key-point-text"><strong>Растежен хормон (GH)</strong> — стимулира растежа на костите и мускулите. Хиперсекреция в детска възраст → гигантизъм; дефицит → джудже (нанизъм). При възрастни — акромегалия.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🦋</div>
+                  <div class="key-point-text"><strong>ТСХ (тиреостимулиращ хормон)</strong> — стимулира щитовидната жлеза да произвежда тиреоидни хормони.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🧬</div>
+                  <div class="key-point-text"><strong>АКТХ (адренокортикотропен хормон)</strong> — стимулира кората на надбъбречните жлези да произвежда кортизол.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🍼</div>
+                  <div class="key-point-text"><strong>Пролактин</strong> — стимулира образуването на кърма. <strong>Окситоцин</strong> (задна хипофиза) — стимулира маточните контракции и изтичането на мляко.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">💧</div>
+                  <div class="key-point-text"><strong>АДХ (антидиуретичен хормон, вазопресин)</strong> — задна хипофиза; стимулира реабсорбция на вода в бъбреците. Дефицит → несахарен диабет (полиурия).</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">3. Щитовидна и паращитовидни жлези</div>
+            <div class="lesson-body">
+              <p><strong>Щитовидната жлеза</strong> е пеперудовидна жлеза в предната страна на шията. Произвежда два основни хормона: <strong>тироксин (Т₄)</strong> и <strong>трийодтиронин (Т₃)</strong>. И двата регулират метаболизма на всички клетки, ускорявайки поглъщането на O₂ и производството на топлина.</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">⬆️</div>
+                  <div class="key-point-text"><strong>Хиперфункция (хипертиреоидизъм)</strong> — ускорен метаболизъм, отслабване, тахикардия, нервност, изпотяване. При болест на Грейвс — гуша и екзофталм (изпъкнали очи).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⬇️</div>
+                  <div class="key-point-text"><strong>Хипофункция (хипотиреоидизъм)</strong> — забавен метаболизъм, увеличаване на теглото, умора, брадикардия, непоносимост към студ. Дефицитът на йод (субстрат за тироксина) причинява ендемична гуша.</div>
+                </div>
+              </div>
+              <p><strong>Паращитовидните жлези</strong> (4 малки жлезки зад щитовидната) произвеждат <strong>паратхормон (ПТХ)</strong>, регулиращ нивото на Ca²⁺ в кръвта. ПТХ повишава Ca²⁺ чрез: мобилизация от костите, увеличена реабсорбция в бъбреците и засилено усвояване в червата. Антагонист на ПТХ е <strong>калцитонинът</strong> (от щитовидната).</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">4. Панкреас — регулация на кръвната захар</div>
+            <div class="lesson-body">
+              <p>Панкреасът е и екзокринна (храносмилателни ензими), и ендокринна жлеза. Ендокринната функция се осъществява от <strong>Лангерхансовите острови</strong> — клъстери от ендокринни клетки в панкреаса.</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🔴</div>
+                  <div class="key-point-text"><strong>Инсулин</strong> (от β-клетките) — намалява кръвната захар: стимулира усвояването на глюкоза от клетките и синтеза на гликоген. Дефицит или резистентност → <strong>захарен диабет</strong>.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🟡</div>
+                  <div class="key-point-text"><strong>Глюкагон</strong> (от α-клетките) — повишава кръвната захар: стимулира разграждането на гликоген в черния дроб и глюконеогенезата. Антагонист на инсулина.</div>
+                </div>
+              </div>
+              <p>Двата хормона действат в <strong>антагонизъм</strong> — поддържат нивото на кръвна захар в тесни граници (3,9–5,5 mmol/l). <strong>Диабет тип 1</strong>: имунна деструкция на β-клетките → нулев инсулин → зависимост от инжекционен инсулин. <strong>Диабет тип 2</strong>: инсулинова резистентност при нормална или повишена секреция → лечение с диета и медикаменти.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">5. Надбъбречни жлези</div>
+            <div class="lesson-body">
+              <p>Надбъбречните жлези са сдвоени жлези, намиращи се над бъбреците. Всяка се дели на <strong>кора (cortex)</strong> и <strong>мозъчна маса (medulla)</strong>.</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🛡️</div>
+                  <div class="key-point-text"><strong>Кора — глюкокортикоиди (кортизол)</strong>: регулират въглехидратния, белтъчния и мастния метаболизъм; противовъзпалителен ефект; освобождават се при стрес. Хронично повишен кортизол → синдром на Кушинг.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🧂</div>
+                  <div class="key-point-text"><strong>Кора — минералкортикоиди (алдостерон)</strong>: регулират водно-солевия баланс — стимулират реабсорбция на Na⁺ в бъбреците (и задържане на вода) и екскреция на K⁺.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⚡</div>
+                  <div class="key-point-text"><strong>Мозъчна маса — адреналин и норадреналин (катехоламини)</strong>: освобождават се при остър стрес; подготвят организма за „бий или бягай" — ускоряват сърдечния ритъм, повишават кръвното налягане, разширяват зениците и бронхите.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">6. Полови жлези и отрицателна обратна връзка</div>
+            <div class="lesson-body">
+              <p><strong>Тестисите</strong> (при мъжете) произвеждат <strong>тестостерон</strong> (андроген) — отговорен за развитието на мъжките полови белези, мускулния растеж, спермогенезата. <strong>Яйчниците</strong> (при жените) произвеждат <strong>естрогени</strong> и <strong>прогестерон</strong> — регулират менструалния цикъл, вторичните полови белези, бременността.</p>
+              <p><strong>Принципът на отрицателна обратна връзка</strong> е основният механизъм за регулация на хормонните нива:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🔄</div>
+                  <div class="key-point-text">Хипоталамусът освобождава рилизинг-хормони → хипофизата освобождава тропни хормони → прицелната жлеза отделя хормон → <strong>повишеното ниво на хормона инхибира хипоталамуса и хипофизата</strong>, намалявайки по-нататъшна секреция.</div>
+                </div>
+              </div>
+              <p>Пример: Хипоталамус → ТРХ → Хипофиза → ТСХ → Щитовидна жлеза → Тироксин. Когато нивото на тироксина се повиши, той инхибира хипоталамуса и хипофизата → по-малко ТСХ → по-малко тироксин. Така системата се самокалибрира.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">7. Обобщение — най-важното</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">💊</div>
+                <div class="key-point-text"><strong>Хормон</strong> = химичен пратеник, отделян в кръвта от ендокринни жлези, действащ на прицелни клетки с рецептори.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏆</div>
+                <div class="key-point-text"><strong>Хипофиза</strong> — GH (растеж), ТСХ, АКТХ, пролактин, АДХ, окситоцин.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🦋</div>
+                <div class="key-point-text"><strong>Щитовидна жлеза</strong> — тироксин (метаболизъм); паращитовидни — ПТХ (Ca²⁺).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🍬</div>
+                <div class="key-point-text"><strong>Панкреас</strong> — инсулин (намалява захарта) ↔ глюкагон (повишава захарта); антагонизъм.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Надбъбречни жлези</strong> — кора: кортизол (стрес), алдостерон (Na⁺/вода); медула: адреналин/норадреналин.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Отрицателна обратна връзка</strong> — хормонът инхибира собствената си секреция, поддържайки хомеостаза.</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bio11-endokrinna-sistema-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bio11-endokrinna-sistema-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bio11-endokrinna-sistema-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Ендокринна система';
+    window.LESSON_SUBJECT = 'Биология';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed?'✓':'✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Строеж и функции на клетката · Биология 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Биология 11 клас</a>
+        <span>›</span>
+        Строеж и функции на клетката
+      </div>
+      <section class="demo-layout" style="margin:0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">🔬 БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Строеж и функции на клетката</div>
+          <div class="lesson-meta">Цитология · Органели · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">1. Клетката — основна единица на живота</div>
+            <div class="lesson-body">
+              <p>Клетката е най-малката структурна и функционална единица на живите организми. Всички живи същества — от бактерии до хора — са изградени от клетки. Тази фундаментална теза е формулирана от Матиас Шлайден и Теодор Шван в <strong>клетъчната теория</strong> (1838–1839), а по-късно Рудолф Вирхов добавя принципа: „всяка клетка произлиза от клетка" (<em>omnis cellula e cellula</em>).</p>
+              <p>Размерите на клетките варират значително — от 1–10 микрометра при бактериите до над 100 микрометра при някои животински клетки. Въпреки разнообразието, всички клетки споделят обща организация: те са заобиколени от клетъчна мембрана, съдържат генетичен материал (ДНК) и цитоплазма.</p>
+              <p>Съществуват два основни типа клетъчна организация: <strong>прокариотна</strong> и <strong>еукариотна</strong>. Прокариотите (бактерии и архебактерии) нямат оформено клетъчно ядро — ДНК е в цитоплазмата. Еукариотите (животни, растения, гъби, протисти) имат ядро, обвито с двойна мембрана, и множество специализирани органели.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">2. Клетъчна мембрана</div>
+            <div class="lesson-body">
+              <p>Клетъчната мембрана (плазмалема) е тънка двойна липидна обвивка, която отделя клетката от околната среда. Тя е изградена от <strong>фосфолипиден двоен слой</strong>, в който са „потопени" различни белтъци — транспортни, рецепторни и ензимни. Това е т.нар. <strong>течна мозайка</strong> — модел, предложен от Сингер и Никълсън (1972).</p>
+              <p>Основните функции на мембраната са:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🚧</div>
+                  <div class="key-point-text"><strong>Бариерна функция</strong> — отделя вътрешността на клетката от средата и поддържа постоянен вътреклетъчен състав.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔄</div>
+                  <div class="key-point-text"><strong>Транспортна функция</strong> — регулира преминаването на вещества: вода (осмоза), йони (йонни канали), глюкоза (улеснена дифузия), макромолекули (ендо- и екзоцитоза).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">📡</div>
+                  <div class="key-point-text"><strong>Рецепторна функция</strong> — мембранните рецептори разпознават хормони, невротрансмитери и други сигнални молекули, задействайки вътреклетъчни реакции.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🤝</div>
+                  <div class="key-point-text"><strong>Клетъчно разпознаване</strong> — гликопротеините и гликолипидите на мембраната участват в имунното разпознаване и клетъчно-клетъчните взаимодействия.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">3. Клетъчно ядро</div>
+            <div class="lesson-body">
+              <p>Ядрото е командният център на еукариотната клетка. То е заобиколено от <strong>двойна ядрена мембрана</strong> с ядрени пори — малки канали, през които се транспортират РНК и белтъци между ядрото и цитоплазмата.</p>
+              <p>Вътре в ядрото се намират:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🧬</div>
+                  <div class="key-point-text"><strong>Хроматин</strong> — комплекс от ДНК и хистонови белтъци. В клетки, които не се делят, ДНК е разопакована (хроматин); по време на деленето се кондензира в хромозоми.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⭕</div>
+                  <div class="key-point-text"><strong>Ядърце (нуклеолус)</strong> — специализирана зона, в която се синтезира рибозомна РНК (рРНК) и се сглобяват рибозомни субединици.</div>
+                </div>
+              </div>
+              <p>Ядрото е отговорно за <strong>съхранението, репликацията и транскрипцията на ДНК</strong>. То регулира всички клетъчни процеси чрез синтеза на информационна РНК (иРНК), която пренася генетичната информация до рибозомите.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">4. Митохондрии — електроцентралите на клетката</div>
+            <div class="lesson-body">
+              <p>Митохондриите са двумембранни органели, в които протича аеробното клетъчно дишане и се синтезира по-голямата част от АТФ. Те имат характерна структура: <strong>външна мембрана</strong> (гладка) и <strong>вътрешна мембрана</strong> (с вгъвания — кристи), която образува огромна повърхност за синтез на АТФ.</p>
+              <p>Митохондриите съдържат собствена кръгова ДНК и рибозоми, което потвърждава <strong>ендосимбионтната теория</strong> — те са потомци на прокариотни клетки, погълнати от предшественик на еукариотите преди ~1.5 милиарда години.</p>
+              <p>В митохондриите протичат: цикълът на Кребс (в матрикса) и окислителното фосфорилиране (по вътрешната мембрана). Крайният продукт е АТФ — универсалната „енергийна валута" на клетката.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">5. Ендоплазмен ретикулум и апарат на Голджи</div>
+            <div class="lesson-body">
+              <p><strong>Ендоплазменият ретикулум (ЕПР)</strong> е мрежа от мембранни канали и цистерни, свързана с ядрената мембрана. Съществува в два вида:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🔵</div>
+                  <div class="key-point-text"><strong>Гранулиран (груб) ЕПР</strong> — покрит с рибозоми; синтезира белтъци, предназначени за секреция или вграждане в мембрани.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⚪</div>
+                  <div class="key-point-text"><strong>Гладък ЕПР</strong> — без рибозоми; синтезира липиди, детоксикира вредни вещества и складира калциеви йони (важно за мускулното съкращение).</div>
+                </div>
+              </div>
+              <p><strong>Апаратът на Голджи</strong> е стек от сплеснати мембранни цистерни — „пощенска станция" на клетката. Той получава белтъци от ЕПР, модифицира ги (гликозилиране, фосфорилиране), сортира и опакова в везикули за транспорт до местоназначението им — лизозоми, клетъчна мембрана или секреция навън.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">6. Рибозоми, лизозоми и цитоскелет</div>
+            <div class="lesson-body">
+              <p><strong>Рибозомите</strong> са немембранни органели, изградени от рРНК и белтъци. Те са машините за <strong>транслация</strong> — синтез на белтъци по матрица от иРНК. Намират се свободно в цитоплазмата (синтез на вътреклетъчни белтъци) или прикрепени към гранулирания ЕПР (синтез на секреторни белтъци).</p>
+              <p><strong>Лизозомите</strong> са везикули с кисела среда (pH ~5), съдържащи хидролитични ензими. Те разграждат:
+              клетъчни отпадъци и увредени органели (автофагия), погълнати чужди частици и бактерии (хетерофагия), и стари клетъчни компоненти при клетъчна смърт (апоптоза).</p>
+              <p><strong>Цитоскелетът</strong> е вътрешна опорна структура, изградена от три вида протеинови нишки:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">📏</div>
+                  <div class="key-point-text"><strong>Микрофиламенти (актинови нишки)</strong> — най-тънките; участват в движението на клетката, клетъчното делене и поддържането на формата.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">📐</div>
+                  <div class="key-point-text"><strong>Интермедиерни нишки</strong> — осигуряват механична стабилност на клетката и ядрото.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔭</div>
+                  <div class="key-point-text"><strong>Микротубули (тубулинови нишки)</strong> — най-дебелите; изграждат делителното вретено при митозата, центриолите, камшичетата и ресничките.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">7. Клетъчно делене — митоза</div>
+            <div class="lesson-body">
+              <p>Клетките се делят по два основни механизма: <strong>митоза</strong> (соматично делене) и <strong>мейоза</strong> (редукционно делене при образуване на полови клетки).</p>
+              <p>Митозата осигурява точно копиране и разпределяне на генетичния материал между двете дъщерни клетки. Тя протича в четири фази:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">1️⃣</div>
+                  <div class="key-point-text"><strong>Профаза</strong> — хромозомите се кондензират и стават видими; ядрото се разпада; образува се делително вретено от микротубули.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">2️⃣</div>
+                  <div class="key-point-text"><strong>Метафаза</strong> — хромозомите са наредени по екватора на клетката; всяка хромозома е захваната от нишките на вретеното.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">3️⃣</div>
+                  <div class="key-point-text"><strong>Анафаза</strong> — хроматидите се разделят и се теглят към противоположните полюси на клетката.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">4️⃣</div>
+                  <div class="key-point-text"><strong>Телофаза</strong> — около всяка група хромозоми се образува ядрена мембрана; цитоплазмата се разделя (цитокинеза), образувайки две дъщерни клетки.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">8. Разлики между животинска и растителна клетка</div>
+            <div class="lesson-body">
+              <p>Растителните и животинските клетки са еукариотни, но се различават по няколко ключови характеристики:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🌿</div>
+                  <div class="key-point-text"><strong>Клетъчна стена</strong> — присъства само при растенията (целулоза); осигурява твърдост и форма. При животинските клетки — липсва.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🟢</div>
+                  <div class="key-point-text"><strong>Хлоропласти</strong> — само в растителните клетки; провеждат фотосинтезата. Животинските клетки не могат сами да синтезират органични вещества от неорганични.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">💧</div>
+                  <div class="key-point-text"><strong>Централна вакуола</strong> — голяма вакуола при растенията поддържа тургорното налягане и складира вещества. При животинските клетки вакуолите са малки и многобройни.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🎯</div>
+                  <div class="key-point-text"><strong>Центриоли</strong> — присъстват в животинските клетки, участват в образуването на делителното вретено. При повечето растения отсъстват.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">9. Обобщение — най-важното</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔬</div>
+                <div class="key-point-text"><strong>Клетката</strong> е основна структурна и функционална единица на живота; два типа: прокариотна и еукариотна.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🚧</div>
+                <div class="key-point-text"><strong>Клетъчна мембрана</strong> — фосфолипиден двоен слой с белтъци (течна мозайка); бариерна, транспортна и рецепторна функция.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧬</div>
+                <div class="key-point-text"><strong>Ядро</strong> — съдържа ДНК, управлява клетъчните процеси; двойна мембрана с ядрени пори и ядърце.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Митохондрии</strong> — аеробно дишане, синтез на АТФ; собствена ДНК (ендосимбионтна теория).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏭</div>
+                <div class="key-point-text"><strong>ЕПР + Голджи + рибозоми</strong> — синтез, модифициране, опаковане и транспорт на белтъци и липиди.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">♻️</div>
+                <div class="key-point-text"><strong>Лизозоми</strong> — разграждане на клетъчни отпадъци и чужди частици (автофагия и хетерофагия).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔀</div>
+                <div class="key-point-text"><strong>Митоза</strong> — профаза, метафаза, анафаза, телофаза; осигурява точно копиране на генетичния материал.</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bio11-kletkata-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bio11-kletkata-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bio11-kletkata-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Строеж и функции на клетката';
+    window.LESSON_SUBJECT = 'Биология';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed?'✓':'✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

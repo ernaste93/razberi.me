@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Тригонометрични функции — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math11-trigonometriya-q1',
+      lessonUrl:   '/lessons/math11-trigonometriya.html',
+      lessonName:  'Тригонометрични функции',
+      eyebrow:     'МАТЕМАТИКА · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Тригонометрични функции — Тест 1',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     1,
+      nextQuizUrl: '/lessons/math11-trigonometriya-quiz-2.html',
+      questions: [
+        {
+          q: 'Каква е стойността на sin 30°?',
+          opts: ['√3/2', '1/2', '√2/2', '1'],
+          correct: 1,
+          explanation: 'sin 30° = 1/2. Трик: sin 30° = √1/2 = 1/2. В таблицата за стандартни ъгли синусите са √0/2, √1/2, √2/2, √3/2, √4/2 за ъглите 0°, 30°, 45°, 60°, 90°.'
+        },
+        {
+          q: 'Каква е стойността на cos 60°?',
+          opts: ['√3/2', '√2/2', '1/2', '0'],
+          correct: 2,
+          explanation: 'cos 60° = 1/2. Стойностите на cos се четат „наобратно" спрямо sin — cos 60° = sin 30° = 1/2. Таблицата на cos е огледало на таблицата на sin.'
+        },
+        {
+          q: 'Как се дефинира sin α в правоъгълен триъгълник?',
+          opts: [
+            'прилежащ катет / хипотенуза',
+            'противолежащ катет / хипотенуза',
+            'хипотенуза / противолежащ катет',
+            'противолежащ катет / прилежащ катет'
+          ],
+          correct: 1,
+          explanation: 'sin α = противолежащ катет / хипотенуза. Мнемоника: „SOH-CAH-TOA" — Sin = Opposite/Hypotenuse, Cos = Adjacent/Hypotenuse, Tan = Opposite/Adjacent.'
+        },
+        {
+          q: 'Каква е стойността на tan 45°?',
+          opts: ['√3', '√3/3', '0', '1'],
+          correct: 3,
+          explanation: 'tan 45° = sin 45° / cos 45° = (√2/2) / (√2/2) = 1. При 45° синусът и косинусът са равни (и двата са √2/2), затова тангенсът е точно 1.'
+        },
+        {
+          q: 'Какво е Основното питагорейско тъждество?',
+          opts: ['sin α + cos α = 1', 'sin²α + cos²α = 1', 'sin²α − cos²α = 1', 'sin α · cos α = 1'],
+          correct: 1,
+          explanation: 'sin²α + cos²α = 1 е основното питагорейско тъждество. Произтича от уравнението на единичната окръжност x² + y² = 1, като x = cos α и y = sin α.'
+        },
+        {
+          q: 'В кой квадрант са sin α > 0 и cos α < 0?',
+          opts: ['I квадрант', 'II квадрант', 'III квадрант', 'IV квадрант'],
+          correct: 1,
+          explanation: 'Във II квадрант (90°–180°) y-координатата е положителна (sin > 0), а x-координатата е отрицателна (cos < 0). Мнемоника ASTC: II квадрант е „S" — само Sin е положителен.'
+        },
+        {
+          q: 'Каква е стойността на cos 0°?',
+          opts: ['0', '1/2', '√2/2', '1'],
+          correct: 3,
+          explanation: 'cos 0° = 1. При ъгъл 0° точката на единичната окръжност е (1, 0), затова cos = x-координата = 1. Аналогично sin 0° = y-координата = 0.'
+        },
+        {
+          q: 'Каква е стойността на sin 90°?',
+          opts: ['0', '√2/2', '√3/2', '1'],
+          correct: 3,
+          explanation: 'sin 90° = 1. При 90° точката на единичната окръжност е в горния край (0, 1), затова sin = y-координата = 1. Това е и максималната стойност на синуса.'
+        },
+        {
+          q: 'Кое твърдение за функцията cos x е вярно?',
+          opts: [
+            'cos x е нечетна функция с период π',
+            'cos x е четна функция с период 2π',
+            'cos x е нечетна функция с период 2π',
+            'cos x е четна функция с период π'
+          ],
+          correct: 1,
+          explanation: 'cos(−x) = cos x — значи cos е четна функция (симетрична спрямо оста Oy). Периодът е 2π (360°). Сравни: sin е нечетна с период 2π; tan е нечетна с период π.'
+        },
+        {
+          q: 'Ако sin α = 5/13 и α е в I квадрант, кое е cos α?',
+          opts: ['12/13', '8/13', '5/12', '13/12'],
+          correct: 0,
+          explanation: 'От sin²α + cos²α = 1: (5/13)² + cos²α = 1 → 25/169 + cos²α = 1 → cos²α = 144/169 → cos α = 12/13 (положително в I квадрант, тъй като cos > 0 при 0° < α < 90°).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Неорганични съединения — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-neorganichni-saedinenia-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/chem11-neorganichni-saedinenia-quiz-3.html',
+      lessonUrl:   '/lessons/chem11-neorganichni-saedinenia.html',
+      lessonName:  'Неорганични съединения',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Неорганични съединения — Тест 2',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Колко мола H₂O се получават при: 2Al(OH)₃ + 3H₂SO₄ → Al₂(SO₄)₃ + ?H₂O',
+          options: ['3', '6', '2', '9'],
+          correct: 1,
+          explanation: '2Al(OH)₃ + 3H₂SO₄ → Al₂(SO₄)₃ + 6H₂O. Al(OH)₃ има 3 OH групи; 2 молекули дават 6 OH. H₂SO₄ дава 6 H⁺ (3 молекули × 2 H). 6 H⁺ + 6 OH⁻ → 6 H₂O. Отговорът е 6.'
+        },
+        {
+          q: 'Реакцията Na₂O + SO₃ → Na₂SO₄ е от тип:',
+          options: ['Основа + киселина', 'Основен оксид + киселинен оксид', 'Сол + оксид', 'Неутрализация'],
+          correct: 1,
+          explanation: 'Na₂O е основен оксид; SO₃ е киселинен оксид. Реакцията оксид+оксид → сол е характерна взаимодействие между основен и киселинен оксид: Na₂O + SO₃ → Na₂SO₄. Не се отделя вода — директно образуване на сол.'
+        },
+        {
+          q: 'Zn(OH)₂ + 2HCl → ZnCl₂ + 2H₂O. Каква е тази реакция?',
+          options: ['Реакция на амфотерен хидроксид с основа', 'Реакция на амфотерен хидроксид с киселина', 'Хидролиза', 'Разлагане'],
+          correct: 1,
+          explanation: 'Zn(OH)₂ е амфотерен хидроксид. Реагира с киселина (HCl) → ZnCl₂ (сол) + H₂O. Реагира и с основа: Zn(OH)₂ + 2NaOH → Na₂[Zn(OH)₄] (натриев тетрахидроксоцинкат). Двете реакции показват амфотерността.'
+        },
+        {
+          q: 'Кое от следните може да се получи от реакция Zn + H₂SO₄(разр.) → ?',
+          options: ['ZnO + H₂', 'ZnSO₄ + H₂↑', 'Zn(OH)₂ + SO₃', 'ZnH₂ + SO₄²⁻'],
+          correct: 1,
+          explanation: 'Zn + H₂SO₄(разредена) → ZnSO₄ + H₂↑. Цинкът е по-активен от водорода (в реда на активност Zn е преди H), затова изтласква H₂ от разредената киселина. Концентрираната H₂SO₄ дава SO₂ вместо H₂.'
+        },
+        {
+          q: 'Коя двойка соли ще реагира помежду си (обменна реакция)?',
+          options: ['NaCl + KNO₃ (всички продукти са разтворими)', 'BaCl₂ + Na₂SO₄ (BaSO₄ е неразтворим)', 'KCl + NaBr (всички продукти са разтворими)', 'NaNO₃ + KCl (всички продукти са разтворими)'],
+          correct: 1,
+          explanation: 'BaCl₂ + Na₂SO₄ → BaSO₄↓ + 2NaCl. BaSO₄ е практически неразтворима сол (Ksp = 1,1×10⁻¹⁰) — образуването на утайка е движещата сила. Когато продуктите са разтворими, равновесие не се измества и реакция практически не протича.'
+        },
+        {
+          q: 'Кое вещество е киселина по Арениус, но НЕ е киселина по Брьонстед?',
+          options: ['HCl', 'H₂SO₄', 'HNO₃', 'Няма такова — всяка кис. по Арениус е и по Брьонстед'],
+          correct: 3,
+          explanation: 'Теорията на Брьонстед-Лоури е по-обхватна от тази на Арениус. Всяка киселина по Арениус (отдава H⁺ в разтвор) е и киселина по Брьонстед (донор на протон). Обратното не е вярно — Брьонстед включва и невъзможни за Арениус системи (без вода).'
+        },
+        {
+          q: 'Каква е разликата между NaCl (средна сол) и NaHCO₃ (кисела сол)?',
+          options: ['NaCl е по-киселинна', 'NaHCO₃ съдържа H в аниона — само едната H на H₂CO₃ е заместена', 'NaHCO₃ е основа, не сол', 'NaCl е амфотерен'],
+          correct: 1,
+          explanation: 'H₂CO₃ е двуосновна киселина. Ако заместим само 1 H с Na → NaHCO₃ (кисела сол — натриев хидрогенкарбонат/бикарбонат). Ако заместим и 2-та H → Na₂CO₃ (средна сол). Киселите соли имат H в киселинния остатък.'
+        },
+        {
+          q: 'При нагряване Cu(OH)₂ се получава:',
+          options: ['CuO + H₂O', 'Cu + H₂O + O₂', 'Cu(OH)₂ не се разлага', 'CuH₂ + O₂'],
+          correct: 0,
+          explanation: 'Неразтворимите хидроксиди се разлагат при нагряване: Cu(OH)₂ → CuO (черен оксид) + H₂O. Това е характерна реакция за всички неразтворими хидроксиди: Fe(OH)₃ → Fe₂O₃ + H₂O; Al(OH)₃ → Al₂O₃ + H₂O.'
+        },
+        {
+          q: 'Коя сол е неразтворима?',
+          options: ['NaCl', 'KNO₃', 'BaSO₄', 'Na₂SO₄'],
+          correct: 2,
+          explanation: 'BaSO₄ (бариев сулфат) е практически неразтворима сол (Ksp ≈ 10⁻¹⁰). Использува се като белег за сулфатни йони в качествен анализ. NaCl, KNO₃ и Na₂SO₄ са добре разтворими. Правила за разтворимост: нитратите са разтворими; повечето сулфати са разтворими, освен BaSO₄, CaSO₄, PbSO₄.'
+        },
+        {
+          q: 'Кой е правилният генетичен ред: Нa → ? → ? → соли?',
+          options: ['Na → NaOH → Na₂O → соли', 'Na → Na₂O → NaOH → соли', 'Na → NaCl → NaOH → соли', 'Na → H₂ → NaOH → соли'],
+          correct: 1,
+          explanation: 'Генетичен ред: Na (метал) → Na₂O (основен оксид, Na + O₂) → NaOH (основа, Na₂O + H₂O) → NaCl и др. соли (NaOH + HCl). Така всяка стъпка превежда от един клас към следващия, показвайки взаимовръзката между неорганичните съединения.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

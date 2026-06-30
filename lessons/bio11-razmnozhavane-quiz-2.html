@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Размножаване — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-razmnozhavane-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio11-razmnozhavane-quiz-3.html',
+      lessonUrl:   '/lessons/bio11-razmnozhavane.html',
+      lessonName:  'Размножаване',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Размножаване — Тест 2',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Какво се случва в профаза I на мейозата, което НЕ се случва при митоза?',
+          options: ['Хромозомите се кондензират', 'Хомоложните хромозоми се сдвояват в биваленти и се извършва кросинговър', 'Делителното вретено се образува', 'Ядрената мембрана се разпада'],
+          correct: 1,
+          explanation: 'В профаза I хомоложните хромозоми се сдвояват в биваленти (тетради) и несестринските хроматиди се пресичат и обменят сегменти — кросинговър. Това НЕ се случва при митоза, където сестринските хроматиди само се разделят без обмен. Кросинговърът е главният ИЗTОЧНИК на генетична рекомбинация.'
+        },
+        {
+          q: 'При мейоза I хомоложните хромозоми се разделят. Резултатът е:',
+          options: ['2 диплоидни клетки с удвоени хромозоми', '2 хаплоидни клетки, всяка с удвоени (двухроматидни) хромозоми', '4 хаплоидни клетки с единични хромозоми', '1 диплоидна клетка'],
+          correct: 1,
+          explanation: 'След мейоза I се образуват 2 хаплоидни клетки, но всяка хромозома все още се състои от 2 сестрински хроматиди (удвоена при интерфаза преди мейоза I). Хромозомният брой е намален (2n→n), но хроматидите не са разделени — те се разделят при мейоза II.'
+        },
+        {
+          q: 'Каква е ролята на полярните тела при оогенезата?',
+          options: ['Те се развиват в допълнителни яйцеклетки', 'Те позволяват концентриране на цитоплазма в яйцеклетката при правилно разпределение на хромозомите; самите те деградират', 'Те оплождат яйцеклетката', 'Те произвеждат хормони'],
+          correct: 1,
+          explanation: 'Полярните тела са начин за елиминиране на „излишните" хромозомни набори след мейозата, като цялата цитоплазма (хранителни вещества, органели) се запазва за яйцеклетката. Полярните тела са малки, лишени от цитоплазма и деградират. Така яйцеклетката е богата на хранителни вещества за началото на ембрионалното развитие.'
+        },
+        {
+          q: 'Ако родителска клетка е 2n=46, колко хромозоми ще има всяка от 4-те клетки след мейозата?',
+          options: ['46', '23', '92', '12'],
+          correct: 1,
+          explanation: 'Мейозата намалява хромозомния брой наполовина: от 2n=46 (диплоидна) до n=23 (хаплоидна). Всяка от 4-те резултатни клетки (гамети) ще съдържа 23 хромозоми — по 1 от всяка двойка хомолози. При оплождане на два гамета: 23 + 23 = 46.'
+        },
+        {
+          q: 'Мейоза II прилича на митоза, защото:',
+          options: ['И в двата случая хомоложните хромозоми се разделят', 'При мейоза II сестринските хроматиди се разделят (като при митоза), но от хаплоидни клетки', 'При мейоза II се случва кросинговър', 'И двата процеса произвеждат диплоидни клетки'],
+          correct: 1,
+          explanation: 'Мейоза II е по-сходна с митоза — в нея сестринските хроматиди на всяка хромозома се разделят и се теглят към противоположни полюси (без кросинговър и без сдвояване на хомолози). Разликата от митоза е, че изходните клетки са вече хаплоидни (n), а не диплоидни.'
+        },
+        {
+          q: 'При вегетативното размножаване на растенията потомците са:',
+          options: ['Генетично различни от родителя', 'Генетично идентични с родителя (клонинги)', 'Хаплоидни', 'По-разнообразни от половото размножаване'],
+          correct: 1,
+          explanation: 'При вегетативното размножаване (чрез коренища, грудки, луковици, резници) новите растения се развиват от соматични клетки на родителя чрез митоза. Те са генетично идентични с родителя — клонинги. Това е полезно в земеделието за запазване на желани сортове.'
+        },
+        {
+          q: 'Три зародишни листа се образуват при:',
+          options: ['Мейозата', 'Гаструлацията на ембриона', 'Сперматогенезата', 'Бинарното разделяне'],
+          correct: 1,
+          explanation: 'При гаструлацията (ранен ембрионален стадий) се образуват три зародишни листа: ектодерм (→ кожа, нервна система), мезодерм (→ мускули, скелет, бъбреци, кръвоносна система) и ендодерм (→ вътрешни органи: стомах, бели дробове, черен дроб). Всички органи произхождат от тези три листа.'
+        },
+        {
+          q: 'Спорообразуването като безполово размножаване е характерно за:',
+          options: ['Само за бактерии', 'Гъби, папрати, мъхове и бактерии', 'Само за животни', 'Само за растения с цветове'],
+          correct: 1,
+          explanation: 'Спорообразуването е характерно за гъби, папрати, мъхове (безсеменни растения) и бактерии. Спорите са специализирани клетки — устойчиви на неблагоприятни условия (суша, висока температура) и могат да бъдат разнасяни от вятъра или вода. При подходящи условия покълват и дават нов организъм.'
+        },
+        {
+          q: 'Независимото разпределение на хромозомите при мейоза означава:',
+          options: ['Хромозомите от майката винаги отиват заедно в една клетка', 'Всяка двойка хомоложни хромозоми се разпределя в клетките независимо от другите двойки — случайно', 'Кросинговърът е задължителен за всяка хромозома', 'Дъщерните клетки са идентични'],
+          correct: 1,
+          explanation: 'Независимото разпределение (Закон на Мендел) гласи: при ориентацията на биваленти в метафаза I всяка двойка хомолози се наредва независимо от другите. Майчиният или бащиният хомолог от всяка двойка попада случайно в дадена клетка. При 23 двойки при хора → 2²³ различни комбинации (~8 милиона)!'
+        },
+        {
+          q: 'Какви са трите зародишни листа, образуващи се при гаструлацията, и от кой се развива нервната система?',
+          options: ['Ектодерм, мезодерм, ендодерм; нервната система от ендодерма', 'Ектодерм, мезодерм, ендодерм; нервната система от ектодерма', 'Само ектодерм и мезодерм', 'Трофобласт, ембриобласт, ектодерм'],
+          correct: 1,
+          explanation: 'Три зародишни листа: ектодерм (外слой) → кожа и нервна система; мезодерм (среден слой) → мускули, скелет, кръвоносна система, бъбреци; ендодерм (вътрешен слой) → лигавица на храносмилателната и дихателна системи. Нервната система произхожда от ектодерма (невруна плочка → невруна тръба).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

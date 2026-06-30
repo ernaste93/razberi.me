@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Окислително-редукционни реакции — Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-okislenie-redukciya-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem11-okislenie-redukciya.html',
+      lessonName:  'Окислително-редукционни реакции',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Окислително-редукционни реакции — Тест 3',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Как батерията (галваничен елемент) генерира електричество?',
+          options: ['Чрез топлинна реакция', 'Чрез спонтанна редокс реакция — електроните текат по външна верига', 'Чрез електролиза', 'Чрез ядрена реакция'],
+          correct: 1,
+          explanation: 'В галваничен елемент (батерия) спонтанна редокс реакция разделя окислението и редукцията в два полуелемента (електрода). Електроните пътуват по външната верига от анода (окисление) към катода (редукция), генерирайки ток.'
+        },
+        {
+          q: 'Защо алуминиевото фолио не се ръждясва, въпреки че Al е активен метал?',
+          options: ['Al не реагира с O₂', 'Al образва тънък защитен оксиден слой (Al₂O₃)', 'Al е благороден метал', 'Al е под медта в реда на активност'],
+          correct: 1,
+          explanation: 'Al реагира бързо с O₂: 4Al + 3O₂ → 2Al₂O₃, но образуваният оксиден слой е тънък, твърд и непропусклив — пасивира повърхността и предотвратява по-нататъшна корозия. Аналогично поведение имат Cr, Ti, Ni.'
+        },
+        {
+          q: 'Термитната реакция: 2Al + Fe₂O₃ → Al₂O₃ + 2Fe. Кой е окислителят?',
+          options: ['Al', 'Al₂O₃', 'Fe₂O₃', 'Fe'],
+          correct: 2,
+          explanation: 'Al⁰ → Al³⁺ (окислява се — Al е редуктор). Fe³⁺ → Fe⁰ (редуцира се — Fe₂O₃ е окислителят). Термитната реакция е силно екзотермична (T > 2500°C) и се използва за заваряване на релси.'
+        },
+        {
+          q: 'Фотосинтезата: 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂. Кое е вярно?',
+          options: ['CO₂ се окислява', 'H₂O е окислителят, C в CO₂ се редуцира', 'O₂ се редуцира', 'Глюкозата е окислителят'],
+          correct: 1,
+          explanation: 'C в CO₂ е +4; C в C₆H₁₂O₆ е 0 — въглеродът се редуцира. O в H₂O е −2; O в O₂ е 0 — кислородът се окислява. H₂O е редукторът (отдава e⁻), а светлинната енергия задвижва реакцията. CO₂ е окислителят.'
+        },
+        {
+          q: 'При електролизата на разтопен NaCl, какво се отделя на анода?',
+          options: ['Na', 'Cl₂', 'NaOH', 'H₂'],
+          correct: 1,
+          explanation: 'При електролиза на разтопен NaCl (без вода): Катод: Na⁺ + e⁻ → Na (редукция). Анод: 2Cl⁻ → Cl₂ + 2e⁻ (окисление). На анода се отделя хлорен газ (Cl₂). Процесът е основа на промишленото производство на натрий и хлор.'
+        },
+        {
+          q: 'В клетките дишането: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O. Каква роля играе O₂?',
+          options: ['Редуктор', 'Окислител (приема e⁻, редуцира се до H₂O)', 'Катализатор', 'Продукт'],
+          correct: 1,
+          explanation: 'O₂ (O⁰) → H₂O (O²⁻): кислородът приема електрони — редуцира се, т.е. е окислителят. Глюкозата се окислява (C⁰ → CO₂, C⁺⁴). Клетъчното дишане е бавна, контролирана редокс реакция, при която се синтезира АТФ.'
+        },
+        {
+          q: 'Кой процес е правилно описан за катода при електролиза?',
+          options: ['Окисление — отдаване на e⁻', 'Редукция — приемане на e⁻', 'Неутрализация', 'Дисмутация'],
+          correct: 1,
+          explanation: 'На катода (отрицателен електрод при електролиза) протича РЕДУКЦИЯ — катионите от разтвора получават електрони и се редуцират. На анода (положителен електрод) протича ОКИСЛЕНИЕ — аниони отдават електрони. Мнемоника: А.О. и К.Р. (Анодно Окисление, Катодна Редукция).'
+        },
+        {
+          q: 'При преобразуване на Fe²⁺ до Fe³⁺ — колко електрона се губят на всеки Fe?',
+          options: ['1', '2', '3', '6'],
+          correct: 0,
+          explanation: 'Fe²⁺ → Fe³⁺ + 1e⁻. С.О. нараства от +2 до +3 — губи се 1 електрон на всеки Fe атом. Сравнение: Fe⁰ → Fe²⁺ губи 2e⁻; Fe⁰ → Fe³⁺ губи 3e⁻. Тази реакция е важна в биохимията (цитохроми, хемоглобин).'
+        },
+        {
+          q: 'Реакцията 2H₂O₂ → 2H₂O + O₂ е:',
+          options: ['Дисмутация на H₂O₂', 'Неутрализация', 'Реакция на съединяване', 'Реакция без промяна на С.О.'],
+          correct: 0,
+          explanation: 'В H₂O₂: O е −1. В H₂O: O е −2 (редуцира се). В O₂: O е 0 (окислява се). Кислородът едновременно се окислява и редуцира — типична дисмутация. H₂O₂ е и окислител, и редуктор в тази реакция. MnO₂ катализира разлагането.'
+        },
+        {
+          q: 'Цинк-въглероден галваничен елемент: Zn е анод, въглеродна пръчка е катод. На анода протича:',
+          options: ['Редукция: Zn²⁺ + 2e⁻ → Zn', 'Окисление: Zn → Zn²⁺ + 2e⁻', 'Неутрализация', 'Отделяне на O₂'],
+          correct: 1,
+          explanation: 'В галваничния елемент анодът е отрицателен — на него протича окисление: Zn → Zn²⁺ + 2e⁻. Електроните пътуват по веригата към катода. На катода: MnO₂ + NH₄⁺ + e⁻ → MnOOH + NH₃ (редукция). Затова батерията генерира ток.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

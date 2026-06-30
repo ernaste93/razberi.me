@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Нервна система — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-nervna-sistema-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio11-nervna-sistema-quiz-3.html',
+      lessonUrl:   '/lessons/bio11-nervna-sistema.html',
+      lessonName:  'Нервна система',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Нервна система — Тест 2',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Какво се случва при деполяризация на невронната мембрана?',
+          options: ['K⁺ йони нахлуват в клетката', 'Na⁺ йони нахлуват в клетката, мембранният потенциал се покачва до ~+40 mV', 'Cl⁻ йони излизат от клетката', 'АТФ се синтезира в мембраната'],
+          correct: 1,
+          explanation: 'При деполяризация натриевите канали се отварят и Na⁺ йони нахлуват в клетката по електрохимичен градиент. Мембранният потенциал се покачва от ~-70 mV (покой) до ~+40 mV. При реполяризация K⁺ канали се отварят и K⁺ излиза, връщайки потенциала надолу.'
+        },
+        {
+          q: 'Каква е ролята на Na⁺/K⁺ помпата (натриево-калиевата АТФаза)?',
+          options: ['Произвежда невротрансмитери', 'Възстановява потенциала на покой след потенциала на действие, изпомпвайки Na⁺ навън и K⁺ навътре', 'Синтезира АТФ', 'Образува миелиновата обвивка'],
+          correct: 1,
+          explanation: 'Na⁺/K⁺ помпата е активен транспортен белтък, изразходващ АТФ. Тя изпомпва 3 Na⁺ навън и внася 2 K⁺ на всеки цикъл. Така поддържа йонните градиенти, необходими за потенциала на покой (-70 mV) и рефрактерния период след всеки потенциал на действие.'
+        },
+        {
+          q: 'Какво е рефрактерен период на неврона?',
+          options: ['Времето, за което невронът синтезира невротрансмитери', 'Кратък период след потенциала на действие, в който невронът не може да бъде повторно стимулиран', 'Времето за образуване на нов синапс', 'Периодът, в който миелинът се регенерира'],
+          correct: 1,
+          explanation: 'Рефрактерният период е кратко вреам след потенциала на действие, в което невронът не може да генерира нов импулс. Той гарантира едностранното разпространение на импулса и ограничава максималната честота на стрелане. Дължи се на инактивиране на Na⁺ каналите.'
+        },
+        {
+          q: 'Допаминът е невротрансмитер, участващ в:',
+          options: ['Само в мускулните съкращения', 'Движение, мотивация, наградна система; дефицитът е свързан с болест на Паркинсон', 'Регулиране на кръвното налягане', 'Фотосинтеза в растенията'],
+          correct: 1,
+          explanation: 'Допаминът участва в регулирането на движенията, мотивацията и наградната система. Дефицит на допамин в стриатума причинява болест на Паркинсон (тремор, ригидност). Наркотиците, предизвикващи зависимост, действат предимно чрез допаминовата система.'
+        },
+        {
+          q: 'ГАМК (GABA) е:',
+          options: ['Възбуждащ невротрансмитер', 'Основен инхибиторен невротрансмитер в ЦНС', 'Хормон на стреса', 'Структурен белтък на аксона'],
+          correct: 1,
+          explanation: 'ГАМК (гама-аминомаслена киселина) е главният инхибиторен невротрансмитер в ЦНС. Той намалява активността на невроните чрез хиперполяризация на постсинаптичната мембрана. Алкохолът, бензодиазепините (успокоителни) и анестетиците усилват действието на ГАМК.'
+        },
+        {
+          q: 'Каква е разликата между сетивни (аферентни) и двигателни (еферентни) неврони?',
+          options: ['Сетивните са по-дълги от двигателните', 'Сетивните пренасят импулси от рецепторите КЪМ ЦНС; двигателните — ОТ ЦНС КЪМ ефекторите', 'Двигателните нямат аксони', 'Двата типа неврони са идентични по функция'],
+          correct: 1,
+          explanation: 'Сетивните (аферентни) неврони пренасят информация от рецепторите (кожа, органи, сетивни органи) КЪМ ЦНС. Двигателните (еферентни) пренасят командата ОТ ЦНС КЪМ ефекторите (мускули, жлези). Вставните (асоциативни) неврони са между тях в ЦНС.'
+        },
+        {
+          q: 'Хипоталамусът е дял на мозъка, отговарящ за:',
+          options: ['Само за зрението', 'Телесна температура, глад, жажда, сън и хормонална секреция', 'Координация на движенията', 'Реч и език'],
+          correct: 1,
+          explanation: 'Хипоталамусът е ключов регулаторен център, контролиращ телесна температура, глад, жажда, сън-бодърстване цикъла и емоциите. Той е и „командирът" на ендокринната система — управлява хипофизата и чрез нея всички периферни жлези с вътрешна секреция.'
+        },
+        {
+          q: 'Каква е разликата между гръбначно-мозъчните и черепно-мозъчните нерви?',
+          options: ['Черепно-мозъчните са 31 двойки, гръбначно-мозъчните — 12', 'Черепно-мозъчните са 12 двойки (излизат от мозъчния ствол); гръбначно-мозъчните са 31 двойки (излизат от гръбначния мозък)', 'Гръбначно-мозъчните са само двигателни', 'Двата вида нерви са еднакви по функция'],
+          correct: 1,
+          explanation: 'Черепно-мозъчните нерви са 12 двойки, излизащи от мозъчния ствол — инервират главата, шията, сетивните органи и вътрешни органи (блуждаещ нерв). Гръбначно-мозъчните са 31 двойки, излизащи от гръбначния мозък — инервират тялото и крайниците.'
+        },
+        {
+          q: 'Какво е потенциал на покой на неврона?',
+          options: ['Потенциалът при активиране (~+40 mV)', 'Разлика в потенциала от ~-70 mV между вътрешността и外рността на неврона в покой', 'Потенциалът при синаптично предаване', 'Нулев потенциал без йонни разлики'],
+          correct: 1,
+          explanation: 'Потенциалът на покой е стабилният мембранен потенциал от ~-70 mV, поддържан от Na⁺/K⁺ помпата и йонната проницаемост. Вътрешността е отрицателна спрямо外ността. Той е „заредената батерия", готова да задейства потенциал на действие при достатъчен стимул.'
+        },
+        {
+          q: 'Каква е функцията на продълговатия мозък (мозъчния ствол)?',
+          options: ['Контролира само рефлексите на гръбначния мозък', 'Управлява жизненоважни функции: дишане, сърдечен ритъм, кръвно налягане', 'Обработва зрителни сигнали', 'Синтезира хормони за растеж'],
+          correct: 1,
+          explanation: 'Мозъчният ствол (продълговат мозък, мост, среден мозък) е жизненоважен дял, управляващ автоматичните функции: дишане, сърдечен ритъм, кръвно налягане, гълтателен и кашличен рефлекс. Увреждане на продълговатия мозък е смъртоносно, тъй като спира дишането.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

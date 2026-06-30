@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Размножаване · Биология 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Биология 11 клас</a>
+        <span>›</span>
+        Размножаване
+      </div>
+      <section class="demo-layout" style="margin:0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">🧬 БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Размножаване</div>
+          <div class="lesson-meta">Полово · Безполово · Мейоза · Гаметогенеза · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">1. Видове размножаване</div>
+            <div class="lesson-body">
+              <p>Размножаването е фундаментално свойство на живите организми — то осигурява продължаване на вида. Съществуват два основни типа размножаване:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🔵</div>
+                  <div class="key-point-text"><strong>Безполово размножаване</strong> — от един родителски организъм чрез митоза; потомците са генетично идентични с родителя (клонинги). Бързо и ефективно при стабилни условия.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔴</div>
+                  <div class="key-point-text"><strong>Полово размножаване</strong> — изисква два родители; гаметите (яйцеклетка и сперматозоид) се обединяват при оплождане, образувайки зигота с уникална генетична комбинация. Осигурява генетично разнообразие — ключово за еволюцията и адаптацията.</div>
+                </div>
+              </div>
+              <p>Безполовото размножаване е характерно за прости организми (бактерии, едноклетъчни еукариоти), но и за много многоклетъчни (вегетативно размножаване при растения, пъпкуване при хидра). Половото размножаване е характерно за повечето многоклетъчни организми.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">2. Форми на безполово размножаване</div>
+            <div class="lesson-body">
+              <p>Безполовото размножаване има множество форми:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">✂️</div>
+                  <div class="key-point-text"><strong>Бинарно разделяне</strong> — клетката се дели на две дъщерни (бактерии, амеба). Основна форма при прокариоти.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🌱</div>
+                  <div class="key-point-text"><strong>Пъпкуване</strong> — от тялото израства „пъпка", развиваща се в нов организъм (хидра, дрожди).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🌿</div>
+                  <div class="key-point-text"><strong>Вегетативно размножаване</strong> — при растения: чрез коренища, грудки, луковици, резници, присаждане.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🧫</div>
+                  <div class="key-point-text"><strong>Спорообразуване</strong> — образуване на специализирани клетки (спори), устойчиви на неблагоприятни условия (гъби, папрати, бактерии).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🪸</div>
+                  <div class="key-point-text"><strong>Фрагментация</strong> — разделяне на тялото на части, всяка от които регенерира нов организъм (морска звезда, планари).</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">3. Мейоза — редукционно делене</div>
+            <div class="lesson-body">
+              <p><strong>Мейозата</strong> е специален вид клетъчно делене, при което от 1 диплоидна (2n) клетка се образуват 4 хаплоидни (n) клетки. Мейозата е в основата на половото размножаване — само така организмите поддържат постоянен брой хромозоми от поколение на поколение.</p>
+              <p>Мейозата се състои от <strong>две последователни деления</strong>:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">1️⃣</div>
+                  <div class="key-point-text"><strong>Мейоза I (редукционно делене)</strong> — хомоложните хромозоми се разделят (2n → n). Включва профаза I (кросинговър!), метафаза I, анафаза I, телофаза I. Резултат: 2 хаплоидни клетки с удвоени хромозоми.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">2️⃣</div>
+                  <div class="key-point-text"><strong>Мейоза II (екваториално делене)</strong> — хроматидите на всяка хромозома се разделят (като митоза). Резултат: 4 хаплоидни клетки с единични хромозоми.</div>
+                </div>
+              </div>
+              <p><strong>Кросинговърът</strong> (crossing over) е ключово събитие в профаза I. Хомоложните хромозоми се сдвояват в биваленти и обменят сегменти. Това създава нови генетични комбинации — рекомбинанти — и е основен ИЗTОЧНИК на генетично разнообразие.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">4. Сравнение митоза — мейоза</div>
+            <div class="lesson-body">
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🔢</div>
+                  <div class="key-point-text"><strong>Брой деления:</strong> Митоза — 1; Мейоза — 2.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🧬</div>
+                  <div class="key-point-text"><strong>Брой дъщерни клетки:</strong> Митоза — 2 (диплоидни); Мейоза — 4 (хаплоидни).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔀</div>
+                  <div class="key-point-text"><strong>Генетично разнообразие:</strong> Митоза — дъщерните клетки са ИДЕНТИЧНИ; Мейоза — разнообразни (кросинговър + независимо разпределение).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🎯</div>
+                  <div class="key-point-text"><strong>Роля:</strong> Митоза — растеж, регенерация, безполово размножаване; Мейоза — образуване на гамети (полово размножаване).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">📍</div>
+                  <div class="key-point-text"><strong>Кросинговър:</strong> При митоза — НЯМА; При мейоза — ДА, в профаза I.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">5. Гаметогенеза — образуване на полови клетки</div>
+            <div class="lesson-body">
+              <p>Гаметогенезата е процесът на образуване на полови клетки (гамети) чрез мейоза.</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">👨</div>
+                  <div class="key-point-text"><strong>Сперматогенеза</strong> (при мъжете, в тестисите): сперматогония (2n) → сперматоцит I → мейоза I → 2 сперматоцита II → мейоза II → 4 сперматиди → сперматозоиди. От 1 прогениторна клетка → 4 сперматозоида.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">👩</div>
+                  <div class="key-point-text"><strong>Оогенеза</strong> (при жените, в яйчниците): оогония (2n) → ооцит I → мейоза I → 1 ооцит II + 1 полярно тяло → мейоза II → 1 яйцеклетка + 2-3 полярни тела. От 1 прогениторна клетка → 1 жизнеспособна яйцеклетка + 3 полярни тела (деградират).</div>
+                </div>
+              </div>
+              <p>Полярните тела при оогенезата са начин за запазване на цитоплазма за яйцеклетката, без да се разпределят хромозомите неравномерно. Яйцеклетката е най-голямата клетка в човешкото тяло (~100 мкм); сперматозоидът е сред най-малките.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">6. Оплождане и ранно развитие</div>
+            <div class="lesson-body">
+              <p><strong>Оплождането</strong> е сливане на хаплоиден сперматозоид (n) с хаплоидна яйцеклетка (n), образувайки диплоидна зигота (2n). Зиготата има пълен набор от хромозоми — по 1 от всеки родител.</p>
+              <p>При хората оплождането се извършва в маточните тръби. Зиготата започва да се дели (митоза) и се движи към матката, образувайки:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">2️⃣</div>
+                  <div class="key-point-text"><strong>Морула</strong> — компактен клъстер от клетки (16–32 клетки).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⭕</div>
+                  <div class="key-point-text"><strong>Бластоциста</strong> — куха структура с вътрешна клетъчна маса (ембриобласт) и трофобласт. Имплантира се в стената на матката.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🌱</div>
+                  <div class="key-point-text"><strong>Гаструлация</strong> — образуване на трите зародишни листа: ектодерм (кожа, НС), мезодерм (мускули, скелет), ендодерм (вътрешни органи).</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">7. Обобщение — най-важното</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔵</div>
+                <div class="key-point-text"><strong>Безполово размножаване</strong> — митоза, клонинги, бързо; бинарно делене, пъпкуване, спори, вегетативно, фрагментация.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔴</div>
+                <div class="key-point-text"><strong>Полово размножаване</strong> — два родители, мейоза, генетично разнообразие; оплождане → зигота.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔢</div>
+                <div class="key-point-text"><strong>Мейоза</strong>: 2 деления → 4 хаплоидни клетки; кросинговър в профаза I → рекомбинация.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">👨</div>
+                <div class="key-point-text"><strong>Сперматогенеза</strong>: 1 клетка → 4 сперматозоида; <strong>Оогенеза</strong>: 1 клетка → 1 яйцеклетка + 3 полярни тела.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Митоза vs Мейоза</strong>: митоза = 1 делене, 2 диплоидни клетки, NO кросинговър; мейоза = 2 деления, 4 хаплоидни клетки, YES кросинговър.</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bio11-razmnozhavane-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bio11-razmnozhavane-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bio11-razmnozhavane-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Размножаване';
+    window.LESSON_SUBJECT = 'Биология';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed?'✓':'✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

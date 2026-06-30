@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Строеж на атома — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-stroezh-atoma-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/chem11-stroezh-atoma-quiz-3.html',
+      lessonUrl:   '/lessons/chem11-stroezh-atoma.html',
+      lessonName:  'Строеж на атома',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Строеж на атома — Тест 2',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Хлорът (Z=17) образува йон Cl⁻. Колко електрона има йонът?',
+          options: ['16', '17', '18', '15'],
+          correct: 2,
+          explanation: 'Неутралният хлор има 17 електрона. При образуване на Cl⁻ той приема 1 електрон, ставайки 18 електрона. Конфигурацията му е [Ne] 3s² 3p⁶ — като аргон.'
+        },
+        {
+          q: 'Кой елемент с Z=20 е в периодичната система?',
+          options: ['Магнезий (Mg)', 'Калций (Ca)', 'Калий (K)', 'Скандий (Sc)'],
+          correct: 1,
+          explanation: 'Калций (Ca, Z=20) е в 4-ти период, IIA група с конфигурация [Ar] 4s². Калий (K) е Z=19, магнезий (Mg) — Z=12.'
+        },
+        {
+          q: 'Колко неутрона има ядрото на ⁵⁶Fe (желязо)?',
+          options: ['26', '56', '30', '82'],
+          correct: 2,
+          explanation: 'Масовото число A=56, атомният номер Z=26 (желязо). Брой неутрони N = A − Z = 56 − 26 = 30.'
+        },
+        {
+          q: 'Правилото на Хунд гласи, че:',
+          options: ['Орбиталите се запълват с нарастваща енергия', 'Електроните заемат орбиталите поотделно преди да се сдвоят', 'Два електрона не могат да имат еднакви 4 квантови числа', 'P-орбиталата има сферична форма'],
+          correct: 1,
+          explanation: 'Правилото на Хунд (максимален мултиплет): електроните в орбиталите на едно подниво се разпределят по един с еднакъв спин, преди да се сдвоят. Така се минимизира електростатичното отблъскване.'
+        },
+        {
+          q: 'Кой период в периодичната система съдържа 18 елемента?',
+          options: ['2-ри период', '3-ти период', '4-ти период', '1-ви период'],
+          correct: 2,
+          explanation: 'Периодите 4 и 5 съдържат по 18 елемента, защото в тях се запълват d-орбиталите (10 e) освен s (2e) и p (6e). Периодите 2 и 3 имат по 8 елемента.'
+        },
+        {
+          q: 'Кой елемент е алкален метал?',
+          options: ['Кислород (O)', 'Хлор (Cl)', 'Калий (K)', 'Калций (Ca)'],
+          correct: 2,
+          explanation: 'Калий (K) е в IA група (алкални метали) с 1 валентен електрон в s-орбитала. Калцият е в IIA (алкалоземни метали), хлорът — в VIIA (халогени), кислородът — в VIA.'
+        },
+        {
+          q: 'При преминаване от Li до Ne в 2-ри период йонизационната енергия:',
+          options: ['Намалява', 'Нараства', 'Остава постоянна', 'Първо намалява после нараства'],
+          correct: 1,
+          explanation: 'Йонизационната енергия нараства по период поради увеличаването на ядрения заряд. Неонът (Ne) има най-висока йонизационна енергия в 2-ри период — трудно се отнема електрон от пълни орбитали.'
+        },
+        {
+          q: 'Колко орбитали има 3d поднивото?',
+          options: ['3', '5', '7', '1'],
+          correct: 1,
+          explanation: 'D-поднивото (l=2) има ml = −2, −1, 0, +1, +2 — общо 5 орбитали, всяка с по 2 електрона, т.е. 10 електрона общо.'
+        },
+        {
+          q: 'Кой елемент е в 2-ри период, VIA група?',
+          options: ['Сяра (S)', 'Кислород (O)', 'Телур (Te)', 'Селен (Se)'],
+          correct: 1,
+          explanation: 'Кислородът (O, Z=8) е в 2-ри период и VIA група с конфигурация 1s² 2s² 2p⁴. Сярата е в 3-ти период, селенът — в 4-ти, телурът — в 5-ти.'
+        },
+        {
+          q: 'Кой вид елементи се намират в d-блока на периодичната система?',
+          options: ['Алкални метали', 'Халогени', 'Преходни метали', 'Благородни газове'],
+          correct: 2,
+          explanation: 'D-блокът (групи 3–12) съдържа преходните метали. При тях се запълва d-поднивото. Примери: Fe, Cu, Zn, Cr, Mn. Те имат характерни цветни йони и множество степени на окисление.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Скорост и равновесие — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-skorost-ravnovesie-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/chem11-skorost-ravnovesie-quiz-3.html',
+      lessonUrl:   '/lessons/chem11-skorost-ravnovesie.html',
+      lessonName:  'Скорост и равновесие',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Скорост и равновесие — Тест 2',
+      passScore:   8,
+      questions: [
+        {
+          q: 'За реакция 2SO₂ + O₂ ⇌ 2SO₃ (екзо), напишете Kc.',
+          options: ['Kc = [SO₂]²[O₂]/[SO₃]²', 'Kc = [SO₃]²/([SO₂]²[O₂])', 'Kc = [SO₃]/([SO₂][O₂])', 'Kc = [SO₂][O₂]/[SO₃]'],
+          correct: 1,
+          explanation: 'За aA + bB ⇌ cC + dD: Kc = [C]ᶜ[D]ᵈ/([A]ᵃ[B]ᵇ). За 2SO₂ + O₂ ⇌ 2SO₃: Kc = [SO₃]²/([SO₂]²[O₂]). Стехиометричните коефициенти стават степени. Тази реакция е ключова за производство на H₂SO₄ (контактен процес).'
+        },
+        {
+          q: 'За H₂(г) + I₂(г) ⇌ 2HI(г): ΔH = +52 kJ/mol. При T↑ добивът на HI:',
+          options: ['Намалява (реакцията е ендо — T↑ я благоприятства, ако беше екзо)', 'Нараства (реакцията е ендо — T↑ измества равновесието →)', 'Не се променя', 'Реакцията спира'],
+          correct: 1,
+          explanation: 'Реакцията е ендотермична (ΔH = +52 kJ > 0 — поглъща топлина). По Льо Шателие: T↑ → равновесието се измества в посоката на ендо реакцията (→ дясно) → повече HI. За ендо реакции: T↑ → повече продукти. (Обратно на екзо.)'
+        },
+        {
+          q: 'Реакцията v = k[A]²[B]. Ако [A] се удвои, как се променя v?',
+          options: ['Удвоява се (×2)', 'Утроява се (×3)', 'Четирикратно нараства (×4)', 'Осемкратно нараства (×8)'],
+          correct: 2,
+          explanation: 'v = k[A]²[B]. Ако [A] → 2[A]: v_нова = k(2[A])²[B] = k·4[A]²[B] = 4v. Концентрацията на A е в степен 2 → удвояването на [A] дава 2² = 4 пъти увеличение на скоростта. Реакцията е 2-ри ред спрямо A.'
+        },
+        {
+          q: 'При реакция A + B ⇌ C, ако отнемем C от системата, равновесието се:',
+          options: ['Измества ← (към реагентите)', 'Измества → (към продуктите — допълнителен C се образува)', 'Не се измества', 'Kc се увеличава'],
+          correct: 1,
+          explanation: 'По Льо Шателие: отнемане на продукт (C) нарушава равновесието — системата се стреми да го компенсира, образувайки повече C → равновесието се измества → (напред). Това е принципът на отстраняване на продукт за увеличаване на добива (напр. кондензиране на пари).'
+        },
+        {
+          q: 'Реакцията CO(г) + 3H₂(г) ⇌ CH₄(г) + H₂O(г). При P↑ равновесието се измества:',
+          options: ['← (4 mol газ от лявата → 2 mol от дясната)', '→ (от 4 mol газ вляво → 2 mol газ вдясно)', 'Не се измества', 'P не влияе на газови реакции'],
+          correct: 1,
+          explanation: 'Ляво: 1+3 = 4 mol газ. Дясно: 1+1 = 2 mol газ. При P↑ равновесието се измества към страната с по-малко молове газ → дясно (→). Резултат: повече CH₄ и H₂O. Тази реакция (метанизация) е важна за производството на природен газ от синтезен газ.'
+        },
+        {
+          q: 'Хомогенна реакция vs. хетерогенна реакция. Коя е ХЕТЕРОГЕННА?',
+          options: ['N₂(г) + 3H₂(г) → 2NH₃(г)', 'H₂(г) + Cl₂(г) → 2HCl(г)', '2C(тв) + O₂(г) → 2CO(г)', 'CO(г) + H₂O(г) → CO₂(г) + H₂(г)'],
+          correct: 2,
+          explanation: 'Хетерогенната реакция включва реагенти в различни фази (тв+газ, тв+теч, и др.). 2C(тв) + O₂(г) → 2CO(г) — реагират твърдо и газ. Останалите реакции са хомогенни — всички реагенти и продукти са газове.'
+        },
+        {
+          q: 'За реакцията CaCO₃(тв) ⇌ CaO(тв) + CO₂(г), Kp зависи от:',
+          options: ['Концентрацията на CaCO₃', 'Само от налягането на CO₂ (твърдите не участват в K)', 'Масата на CaO', 'Температурата и масата на CaCO₃'],
+          correct: 1,
+          explanation: 'Твърдите вещества и чистите течности не се включват в изразите за K (тяхната „концентрация" е константа). Kp = p(CO₂). Равновесното налягане на CO₂ зависи само от температурата. Затова разлагането на CaCO₃ протича при ~850°C.'
+        },
+        {
+          q: 'Ако v = k[A][B] и k = 0,1 L/(mol·s), [A] = 0,2 M, [B] = 0,5 M, каква е скоростта?',
+          options: ['0,001 mol/(L·s)', '0,01 mol/(L·s)', '0,1 mol/(L·s)', '1 mol/(L·s)'],
+          correct: 1,
+          explanation: 'v = k[A][B] = 0,1 × 0,2 × 0,5 = 0,01 mol/(L·s). Единицата за k при реакция от 2-ри ред е L/(mol·s).'
+        },
+        {
+          q: 'Ензимите в живите организми действат като:',
+          options: ['Реагенти, изразходвани в реакцията', 'Биологични катализатори, намаляващи Ea', 'Инхибитори, забавящи реакцията', 'Продукти на метаболизма'],
+          correct: 1,
+          explanation: 'Ензимите са биологични катализатори — белтъчни молекули, ускоряващи биохимичните реакции с намаляване на Ea. Не се изразходват в реакцията. Без ензими много реакции в клетката биха протичали твърде бавно (часове вместо милисекунди). Пример: амилаза, каталаза, ДНК полимераза.'
+        },
+        {
+          q: 'При химично равновесие v(права) = v(обратна). Какво от следното е ВЯРНО?',
+          options: ['[реагенти] = [продукти] задължително', 'Реакцията е спряла', 'Концентрациите са постоянни, но не непременно равни', 'Kc = 1 задължително'],
+          correct: 2,
+          explanation: 'При равновесие концентрациите са постоянни (не се изменят), но не е нужно [реагенти] = [продукти] — това зависи от Kc. Ако Kc >> 1, преобладават продуктите. Kc = 1 би означавало [продукти] ≈ [реагенти]. Реакцията НЕ е спряла — тя е динамично равновесие.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

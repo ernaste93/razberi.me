@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Размножаване — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-razmnozhavane-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio11-razmnozhavane-quiz-2.html',
+      lessonUrl:   '/lessons/bio11-razmnozhavane.html',
+      lessonName:  'Размножаване',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Размножаване — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Каква е основната разлика между полово и безполово размножаване?',
+          options: ['Безполовото е само при животни', 'Половото изисква два родители и мейоза → генетично разнообразие; безполовото — от един родител чрез митоза → клонинги', 'Половото е по-бързо', 'Безполовото изисква повече енергия'],
+          correct: 1,
+          explanation: 'При безполовото размножаване (митоза) потомците са генетично идентични с родителя — бързо, но без разнообразие. При половото (мейоза + оплождане) се получава уникална генетична комбинация — по-бавно, но осигурява разнообразие, ключово за адаптация и еволюция.'
+        },
+        {
+          q: 'Мейозата е специален вид делене, при което:',
+          options: ['От 1 диплоидна клетка се образуват 2 диплоидни клетки', 'От 1 диплоидна клетка се образуват 4 хаплоидни клетки', 'От 1 хаплоидна клетка се образуват 2 диплоидни', 'Хромозомният брой се удвоява'],
+          correct: 1,
+          explanation: 'Мейозата е редукционно делене: от 1 диплоидна (2n) клетка се образуват 4 хаплоидни (n) клетки. Тя се осъществява чрез 2 последователни деления (мейоза I и II). При оплождане две хаплоидни гамети се сливат, възстановявайки диплоидния набор.'
+        },
+        {
+          q: 'Колко деления включва мейозата?',
+          options: ['1', '2', '3', '4'],
+          correct: 1,
+          explanation: 'Мейозата включва 2 последователни деления: Мейоза I (редукционно — разделяне на хомоложните хромозоми, 2n → n) и Мейоза II (екваториално — разделяне на хроматидите, подобно на митоза). Резултатът е 4 хаплоидни клетки.'
+        },
+        {
+          q: 'Кросинговърът се случва в коя фаза на мейозата?',
+          options: ['Метафаза II', 'Профаза I', 'Анафаза I', 'Телофаза II'],
+          correct: 1,
+          explanation: 'Кросинговърът (crossing over) се случва в профаза I, когато хомоложните хромозоми се сдвояват в биваленти. Несестринските хроматиди на хомоложните хромозоми се пресичат и обменят сегменти. Това е ключов механизъм за генетична рекомбинация.'
+        },
+        {
+          q: 'При сперматогенезата от 1 сперматогония (2n) се образуват:',
+          options: ['1 сперматозоид', '2 сперматозоида', '4 сперматозоида', '8 сперматозоида'],
+          correct: 2,
+          explanation: 'Сперматогенезата: 1 сперматогония (2n) → 1 сперматоцит I (2n) → мейоза I → 2 сперматоцита II (n) → мейоза II → 4 сперматиди (n) → диференциация → 4 сперматозоида (n). За разлика от оогенезата, при сперматогенезата се образуват 4 жизнеспособни клетки.'
+        },
+        {
+          q: 'При оогенезата от 1 оогония (2n) се образуват:',
+          options: ['4 яйцеклетки', '2 яйцеклетки', '1 яйцеклетка и 3 полярни тела', '1 яйцеклетка и 1 полярно тяло'],
+          correct: 2,
+          explanation: 'Оогенезата: 1 оогония → 1 ооцит I → мейоза I → 1 ооцит II + 1 полярно тяло → мейоза II → 1 яйцеклетка + 2 полярни тела (+ 1 полярно тяло се дели = общо 3). От 1 прогениторна клетка се получава само 1 жизнеспособна яйцеклетка. Цитоплазмата се концентрира в нея.'
+        },
+        {
+          q: 'Каква е резултатната клетка след оплождане?',
+          options: ['Хаплоидна яйцеклетка', 'Диплоидна зигота', 'Хаплоиден ембрион', 'Триплоидна клетка'],
+          correct: 1,
+          explanation: 'При оплождане хаплоидният сперматозоид (n) се слива с хаплоидната яйцеклетка (n), образувайки диплоидна зигота (2n). Зиготата съдържа по 23 хромозоми от всеки родител (при хората) — общо 46 хромозоми в 23 двойки хомолози.'
+        },
+        {
+          q: 'Бинарното разделяне е форма на безполово размножаване, характерна за:',
+          options: ['Многоклетъчни животни', 'Бактерии и едноклетъчни организми', 'Растения', 'Само за гъби'],
+          correct: 1,
+          explanation: 'Бинарното разделяне е основна форма на безполово размножаване при прокариоти (бактерии) и много едноклетъчни еукариоти (амеба, парамеций). Клетката расте, ДНК се репликира, клетката се разделя на 2 генетично идентични дъщерни клетки.'
+        },
+        {
+          q: 'Защо половото размножаване е важно за еволюцията?',
+          options: ['Защото е по-бързо от безполовото', 'Защото осигурява генетично разнообразие чрез кросинговър и рекомбинация при оплождане', 'Защото не изисква ДНК', 'Защото клонира организмите'],
+          correct: 1,
+          explanation: 'Половото размножаване създава генетично разнообразие чрез: 1) кросинговър в мейоза I (рекомбинация в хромозомите); 2) независимо разпределение на хомоложните хромозоми; 3) случайно оплождане. Разнообразието е суровина за естествения отбор и еволюцията.'
+        },
+        {
+          q: 'При кое животно е характерно пъпкуването като форма на безполово размножаване?',
+          options: ['Кон', 'Хидра', 'Птица', 'Риба'],
+          correct: 1,
+          explanation: 'Пъпкуването е характерно за хидра (сладководна полипа) и дрождите (едноклетъчни гъби). При хидрата от тялото израства малка „пъпка", която се развива в нов организъм и се отделя от родителя. Пъпкуването е вид безполово размножаване без намаляване на генетичния материал.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

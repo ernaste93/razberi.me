@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Фотосинтеза · Биология 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Биология 11 клас</a>
+        <span>›</span>
+        Фотосинтеза
+      </div>
+      <section class="demo-layout" style="margin:0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">🌿 БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Фотосинтеза</div>
+          <div class="lesson-meta">Хлоропласт · Светлинна и тъмнинна фаза · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">1. Какво е фотосинтезата?</div>
+            <div class="lesson-body">
+              <p>Фотосинтезата е процес, при който <strong>зелените растения, водораслите и някои бактерии</strong> превръщат светлинната енергия в химична енергия, съхранявана в органични молекули (предимно глюкоза). Тя е основният механизъм, чрез който в биосферата постъпва органична материя и се отделя кислород.</p>
+              <p>Обобщеното уравнение на фотосинтезата е:</p>
+              <p style="background:var(--soft);padding:12px 16px;border-radius:10px;font-weight:600;text-align:center;">6CO₂ + 6H₂O + светлинна енергия → C₆H₁₂O₆ + 6O₂</p>
+              <p>Фотосинтезата протича в <strong>хлоропластите</strong> — зелени двумембранни органели, съдържащи пигмента <strong>хлорофил</strong>, който поглъща предимно червената и синята светлина, а отразява зелената (поради което листата изглеждат зелени).</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">2. Строеж на хлоропласта</div>
+            <div class="lesson-body">
+              <p>Хлоропластът е двумембранна органела. Между двете мембрани е <strong>интермембранното пространство</strong>. Вътрешността се заема от <strong>строма</strong> — течна среда, в която потичат биохимичните реакции на тъмнинната фаза.</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🥞</div>
+                  <div class="key-point-text"><strong>Тилакоиди</strong> — сплеснати мембранни торбички, наредени в стекове, наречени <strong>грани</strong>. В тилакоидните мембрани са наредени молекулите на хлорофила и другите пигменти, както и белтъчните комплекси (фотосистеми), необходими за светлинната фаза.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🌊</div>
+                  <div class="key-point-text"><strong>Строма</strong> — течната матрица около тилакоидите; съдържа ензимите на Калвиновия цикъл, рибозоми и собствена ДНК (хлоропластите — подобно на митохондриите — имат ендосимбионтен произход).</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">3. Светлинна фаза (фотохимична реакция)</div>
+            <div class="lesson-body">
+              <p>Светлинната фаза протича в <strong>тилакоидните мембрани</strong> и зависи пряко от светлинната енергия. В нея участват два белтъчни комплекса — <strong>Фотосистема I (ФС I)</strong> и <strong>Фотосистема II (ФС II)</strong>.</p>
+              <p>Последователността на събитията в светлинната фаза:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">☀️</div>
+                  <div class="key-point-text"><strong>Поглъщане на светлина</strong> — фотоните активират хлорофилните молекули в ФС II; електрони се „вдигат" на по-високо енергетично ниво.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">💧</div>
+                  <div class="key-point-text"><strong>Фотолиза на водата</strong> — водата се разгражда: 2H₂O → 4H⁺ + 4e⁻ + O₂. Отделеният кислород се освобождава като страничен продукт. Електроните попълват „дупките" в ФС II.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⚡</div>
+                  <div class="key-point-text"><strong>Транспорт на електрони</strong> — електроните преминават по електронтранспортна верига от ФС II към ФС I; освободената енергия се използва за синтез на <strong>АТФ</strong> (фотофосфорилиране).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔋</div>
+                  <div class="key-point-text"><strong>Редукция на НАДФ⁺</strong> — в ФС I електроните отново се активират от светлина и накрая редуцират НАДФ⁺ до <strong>НАДФH</strong> (редуцираща сила за тъмнинната фаза).</div>
+                </div>
+              </div>
+              <p><strong>Продукти на светлинната фаза:</strong> АТФ, НАДФH и O₂.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">4. Тъмнинна фаза — Калвинов цикъл</div>
+            <div class="lesson-body">
+              <p>Тъмнинната фаза (цикъл на Калвин) протича в <strong>стромата</strong> на хлоропласта. Тя не зависи пряко от светлината, но използва АТФ и НАДФH, синтезирани в светлинната фаза. Наречена е „тъмнинна", защото не изисква светлина — не защото протича само нощем.</p>
+              <p>Три основни стъпки в цикъла на Калвин:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">1️⃣</div>
+                  <div class="key-point-text"><strong>Карбоксилиране (фиксация на CO₂)</strong> — ензимът <strong>РуБиСКО</strong> свързва CO₂ към петвъглеродния акцептор рибулозо-1,5-бисфосфат (RuBP), получавайки два трикарбонни молекули — 3-фосфоглицерат (3-PGA).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">2️⃣</div>
+                  <div class="key-point-text"><strong>Редукция</strong> — 3-PGA се редуцира с АТФ и НАДФH до глицералдехид-3-фосфат (G3P) — трикарбонна захар, непосредствен предшественик на глюкозата.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">3️⃣</div>
+                  <div class="key-point-text"><strong>Регенерация на акцептора</strong> — по-голямата част от G3P се използва за регенерация на RuBP (с изразходване на АТФ), за да може цикълът да продължи. Малка част от G3P се използва за синтез на глюкоза и други органични молекули.</div>
+                </div>
+              </div>
+              <p><strong>За синтез на 1 молекула глюкоза</strong> са необходими: 6 CO₂, 18 АТФ и 12 НАДФH.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">5. Пигменти — хлорофил и каротеноиди</div>
+            <div class="lesson-body">
+              <p>Фотосинтезата зависи от фотосинтетичните пигменти, наредени в тилакоидните мембрани. Основните пигменти са:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🟢</div>
+                  <div class="key-point-text"><strong>Хлорофил а</strong> — основният пигмент; поглъща червена (680 нм) и синьо-виолетова светлина; единственият, способен директно да задейства фотохимичните реакции.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🌿</div>
+                  <div class="key-point-text"><strong>Хлорофил б</strong> — допълнителен пигмент; поглъща предимно синя светлина (450 нм); предава енергията на хлорофил а.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🟠</div>
+                  <div class="key-point-text"><strong>Каротеноиди (каротини и ксантофили)</strong> — жълто-оранжеви пигменти; поглъщат синя и зелена светлина; предпазват хлорофила от фотоокисление (фотозащитна роля).</div>
+                </div>
+              </div>
+              <p>Есен: когато хлорофилът се разгражда, каротеноидите (жълти и оранжеви) стават видими — оттук жълтеещите и портокалеещи листа.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">6. Фактори, влияещи върху фотосинтезата</div>
+            <div class="lesson-body">
+              <p>Скоростта на фотосинтезата зависи от редица фактори на средата:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">☀️</div>
+                  <div class="key-point-text"><strong>Интензитет на светлината</strong> — при ниски интензитети е лимитиращ фактор; при много висок интензитет може да причини фотоинхибиция.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">💨</div>
+                  <div class="key-point-text"><strong>Концентрация на CO₂</strong> — нарастването й ускорява Калвиновия цикъл; нормалното съдържание в атмосферата (~0,04%) е субоптимално за повечето растения.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🌡️</div>
+                  <div class="key-point-text"><strong>Температура</strong> — тъмнинната фаза е ензимно зависима; оптималната температура е 20–30°C; много ниска или висока температура инхибира ензимите.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">💧</div>
+                  <div class="key-point-text"><strong>Вода</strong> — освен субстрат за фотолизата, водният дефицит предизвиква затваряне на устицата и ограничава постъпването на CO₂.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">7. Значение на фотосинтезата</div>
+            <div class="lesson-body">
+              <p>Фотосинтезата е от изключително значение за живота на Земята:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🌍</div>
+                  <div class="key-point-text"><strong>Кислород в атмосферата</strong> — почти целият атмосферен кислород е продукт на фотосинтезата. Без нея животът в сегашния му вид е невъзможен.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🍃</div>
+                  <div class="key-point-text"><strong>Основа на хранителните вериги</strong> — фотосинтетиците са продуценти, синтезиращи органична материя от неорганични вещества; те „хранят" всички останали организми.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🌡️</div>
+                  <div class="key-point-text"><strong>Въглероден цикъл</strong> — фотосинтезата е ключов процес в кръговрата на въглерода, поглъщайки CO₂ от атмосферата и намалявайки парниковия ефект.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">8. Обобщение — най-важното</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚗️</div>
+                <div class="key-point-text"><strong>Уравнение:</strong> 6CO₂ + 6H₂O + светлина → C₆H₁₂O₆ + 6O₂; протича в хлоропластите.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">☀️</div>
+                <div class="key-point-text"><strong>Светлинна фаза</strong> — в тилакоидите; фотолиза на вода, синтез на АТФ и НАДФH, отделяне на O₂.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌿</div>
+                <div class="key-point-text"><strong>Тъмнинна фаза (Калвин)</strong> — в стромата; фиксация на CO₂ чрез РуБиСКО, синтез на G3P и глюкоза.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🟢</div>
+                <div class="key-point-text"><strong>Хлорофил а</strong> — основен пигмент; хлорофил б и каротеноиди — допълнителни.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📈</div>
+                <div class="key-point-text"><strong>Лимитиращи фактори:</strong> светлина, CO₂, температура, вода.</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bio11-fotosinteza-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bio11-fotosinteza-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bio11-fotosinteza-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Фотосинтеза';
+    window.LESSON_SUBJECT = 'Биология';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed?'✓':'✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

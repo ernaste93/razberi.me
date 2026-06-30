@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Фотосинтеза — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-fotosinteza-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio11-fotosinteza-quiz-3.html',
+      lessonUrl:   '/lessons/bio11-fotosinteza.html',
+      lessonName:  'Фотосинтеза',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Фотосинтеза — Тест 2',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Последователността на събитията в светлинната фаза е:',
+          options: ['Фотолиза на вода → Транспорт на електрони → Редукция на НАДФ⁺ → Синтез на АТФ', 'Поглъщане на светлина → Фотолиза на вода → Транспорт на електрони → Редукция на НАДФ⁺', 'Редукция на НАДФ⁺ → Фотолиза на вода → Синтез на АТФ → Транспорт на електрони', 'Синтез на АТФ → Поглъщане на светлина → Фотолиза → Редукция на НАДФ⁺'],
+          correct: 1,
+          explanation: 'В светлинната фаза: 1) Хлорофилът поглъща светлина; 2) Водата се разгражда (фотолиза), освобождавайки O₂ и електрони; 3) Електроните преминават по електронтранспортна верига, задвижвайки синтез на АТФ; 4) НАДФ⁺ се редуцира до НАДФH.'
+        },
+        {
+          q: 'Каква е разликата между фотосистема I (ФС I) и фотосистема II (ФС II)?',
+          options: ['ФС I се активира от по-дълговълнова светлина (700 нм) и произвежда НАДФH; ФС II от 680 нм и фотолизира вода', 'ФС I е в стромата, ФС II в тилакоидите', 'ФС I разгражда вода, ФС II синтезира АТФ', 'Те са идентични по функция, но различни по местоположение'],
+          correct: 0,
+          explanation: 'Фотосистема II (680 нм) поглъща светлина, задейства фотолизата на вода и „изпраща" електрони по транспортната верига с производство на АТФ. Фотосистема I (700 нм) получава тези електрони, ре-активира ги от светлина и редуцира НАДФ⁺ до НАДФH.'
+        },
+        {
+          q: 'Какво е фотолизата на водата и защо е важна?',
+          options: ['Синтез на вода при фотосинтеза', 'Разграждане на вода от светлинна енергия, осигуряващо електрони за ФС II и O₂', 'Транспорт на вода в растението', 'Поглъщане на вода от корените'],
+          correct: 1,
+          explanation: 'Фотолизата е разграждането на водата: 2H₂O → 4H⁺ + 4e⁻ + O₂. Тя е важна, защото осигурява електроните, необходими за попълване на „дупките" в ФС II след поглъщане на светлина, и освобождава O₂ — страничния продукт на фотосинтезата.'
+        },
+        {
+          q: 'Колко CO₂ трябва да се фиксират, за да се синтезира 1 молекула глюкоза?',
+          options: ['3', '4', '6', '12'],
+          correct: 2,
+          explanation: 'За синтез на 1 молекула глюкоза (C₆H₁₂O₆) са необходими 6 молекули CO₂. За тяхното фиксиране се изразходват 18 АТФ и 12 НАДФH. Това следва директно от уравнението: 6CO₂ + 6H₂O + светлина → C₆H₁₂O₆ + 6O₂.'
+        },
+        {
+          q: 'Каква е ролята на каротеноидите при фотосинтезата?',
+          options: ['Пряко задействат фотохимичните реакции', 'Поглъщат допълнителна светлина и предпазват хлорофила от фотоокисление', 'Фиксират CO₂ в стромата', 'Синтезират АТФ'],
+          correct: 1,
+          explanation: 'Каротеноидите (каротини и ксантофили) са допълнителни пигменти. Те поглъщат синя и зелена светлина и предават енергията на хлорофил а. Освен това изпълняват фотозащитна роля — предпазват хлорофила от фотоокисление при прекомерна светлина.'
+        },
+        {
+          q: 'Трите стъпки на Калвиновия цикъл в правилен ред са:',
+          options: ['Редукция → Карбоксилиране → Регенерация на RuBP', 'Карбоксилиране → Редукция → Регенерация на RuBP', 'Регенерация на RuBP → Редукция → Карбоксилиране', 'Карбоксилиране → Регенерация на RuBP → Редукция'],
+          correct: 1,
+          explanation: 'Калвиновият цикъл протича в три стъпки: 1) Карбоксилиране — РуБиСКО фиксира CO₂ към RuBP, получавайки 3-PGA; 2) Редукция — 3-PGA се редуцира с АТФ и НАДФH до G3P; 3) Регенерация — G3P регенерира RuBP за следващия цикъл.'
+        },
+        {
+          q: 'Защо тъмнинната фаза НЕ се нарича „нощна реакция"?',
+          options: ['Защото протича само денем', 'Защото не изисква пряко светлина, но може да протича и при наличие на светлина', 'Защото е по-бърза от светлинната фаза', 'Защото се извършва в митохондриите'],
+          correct: 1,
+          explanation: 'Тъмнинната фаза е наречена така, защото не изисква пряко светлина — не защото протича само нощем. Тя може да протича едновременно со светлинната фаза, стига да има АТФ и НАДФH. Без светлинна фаза обаче АТФ и НАДФH се изчерпват.'
+        },
+        {
+          q: 'Какво се случва при затваряне на устицата на листата?',
+          options: ['Светлинната фаза спира', 'CO₂ не може да влезе, фотосинтезата се забавя', 'Хлорофилът се разгражда', 'АТФ синтезата се ускорява'],
+          correct: 1,
+          explanation: 'При воден дефицит устицата се затварят, за да намалят изпарението. Това обаче ограничава постъпването на CO₂ в листата, намалявайки Калвиновия цикъл и общата скорост на фотосинтезата. Затова водата е лимитиращ фактор.'
+        },
+        {
+          q: 'Коя е непосредствената захарна молекула, синтезирана в Калвиновия цикъл?',
+          options: ['Фруктоза', 'Сукроза', 'Глицералдехид-3-фосфат (G3P)', 'Нишесте'],
+          correct: 2,
+          explanation: 'Непосредственият продукт на Калвиновия цикъл е глицералдехид-3-фосфат (G3P) — трикарбонна захарна молекула. От G3P клетката синтезира глюкоза, фруктоза, сукроза, нишесте и всички останали органични съединения.'
+        },
+        {
+          q: 'Откъде хлоропластите получават CO₂ за фотосинтезата?',
+          options: ['От митохондриите чрез директен транспорт', 'От атмосферата чрез устицата на листата', 'От корените на растението', 'От фотолизата на водата'],
+          correct: 1,
+          explanation: 'CO₂ постъпва в листата от атмосферата чрез малки отвори, наречени устица (стомати). Оттам CO₂ дифундира в межуклетъчните пространства и клетките, достигайки хлоропластите, където се фиксира от РуБиСКО.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

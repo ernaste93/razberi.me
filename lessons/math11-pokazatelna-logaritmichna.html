@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Показателна и логаритмична функция · Математика 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    .formula-block {
+      background: #f0f4ff;
+      border: 1.5px solid #c7d2fe;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+    .formula-block .formula-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; display: block;
+    }
+    .formula-inline {
+      background: #eef2ff; color: var(--accent);
+      padding: 1px 7px; border-radius: 6px;
+      font-weight: 700; font-size: 13px;
+    }
+    .example-block {
+      background: var(--soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 13px; line-height: 1.8;
+    }
+    .example-block strong { color: var(--accent); }
+    .example-step {
+      display: flex; gap: 10px; align-items: flex-start; justify-content: flex-start;
+      padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; width: 100%;
+    }
+    .example-step:last-child { border-bottom: none; }
+    .example-step > div:last-child { flex: 1; }
+    .step-num {
+      width: 22px; height: 22px; border-radius: 50%; background: var(--accent);
+      color: #fff; font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+    }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0;
+    }
+    .compare-card {
+      border: 1.5px solid var(--line); border-radius: 12px; padding: 14px;
+      text-align: center; font-size: 13px;
+    }
+    .compare-card.pos { border-color: #86efac; background: #f0fdf4; }
+    .compare-card.neg { border-color: #fca5a5; background: #fff5f5; }
+    .compare-card .cc-title { font-weight: 800; font-size: 15px; margin-bottom: 6px; }
+    .compare-card.pos .cc-title { color: #16a34a; }
+    .compare-card.neg .cc-title { color: #dc2626; }
+
+    #btn-ask-znaiko {
+      position: fixed; bottom: 28px; right: 32px; z-index: 999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 20px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    #selection-tooltip {
+      position: fixed; z-index: 9999; display: none;
+      transform: translateX(-50%); pointer-events: none;
+    }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+      transition: opacity .12s, transform .12s;
+    }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after {
+      content: ''; position: absolute; top: 100%; left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent; border-top-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <nav style="display:flex;align-items:center;gap:4px;margin:0 auto;">
+        <a href="/urotsi.html" class="nav-btn">Уроци</a>
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Математика · Преговор 11 клас</a>
+        <span>›</span>
+        Показателна и логаритмична функция
+      </div>
+
+      <section class="demo-layout">
+        <div class="lesson-panel">
+          <div id="lesson-content">
+
+            <div class="lesson-tag">МАТЕМАТИКА · 11 КЛАС · ПРЕГОВОР</div>
+            <h1 class="lesson-title">Показателна и логаритмична функция</h1>
+            <div class="lesson-meta">Функции · Уравнения · Графики · ~10 мин четене</div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 1. Показателна функция -->
+            <div class="section-title">1. Показателна функция — определение и свойства</div>
+            <div class="lesson-body">
+              <p>Показателната функция е една от най-важните функции в математиката. Тя се използва при описание на растеж и затихване — от лихвени сметки до разпространение на вируси и радиоактивен разпад.</p>
+              <p>Функцията <span class="formula-inline">f(x) = a^x</span> се нарича <strong>показателна функция с основа a</strong>, където <span class="formula-inline">a > 0</span> и <span class="formula-inline">a ≠ 1</span>. Променливата <span class="formula-inline">x</span> е показателят (степента), а <span class="formula-inline">a</span> е основата.</p>
+            </div>
+
+            <div class="formula-block">
+              <span class="formula-label">Показателна функция</span>
+              f(x) = a^x, &nbsp; a &gt; 0, &nbsp; a ≠ 1
+            </div>
+
+            <div class="lesson-body">
+              <p>Свойствата на функцията зависят критично от стойността на основата <span class="formula-inline">a</span>. Разглеждаме два случая:</p>
+            </div>
+
+            <div class="compare-grid">
+              <div class="compare-card pos">
+                <div class="cc-title">a &gt; 1 (напр. 2^x)</div>
+                <div><strong>Монотонност:</strong> растяща</div>
+                <div><strong>Дефиниционна обл.:</strong> (-∞, +∞)</div>
+                <div><strong>Обл. на стойностите:</strong> (0, +∞)</div>
+                <div style="margin-top:6px;font-size:12px;">Колкото по-голямо е x, толкова по-голяма е стойността. При x→-∞ функцията клони към 0.</div>
+              </div>
+              <div class="compare-card neg">
+                <div class="cc-title">0 &lt; a &lt; 1 (напр. (1/2)^x)</div>
+                <div><strong>Монотонност:</strong> намаляваща</div>
+                <div><strong>Дефиниционна обл.:</strong> (-∞, +∞)</div>
+                <div><strong>Обл. на стойностите:</strong> (0, +∞)</div>
+                <div style="margin-top:6px;font-size:12px;">Колкото по-голямо е x, толкова по-малка е стойността. При x→+∞ функцията клони към 0.</div>
+              </div>
+            </div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Дефиниционна област:</strong> D(f) = (-∞, +∞) = ℝ — можем да степенуваме с всяко реално число.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Област на стойностите:</strong> f(x) = a^x &gt; 0 за всяко x — показателната функция НИКОГА не приема нулева или отрицателна стойност.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Специална точка:</strong> a^0 = 1 за всяко a ≠ 0. Графиката на f(x) = a^x винаги минава през точката (0, 1).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Асимптота:</strong> Оста Ox (y = 0) е хоризонтална асимптота — за a &gt; 1 при x→-∞, а за 0 &lt; a &lt; 1 при x→+∞.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 2. Логаритъм — определение -->
+            <div class="section-title">2. Логаритъм — определение</div>
+            <div class="lesson-body">
+              <p>Логаритъмът е операцията, обратна на степенуването. Ако знаем, че <span class="formula-inline">2^3 = 8</span>, то логаритъмът ни дава показателя: <span class="formula-inline">log₂(8) = 3</span>. С други думи — логаритъмът отговаря на въпроса „на каква степен трябва да вдигнем основата, за да получим дадено число?"</p>
+            </div>
+
+            <div class="formula-block">
+              <span class="formula-label">Определение на логаритъм</span>
+              log_a(b) = c &nbsp; ⟺ &nbsp; a^c = b
+              <br />
+              <span style="font-size:14px;font-weight:600;">(a &gt; 0, a ≠ 1, b &gt; 0)</span>
+            </div>
+
+            <div class="lesson-body">
+              <p>Четем: <em>„логаритъм на b при основа a е равен на c"</em>. Условията <span class="formula-inline">a > 0</span>, <span class="formula-inline">a ≠ 1</span> и <span class="formula-inline">b > 0</span> са задължителни — логаритъм от отрицателно число или от нула не съществува!</p>
+              <p>Примери: <span class="formula-inline">log₂(8) = 3</span>, защото 2³ = 8. Също: <span class="formula-inline">log₃(9) = 2</span>, защото 3² = 9. И: <span class="formula-inline">log₅(1) = 0</span>, защото 5⁰ = 1.</p>
+            </div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Логаритъм и степенуване са обратни операции:</strong> a^(log_a(b)) = b и log_a(a^x) = x. Тези формули са изключително полезни при решаване на уравнения.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>log_a(1) = 0</strong> — винаги! Защото a⁰ = 1 за всяка допустима основа a.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>log_a(a) = 1</strong> — винаги! Защото a¹ = a.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 3. Свойства на логаритмите -->
+            <div class="section-title">3. Свойства на логаритмите</div>
+            <div class="lesson-body">
+              <p>Свойствата на логаритмите произтичат директно от правилата за работа с степени. Те са изключително важни за опростяване на изрази и решаване на уравнения. Трябва да ги знаеш наизуст!</p>
+            </div>
+
+            <div class="formula-block">
+              <span class="formula-label">Свойство 1 — логаритъм на произведение</span>
+              log_a(m · n) = log_a(m) + log_a(n)
+            </div>
+
+            <div class="formula-block">
+              <span class="formula-label">Свойство 2 — логаритъм на частно</span>
+              log_a(m / n) = log_a(m) − log_a(n)
+            </div>
+
+            <div class="formula-block">
+              <span class="formula-label">Свойство 3 — логаритъм на степен</span>
+              log_a(m^n) = n · log_a(m)
+            </div>
+
+            <div class="lesson-body">
+              <p>Интуицията зад тези свойства: логаритъмът „превежда" умножение в събиране, деление в изваждане, и степенуване в умножение. Точно обратното на степенуването!</p>
+            </div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📐</div>
+                <div class="key-point-text"><strong>Пример за свойство 1:</strong> log₂(4 · 8) = log₂(4) + log₂(8) = 2 + 3 = 5. Проверка: 2⁵ = 32 = 4 · 8. ✓</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📐</div>
+                <div class="key-point-text"><strong>Пример за свойство 2:</strong> log₃(27/9) = log₃(27) − log₃(9) = 3 − 2 = 1. Проверка: 27/9 = 3 = 3¹. ✓</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📐</div>
+                <div class="key-point-text"><strong>Пример за свойство 3:</strong> log₂(8³) = 3 · log₂(8) = 3 · 3 = 9. Проверка: 8³ = 512 = 2⁹. ✓</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 4. Формула за смяна на основата -->
+            <div class="section-title">4. Формула за смяна на основата</div>
+            <div class="lesson-body">
+              <p>Много калкулатори пресмятат само <span class="formula-inline">log</span> (десетичен) и <span class="formula-inline">ln</span> (натурален). За да изчислим логаритъм с произволна основа, използваме формулата за смяна на основата:</p>
+            </div>
+
+            <div class="formula-block">
+              <span class="formula-label">Формула за смяна на основата</span>
+              log_a(b) = log_c(b) / log_c(a)
+              <br />
+              <span style="font-size:14px;font-weight:600;">Специален случай: log_a(b) = ln(b) / ln(a) = lg(b) / lg(a)</span>
+            </div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Пример:</strong> log₂(10) = lg(10) / lg(2) = 1 / 0.301 ≈ 3.32. Тоест 2^3.32 ≈ 10. ✓</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Следствие:</strong> log_a(b) · log_b(a) = 1, тоест log_b(a) = 1 / log_a(b). Основите се „разменят" с реципрочност.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 5. Натурален и десетичен логаритъм -->
+            <div class="section-title">5. Натурален логаритъм ln и десетичен логаритъм lg</div>
+            <div class="lesson-body">
+              <p>Два логаритъма имат специални означения и са особено важни в практиката:</p>
+            </div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📘</div>
+                <div class="key-point-text"><strong>Натурален логаритъм: ln(x) = log_e(x)</strong> — основата е числото на Ойлер e ≈ 2.718. Използва се в анализа, физиката и финансовата математика. Функцията e^x е обратна на ln(x).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📘</div>
+                <div class="key-point-text"><strong>Десетичен логаритъм: lg(x) = log₁₀(x)</strong> — основата е 10. Използва се в технически изчисления, скали (pH, децибели, Рихтер). lg(100) = 2, lg(1000) = 3.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Връзка:</strong> ln(x) = lg(x) / lg(e) ≈ lg(x) / 0.4343, или lg(x) = ln(x) / ln(10) ≈ ln(x) / 2.303.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 6. Логаритмична функция — графика -->
+            <div class="section-title">6. Логаритмична функция и нейната графика</div>
+            <div class="lesson-body">
+              <p>Логаритмичната функция <span class="formula-inline">f(x) = log_a(x)</span> е обратна на показателната функция <span class="formula-inline">g(x) = a^x</span>. Графиките им са симетрични спрямо правата <span class="formula-inline">y = x</span>.</p>
+            </div>
+
+            <div class="compare-grid">
+              <div class="compare-card pos">
+                <div class="cc-title">a &gt; 1 — log_a(x)</div>
+                <div><strong>Монотонност:</strong> растяща</div>
+                <div><strong>Дефиниционна обл.:</strong> (0, +∞)</div>
+                <div><strong>Обл. на стойностите:</strong> (-∞, +∞)</div>
+                <div style="margin-top:6px;font-size:12px;">Графиката минава през (1, 0) и (a, 1). При x→0⁺ функцията клони към -∞.</div>
+              </div>
+              <div class="compare-card neg">
+                <div class="cc-title">0 &lt; a &lt; 1 — log_a(x)</div>
+                <div><strong>Монотонност:</strong> намаляваща</div>
+                <div><strong>Дефиниционна обл.:</strong> (0, +∞)</div>
+                <div><strong>Обл. на стойностите:</strong> (-∞, +∞)</div>
+                <div style="margin-top:6px;font-size:12px;">Графиката минава през (1, 0) и (a, 1). При x→0⁺ функцията клони към +∞.</div>
+              </div>
+            </div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📈</div>
+                <div class="key-point-text"><strong>Оста Oy (x = 0) е вертикална асимптота</strong> — логаритмичната функция е дефинирана само за x &gt; 0 и се приближава безкрайно до оста Oy, без да я достига.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📈</div>
+                <div class="key-point-text"><strong>Специална точка (1, 0):</strong> log_a(1) = 0 за всяка допустима основа a. Графиката на всяка логаритмична функция минава през точката (1, 0).</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 7. Решени примери — показателни уравнения -->
+            <div class="section-title">7. Показателни уравнения — решени примери</div>
+            <div class="lesson-body">
+              <p>При показателните уравнения целта е да изравним основите от двете страни или да заместим <span class="formula-inline">a^x = t</span>.</p>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример 1:</strong> Реши уравнението 2^x = 32.
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>Изразяваме 32 като степен на 2: 32 = 2⁵</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>Уравнението става: 2^x = 2⁵</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div>Тъй като основите са равни, сравняваме показателите: x = 5</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">4</div>
+                <div><strong>Отговор: x = 5</strong></div>
+              </div>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример 2:</strong> Реши уравнението 4^x = 8.
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>Изразяваме и двете страни като степени на 2: 4^x = (2²)^x = 2^(2x) и 8 = 2³</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>Уравнението става: 2^(2x) = 2³</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div>Сравняваме показателите: 2x = 3 → x = 3/2</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">4</div>
+                <div><strong>Отговор: x = 3/2 = 1.5</strong></div>
+              </div>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример 3:</strong> Реши уравнението 9^x − 10 · 3^x + 9 = 0.
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>Забелязваме, че 9^x = (3²)^x = (3^x)². Заместваме t = 3^x (t &gt; 0).</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>Уравнението става: t² − 10t + 9 = 0</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div>Решаваме квадратното уравнение: t = (10 ± √(100 − 36)) / 2 = (10 ± 8) / 2 → t₁ = 9, t₂ = 1</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">4</div>
+                <div>Връщаме се към x: 3^x = 9 = 3² → x = 2; и 3^x = 1 = 3⁰ → x = 0</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">5</div>
+                <div><strong>Отговор: x = 0 или x = 2</strong></div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 8. Решени примери — логаритмични уравнения -->
+            <div class="section-title">8. Логаритмични уравнения — решени примери</div>
+            <div class="lesson-body">
+              <p>При логаритмичните уравнения задължително проверяваме, че аргументите под логаритъма са положителни (условие за съществуване).</p>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример 4:</strong> Реши уравнението log₂(x) = 5.
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>Прилагаме определението: log₂(x) = 5 ⟺ 2⁵ = x</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>x = 32</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div>Проверка: x = 32 &gt; 0 — условието е изпълнено. <strong>Отговор: x = 32</strong></div>
+              </div>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример 5:</strong> Реши уравнението log₃(2x − 1) = 2.
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>Прилагаме определението: 2x − 1 = 3² = 9</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>2x = 10 → x = 5</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div>Проверка на ОДЗ: 2(5) − 1 = 9 &gt; 0. ✓ <strong>Отговор: x = 5</strong></div>
+              </div>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример 6:</strong> Реши уравнението log₂(x) + log₂(x − 2) = 3.
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>ОДЗ: x &gt; 0 и x − 2 &gt; 0 → x &gt; 2</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>Прилагаме свойство 1: log₂(x · (x − 2)) = 3</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div>x(x − 2) = 2³ = 8 → x² − 2x − 8 = 0</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">4</div>
+                <div>Решаваме: (x − 4)(x + 2) = 0 → x = 4 или x = −2</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">5</div>
+                <div>Проверяваме спрямо ОДЗ (x &gt; 2): x = 4 ✓, x = −2 ✗. <strong>Отговор: x = 4</strong></div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 9. Най-важното -->
+            <div class="section-title">9. Най-важното за матурата</div>
+
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Определение на логаритъм:</strong> log_a(b) = c ⟺ a^c = b. Това е ключовата формула — свеждаш логаритмично уравнение към показателно.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Трите свойства на логаритмите:</strong> log(mn) = log m + log n; log(m/n) = log m − log n; log(mⁿ) = n·log m. Задължителни!</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>ОДЗ при логаритмични уравнения:</strong> аргументът на логаритъма трябва да е строго положителен. Намери ОДЗ ПРЕДИ да решаваш, и провери накрая.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>При показателни уравнения:</strong> изрази и двете страни като степени на еднаква основа, след което сравни показателите.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Заместване t = a^x:</strong> при уравнения от вида (a^x)² + p·a^x + q = 0 замести t = a^x (t &gt; 0) и реши квадратно уравнение.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Формула за смяна на основата:</strong> log_a(b) = lg(b)/lg(a) = ln(b)/ln(a). Полезна при задачи с различни основи.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+              <a href="/lessons/math11-pokazatelna-logaritmichna-quiz.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:#fff;border-radius:99px;font-weight:800;font-size:14px;text-decoration:none;">
+                Към тест 1 →
+              </a>
+              <a href="/urotsi.html" style="font-size:13px;color:var(--muted);text-decoration:none;">← Всички уроци</a>
+            </div>
+
+          </div>
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай формула или текст от урока и цъкни <strong>„Обясни"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+    </div>
+  </main>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Показателна и логаритмична функция — определение, свойства, уравнения, графики';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Клетъчно дишане — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-dishane-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio11-dishane-quiz-3.html',
+      lessonUrl:   '/lessons/bio11-dishane.html',
+      lessonName:  'Клетъчно дишане',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Клетъчно дишане — Тест 2',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Последователността на трите основни етапа на аеробното клетъчно дишане е:',
+          options: ['Цикъл на Кребс → Гликолиза → Окислително фосфорилиране', 'Гликолиза → Цикъл на Кребс → Окислително фосфорилиране', 'Окислително фосфорилиране → Гликолиза → Цикъл на Кребс', 'Гликолиза → Окислително фосфорилиране → Цикъл на Кребс'],
+          correct: 1,
+          explanation: 'Правилната последователност е: 1) Гликолиза (цитоплазма) — глюкоза → пируват; 2) Пируватно декарбоксилиране + Цикъл на Кребс (митохондриален матрикс); 3) Окислително фосфорилиране (вътрешна митохондриална мембрана) — производство на ~32–34 АТФ.'
+        },
+        {
+          q: 'Каква е основната цел на ферментацията при анаеробни условия?',
+          options: ['Да произведе повече АТФ', 'Да регенерира НАД⁺, за да може гликолизата да продължи', 'Да произведе O₂', 'Да разгради митохондриите'],
+          correct: 1,
+          explanation: 'Основната цел на ферментацията НЕ е производство на АТФ (то остава само 2 АТФ от гликолизата). Целта е регенерирането на НАД⁺ от НАДH, за да може гликолизата да продължи да произвежда малко АТФ при липса на O₂.'
+        },
+        {
+          q: 'Коя молекула свързва гликолизата и цикъла на Кребс?',
+          options: ['Глюкоза', 'Пируват', 'Ацетил-КоА', 'Цитрат'],
+          correct: 2,
+          explanation: 'Ацетил-КоА е „връзката" между гликолизата и цикъла на Кребс. Пируватът от гликолизата се превръща в ацетил-КоА при преходната (пируватното декарбоксилиране) реакция в митохондриалния матрикс, след което ацетил-КоА влиза в Кребс цикъла.'
+        },
+        {
+          q: 'При алкохолна ферментация продуктите са:',
+          options: ['Лактат и CO₂', 'Етанол и CO₂', 'Пируват и НАДH', 'Ацетил-КоА и CO₂'],
+          correct: 1,
+          explanation: 'При алкохолна ферментация (дрожди, растения): Пируват → Ацеталдехид → Етанол + CO₂. Тази реакция регенерира НАД⁺ от НАДH. Тя е в основата на производството на хляб (CO₂ го разпушва) и алкохолни напитки (етанолът е целта).'
+        },
+        {
+          q: 'Какво е хемиосмоза?',
+          options: ['Движение на глюкоза през мембрана', 'Синтез на АТФ, задвижван от движението на H⁺ йони по градиент през АТФ синтаза', 'Разграждане на мастни киселини', 'Транспорт на O₂ в митохондрията'],
+          correct: 1,
+          explanation: 'Хемиосмозата е процесът, при който H⁺ йони (протони), натрупани в интермембранното пространство от ЕТВ, се движат обратно в матрикса по електрохимичния градиент през АТФ синтазата. Това движение задвижва синтеза на АТФ от АДФ + Pᵢ.'
+        },
+        {
+          q: 'В цикъла на Кребс колко CO₂ се отделят на 1 оборот (1 ацетил-КоА)?',
+          options: ['1', '2', '4', '6'],
+          correct: 1,
+          explanation: 'На 1 оборот на цикъла на Кребс се окисляват 2 въглеродни атома от ацетил-КоА и се отделят 2 молекули CO₂. На 1 молекула глюкоза (2 ацетил-КоА → 2 оборота) се отделят 4 CO₂ в Кребс цикъла плюс 2 CO₂ при пируватното декарбоксилиране = общо 6 CO₂.'
+        },
+        {
+          q: 'Защо мускулите „горят" (болят) след интензивно усилие?',
+          options: ['Поради натрупване на CO₂', 'Поради натрупване на лактат при млечно-кисела ферментация', 'Поради липса на глюкоза', 'Поради повишена митохондриална активност'],
+          correct: 1,
+          explanation: 'При интензивно физическо усилие мускулите изпадат в кислороден дефицит. Гликолизата продължава, но пируватът не може да постъпи в митохондрията — вместо това се превръща в лактат (млечна киселина). Натрупването на лактат понижава pH и причинява характерното усещане за „парене".'
+        },
+        {
+          q: 'Кои от изброените процеси протичат в митохондриалния матрикс?',
+          options: ['Гликолиза и ферментация', 'Цикъл на Кребс и пируватно декарбоксилиране', 'Електронно-транспортна верига и АТФ синтаза', 'Фотосинтеза и окислително фосфорилиране'],
+          correct: 1,
+          explanation: 'В митохондриалния матрикс протичат: пируватното декарбоксилиране (пируват → ацетил-КоА) и цикълът на Кребс. Електронно-транспортната верига и АТФ синтазата са по вътрешната митохондриална мембрана. Гликолизата — в цитоплазмата.'
+        },
+        {
+          q: 'При каква концентрация на O₂ клетките преминават от аеробно към анаеробно дишане?',
+          options: ['При излишък на O₂', 'При дефицит или липса на O₂', 'При нормална концентрация на O₂', 'О₂ не влияе на вида дишане'],
+          correct: 1,
+          explanation: 'Клетките преминават към анаеробно дишане (ферментация) при дефицит или пълна липса на O₂. Тъй като O₂ е крайният акцептор на електрони в ЕТВ, без него аеробното дишане е невъзможно. Гликолизата продължава и осигурява малко АТФ за оцеляване.'
+        },
+        {
+          q: 'Кой е приносът на ФАДH₂ спрямо НАДH при производство на АТФ?',
+          options: ['ФАДH₂ произвежда повече АТФ от НАДH', 'ФАДH₂ произвежда по-малко АТФ (~1,5 АТФ) срещу ~2,5 АТФ за НАДH', 'ФАДH₂ и НАДH произвеждат еднакво АТФ', 'ФАДH₂ не участва в производството на АТФ'],
+          correct: 1,
+          explanation: 'НАДH дарява електрони на Комплекс I на ЕТВ и задвижва изпомпването на повече H⁺ — произвежда ~2,5 АТФ. ФАДH₂ дарява електрони на Комплекс II (влиза по-„надолу" по веригата) и задвижва изпомпването на по-малко H⁺ — произвежда ~1,5 АТФ.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

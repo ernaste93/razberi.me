@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Неорганични съединения — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem11-neorganichni-saedinenia-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem11-neorganichni-saedinenia-quiz-2.html',
+      lessonUrl:   '/lessons/chem11-neorganichni-saedinenia.html',
+      lessonName:  'Неорганични съединения',
+      eyebrow:     'ХИМИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Неорганични съединения — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Кое от следните е киселинен оксид?',
+          options: ['CaO', 'Na₂O', 'SO₃', 'MgO'],
+          correct: 2,
+          explanation: 'SO₃ (серен триоксид) е киселинен оксид — оксид на неметал (S). Реагира с вода: SO₃ + H₂O → H₂SO₄. CaO, Na₂O и MgO са основни оксиди — оксиди на метали, реагират с киселини и вода (алкали).'
+        },
+        {
+          q: 'Какво се получава при реакцията CaO + H₂O → ?',
+          options: ['CaCO₃', 'Ca(OH)₂', 'CaCl₂', 'CaSO₄'],
+          correct: 1,
+          explanation: 'CaO (негасена вар) реагира бурно с вода: CaO + H₂O → Ca(OH)₂ (гасена вар). Реакцията е силно екзотермична. Ca(OH)₂ е разтворима (умерено) основа (алкали), прилагана в строителството и пречистването на вода.'
+        },
+        {
+          q: 'Кое вещество е амфотерен хидроксид?',
+          options: ['NaOH', 'KOH', 'Al(OH)₃', 'Ca(OH)₂'],
+          correct: 2,
+          explanation: 'Al(OH)₃ е амфотерен: реагира с HCl (Al(OH)₃ + 3HCl → AlCl₃ + 3H₂O) и с NaOH (Al(OH)₃ + NaOH → NaAlO₂ + 2H₂O). NaOH, KOH и Ca(OH)₂ са само основи (алкали), не реагират с основи.'
+        },
+        {
+          q: 'При реакцията H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O, какво е Na₂SO₄?',
+          options: ['Киселина', 'Основа', 'Сол', 'Оксид'],
+          correct: 2,
+          explanation: 'Na₂SO₄ (натриев сулфат) е сол — продукт на реакцията между H₂SO₄ (киселина) и NaOH (основа). Солите са йонни съединения от метален катион (Na⁺) и киселинен анион (SO₄²⁻).'
+        },
+        {
+          q: 'Реакцията CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑ е:',
+          options: ['Сол + основа', 'Сол + киселина', 'Оксид + вода', 'Неутрализация'],
+          correct: 1,
+          explanation: 'CaCO₃ е сол (карбонат), HCl е киселина. Реакцията е от тип „сол + киселина → нова сол + нова киселина". CO₂ се отделя като газ, защото H₂CO₃ е нестабилна и се разлага. Реакцията е качествена за карбонати.'
+        },
+        {
+          q: 'Кое от изброените е средна сол?',
+          options: ['NaHCO₃ (бикарбонат)', 'NaHSO₄', 'Na₂SO₄', 'MgOHCl'],
+          correct: 2,
+          explanation: 'Na₂SO₄ е средна сол — H₂SO₄ е напълно неутрализирана. NaHCO₃ е кисела сол (има H в аниона). NaHSO₄ е кисела сол (само едната H на H₂SO₄ е заместена). MgOHCl е основна сол (съдържа OH).'
+        },
+        {
+          q: 'Кое от следните ще реагира с NaOH?',
+          options: ['NaCl', 'SO₃', 'Na₂SO₄', 'KNO₃'],
+          correct: 1,
+          explanation: 'SO₃ е киселинен оксид — реагира с основа: SO₃ + 2NaOH → Na₂SO₄ + H₂O. NaCl, Na₂SO₄ и KNO₃ са соли от силна киселина и силна основа — хидролизират незначително и практически не реагират с NaOH.'
+        },
+        {
+          q: 'Какъв е продуктът от реакцията Fe₂O₃ + 3H₂SO₄ → ?',
+          options: ['Fe(OH)₃ + SO₃', 'Fe₂(SO₄)₃ + 3H₂O', 'FeSO₄ + H₂O', 'FeO + H₂SO₄'],
+          correct: 1,
+          explanation: 'Fe₂O₃ (основен оксид) + H₂SO₄ (киселина) → сол + вода. Fe₂O₃ + 3H₂SO₄ → Fe₂(SO₄)₃ + 3H₂O. Fe е в степен +3 в Fe₂O₃, така и в Fe₂(SO₄)₃.'
+        },
+        {
+          q: 'CuSO₄ + 2NaOH → Cu(OH)₂↓ + Na₂SO₄. Каква е утайката?',
+          options: ['Синя утайка от Cu(OH)₂', 'Бяла утайка от NaOH', 'Зелена утайка от Na₂SO₄', 'Черна утайка от CuO'],
+          correct: 0,
+          explanation: 'Cu(OH)₂ е синя утайка — неразтворим хидроксид на мед(II). Реакцията е качествена за Cu²⁺ йони. При нагряване: Cu(OH)₂ → CuO (черен) + H₂O. Реакцията се използва в аналитичната химия за доказване на медни йони.'
+        },
+        {
+          q: 'Какво е CO₂ — киселинен оксид или основен оксид?',
+          options: ['Основен оксид (реагира с киселини)', 'Киселинен оксид (реагира с основи)', 'Амфотерен оксид', 'Безразличен оксид'],
+          correct: 1,
+          explanation: 'CO₂ е киселинен оксид — оксид на неметал (C в +4). Реагира с вода: CO₂ + H₂O → H₂CO₃. Реагира с основа: CO₂ + 2NaOH → Na₂CO₃ + H₂O. Не реагира с киселини. SiO₂ е особен — киселинен оксид, но не реагира с вода.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

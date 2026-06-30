@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Строеж и функции на клетката — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio11-kletkata-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio11-kletkata-quiz-3.html',
+      lessonUrl:   '/lessons/bio11-kletkata.html',
+      lessonName:  'Строеж и функции на клетката',
+      eyebrow:     'БИОЛОГИЯ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Строеж и функции на клетката — Тест 2',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Какви са фазите на митозата в правилен ред?',
+          options: ['Метафаза → Профаза → Анафаза → Телофаза', 'Профаза → Метафаза → Анафаза → Телофаза', 'Анафаза → Профаза → Метафаза → Телофаза', 'Профаза → Анафаза → Метафаза → Телофаза'],
+          correct: 1,
+          explanation: 'Митозата протича в четири фази: Профаза (кондензиране на хромозоми), Метафаза (наредждане по екватора), Анафаза (разделяне на хроматиди), Телофаза (образуване на ядра и цитокинеза).'
+        },
+        {
+          q: 'Коя от следните структури е характерна САМО за животинските клетки?',
+          options: ['Митохондрия', 'Клетъчна мембрана', 'Центриол', 'Рибозома'],
+          correct: 2,
+          explanation: 'Центриолите присъстват в животинските клетки и участват в образуването на делителното вретено по време на митоза. При повечето растения центриолите отсъстват, но делителното вретено все пак се формира.'
+        },
+        {
+          q: 'Какво е функцията на ядреното ядърце (нуклеолус)?',
+          options: ['Синтез на ДНК', 'Синтез на рибозомна РНК и сглобяване на рибозомни субединици', 'Транспорт на белтъци', 'Регулиране на клетъчното делене'],
+          correct: 1,
+          explanation: 'Ядърцето (нуклеолусът) е специализирана зона в ядрото, в която се синтезира рибозомна РНК (рРНК) и се сглобяват рибозомните субединици. Те след това излизат в цитоплазмата през ядрените пори.'
+        },
+        {
+          q: 'В коя фаза на митозата хромозомите са наредени по екватора на клетката?',
+          options: ['Профаза', 'Метафаза', 'Анафаза', 'Телофаза'],
+          correct: 1,
+          explanation: 'В метафазата хромозомите достигат максимална кондензация и се нареждат по екватора на клетката (метафазна плоча). Нишките на делителното вретено са захванали центромерите на всяка хромозома.'
+        },
+        {
+          q: 'Гладкият ендоплазмен ретикулум (ГЕПр) е специализиран за:',
+          options: ['Синтез на секреторни белтъци', 'Синтез на липиди и детоксикация', 'Разграждане на хранителни вещества', 'Производство на АТФ'],
+          correct: 1,
+          explanation: 'Гладкият ЕПР не носи рибозоми и е специализиран за синтез на липиди, стероидни хормони и детоксикация на вредни вещества. Освен това складира Ca²⁺ йони, важни за мускулното съкращение.'
+        },
+        {
+          q: 'Какво представляват кристите на митохондрията?',
+          options: ['Външната мембрана на митохондрията', 'Вгъвания на вътрешната мембрана', 'Рибозомите в митохондрията', 'Матриксът на митохондрията'],
+          correct: 1,
+          explanation: 'Кристите са вгъвания на вътрешната митохондриална мембрана. Те значително увеличават повърхността на вътрешната мембрана, където се намират АТФ синтазите и ензимните комплекси на електронно-транспортната верига.'
+        },
+        {
+          q: 'Коя теория обяснява произхода на митохондриите и хлоропластите?',
+          options: ['Теория на еволюцията на Дарвин', 'Ендосимбионтна теория', 'Теория на спонтанното зараждане', 'Клетъчна теория на Шлайден-Шван'],
+          correct: 1,
+          explanation: 'Ендосимбионтната теория (Маргулис) предполага, че митохондриите и хлоропластите произхождат от прокариоти, погълнати от ранни еукариоти. Доказателства: собствена кръгова ДНК, рибозоми, двойна мембрана.'
+        },
+        {
+          q: 'Кой компонент на цитоскелета изгражда делителното вретено при митоза?',
+          options: ['Актинови нишки (микрофиламенти)', 'Интермедиерни нишки', 'Микротубули (тубулинови нишки)', 'Протеинови фибри'],
+          correct: 2,
+          explanation: 'Делителното вретено е изградено от микротубули (тубулинови нишки). Те се прикрепват към кинетохорите на хромозомите и теглят хроматидите към полюсите на клетката по време на анафазата.'
+        },
+        {
+          q: 'Каква е ролята на ядрените пори?',
+          options: ['Синтез на ДНК', 'Транспорт на молекули между ядрото и цитоплазмата', 'Произвеждане на АТФ', 'Разграждане на белтъци'],
+          correct: 1,
+          explanation: 'Ядрените пори са канали в двойната ядрена мембрана, регулиращи транспорта между ядрото и цитоплазмата. Те пропускат иРНК (навън от ядрото) и белтъци (навътре в ядрото).'
+        },
+        {
+          q: 'Каква е разликата между хроматин и хромозоми?',
+          options: ['Хроматинът е само в прокариоти, а хромозомите — в еукариоти', 'Хроматинът е разхлабена ДНК-белтъчна структура, а хромозомите са кондензирани при делене', 'Хроматинът съдържа само РНК, а хромозомите — само ДНК', 'Няма разлика, двата термина са синоними'],
+          correct: 1,
+          explanation: 'Хроматинът е комплекс от ДНК и хистонови белтъци в неделяща се клетка — разхлабен и достъпен за транскрипция. По време на клетъчното делене хроматинът се кондензира в хромозоми, видими под микроскоп.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

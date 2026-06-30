@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Аритметична и геометрична прогресия · Математика 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .formula-block { background: #f0f4ff; border: 1.5px solid #c7d2fe; border-radius: 12px; padding: 16px 20px; margin: 16px 0; text-align: center; font-size: 17px; font-weight: 800; color: var(--accent); letter-spacing: 0.02em; }
+    .formula-block .formula-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; display: block; }
+    .formula-inline { background: #eef2ff; color: var(--accent); padding: 1px 7px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .example-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.8; }
+    .example-block strong { color: var(--accent); }
+    .example-step { display: flex; gap: 10px; align-items: flex-start; justify-content: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; width: 100%; }
+    .example-step:last-child { border-bottom: none; }
+    .example-step > div:last-child { flex: 1; }
+    .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+    .compare-card { border: 1.5px solid var(--line); border-radius: 12px; padding: 14px; font-size: 13px; }
+    .compare-card.ap { border-color: #93c5fd; background: #eff6ff; }
+    .compare-card.gp { border-color: #86efac; background: #f0fdf4; }
+    .compare-card .cc-title { font-weight: 800; font-size: 15px; margin-bottom: 8px; }
+    .compare-card.ap .cc-title { color: #1d4ed8; }
+    .compare-card.gp .cc-title { color: #16a34a; }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>/</span>
+        <a href="/urotsi.html">Математика · Преговор 11 клас</a><span>/</span>
+        <span>Аритметична и геометрична прогресия</span>
+      </div>
+      <div class="lesson-tag">Математика · 11 клас · Преговор</div>
+      <h1 class="lesson-title">Аритметична и геометрична прогресия</h1>
+      <div class="lesson-meta">Редици · Формули · Суми · ~10 мин четене</div>
+      <div class="lesson-divider"></div>
+
+      <div class="lesson-body">
+
+        <!-- 1. Въведение -->
+        <div class="section-title">1. Какво е прогресия?</div>
+        <p>Прогресията е специален вид <strong>числова редица</strong> — наредена поредица от числа, при която всеки следващ член се получава по точно определено правило. В математиката изучаваме два основни типа: <strong>аритметична прогресия (АП)</strong> и <strong>геометрична прогресия (ГП)</strong>. Те се срещат навсякъде — от лихвени сметки и вноски до физика и компютърни алгоритми.</p>
+        <p>Познаването на тези редици позволява бързо да намерим произволен член или сумата на много членове, без да ги изброяваме един по един.</p>
+
+        <div class="lesson-divider"></div>
+
+        <!-- 2. АП - определение -->
+        <div class="section-title">2. Аритметична прогресия (АП)</div>
+        <p>Казваме, че редицата a₁, a₂, a₃, … е <strong>аритметична прогресия</strong>, ако разликата между всеки два последователни члена е постоянна. Тази постоянна се нарича <strong>разлика на прогресията</strong> и се означава с <strong>d</strong>.</p>
+
+        <div class="formula-block">
+          <span class="formula-label">Определение за АП</span>
+          aₙ₊₁ − aₙ = d = const, за всяко n ≥ 1
+        </div>
+
+        <p>Ако d &gt; 0, прогресията е <strong>растяща</strong>. Ако d &lt; 0, прогресията е <strong>намаляваща</strong>. Ако d = 0, всички членове са равни — говорим за <strong>константна редица</strong>.</p>
+
+        <p><strong>Примери за АП:</strong></p>
+        <ul style="margin: 0 0 12px 20px; line-height: 2;">
+          <li>2, 5, 8, 11, 14, … (d = 3, растяща)</li>
+          <li>10, 7, 4, 1, −2, … (d = −3, намаляваща)</li>
+          <li>1, 1, 1, 1, … (d = 0, константна)</li>
+        </ul>
+
+        <div class="section-title" style="margin-top:18px;">2а. Общ член на АП</div>
+        <p>За да намерим n-тия член на АП, не е нужно да изброяваме всички предишни. Достатъчно е да знаем първия член a₁ и разликата d:</p>
+
+        <div class="formula-block">
+          <span class="formula-label">Общ член на аритметична прогресия</span>
+          aₙ = a₁ + (n − 1) · d
+        </div>
+
+        <p>Тази формула следва директно от определението: всеки нов член добавя d към предишния, следователно n-тият член добавя d точно (n−1) пъти към a₁.</p>
+
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">📐</div>
+            <div class="key-point-text"><strong>aₙ = a₁ + (n−1)·d</strong> — общ член на АП. Знаейки a₁ и d, можем да намерим произволен член мигновено.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">🔁</div>
+            <div class="key-point-text"><strong>Средна стойност:</strong> всеки член на АП е средноаритметичното на двата си съседа: aₙ = (aₙ₋₁ + aₙ₊₁) / 2.</div>
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top:18px;">2б. Сума на първите n члена на АП</div>
+        <p>Намирането на сумата S_n = a₁ + a₂ + … + aₙ е класическа задача. Гаус е открил елегантна формула още като ученик: ако напишем сумата наред и я напишем наред наобратно, всяка двойка членове дава едно и също.</p>
+
+        <div class="formula-block">
+          <span class="formula-label">Сума на АП — две еквивалентни форми</span>
+          Sₙ = n · (a₁ + aₙ) / 2 &nbsp;&nbsp;=&nbsp;&nbsp; n · (2a₁ + (n−1)·d) / 2
+        </div>
+
+        <p>Първата форма е удобна, когато знаем първия и последния член. Втората форма е удобна, когато знаем само a₁ и d.</p>
+
+        <div class="example-block">
+          <strong>Пример 1:</strong> Намерете сумата на първите 20 члена на АП с a₁ = 3 и d = 4.
+          <div class="example-step">
+            <div class="step-num">1</div>
+            <div>Намираме a₂₀ = a₁ + (20 − 1) · d = 3 + 19 · 4 = 3 + 76 = <strong>79</strong></div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">2</div>
+            <div>S₂₀ = 20 · (a₁ + a₂₀) / 2 = 20 · (3 + 79) / 2 = 20 · 41 = <strong>820</strong></div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">3</div>
+            <div>Проверка с втората форма: S₂₀ = 20 · (2·3 + 19·4) / 2 = 20 · (6 + 76) / 2 = 20 · 41 = <strong>820 ✓</strong></div>
+          </div>
+        </div>
+
+        <div class="example-block">
+          <strong>Пример 2:</strong> 5-тият член на АП е 17, а 12-тият член е 38. Намерете a₁ и d.
+          <div class="example-step">
+            <div class="step-num">1</div>
+            <div>a₅ = a₁ + 4d = 17 и a₁₂ = a₁ + 11d = 38. Изваждаме: 7d = 21, откъдето <strong>d = 3</strong>.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">2</div>
+            <div>От a₁ + 4·3 = 17: a₁ = 17 − 12 = <strong>5</strong>.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">3</div>
+            <div>Прогресията: 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 38, … ✓</div>
+          </div>
+        </div>
+
+        <div class="lesson-divider"></div>
+
+        <!-- 3. ГП - определение -->
+        <div class="section-title">3. Геометрична прогресия (ГП)</div>
+        <p>Казваме, че редицата b₁, b₂, b₃, … е <strong>геометрична прогресия</strong>, ако частното между всеки два последователни члена е постоянно. Тази постоянна се нарича <strong>знаменател на прогресията</strong> и се означава с <strong>q</strong>. Изисква се b₁ ≠ 0 и q ≠ 0.</p>
+
+        <div class="formula-block">
+          <span class="formula-label">Определение за ГП</span>
+          bₙ₊₁ / bₙ = q = const, за всяко n ≥ 1
+        </div>
+
+        <p>Ако |q| &gt; 1, прогресията расте по абсолютна стойност. Ако 0 &lt; |q| &lt; 1, прогресията клони към нула. Ако q &lt; 0, знакът на членовете се редува.</p>
+
+        <p><strong>Примери за ГП:</strong></p>
+        <ul style="margin: 0 0 12px 20px; line-height: 2;">
+          <li>2, 6, 18, 54, … (q = 3, растяща)</li>
+          <li>64, 16, 4, 1, 1/4, … (q = 1/4, намаляваща)</li>
+          <li>1, −2, 4, −8, … (q = −2, знакочередуваща)</li>
+        </ul>
+
+        <div class="section-title" style="margin-top:18px;">3а. Общ член на ГП</div>
+
+        <div class="formula-block">
+          <span class="formula-label">Общ член на геометрична прогресия</span>
+          bₙ = b₁ · qⁿ⁻¹
+        </div>
+
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">📐</div>
+            <div class="key-point-text"><strong>bₙ = b₁ · qⁿ⁻¹</strong> — общ член на ГП. Множим b₁ по q точно (n−1) пъти.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">🔁</div>
+            <div class="key-point-text"><strong>Средна стойност:</strong> всеки член на ГП е средногеометрично на двата си съседа: bₙ² = bₙ₋₁ · bₙ₊₁.</div>
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top:18px;">3б. Сума на първите n члена на ГП</div>
+        <p>Формулата за сума на ГП се извежда умно: умножаваме сумата по q и изваждаме от оригиналната. Почти всички членове се съкращават.</p>
+
+        <div class="formula-block">
+          <span class="formula-label">Сума на ГП (при q ≠ 1)</span>
+          Sₙ = b₁ · (qⁿ − 1) / (q − 1)
+        </div>
+
+        <p>При q = 1 всички членове са равни на b₁, така че S_n = n · b₁.</p>
+
+        <div class="lesson-divider"></div>
+
+        <!-- 4. Безкрайна ГП -->
+        <div class="section-title">4. Сума на безкрайна геометрична прогресия</div>
+        <p>Когато <strong>|q| &lt; 1</strong>, членовете на ГП клонят към нула и сумата на <em>безкрайно много</em> члена е <strong>крайно число</strong>. Това е едно от най-изненадващите явления в математиката.</p>
+
+        <div class="formula-block">
+          <span class="formula-label">Сума на безкрайна ГП (|q| &lt; 1)</span>
+          S = b₁ / (1 − q)
+        </div>
+
+        <p>Тази формула обяснява защо например 0.999... = 1: сумата 9/10 + 9/100 + 9/1000 + … = (9/10) / (1 − 1/10) = (9/10) / (9/10) = 1.</p>
+
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">⚠️</div>
+            <div class="key-point-text"><strong>Важно:</strong> Ако |q| ≥ 1, безкрайната сума не съществува (сумата клони към безкрайност или се люлее).</div>
+          </div>
+        </div>
+
+        <div class="lesson-divider"></div>
+
+        <!-- 5. Сравнение АП vs ГП -->
+        <div class="section-title">5. АП срещу ГП — бърза справка</div>
+
+        <div class="compare-grid">
+          <div class="compare-card ap">
+            <div class="cc-title">Аритметична прогресия</div>
+            <div style="line-height:2; font-size:12px;">
+              <div>Следващ член: + d</div>
+              <div>Общ член: a₁ + (n−1)·d</div>
+              <div>Сума: n·(a₁ + aₙ)/2</div>
+              <div>Свойство: aₙ = (aₙ₋₁ + aₙ₊₁)/2</div>
+              <div>Пример: 2, 5, 8, 11, …</div>
+            </div>
+          </div>
+          <div class="compare-card gp">
+            <div class="cc-title">Геометрична прогресия</div>
+            <div style="line-height:2; font-size:12px;">
+              <div>Следващ член: × q</div>
+              <div>Общ член: b₁ · qⁿ⁻¹</div>
+              <div>Сума: b₁·(qⁿ−1)/(q−1)</div>
+              <div>Свойство: bₙ² = bₙ₋₁·bₙ₊₁</div>
+              <div>Пример: 3, 6, 12, 24, …</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lesson-divider"></div>
+
+        <!-- 6. Решени примери -->
+        <div class="section-title">6. Решени примери</div>
+
+        <div class="example-block">
+          <strong>Пример 3 — ГП, намиране на членове:</strong> В геометрична прогресия b₃ = 12 и b₆ = 96. Намерете b₁ и q.
+          <div class="example-step">
+            <div class="step-num">1</div>
+            <div>b₃ = b₁ · q² = 12 и b₆ = b₁ · q⁵ = 96.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">2</div>
+            <div>Делим: q³ = 96/12 = 8, откъдето <strong>q = 2</strong>.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">3</div>
+            <div>От b₁ · 2² = 12: b₁ = 12/4 = <strong>3</strong>.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">4</div>
+            <div>ГП: 3, 6, 12, 24, 48, 96, … ✓</div>
+          </div>
+        </div>
+
+        <div class="example-block">
+          <strong>Пример 4 — безкрайна ГП:</strong> Намерете сумата на безкрайната прогресия 8, 4, 2, 1, 1/2, …
+          <div class="example-step">
+            <div class="step-num">1</div>
+            <div>b₁ = 8, q = 4/8 = 1/2. Тъй като |q| = 1/2 &lt; 1, безкрайната сума съществува.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">2</div>
+            <div>S = b₁ / (1 − q) = 8 / (1 − 1/2) = 8 / (1/2) = <strong>16</strong>.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">3</div>
+            <div>Проверка: 8 + 4 + 2 + 1 + 0.5 + 0.25 + … се приближава все повече до 16. ✓</div>
+          </div>
+        </div>
+
+        <div class="example-block">
+          <strong>Пример 5 — смесена задача:</strong> Три числа образуват АП. Сумата им е 21, а произведението им е 315. Намерете ги.
+          <div class="example-step">
+            <div class="step-num">1</div>
+            <div>Нека трите числа на АП са (a−d), a, (a+d). Сумата им е 3a = 21, откъдето <strong>a = 7</strong>.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">2</div>
+            <div>Произведение: (7−d) · 7 · (7+d) = 315. Опростяваме: 7 · (49 − d²) = 315.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">3</div>
+            <div>49 − d² = 45, откъдето d² = 4, т.е. <strong>d = ±2</strong>.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">4</div>
+            <div>Трите числа са <strong>5, 7, 9</strong> (или 9, 7, 5). Проверка: 5+7+9 = 21 ✓, 5·7·9 = 315 ✓.</div>
+          </div>
+        </div>
+
+        <div class="example-block">
+          <strong>Пример 6 — сума на АП с условие:</strong> Намерете сумата на всички естествени числа от 1 до 100, делящи се на 3.
+          <div class="example-step">
+            <div class="step-num">1</div>
+            <div>Числата са 3, 6, 9, …, 99 — АП с a₁ = 3, d = 3, aₙ = 99.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">2</div>
+            <div>Брой членове: n = (99 − 3)/3 + 1 = 96/3 + 1 = 32 + 1 = <strong>33</strong>.</div>
+          </div>
+          <div class="example-step">
+            <div class="step-num">3</div>
+            <div>S₃₃ = 33 · (3 + 99) / 2 = 33 · 51 = <strong>1683</strong>.</div>
+          </div>
+        </div>
+
+        <div class="lesson-divider"></div>
+
+        <!-- 7. Свойства -->
+        <div class="section-title">7. Важни свойства и бележки</div>
+
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">📌</div>
+            <div class="key-point-text"><strong>АП — свойство на средата:</strong> в АП с нечетен брой членове, средният член е равен на средноаритметичното на всички членове, т.е. на Sₙ/n.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📌</div>
+            <div class="key-point-text"><strong>ГП — свойство на симетрия:</strong> при ГП произведението на членове, еднакво отдалечени от краищата, е постоянно: b₁ · bₙ = b₂ · bₙ₋₁ = b₃ · bₙ₋₂.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📌</div>
+            <div class="key-point-text"><strong>АП и ГП заедно:</strong> ако три числа a, b, c са в АП, то 2b = a + c. Ако са в ГП, то b² = a·c. Тези условия се използват в задачи за намиране на числа.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📌</div>
+            <div class="key-point-text"><strong>Безкрайна ГП — условие:</strong> сумата на безкрайна ГП съществува единствено когато |q| &lt; 1. Формулата S = b₁/(1−q) НЕ важи за |q| ≥ 1.</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">📌</div>
+            <div class="key-point-text"><strong>Практически наблюдения:</strong> банкова лихва = ГП (умножение), равни вноски = АП (добавяне). АП расте линейно, ГП расте експоненциално.</div>
+          </div>
+        </div>
+
+        <div class="lesson-divider"></div>
+
+        <!-- 8. Обобщение -->
+        <div class="section-title">8. Обобщение на формулите</div>
+
+        <div class="key-points">
+          <div class="key-point">
+            <div class="key-point-icon">🔢</div>
+            <div class="key-point-text"><strong>АП — общ член:</strong> aₙ = a₁ + (n−1)·d</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">∑</div>
+            <div class="key-point-text"><strong>АП — сума:</strong> Sₙ = n·(a₁ + aₙ)/2 = n·(2a₁ + (n−1)·d)/2</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">🔢</div>
+            <div class="key-point-text"><strong>ГП — общ член:</strong> bₙ = b₁ · qⁿ⁻¹</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">∑</div>
+            <div class="key-point-text"><strong>ГП — сума (q ≠ 1):</strong> Sₙ = b₁·(qⁿ − 1)/(q − 1)</div>
+          </div>
+          <div class="key-point">
+            <div class="key-point-icon">∞</div>
+            <div class="key-point-text"><strong>Безкрайна ГП (|q| &lt; 1):</strong> S = b₁/(1 − q)</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="lesson-divider"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <a href="/lessons/math11-progresii-quiz.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:#fff;border-radius:99px;font-weight:800;font-size:14px;text-decoration:none;">
+          Към тест 1 →
+        </a>
+        <a href="/urotsi.html" style="font-size:13px;color:var(--muted);text-decoration:none;">← Всички уроци</a>
+      </div>
+    </div>
+  </main>
+
+  <button id="btn-ask-znaiko" onclick="document.getElementById('znaiko-panel').style.display='flex'">
+    💡 Цъкни за помощ
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни с Знайко</button>
+  </div>
+
+  <div id="znaiko-panel" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.45);align-items:flex-end;justify-content:center;">
+    <div style="background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:680px;padding:24px;max-height:80vh;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <strong style="font-size:16px;">💡 Знайко</strong>
+        <button onclick="document.getElementById('znaiko-panel').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);">✕</button>
+      </div>
+      <div id="chat-messages" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
+      <div style="display:flex;gap:8px;">
+        <input id="chat-input" type="text" placeholder="Задай въпрос..." style="flex:1;padding:10px 16px;border:1.5px solid var(--line);border-radius:99px;font-family:inherit;font-size:14px;outline:none;" />
+        <button id="chat-send" style="padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:99px;font-family:inherit;font-weight:700;cursor:pointer;">Изпрати</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Аритметична и геометрична прогресия';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

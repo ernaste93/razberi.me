@@ -1,9 +1,13 @@
 {
-  "model": "claude-sonnet-4-6",
   "permissions": {
     "allow": [
       "Skill(claude-api)",
-      "Skill(claude-api:*)"
+      "Skill(claude-api:*)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(python3)"
     ]
-  }
+  },
+  "model": "claude-sonnet-4-6"
 }

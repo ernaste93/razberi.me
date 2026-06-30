@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Прогресии — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math11-progresii-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/math11-progresii-quiz-2.html',
+      lessonUrl:   '/lessons/math11-progresii.html',
+      lessonName:  'Прогресии',
+      eyebrow:     'МАТЕМАТИКА · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Прогресии — Тест 1',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Какво е аритметична прогресия?',
+          opts: [
+            'Редица, в която всеки следващ член е умножен с константа',
+            'Редица, в която разликата между всеки два последователни члена е константа',
+            'Редица от прости числа',
+            'Редица, в която членовете са в нарастващ ред'
+          ],
+          correct: 1,
+          explanation: 'Аритметична прогресия (АП) е редица, в която разликата d = aₙ₊₁ − aₙ е постоянна за всяко n. Например 2, 5, 8, 11, ... е АП с разлика d = 3.'
+        },
+        {
+          q: 'Каква е общата формула за n-тия член на аритметична прогресия?',
+          opts: ['aₙ = a₁ · qⁿ⁻¹', 'aₙ = a₁ + (n−1)d', 'aₙ = a₁ · n', 'aₙ = a₁ + n · d'],
+          correct: 1,
+          explanation: 'aₙ = a₁ + (n−1)·d, където a₁ е първият член и d е разликата. Обяснение: от a₁ до aₙ има (n−1) стъпки, всяка от размер d.'
+        },
+        {
+          q: 'Каква е формулата за сумата на първите n члена на АП?',
+          opts: [
+            'Sₙ = n(a₁ + aₙ)',
+            'Sₙ = n(a₁ + aₙ)/2',
+            'Sₙ = a₁(1 − qⁿ)/(1 − q)',
+            'Sₙ = n·a₁ + d'
+          ],
+          correct: 1,
+          explanation: 'Sₙ = n(a₁ + aₙ)/2 — формулата на Гаус. Или еквивалентно: Sₙ = n(2a₁ + (n−1)d)/2. Идеята: средната стойност на всички членове е (a₁ + aₙ)/2, умножена по броя на членовете n.'
+        },
+        {
+          q: 'Какво е геометрична прогресия?',
+          opts: [
+            'Редица, в която разликата между членовете е постоянна',
+            'Редица, в която всеки член е в квадрат',
+            'Редица, в която отношението на всеки два последователни члена е постоянно',
+            'Редица от геометрични числа'
+          ],
+          correct: 2,
+          explanation: 'Геометрична прогресия (ГП) е редица, в която q = aₙ₊₁/aₙ е постоянно за всяко n (q се нарича знаменател или коеф. на прогресията). Пример: 3, 6, 12, 24, ... е ГП с q = 2.'
+        },
+        {
+          q: 'Каква е общата формула за n-тия член на геометрична прогресия?',
+          opts: ['bₙ = b₁ + (n−1)q', 'bₙ = b₁ · qⁿ', 'bₙ = b₁ · qⁿ⁻¹', 'bₙ = b₁ · n · q'],
+          correct: 2,
+          explanation: 'bₙ = b₁ · qⁿ⁻¹, където b₁ е първият член и q е знаменателят. Обяснение: умножаваме b₁ с q точно (n−1) пъти, за да стигнем до n-тия член.'
+        },
+        {
+          q: 'В редицата 2, 5, 8, 11, ... каква е разликата d?',
+          opts: ['2', '3', '5', '4'],
+          correct: 1,
+          explanation: '5 − 2 = 3, 8 − 5 = 3, 11 − 8 = 3. Разликата d = 3. Постоянната разлика е дефиниращото свойство на аритметичната прогресия.'
+        },
+        {
+          q: 'В геометрична прогресия 3, 6, 12, 24, ... какъв е знаменателят q?',
+          opts: ['3', '2', '6', '4'],
+          correct: 1,
+          explanation: '6/3 = 2, 12/6 = 2, 24/12 = 2. Знаменателят q = 2. Постоянното отношение е дефиниращото свойство на геометричната прогресия.'
+        },
+        {
+          q: 'При геометрична прогресия с b₁ = 5 и q = 3, какъв е b₃?',
+          opts: ['15', '30', '45', '135'],
+          correct: 2,
+          explanation: 'b₃ = b₁ · q² = 5 · 3² = 5 · 9 = 45. Или последователно: b₂ = 5·3 = 15, b₃ = 15·3 = 45. Формула: bₙ = b₁ · qⁿ⁻¹, за n=3: b₃ = 5 · 3² = 45.'
+        },
+        {
+          q: 'За АП с a₁ = 4 и d = 3, кой е 10-ият член?',
+          opts: ['30', '31', '34', '27'],
+          correct: 1,
+          explanation: 'a₁₀ = a₁ + (10−1)·d = 4 + 9·3 = 4 + 27 = 31. Формула: aₙ = a₁ + (n−1)d. Проверка: 4, 7, 10, 13, 16, 19, 22, 25, 28, 31 — да, 10-ият член е 31.'
+        },
+        {
+          q: 'Средното аритметично на два члена на АП равно ли е на члена между тях?',
+          opts: ['Не', 'Да', 'Само при d > 0', 'Само ако членовете са естествени числа'],
+          correct: 1,
+          explanation: 'Да! Средното аритметично на aₙ₋₁ и aₙ₊₁ е точно aₙ. Доказателство: (aₙ₋₁ + aₙ₊₁)/2 = ((aₙ−d) + (aₙ+d))/2 = 2aₙ/2 = aₙ. Това свойство важи за всяка АП.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>
