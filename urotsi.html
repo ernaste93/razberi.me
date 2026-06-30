@@ -534,7 +534,7 @@
           </div>
           <div>
             <div class="subject-section-name">Математика</div>
-            <div class="subject-section-sub">Очаква се скоро</div>
+            <div class="subject-section-sub">5 теми · матурна подготовка</div>
           </div>
         </div>
         <div class="lessons-grid">
@@ -769,8 +769,8 @@
         tab.style.borderColor = 'var(--accent)';
         tab.style.color = '#fff';
         const sub = tab.dataset.belSub;
-        document.getElementById('bel-sub-12klas').style.display = sub === '12klas' ? '' : 'none';
-        document.getElementById('bel-sub-pregovor').style.display = sub === 'pregovor' ? '' : 'none';
+        document.getElementById('bel-sub-12klas').style.display = sub === '12klas' ? 'block' : 'none';
+        document.getElementById('bel-sub-pregovor').style.display = sub === 'pregovor' ? 'block' : 'none';
       });
     });
   </script>
