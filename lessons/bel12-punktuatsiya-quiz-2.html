@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Пунктуационна норма · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-punktuatsiya-q2',
+      lessonUrl:  '/lessons/bel12-punktuatsiya.html',
+      lessonName: 'Пунктуационна норма',
+      eyebrow:    'БЕЛ · 12 КЛАС · ЕЗИК',
+      title:      'Куиз — Пунктуационна норма — Тест 2',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    2,
+      nextQuizUrl: '/lessons/bel12-punktuatsiya-quiz-3.html',
+      questions: [
+        { q:'Кое изречение е пунктуационно ПРАВИЛНО?', opts:['"Книгата написана преди век е класика."','"Книгата, написана преди век е класика."','"Книгата, написана преди век, е класика."','"Книгата написана, преди век е класика."'], correct:2, explanation:'„Написана преди век" е обособена причастна конструкция и се отделя с две запетаи — пред и след: „Книгата, написана преди век, е класика."' },
+        { q:'В кое изречение точката и запетаята е ПРАВИЛНО поставена?', opts:['"Той работеше усърдно; тя се грижеше за децата."','"Той работеше; усърдно, тя се грижеше."','"Той; работеше усърдно, тя се грижеше."','"Той работеше усърдно, тя; се грижеше за децата."'], correct:0, explanation:'Точката и запетаята разделя две независими, но свързани по смисъл изречения: „Той работеше усърдно; тя се грижеше за децата." Всяка от двете части е пълно изречение.' },
+        { q:'Кое изречение с подчинено изречение е правилно пунктуирано?', opts:['"Знам че ще дойдеш."','"Знам, че ще дойдеш."','"Знам, че, ще дойдеш."','"Знам, ще дойдеш."'], correct:1, explanation:'Пред допълнителното подчинено изречение, въведено с „че", се поставя запетая: „Знам, че ще дойдеш." Запетая се поставя пред всички подчинени изречения.' },
+        { q:'За какво се използва тире при вметнато изречение?', opts:['За маркиране на диалог','За изолиране на допълнително пояснение вътре в изречението','За обозначаване на края на изречение','За свързване на две думи'], correct:1, explanation:'„Той — макар и уморен — продължи пътя." — двете тирета изолират вметнатото изречение/пояснение. То може да се пропусне, без да се наруши основната мисъл.' },
+        { q:'Кое изречение НЕ изисква запетая?', opts:['"Ако вали, ще остана вкъщи."','"Той и тя заминаха заедно."','"Мари, ела тук."','"Знам, че ще се върнеш."'], correct:1, explanation:'„Той и тя заминаха заедно." — свързителният съюз „и" свързва два подлога. Преди „и" при само два елемента не се пише запетая. В другите изречения запетаята е задължителна.' },
+        { q:'Кой знак се използва при диапазони от числа (напр. стр. 15 до 20)?', opts:['Тире (—)','Полутире (–)','Запетая','Двоеточие'], correct:1, explanation:'Полутирето (–) се използва при диапазони: „стр. 15–20", „2020–2025 г.", „10–15 минути". То е по-късо от тирето (—), използвано за пауза и диалог.' },
+        { q:'Кое изречение е пунктуационно ГРЕШНО?', opts:['"Той каза: „Ще се върна.""','"— Ще се върна, — каза той."','"Той каза „Ще се върна.""','"— Ще се върна. — каза той."'], correct:2, explanation:'„Той каза „Ще се върна."" — липсва двоеточие пред пряката реч. Правилно: „Той каза: „Ще се върна."" Двоеточието е задължително пред пряка реч при авторски думи.' },
+        { q:'Какво изразява многоточието в изречението „Ако знаех… но не знаех."?', opts:['Изброяване','Колебание и незавършена мисъл','Обяснение','Диапазон'], correct:1, explanation:'„Ако знаех…" — многоточието показва незавършена мисъл, пауза, колебание. Говорителят спира да довърши условното изречение и преминава в друга посока.' },
+        { q:'Кое изречение съдържа ПРАВИЛНО употребени кавички?', opts:['"Романът „Под игото" е написан от Иван Вазов."','"Романът Под игото е написан от Иван Вазов."','"Романът (Под игото) е написан от Иван Вазов."','"Романът Под ,, игото,, е написан от Иван Вазов."'], correct:0, explanation:'Заглавията на произведения се поставят в кавички: „Под игото". Скобите са за пояснения, не за заглавия. Формата с „,," е неправилна.' },
+        { q:'В кое изречение запетаята ПРЕДИ „и" е необходима?', opts:['"Той и тя пяха заедно."','"Купих хляб и мляко."','"Той работи, и тя го подкрепя по всякакъв начин."','"Деца и родители присъстваха."'], correct:2, explanation:'„Той работи, и тя го подкрепя по всякакъв начин." — когато „и" свързва две независими изречения (всяко с подлог и сказуемо), се поставя запетая. При две думи (не изречения) — без запетая.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

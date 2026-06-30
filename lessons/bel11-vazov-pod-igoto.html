@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Иван Вазов — Под игото · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a>
+        <span>›</span>
+        Иван Вазов — Под игото
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Иван Вазов — „Под игото"</div>
+          <div class="lesson-meta">Теми · Герои · Структура · Историческа основа · ~12 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. ЗА АВТОРА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Иван Вазов — живот и значение</div>
+            <div class="lesson-body">
+              <p><strong>Иван Вазов (1850–1921)</strong> е роден в Сопот. Смятан е за „Патриарх на българската литература" — автор, чието творчество обхваща почти всички жанрове (поезия, проза, драма) и исторически периоди (Възраждане, Освобождение, следосвобожденска България). Живее в изгнание в Румъния и Одеса, когато пише „Под игото" (1889–1890).</p>
+              <p>Романът „Под игото" е <strong>първият значителен роман в българската литература</strong>. Написан е по спомени и свидетелства за Априлското въстание от 1876 г. Публикуван е първо на части в списание „Денница" (Одеса), после като книга в Пловдив (1894).</p>
+            </div>
+
+            <!-- ══ 2. ИСТОРИЧЕСКА ОСНОВА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Историческа основа — Априлското въстание</div>
+            <div class="lesson-body">
+              <p><strong>Априлското въстание (1876)</strong> е най-голямото въоръжено въстание на българите срещу османската власт. Организирано от Гюргевския революционен комитет начело с Георги Бенковски и Стефан Стамболов. Обхваща четири революционни окръга: Търновски, Панагюрски, Врачански и Сливенски.</p>
+              <p>Въстанието е <strong>потушено жестоко</strong> — масови убийства в Батак, Брацигово, Перущица. Гибелта на Панагюрище и Клисура. Трагедията привлича международно внимание (Виктор Юго, Уилям Гладстон), което допринася за Руско-турската освободителна война (1877–1878) и Освобождението на България.</p>
+              <p>Вазов е очевидец и участник в тези събития — <strong>романът е исторически, но и автобиографичен</strong>.</p>
+            </div>
+
+            <!-- ══ 3. СТРУКТУРА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Структура на романа</div>
+            <div class="lesson-body">
+              <p>Романът се състои от <strong>38 глави</strong>, разделени в три части (неофициално). Действието се развива в малкия град <strong>Бяла черква</strong> (измислен прототип на Сопот) в навечерието, по време и след Априлското въстание.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📖</div>
+                <div class="key-point-text"><strong>Първа част (ч. I–XII)</strong> — Запознаване с героите и средата. Пристигането на Огнянов в Бяла черква, началото на националноосвободителната дейност. Картини на предвъстанническия бит.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📖</div>
+                <div class="key-point-text"><strong>Втора част (ч. XIII–XXVI)</strong> — Подготовка за въстанието. Четата на Бенковски. Въстанието избухва. Първоначален ентусиазъм и героизъм.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📖</div>
+                <div class="key-point-text"><strong>Трета част (ч. XXVII–XXXVIII)</strong> — Потушаването на въстанието. Трагичният финал: гибелта на Огнянов и Рада. Но и надеждата — руските войски идват.</div>
+              </div>
+            </div>
+
+            <!-- ══ 4. ГЛАВНИ ГЕРОИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Главни герои</div>
+            <div class="lesson-body">
+              <p><strong>Иван Краличевски — Огнянов</strong> е централният герой на романа. Беглец от затвора, пристига в Бяла черква под псевдоним „Боримечката". Учител, организатор на въстанието, национален герой и романтична фигура. Образът му съчетава:</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚔️</div>
+                <div class="key-point-text"><strong>Национален революционер:</strong> Огнянов посвещава живота си на свободата на народа. Убеден, решителен, ръководи конспиративната дейност.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❤️</div>
+                <div class="key-point-text"><strong>Романтичен любовник:</strong> Обича Рада Госпожина. Любовната история е вплетена в националната борба — личното и общественото са неделими.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💀</div>
+                <div class="key-point-text"><strong>Трагичен герой:</strong> Загива в боевете. Смъртта му е показана като жертва за свободата — не безсмислена гибел, а героично дело.</div>
+              </div>
+            </div>
+            <div class="lesson-body" style="margin-top:14px;">
+              <p><strong>Рада Госпожина</strong> е любимата на Огнянов. Учителка в Бяла черква, красива и духовна жена. Тя олицетворява:</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🌸</div>
+                <div class="key-point-text"><strong>Жената на Възраждането:</strong> Образована, патриотична, участва в националноосвободителното движение. Не е пасивна — помага, укрива, действа.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌸</div>
+                <div class="key-point-text"><strong>Любовта в епохата:</strong> Нейната любов към Огнянов е чиста и дълбока, но подчинена на националните идеали. Личното щастие е жертвано за общото дело.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌸</div>
+                <div class="key-point-text"><strong>Трагичен финал:</strong> Рада умира при потушаването на въстанието — нейната смърт символизира цената, платена за свободата.</div>
+              </div>
+            </div>
+            <div class="lesson-body" style="margin-top:14px;">
+              <p><strong>Чорбаджи Марко Иванов (Соколов)</strong> е представител на богатото, консервативно съсловие в Бяла черква. Сложен образ — не е просто отрицателен герой:</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🏠</div>
+                <div class="key-point-text"><strong>Консерватор и прагматик:</strong> Не вярва в успеха на въстанието. Притеснен за имота и семейството. Смята въстаниците за безразсъдни мечтатели.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏠</div>
+                <div class="key-point-text"><strong>Вътрешна трансформация:</strong> Когато конфликтът ескалира, той осъзнава важността на националното дело. Финалната му позиция е по-сложна — не отрицателна.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏠</div>
+                <div class="key-point-text"><strong>Социален тип:</strong> Представлява общественото колебание — голяма част от бъргарите са като него: патриотични, но страхуващи се от репресии.</div>
+              </div>
+            </div>
+            <div class="lesson-body" style="margin-top:14px;">
+              <p><strong>Бай Мичо</strong> — комичен, но симпатичен образ на дребния гражданин. Страхлив, но патриотичен по сърце. Функцията му е да показва хумористично противоречието между желанието и действието.</p>
+              <p><strong>Поп Ставри</strong> — свещеник, представящ традиционната религиозна и обществена роля на православното духовенство в националноосвободителното движение.</p>
+              <p><strong>Мунчо</strong> — „безумецът" в романа. Лудостта му е форма на мъдрост — той казва истини, които другите не смеят да изкажат. Традиционен образ на юрода (светия луд) в българската литература.</p>
+            </div>
+
+            <!-- ══ 5. ТЕМИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Основни теми</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🏴</div>
+                <div class="key-point-text"><strong>Национална свобода и героизъм:</strong> Централна тема — борбата за освобождение от османската власт. Романът изобразява масовия, колективен героизъм на народа.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❤️</div>
+                <div class="key-point-text"><strong>Любов и жертва:</strong> Личното щастие е подчинено на националното дело. Огнянов и Рада жертват любовта и живота си за свободата.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">👥</div>
+                <div class="key-point-text"><strong>Народният бит и характер:</strong> Вазов рисува живи, конкретни хора — не герои от легендата, а реални хора с страхове, слабости и величие. Народопсихология.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎭</div>
+                <div class="key-point-text"><strong>Трагичност и надежда:</strong> Въстанието е потушено — трагедия. Но от пепелта идва Освобождението — надежда. Двуполюсната структура: гибел и раждане.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚖️</div>
+                <div class="key-point-text"><strong>Социално разслоение:</strong> Чорбаджиите срещу революционерите. Страхът на богатите срещу ентусиазма на идеалистите. Вазов не идеализира — показва и противоречията.</div>
+              </div>
+            </div>
+
+            <!-- ══ 6. СТИЛ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стил и жанрови особености</div>
+            <div class="lesson-body">
+              <p><strong>Жанр:</strong> Исторически роман с реалистична основа и романтични елементи. Вазов съчетава документалността (реални факти, лица, места) с художественото преосмисляне.</p>
+              <p><strong>Реализъм:</strong> Конкретни, живи описания на бита — пазарът, кръчмата, домовете, природата. Психологически убедителни персонажи. Критичен поглед към слабостите на народа.</p>
+              <p><strong>Романтизъм:</strong> Идеализация на героизма. Огнянов е романтичен герой — красив, смел, загадъчен. Любовната линия е романтично очертана.</p>
+              <p><strong>Хумор и ирония:</strong> Вазов използва хумор за разграничаване на типовете. Бай Мичо, Мунчо, комичните сцени с чорбаджиите — те разсмиват и разобличават едновременно.</p>
+              <p><strong>Цитат от романа:</strong></p>
+            </div>
+            <div class="poem-block">„България е тук! Тя трепти в тоя въздух, в тия планини, в тия сърца, в тоя огън!"
+<div class="poem-author">— Иван Вазов, „Под игото"</div></div>
+
+            <!-- ══ 7. ЗНАЧЕНИЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Значение на романа</div>
+            <div class="lesson-body">
+              <p>„Под игото" е <strong>националният роман на България</strong> — той кодифицира националната памет за Априлското въстание. Превеждан е на над 30 езика. Особено значим е за формирането на националната идентичност.</p>
+              <p>Романът е матурна тема не само заради художествените му качества, но и защото е ключов документ на <strong>националното самосъзнание</strong>: как си представяме борбата за свобода, какъв е националният характер, какво пазим в историческата памет.</p>
+            </div>
+
+            <!-- ══ 8. ОБОБЩЕНИЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното за матурата</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Иван Вазов (1850–1921), „Патриарх на българската литература".</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Роман:</strong> „Под игото" (1889–1890, публ. 1894) — първият значителен роман в нашата литература.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Историческа основа:</strong> Априлското въстание 1876 г. — организирано от Гюргевския комитет.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Огнянов:</strong> Главен герой — революционер, любовник, трагичен герой. Загива за свободата.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Рада:</strong> Любимата на Огнянов — образована, патриотична жена на Възраждането. Умира при потушаването.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Соколов (Марко):</strong> Чорбаджия — консерватор и прагматик, но не еднозначно отрицателен. Символ на колебаещото се гражданство.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Теми:</strong> Национална свобода, любов и жертва, народен характер, трагедия и надежда.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Жанр:</strong> Исторически роман, съчетаващ реализъм и романтизъм.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Значение:</strong> Националният роман на България — превеждан на 30+ езика, ключов за националната идентичност.</div></div>
+            </div>
+
+          </div><!-- /#lesson-content -->
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel11-vazov-pod-igoto-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel11-vazov-pod-igoto-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel11-vazov-pod-igoto-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div><!-- /.lesson-panel -->
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Иван Вазов — „Под игото"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

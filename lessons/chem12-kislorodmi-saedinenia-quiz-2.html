@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Кислородни съединения · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem12-kislorodni-saedinenia-q2',
+      lessonUrl:   '/lessons/chem12-kislorodmi-saedinenia.html',
+      lessonName:  'Органична химия — кислородни съединения',
+      eyebrow:     'ХИМИЯ · 12 КЛАС',
+      title:       'Куиз — Кислородни съединения — Тест 2',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     2,
+      nextQuizUrl: '/lessons/chem12-kislorodmi-saedinenia-quiz-3.html',
+      questions: [
+        { q:'При окисляване на първичен алкохол се получава:', opts:['Кетон','Алдехид (при леко окисление) или карбоксилна киселина (при силно)','Естер','Алкен'], correct:1, explanation:'При леко окисление на първичен алкохол (R–CH₂OH) се получава алдехид (R–CHO); при по-силно окисление — карбоксилна киселина (R–COOH). При окисление на вторичен алкохол (R–CHOH–R\') се получава кетон.' },
+        { q:'Какъв реагент се използва за разграничаване на алдехид от кетон?', opts:['Лакмусова хартия','Реактив на Толенс (амонячен разтвор на AgNO₃) — алдехидите дават „сребърно огледало"','Бромова вода','Концентрирана H₂SO₄'], correct:1, explanation:'Реактивът на Толенс (аргентоаминов разтвор) се редуцира само от алдехиди до метално сребро — „сребърно огледало" по стените на съда. Кетоните не реагират. Реактивът на Фелинг дава тухленочервена утайка (Cu₂O) само с алдехиди.' },
+        { q:'Хидролизата на естер в присъствие на основа (осапунване) дава:', opts:['Алдехид + вода','Алкохол + сол на карбоксилна киселина','Кетон + вода','Два различни алкохола'], correct:1, explanation:'При алкална хидролиза (осапунване) на естер: R–COO–R\' + NaOH → R–COONa (сол) + R\'–OH (алкохол). Киселинната хидролиза дава алкохол + карбоксилна киселина (обратна реакция на естерификация).' },
+        { q:'Формалдехидът (метанал) HCHO се използва за:', opts:['Гориво за автомобили','Дезинфекция (формалин) и производство на пластмаси','Хранителна добавка','Лекарствено средство'], correct:1, explanation:'Формалдехидът (40%-ен воден разтвор = формалин) се използва за консервиране на биологични препарати и дезинфекция. Освен това е суровина за производство на фенолформалдехидни смоли (пластмаси, лепила).' },
+        { q:'Кое от следните е ненаситен алкохол?', opts:['Метанол','Пропанол','Алилов алкохол (пропен-2-ол-1, CH₂=CH–CH₂OH)','Глицерол'], correct:2, explanation:'Алиловият алкохол (пропен-2-ол-1) съдържа едновременно хидроксилна група (алкохол) и двойна C=C връзка (ненаситеност). Метанол, пропанол и глицерол са наситени алкохоли.' },
+        { q:'Какъв тип реакция е дехидратацията на алкохол?', opts:['Присъединяване','Заместване','Елиминиране (отнемане на вода с образуване на алкен)','Окисляване'], correct:2, explanation:'При нагряване на алкохол с конц. H₂SO₄ при висока температура протича елиминиране: от молекулата се отнемат H₂O, а се образува алкен. Пример: C₂H₅OH → CH₂=CH₂ + H₂O (при ~180°C).' },
+        { q:'Оцетноетиловият естер (етилацетат) CH₃COOC₂H₅ се получава от:', opts:['Метанол + оцетна киселина','Етанол + оцетна киселина','Пропанол + мравчена киселина','Глицерол + три молекули оцетна киселина'], correct:1, explanation:'Етилацетат = естерификация на етанол (C₂H₅OH) с оцетна киселина (CH₃COOH): CH₃COOH + C₂H₅OH → CH₃COOC₂H₅ + H₂O. Той е широко използван разтворител с характерна плодова миризма.' },
+        { q:'Маслената киселина (бутанова киселина C₃H₇COOH) е известна с:', opts:['Приятна цветна миризма','Характерна остра неприятна миризма на развалено масло','Отсъствие на мирис','Миризма на горски плодове'], correct:1, explanation:'Маслената (бутанова) киселина е карбоксилна киселина с 4 въглеродни атома. Тя е с характерна неприятна миризма — тя се образува при разваляне на масло и мазнини чрез хидролиза и окисляване.' },
+        { q:'Кое от изброените е ВЕРНИЯТ ред по нарастване на точките на кипене при нормални алкохоли с нарастваща верига?', opts:['Точките на кипене намаляват','Точките на кипене нарастват','Не се влияят от дължината на веригата','Точките на кипене са идентични'], correct:1, explanation:'При нарастване на въглеродната верига нарастват: молярната маса, повърхността на молекулата и Ван дер Ваалсовите сили. Освен това всички алкохоли образуват водородни връзки поради –OH групата, което значително повишава точките на кипене в сравнение с алкани от същата молярна маса.' },
+        { q:'Коя от следните формули представлява кетон?', opts:['CH₃CHO','CH₃COOH','CH₃COCH₃','CH₃CH₂OH'], correct:2, explanation:'CH₃COCH₃ е пропанон (ацетон) — кетон с карбонилна група между два метилови остатъка. CH₃CHO е ацеталдехид (алдехид), CH₃COOH е оцетна киселина, CH₃CH₂OH е етанол (алкохол).' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

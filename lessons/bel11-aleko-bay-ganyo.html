@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Алеко Константинов — Бай Ганьо · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a>
+        <span>›</span>
+        Алеко — Бай Ганьо
+      </div>
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Родното и чуждото в „Бай Ганьо" на Алеко Константинов</div>
+          <div class="lesson-meta">Фейлетонен цикъл · Сатира · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">1. За автора</div>
+            <div class="lesson-body">
+              <p>Алеко Константинов (1863–1897) е един от най-ярките български писатели, публицисти и обществени дейци от епохата след Освобождението. Роден в Свищов, той завършва право в Одеса и работи като прокурор и адвокат, но истинската му страст е литературата и обществената сатира.</p>
+              <p>Алеко е народен представител в Народното събрание и непримирим критик на политическите нрави на следосвобожденска България. Известен е и като основател на туристическото дружество „Алеко Константинов" — той организира първото изкачване на Черни връх през 1895 г.</p>
+              <p>Убит е на 31 март 1897 г. край Пещера при нападение, насочено срещу политика Михаил Такев. Алеко загива случайно — куршумът, предназначен за Такев, го поразява. Умира едва на 33 години, оставяйки незавършен своя литературен проект.</p>
+              <p>Главните му творби са пътеписът <em>„До Чикаго и назад"</em> (1894) — блестящо описание на Световното изложение в Чикаго — и фейлетонният цикъл <em>„Бай Ганьо"</em> (1895), с който влиза в историята на българската литература.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">2. Жанрът и структурата</div>
+            <div class="lesson-body">
+              <p><em>„Бай Ганьо"</em> е издаден през 1895 г. и представлява цикъл от <strong>20 фейлетонни разказа</strong>, обединени от един и същ главен герой — търговеца на розово масло Ганьо Балкански, наречен от всички „Бай Ганьо".</p>
+              <p>Произведението се дели на <strong>два дяла</strong>:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🧳</div>
+                  <div class="key-point-text"><strong>„Бай Ганьо пътува"</strong> — разказите в първата половина проследяват Бай Ганьо в пътуванията му из Европа: Виена, Прага, Дрезден, Женева, Петербург. Европа служи като огледало, в което се отразяват неговите недостатъци.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🏛️</div>
+                  <div class="key-point-text"><strong>„Бай Ганьо се е върнал"</strong> — във втората половина героят се е завърнал в България и се е превърнал в политик и редактор на вестник. Тук сатирата е по-остра и директна — разкрива се моралното разложение в политическия живот.</div>
+                </div>
+              </div>
+              <p>Жанрово произведението съчетава черти на <strong>фейлетона</strong> (остра публицистична сатира), <strong>разказа</strong> (конкретни сцени с герои и диалози) и <strong>цикъла</strong> (единство чрез повтарящ се герой). Алеко сам го определя като „нещо в замяна на роман".</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">3. Историческият контекст</div>
+            <div class="lesson-body">
+              <p>„Бай Ганьо" е роден от болката по новата следосвобожденска действителност. След 1878 г. България се изправя пред огромно предизвикателство: в рамките на едно-две десетилетия трябва да изгради модерна европейска държава върху основите на общество, излизащо от пет века чуждо владичество.</p>
+              <p>Алеко наблюдава как редом с искреното желание за промяна се появяват и деградиралите образци на европейско подражание — хора, които копират външните форми на цивилизацията, без да усвоят нейния дух. Бай Ганьо е олицетворение именно на тази опасна пропаст.</p>
+              <p>Контекстът включва и силното руско влияние (Русия е освободителката), сблъсъка между русофили и западняци в политиката, и общото усещане сред интелигенцията, че България е на кръстопът. Алеко застава твърдо на страната на европейските ценности — но не повърхностното им наподобяване, а тяхното същинско усвояване.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">4. Темата за родното и чуждото</div>
+            <div class="lesson-body">
+              <p>Основната тема на произведението е сблъсъкът между <strong>родното</strong> и <strong>чуждото</strong> — двете начала, между които се разкъсва следосвобожденска България.</p>
+              <p><strong>Бай Ганьо пътува из Европа, но остава непроменен.</strong> Европейската цивилизация не прониква в него — той я гледа отвън, с практическия поглед на търговеца. Интересува го единствено как да спести пари, как да се нахрани евтино, как да не плаща в хотела. Красотата на Виена, музиката, театърът — всичко това не го докосва.</p>
+              <p>„Чуждото" изпълнява важна художествена функция: то е <strong>огледалото</strong>, в което се отразява Бай Ганьо. Именно защото е поставен на фона на европейски норми и ценности, неговата ограниченост, грубост и безскрупулност изпъкват толкова ярко.</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🏡</div>
+                  <div class="key-point-text"><strong>Родното</strong> в произведението не е идеализирано — то носи белезите на вековна изостаналост: практицизъм без морален компас, адаптивност без принципи, хитрост вместо разум.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🌍</div>
+                  <div class="key-point-text"><strong>Чуждото</strong> (Европа) представлява цивилизация, ред и морал — но Алеко предупреждава и срещу повърхностното му наследяване, което ражда лицемерие.</div>
+                </div>
+              </div>
+              <p>Алеко не отхвърля родното заради чуждото — той се бори за <strong>истинска промяна отвътре</strong>. Сатирата му е израз на любов и разочарование едновременно: „Аз те обичам, народе мой, но твоят Бай Ганьо ме наскърбява."</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">5. Образът на Бай Ганьо</div>
+            <div class="lesson-body">
+              <p>Бай Ганьо Балкански е <strong>търговец на розово масло</strong> — реалистична черта, обвързваща го с реалното стопанство на следосвобожденска България. Но той е преди всичко <strong>социален тип</strong>, въплъщение на определена нагласа и манталитет.</p>
+              <p><strong>Външен вид:</strong> Бай Ганьо е описан с характерна шапка (калпак), широки потури и пъстри чорапи — облекло, което контрастира с европейските костюми около него. Физическата му поява е нарочно смешна и несъответстваща на средата.</p>
+              <p><strong>Основни черти на характера:</strong></p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">💰</div>
+                  <div class="key-point-text"><strong>Практицизъм и скъперничество</strong> — Бай Ганьо мисли само за пари. Натовара европейски познати с подаръци розово масло, за да не плаща за нощувка; яде до насита безплатно на чужд сметка.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">😤</div>
+                  <div class="key-point-text"><strong>Липса на естетически норми</strong> — не разбира и не цени изкуството, архитектурата, природата. Красотата е за него излишна — ако не носи пари, тя няма стойност.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🎭</div>
+                  <div class="key-point-text"><strong>Адаптивност без принципи</strong> — Бай Ганьо е хамелеон: лесно сменя маски, казва каквото е изгодно, приема чужди идеи само ако му носят полза. Тази адаптивност е опасна, защото изглежда като интелигентност.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🚫</div>
+                  <div class="key-point-text"><strong>Безскрупулност</strong> — не се спира пред нищо: лъже, манипулира, изнудва. В политическите разкази фалшифицира избори и купува гласове без угризения.</div>
+                </div>
+              </div>
+              <p>Ключов момент е, когато Бай Ганьо сам коментира своята философия:</p>
+              <div class="poem-block">„Туй е за вас, Европейци... Ний, българете, сме прости — ний казваме право каквото мислим."
+<div class="poem-author">— Бай Ганьо</div></div>
+              <p>Иронията е очевидна: „простотата" на Бай Ганьо всъщност е пресметлива хитрост, прикрита зад маската на искреност.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">6. Разказвачите и сказовата форма</div>
+            <div class="lesson-body">
+              <p>Едно от най-интересните художествени решения в „Бай Ганьо" е <strong>множеството разказвачи</strong>. Няма единен всезнаещ разказвач — вместо него различни персонажи разказват своите срещи с Бай Ганьо. Алеко сам присъства като слушател в компания от приятели.</p>
+              <p>Тази <strong>сказова форма</strong> (разказ в разказа) създава усещане за автентичност и непосредственост. Читателят сякаш слуша живи спомени — всеки разказвач внася своя глас, своя интонация, своята реакция към Бай Ганьо.</p>
+              <p>Важна е и ролята на <strong>компанията</strong> — образованите, европеизирани българи, сред които се разказват историите. Те са имплицитната норма, спрямо която Бай Ганьо изглежда смешен и жалък. Тяхното мълчаливо присъствие е морален коректив.</p>
+              <p>Алеко самият понякога иронизира и разказвачите — той не идеализира и „образованите" — защото и сред тях има лицемерие. Сатирата е многопосочна.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">7. Художествени средства</div>
+            <div class="lesson-body">
+              <p><strong>Сатирата</strong> е основното оръжие на Алеко. За разлика от хумора, сатирата е насочена срещу пороци с цел тяхното поправяне. Алеко е жесток, когато е нужно — не пожалява нито Бай Ганьо, нито политиците, нито лицемерното общество.</p>
+              <p><strong>Иронията</strong> пронизва всяка сцена. Бай Ганьо постоянно се самоизобличава — думите му разкриват обратното на онова, което иска да внуши. Когато казва, че е „прост и искрен", читателят разбира, че е хитър и пресметлив.</p>
+              <p><strong>Хиперболата</strong> усилва комичния ефект. Поведението на Бай Ганьо е преувеличено до крайност: яде, докато не може да диша; натрупва подаръци розово масло с хамалска сила; вдига скандали из цяла Европа.</p>
+              <p><strong>Контрастът</strong> между Бай Ганьо и европейците е структурен принцип. Той не е просто декорация — именно чрез контраста Алеко показва до каква степен героят му е чужд на нормите на модерния свят.</p>
+              <p><strong>Диалогът</strong> е жив и колоритен — Алеко възпроизвежда говора на Бай Ганьо с всичките му особености: просторечие, чуждици, смесване на регистри.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">8. Цитати от произведението</div>
+            <div class="lesson-body">
+              <div class="poem-block">„Бай Ганьо е жив! Той е и между нас. Търсете го — ще го намерите."
+<div class="poem-author">— Алеко Константинов</div></div>
+              <div class="poem-block">„Абе, за какво ти е сапун? Вода има, измий се с вода — пари харчиш!"
+<div class="poem-author">— Бай Ганьо (в банята)</div></div>
+              <div class="poem-block">„Хайде де! Туй е за вас, Европейци. Ний, българете, сме прости — ний казваме право каквото мислим."
+<div class="poem-author">— Бай Ганьо</div></div>
+              <div class="poem-block">„Слушай, бе Иречек, кажи ми — ти учен ли си? — Учен съм. — Е, тогаз... дай ми писмо до хотела!"
+<div class="poem-author">— Бай Ганьо при Иречек</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">9. Най-важното — обобщение</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📅</div>
+                <div class="key-point-text"><strong>Алеко Константинов (1863–1897)</strong> — публицист, пътописец, народен представител; убит на 31.III.1897 г. край Пещера.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📚</div>
+                <div class="key-point-text"><strong>„Бай Ганьо" (1895)</strong> — цикъл от 20 фейлетонни разказа; два дяла: „Бай Ганьо пътува" и „Бай Ганьо се е върнал".</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎭</div>
+                <div class="key-point-text"><strong>Жанр</strong> — фейлетонен цикъл; сказова форма с множество разказвачи; Алеко като свидетел-слушател.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔑</div>
+                <div class="key-point-text"><strong>Тема</strong> — сблъсъкът на родното и чуждото; Европа като огледало; критика на следосвобожденския манталитет.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">👤</div>
+                <div class="key-point-text"><strong>Бай Ганьо</strong> — социален тип; практицизъм, безскрупулност, липса на естетически норми, адаптивност без принципи.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🛠️</div>
+                <div class="key-point-text"><strong>Художествени средства</strong> — сатира, ирония, хипербола, контраст, жив диалог.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💬</div>
+                <div class="key-point-text"><strong>Ключов цитат</strong> — „Туй е за вас, Европейци... Ний, българете, сме прости — ний казваме право каквото мислим." — иронично самоизобличение.</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel11-aleko-bay-ganyo-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel11-aleko-bay-ganyo-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel11-aleko-bay-ganyo-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Родното и чуждото в „Бай Ганьо" на Алеко Константинов';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed?'✓':'✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

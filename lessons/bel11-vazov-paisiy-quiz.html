@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Вазов Паисий · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel11-vazov-paisiy-q1',
+      lessonUrl: '/lessons/bel11-vazov-paisiy.html',
+      lessonName: 'Вазов — Паисий',
+      eyebrow: 'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title: 'Куиз — Вазов „Паисий" — Тест 1',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel11-vazov-paisiy-quiz-2.html',
+      passScore: 8,
+      questions: [
+        {
+          q: 'В кой град е роден Иван Вазов?',
+          opts: ['Копривщица', 'Калофер', 'Сопот', 'Пловдив'],
+          correct: 2,
+          explanation: 'Иван Вазов е роден на 9 юли 1850 г. в Сопот — малък балкански град. Градът му е прототип и на измисления Бяла черква в романа „Под игото". Вазов живее до 1921 г.'
+        },
+        {
+          q: 'С коя почетна титла е известен Иван Вазов в българската литература?',
+          opts: [
+            'Баща на българската поезия',
+            'Патриарх на българската литература',
+            'Певец на свободата',
+            'Бард на Възраждането'
+          ],
+          correct: 1,
+          explanation: 'Иван Вазов е известен като „Патриарх на българската литература" — почетна титла, отразяваща неговото централно място в националната ни литературна традиция. Той пише поезия, проза, драматургия и есеистика.'
+        },
+        {
+          q: 'В коя година е написана „История славянобългарска" от Паисий Хилендарски?',
+          opts: ['1744', '1762', '1785', '1800'],
+          correct: 1,
+          explanation: '„История славянобългарска" е написана от Паисий Хилендарски през 1762 г. в Зографския и Хилендарския манастир. Тя се счита за пръв паметник на Българското Възраждане.'
+        },
+        {
+          q: 'В кой манастир е бил монах Паисий Хилендарски?',
+          opts: [
+            'Рилски манастир',
+            'Бачковски манастир',
+            'Хилендарски манастир на Атос',
+            'Троянски манастир'
+          ],
+          correct: 2,
+          explanation: 'Паисий Хилендарски е монах в Хилендарския (Хилендар) православен манастир на полуостров Атос (Света гора) в Гърция. Там той събира материали и пише „История славянобългарска".'
+        },
+        {
+          q: 'Към кой поетически цикъл на Вазов принадлежи стихотворението „Паисий"?',
+          opts: [
+            'Италия',
+            'Поля и гори',
+            'Епопея на забравените',
+            'Сливница'
+          ],
+          correct: 2,
+          explanation: 'Стихотворението „Паисий" е от цикъла „Епопея на забравените" (1881–1884). Цикълът прославя забравени герои на Българското Възраждане — Паисий, Левски, Ботев, Каблешков и др.'
+        },
+        {
+          q: 'Призивът на Паисий „О, неразумни и юроде..." е насочен към кого?',
+          opts: [
+            'Към турските завоеватели',
+            'Към гръцкото духовенство',
+            'Към онези българи, които се срамуват от своя произход и отричат народността си',
+            'Към чужденците, незапознати с българската история'
+          ],
+          correct: 2,
+          explanation: 'Призивът „О, неразумни и юроде..." е отправен към онези българи, които се срамуват от своя произход, приемат гръцки имена и отричат народността си. Паисий ги укорява и призовава да се гордеят с българската история и традиции.'
+        },
+        {
+          q: 'Каква е основната тема на стихотворението „Паисий" от Вазов?',
+          opts: [
+            'Природата и красотата на България',
+            'Любовта и самотата на поета',
+            'Народното пробуждане и ролята на просветата за националното съзнание',
+            'Военните победи на средновековна България'
+          ],
+          correct: 2,
+          explanation: 'Основната тема на „Паисий" е народното пробуждане и ролята на просветата. Вазов показва как един монах с перо в ръка пробужда националното съзнание на целия народ — словото е по-силно от оръжието.'
+        },
+        {
+          q: 'В кой период е публикуван цикълът „Епопея на забравените"?',
+          opts: ['1870–1875', '1878–1880', '1881–1884', '1890–1895'],
+          correct: 2,
+          explanation: '„Епопея на забравените" е публикуван в периода 1881–1884 г. — само няколко години след Освобождението (1878). Вазов пише цикъла, за да напомни на освободените българи за жертвите, направени ради свободата.'
+        },
+        {
+          q: 'Кой се смята за пръв будител на Българското Възраждане?',
+          opts: [
+            'Иван Вазов',
+            'Паисий Хилендарски',
+            'Христо Ботев',
+            'Васил Левски'
+          ],
+          correct: 1,
+          explanation: 'Паисий Хилендарски (ок. 1722–1773) се счита за пръв будител на Българското Възраждане. С „История славянобългарска" (1762) той пробужда националното самосъзнание на българите и поставя началото на Възраждането.'
+        },
+        {
+          q: 'Какъв е жанрът на „Паисий" от Вазов?',
+          opts: ['Балада', 'Сонет', 'Ода', 'Лирическо стихотворение с епически елементи'],
+          correct: 3,
+          explanation: '„Паисий" е лирическо стихотворение с епически елементи — разказва за конкретен исторически герой и неговото дело, но е наситено с лирически патос и директни обръщения. Характерно за Вазовия стил е съчетаването на историческото с емоционалното.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

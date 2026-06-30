@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Пенчо Славейков — Cis moll · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a><span>›</span>
+        Cis moll — Пенчо Славейков
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Пенчо Славейков — „Cis moll"</div>
+          <div class="lesson-meta">Любовна лирика · Музикалност · Символизъм · ~8 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Пенчо Славейков (1866–1912)</strong> е роден в Трявна, син на великия поет Петко Рачов Славейков. Образован в Лайпциг, Германия, той внася в българската литература влиянието на <strong>европейския романтизъм, символизма и философията на Ницше</strong>.</p>
+              <p>Славейков е изключително образован — познава Гьоте, Шекспир, Байрон, Ницше. Основател на литературния кръг „Мисъл" (заедно с Яворов и д-р Кръстев), той поставя основите на модерната българска поезия.</p>
+              <p>Творчеството му: лирика с дълбок философски заряд, любовна поезия, поемата „Сън за щастие". Умира в Рим, номиниран за Нобелова награда. „Cis moll" е от стихосбирката „Сън за щастие" (1906).</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Заглавието — Cis moll</div>
+            <div class="lesson-body">
+              <p><strong>„Cis moll"</strong> е музикален термин — до диез минор, тонален строй в западноевропейската музика. Изборът на музикален термин за заглавие е програмен: стихотворението <em>е</em> музика, не само за нея пише.</p>
+              <p>Минорният строй носи меланхолия, тъга, нежност — точно настроението на стихотворението. Славейков сближава поезията и музиката, следвайки символистичния принцип: „поезията трябва да е музика".</p>
+              <p>Важно: заглавието не назовава теза или тема — то задава <em>тоналност</em>. Читателят трябва да настрои емоцията си преди да прочете.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стихотворението — откъс</div>
+            <div class="poem-block">Tъй тихо, тихо цигулката пее —
+като шепот на нощния вятър...
+И образ сред мрак бавно се вее
+и тихо се губи в лазура.
+
+Тя пее — и мойта душа се открива
+на мисли, незнайни дотогаз;
+тя пее — и нещо в душата ми скрива
+онова, що беше тъй ясно преди.
+<div class="poem-author">— Пенчо Славейков, „Cis moll" (откъс)</div></div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Музикалността в поезията</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🎻</div>
+                <div class="key-point-text"><strong>Цигулката</strong> — централният образ. Тя не е просто инструмент — тя е гласът на душата, медиум между видимото и невидимото, между реалното и идеалното.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔊</div>
+                <div class="key-point-text"><strong>Звукопис</strong> — повторението на „тихо, тихо" имитира самата тишина и нежността на музиката. Стихотворението звучи като тихо свирене.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌊</div>
+                <div class="key-point-text"><strong>Ритъм</strong> — плавният, музикален ритъм е съзнателен избор. Читателят усеща мелодията, не я описва само.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎵</div>
+                <div class="key-point-text"><strong>Синестезия</strong> — смесване на усещания: музиката е „образ", звукът се „вее" и „губи" — слухово преминава в зрително. Характерна символистична техника.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Образът на жената и любовта</div>
+            <div class="lesson-body">
+              <p>В „Cis moll" жената е свързана с музиката — тя или е онази, за която се свири, или е въплъщение на самата музика. Образът е <strong>ефирен, неуловим</strong> — „вее се в мрака", „губи се в лазура". Не е описана реалистично, а като видение, настроение.</p>
+              <p>Любовта при Славейков не е страстна или бурна — тя е <strong>меланхолична и тиха</strong>. Близка до символистичния идеал: любовта като копнеж по недостижимото, по красотата, която се изплъзва.</p>
+              <p>Образът на жената е съзвучен с музиката — и двете са форми на <strong>красотата като преходна ценност</strong>. Те съществуват в момента на звука, после изчезват.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Символизмът и темата за красотата</div>
+            <div class="lesson-body">
+              <p>„Cis moll" е класически пример за <strong>символистична лирика</strong> — не описва, а внушава; не разказва, а предизвиква настроение. Следва принципа на Верлен: поезията е музика.</p>
+              <p>Темата за красотата: красивото е мимолетно. Музиката звучи и изчезва. Образът се вее и се губи. Красотата е именно в тази мимолетност — тя е ценна, защото не трае.</p>
+              <p>Философският подтекст (Ницше, Шопенхауер): музиката е най-висшето изкуство, защото е напълно нематериална. Тя е чиста красота без форма и вещество.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🌙</div>
+                <div class="key-point-text"><strong>Символи</strong> — цигулката (душата), мракът (несъзнаваното), лазурът (идеалното, небесното).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Повторение</strong> — „тихо, тихо", „тя пее — и..." усилват музикалния ефект и медитативното настроение.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💨</div>
+                <div class="key-point-text"><strong>Метафора</strong> — „шепот на нощния вятър" — музиката е неуловима като вятъра, нежна, ефимерна.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎭</div>
+                <div class="key-point-text"><strong>Парадокс</strong> — „тя пее — и нещо скрива онова, що беше ясно". Музиката не изяснява, а замъглява — потапя в несъзнаваното.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Музиката като прозорец към душата и красотата — и любовта като настроение, изграждано от звука.</p>
+              <p><strong>Идея:</strong> Красотата е мимолетна и неуловима — именно затова е ценна. Музиката (и любовта) ни докосва и изчезва, оставяйки само носталгия.</p>
+              <p><strong>Основни мотиви:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Музиката като душевен опит</strong> — не забавление, а мистично преживяване</li>
+                <li><strong>Мимолетността на красотата</strong> — тя се „губи в лазура"</li>
+                <li><strong>Несъзнаваното</strong> — музиката достига до онова, което думите не могат</li>
+                <li><strong>Любовта като настроение</strong> — не събитие, а вибрация</li>
+              </ul>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Пенчо Славейков (1866–1912) — основател на кръга „Мисъл", философска и символистична поезия.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Заглавие:</strong> Cis moll е музикален термин — до диез минор. Задава тоналността (меланхолия, нежност).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Цигулката:</strong> централен символ — гласът на душата, медиум към красотата и несъзнаваното.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Синестезия:</strong> музиката се превръща в образ — слуховото преминава в зрително. Символистична техника.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Красотата:</strong> мимолетна и неуловима — „губи се в лазура". Ценна именно защото не трае.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Символизъм:</strong> внушение, не описание; настроение, не сюжет. „Поезията е музика" (Верлен).</div></div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel11-slaveykov-cis-moll-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel11-slaveykov-cis-moll-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel11-slaveykov-cis-moll-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Пенчо Славейков — „Cis moll"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

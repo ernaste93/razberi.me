@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Пунктуационна норма · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-punktuatsiya-q3',
+      lessonUrl:  '/lessons/bel12-punktuatsiya.html',
+      lessonName: 'Пунктуационна норма',
+      eyebrow:    'БЕЛ · 12 КЛАС · ЕЗИК',
+      title:      'Куиз — Пунктуационна норма — Тест 3',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        { q:'Намери изречението БЕЗ пунктуационна грешка.', opts:['"Слушайте ученици, внимателно."','"Слушайте, ученици, внимателно."','"Слушайте, ученици внимателно."','"Слушайте ученици внимателно."'], correct:1, explanation:'„Ученици" е обръщение и се отделя с запетаи от двете страни: „Слушайте, ученици, внимателно." Ако обръщението е в края: „Внимателно, ученици."' },
+        { q:'Кой знак е подходящ в изречението „Беше умна красива и добра ___всичко, за което бих мечтал"?', opts:['Запетая','Тире','Двоеточие','Точка и запетая'], correct:1, explanation:'„Беше умна, красива и добра — всичко, за което бих мечтал." Тире пред обобщителната дума „всичко", която обобщава изброените качества. Изреждане → тире → обобщение.' },
+        { q:'Кое изречение с определително подчинено е ВЯРНО пунктуирано?', opts:['"Момчето което виждаш е мой брат."','"Момчето, което виждаш е мой брат."','"Момчето, което виждаш, е мой брат."','"Момчето което, виждаш, е мой брат."'], correct:2, explanation:'Определителното подчинено изречение „което виждаш" се отделя с две запетаи — пред и след: „Момчето, което виждаш, е мой брат." Така се изолира вметнатата подчинена клауза.' },
+        { q:'В кое изречение многоточието е употребено ПРАВИЛНО?', opts:['"Имам три желания: слава... пари... и здраве."','"Исках да кажа нещо важно, но думите не дойдоха..."','"Той имаше... три ябълки... в чантата."','"Учителят... дойде... в час."'], correct:1, explanation:'„Исках да кажа нещо важно, но думите не дойдоха..." — многоточието изразява незавършена мисъл, потисната емоция. В другите примери употребата е несистемна и не изразява реална пауза/незавършеност.' },
+        { q:'При условно подчинено изречение в началото, запетаята се поставя:', opts:['Пред „ако"','След условното изречение, пред главното','Никъде — условните изречения нямат запетая','В средата на условното изречение'], correct:1, explanation:'„Ако вали, ще остана вкъщи." — запетаята е след условното изречение („ако вали"), пред главното. Когато главното е пред условното, запетая обикновено не се пише: „Ще остана вкъщи, ако вали." (тук има запетая, защото е подчинено след главното).' },
+        { q:'Кое твърдение за точката и запетаята е ВЯРНО?', opts:['Използва се само в поезия','Маркира по-дълга пауза от запетаята, при разделяне на независими, но свързани части','Е равна по сила на точката','Използва се само при изброяване'], correct:1, explanation:'Точката и запетаята (;) е между запетая и точка по сила. Разделя независими изречения или групи при сложно изброяване: „Взех ябълки, круши и сливи; пъпеши, дини и грозде."' },
+        { q:'Намери ГРЕШНО пунктуирано изречение.', opts:['"— Как си? — попита той.','„Той попита: „Как си?""','"Той попита: Как си?"','"— Добре, благодаря."'], correct:2, explanation:'„Той попита: Как си?" — при пряка реч думите задължително се поставят в кавички: „Той попита: „Как си?"" Без кавичките е неправилно.' },
+        { q:'Кое изречение с вметнато пояснение е правилно пунктуирано?', opts:['"Той — макар и уморен — продължи пътя."','"Той, макар и уморен продължи пътя."','"Той макар и, уморен — продължи пътя."','"Той (макар и уморен, продължи пътя)."'], correct:0, explanation:'„Той — макар и уморен — продължи пътя." — вметнатото изречение „макар и уморен" се огражда с две тирета. Алтернативно може да се използват скоби: „Той (макар и уморен) продължи пътя."' },
+        { q:'Пред кое съчинително подчинено изречение НЕ се поставя запетая?', opts:['"... а той не дойде."','"... но тя отказа."','"... и се прибра."','"... или те ще решат."'], correct:2, explanation:'Запетая не се поставя пред „и" когато то свързва две прости части (не две пълни изречения с подлог): „Той дойде и се прибра." При две пълни изречения: „Той дойде, и тя го посрещна."' },
+        { q:'Кое описва ПРАВИЛНО употребата на двоеточие?', opts:['Само пред пряка реч','Пред пряка реч, пред изброяване след обобщаваща дума и пред обяснение','Само при изброяване','Между подлог и сказуемо'], correct:1, explanation:'Двоеточието има три основни функции: (1) пред пряка реч — „Той каза:...", (2) пред изброяване след обобщение — „Взех всичко:...", (3) пред обяснение — „Имаше едно препятствие: липсата на пари."' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

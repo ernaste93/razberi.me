@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Иван Вазов — Опълченците на Шипка · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel11-vazov-opalchentsite-q3',
+      lessonUrl:   '/lessons/bel11-vazov-opalchentsite.html',
+      lessonName:  'Иван Вазов — Опълченците на Шипка',
+      eyebrow:     'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Иван Вазов — Опълченците на Шипка — Тест 3',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     3,
+      questions: [
+        { q:'Как Вазов противопоставя „малкото" и „голямото" в стихотворението?', opts:['Противопоставя богати на бедни','Малкото тяло / малкото оръжие срещу голямата воля / голямата любов към Родината','Малко срещу голямо войнство','Малкото сражение срещу голямата война'], correct:1, explanation:'Антитезата е фундаментална: малкото (тяло, оръжие, число) срещу голямото (дух, воля, любов). Победата е на духа — именно тази антитеза прави подвига митологичен, а не просто военен.' },
+        { q:'Как стихотворението изгражда чувство за национална гордост?', opts:['Чрез критика на другите народи','Чрез прославяне на конкретен подвиг, правейки го символ на националния характер','Чрез сравнение с по-слаби народи','Чрез исторически факти'], correct:1, explanation:'Националната гордост се изгражда конкретно — не с абстрактни твърдения, а с конкретен подвиг. „Вижте какво направихме при Шипка" — подвигът е доказателство за качествата на народа.' },
+        { q:'Каква е ролята на рефрена „Шипка е наша!" в структурата?', opts:['Просто музикален ефект','Рефренът е ключова идея, повтаряна за засилване — всяко повторение надгражда смисловото натоварване','Запълване на строфата','Помощ при запаметяване'], correct:1, explanation:'Рефренът не е украса — той е носителят на основната идея. Всяко повторение надгражда: от военна констатация до патриотична декларация до исторически символ.' },
+        { q:'Как Вазов вижда смъртта на бойното поле?', opts:['Трагична и безсмислена','Свещена жертва — смъртта за Родината е върховен акт на патриотизъм и безсмъртие в паметта','Неизбежна случайност','Наказание за слабостта'], correct:1, explanation:'Смъртта за Родината е сакрализирана — тя е свещена жертва, а не трагедия. Загиналите получават безсмъртие в паметта на народа. Вазов изгражда национален мит за смъртта като победа.' },
+        { q:'Каква е разликата между патриотизма на Вазов и шовинизма?', opts:['Няма разлика','Вазов прославя конкретни подвизи на своя народ, без да унижава другите — патриотизъм е любов към своето, не омраза към другото','Вазов мрази турците','Вазов е националист'], correct:1, explanation:'Вазовият патриотизъм е любов към своето, без обезценяване на другото. Той прославя подвига на опълченците, не унижава врага. Патриотизмът е позитивна ценност, шовинизмът — негативна омраза.' },
+        { q:'Как стихотворението функционира като колективна памет?', opts:['Само индивидуален творчески акт','То фиксира събитието в колективната памет — чрез четенето му поколения наред подвигът оживява за всеки читател','Само историческа хроника','Само за образователни цели'], correct:1, explanation:'Стихотворението е инструмент на колективна памет — чрез четенето му всяко поколение „присъства" на Шипка. Поезията е жива памет: тя не описва, тя предизвиква преживяване.' },
+        { q:'Как се свързва „Опълченците на Шипка" с одата „Левски" от „Епопея"?', opts:['Не са свързани','И двете прославят жертвата за Родина — Левски е индивидуален герой, опълченците са колективен герой','Левски е по-велик','Шипка е по-важна от Левски'], correct:1, explanation:'Двете оди се допълват — Левски е образецът на индивидуалния герой-мъченик, опълченците са образецът на колективния героизъм. Заедно те очертават пълния образ на националното саможертвуване.' },
+        { q:'Какво означава „опълченец" буквално?', opts:['Ветеран от много войни','Доброволец — човек, опълчил се (станал воин) по собствена воля за защита на Родината','Платен войник','Военен офицер'], correct:1, explanation:'„Опълченец" означава доброволец — „опълчил се" значи „станал воин" доброволно. Думата носи смисъла на доброволна жертва, което е ключово за разбиране на подвига.' },
+        { q:'Кога е написано стихотворението „Опълченците на Шипка"?', opts:['По времето на самата битка (1877)','Скоро след Освобождението — в рамките на „Епопея на забравените" (1881–1884)','В началото на XX в.','По времето на Балканските войни'], correct:1, explanation:'Стихотворението е написано 1881–1884 г. — само 4–7 години след битката (1877). Вазов пише, докато паметта е жива, но вижда признаци на забравата и се стреми да противодейства.' },
+        { q:'Каква е общата теза на Вазов за народния характер, изразена чрез „Опълченците"?', opts:['Народът е слаб и се нуждае от помощ','Народът е способен на велик героизъм, когато Родината е застрашена — Шипка е доказателство','Само военните са герои','Победата е случайна'], correct:1, explanation:'Тезата за народния характер: под привидна простота и смиреност живее готовност за велик героизъм. Шипка е доказателството — прости хора стават безсмъртни герои когато Родината призове.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

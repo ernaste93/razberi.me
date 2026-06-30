@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Елин Пелин — Андрешко · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a><span>›</span>
+        Андрешко — Елин Пелин
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Елин Пелин — „Андрешко"</div>
+          <div class="lesson-meta">Хумор и сатира · Народопсихология · Конфликт с властта · ~8 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Елин Пелин (1877–1949)</strong>, истинско име Димитър Иванов Стоянов, е роден в с. Байлово, Софийско. Той е един от най-обичаните български разказвачи, чието творчество рисува живота на селяните в Средна България с топлота, хумор и дълбоко разбиране.</p>
+              <p>За разлика от Вазов, който пише за героизма, и Смирненски, който пише за пролетарското страдание, Елин Пелин пише за <strong>обикновения живот на обикновения човек</strong> — неговите радости, хитрини, борби с бедността и власт.</p>
+              <p>Стилът му е характерен: мек хумор, народна мъдрост, кратка и точна фраза. Раззказвачът никога не осъжда героите — той ги разбира и обича.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Сюжетът на „Андрешко"</div>
+            <div class="lesson-body">
+              <p>Разказът „Андрешко" е кратък, но многопластов. <strong>Съдебният изпълнител</strong> (представител на властта) пътува с файтон, за да изпълни запор върху имуществото на беден селянин. Наема кола от файтонджията Андрешко.</p>
+              <p>По пътя Андрешко разбира какво е намерението на „господина". Тъй като разбира, че длъжникът е негов познат (беден съселянин), Андрешко <strong>умишлено и хитро завежда колата в блатото</strong> — прави се, че е изгубил пътя. Съдебният изпълнител закъснява за запора и целта му е осуетена.</p>
+              <p>Андрешко се „извинява" с наивна искреност, но читателят разбира, че всичко е преднамерено. Народният хитрец побеждава властта не с открита съпротива, а с лукавство.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Образът на Андрешко</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🧠</div>
+                <div class="key-point-text"><strong>Народна хитрост</strong> — Андрешко не е образован, но е мъдър. Той разбира ситуацията бързо и действа тихо, без конфликт.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">😄</div>
+                <div class="key-point-text"><strong>Привидна наивност</strong> — цялото му поведение изглежда като случайност. Прави се на прост, за да победи системата.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❤️</div>
+                <div class="key-point-text"><strong>Солидарност с бедния</strong> — Андрешко не се бори за себе си, а за съселянина си. Народната солидарност е по-силна от закона.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏆</div>
+                <div class="key-point-text"><strong>Морална победа</strong> — формално Андрешко не е извършил нищо незаконно. Хитростта му е в рамките на закона, но извън намеренията на власт.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Хумор и сатира</div>
+            <div class="lesson-body">
+              <p>Елин Пелин използва <strong>два типа хумор</strong>: топъл хумор към Андрешко (разбиране, обич) и ирония/сатира към съдебния изпълнител (критика на системата).</p>
+              <p>Сатирата не е груба — тя е мека, прикрита. Чиновникът не е чудовище, но е слаб и самонадеян. Смешно е, че представителят на „висшата" власт е победен от прост файтонджия.</p>
+              <p>Хуморът идва от <strong>несъответствието</strong>: официалността на изпълнителя срещу простотата на Андрешко. Накрая „простият" е по-умен от „образования".</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Народопсихология</div>
+            <div class="lesson-body">
+              <p>„Андрешко" е разказ за народния характер. Елин Пелин улавя типичната стратегия на селянина в сблъсъка с властта: <strong>не фронтален конфликт, а заобикаляне</strong>. Народната мъдрост казва „кривото дърво не се сече право".</p>
+              <p>Андрешко е архетип — не само конкретен герой, а цял народопсихологически модел. Той е хитрецът, трикстерът на българската народна традиция — като Хитър Петър или Настрадин Ходжа.</p>
+              <p>Конфликтът не е лично между Андрешко и изпълнителя — той е между <strong>народа и институцията</strong>, между бедния и системата, между живата човешка солидарност и формалния закон.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🗣️</div>
+                <div class="key-point-text"><strong>Диалог</strong> — Елин Пелин майсторски използва диалога, за да разкрие характера. Речта на Андрешко е проста, народна; на изпълнителя — официална, надменна.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">😏</div>
+                <div class="key-point-text"><strong>Ирония</strong> — ситуативната ирония е в основата: властта, която трябва да е силна, е безпомощна пред народния хитрец.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌄</div>
+                <div class="key-point-text"><strong>Пейзаж</strong> — природата (блатото, пътя) не е фон, а участник в действието. Андрешко я използва като оръжие.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📝</div>
+                <div class="key-point-text"><strong>Лаконизъм</strong> — кратката, точна фраза е белег на Елин Пелин. Нищо излишно — всяка дума носи смисъл.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Сблъсъкът между народния хитрец и представителя на властта — и победата на народната мъдрост.</p>
+              <p><strong>Идея:</strong> Народната солидарност и хитростта са по-мощни от официалната власт. Простият човек има свои средства за справедливост.</p>
+              <p><strong>Основни мотиви:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Хитростта като оцеляване</strong> — стратегия на слабия срещу силния</li>
+                <li><strong>Солидарността</strong> — народна взаимопомощ</li>
+                <li><strong>Несправедливостта на закона</strong> — системата служи на богатите</li>
+                <li><strong>Привидната простота</strong> — интелигентността, скрита зад наивност</li>
+              </ul>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Елин Пелин (1877–1949) — майстор на разказа за живота на българското село.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Сюжет:</strong> Файтонджията Андрешко умишлено завежда съдебния изпълнител в блато, за да осуети запор срещу беден съселянин.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Андрешко = народен трикстер:</strong> победата чрез хитрост, не чрез сила — архетип на народната мъдрост.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Хумор:</strong> топъл към Андрешко, сатиричен към властта — несъответствието е основата на комичното.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Народопсихология:</strong> заобикаляне вместо фронтален конфликт — стратегия на слабия срещу институцията.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Стил:</strong> мек хумор, диалог, лаконизъм — характерни за Елин Пелин.</div></div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel11-elin-pelin-andreshko-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel11-elin-pelin-andreshko-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel11-elin-pelin-andreshko-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Елин Пелин — „Андрешко"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Лекарства, горива и полимери · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'chem12-lekarstva-goriva-q3',
+      lessonUrl:  '/lessons/chem12-lekarstva-goriva.html',
+      lessonName: 'Лекарства, горива и полимери',
+      eyebrow:    'ХИМИЯ · 12 КЛАС',
+      title:      'Куиз — Лекарства, горива и полимери — Тест 3',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        { q:'Какво е антибиотик?', opts:['Витамин, укрепващ имунитета','Вещество, което унищожава или потиска растежа на бактерии','Хормон, регулиращ обмяната','Болкоуспокояващо средство'], correct:1, explanation:'Антибиотиците (пеницилин, стрептомицин, тетрациклин) са вещества, произведени от микроорганизми или синтетично, които потискат или унищожават бактерии. Не действат срещу вируси.' },
+        { q:'Каква е химичната формула на аспирина (ацетилсалицилова киселина)?', opts:['C₆H₅OH','C₉H₈O₄','C₂H₅OH','C₆H₁₂O₆'], correct:1, explanation:'Аспиринът (ацетилсалициловата киселина) има формула C₉H₈O₄. Получава се при ацетилиране на салицилова киселина. Действа като аналгетик, жаропонижаващ и противовъзпалителен агент.' },
+        { q:'Какво е октановото число на бензина?', opts:['Съдържанието на октан в %','Мярка за устойчивост срещу детонация при горене','Точката на кипене на горивото','Количеството CO₂ при горене'], correct:1, explanation:'Октановото число показва устойчивостта на горивото срещу самовъзпламеняване (детонация) в двигателя. По-висок октан — по-малка детонация. Определя се чрез сравнение с изооктан (ОЧ = 100).' },
+        { q:'Кой полимер се използва за производство на найлон (полиамид)?', opts:['Полиетилен','Полиамид','Полистирол','Поливинилхлорид (PVC)'], correct:1, explanation:'Найлонът е полиамид — съдържа амидна връзка (-CO-NH-). Получава се чрез кондензационна полимеризация на диамини и дикиселини. Широко се използва в текстилната промишленост.' },
+        { q:'Кой вид гориво се получава чрез преработка на биомаса?', opts:['Природен газ','Биогориво (биодизел, биоетанол)','Нефт','Въглища'], correct:1, explanation:'Биогоривата (биодизел от растителни масла, биоетанол от захарна тръстика/царевица) са възобновяеми горива от биологичен произход. Считат се за по-екологични, тъй като CO₂ при горенето им е поет преди от растенията.' },
+        { q:'Кой от следните полимери е термопластичен?', opts:['Бакелит','Полиетилен','Вулканизиран каучук','Меламин'], correct:1, explanation:'Термопластичните полимери (полиетилен, полипропилен, PVC) омекват при нагряване и могат да се преформоват. Термоустойчивите (бакелит, меламин) се втвърдяват необратимо при нагряване.' },
+        { q:'Каква е ролята на катализатора при крекинга на нефт?', opts:['Повишава температурата на реакцията','Ускорява разграждането на дълговерижните въглеводороди','Добавя водород към молекулите','Неутрализира сярата в нефта'], correct:1, explanation:'При каталитичния крекинг катализаторът (зеолит, Al₂O₃/SiO₂) ускорява разграждането на тежките фракции на нефта до по-леки, ценни продукти (бензин, пропилен, бутилен).' },
+        { q:'Какъв е механизмът на действие на болкоуспокояващите (аналгетиците)?', opts:['Убиват бактериите, причиняващи болката','Потискат предаването на болкови сигнали в нервната система','Разширяват кръвоносните съдове','Намаляват температурата на тялото само'], correct:1, explanation:'Аналгетиците (парацетамол, ибупрофен) потискат синтеза на простагландини — вещества, участващи в предаването на болков сигнал и възпалителния отговор. Опиоидните аналгетици действат директно върху ЦНС.' },
+        { q:'Кое твърдение за природния газ е ВЯРНО?', opts:['Основният компонент е пропан','Основният компонент е метан (CH₄)','Природният газ е течност при стайна температура','Не се използва за отопление'], correct:1, explanation:'Природният газ се състои главно от метан (CH₄) — около 70–90%. Съдържа и малки количества етан, пропан, бутан и CO₂. Използва се масово за отопление, производство на ток и като суровина в химичната промишленост.' },
+        { q:'Каква реакция протича при получаване на полиетилен?', opts:['Заместване','Добавяне (адиционна полимеризация)','Хидролиза','Неутрализация'], correct:1, explanation:'Полиетиленът се получава чрез адиционна полимеризация на етилен (CH₂=CH₂): n CH₂=CH₂ → (-CH₂-CH₂-)ₙ. Двойната връзка се отваря и молекулите се свързват в дълга верига.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Правописна норма · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-pravopis-q1',
+      lessonUrl:  '/lessons/bel12-pravopis.html',
+      lessonName: 'Правописна норма',
+      eyebrow:    'БЕЛ · 12 КЛАС · ЕЗИК',
+      title:      'Куиз — Правописна норма — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel12-pravopis-quiz-2.html',
+      questions: [
+        { q:'Кое изречение съдържа ПРАВИЛНО използван пълен член?', opts:['"Видях ученикът на улицата."','"Ученикът влезе в класната стая."','"Дадох книгата на ученикът."','"Помогнах на ученикът."'], correct:1, explanation:'Пълният член (-ът/-ят) се пише само когато думата е подлог в изречението. „Ученикът влезе" — ученик е подлог → пълен член. В другите изречения думата е допълнение → трябва „ученика".' },
+        { q:'Как се пише правилно: „не работи" или „неработи"?', opts:['"неработи" — слято','„не работи" — разделно','И двете са правилни','Зависи от контекста'], correct:1, explanation:'Частицата „не" с глаголи винаги се пише разделно: „не работи", „не идва", „не можа". Слято се пише само с прилагателни и наречия: „невъзможен", „нередовно".' },
+        { q:'Как се пише правилно: „по добър" или „по-добър"?', opts:['„по добър" — разделно','„по-добър" — с тире','„подобър" — слято','„по_добър" — с долна черта'], correct:1, explanation:'Степените за сравнение с „по-" и „най-" винаги се пишат с тире: „по-добър", „по-бързо", „най-красив", „най-много".' },
+        { q:'Кой правопис е ВЕРЕН?', opts:['„ексамен"','„екзамен"','„ексзамен"','„eкзамeн" с й'], correct:1, explanation:'Правилото е: пред гласна → „кз" (екзамен, екзотичен, екзекуция); пред съгласна → „кс" (текст, екстра, екстравагантен). В „екзамен" следва гласна „а" → „кз".' },
+        { q:'Кое е правилното изписване?', opts:['„Черноморски бряг"','„Черно-морски бряг"','„черноморски бряг"','„Черноморски Бряг"'], correct:2, explanation:'„Черноморски" е прилагателно от собствено географско название — пише се с малка буква: „черноморски бряг". С главна само ако е официално собствено наименование на конкретно място.' },
+        { q:'В изречението „Виждам коня в полето" какъв член носи „кон"?', opts:['Пълен член (-ят)','Кратък член (-я)','Без член','Множествено число'], correct:1, explanation:'„Коня" е с кратък член (-я), защото думата е допълнение (не подлог). Ако кон бе подлог: „Конят тичаше" — пълен член (-ят).' },
+        { q:'Как се пише „българо-руски речник"?', opts:['„българо-руски" — с тире','„българоруски" — слято','„българо руски" — разделно','„Българо-Руски" — с главни'], correct:0, explanation:'При координативни сложни думи (двата компонента са равнопоставени, без субординация) се пише полуслято (с тире): „българо-руски", „физико-математически", „историко-географски".' },
+        { q:'Кой правопис е ГРЕШЕН?', opts:['"Министерство на образованието"','"Народна библиотека"','"Европейски Съюз"','"Пловдивски университет"'], correct:2, explanation:'„Европейски съюз" — „съюз" е нарицателно и се пише с малка буква. Официалното наименование е „Европейски съюз" — само „Европейски" с главна (като начало на собствено наименование).' },
+        { q:'Кое изречение НЕ съдържа правописна грешка?', opts:['"Учителят обясни урокът."','"Учителят обясни урока."','"Учителя обясни урокът."','"Учителя обясни урока."'], correct:1, explanation:'„Учителят" е подлог → пълен член (-ят). „Урока" е допълнение → кратък член (-а). Правилното изречение е „Учителят обясни урока."' },
+        { q:'Как се пише числителното „25-ти"?', opts:['"двадесет и пети" — с тире','„двадесет и пети" — разделно','„двадесетипети" — слято','„двадесет-и-пети" — с тирета'], correct:1, explanation:'Редните числителни се пишат разделно: „двадесет и пети", „тридесет и втори". Само поредните числа с цифра получават тире: „25-ти", „3-ти". Бройните числителни също са разделно: „двадесет и пет".' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

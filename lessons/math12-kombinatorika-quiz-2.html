@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз 2 — Комбинаторика · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main><div class="quiz-page">
+    <div class="breadcrumb" id="quiz-breadcrumb"></div>
+    <div class="quiz-wrap">
+      <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+      <div class="quiz-title" id="quiz-title"></div>
+      <div class="quiz-sub" id="quiz-sub"></div>
+      <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+      <div id="quiz-area">
+        <div class="quiz-q-num" id="q-num"></div>
+        <div class="quiz-q-text" id="q-text"></div>
+        <div class="quiz-options" id="q-options"></div>
+        <div class="quiz-explanation" id="q-explanation"></div>
+        <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+      </div>
+      <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+    </div>
+  </div></main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-kombinatorika-q2',
+      lessonUrl:  '/lessons/math12-kombinatorika.html',
+      lessonName: 'Комбинаторика',
+      eyebrow:    'МАТЕМАТИКА · 12 КЛАС',
+      title:      'Куиз 2 — Комбинаторика',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    2,
+      nextQuizUrl: '/lessons/math12-kombinatorika-quiz-3.html',
+      questions: [
+        {
+          q: 'Колко е C₆³?',
+          opts: ['15', '18', '20', '30'],
+          correct: 2,
+          expl: 'C₆³ = 6! / (3! · 3!) = 720 / (6 · 6) = 720 / 36 = 20'
+        },
+        {
+          q: 'По колко начина могат да се наредат буквите на думата МАМА?',
+          opts: ['24', '12', '6', '4'],
+          correct: 2,
+          expl: 'МАМА има 4 букви, но М се повтаря 2 пъти и А се повтаря 2 пъти. Брой = 4! / (2! · 2!) = 24 / 4 = 6'
+        },
+        {
+          q: 'Колко е C₁₀²?',
+          opts: ['20', '45', '90', '100'],
+          correct: 1,
+          expl: 'C₁₀² = 10! / (2! · 8!) = (10 × 9) / 2 = 45'
+        },
+        {
+          q: 'От 8 кандидати трябва да се избере комитет от 3 члена. По колко начина може да стане това?',
+          opts: ['24', '56', '336', '512'],
+          correct: 1,
+          expl: 'Редът не е важен (комитет, не позиции). C₈³ = 8! / (3! · 5!) = 56'
+        },
+        {
+          q: 'Коя формула описва пермутации с повторение, ако елементите се повтарят k₁, k₂, … пъти?',
+          opts: [
+            'n! · k₁! · k₂!',
+            'n! / (k₁! · k₂! · …)',
+            '(k₁ + k₂)! / n!',
+            'n · k₁ · k₂'
+          ],
+          correct: 1,
+          expl: 'При пермутации с повторение делим n! на произведението от факториелите на броя на всеки повтарящ се елемент.'
+        },
+        {
+          q: 'Ако C₁₂ᵏ = C₁₂⁴, кое е едно възможно стойност за k (различно от 4)?',
+          opts: ['6', '8', '10', '12'],
+          correct: 1,
+          expl: 'По симетричното свойство Cₙᵏ = Cₙⁿ⁻ᵏ. Тук n=12, k=4, значи другото решение е 12−4 = 8.'
+        },
+        {
+          q: 'Коефициентите при разложението на (a+b)⁴ са:',
+          opts: [
+            '1, 3, 3, 1',
+            '1, 4, 6, 4, 1',
+            '1, 4, 4, 1',
+            '1, 2, 4, 2, 1'
+          ],
+          correct: 1,
+          expl: 'Четвъртият ред на триъгълника на Паскал (n=4) е: 1, 4, 6, 4, 1. Те съответстват на C₄⁰, C₄¹, C₄², C₄³, C₄⁴.'
+        },
+        {
+          q: 'Сумата от всички биномни коефициенти в ред n на триъгълника на Паскал е:',
+          opts: ['n!', 'n²', '2ⁿ', '2n'],
+          correct: 2,
+          expl: 'C ₙ⁰ + Cₙ¹ + … + Cₙⁿ = 2ⁿ. Например за n=4: 1+4+6+4+1 = 16 = 2⁴.'
+        },
+        {
+          q: 'За 4-значен ПИН код от цифрите 0–9 (с повторение), колко различни ПИН-а има?',
+          opts: ['5040', '10000', '210', '3628800'],
+          correct: 1,
+          expl: 'Всяка от 4-те позиции има 10 избора (0–9) и повторенията са позволени. 10⁴ = 10 000.'
+        },
+        {
+          q: 'Колко е A₄² (вариации от 4 по 2)?',
+          opts: ['6', '8', '12', '24'],
+          correct: 2,
+          expl: 'A₄² = 4! / (4−2)! = 24 / 2 = 12'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Лекарства, горива и полимери · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem12-lekarstva-goriva-q1',
+      lessonUrl:   '/lessons/chem12-lekarstva-goriva.html',
+      lessonName:  'Лекарства, горива и полимери',
+      eyebrow:     'ХИМИЯ · 12 КЛАС',
+      title:       'Тест 1 — Горива',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem12-lekarstva-goriva-quiz-2.html',
+      questions: [
+        {
+          q: 'Кой вид въглища съдържа най-висок процент въглерод?',
+          opts: ['Лигнити', 'Кафяви въглища', 'Антрацит', 'Торф'],
+          correct: 2,
+          explanation: 'Антрацитът е най-висококачественото въглище с най-висок процент въглерод (над 90%). Последователността по нарастващ % C е: торф → лигнити → кафяви въглища → антрацит. Антрацитът гори по-чисто и отделя повече енергия.'
+        },
+        {
+          q: 'Кой газ, отделян при изгарянето на въглища, е основна причина за киселинни дъждове?',
+          opts: ['CO₂', 'SO₂', 'CH₄', 'N₂'],
+          correct: 1,
+          explanation: 'Серният диоксид (SO₂) е основна причина за киселинни дъждове. В атмосферата SO₂ реагира с вода и кислород, образувайки сярна киселина (H₂SO₄), която се утаява с валежите и уврежда екосистемите и сградите.'
+        },
+        {
+          q: 'Какво представлява нефтът (петролът) от химична гледна точка?',
+          opts: ['Чисто вещество с формула C₈H₁₈', 'Смес от въглеводороди', 'Разтвор на CO₂ във вода', 'Смес от естери и алкохоли'],
+          correct: 1,
+          explanation: 'Нефтът е сложна смес от стотици различни въглеводороди — главно алкани, циклоалкани и арени. Именно защото е смес, а не чисто вещество, той може да се разделя чрез фракционна дестилация на полезни фракции.'
+        },
+        {
+          q: 'Каква е молекулната формула на октана?',
+          opts: ['C₆H₁₄', 'C₇H₁₆', 'C₈H₁₈', 'C₁₀H₂₂'],
+          correct: 2,
+          explanation: 'Октанът (C₈H₁₈) е наситен въглеводород (алкан) с 8 въглеродни атома. Следва общата формула CₙH₂ₙ₊₂ (n=8: 2×8+2=18). Октановото число на бензина се измерва спрямо изооктана (2,2,4-триметилпентан).'
+        },
+        {
+          q: 'Как се разделят различните фракции при рафинирането на нефт?',
+          opts: ['Чрез кристализация', 'Чрез фракционна дестилация', 'Чрез центрофугиране', 'Чрез хроматография'],
+          correct: 1,
+          explanation: 'Фракционната дестилация е процесът, при който нефтът се нагрява и различните въглеводороди кипят при различни температури — газове (LPG), бензин (~40–200°C), керосин, дизел, мазут. По-леките фракции се събират в горните части на дестилационната колона.'
+        },
+        {
+          q: 'Кое е главният компонент на природния газ?',
+          opts: ['Пропан (C₃H₈)', 'Бутан (C₄H₁₀)', 'Метан (CH₄)', 'Етан (C₂H₆)'],
+          correct: 2,
+          explanation: 'Природният газ се състои главно от метан (CH₄) — обикновено над 90%. Съдържа и малки количества етан, пропан и бутан. Метанът е най-простият алкан и гори чисто: CH₄ + 2O₂ → CO₂ + 2H₂O.'
+        },
+        {
+          q: 'Колко мола O₂ са необходими за пълно изгаряне на 1 mol метан?',
+          opts: ['1 mol', '2 mol', '3 mol', '4 mol'],
+          correct: 1,
+          explanation: 'Реакцията на изгаряне на метан е: CH₄ + 2O₂ → CO₂ + 2H₂O. Значи за 1 mol CH₄ са необходими точно 2 mol O₂. Продуктите са 1 mol CO₂ и 2 mol H₂O.'
+        },
+        {
+          q: 'Кое гориво се смята за CO₂-неутрално?',
+          opts: ['Въглища', 'Нефт', 'Природен газ', 'Биогорива (биоетанол)'],
+          correct: 3,
+          explanation: 'Биогоривата (биоетанол, биодизел) се считат за CO₂-неутрални, защото растенията, от които са произведени, са поглъщали CO₂ от атмосферата по време на растежа си. При изгарянето се освобождава приблизително толкова CO₂, колкото е бил поет — нетният баланс е близо до нула.'
+        },
+        {
+          q: 'Какъв е продуктът при изгарянето на водород (H₂)?',
+          opts: ['CO₂ и H₂O', 'Само H₂O', 'SO₂ и H₂O', 'CO и H₂O'],
+          correct: 1,
+          explanation: 'Водородът изгаря напълно чисто: 2H₂ + O₂ → 2H₂O. Единственият продукт е вода, без въглероден диоксид или серен диоксид. Именно затова водородът е перспективно гориво за намаляване на парниковите емисии.'
+        },
+        {
+          q: 'Какво означава октаново число 95 на бензина?',
+          opts: ['Бензинът съдържа 95% чист октан', 'Бензинът кипи при 95°C', 'Устойчивостта на детонация е еквивалентна на смес с 95% изооктан', 'Горивната стойност е 95 kJ/mol'],
+          correct: 2,
+          explanation: 'Октановото число е мярка за устойчивостта на бензина към преждевременно запалване (детонация). Бензин А95 има антидетонационни свойства, еквивалентни на смес от 95% изооктан и 5% n-хептан. По-високото октаново число означава по-малко детонация.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

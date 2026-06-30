@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Ботев Хаджи Димитър · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel11-botev-hadzhi-dimityr-q2',
+      lessonUrl: '/lessons/bel11-botev-hadzhi-dimityr.html',
+      lessonName: 'Ботев — Хаджи Димитър',
+      eyebrow: 'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title: 'Куиз — Ботев „Хаджи Димитър" — Тест 2',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel11-botev-hadzhi-dimityr-quiz-3.html',
+      passScore: 8,
+      questions: [
+        {
+          q: 'На колко години загива Христо Ботев на връх Камарото на 2 юли 1876 г.?',
+          opts: ['24', '26', '28', '32'],
+          correct: 2,
+          explanation: 'Ботев загива на 2 юли 1876 г. на връх Камарото в Средна Стара планина, само на 28 години. Животът му е кратък, но оставя неизличима следа в българската история и литература.'
+        },
+        {
+          q: 'В кое издание е публикувана за пръв път балада „Хаджи Димитър"?',
+          opts: ['Вестник „Свобода"', 'Списание „Независимост"', 'Вестник „Будилник"', 'Сборник „Песни и стихотворения"'],
+          correct: 1,
+          explanation: '„Хаджи Димитър" е публикувана за пръв път в списание „Независимост" през 1873 г. Ботев е редактирал различни революционни издания по време на своята емигрантска дейност в Румъния.'
+        },
+        {
+          q: 'Колко четници са на борда на „Радецки" при преминаването на Дунава?',
+          opts: ['105', '130', '205', '305'],
+          correct: 2,
+          explanation: 'Ботевата чета се състои от 205 четници. Те превземат австрийския параход „Радецки" и принуждават капитана да ги прекара до българския бряг. Четата кацва край Козлодуй на 1 юни 1876 г.'
+        },
+        {
+          q: 'Каква е структурата на „Хаджи Димитър" — от колко строфи и стиха се състои?',
+          opts: [
+            '5 строфи по 6 стиха',
+            '7 строфи по 8 стиха',
+            '8 строфи по 7 стиха',
+            '10 строфи по 4 стиха'
+          ],
+          correct: 1,
+          explanation: 'Поемата „Хаджи Димитър" се състои от 7 строфи по 8 стиха. Трите части са: умиращият герой (строфи 1–2), природата скърби (строфи 3–5) и апотеозът — триумфът на идеята (строфи 6–7).'
+        },
+        {
+          q: 'Какво е „апотеоз" като художествен похват в „Хаджи Димитър"?',
+          opts: [
+            'Описание на физическата смърт на героя',
+            'Прославяне и издигане на героя до свръхчовешки мащаби',
+            'Плач и оплакване на падналия войвода',
+            'Изображение на природата като безучастна към съдбата на героя'
+          ],
+          correct: 1,
+          explanation: 'Апотеозът е художествен похват, при който героят се прославя и издига до митологични или божествени висоти. В „Хаджи Димитър" финалните строфи превръщат умиращия войвода в безсмъртна легенда — символ на жертвата за свобода.'
+        },
+        {
+          q: 'Какво означава „жив е той" в контекста на „Хаджи Димитър" — каква е истинската му идея?',
+          opts: [
+            'Героят е оцелял биологично и ще се възстанови',
+            'Героят е спасен от самодивите и е вече здрав',
+            'Идеята, за която е паднал, е безсмъртна и вечна',
+            'Природата е съживила героя чрез магия'
+          ],
+          correct: 2,
+          explanation: '„Жив е той" не означава биологично оцеляване. Ботев изразява философската идея, че героят, паднал за свобода, живее вечно в паметта на народа и в самата идея за свобода. Това е романтическата концепция за безсмъртие чрез жертва.'
+        },
+        {
+          q: 'Каква е ролята на Балкана (планината) в „Хаджи Димитър"?',
+          opts: [
+            'Балканът е просто географски фон без значение',
+            'Балканът е активен участник — скърби, пази героя, реагира на смъртта му',
+            'Балканът символизира Ottoman владичество',
+            'Балканът е споменат само веднъж като място на действие'
+          ],
+          correct: 1,
+          explanation: 'В „Хаджи Димитър" Балканът не е пасивен фон, а активен участник в трагедията. Чрез персонификация планината скърби, природата реагира на смъртта на героя. Балканът е свидетел и пазител на героичния подвиг.'
+        },
+        {
+          q: 'Кои са основните белези на романтизма, представени в „Хаджи Димитър"?',
+          opts: [
+            'Реализъм, детайлно описание на бита, критика на обществото',
+            'Идеализиран герой, свръхестествени елементи, природата като одушевена, бунт срещу тиранията',
+            'Хумор, сатира и ирония към националните недостатъци',
+            'Класицистична строгост, разум над чувствата'
+          ],
+          correct: 1,
+          explanation: '„Хаджи Димитър" е романтическа творба: героят е идеализиран до мит, природата е одушевена и участва в трагедията, присъстват свръхестествени елементи (самодивите), а темата е бунтът срещу тиранията и жертвата за свобода.'
+        },
+        {
+          q: 'С кои свои издания е свързана журналистическата дейност на Ботев?',
+          opts: [
+            '„Зора" и „Вечерник"',
+            '„Дума на българските емигранти" и „Будилник"',
+            '„Народност" и „Читалище"',
+            '„Цариградски вестник" и „България"'
+          ],
+          correct: 1,
+          explanation: 'Ботев е бележит публицист. Редактира „Дума на българските емигранти" (1871) и „Будилник" (1873) — революционни издания, в които атакува турското владичество и будни националното съзнание.'
+        },
+        {
+          q: 'Защо „Хаджи Димитър" се смята за пророческа творба по отношение на самия Ботев?',
+          opts: [
+            'Защото Ботев предсказва Освобождението на България',
+            'Защото Ботев описва собствената си съдба — той също загива в планината за свободата на България',
+            'Защото Ботев пише за бъдещи поколения герои',
+            'Защото стихотворението е написано след смъртта на Ботев'
+          ],
+          correct: 1,
+          explanation: 'Творбата се смята за пророческа, защото Ботев сам повтаря съдбата на Хаджи Димитър — загива на 28 г. в балканските планини, воювайки за освобождението на България. Поетът е живял своята поезия до края.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

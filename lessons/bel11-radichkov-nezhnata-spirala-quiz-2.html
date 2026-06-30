@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Радичков Нежната спирала · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel11-radichkov-nezhnata-spirala-q2',
+      lessonUrl: '/lessons/bel11-radichkov-nezhnata-spirala.html',
+      lessonName: 'Радичков — Нежната спирала',
+      eyebrow: 'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title: 'Куиз — Радичков „Нежната спирала" — Тест 2',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel11-radichkov-nezhnata-spirala-quiz-3.html',
+      passScore: 8,
+      questions: [
+        {
+          q: 'Коя от следните творби е драма на Йордан Радичков?',
+          opts: ['„Нежната спирала"', '„Барутен буквар"', '„Свирепо настроение"', '„Опит за летене"'],
+          correct: 2,
+          explanation: '„Свирепо настроение" е пиеса (драма) на Радичков. „Барутен буквар" е автобиографична проза, а „Нежната спирала" и „Опит за летене" са есета.'
+        },
+        {
+          q: 'Защо Радичков избира именно прилагателното „нежна" за спиралата на паметта?',
+          opts: [
+            'Защото паметта е физически слаба и лесно се разрушава',
+            'Защото паметта действа деликатно, без насилие — тя завива и разгъва спомените с грижа',
+            'Защото спиралата е нежна на допир като коприна',
+            'Защото авторът иска да покаже, че паметта е нещо женствено'
+          ],
+          correct: 1,
+          explanation: '„Нежна" подчертава ненасилствения, деликатен характер на паметта — тя не налага спомените, а ги завива и разгъва внимателно, откривайки пласт след пласт от идентичността ни.'
+        },
+        {
+          q: 'В кой жанр е написан „Барутен буквар" на Радичков?',
+          opts: ['Есе', 'Роман', 'Автобиографична проза/разкази', 'Поема'],
+          correct: 2,
+          explanation: '„Барутен буквар" е автобиографична проза — разкази, базирани на детските спомени на Радичков от селото и войната, различен жанр от философското есе „Нежната спирала".'
+        },
+        {
+          q: 'Каква роля играе детството в есето „Нежната спирала"?',
+          opts: [
+            'Детството е представено като нещастен период, от който авторът е рад да се е освободил',
+            'Детството е отправна точка на паметта — там са вградени най-дълбоките спомени, формиращи идентичността',
+            'Детството не се споменава в есето',
+            'Детството е само фон за описание на природата'
+          ],
+          correct: 1,
+          explanation: 'Детството е ключова тема в есето — ранните преживявания са дълбоко наслоени в паметта и именно те определят кои сме. Спиралата „навива" детски спомени в ядрото на личността.'
+        },
+        {
+          q: 'В коя година умира Йордан Радичков?',
+          opts: ['1995', '1999', '2004', '2010'],
+          correct: 2,
+          explanation: 'Йордан Радичков умира на 20 януари 2004 г. в София. Роден е през 1929 г., което означава, че твори в продължение на повече от половин век.'
+        },
+        {
+          q: 'Какъв е философският въпрос, който есето поставя чрез образа на спиралата?',
+          opts: [
+            'Може ли човек да живее без бъдеще?',
+            'Кои сме ние без нашата памет — съществуваме ли като личности?',
+            'По-важна ли е колективната памет от личната?',
+            'Трябва ли да забравяме миналото, за да живеем в настоящето?'
+          ],
+          correct: 1,
+          explanation: 'Централният философски въпрос е за идентичността: паметта е това, което ни прави „нас самите". Без нея оставаме само биологично тяло без история, без смисъл, без личност.'
+        },
+        {
+          q: 'Кои елементи на магическия реализъм присъстват в прозата на Радичков?',
+          opts: [
+            'Точно описание на историческите факти и документален стил',
+            'Преплитане на реалното и фантастичното, одухотворяване на природата, приказни мотиви',
+            'Строга психологическа характеристика на героите',
+            'Политически коментар и социален анализ'
+          ],
+          correct: 1,
+          explanation: 'Радичков е известен с магическия реализъм в прозата си: реалното и фантастичното се преплитат органично, природата е одухотворена, присъстват приказни и митологични мотиви.'
+        },
+        {
+          q: 'Есето като жанр се характеризира с това, че авторът:',
+          opts: [
+            'Разказва измислена история с ясен сюжет и герои',
+            'Излага строго научни аргументи и доказателства',
+            'Мисли на глас, споделя лични размисли и търси истината чрез субективен поглед',
+            'Описва исторически събития в хронологичен ред'
+          ],
+          correct: 2,
+          explanation: 'Есето е жанр на свободната мисъл — авторът „мисли на глас", споделя лични наблюдения и размисли без да следва строга схема. Субективността и откритостта са негови основни белези.'
+        },
+        {
+          q: 'Какво означава, че паметта при Радичков е „асоциативна"?',
+          opts: [
+            'Тя работи само когато се опитваме да си спомним нещо конкретно',
+            'Един спомен води до друг по верига от усещания и образи, а не по хронологичен ред',
+            'Тя е свързана с музикални асоциации и звуци',
+            'Тя е споделена с другите хора около нас'
+          ],
+          correct: 1,
+          explanation: 'Асоциативната памет работи по принципа на верижните връзки: миризма навява образ, образът — звук, звукът — детски спомен. Това нелинейно движение е именно формата на спиралата.'
+        },
+        {
+          q: 'Кое твърдение за Радичков като писател е ВЯРНО?',
+          opts: [
+            'Той пише предимно поезия и е известен като лирик',
+            'Той е роден в София и градската среда определя творчеството му',
+            'Неговата проза и есеистика са дълбоко вкоренени в селото и провинциалния свят',
+            'Той е повлиян преди всичко от западноевропейската модернистична проза'
+          ],
+          correct: 2,
+          explanation: 'Родното село Калиманица и светът на провинциална България са в основата на творчеството на Радичков — селото, природата, народната памет и митология пронизват цялото му дело.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

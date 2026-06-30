@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Христо Смирненски — Йохан · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/дневник.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel11-smirnanski-yohan-q2',
+      lessonUrl:   '/lessons/bel11-smirnanski-yohan.html',
+      lessonName:  'Христо Смирненски — Йохан',
+      eyebrow:     'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Христо Смирненски — Йохан — Тест 2',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel11-smirnanski-yohan-quiz-3.html',
+      questions: [
+        { q:'Каква е идеята за пролетарска солидарност в „Йохан"?', opts:['Само германците трябва да помагат помежду си','Работниците от всички нации споделят едно страдание и трябва да се обединят','Солидарността е слабост','Всеки народ трябва сам да решава проблемите си'], correct:1, explanation:'„Йохан" е програмно стихотворение на интернационализма — германецът Йохан страда по същия начин като всеки беден работник. Пролетарската солидарност надвишава националните граници.' },
+        { q:'Как Смирненски изобразява града в стихотворението?', opts:['Красив и привлекателен','Жив и пълен с приключения','Студен, враждебен и безразличен към страданието','Топъл и приятелски'], correct:2, explanation:'Градът при Смирненски е студен и враждебен — той не вижда и не признава Йохан. Индустриалният град поглъща работниците и ги изхвърля, когато не са нужни.' },
+        { q:'Какво означава „куфарът" на Йохан като детайл?', opts:['Богатство и успех','Всичкото имущество на бежанеца — символ на пълната бедност','Инструменти за работа','Спомени от родината'], correct:1, explanation:'Куфарът е ключов реалистичен детайл — той съдържа всичко, което Йохан притежава. Един куфар символизира пълната бедност и бездомността на войнишкия бежанец.' },
+        { q:'Каква е функцията на рефрена (повторенията) в „Йохан"?', opts:['Поетическа украса','Засилване на трагизма и внушаване на безизходност чрез ритъм','Лесно запомняне','Запълване на стиховете'], correct:1, explanation:'Рефренът при Смирненски е функционален — повторенията засилват трагизма, създават усещане за безкрайно повтарящо се страдание и безизходност. Ритъмът сам по себе си е обвинение.' },
+        { q:'Как се различава образът на Йохан от традиционния лирически герой?', opts:['Не се различава','Йохан е анонимен представител на клас, не уникална личност — новият тип герой в пролетарската поезия','Йохан е по-красив','Йохан има богато минало'], correct:1, explanation:'Традиционният лирически герой е уникална личност. Йохан е тип-образ — представител на цяла класа. Той е „всеки Йохан" — всеки беден работник в следвоенна Европа.' },
+        { q:'Каква е критиката на Смирненски към обществото в „Йохан"?', opts:['Обществото е несправедливо само към германците','Капиталистическото общество е безразлично към страданието на работника, независимо от националността','Германците трябва да се върнат в родината','Войната е виновна само за германците'], correct:1, explanation:'Критиката е към системата — капиталистическото общество не вижда Йохан като човек, а само като работна ръка. Когато тя не е нужна, той е изхвърлен. Това е универсална критика.' },
+        { q:'Какво е значението на „чука" в образа на Йохан?', opts:['Оръжие','Музикален инструмент','Символ на пролетарския труд и единствената ценност, която системата признава в Йохан','Инструмент за майсторство'], correct:2, explanation:'Чукът е символ на пролетарски труд — единствената „ценност", която системата приписва на Йохан. Той е сведен до своя труд; личността му не интересува никого.' },
+        { q:'Как Смирненски постига съчувствие у читателя без сентименталност?', opts:['Чрез описание на плача на Йохан','Чрез точни, конкретни детайли (кал, ботуши, куфар), които говорят сами','Чрез директно искане на съчувствие','Чрез трагична история за любов'], correct:1, explanation:'Смирненски избягва сантименталността — не описва сълзи или молби. Вместо това конкретните детайли (калта, ботушите) говорят сами — читателят сам стига до съчувствие.' },
+        { q:'Каква е ролята на „нощта" в стихотворението?', opts:['Времето за почивка','Символ на безнадеждността и социалната мрака, в който живее Йохан','Буквална нощ','Символ на свободата'], correct:1, explanation:'Нощта е символна — тя е и буквалната тъмнина, в която Йохан скита, и метафора за социалния мрак: бедността, изключеността и безнадеждността на неговото положение.' },
+        { q:'Кое е основното художествено постижение на стихотворението „Йохан"?', opts:['Красиви пейзажи','Сложни метафори','Синтезиране на социална критика, интернационализъм и конкретен образ с реалистични детайли','Музикалност и ритъм'], correct:2, explanation:'Постижението е синтезът — социалната критика не е абстрактна, а е въплътена в конкретен образ (Йохан) с реалистични детайли. Универсалното послание е изразено чрез частния случай.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

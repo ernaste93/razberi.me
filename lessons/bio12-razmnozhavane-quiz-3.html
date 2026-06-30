@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Размножаване, растеж и развитие · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bio12-razmnozhavane-q3',
+      lessonUrl:  '/lessons/bio12-razmnozhavane.html',
+      lessonName: 'Размножаване, растеж и развитие',
+      eyebrow:    'БИОЛОГИЯ · 12 КЛАС',
+      title:      'Тест 3 — Размножаване, растеж и развитие',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        {
+          q: 'Какво се образува при сливането на сперматозоид и яйцеклетка?',
+          opts: ['Морула', 'Бластула', 'Зигота', 'Гаструла'],
+          correct: 2,
+          explanation: 'При оплождането сперматозоидът се слива с яйцеклетката и се образува зигота — единична диплоидна клетка (2n), която е началото на новия организъм.'
+        },
+        {
+          q: 'Как се казва процесът на многократно митотично делене на зиготата без увеличаване на общия обем?',
+          opts: ['Гаструлация', 'Органогенеза', 'Браздене (клавеаж)', 'Метаморфоза'],
+          correct: 2,
+          explanation: 'Бразденето (клавеаж) е серия от бързи митотични деления на зиготата. Клетките стават все по-малки, без да нараства общият обем на зародиша.'
+        },
+        {
+          q: 'Морулата представлява:',
+          opts: [
+            'Кухина, изпълнена с течност',
+            'Плътна топка от клетки',
+            'Зародиш с два зародишни слоя',
+            'Единична оплодена клетка'
+          ],
+          correct: 1,
+          explanation: 'Морулата е стадий на ранното ембрионално развитие, при който зародишът представлява плътна топка от клетки (наподобява черница). Следва бластулата с вътрешна кухина.'
+        },
+        {
+          q: 'Какво е бластоцелът?',
+          opts: [
+            'Вторият зародишен слой',
+            'Кухина вътре в бластулата',
+            'Нишките на делителното вретено',
+            'Полярното тяло при оогенезата'
+          ],
+          correct: 1,
+          explanation: 'Бластоцелът е кухината, която се образува вътре в бластулата. Клетките на бластулата образуват стена около тази кухина.'
+        },
+        {
+          q: 'Кои зародишни слоеве се формират по време на гаструлацията при простите животни?',
+          opts: [
+            'Само ектодерм',
+            'Ектодерм и ендодерм',
+            'Ектодерм, мезодерм и ендодерм',
+            'Само мезодерм и ендодерм'
+          ],
+          correct: 1,
+          explanation: 'При простите животни (двуслойни) гаструлацията води до образуване на два зародишни слоя: ектодерм (външен) и ендодерм (вътрешен). При по-сложните животни се формира и трети слой — мезодерм.'
+        },
+        {
+          q: 'Кои органи се развиват от ектодерма?',
+          opts: [
+            'Мускули и скелет',
+            'Черен дроб и панкреас',
+            'Кожа, нервна система и сетивни органи',
+            'Сърце и кръвоносни съдове'
+          ],
+          correct: 2,
+          explanation: 'Ектодермът е външният зародишен слой и от него се развиват: кожата и нейните производни, цялата нервна система (главен и гръбначен мозък, нерви) и сетивните органи (очи, уши, нос).'
+        },
+        {
+          q: 'От кой зародишен слой се развиват мускулите и скелетът?',
+          opts: ['Ектодерм', 'Мезодерм', 'Ендодерм', 'Бластодерм'],
+          correct: 1,
+          explanation: 'Мезодермът е средният зародишен слой и от него се развиват: мускулната система, скелетът, кръвоносната система, сърцето и пикочно-половата система.'
+        },
+        {
+          q: 'Кое е характерно за ПРЯКОТО развитие при животните?',
+          opts: [
+            'Организмът преминава през ларвен стадий',
+            'Задължително има какавиден стадий',
+            'Новороденото прилича на родителя и постепенно нараства',
+            'Характерно е само за насекомите'
+          ],
+          correct: 2,
+          explanation: 'При прякото развитие новороденото е миниатюрно копие на родителя и постепенно нараства и узрява, без да минава през коренно различни стадии. Характерно е за бозайниците и птиците.'
+        },
+        {
+          q: 'Кой е правилният ред на стадиите при пълна метаморфоза (холометаболия)?',
+          opts: [
+            'Яйце → Нимфа → Имаго',
+            'Яйце → Ларва → Имаго',
+            'Яйце → Ларва → Какавида → Имаго',
+            'Яйце → Какавида → Ларва → Имаго'
+          ],
+          correct: 2,
+          explanation: 'Пълната метаморфоза включва четири стадия: яйце → ларва (гъсеница, личинка) → какавида (неактивен стадий на преустройство) → имаго (зряло насекомо). Характерна за пеперудите, бръмбарите, мухите, пчелите.'
+        },
+        {
+          q: 'Кой от следните организми се развива чрез непряко развитие с метаморфоза?',
+          opts: ['Куче', 'Гълъб', 'Жаба', 'Змия'],
+          correct: 2,
+          explanation: 'Жабата е класически пример за непряко развитие с метаморфоза: яйце → попова лъжица (ларва, живее във вода, диша с хриле) → млада жаба → възрастна жаба (диша с бели дробове и кожа). Кучето, гълъбът и змията имат пряко развитие.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

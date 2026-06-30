@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Вероятности и статистика · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .formula-block { background: #f0f4ff; border: 1.5px solid #c7d2fe; border-radius: 12px; padding: 16px 20px; margin: 16px 0; text-align: center; font-size: 18px; font-weight: 800; color: var(--accent); letter-spacing: 0.02em; }
+    .formula-block .formula-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; display: block; }
+    .formula-inline { background: #eef2ff; color: var(--accent); padding: 1px 7px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .example-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.8; }
+    .example-block strong { color: var(--accent); }
+    .example-step { display: flex; gap: 10px; align-items: flex-start; justify-content: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; width: 100%; }
+    .example-step:last-child { border-bottom: none; }
+    .example-step > div:last-child { flex: 1; }
+    .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+    .compare-card { border: 1.5px solid var(--line); border-radius: 12px; padding: 14px; text-align: center; font-size: 13px; }
+    .compare-card.pos { border-color: #86efac; background: #f0fdf4; }
+    .compare-card.neg { border-color: #fca5a5; background: #fff5f5; }
+    .compare-card .cc-title { font-weight: 800; font-size: 15px; margin-bottom: 6px; }
+    .compare-card.pos .cc-title { color: #16a34a; }
+    .compare-card.neg .cc-title { color: #dc2626; }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); }
+    #selection-tooltip.show { display: block; }
+    #explain-selection { background: var(--accent); color: #fff; border: none; padding: 7px 14px; border-radius: 20px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); }
+    #explain-selection::after { content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); border-bottom: none; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <nav style="display:flex;align-items:center;gap:4px;margin:0 auto;">
+        <a href="/urotsi.html" class="nav-btn">Уроци</a>
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>›</span>
+        <a href="/urotsi.html">Математика</a><span>›</span>
+        Вероятности и статистика
+      </div>
+      <section class="demo-layout">
+        <div class="lesson-panel">
+          <div id="lesson-content">
+            <div class="lesson-tag">МАТЕМАТИКА · 12 КЛАС</div>
+            <h1 class="lesson-title">Вероятности и статистика</h1>
+            <div class="lesson-meta">Класическа вероятност · Събитие · Условна вероятност · Статистика · ~15 мин</div>
+            <div class="lesson-divider"></div>
+
+            <!-- 1. Случайно събитие и вероятност -->
+            <div class="section-title">1. Случайно събитие и класическа вероятност</div>
+            <div class="lesson-body">
+              <p><strong>Случайно събитие</strong> е резултат от опит, чието осъществяване не можем да предскажем с точност. Класическата вероятност се дефинира, когато всички изходи на опита са равновероятни.</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Класическа вероятност</span>
+              P(A) = m / n
+            </div>
+            <div class="lesson-body">
+              <p>където <span class="formula-inline">m</span> е броят на <strong>благоприятните</strong> изходи за събитие A, а <span class="formula-inline">n</span> е броят на <strong>всички равновероятни</strong> изходи.</p>
+              <p>Вероятността е винаги число между 0 и 1: <span class="formula-inline">0 ≤ P(A) ≤ 1</span>. При P(A) = 0 събитието е невъзможно, при P(A) = 1 — достоверно.</p>
+            </div>
+            <div class="example-block">
+              <strong>Пример: хвърляне на зар</strong>
+              <div class="example-step"><div class="step-num">1</div><div>Всички изходи: {1, 2, 3, 4, 5, 6} — значи n = 6.</div></div>
+              <div class="example-step"><div class="step-num">2</div><div>Събитие A = "пада четно число" — благоприятни: {2, 4, 6}, значи m = 3.</div></div>
+              <div class="example-step"><div class="step-num">3</div><div>P(A) = 3/6 = 1/2 = 0,5.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 2. Противоположно събитие -->
+            <div class="section-title">2. Противоположно събитие</div>
+            <div class="lesson-body">
+              <p>Събитието <strong>Ā</strong> (не-А) е противоположно на A — осъществява се точно когато A не се осъществи.</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Противоположно събитие</span>
+              P(Ā) = 1 − P(A)
+            </div>
+            <div class="example-block">
+              <strong>Пример:</strong> Хвърляме зар. Вероятността да падне 6 е P(A) = 1/6.
+              <br />Вероятността <em>да не падне</em> 6: P(Ā) = 1 − 1/6 = 5/6.
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 3. Събиране на вероятности -->
+            <div class="section-title">3. Събиране на вероятности</div>
+            <div class="lesson-body">
+              <p>Зависи дали събитията А и B могат да се осъществят едновременно:</p>
+            </div>
+            <div class="compare-grid">
+              <div class="compare-card pos">
+                <div class="cc-title">Несъвместими събития</div>
+                <div>A и B не могат да се случат едновременно: P(A∩B) = 0</div>
+                <div style="margin-top:10px;font-weight:700;">P(A∪B) = P(A) + P(B)</div>
+                <div style="margin-top:6px;font-size:12px;color:#166534;">Пример: зар — пада 1 или пада 6</div>
+              </div>
+              <div class="compare-card neg">
+                <div class="cc-title">Съвместими събития</div>
+                <div>A и B могат да се случат едновременно: P(A∩B) ≠ 0</div>
+                <div style="margin-top:10px;font-weight:700;">P(A∪B) = P(A) + P(B) − P(A∩B)</div>
+                <div style="margin-top:6px;font-size:12px;color:#991b1b;">Пример: карти — четна или купа</div>
+              </div>
+            </div>
+            <div class="example-block">
+              <strong>Пример (несъвместими):</strong> Зар. A = "пада 1", B = "пада 6". P(A) = 1/6, P(B) = 1/6.
+              <br />P(A∪B) = 1/6 + 1/6 = 2/6 = 1/3.
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 4. Умножение на вероятности -->
+            <div class="section-title">4. Умножение на вероятности</div>
+            <div class="formula-block">
+              <span class="formula-label">Независими събития</span>
+              P(A∩B) = P(A) · P(B)
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Зависими събития</span>
+              P(A∩B) = P(A) · P(B|A)
+            </div>
+            <div class="lesson-body">
+              <p>Събитията са <strong>независими</strong>, когато изходът на едното не влияе на другото (напр. хвърляне на монета два пъти). При <strong>зависими</strong> събития изходът на A влияе на вероятността на B.</p>
+            </div>
+            <div class="example-block">
+              <strong>Пример (независими):</strong> Хвърляме монета два пъти. Вероятността и двата пъти да падне ези: P = 1/2 · 1/2 = 1/4.
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 5. Условна вероятност -->
+            <div class="section-title">5. Условна вероятност</div>
+            <div class="lesson-body">
+              <p>P(B|A) е вероятността B да се осъществи <em>при условие</em>, че A вече се е осъществило.</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Условна вероятност</span>
+              P(B|A) = P(A∩B) / P(A)
+            </div>
+            <div class="example-block">
+              <strong>Пример с урна:</strong> В урна има 4 червени и 6 бели топки (общо 10).
+              <div class="example-step"><div class="step-num">1</div><div>Изтегляме 1 топка. P(червена) = 4/10 = 2/5.</div></div>
+              <div class="example-step"><div class="step-num">2</div><div>Не я връщаме. В урната остават 9 топки (3 червени, 6 бели).</div></div>
+              <div class="example-step"><div class="step-num">3</div><div>Вероятност втората да е червена, <em>при условие</em> че първата е червена: P = 3/9 = 1/3.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 6. Пълна вероятност -->
+            <div class="section-title">6. Формула за пълна вероятност</div>
+            <div class="lesson-body">
+              <p>Когато едно събитие B може да настъпи чрез различни хипотези H₁, H₂, ..., Hₙ (взаимно изключващи се и покриващи цялото вероятностно пространство):</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Пълна вероятност</span>
+              P(B) = P(H₁)·P(B|H₁) + P(H₂)·P(B|H₂) + ... + P(Hₙ)·P(B|Hₙ)
+            </div>
+            <div class="example-block">
+              <strong>Пример:</strong> Има две урни. Урна 1 (вероятност 0,4 да се избере) — 3 червени от 5. Урна 2 (вероятност 0,6) — 1 червена от 5.
+              <br />P(червена) = 0,4 · 3/5 + 0,6 · 1/5 = 0,24 + 0,12 = 0,36.
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 7. Средноаритметично -->
+            <div class="section-title">7. Средноаритметично (средна стойност)</div>
+            <div class="formula-block">
+              <span class="formula-label">Средноаритметично</span>
+              x̄ = (x₁ + x₂ + ... + xₙ) / n
+            </div>
+            <div class="example-block">
+              <strong>Пример с оценки:</strong> Ученик е получил оценки 4, 5, 6, 5, 4, 6.
+              <div class="example-step"><div class="step-num">1</div><div>Сума: 4 + 5 + 6 + 5 + 4 + 6 = 30.</div></div>
+              <div class="example-step"><div class="step-num">2</div><div>Брой оценки: n = 6.</div></div>
+              <div class="example-step"><div class="step-num">3</div><div>x̄ = 30 / 6 = 5,00.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 8. Медиана -->
+            <div class="section-title">8. Медиана</div>
+            <div class="lesson-body">
+              <p>Медианата е <strong>средната стойност</strong> на наредената редица (от малко към голямо).</p>
+              <ul style="margin-left:18px;margin-bottom:12px;">
+                <li>Ако n е <strong>нечетно</strong> — медианата е средният елемент.</li>
+                <li>Ако n е <strong>четно</strong> — медианата е средноаритметичното на двата средни елемента.</li>
+              </ul>
+            </div>
+            <div class="example-block">
+              <strong>Пример 1 (нечетно n):</strong> Редица: 2, 5, 7, 9, 11 — медиана = 7 (3-ти елемент от 5).
+              <br /><br />
+              <strong>Пример 2 (четно n):</strong> Редица: 3, 5, 8, 12 — медиана = (5 + 8) / 2 = 6,5.
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 9. Мода -->
+            <div class="section-title">9. Мода</div>
+            <div class="lesson-body">
+              <p>Модата е <strong>най-често срещаната стойност</strong> в редицата. Може да има повече от една мода (или нито една, ако всички стойности са различни).</p>
+            </div>
+            <div class="example-block">
+              <strong>Пример:</strong> Редица: 3, 5, 5, 7, 8, 5, 9 — модата е 5 (среща се 3 пъти).
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 10. Дисперсия и стандартно отклонение -->
+            <div class="section-title">10. Дисперсия и стандартно отклонение</div>
+            <div class="lesson-body">
+              <p><strong>Дисперсията</strong> измерва колко разпръснати са данните около средната стойност.</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Дисперсия</span>
+              D = (1/n) · Σ(xᵢ − x̄)²
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Стандартно отклонение</span>
+              σ = √D
+            </div>
+            <div class="lesson-body">
+              <p>По-голямо <span class="formula-inline">σ</span> означава по-разпръснати данни. По-малко <span class="formula-inline">σ</span> — данните са близо до средната стойност.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 11. Пример с урна -->
+            <div class="section-title">11. Класическа задача с урна</div>
+            <div class="example-block">
+              <strong>Задача:</strong> В урна има 4 червени и 6 бели топки. Изтегля се 1 топка. Намери вероятността да е червена.
+              <div class="example-step"><div class="step-num">1</div><div>Общ брой топки: n = 4 + 6 = 10.</div></div>
+              <div class="example-step"><div class="step-num">2</div><div>Благоприятни изходи (червена): m = 4.</div></div>
+              <div class="example-step"><div class="step-num">3</div><div>P(червена) = 4/10 = 2/5 = 0,4.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 12. Най-важното -->
+            <div class="section-title">12. Най-важното — запомни</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>P(A) = m/n</strong> — класическа вероятност: брой благоприятни / брой всички равновероятни изходи.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>0 ≤ P(A) ≤ 1</strong> — вероятността е винаги между 0 и 1; никога отрицателна, никога по-голяма от 1.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>P(Ā) = 1 − P(A)</strong> — противоположното събитие. Знай тази формула наизуст.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Несъвместими:</strong> P(A∪B) = P(A) + P(B). <strong>Съвместими:</strong> P(A∪B) = P(A) + P(B) − P(A∩B).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Независими:</strong> P(A∩B) = P(A)·P(B). <strong>Зависими:</strong> P(A∩B) = P(A)·P(B|A).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Условна вероятност:</strong> P(B|A) = P(A∩B) / P(A) — вероятността на B при условие, че A е настъпило.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Средноаритметично:</strong> x̄ = сума / брой. <strong>Медиана:</strong> средният елемент в наредена редица. <strong>Мода:</strong> най-честата стойност.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Дисперсия D = (1/n)·Σ(xᵢ−x̄)²</strong> и стандартно отклонение <strong>σ = √D</strong> — мярка за разпръснатост.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <div class="lesson-panel" style="margin-top:0; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+              <div>
+                <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+                <div style="font-size:13px;color:var(--muted);">30 въпроса в 3 части · след като си прочел урока</div>
+              </div>
+              <a href="/lessons/math12-veroyatnosti-quiz.html" style="display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:14px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;">Към куиза →</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай формула или текст от урока и цъкни <strong>„Обясни"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Вероятности и статистика — класическа вероятност, условна, сума, произведение, средноаритметично';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+</body>
+</html>

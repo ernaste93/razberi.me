@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Яворов Градушка · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel11-yavorov-gradushka-q1',
+      lessonUrl:  '/lessons/bel11-yavorov-gradushka.html',
+      lessonName: 'Яворов — Градушка',
+      eyebrow:    'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:      'Куиз — Яворов „Градушка" — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel11-yavorov-gradushka-quiz-2.html',
+      questions: [
+        {
+          q: 'Към кой период от творчеството на Яворов принадлежи „Градушка"?',
+          opts: ['Символистичен', 'Ранен социален', 'Романтичен', 'Реалистичен'],
+          correct: 1,
+          explanation: '„Градушка" (1901) е от ранния период на Яворов, когато пише социална лирика за страданията на народа, преди да премине към символизма.'
+        },
+        {
+          q: 'Какво символизира градушката в стихотворението?',
+          opts: ['Просто природно явление', 'Радост и изобилие', 'Народна трагедия и безнадеждност', 'Смяна на сезоните'],
+          correct: 2,
+          explanation: 'Градушката е двупланова — природна стихия и метафора за историческото безсилие на бедния селянин пред съдбата.'
+        },
+        {
+          q: 'В кой град е роден Пейо Яворов?',
+          opts: ['Пловдив', 'Чирпан', 'Сливен', 'Стара Загора'],
+          correct: 1,
+          explanation: 'Яворов е роден на 1 януари 1878 г. в Чирпан. Истинското му фамилно име е Крачолов — Яворов е псевдоним.'
+        },
+        {
+          q: 'Каква е професията на Яворов преди да стане поет?',
+          opts: ['Учител', 'Лекар', 'Телеграфист', 'Журналист'],
+          correct: 2,
+          explanation: 'Яворов работи като телеграфист в различни градове на България, което му дава пряк контакт с бедния народ и неговите страдания.'
+        },
+        {
+          q: 'Каква е метафората „надежда — труп" в стихотворението?',
+          opts: ['Любовта е мъртва', 'Надеждата за реколта е унищожена от градушката', 'Мъртвец е намерен на нивата', 'Надеждата е безсмъртна'],
+          correct: 1,
+          explanation: '„Надежда — труп" е ключова метафора — зърното, набъбнало с надежда, е смазано от градушката. Трудът и мечтите на селянина са погребани.'
+        },
+        {
+          q: 'Кои три плана се разгръщат в „Градушка"?',
+          opts: ['Личен, обществен, религиозен', 'Природен, социален, философски', 'Исторически, политически, естетически', 'Семеен, приятелски, народен'],
+          correct: 1,
+          explanation: 'Стихотворението работи на три нива: природен (буря), социален (разоряване на селяните) и философски (безсмислеността на живота след катастрофата).'
+        },
+        {
+          q: 'Кое художествено средство е: „небето — пламък мрачен"?',
+          opts: ['Сравнение', 'Хипербола', 'Метафора', 'Анафора'],
+          correct: 2,
+          explanation: '„Небето — пламък мрачен" е метафора — небето се уподобява на тъмен пламък. Оксиморонът „мрачен пламък" засилва апокалиптичната картина.'
+        },
+        {
+          q: 'Как завършва стихотворението „Градушка" — какъв въпрос задава?',
+          opts: ['Кой е виновен?', 'Кога ще спре бурята?', 'Трябва ли да живееш след туй, сетне?', 'Има ли Бог?'],
+          correct: 2,
+          explanation: 'Финалният въпрос — „И трябва ли да живееш след туй, сетне?" — е риторичен. Той изразява пълното отчаяние и отхвърляне на смисъла на живота след разрухата.'
+        },
+        {
+          q: 'Коя от следните творби е от символистичния период на Яворов?',
+          opts: ['Градушка', 'Калиопа', 'Маска', 'Арменци'],
+          correct: 2,
+          explanation: '„Маска" е от символистичния период на Яворов. „Градушка", „Арменци" и „Калиопа" са от ранния социален период.'
+        },
+        {
+          q: 'Какъв е лирическият говорител в „Градушка"?',
+          opts: ['Самият Яворов като участник', 'Наблюдател и съпричастник', 'Гласът на природата', 'Мъртвецът от нивата'],
+          correct: 1,
+          explanation: 'Говорителят не е пострадал директно — той наблюдава и съпреживява. Тази позиция му позволява да разкрие общото страдание, не само личното.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

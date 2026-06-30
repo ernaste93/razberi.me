@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Никола Вапцаров — История · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    .poem-block {
+      background: var(--soft); border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0;
+      font-style: italic; font-size: 14px; line-height: 2; color: var(--text);
+      white-space: pre-line;
+    }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    #btn-ask-znaiko {
+      position: fixed; bottom: 28px; right: 32px; z-index: 999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 20px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    #selection-tooltip {
+      position: fixed; z-index: 9999; display: none;
+      transform: translateX(-50%); pointer-events: none;
+    }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+      transition: opacity .12s, transform .12s;
+    }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 6px solid transparent; border-top-color: var(--accent);
+    }
+
+    .quiz-wrap {
+      margin-top: 28px; background: rgba(255,255,255,0.97);
+      border: 1px solid var(--line); border-radius: 20px;
+      padding: 28px 32px; box-shadow: 0 4px 16px rgba(16,24,40,0.07);
+    }
+    .quiz-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .quiz-sub   { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .quiz-progress-wrap { height: 5px; background: var(--soft); border-radius: 99px; overflow: hidden; margin-bottom: 22px; }
+    .quiz-progress-bar  { height: 100%; background: var(--accent); border-radius: 99px; transition: width .35s ease; }
+    .quiz-q-num  { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing:.07em; margin-bottom: 6px; }
+    .quiz-q-text { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.5; margin-bottom: 16px; }
+    .quiz-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+    .quiz-option {
+      padding: 11px 16px; border: 1.5px solid var(--line); border-radius: 11px;
+      font-family: inherit; font-size: 13px; font-weight: 600; color: var(--text);
+      background: var(--bg); cursor: pointer; text-align: left;
+      transition: border-color .15s, background .15s;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .quiz-option:hover:not(:disabled) { border-color: var(--accent); background: #f0f4ff; }
+    .quiz-option.correct  { border-color: #16a34a; background: #f0fdf4; color: #15803d; }
+    .quiz-option.wrong    { border-color: #dc2626; background: #fff5f5; color: #dc2626; }
+    .quiz-option.revealed { border-color: #16a34a; background: #f0fdf4; color: #15803d; }
+    .quiz-option:disabled { cursor: default; }
+    .option-letter {
+      width: 24px; height: 24px; border-radius: 7px; background: var(--line);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; flex-shrink: 0;
+    }
+    .quiz-option.correct  .option-letter,
+    .quiz-option.revealed .option-letter { background: #16a34a; color: #fff; }
+    .quiz-option.wrong    .option-letter { background: #dc2626; color: #fff; }
+    .quiz-explanation {
+      display: none; padding: 10px 14px; background: #f0f9ff;
+      border: 1px solid #bae6fd; border-radius: 10px;
+      font-size: 13px; color: #0369a1; line-height: 1.6; margin-bottom: 16px;
+    }
+    .quiz-explanation.show { display: block; }
+    .quiz-btn-row { display: flex; justify-content: flex-end; }
+    .quiz-next-btn {
+      padding: 10px 24px; background: var(--accent); color: #fff;
+      border: none; border-radius: 11px; font-family: inherit;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+    }
+    .quiz-next-btn:disabled { opacity: .4; cursor: default; }
+    .quiz-results { text-align: center; }
+    .results-score-ring {
+      width: 96px; height: 96px; border-radius: 50%;
+      margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
+      font-size: 26px; font-weight: 800; color: #fff;
+    }
+    .results-title { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .results-sub   { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .results-grade {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--soft); border-radius: 12px; padding: 10px 20px;
+      font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 20px;
+    }
+    .results-grade span { font-size: 26px; font-weight: 800; color: var(--accent); }
+    .results-breakdown { text-align: left; margin-bottom: 20px; }
+    .results-breakdown-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing:.07em; color: var(--muted); margin-bottom: 8px; }
+    .result-row { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+    .result-row:last-child { border-bottom: none; }
+    .result-icon { font-size: 14px; flex-shrink: 0; }
+    .result-q  { flex: 1; color: var(--text); line-height: 1.5; }
+    .result-a  { color: var(--muted); font-size: 11px; margin-top: 2px; }
+    .result-a.ca { color: #16a34a; font-weight: 700; }
+    .result-a.wa { color: #dc2626; }
+    .results-btn-row { display: flex; gap: 10px; justify-content: center; }
+    .btn-retry    { padding: 10px 20px; border: 1.5px solid var(--line); border-radius: 11px; font-family: inherit; font-size: 13px; font-weight: 700; color: var(--text); background: var(--bg); cursor: pointer; }
+    .btn-continue { padding: 10px 24px; background: var(--accent); color: #fff; border: none; border-radius: 11px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a>
+        <span>›</span>
+        История — Никола Вапцаров
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Миналото и паметта в поезията на Никола Вапцаров — „История"</div>
+          <div class="lesson-meta">„Историята не е мъртва книга" · Социална лирика · ~9 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p>Никола Вапцаров (1909–1942) е роден в <strong>Банско</strong> — малък планински град в Пиринска Македония. Произхожда от семейство с революционни традиции: баща му участва в Илинденското въстание. Завършва Морското машинно училище в Трън и работи като <strong>машинист</strong> — опит, дълбоко отпечатан в поезията му. Машините, заводите, работниците и тяхното ежедневие са неговата лирическа вселена.</p>
+              <p>Единствената му стихосбирка — <strong>„Моторни песни"</strong> (1940) — излиза само две години преди смъртта му. В нея Вапцаров съчетава лиричност с политическа ангажираност, личното с колективното, любовта с класовата борба. Активен комунист, участва в антифашистката съпротива. Арестуван е, осъден и <strong>разстрелян на 23 юли 1942 г.</strong> Само на 32 години. Известна е легендата, че последните му думи са „Борбата е безмилостно жестока."</p>
+              <p>Посмъртно е удостоен с Международната Ленинска награда за мир. Поезията му е преведена на десетки езици. Вапцаров е единственият български поет, признат от ЮНЕСКО за световно литературно наследство.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Контекст: Социалната лирика</div>
+            <div class="lesson-body">
+              <p>За да разберем „История", трябва да знаем какво е <strong>социална лирика</strong> и как тя се различава от символизма, доминирал в българската поезия преди Вапцаров.</p>
+              <p><strong>Символизмът</strong> (Яворов, Дебелянов, Лилиев) се занимава с индивидуалното страдание, с душата, с тайнствените светове отвъд реалното. Лирическият говорител е самотен, изолиран, разкъсан между живота и смъртта. Светът е сянка, илюзия.</p>
+              <p><strong>Социалната лирика</strong> обръща погледа навън — към реалните хора, техния труд, тяхната бедност, тяхната класова принадлежност. При Вапцаров говорителят не е самотен интелектуалец, а <strong>колективно „ние"</strong> — работниците, бедните, „хилядите без слава". Историята не е абстракция — тя е тяло, хляб, смърт, любов.</p>
+              <p>Социалната лирика съдържа <strong>надежда за промяна</strong>: тя не е пасивна меланхолия, а зов за действие. Страданието не е метафизично — то има конкретни виновници и конкретни жертви. Тази позиция прави Вапцаров коренно различен от предшествениците му.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стихотворението</div>
+            <div class="poem-block">Историята не е мъртва книга,
+историята — това сме ний,
+ний — хилядите, що кървим и пием горчила,
+ний — хилядите без слава и без история.
+
+Историята не е мъртва книга,
+историята — земята и хлябът,
+историята — нашият живот,
+нашата смърт, нашето страдание и нашата любов.<div class="poem-author">— Никола Вапцаров, „История" (от „Моторни песни", 1940)</div></div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Анализ строфа по строфа</div>
+            <div class="lesson-body">
+              <p><strong>Строфа 1 — Кой прави историята:</strong> Стихотворението се отваря с парадоксално твърдение: „Историята не е мъртва книга." Отричането на общоприетото — историята като нещо написано, завършено, мъртво — е провокативен ход. Ако не е книга, тогава какво е? Отговорът е незабавен и категоричен: „историята — това сме ний." Говорителят преобръща традиционното разбиране: историята не се прави от царе и победители, а от анонимните маси — „хилядите, що кървим и пием горчила." Парадоксът е дълбок: тези, които са „без слава и без история" в официалния разказ, всъщност СА историята. Те не липсват от нея — те са я създали с тялото и живота си, без да получат признание.</p>
+              <p><strong>Строфа 2 — Какво е историята:</strong> Втората строфа разширява и задълбочава определението. Анафората „историята —" се повтаря три пъти, натрупвайки значения. Историята е „земята и хлябът" — материалното, физическото, необходимото за оцеляване. Тя е „нашият живот, нашата смърт, нашето страдание и нашата любов" — пълнотата на човешкото съществуване. Забележително е, че любовта е включена редом с живота, смъртта и страданието — тя не е лукс, а основна човешка реалност. Поемата завършва с „нашата любов" — открита, незатворена, като обещание или отворен въпрос.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Анафора</strong> — „Историята не е мъртва книга" се повтаря в началото на двете строфи. В строфа 2 „историята —" се повтаря три пъти. Анафората създава ритъм, настойчивост, манифестен тон — като лозунг, като клетва.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚔️</div>
+                <div class="key-point-text"><strong>Антитеза</strong> — „мъртва книга" срещу „жив процес" (нашият живот, любов, смърт). Историята е представена чрез отричане на мъртвото и утвърждаване на живото. Официалното разбиране (книга = архив = завършено) е противопоставено на народното (живот = процес = непрекъснато).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Инверсия</strong> — „ний — хилядите, що кървим..." Нормалният словоред би бил „хилядите, що кървим — ние сме историята." Инверсията поставя „ний" на преден план, изтъква колективния субект като главен герой на историческия разказ.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">✂️</div>
+                <div class="key-point-text"><strong>Елипса</strong> — „историята — земята и хлябът" (без глагол). Пропуснатото „е" ускорява ритъма, прави изреченията категорични, почти заповедни. Всяко тире действа като удар — директен, без колебание.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">👥</div>
+                <div class="key-point-text"><strong>Колективен говорител</strong> — Вапцаров не говори като „аз", а като „ний" (ние). Това е изключително важно художествено решение: лирическият субект е цяла класа, цяло поколение. Говорителят не е привилегирован наблюдател, а един от „хилядите".</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📋</div>
+                <div class="key-point-text"><strong>Натрупване (градация)</strong> — „нашият живот, нашата смърт, нашето страдание и нашата любов." Четири понятия, обхващащи цялата човешка реалност. Натрупването завършва с „любов" — неочаквано, трогателно, хуманизиращо.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Преосмислянето на историята като колективна съдба на обикновените хора, а не хроника на управляващите.</p>
+              <p><strong>Идея:</strong> Анонимните маси — работниците, бедните, „хилядите без слава" — са истинските творци на историята. Техните живот, смърт, страдание и любов са самата история, макар официалните разкази да ги игнорират. Признаването на тяхната роля е акт на революционна справедливост.</p>
+              <p><strong>Мотиви:</strong> Историята като жив процес; колективното „ние" като субект; страданието като исторически факт; хлябът и земята като основни реалности; невидимостта на обикновения човек в официалния исторически разказ; любовта като неделима от борбата.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Лирическият говорител</div>
+            <div class="lesson-body">
+              <p>Едно от най-важните особености на „История" е изборът на <strong>колективно „ний"</strong> като лирически говорител — вместо традиционното индивидуално „аз".</p>
+              <p>Говорителят не е поетът-творец, наблюдаващ страданието отстрани. Той е вътре в него: „ний — хилядите, що <em>кървим</em> и пием горчила." Глаголите са в 1 лице множествено число — включващо, без дистанция. Говорителят заявява принадлежност, а не съчувствие.</p>
+              <p>Тази позиция е принципно различна от символизма, където говорителят обикновено е изолиран, самотен, отделен от масите. При Вапцаров говорителят <strong>е</strong> масата. Това прави поемата политически манифест, а не лирическа изповед.</p>
+              <p>Парадоксалното е, че именно тези, наречени „без слава и без история", произнасят думите на стихотворението — с което парадоксално влизат в историята на литературата.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Връзки с матурата</div>
+            <div class="lesson-body">
+              <p>„История" е сред задължителните произведения за <strong>матура по БЕЛ</strong>. Ето защо е важно:</p>
+              <p><strong>Есе тип „анализ на художествен текст":</strong> Стихотворението е кратко, но изключително богато откъм художествени средства. Идеално за анализ на анафора, антитеза, инверсия и елипса в комбинация. Важно е да покажеш не само <em>какво</em> са тропите, но <em>как</em> работят заедно за манифестния тон.</p>
+              <p><strong>Есе тип „сравнителен анализ":</strong> Вапцаров се сравнява с Яворов (индивидуално vs. колективно страдание), с Ботев (революционна поезия — смъртта като саможертва), с Дебелянов (меланхолия vs. социален гняв). Умението да ситуираш „История" в по-широкия контекст на българската литература е ключово за по-висока оценка.</p>
+              <p><strong>Лирически говорител:</strong> В задачи за идентифициране на лирическия говорител — задължително посочи колективния характер на „ний" и обясни художествената му функция.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното накратко</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📍</div>
+                <div class="key-point-text"><strong>Автор и биография:</strong> Никола Вапцаров (1909–1942), роден в Банско, машинист, „Моторни песни" (1940), разстрелян на 23 юли 1942 г.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Централна идея:</strong> Историята не е книга на победителите — тя е живият опит на анонимните маси: техният живот, смърт, страдание и любов.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">👥</div>
+                <div class="key-point-text"><strong>Колективен говорител:</strong> „Ний" (ние) — не „аз". Говорителят е вътре в масата, не наблюдател отстрани. Фундаментална разлика от символизма.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Водещо художествено средство:</strong> Анафора — „Историята не е мъртва книга" и „историята —" (повторени многократно). Създава манифестен, ритмичен, настойчив тон.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚔️</div>
+                <div class="key-point-text"><strong>Антитеза:</strong> „Мъртва книга" (официалната история = архив) срещу „нашият живот, смърт, любов" (народната история = жив процес).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏭</div>
+                <div class="key-point-text"><strong>Социална лирика vs. символизъм:</strong> Символизмът = индивидуално страдание, метафизика, самота. Социалната лирика = колективно страдание, реалност, надежда за промяна.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🍞</div>
+                <div class="key-point-text"><strong>„Земята и хлябът":</strong> Не метафора — буквална реалност. Историята е материална, физическа, телесна. Не абстрактна идея, а конкретен глад и оцеляване.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❤️</div>
+                <div class="key-point-text"><strong>„Нашата любов":</strong> Финалната дума на поемата. Любовта е равностойна на живота, смъртта и страданието — тя не е забравена дори в революционния манифест.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel11-vaptsarov-istoriya-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel11-vaptsarov-istoriya-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel11-vaptsarov-istoriya-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+      btnTop.classList.toggle('visible', window.scrollY > 200);
+    });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Миналото и паметта — Никола Вапцаров „История"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        var color = d.passed ? '#16a34a' : '#d97706';
+        var icon = d.passed ? '✓' : '✗';
+        a.style.position = 'relative';
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + icon + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) {
+          a.style.background = '#16a34a';
+          a.style.color = '#fff';
+          a.style.borderColor = '#16a34a';
+        } else {
+          a.style.borderColor = '#d97706';
+          a.style.color = '#92400e';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

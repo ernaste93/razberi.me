@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Въглеводороди · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem12-vaglevodorodi-q1',
+      lessonUrl:   '/lessons/chem12-vaglevodorodi.html',
+      lessonName:  'Органична химия — въглеводороди',
+      eyebrow:     'ХИМИЯ · 12 КЛАС',
+      title:       'Куиз — Въглеводороди — Тест 1',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem12-vaglevodorodi-quiz-2.html',
+      questions: [
+        { q:'Каква е общата формула на алканите?', opts:['CₙH₂ₙ','CₙH₂ₙ₊₂','CₙH₂ₙ₋₂','CₙHₙ'], correct:1, explanation:'Алканите (наситени въглеводороди) имат обща формула CₙH₂ₙ₊₂. Съдържат само единични C–C и C–H връзки. Примери: метан CH₄ (n=1), етан C₂H₆ (n=2), пропан C₃H₈ (n=3).' },
+        { q:'Кой е правилното IUPAC наименование на CH₃–CH₂–CH₂–CH₃?', opts:['Пентан','Бутан','Пропан','Хексан'], correct:1, explanation:'CH₃–CH₂–CH₂–CH₃ е бутан (4 въглеродни атома). По IUPAC: мет-(1С), ет-(2С), проп-(3С), бут-(4С), пент-(5С), хекс-(6С)... + -ан за наситени.' },
+        { q:'Каква е характерната реакция на алканите?', opts:['Присъединяване','Заместване (халогениране, нитриране)','Полимеризация','Естерификация'], correct:1, explanation:'Алканите са химически инертни (отсъствие на двойни/тройни връзки) и претърпяват предимно реакции на заместване: халогениране (CH₄ + Cl₂ → CH₃Cl + HCl при светлина), нитриране. Горят с пълно окисляване.' },
+        { q:'Каква е общата формула на алкените?', opts:['CₙH₂ₙ₊₂','CₙH₂ₙ','CₙH₂ₙ₋₂','CₙHₙ'], correct:1, explanation:'Алкените (ненаситени въглеводороди с една двойна връзка) имат обща формула CₙH₂ₙ. Примери: етен (етилен) CH₂=CH₂ (n=2), пропен CH₂=CH–CH₃ (n=3).' },
+        { q:'Каква е характерната реакция на алкените?', opts:['Заместване','Присъединяване (адиция) — към двойната C=C връзка','Горене','Крекинг'], correct:1, explanation:'Двойната C=C връзка е реакционен център. Алкените претърпяват реакции на присъединяване: хидрогениране (+ H₂ → алкан), халогениране (+ Br₂ → дибромалкан), хидратация (+ H₂O → алкохол). Обезцветяват бромова вода.' },
+        { q:'Каква е общата формула на алкините?', opts:['CₙH₂ₙ₊₂','CₙH₂ₙ','CₙH₂ₙ₋₂','CₙH₂ₙ₋₄'], correct:2, explanation:'Алкините (ненаситени въглеводороди с тройна С≡С връзка) имат обща формула CₙH₂ₙ₋₂. Пример: ацетилен (етин) HC≡CH — C₂H₂ (2×2−2=2). Реагират с присъединяване подобно на алкените.' },
+        { q:'Бензенът C₆H₆ е:', opts:['Алкан','Алкен','Ароматен въглеводород с делокализирана π-система','Алкин'], correct:2, explanation:'Бензенът е представителен ароматен въглеводород. Молекулата му е плоска шестоъгълна с делокализирани π-електрони (резонансна структура). Характерна реакция за него е заместването (не присъединяването), запазващо ароматността.' },
+        { q:'Кой газ се използва за зреене на плодове и е прост алкен?', opts:['Метан','Ацетилен','Етилен (етен, CH₂=CH₂)','Бутан'], correct:2, explanation:'Етиленът (CH₂=CH₂) е растителен хормон, ускоряващ зреенето на плодовете. В промишлеността се използва и за производство на полиетилен чрез полимеризация.' },
+        { q:'Изомерите са вещества с:', opts:['Еднаква структура и свойства','Еднаква молекулна формула, но различна структура и различни свойства','Различна молекулна формула, но еднакви свойства','Различен брой атоми'], correct:1, explanation:'Структурните изомери имат еднаква молекулна формула, но различно свързване на атомите (различна структура). Пример: бутан (CH₃CH₂CH₂CH₃) и изобутан (CH₃CH(CH₃)CH₃) — и двата с формула C₄H₁₀.' },
+        { q:'Какво е „крекинг" при преработка на нефт?', opts:['Изгаряне на нефт','Разцепване на дълговерижни въглеводороди на по-малки молекули при висока температура','Очистване на нефт от сяра','Смесване на различни фракции'], correct:1, explanation:'Крекингът е термичен или каталитичен процес, при който дълговерижни алкани (от тежки нефтени фракции) се разцепват на по-малки молекули (бензин, газ, алкени). Дава бензин с по-добри качества от директната дестилация.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

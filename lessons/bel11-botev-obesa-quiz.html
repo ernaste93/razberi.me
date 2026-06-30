@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Ботев — Обесването на Васил Левски · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel11-botev-obesa-q1',
+      lessonUrl:   '/lessons/bel11-botev-obesa.html',
+      lessonName:  'Христо Ботев — Обесването на Васил Левски',
+      eyebrow:     'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Обесването на Васил Левски — Тест 1',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel11-botev-obesa-quiz-2.html',
+      questions: [
+        { q:'Към кой жанр принадлежи стихотворението „Обесването на Васил Левски"?', opts:['Ода','Елегия','Балада','Химн'], correct:1, explanation:'Стихотворението е елегия — лирическа творба с тъжно, скръбно настроение, посветена на смъртта на национален герой.' },
+        { q:'Кога е обесен Васил Левски?', opts:['1868 г.','1872 г.','1873 г.','1876 г.'], correct:2, explanation:'Левски е обесен на 18 февруари 1873 г. в София (тогава Търново). Ботев пише стихотворението скоро след казнения.' },
+        { q:'Как е изобразена природата в стихотворението?', opts:['Безразлична и ведра','Скърбяща и мрачна — сподвижник в траура','Бурна и гневна','Весела и пролетна'], correct:1, explanation:'Природата е антропоморфизирана и скърби заедно с народа: „мъртва тишина", студ, мрак — тя е съпричастна към трагедията.' },
+        { q:'Какво олицетворява „вихрушката плаче" в стихотворението?', opts:['Буря идва','Природата споделя мъката по Левски','Ботев се страхува','Турците ликуват'], correct:1, explanation:'„Вихрушката плаче" е олицетворение — природата е очовечена и изразява скръбта по обесения Левски. Това засилва трагическата атмосфера.' },
+        { q:'Кой е лирическият говорител в стихотворението?', opts:['Самият Левски','Скръбен свидетел — гласът на народа','Турски пазач','Безличен разказвач'], correct:1, explanation:'Говорителят е скръбен свидетел, идентифициран с народа. Той изразява колективната болка и изгубената надежда след смъртта на Апостола.' },
+        { q:'С коя фраза Ботев характеризира обесването на Левски?', opts:['„Подвиг велик"','„Позорна смърт"','„И твоята смърт е победа"','„Той падна, но не се предаде"'], correct:1, explanation:'Ботев определя смъртта на бесилото като „позорна" от гледна точка на поробителите, но за народа тя е свещена жертва — парадокс, зареден с патос.' },
+        { q:'Какъв е образът на Левски в стихотворението?', opts:['Обикновен войник','Светец и мъченик за народна свобода','Самотен бунтар без последователи','Политик и дипломат'], correct:1, explanation:'Левски е представен като светец-мъченик: умира за свободата на народа, жертвата му е свещена. Образът е издигнат до религиозно-митологичен план.' },
+        { q:'Каква е ролята на „тъмний затвор" в стихотворението?', opts:['Място, откъдето Левски избягва','Символ на робството и потисничеството','Конкретен затвор в Търново','Метафора за смъртта'], correct:1, explanation:'„Тъмният затвор" е символ на поробеното отечество — България под османска власт. Левски се бори срещу тази тъмнина с цената на живота си.' },
+        { q:'Коя изразна средства е основна за предаване на скръбта в стихотворението?', opts:['Ирония','Хумор','Олицетворение и метафора','Хипербола'], correct:2, explanation:'Олицетворението (природата скърби) и метафората (Левски като светлина, свобода като цел) са главните средства за предаване на дълбоката скръб и величие.' },
+        { q:'Как завършва стихотворението?', opts:['С надежда за бъдеща свобода','С призив за въстание','С безнадеждна мъка и тъмнина','С молитва за Левски'], correct:0, explanation:'Въпреки скръбта, стихотворението завършва с неугасваща надежда — паметта за Левски ще вдъхновява бъдещите борби за свобода.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

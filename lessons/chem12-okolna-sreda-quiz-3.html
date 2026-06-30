@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Химия и околната среда · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'chem12-okolna-sreda-q3',
+      lessonUrl:  '/lessons/chem12-okolna-sreda.html',
+      lessonName: 'Химия и опазване на околната среда',
+      eyebrow:    'ХИМИЯ · 12 КЛАС',
+      title:      'Куиз — Химия и околна среда — Тест 3',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        { q:'Как хлорните атоми от фреоните разрушават озона?', opts:['Директно изгарят озона','Cl• + O₃ → ClO• + O₂, после ClO• + O• → Cl• + O₂ (верижна реакция)','Абсорбират UV и пречат на образуването на О₃','Реагират с N₂ и блокират озона'], correct:1, explanation:'Верижната реакция Cl• + O₃ → ClO• + O₂ и ClO• + O• → Cl• + O₂ регенерира Cl• — той може да разруши хиляди молекули О₃ преди да се инактивира. Един атом Cl унищожава ~100 000 молекули О₃.' },
+        { q:'Кое твърдение за CO₂ в атмосферата е ВЯРНО?', opts:['Концентрацията му намалява от 1850 г.','Концентрацията му нараства от ~280 ppm до над 420 ppm от индустриализацията досега','CO₂ не е парников газ','CO₂ разрушава озоновия слой'], correct:1, explanation:'От преди индустриалната революция (~280 ppm) до днес (над 420 ppm) концентрацията на CO₂ се е повишила с около 50%. Горенето на въглища, нефт и газ е главната причина.' },
+        { q:'Кои са последиците от замърсяването на водата с тежки метали?', opts:['Водата добива приятен вкус','Биоакумулация в хранителната верига — увреждане на нервната система, бъбреците, черния дроб','Стимулиране на растежа на риби','Намаляване на еутрофикацията'], correct:1, explanation:'Тежките метали (Pb, Hg, Cd) се натрупват в живите организми. Живакът например се превръща в метилживак от бактерии, биоакумулира се в риби и при консумация уврежда нервната система (болест Минамата).' },
+        { q:'Кое от следните е пример за биогориво?', opts:['Бензин от нефтена рафинерия','Биоетанол от захарна тръстика','Природен газ от газово находище','Дизел от въглища'], correct:1, explanation:'Биоетанолът се произвежда чрез ферментация на захари от захарна тръстика, царевица или пшеница. Смесен с бензин, намалява употребата на изкопаеми горива. Смятан за въглеродно по-неутрален.' },
+        { q:'Защо пластмасата е особено проблематична като отпадък?', opts:['Реагира с О₂ веднага след изхвърляне','Биологично неразградима — остава в средата стотици години; само 9% се рециклира','Произвежда токсичен газ при гниене','Тежка е и потъва в океаните'], correct:1, explanation:'Повечето пластмаси не се разграждат биологично. Фотодеградацията ги разбива на микропластмаси, но не ги елиминира. Те навлизат в хранителните вериги и са намерени дори в човешка кръв.' },
+        { q:'Какво е „атомна икономия" в зелената химия?', opts:['Броят на атомите в молекулата','Делът на масата на изходните вещества, влизаща в крайния продукт (без странични продукти)','Икономия на ядрена енергия','Атомите, отделяни като топлина'], correct:1, explanation:'Атомна икономия (%) = (Mr на желания продукт / сума Mr на всички продукти) × 100. При 100% АИ всички атоми от реагентите отиват в продукта — нулеви отпадъци. Реакциите на добавяне имат по-висока АИ от реакциите на заместване.' },
+        { q:'Кой е главен източник на метан (CH₄) в атмосферата?', opts:['Горене на природен газ в домакинствата','Животновъдство, оризови полета, нефтодобив и сметища','Изгаряне на нефт в рафинерии','Производство на цимент'], correct:1, explanation:'Около 30% от антропогенния CH₄ идва от животновъдство (ентерална ферментация при преживни животни). Оризовите полета, течовете от газопроводи и разлагането на органика в сметища са другите основни източници.' },
+        { q:'Как десулфуризацията на отработените газове намалява киселинните дъждове?', opts:['Добавя SO₂ за неутрализация','Улавя SO₂ от димните газове преди изпускане в атмосферата','Конвертира SO₂ в O₂','Намалява температурата на изгаряне'], correct:1, explanation:'При десулфуризация (FGD) димните газове се промиват с варно мляко (Ca(OH)₂): SO₂ + Ca(OH)₂ → CaSO₃ + H₂O. CaSO₃ се окислява до гипс (CaSO₄·2H₂O) — ценен строителен материал.' },
+        { q:'Кое вещество е найразпространеният замърсител на въздуха в градска среда?', opts:['Аргон','PM2.5 (фини прахови частици)','Водород','Хелий'], correct:1, explanation:'PM2.5 (частици с диаметър < 2.5 микрона) проникват дълбоко в белите дробове и дори в кръвта. Образуват се от транспорта, промишлеността и битовото отопление. Причиняват сериозни здравни проблеми.' },
+        { q:'Кое твърдение за зелената химия е НЕВЯРНО?', opts:['Предпочита каталитични процеси','Насърчава употребата на безопасни разтворители','Разрешава употребата на неограничени количества токсични вещества, стига продуктът да е полезен','Поощрява атомната икономия'], correct:2, explanation:'Зелената химия цели да намали или елиминира опасните вещества още при проектирането на процесите. Разрешаването на неограничени токсични вещества е обратното на нейните принципи.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

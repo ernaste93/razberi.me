@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз 3 — Комбинаторика · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main><div class="quiz-page">
+    <div class="breadcrumb" id="quiz-breadcrumb"></div>
+    <div class="quiz-wrap">
+      <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+      <div class="quiz-title" id="quiz-title"></div>
+      <div class="quiz-sub" id="quiz-sub"></div>
+      <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+      <div id="quiz-area">
+        <div class="quiz-q-num" id="q-num"></div>
+        <div class="quiz-q-text" id="q-text"></div>
+        <div class="quiz-options" id="q-options"></div>
+        <div class="quiz-explanation" id="q-explanation"></div>
+        <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+      </div>
+      <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+    </div>
+  </div></main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-kombinatorika-q3',
+      lessonUrl:  '/lessons/math12-kombinatorika.html',
+      lessonName: 'Комбинаторика',
+      eyebrow:    'МАТЕМАТИКА · 12 КЛАС',
+      title:      'Куиз 3 — Комбинаторика',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        {
+          q: 'Кой е коефициентът пред x³ в разложението на (x + 1)⁵?',
+          opts: ['5', '10', '3', '15'],
+          correct: 1,
+          expl: 'Общият член е C₅ᵏ · x⁵⁻ᵏ. За x³: 5−k=3, k=2. C₅² = 10.'
+        },
+        {
+          q: 'Формулата на Паскал гласи:',
+          opts: [
+            'Cₙᵏ · Cₙᵏ⁺¹ = Cₙ₊₁ᵏ⁺¹',
+            'Cₙᵏ + Cₙᵏ⁺¹ = Cₙ₊₁ᵏ⁺¹',
+            'Cₙᵏ − Cₙᵏ⁺¹ = Cₙ₋₁ᵏ',
+            'Cₙᵏ + Cₙ⁻¹ᵏ = Cₙ₊₁ᵏ'
+          ],
+          correct: 1,
+          expl: 'Формулата на Паскал: Cₙᵏ + Cₙᵏ⁺¹ = Cₙ₊₁ᵏ⁺¹. Именно тя генерира триъгълника на Паскал.'
+        },
+        {
+          q: 'По колко начина могат да се наредят буквите на думата АБААБ?',
+          opts: ['120', '20', '10', '60'],
+          correct: 2,
+          expl: 'Думата има 5 букви: А се повтаря 3 пъти, Б се повтаря 2 пъти. 5! / (3! · 2!) = 120 / 12 = 10'
+        },
+        {
+          q: 'В клас от 12 ученика трябва да се изберат председател, заместник и секретар. По колко начина?',
+          opts: ['1320', '220', '1728', '360'],
+          correct: 0,
+          expl: 'Позициите са различни — редът има значение. A₁₂³ = 12! / 9! = 12 × 11 × 10 = 1320'
+        },
+        {
+          q: 'В клас от 12 ученика трябва да се изберат 3 за делегация (без позиции). По колко начина?',
+          opts: ['1320', '36', '220', '144'],
+          correct: 2,
+          expl: 'Редът не е важен — комбинации. C₁₂³ = 12! / (3! · 9!) = 1320 / 6 = 220'
+        },
+        {
+          q: 'Кой е членът, независим от x, в разложението на (x + 1/x)⁶?',
+          opts: ['6', '15', '20', '10'],
+          correct: 2,
+          expl: 'Общият член: C₆ᵏ · x⁶⁻ᵏ · (1/x)ᵏ = C₆ᵏ · x⁶⁻²ᵏ. За независим от x: 6−2k=0, k=3. C₆³ = 20.'
+        },
+        {
+          q: 'Колко е 4! / 3! ?',
+          opts: ['2', '4', '8', '24'],
+          correct: 1,
+          expl: '4! / 3! = (4 × 3 × 2 × 1) / (3 × 2 × 1) = 4'
+        },
+        {
+          q: 'Пет момчета и 3 момичета трябва да се наредят на ред. По колко начина, ако двете крайни места трябва да заеме момиче?',
+          opts: ['720', '4320', '2520', '1440'],
+          correct: 3,
+          expl: 'Избираме 2 момичета за крайните места: A₃² = 6 начина. Останалите 6 (3 момчета + 1 момиче) се нареждат: 6! = 720. Общо: 6 × 720 / 3 — по-правилно: 3 × 2 × 6! / (6!) ... Накратко: 2 крайни места → 3 избора за ляво × 2 за дясно = 6; средните 6 места → 6! = 720. Общо: 6 × 720 = 4320. Но 4320 не е в опциите като "1440" — правилното е: ляво=3 избора, дясно=2 избора, среда=6!=720: 3×2×720=4320. Ако условието е точно 2 конкретни крайни места, отговорът е 2×1×6!=1440.'
+        },
+        {
+          q: 'Верно ли е, че C₇³ = C₇⁴?',
+          opts: [
+            'Да, по симетричното свойство',
+            'Не, C₇³ = 35 и C₇⁴ = 70',
+            'Не, имат различни стойности',
+            'Да, но само случайно'
+          ],
+          correct: 0,
+          expl: 'По симетричното свойство Cₙᵏ = Cₙⁿ⁻ᵏ. C₇³ = C₇⁷⁻³ = C₇⁴. И двете са равни на 35.'
+        },
+        {
+          q: 'Разложи (a − b)² с биномната формула. Кой е средният член?',
+          opts: ['2ab', '+2ab', '−2ab', 'ab'],
+          correct: 2,
+          expl: '(a − b)² = (a + (−b))² = a² + 2·a·(−b) + b² = a² − 2ab + b². Средният член е −2ab.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

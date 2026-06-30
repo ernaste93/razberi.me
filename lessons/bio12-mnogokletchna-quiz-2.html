@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Многоклетъчна организация · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio12-mnogokletchna-q2',
+      lessonUrl:   '/lessons/bio12-mnogokletchna.html',
+      lessonName:  'Многоклетъчна организация',
+      eyebrow:     'БИОЛОГИЯ · 12 КЛАС',
+      title:       'Тест 2 — Многоклетъчна организация',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio12-mnogokletchna-quiz-3.html',
+      questions: [
+        {
+          q: 'Кои са съставните части на неврона?',
+          opts: [
+            'Ядро, митохондрии и рибозоми',
+            'Тяло (сома), дендрити и аксон',
+            'Тяло, синапс и миелин',
+            'Дендрити, синапс и глиални клетки'
+          ],
+          correct: 1,
+          explanation: 'Невронът се състои от тяло (сома — съдържа ядрото), дендрити (разклонения, приемащи сигнали) и аксон (дълго израстъче, провеждащо сигнала към следващата клетка).'
+        },
+        {
+          q: 'Какво е синапс?',
+          opts: [
+            'Вид нервна тъкан в главния мозък',
+            'Специализиран контакт между два неврона или между неврон и ефектор',
+            'Миелиновата обвивка около аксона',
+            'Тялото на неврона с ядрото'
+          ],
+          correct: 1,
+          explanation: 'Синапсът е специализирано място за предаване на сигнал между два неврона или между неврон и мускул/жлеза. Предаването е химично — чрез невромедиатори (напр. ацетилхолин).'
+        },
+        {
+          q: 'Каква е функцията на глиалните клетки в нервната тъкан?',
+          opts: [
+            'Провеждат нервни импулси',
+            'Осигуряват опора, изолация и хранене на невроните',
+            'Произвеждат хормони',
+            'Изграждат синапсите'
+          ],
+          correct: 1,
+          explanation: 'Глиалните клетки са поддържащи — осигуряват механична опора, изолация (миелинова обвивка) и метаболитна подкрепа на невроните. Те не провеждат импулси.'
+        },
+        {
+          q: 'Коя органна система осъществява газообмен чрез алвеолите?',
+          opts: [
+            'Кръвоносна система',
+            'Храносмилателна система',
+            'Дихателна система',
+            'Отделителна система'
+          ],
+          correct: 2,
+          explanation: 'Дихателната система (нос → трахея → бронхи → бели дробове → алвеоли) осъществява газообмена: О₂ преминава от въздуха в кръвта, а CO₂ — от кръвта в алвеолите.'
+        },
+        {
+          q: 'Колко камери има човешкото сърце?',
+          opts: ['2', '3', '4', '6'],
+          correct: 2,
+          explanation: 'Човешкото сърце има 4 камери: дясно предсърдие, дясна камера, ляво предсърдие, лява камера. Дясната половина изпомпва кръв към белите дробове (малък кръг), лявата — към тялото (голям кръг).'
+        },
+        {
+          q: 'Кои органи изграждат отделителната система при човека?',
+          opts: [
+            'Бели дробове, трахея, нос',
+            'Бъбреци, уретери, пикочен мехур, уретра',
+            'Черен дроб, панкреас, жлъчен мехур',
+            'Лимфни възли, слезка, тимус'
+          ],
+          correct: 1,
+          explanation: 'Отделителната система включва: бъбреци (филтрират кръвта) → уретери (отвеждат урината) → пикочен мехур (съхранява) → уретра (извежда урината навън).'
+        },
+        {
+          q: 'Каква е разликата между ЦНС и ПНС?',
+          opts: [
+            'ЦНС е само в главния мозък; ПНС — само в гръбначния мозък',
+            'ЦНС включва главен и гръбначен мозък; ПНС — периферните нерви и ганглии',
+            'ЦНС е отговорна за движението; ПНС — за мисленето',
+            'ЦНС и ПНС са едно и също нещо'
+          ],
+          correct: 1,
+          explanation: 'ЦНС (централна нервна система) = главен мозък + гръбначен мозък. ПНС (периферна нервна система) = всички нерви и ганглии извън ЦНС, свързващи я с органите и сетивата.'
+        },
+        {
+          q: 'Кой хормон произвежда панкреасът, за да понижи кръвната захар?',
+          opts: [
+            'Адреналин',
+            'Кортизол',
+            'Инсулин',
+            'Глюкагон'
+          ],
+          correct: 2,
+          explanation: 'Инсулинът се произвежда от бета-клетките на панкреаса и понижава кръвната захар, като стимулира клетките да поемат глюкоза. Глюкагонът (алфа-клетки) има обратното действие — повишава кръвната захар.'
+        },
+        {
+          q: 'Кой орган е „главната жлеза" на ендокринната система?',
+          opts: [
+            'Щитовидна жлеза',
+            'Надбъбречна жлеза',
+            'Хипофиза',
+            'Панкреас'
+          ],
+          correct: 2,
+          explanation: 'Хипофизата (pituitarygland) е наречена „главна жлеза" — отделя хормони, регулиращи дейността на другите жлези (щитовидна, надбъбречни, полови жлези). Контролира се от хипоталамуса.'
+        },
+        {
+          q: 'Орган е:',
+          opts: [
+            'Група от еднакви клетки с обща функция',
+            'Съвкупност от различни тъкани, организирани да изпълняват обща функция',
+            'Един вид тъкан, изпълняваща специализирана роля',
+            'Система от органни системи'
+          ],
+          correct: 1,
+          explanation: 'Органът е съвкупност от различни тъкани с обща функция. Например стомахът съдържа епителна (лигавица), мускулна (движение), нервна (регулация) и съединителна тъкан (опора).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Христо Смирненски — Йохан · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel11-smirnanski-yohan-q3',
+      lessonUrl:   '/lessons/bel11-smirnanski-yohan.html',
+      lessonName:  'Христо Смирненски — Йохан',
+      eyebrow:     'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Христо Смирненски — Йохан — Тест 3',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     3,
+      questions: [
+        { q:'Каква е разликата между Смирненски и Вазов в изобразяването на народа?', opts:['Няма разлика','Вазов изобразява народа като исторически герой, Смирненски — като угнетен пролетариат в настоящето','Смирненски е по-оптимистичен','Вазов е по-социален'], correct:1, explanation:'Вазов изгражда историческия мит за народа-герой (Епопея). Смирненски разкрива настоящата реалност — угнетен пролетариат без героика, само с ежедневна борба за оцеляване.' },
+        { q:'Каква е ролята на конкретния детайл в пролетарската поезия на Смирненски?', opts:['Конкретните детайли са излишни','Те правят страданието осезаемо и убедително — повече от всякакви абстракции','Детайлите са само описателни','Те служат за хумор'], correct:1, explanation:'Конкретният детайл е водещ похват — „калта", „ботушите", „куфарът" правят страданието реално и осезаемо. Читателят не само разбира, но и усеща бедността на Йохан.' },
+        { q:'Как Смирненски превръща личната история в универсална?', opts:['Като я прави по-обща и неясна','Чрез типичния образ — Йохан е всеки беден работник, не само конкретен германец','Чрез исторически контекст','Чрез религиозни символи'], correct:1, explanation:'Йохан е тип-образ — конкретен и реален, но едновременно универсален. Всеки читател може да разпознае в него „своя Йохан" — всеки беден и изключен човек.' },
+        { q:'Какво е „отчуждението" като тема в „Йохан"?', opts:['Йохан се отчуждава от семейството си','Йохан е отчужден от обществото — невидим, без глас, без признание','Йохан е отчужден от природата','Отчуждението е просто самота'], correct:1, explanation:'Отчуждението е социологическо — Йохан е буквално невидим за обществото. Той е там, сред хората, но никой не го вижда. Това е отчуждението на пролетария в капиталистическата система.' },
+        { q:'Каква е функцията на антитезата „богатство / бедност" в стихотворението?', opts:['Само за описание','Подчертава социалното неравенство и несправедливостта на системата','Хумористичен ефект','Показва, че богатството е добро'], correct:1, explanation:'Антитезата богатство/бедност (разкошни витрини срещу скитащия Йохан) е остра социална критика — системата произвежда богатство за едни и нищета за други едновременно.' },
+        { q:'Как стихотворението „Йохан" е актуално и днес?', opts:['Вече не е актуално','Темата за мигрантите, бежанците и изключените от обществото е вечно актуална','Актуално е само за германците','Актуално е само в България'], correct:1, explanation:'„Йохан" е вечно актуален — бежанците, мигрантите и социално изключените са проблем на всяка епоха. Смирненски е провидял universal образ, надживяващ своето историческо време.' },
+        { q:'Кое от следните е НАЙ-точно определение на пролетарската лирика?', opts:['Поезия за работа и занаяти','Социално ангажирана поезия, изразяваща страданието на работническата класа и призиваща за промяна','Поезия за природата и труда','Религиозна поезия за беднитe'], correct:1, explanation:'Пролетарската лирика е социално ангажирана — изразява страданието на работническата класа, разкрива несправедливостта на системата и (при революционните поети) призовава за промяна.' },
+        { q:'Каква е разликата в употребата на езика при Смирненски и при символистите?', opts:['Смирненски използва по-сложен език','Символистите предпочитат неясни настроения и символи, Смирненски — конкретни, прости думи с директен смисъл','Не се различават','Смирненски пише само на немски'], correct:1, explanation:'Символистите (Дебелянов, Славейков) предпочитат настроения, символи и абстракция. Смирненски използва прост, директен език с конкретни детайли — поезията трябва да е разбираема.' },
+        { q:'Как финалът на „Йохан" резонира с основното послание?', opts:['Финалът е оптимистичен — Йохан намира работа','Финалът е отворен и безнадежден — Йохан продължава да скита, системата не се е променила','Йохан умира в края','Йохан се завръща в родината'], correct:1, explanation:'Финалът е без разрешение — Йохан продължава да скита, системата не предлага помощ. Тази открита и безнадеждна развръзка е самото обвинение срещу обществения ред.' },
+        { q:'Защо Смирненски е важна фигура в историята на българската литература?', opts:['Защото е живял дълго','Защото пише само смешна поезия','Защото въвежда социалната и пролетарска лирика в България с висок художествен усет','Защото е превел много чужди произведения'], correct:2, explanation:'Смирненски е важен, защото въвежда социалната ангажираност в поезията без да жертва художествеността. Той доказва, че „политическата" поезия може да бъде истинско изкуство.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

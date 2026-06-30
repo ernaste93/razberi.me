@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Вазов Под игото · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel11-vazov-pod-igoto-q1',
+      lessonUrl: '/lessons/bel11-vazov-pod-igoto.html',
+      lessonName: 'Вазов — Под игото',
+      eyebrow: 'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title: 'Куиз — Вазов „Под игото" — Тест 1',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel11-vazov-pod-igoto-quiz-2.html',
+      passScore: 8,
+      questions: [
+        {
+          q: 'В кои години е публикуван романът „Под игото" за пръв път?',
+          opts: ['1876–1877', '1881–1882', '1888–1889', '1894–1895'],
+          correct: 2,
+          explanation: '„Под игото" е публикуван за пръв път на части в периода 1888–1889 г. в списание „Денница" в Санкт Петербург. Като самостоятелна книга излиза в пълен вид едва през 1894 г.'
+        },
+        {
+          q: 'Как се казва измисленият град, в който се развива действието на „Под игото"?',
+          opts: ['Клисура', 'Копривщица', 'Бяла черква', 'Панагюрище'],
+          correct: 2,
+          explanation: 'Действието на „Под игото" се развива в измисления град Бяла черква. Прототипът на града е Сопот — родният град на Вазов, което добавя автобиографична нотка към творбата.'
+        },
+        {
+          q: 'Кой е главният герой на „Под игото"?',
+          opts: ['Кириак Стефчов', 'Чорбаджи Марко', 'Бойчо Огнянов', 'Доктор Соколов'],
+          correct: 2,
+          explanation: 'Главният герой е Бойчо Огнянов — революционер, пристигнал в Бяла черква под прикритие като учител. Двойната му самоличност (учител и конспиратор) е в центъра на романа.'
+        },
+        {
+          q: 'Коя е любовният интерес на Бойчо Огнянов в романа?',
+          opts: ['Мила', 'Рада Госпожина', 'Катя', 'Лалка'],
+          correct: 1,
+          explanation: 'Любовният интерес на Огнянов е Рада Госпожина — учителка в Бяла черква. Тяхната любовна история се развива на фона на подготовката за въстание и е неразривно свързана с националноосвободителния мотив.'
+        },
+        {
+          q: 'Кой е главният антагонист (отрицателен герой) в „Под игото"?',
+          opts: ['Чорбаджи Юрдан', 'Кириак Стефчов', 'Мердан ага', 'Велчо'],
+          correct: 1,
+          explanation: 'Кириак Стефчов е главният антагонист — предател и доносник, противопоставен на идеализма на Огнянов. Той символизира онези българи, предали своите сънародници заради лична изгода.'
+        },
+        {
+          q: 'Кое историческо събитие е кулминацията в „Под игото"?',
+          opts: [
+            'Руско-турската война от 1877–78 г.',
+            'Освобождението на България',
+            'Априлското въстание от 1876 г.',
+            'Съединението на Румелия от 1885 г.'
+          ],
+          correct: 2,
+          explanation: 'Кулминацията на романа е Априлското въстание от 1876 г. — когато въстаниците слагат огън на Бяла черква и въстанието е потушено от турците. Романът завършва трагично, но с надежда за бъдещето.'
+        },
+        {
+          q: 'Какъв е жанрът на „Под игото"?',
+          opts: ['Приключенски роман', 'Исторически роман', 'Психологически роман', 'Автобиографичен роман'],
+          correct: 1,
+          explanation: '„Под игото" е исторически роман — той описва конкретен исторически период (навечерието на Априлското въстание 1876 г.) и реални исторически събития, пречупени през призмата на измислени герои и сюжет.'
+        },
+        {
+          q: 'В кое списание е публикуван „Под игото" за пръв път и в кой град?',
+          opts: [
+            'Списание „Периодическо списание" в Браила',
+            'Вестник „Марица" в Пловдив',
+            'Списание „Денница" в Санкт Петербург',
+            'Списание „Читалище" в Цариград'
+          ],
+          correct: 2,
+          explanation: 'Романът е публикуван за пръв път на части в списание „Денница" в Санкт Петербург (Русия) през 1888–1889 г. Вазов е в изгнание по това време и поддържа контакти с руската интелигенция.'
+        },
+        {
+          q: 'На колко езика е преведен романът „Под игото"?',
+          opts: ['На 10 езика', 'На 20 езика', 'На повече от 30 езика', 'На 5 езика'],
+          correct: 2,
+          explanation: '„Под игото" е преведен на повече от 30 езика, което го прави едно от най-превежданите произведения на българската литература. Той представя на световната аудитория борбата на малкия български народ за свобода.'
+        },
+        {
+          q: 'Коя почетна титла носи Иван Вазов в българската литература?',
+          opts: [
+            'Баща на реализма',
+            'Патриарх на българската литература',
+            'Певец на свободата',
+            'Бард на Балкана'
+          ],
+          correct: 1,
+          explanation: 'Иван Вазов е известен като „Патриарх на българската литература". Той е централна фигура в националната ни литература — пише поезия, проза, драматургия и публицистика и оказва огромно влияние върху следващите поколения.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

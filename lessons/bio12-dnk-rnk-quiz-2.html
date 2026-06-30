@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — ДНК, РНК и Биосинтеза · Биология 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bio12-dnk-rnk-q2',
+      lessonUrl:  '/lessons/bio12-dnk-rnk.html',
+      lessonName: 'ДНК, РНК и Биосинтеза на Белтъци',
+      eyebrow:    'БИОЛОГИЯ · 12 КЛАС · ТЕМА 1',
+      title:      'Тест 2 — ДНК, РНК и Биосинтеза',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    2,
+      nextQuizUrl: '/lessons/bio12-dnk-rnk-quiz-3.html',
+      questions: [
+        { q:'Кой вид РНК изгражда рибозомите?', opts:['иРНК','тРНК','рРНК','хРНК'], correct:2, explanation:'рРНК (рибозомна РНК) е структурен компонент на рибозомите заедно с рибозомни белтъци. Тя участва пряко в каталитичния процес на транслацията.' },
+        { q:'Каква е посоката на синтеза на новата ДНК верига?', opts:["3'→5'","5'→3'",'Двупосочна','Случайна'], correct:1, explanation:"ДНК-полимеразата синтезира новата верига само в посока 5'→3'. Тя добавя нуклеотиди към свободния 3'-OH край." },
+        { q:'В кой органел на клетката се съдържа основното количество ДНК?', opts:['Митохондрии','Рибозоми','Ядро','Апарат на Голджи'], correct:2, explanation:'Основното количество ДНК при еукариотите е в ядрото (под формата на хроматин/хромозоми). Малко количество ДНК има и в митохондриите и хлоропластите.' },
+        { q:'Какво е свойството „дегенерираност" на генетичния код?', opts:['Един кодон кодира много аминокиселини','Различни кодони могат да кодират 1 и съща аминокиселина','Кодонът е от 4 нуклеотида','Кодонът е различен при различни видове'], correct:1, explanation:'Дегенерираността означава, че повечето аминокиселини се кодират от повече от един кодон (синонимни кодони). 64 кодона кодират само 20 аминокиселини.' },
+        { q:'Кой ензим синтезира иРНК при транскрипцията?', opts:['ДНК-полимераза','РНК-полимераза','Хеликаза','Рибонуклеаза'], correct:1, explanation:'РНК-полимеразата е ензимът, отговорен за синтеза на иРНК по ДНК матрица при транскрипция. За разлика от ДНК-полимеразата, тя може да започне синтеза de novo.' },
+        { q:'Колко аминокиселини кодират 64-те кодона?', opts:['64','32','20','10'], correct:2, explanation:'64 кодона кодират само 20 аминокиселини (плюс 3 стоп-кодона). Затова кодът е дегенериран — много аминокиселини имат по няколко кодона.' },
+        { q:'Каква е разликата между захарта в ДНК и РНК?', opts:['ДНК има рибоза, РНК — глюкоза','ДНК има дезоксирибоза, РНК — рибоза','И двете имат рибоза','И двете имат дезоксирибоза'], correct:1, explanation:"ДНК съдържа дезоксирибоза (без ОН при 2' въглерод), а РНК съдържа рибоза (с ОН при 2' въглерод). Оттам идват и имената им." },
+        { q:'Кой от следните е СТОП кодон?', opts:['АУГ','УЦА','УАА','ГГГ'], correct:2, explanation:'УАА е един от трите стоп кодона (УАА, УАГ, УГА). Те не кодират аминокиселини, а сигнализират за края на транслацията. АУГ е старт кодон.' },
+        { q:'Какво е антикодон?', opts:['3 нуклеотида на иРНК','3 нуклеотида на тРНК, комплементарни на кодона','Структура на рибозомата','Старт сигнал на ДНК'], correct:1, explanation:'Антикодонът е 3-нуклеотидна последователност на тРНК, комплементарна и антипаралелна на кодона на иРНК. Чрез него тРНК разпознава правилния кодон.' },
+        { q:'Централната догма на молекулярната биология описва:', opts:['ДНК→Белтък→РНК','РНК→ДНК→Белтък','ДНК→РНК→Белтък','Белтък→РНК→ДНК'], correct:2, explanation:'Централната догма е ДНК→РНК→Белтък. Информацията тече от нуклеинова киселина към белтък, но не обратно (при нормални условия). Формулирана от Франсис Крик (1958).' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

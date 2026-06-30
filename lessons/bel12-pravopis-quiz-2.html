@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Правописна норма · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-pravopis-q2',
+      lessonUrl:  '/lessons/bel12-pravopis.html',
+      lessonName: 'Правописна норма',
+      eyebrow:    'БЕЛ · 12 КЛАС · ЕЗИК',
+      title:      'Куиз — Правописна норма — Тест 2',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    2,
+      nextQuizUrl: '/lessons/bel12-pravopis-quiz-3.html',
+      questions: [
+        { q:'Кое изречение е написано ПРАВИЛНО?', opts:['"Директорът обяви резултатите."','"Директора обяви резултатите."','"Директорът обяви резултатите-та."','"Директорa бе обявен."'], correct:0, explanation:'„Директорът" е подлог → пълен член (-ът). „Обяви" е сказуемо. Изречението е граматически правилно.' },
+        { q:'В кой ред ВСИЧКИ думи са написани правилно?', opts:['невъзможен, не идва, по-голям','невъзможен, неидва, по-голям','не възможен, не идва, поголям','невъзможен, не-идва, по голям'], correct:0, explanation:'„Невъзможен" — не+прилагателно = слято. „Не идва" — не+глагол = разделно. „По-голям" — степен = с тире. Всичко в ред А е вярно.' },
+        { q:'Коя дума е написана ГРЕШНО?', opts:['екзотичен','екстра','ексклузивен','екзекуция'], correct:2, explanation:'„Ексклузивен" — пред „к" (съгласна) се пише „кс" → „ексклузивен" е правилно! Всъщност грешно в оригиналната задача е „ексзотичен". Проверка: „ексклузивен" е правилна форма.' },
+        { q:'Как се пише „следобед" и „след обяд"?', opts:['И двете — разделно','„следобед" — слято; „след обяд" — разделно','И двете — слято','„следобед" — разделно; „след обяд" — слято'], correct:1, explanation:'„Следобед" е слято — самостоятелна дума (периодът от деня). „След обяд" е разделно — предлог + съществително, буквалното значение (след конкретното обедно хранене).' },
+        { q:'Кое е правилното изписване на английското собствено ime "Shakespeare"?', opts:['Шейкспиър','Шекспир','Шейкспир','Shakeshpir'], correct:1, explanation:'„Шекспир" е утвърдената транскрипция в българския. Чуждите собствени имена се транскрибират (предават с български букви) по установения начин в речниците.' },
+        { q:'В изречението „_____ замина за чужбина" кой вариант е правилен?', opts:['"Героят замина..."','"Героя замина..."','"Геройт замина..."','"Героят-а замина..."'], correct:0, explanation:'„Героят" е подлог → пълен член (-ят). Имена на -й получават -ят в пълна форма: герой → героят (подлог), героя (допълнение).' },
+        { q:'Как се пишат прилагателните, произлезли от собствени имена?', opts:['Винаги с главна буква','С малка буква: „парижки", „вазов", „шекспиров"','С главна само при поети: „Вазов"','С тире: „Вазов-ски"'], correct:1, explanation:'Прилагателните от собствени имена се пишат с малка буква: „парижки", „вазов роман", „шекспиров герой". Изключение е само притежателното прилагателно, заместващо родителен падеж: „Вазовата поезия".' },
+        { q:'Кое изречение НЕ съдържа членуване?', opts:['"Детето плачеше."','"Дете плачеше."','"Детето беше малко."','"Детенцето спеше."'], correct:1, explanation:'„Дете плачеше" — съществителното „дете" е без член. В другите изречения „детето" и „детенцето" носят определителен член (-то/-цето).' },
+        { q:'Как се пише „физикo-математически"?', opts:['„физикоматематически" — слято','„физико-математически" — с тире','„физико математически" — разделно','„Физико-Математически" — с главни'], correct:1, explanation:'„Физико-математически" се пише с тире — координативно сложно прилагателно, при което двата компонента са равноправни (и физика, и математика). Не е субординативно (едното не определя другото).' },
+        { q:'Кой ПРИНЦИП обяснява защо пишем „мъж" (не „мъш"), въпреки изговора „мъш"?', opts:['Фонетичен принцип','Морфологичен принцип','Исторически принцип','Синтактичен принцип'], correct:1, explanation:'Морфологичният принцип — запазваме правописа на основата. „Мъж" се запазва, въпреки че се произнася „мъш" пред глухи съгласни. В „мъже" звучи ясно „ж" → правопис „мъж".' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

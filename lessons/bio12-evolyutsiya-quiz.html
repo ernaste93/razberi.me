@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Еволюция · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bio12-evolyutsiya-q1',
+      lessonUrl:  '/lessons/bio12-evolyutsiya.html',
+      lessonName: 'Еволюция на биологичните системи',
+      eyebrow:    'БИОЛОГИЯ · 12 КЛАС',
+      title:      'Тест 1 — Еволюция на биологичните системи',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bio12-evolyutsiya-quiz-2.html',
+      questions: [
+        {
+          q: 'Кой е основният принцип в теорията на Ламарк за еволюцията?',
+          opts: [
+            'Естественият отбор определя кои организми оцеляват',
+            'Придобитите по време на живота признаци се наследяват от потомците',
+            'Мутациите са основният двигател на еволюцията',
+            'Видовете са непроменливи и са създадени такива, каквито ги виждаме'
+          ],
+          correct: 1,
+          explanation: 'Ламарк твърди, че промените, придобити от организма по време на живота му (под влияние на средата), се предават на потомците. Тази идея е опровергана от съвременната генетика.'
+        },
+        {
+          q: 'Какво гласи „принципът на упражняването" по Ламарк?',
+          opts: [
+            'Организмите се упражняват, за да оцелеят в суровата среда',
+            'Използваният орган се развива и укрепва, а неизползваният атрофира',
+            'Само физически силните индивиди предават белезите си',
+            'Средата директно изменя ДНК на организма'
+          ],
+          correct: 1,
+          explanation: 'По принципа на упражняването на Ламарк: орган, който се използва интензивно, се развива, а орган, който не се използва, постепенно се атрофира. Класическият пример е врата на жирафа.'
+        },
+        {
+          q: 'Защо теорията на Ламарк е отхвърлена?',
+          opts: [
+            'Защото Ламарк не е провел никакви наблюдения',
+            'Защото придобитите признаци не се наследяват — генетиката доказва, че само ДНК се предава на потомството',
+            'Защото изменчивостта на организмите е невъзможна',
+            'Защото Дарвин публикува своята теория първи'
+          ],
+          correct: 1,
+          explanation: 'Генетиката доказва, че промените в тялото на организма (мускулна маса, тен и т.н.) не се записват в ДНК и не се предават на потомците. Само генетичните изменения (мутации) се наследяват.'
+        },
+        {
+          q: 'В коя година е публикуван „Произход на видовете" на Чарлз Дарвин?',
+          opts: ['1831 г.', '1842 г.', '1859 г.', '1871 г.'],
+          correct: 2,
+          explanation: '„За произхода на видовете чрез естествен отбор" е публикуван на 24 ноември 1859 г. — това е основополагащото произведение на еволюционната биология.'
+        },
+        {
+          q: 'Какво означава „свръхпроизводство" в теорията на Дарвин?',
+          opts: [
+            'Организмите произвеждат прекалено много храна',
+            'Организмите произвеждат повече потомство, отколкото може да оцелее при наличните ресурси',
+            'Хората произвеждат прекалено много стоки',
+            'Генетичният код се копира повече пъти, отколкото е необходимо'
+          ],
+          correct: 1,
+          explanation: 'Свръхпроизводството означава, че всеки вид произвежда повече потомство, отколкото може да оцелее — тъй като ресурсите (храна, пространство) са ограничени, настъпва конкуренция.'
+        },
+        {
+          q: 'Кой е механизмът, чрез който Дарвин обяснява „оцеляването на най-приспособените"?',
+          opts: [
+            'Изкуствен отбор',
+            'Генетичен дрейф',
+            'Естествен отбор',
+            'Мутационна теория'
+          ],
+          correct: 2,
+          explanation: 'Естественият отбор е ключовият механизъм по Дарвин: индивидите с изгодни белези за дадената среда оцеляват по-добре, размножават се повече и предават белезите си на потомците.'
+        },
+        {
+          q: 'При кой тип естествен отбор средните стойности на даден белег се запазват, а крайните се елиминират?',
+          opts: [
+            'Движещ отбор',
+            'Разривен (дисруптивен) отбор',
+            'Стабилизиращ отбор',
+            'Полов отбор'
+          ],
+          correct: 2,
+          explanation: 'Стабилизиращият отбор запазва средните (типичните) стойности и елиминира крайностите. Пример: при новородените средното тегло е най-изгодно — много леките и много тежките имат по-ниска преживяемост.'
+        },
+        {
+          q: 'Устойчивостта на бактериите към антибиотици е пример за кой тип естествен отбор?',
+          opts: [
+            'Стабилизиращ отбор',
+            'Движещ отбор',
+            'Разривен отбор',
+            'Полов отбор'
+          ],
+          correct: 1,
+          explanation: 'Движещият отбор измества нормата в едната посока — в случая с антибиотиците, бактериите с гени за устойчивост оцеляват и се размножават, докато чувствителните загиват.'
+        },
+        {
+          q: 'При разривния (дисруптивния) отбор какво се случва с популацията?',
+          opts: [
+            'Популацията се стабилизира около средната стойност',
+            'Нормата се измества постепенно в едната посока',
+            'Крайните форми се запазват, средните се елиминират — може да се стигне до 2 нови вида',
+            'Всички индивиди с крайни белези загиват'
+          ],
+          correct: 2,
+          explanation: 'При разривния отбор крайните форми имат предимство пред средните. Това може да доведе до разцепване на популацията на две групи и евентуално образуване на два нови вида.'
+        },
+        {
+          q: 'Кое от следните НЕ е задължително условие за действието на естествения отбор по Дарвин?',
+          opts: [
+            'Изменчивост в популацията',
+            'Наследственост на белезите',
+            'Борба за съществуване',
+            'Географска изолация между популациите'
+          ],
+          correct: 3,
+          explanation: 'Естественият отбор изисква изменчивост, наследственост и борба за съществуване (заради ограничени ресурси). Географската изолация е условие за алопатричното видообразуване, но не е задължителна за действието на самия естествен отбор.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

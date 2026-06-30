@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Биохимия · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+    table.chem-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+    table.chem-table th { background: var(--accent); color: #fff; padding: 8px 12px; text-align: left; }
+    table.chem-table td { padding: 8px 12px; border-bottom: 1px solid var(--line); }
+    table.chem-table tr:nth-child(even) td { background: var(--soft); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>›</span>
+        <a href="/urotsi.html">Химия 12 клас</a><span>›</span>
+        Биохимия
+      </div>
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">⚗️ ХИМИЯ · 12 КЛАС</div>
+          <div class="lesson-title">Биохимия — Молекулите на живота</div>
+          <div class="lesson-meta">Въглехидрати, мазнини, белтъци, ензими, нуклеинови киселини · ~14 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Какво изучава биохимията?</div>
+            <div class="lesson-body">
+              <p><strong>Биохимията</strong> е наука на границата между химия и биология. Изучава химичния строеж и реакциите на молекулите в живите организми. Основните биомолекули са: въглехидрати, мазнини (липиди), белтъци (протеини), нуклеинови киселини и ензими.</p>
+            </div>
+
+            <!-- ВЪГЛЕХИДРАТИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Въглехидрати</div>
+            <div class="lesson-body">
+              <p>Въглехидратите са органични съединения с обща формула <strong>Cₙ(H₂O)ₙ</strong> или <strong>Cₙ(H₂O)ₘ</strong>. Служат като основен енергиен източник за клетките (1 г = 4 ккал) и като структурни компоненти.</p>
+              <p>Делят се на <strong>монозахариди</strong> (прости захари), <strong>дизахариди</strong> и <strong>полизахариди</strong>.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🍇</div>
+                <div class="key-point-text"><strong>Глюкоза (C₆H₁₂O₆)</strong> — най-важният монозахарид. Главен енергиен субстрат на клетките. Съдържа се в грозде, мед, плодове. Формула: алдохексоза — съдържа алдехидна група и 4 ОН групи. Дава положителна Fehling реакция (редуцираща захар)!</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🍎</div>
+                <div class="key-point-text"><strong>Фруктоза (C₆H₁₂O₆)</strong> — изомер на глюкозата. Кетохексоза. Най-сладката естествена захар. Съдържа се в плодове и мед.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🍬</div>
+                <div class="key-point-text"><strong>Захароза (C₁₂H₂₂O₁₁)</strong> — обикновена захар (дизахарид). Глюкоза + фруктоза. НЕ е редуцираща захар. При хидролиза се получава инвертна захар (мед).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌾</div>
+                <div class="key-point-text"><strong>Нишесте ((C₆H₁₀O₅)ₙ)</strong> — полизахарид, изграден от глюкозни единици. Резервен въглехидрат в растенията. При реакция с йод (I₂) дава <strong>синьо-виолетово оцветяване</strong> — качествена реакция за нишесте!</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌿</div>
+                <div class="key-point-text"><strong>Целулоза ((C₆H₁₀O₅)ₙ)</strong> — полизахарид, изграден от глюкозни единици чрез β-1,4 гликозидни връзки. Структурен компонент на клетъчната стена на растенията. Хората не могат да я смилат (нямат целулаза). С I₂ НЕ дава синьо оцветяване.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔥</div>
+                <div class="key-point-text"><strong>Горене на глюкоза (клетъчно дишане):</strong> C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + 2880 kJ. Това е основният процес на добиване на енергия в клетките.</div>
+              </div>
+            </div>
+
+            <!-- МАЗНИНИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Мазнини (Липиди)</div>
+            <div class="lesson-body">
+              <p>Мазнините са <strong>триестери на глицерола с висши мастни киселини</strong> (триглицериди). Общата им формула е сложна, но принципът е: 1 глицеролова молекула + 3 мастни киселини → триглицерид + 3H₂O.</p>
+              <p>Делят се на:</p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Наситени мазнини</strong> — животински (масло, мас, бекон): твърди при стайна температура, съдържат наситени мастни киселини (стеаринова, палмитинова)</li>
+                <li><strong>Ненаситени мазнини</strong> — растителни масла (зехтин, слънчогледово): течни при стайна температура, съдържат ненаситени мастни киселини (олеинова, линолова)</li>
+              </ul>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Енергийна стойност:</strong> 1 г мазнина = 9 ккал (повече от въглехидрати!). Мазнините са основен дългосрочен енергиен резерв.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧼</div>
+                <div class="key-point-text"><strong>Осапуняване:</strong> Мазнина + NaOH → глицерол + сапун (натриеви соли на мастни киселини). Калиевите сапуни — меки (течни). Натриевите — твърди.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🥜</div>
+                <div class="key-point-text"><strong>Хидрогениране:</strong> Ненаситени растителни масла + H₂ → твърди маргарини. Двойните връзки в мастните киселини се наситват с водород.</div>
+              </div>
+            </div>
+
+            <!-- БЕЛТЪЦИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Белтъци (Протеини)</div>
+            <div class="lesson-body">
+              <p>Белтъците са <strong>биополимери от аминокиселини</strong>, свързани чрез пептидни (-CO-NH-) връзки. Изграждат се от 20 стандартни аминокиселини. Функциите им са изключително разнообразни: ензими, хормони, антитела, структурни протеини (колаген, кератин), транспортни (хемоглобин).</p>
+              <p><strong>Аминокиселините</strong> имат обща структура: NH₂–CHR–COOH (амино- и карбоксилна група при един C атом). Те са амфотерни — реагират и с киселини, и с основи.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔗</div>
+                <div class="key-point-text"><strong>Пептидна връзка:</strong> –CO–NH– се образува между –COOH и –NH₂ на две аминокиселини с отделяне на H₂O. Дипептид = 2 АК, олигопептид = до 10 АК, полипептид = над 10 АК.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌡️</div>
+                <div class="key-point-text"><strong>Денатурация:</strong> При нагряване, UV лъчение, киселини/основи, тежки метали — пространствената структура на белтъка се разрушава. Пример: сваряване на яйце (необратима денатурация на яйчен белтък).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔴</div>
+                <div class="key-point-text"><strong>Биуретова реакция:</strong> Белтъците с CuSO₄ + NaOH дават виолетово/розово оцветяване — качествена реакция за белтъци (пептидни връзки).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🟡</div>
+                <div class="key-point-text"><strong>Ксантопротеинова реакция:</strong> Белтъци + конц. HNO₃ → жълто оцветяване (реагират ароматни аминокиселини — тирозин, фенилаланин).</div>
+              </div>
+            </div>
+
+            <!-- ЕНЗИМИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Ензими</div>
+            <div class="lesson-body">
+              <p><strong>Ензимите</strong> са биологични катализатори — белтъци (рядко РНК), които ускоряват химичните реакции в организма без да се изразходват. Всеки ензим е специфичен — разпознава само определен субстрат (принцип "ключ–ключалка").</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔑</div>
+                <div class="key-point-text"><strong>Специфичност:</strong> Ензимът се свързва със субстрата в <strong>активния център</strong>. Промяна в pH или температура разрушава активния център (денатурация).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌡️</div>
+                <div class="key-point-text"><strong>Оптимална температура и pH:</strong> Повечето човешки ензими работят оптимално при 37°C и pH 7,4. Изключение: пепсинът (стомашен) — pH 1,5-2.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧬</div>
+                <div class="key-point-text"><strong>Примери:</strong> амилаза (слина, разгражда нишесте), липаза (мазнини), протеаза (белтъци), лактаза (лактоза).</div>
+              </div>
+            </div>
+
+            <!-- НУКЛЕИНОВИ КИСЕЛИНИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Нуклеинови киселини (ДНК и РНК)</div>
+            <div class="lesson-body">
+              <p><strong>Нуклеиновите киселини</strong> са биополимери, изградени от <strong>нуклеотиди</strong>. Всеки нуклеотид се състои от: пентоза (дезоксирибоза в ДНК или рибоза в РНК) + азотна база + фосфатна група.</p>
+            </div>
+            <table class="chem-table">
+              <tr><th>Признак</th><th>ДНК</th><th>РНК</th></tr>
+              <tr><td>Захар</td><td>Дезоксирибоза</td><td>Рибоза</td></tr>
+              <tr><td>Бази</td><td>A, T, G, C</td><td>A, U, G, C</td></tr>
+              <tr><td>Структура</td><td>Двойна спирала</td><td>Единична верига</td></tr>
+              <tr><td>Функция</td><td>Съхранение на ген. информация</td><td>Синтез на белтъци</td></tr>
+              <tr><td>Местоположение</td><td>Ядро (хромозоми)</td><td>Ядро + цитоплазма</td></tr>
+            </table>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔬</div>
+                <div class="key-point-text"><strong>Комплементарност:</strong> В ДНК А се свързва с Т (2 водородни връзки), G с C (3 водородни връзки). Тази специфичност е основата на репликацията и транскрипцията.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧬</div>
+                <div class="key-point-text"><strong>Централна догма на молекулярната биология:</strong> ДНК → РНК → Белтък. Генетичната информация тече в тази посока.</div>
+              </div>
+            </div>
+
+            <!-- МАТУРА -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Важно за матурата</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Глюкоза (C₆H₁₂O₆):</strong> монозахарид, редуцираща захар (дава Fehling реакция), алдохексоза. Основен енергиен субстрат.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Нишесте + I₂ = синьо-виолетово оцветяване</strong> — качествена реакция за нишесте. Целулоза + I₂ = не дава синьо оцветяване.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Мазнини:</strong> триестери на глицерола. Осапуняване = алкална хидролиза → сапун + глицерол. 1 г = 9 ккал.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Белтъци:</strong> изградени от аминокиселини чрез пептидни връзки. Биуретова реакция → виолетово. Денатурация при топлина.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Ензими:</strong> биологични катализатори (белтъци). Специфични, термолабилни, рН-чувствителни.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>ДНК vs РНК:</strong> ДНК = дезоксирибоза + ATGC + двойна спирала; РНК = рибоза + AUGC + единична верига.</div></div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/chem12-biohimiya-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/chem12-biohimiya-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/chem12-biohimiya-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header"><div class="ai-header-title"><strong>Знайко</strong></div><button id="ai-panel-close" aria-label="Затвори">×</button></div>
+          <div id="ai-output" class="ai-output"><p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p></div>
+          <div class="feedback-row" id="feedback-row" style="display:none;"><button id="understood">Продължи с урока</button><button id="still-confused">Обясни пак</button></div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;"><input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" /><button type="submit">→</button></form>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Биохимия — въглехидрати, мазнини, белтъци, ензими, нуклеинови киселини';
+    window.LESSON_SUBJECT = 'Химия';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

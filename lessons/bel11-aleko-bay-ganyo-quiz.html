@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Бай Ганьо — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel11-aleko-bay-ganyo-q1',
+      lessonUrl: '/lessons/bel11-aleko-bay-ganyo.html',
+      lessonName: 'Алеко — Бай Ганьо',
+      eyebrow: 'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title: 'Куиз — Бай Ганьо — Тест 1',
+      sub: '10 въпроса · Избери верния отговор',
+      passScore: 8,
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel11-aleko-bay-ganyo-quiz-2.html',
+      questions: [
+        {
+          q: 'В коя година е роден Алеко Константинов?',
+          opts: ['1855', '1863', '1870', '1878'],
+          correct: 1,
+          explanation: 'Алеко Константинов е роден на 1 януари 1863 г. в Свищов.'
+        },
+        {
+          q: 'Как загива Алеко Константинов?',
+          opts: [
+            'Умира от болест в Свищов',
+            'Убит е при нападение край Пещера на 31 март 1897 г.',
+            'Загива при корабокрушение в Черно море',
+            'Умира от рана, получена на дуел'
+          ],
+          correct: 1,
+          explanation: 'Алеко е убит на 31 март 1897 г. край Пещера — куршумът е бил предназначен за политика Михаил Такев, но поразява Алеко случайно.'
+        },
+        {
+          q: 'Кой е главният герой на произведението „Бай Ганьо"?',
+          opts: [
+            'Алеко Константинов — журналист',
+            'Ганьо Балкански — търговец на розово масло',
+            'Иречек — чешки учен',
+            'Михаил Такев — политик'
+          ],
+          correct: 1,
+          explanation: 'Главният герой е Ганьо Балкански, наречен „Бай Ганьо" — търговец на розово масло, пътуващ из Европа.'
+        },
+        {
+          q: 'В коя година е издадена творбата „Бай Ганьо"?',
+          opts: ['1878', '1885', '1895', '1900'],
+          correct: 2,
+          explanation: '„Бай Ганьо" е издаден през 1895 г. — само две години преди смъртта на Алеко.'
+        },
+        {
+          q: 'От колко фейлетонни разказа се състои „Бай Ганьо"?',
+          opts: ['10', '15', '20', '25'],
+          correct: 2,
+          explanation: 'Произведението се състои от 20 фейлетонни разказа, обединени от общия герой Бай Ганьо.'
+        },
+        {
+          q: 'Как се казват двата дяла на „Бай Ганьо"?',
+          opts: [
+            '„Бай Ганьо в Европа" и „Бай Ганьо у дома"',
+            '„Бай Ганьо пътува" и „Бай Ганьо се е върнал"',
+            '„Бай Ганьо търгува" и „Бай Ганьо управлява"',
+            '„Бай Ганьо млад" и „Бай Ганьо стар"'
+          ],
+          correct: 1,
+          explanation: 'Двата дяла са „Бай Ганьо пътува" (из Европа) и „Бай Ганьо се е върнал" (в България като политик).'
+        },
+        {
+          q: 'С какво търгува Бай Ганьо?',
+          opts: ['Тютюн', 'Розово масло', 'Мед и восък', 'Вълна и кожи'],
+          correct: 1,
+          explanation: 'Бай Ганьо е търговец на розово масло — реалистична черта, свързана с реалното стопанство на следосвобожденска България.'
+        },
+        {
+          q: 'Кой друг известен пътепис написва Алеко Константинов преди „Бай Ганьо"?',
+          opts: [
+            '„Под игото"',
+            '„До Чикаго и назад"',
+            '„Немили-недраги"',
+            '„Железният светилник"'
+          ],
+          correct: 1,
+          explanation: '„До Чикаго и назад" (1894) е пътепис на Алеко за Световното изложение в Чикаго — написан е година преди „Бай Ганьо".'
+        },
+        {
+          q: 'Каква е основната тема на „Бай Ганьо"?',
+          opts: [
+            'Любовта между българи и европейки',
+            'Сблъсъкът на родното и чуждото в следосвобожденска България',
+            'Историята на Освобождението от турско робство',
+            'Природата на Балканския полуостров'
+          ],
+          correct: 1,
+          explanation: 'Основната тема е сблъсъкът между родното и чуждото — Европа служи като огледало, в което пороците на Бай Ганьо изпъкват.'
+        },
+        {
+          q: 'Какво прави Европа (чуждото) в контекста на произведението?',
+          opts: [
+            'Напълно преобразява Бай Ганьо към по-добро',
+            'Служи като огледало, което разкрива недостатъците на героя',
+            'Прави Бай Ганьо богат и успешен търговец',
+            'Остава напълно безразлична към Бай Ганьо'
+          ],
+          correct: 1,
+          explanation: 'Чуждото (Европа) е огледалото, на фона на което пороците и ограничеността на Бай Ганьо изпъкват особено ярко.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

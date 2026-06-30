@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Еволюция · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bio12-evolyutsiya-q3',
+      lessonUrl:  '/lessons/bio12-evolyutsiya.html',
+      lessonName: 'Еволюция на биологичните системи',
+      eyebrow:    'БИОЛОГИЯ · 12 КЛАС',
+      title:      'Тест 3 — Еволюция на биологичните системи',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        {
+          q: 'Какво е алопатричното видообразуване?',
+          opts: [
+            'Образуване на нови видове в една и съща географска зона без изолация',
+            'Образуване на нови видове след разделяне на популациите от географска бариера',
+            'Образуване на нови видове чрез полиплоидия',
+            'Образуване на нови видове единствено при растенията'
+          ],
+          correct: 1,
+          explanation: 'Алопатричното (географско) видообразуване се случва, когато популация се раздели от географска бариера (река, планина, море). Двете групи еволюират независимо и с времето стават толкова различни, че не могат да се кръстосват — образуват нови видове.'
+        },
+        {
+          q: 'Кое е класически пример за алопатрично видообразуване?',
+          opts: [
+            'Устойчивостта на бактериите към антибиотици',
+            'Полиплоидията при пшеницата',
+            'Популации от един вид птици, разделени от планинска верига, еволюират в различни видове',
+            'Образуването на нови видове водорасли в едно езеро'
+          ],
+          correct: 2,
+          explanation: 'Класически пример за алопатрично видообразуване са популации от птици (или друг вид), разделени от планинска верига или друга бариера. Изолирани от обмен на гени, те еволюират самостоятелно и могат да се превърнат в различни видове.'
+        },
+        {
+          q: 'Какво е симпатричното видообразуване?',
+          opts: [
+            'Видообразуване след пълна географска изолация',
+            'Видообразуване в рамките на едно и също ареал, без географска бариера',
+            'Видообразуване изключително чрез естествен отбор',
+            'Видообразуване, причинено само от климатични промени'
+          ],
+          correct: 1,
+          explanation: 'Симпатричното видообразуване се случва в едно и също географско пространство — без физическа изолация. Механизмите включват полиплоидия (особено при растенията) или екологична специализация — различни групи се адаптират към различни ресурси в общата среда.'
+        },
+        {
+          q: 'Как се дефинира „биологичен вид"?',
+          opts: [
+            'Група организми с еднакъв външен вид',
+            'Група организми, живеещи в едно и също място',
+            'Група организми, способни да се кръстосват помежду си и да дадат плодовито потомство',
+            'Група организми с идентичен генном'
+          ],
+          correct: 2,
+          explanation: 'Биологичният вид (по концепцията на Майр) е група от популации, чиито членове могат свободно да се кръстосват помежду си и да произвеждат плодовито (фертилно) потомство, но са репродуктивно изолирани от други такива групи.'
+        },
+        {
+          q: 'Кой е най-ранният известен хоминид в еволюционната линия към Homo sapiens?',
+          opts: [
+            'Homo habilis',
+            'Homo erectus',
+            'Австралопитек',
+            'Homo neanderthalensis'
+          ],
+          correct: 2,
+          explanation: 'Австралопитекът (4–1 млн. г.) е най-ранният хоминид в еволюционната линия. Следват Homo habilis (~2,5 млн. г.), Homo erectus (~1,8 млн. г.) и накрая Homo sapiens (~300 хил. г.).'
+        },
+        {
+          q: 'Кой вид е известен като „сръчния човек" поради умението да прави сечива?',
+          opts: [
+            'Australopithecus africanus',
+            'Homo habilis',
+            'Homo erectus',
+            'Homo neanderthalensis'
+          ],
+          correct: 1,
+          explanation: 'Homo habilis (буквално „сръчният/способният човек", ~2,5 млн. г.) е първият хоминид, при когото са открити каменни оръдия на труда. Счита се за пряк предшественик на Homo erectus.'
+        },
+        {
+          q: 'Какво гласи хипотезата „Из Африка" (Out of Africa)?',
+          opts: [
+            'Homo sapiens се е развил независимо на различни континенти',
+            'Homo sapiens произхожда от Африка преди ~200 хил. г. и оттам се е разпространил по света',
+            'Африка е единственият континент, където са живяли хоминиди',
+            'Първите хора са дошли в Африка от Азия'
+          ],
+          correct: 1,
+          explanation: '„Из Африка" хипотезата (подкрепена от генетични данни) твърди, че анатомично съвременният Homo sapiens се е появил в Африка преди около 200 000 години и оттам се е разселил из целия свят, постепенно заменяйки другите хоминидни видове.'
+        },
+        {
+          q: 'Чинките (финките) на Дарвин от Галапагоските острови са пример за:',
+          opts: [
+            'Стабилизиращ отбор в действие',
+            'Адаптивна радиация — от общ предшественик са се развили различни видове с различни клюнове, адаптирани към различни храни',
+            'Изкуствен отбор от страна на хора',
+            'Симпатрично видообразуване чрез полиплоидия'
+          ],
+          correct: 1,
+          explanation: 'Галапагоските чинки са класически пример за адаптивна радиация: от един общ предшественик са се развили множество видове с различно оформени клюнове, адаптирани към различни хранителни източници (семена, насекоми, кактуси). Именно те вдъхновяват Дарвин.'
+        },
+        {
+          q: 'Синтетичната теория на еволюцията (СТЕ) обединява кои научни области?',
+          opts: [
+            'Дарвинизма, физиката и химията',
+            'Ламаркизма и генетиката',
+            'Дарвинизма, менделовата генетика и популационната генетика',
+            'Палеонтологията и астрофизиката'
+          ],
+          correct: 2,
+          explanation: 'СТЕ (формирана главно през 30-те–50-те г. на XX в.) синтезира дарвиновата теория за естествения отбор с менделовата генетика и популационната генетика в единна, всеобхватна теоретична рамка за еволюцията.'
+        },
+        {
+          q: 'Кои са основните еволюционни фактори според Синтетичната теория на еволюцията?',
+          opts: [
+            'Само мутации и естествен отбор',
+            'Мутации, естествен отбор, генетичен дрейф, поток на гени и изолация',
+            'Само естествен отбор и географска изолация',
+            'Придобити признаци, борба за съществуване и миграция'
+          ],
+          correct: 1,
+          explanation: 'Според СТЕ еволюционните фактори са: мутации (доставят изменчивост), естествен отбор (насочва еволюцията), генетичен дрейф (случайни промени в честотата на алели), поток на гени (обмен на гени между популации) и изолация (предпоставка за видообразуване).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

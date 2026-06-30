@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Геометрия — преговор · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    .formula-block {
+      background: var(--soft); border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 10px 0;
+      font-family: 'Courier New', monospace; font-size: 14px; line-height: 2;
+      color: var(--text);
+    }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    #btn-ask-znaiko {
+      position: fixed; bottom: 28px; right: 32px; z-index: 999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 20px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    #selection-tooltip {
+      position: fixed; z-index: 9999; display: none;
+      transform: translateX(-50%); pointer-events: none;
+    }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+      transition: opacity .12s, transform .12s;
+    }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 6px solid transparent; border-top-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Математика 12 клас</a>
+        <span>›</span>
+        Геометрия — преговор
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📐 МАТЕМАТИКА · 12 КЛАС</div>
+          <div class="lesson-title">Геометрия — преговор</div>
+          <div class="lesson-meta">Лице и периметър · Обем и лице на тяло · Теореми · Подобност · ~12 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. ЛИЦЕ И ПЕРИМЕТЪР ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Лице и периметър на равнинни фигури</div>
+            <div class="lesson-body">
+              <p>Лицето (S или A) е мярка за повърхността на фигурата. Периметърът (P) е сумата на всички страни.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">△</div>
+                <div class="key-point-text">
+                  <strong>Триъгълник:</strong><br>
+                  S = (a · h) / 2 (основа по височина, разделено на 2)<br>
+                  S = (a · b · sin C) / 2 (две страни и ъгълът между тях)<br>
+                  Формула на Херон: S = √(s(s−a)(s−b)(s−c)), където s = (a+b+c)/2<br>
+                  P = a + b + c
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">▭</div>
+                <div class="key-point-text">
+                  <strong>Правоъгълник:</strong> S = a · b; P = 2(a + b)<br>
+                  <strong>Квадрат:</strong> S = a²; P = 4a<br>
+                  <strong>Ромб:</strong> S = a · h = (d₁ · d₂) / 2 (d₁, d₂ — диагонали); P = 4a
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⬠</div>
+                <div class="key-point-text">
+                  <strong>Трапец:</strong> S = ((a + c) · h) / 2, където a и c са основите, h — височината<br>
+                  P = a + b + c + d (сума на всички страни)
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⬤</div>
+                <div class="key-point-text">
+                  <strong>Кръг:</strong> S = π · r²; Обиколка (периметър): L = 2π · r<br>
+                  <strong>Кръгов сектор:</strong> S = (α/360°) · π · r² (α в градуси) или S = ½ · r² · α (α в радиани)
+                </div>
+              </div>
+            </div>
+
+            <!-- ══ 2. ОБЕМ И ЛИЦЕ НА ПОВЪРХНИНА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Обем и лице на повърхнина на тела</div>
+            <div class="lesson-body">
+              <p>Обемът (V) измерва тримерното пространство, което тялото заема. Лицето на повърхнина (S) е сумата от лицата на всички стени.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">▪</div>
+                <div class="key-point-text">
+                  <strong>Куб (страна a):</strong><br>
+                  V = a³ &nbsp;&nbsp; S = 6a²
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">▬</div>
+                <div class="key-point-text">
+                  <strong>Правоъгълен паралелепипед (a, b, c):</strong><br>
+                  V = a · b · c &nbsp;&nbsp; S = 2(ab + bc + ca)
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🥫</div>
+                <div class="key-point-text">
+                  <strong>Цилиндър (радиус r, височина h):</strong><br>
+                  V = π · r² · h<br>
+                  S = 2π · r · h + 2π · r² = 2πr(h + r)
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔺</div>
+                <div class="key-point-text">
+                  <strong>Конус (радиус r, височина h, образуваща l = √(r²+h²)):</strong><br>
+                  V = (1/3) · π · r² · h<br>
+                  S = π · r · l + π · r² = πr(l + r)
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌐</div>
+                <div class="key-point-text">
+                  <strong>Сфера (радиус r):</strong><br>
+                  V = (4/3) · π · r³ &nbsp;&nbsp; S = 4π · r²
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">△</div>
+                <div class="key-point-text">
+                  <strong>Пирамида (основа S₀, височина h):</strong><br>
+                  V = (1/3) · S₀ · h
+                </div>
+              </div>
+            </div>
+
+            <!-- ══ 3. ПИТАГОРОВА ТЕОРЕМА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Питагорова теорема</div>
+            <div class="lesson-body">
+              <p>В правоъгълен триъгълник квадратът на хипотенузата е равен на сумата от квадратите на катетите:</p>
+            </div>
+            <div class="formula-block">
+              c² = a² + b²
+
+              или: c = √(a² + b²)
+
+              Следствие: a = √(c² − b²)
+            </div>
+            <div class="lesson-body">
+              <p><strong>Питагорови тройки</strong> (цели числа, удовлетворяващи теоремата): (3, 4, 5), (5, 12, 13), (8, 15, 17), (7, 24, 25). При задачи с тези числа не е нужен калкулатор.</p>
+              <p><strong>Приложения:</strong> намиране на диагонал на правоъгълник (d = √(a²+b²)), на диагонал на куб (d = a√3), на височина на равностранен триъгълник (h = a√3/2).</p>
+            </div>
+
+            <!-- ══ 4. СИНУСОВА И КОСИНУСОВА ТЕОРЕМА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Синусова и косинусова теорема</div>
+            <div class="lesson-body">
+              <p>Използват се в <strong>произволен</strong> (не само правоъгълен) триъгълник.</p>
+            </div>
+            <div class="formula-block">
+              СИНУСОВА ТЕОРЕМА:
+              a/sin A = b/sin B = c/sin C = 2R
+              (R — радиус на описаната окръжност)
+
+              Приложение: даден ъгъл и срещуположна страна → намери друг ъгъл или страна.
+            </div>
+            <div class="formula-block">
+              КОСИНУСОВА ТЕОРЕМА:
+              c² = a² + b² − 2ab·cos C
+
+              При C = 90° → cos 90° = 0 → c² = a² + b² (Питагор!)
+
+              Приложение: даден ъгъл и двете му страни → намери третата страна.
+              Или: дадени три страни → намери ъгъл.
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Кога коя теорема:</strong> Синусова — знаеш ъгъл и срещуположната страна. Косинусова — знаеш две страни и ъгъла между тях (или три страни).</div>
+              </div>
+            </div>
+
+            <!-- ══ 5. ПОДОБНОСТ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Подобност на триъгълници</div>
+            <div class="lesson-body">
+              <p>Два триъгълника са <strong>подобни</strong>, ако съответните им ъгли са равни и съответните страни са пропорционални. Коефициентът на подобие е k = a'/a.</p>
+              <p><strong>Признаци за подобност (ТТТ, ТТ, ТС):</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>ТТТ (три ъгъла)</strong> — ако всички ъгли на единия са равни на ъглите на другия. (Достатъчно е 2 ъгъла, третият е определен.)</li>
+                <li><strong>ТТ (две страни и ъгъл)</strong> — ако два страни са пропорционални и ъгълът между тях е равен.</li>
+                <li><strong>ТС (три страни)</strong> — ако трите двойки съответни страни са пропорционални.</li>
+              </ul>
+              <p><strong>Свойства:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li>Отношението на лицата на подобни фигури = k²</li>
+                <li>Отношението на обемите на подобни тела = k³</li>
+                <li>Ако k = 2, лицето е 4 пъти по-голямо, обемът — 8 пъти</li>
+              </ul>
+              <p><strong>Среден отрязък на триъгълника</strong> свързва средите на две страни. Успореден е на третата страна и е равен на половината й.</p>
+            </div>
+
+            <!-- ══ 6. НАЙ-ВАЖНОТО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното — формули наизуст</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Триъгълник:</strong> S = ah/2; S = ab·sinC/2; Херон: s=(a+b+c)/2, S=√(s(s-a)(s-b)(s-c))</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Кръг:</strong> S = πr²; L = 2πr</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Цилиндър:</strong> V = πr²h; S = 2πr(h+r)</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Конус:</strong> V = πr²h/3; S = πr(l+r), l=√(r²+h²)</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Сфера:</strong> V = 4πr³/3; S = 4πr²</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Питагор:</strong> c² = a² + b²; тройки: (3,4,5), (5,12,13)</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Синусова:</strong> a/sinA = b/sinB = c/sinC = 2R</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Косинусова:</strong> c² = a² + b² − 2ab·cosC</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Подобност:</strong> Лица: k²; Обеми: k³. Признаци: ТТТ, ТТ, ТС.</div></div>
+            </div>
+
+          </div><!-- /#lesson-content -->
+
+          <!-- ── QUIZ CTA ── -->
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/math12-geometriya-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/math12-geometriya-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/math12-geometriya-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div><!-- /.lesson-panel -->
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай формула или задача от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+      btnTop.classList.toggle('visible', window.scrollY > 200);
+    });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Геометрия — преговор';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        var icon = d.passed ? '✓' : '✗';
+        a.style.position = 'relative';
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + icon + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) {
+          a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a';
+        } else {
+          a.style.borderColor = '#d97706'; a.style.color = '#92400e';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

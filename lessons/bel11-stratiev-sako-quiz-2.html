@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Сако от велур — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel11-stratiev-sako-q2',
+      lessonUrl: '/lessons/bel11-stratiev-sako.html',
+      lessonName: 'Стратиев — Сако от велур',
+      eyebrow: 'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title: 'Куиз — Сако от велур — Тест 2',
+      sub: '10 въпроса · Избери верния отговор',
+      passScore: 8,
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel11-stratiev-sako-quiz-3.html',
+      questions: [
+        {
+          q: 'Кой е главният художествен похват, характерен за творчеството на Стратиев?',
+          opts: ['Лиризъм и елегия', 'Абсурд и сатира', 'Натурализъм и документалност', 'Романтизъм и патетика'],
+          correct: 1,
+          explanation: 'Стратиев е известен с майсторското си използване на абсурда и сатирата като инструменти за социална критика.'
+        },
+        {
+          q: 'Как се нарича похватът, при който реалистични ситуации са преувеличени до карикатура?',
+          opts: ['Алитерация', 'Гротеска', 'Анафора', 'Синекдоха'],
+          correct: 1,
+          explanation: 'Гротеската е художествен похват, при който реалното е преувеличено до степен на карикатура, за да разкрие скритото уродство на явлението.'
+        },
+        {
+          q: 'Какво постига Стратиев, като описва абсурдните реакции около сакото с равнодушна интонация?',
+          opts: ['Показва, че разказвачът е безразличен към проблемите', 'Засилва комичния и критичния ефект — спокойствието контрастира с нелепостта', 'Намалява напрежението в текста', 'Показва, че ситуацията е нормална'],
+          correct: 1,
+          explanation: 'Разказвачът описва невероятното с делничен тон — именно този контраст между спокойствие и абсурд създава иронично-критичния ефект.'
+        },
+        {
+          q: 'Каква е функцията на иронията в „Сако от велур"?',
+          opts: ['Да развесели читателя без критична цел', 'Да разкрие несъответствието между привидното и истинското, между думите и делата', 'Да се подиграе с главния герой лично', 'Да покаже интелектуалното превъзходство на автора'],
+          correct: 1,
+          explanation: 'Иронията разкрива пропастта между видимото и скритото — хората правят вид, че ценят приятелството, но всъщност ценят вещта.'
+        },
+        {
+          q: 'Как реагират колегите на разказвача след появата на сакото?',
+          opts: ['Игнорират го напълно', 'Изведнъж му обръщат внимание — всъщност се интересуват от сакото', 'Го наказват за показност', 'Го хвалят искрено за добрия вкус'],
+          correct: 1,
+          explanation: 'Колегите, с които разказвачът е работил години, изведнъж „го забелязват" — разкривайки, че интересът им е към вещта, не към човека.'
+        },
+        {
+          q: 'Какво изкривява „чуждото" (сакото) в разказа?',
+          opts: ['Само имущественото положение на героя', 'Социалните отношения, ценностите и истинската идентичност на хората', 'Само външния вид на разказвача', 'Политическите убеждения на персонажите'],
+          correct: 1,
+          explanation: 'Сакото изкривява всичко — приятелства, семейни отношения, самооценка. То замества автентичните ценности с прагматичен интерес.'
+        },
+        {
+          q: 'Каква социална критика прави Стратиев чрез разказа?',
+          opts: ['Критикува западния капитализъм директно', 'Разобличава „дефицитното мислене" на социализма — как липсата на стоки деформира човешките отношения', 'Хвали социализма за равенството', 'Критикува религията и традицията'],
+          correct: 1,
+          explanation: 'Стратиев разобличава психологията на дефицита при социализма — обществото, в което обикновена вещ може да деформира цели човешки съдби.'
+        },
+        {
+          q: 'Кой е ефектът от хиперболата в разказа?',
+          opts: ['Прави текста по-кратък', 'Превръща частния случай с едно сако в универсален феномен за цялото общество', 'Увеличава поетичността на езика', 'Намалява достоверността на разказа'],
+          correct: 1,
+          explanation: 'Чрез преувеличаване на реакциите (всеки иска сакото, всеки говори за него) един частен случай се превръща в огледало на цялото общество.'
+        },
+        {
+          q: 'Защо разказът на Стратиев е успял да мине цензурата при социализма?',
+          opts: ['Защото е одобрен лично от Тодор Живков', 'Защото критиката е скрита зад абсурда и иронията, а не директна', 'Защото прославя социалистическите ценности', 'Защото е писан на език, неразбираем за цензорите'],
+          correct: 1,
+          explanation: 'Стратиев не критикува директно — критиката е скрита в абсурдните ситуации. Системата не може да осъди текст, в който не е споменато нищо забранено.'
+        },
+        {
+          q: 'Как жена му реагира на сакото?',
+          opts: ['Изисква веднага да го върнат', 'Е едновременно горда от него и уплашена, че другите ще се опитат да го вземат', 'Напълно игнорира сакото', 'Подарява сакото на съседката'],
+          correct: 1,
+          explanation: 'Жена му е двояко настроена — гордостта от притежанието се смесва с тревогата, че сакото ще привлече нежелан интерес.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

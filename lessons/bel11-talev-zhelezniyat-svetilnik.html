@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Димитър Талев — Железният светилник · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a>
+        <span>›</span>
+        Родното и чуждото в „Железният светилник"
+      </div>
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Родното и чуждото в „Железният светилник" на Димитър Талев</div>
+          <div class="lesson-meta">Роман-сага · Македония · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">1. За автора</div>
+            <div class="lesson-body">
+              <p><strong>Димитър Талев</strong> (1898–1964) е роден в <strong>Прилеп, Македония</strong> — тогава в пределите на Османската империя. Самото място на раждането му е ключово за разбирането на цялото му творчество: Македония е земя, разкъсана между империи и народи, земя, в която запазването на българската идентичност е ежедневна борба. Талев израства в среда, в която езикът, вярата и родовата памет са единствената форма на съпротива срещу асимилацията.</p>
+              <p>Учи в Солун и Битоля, а след Балканските войни и обединението на части от Македония с България се преселва в страната. Работи като журналист, редактор и писател. Преживява политически преследвания след 1944 г. — комунистическият режим го затваря, защото творчеството му е пронизано от националния дух, неудобен за тогавашната идеология.</p>
+              <p>Главното му произведение е <strong>тетралогията за Македония</strong>, чиято първа книга е „Железният светилник" (1952). Другите три са „Илинден" (1953), „Преспанските камбани" (1954) и „Гласовете ви чувам" (1966). Тетралогията проследява съдбата на рода Глаушеви в Прилеп от края на XIX до началото на XX век — от робството под Османска власт до Илинденското въстание.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">2. Историческият контекст</div>
+            <div class="lesson-body">
+              <p>Действието на „Железният светилник" се развива в <strong>Прилеп в края на XIX век</strong>, когато Македония е под Османска власт. Това е епоха на т.нар. <strong>Възраждане</strong> — национално и духовно пробуждане на българите в Македония.</p>
+              <p>Основните исторически конфликти, които романът отразява, са:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">⚔️</div>
+                  <div class="key-point-text"><strong>Борбата с гъркоманството</strong> — Цариградската патриаршия налага гръцки свещеници и гръцко богослужение. Приемането на Патриаршията (гъркоманство) срещу Екзархията (българщина) е централен конфликт в романа.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">✝️</div>
+                  <div class="key-point-text"><strong>Борбата за Екзархията</strong> — основаването на Българската екзархия (1870) е ключово събитие. В романа борбата за признаване на Екзархията в Прилеп е символ на националното самоопределение.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">📚</div>
+                  <div class="key-point-text"><strong>Борбата за образование на български</strong> — отварянето на български училища е акт на национална съпротива. Учителят е герой на Възраждането.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🏘️</div>
+                  <div class="key-point-text"><strong>Социалното разслоение</strong> — между чорбаджии (богатите, склонни към компромис) и занаятчии/прости хора (пазители на народния дух).</div>
+                </div>
+              </div>
+              <p>Романът показва, че „чуждото" не е само Османската власт, но и всяка сила, която иска да откъсне хората от тяхната <strong>национална идентичност, език и вяра</strong>.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">3. Темата Родното и чуждото</div>
+            <div class="lesson-body">
+              <p>Противопоставянето <strong>родно — чуждо</strong> е основният идеен конфликт на романа. То се проявява на няколко нива:</p>
+
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🏠</div>
+                  <div class="key-point-text"><strong>Родното като дом, род и памет</strong> — „Железният светилник" в черквата свети за родовете, за паметта на дедите. Всеки род поддържа своя светилник — угасне ли той, родът изчезва.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🗣️</div>
+                  <div class="key-point-text"><strong>Родното като език</strong> — говоренето на български, молитвата на български, обучението на деца на роден език са форми на съпротива. Стоян Глаушев настоява синът му да учи „на наш".</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⛪</div>
+                  <div class="key-point-text"><strong>Родното като вяра</strong> — православната вяра, свързана с Екзархията и с родния свещеник, е форма на национална идентичност.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">👥</div>
+                  <div class="key-point-text"><strong>Чуждото като заплаха</strong> — гъркоманите, патриаршистите, турските власти и дори личните слабости (алчност, страх, предателство) са „чуждото", което разяжда родовата цялост.</div>
+                </div>
+              </div>
+
+              <p>Стоян Глаушев олицетворява <strong>„родното"</strong> — той е железар, твърд като желязото, непреклонен, готов да жертва материалното за духовното. Неговата борба е за запазването на черквата, на езика, на рода.</p>
+              <p>„Чуждото" е представено многопластово — не само като турска власт или гръцко влияние, но и като вътрешна слабост: гъркоманинът <strong>Хаджи Серафим</strong> е „чужд" точно защото е предал своята общност отвътре.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">4. Главните герои</div>
+            <div class="lesson-body">
+              <p><strong>Стоян Глаушев</strong> е централният герой на романа. Железар от Прилеп, той е въплъщение на народния дух — твърд, работлив, горд, непоколебим в убежденията си. Животът му е посветен на две неща: <em>семейството и народа</em>. Той не е интелектуалец, а прост занаятчия, но именно в него Талев вижда истинската сила на народа. Стоян разбира, че трябва да пази черквата за своите, да изпрати сина си да учи, да не се поддава на гъркоманите.</p>
+
+              <p><strong>Султана</strong> е съпругата на Стоян и една от най-ярките женски образи в българската литература. Тя е силна, горда жена, която обича мъжа си, но не му е подчинена сляпо. Султана е пазителка на огнището — тя управлява дома, отглежда децата, пази рода. В нея се съчетават твърдост и топлота. Нейните думи и решения нерядко насочват съдбата на семейството.</p>
+
+              <p><strong>Лазар Глаушев</strong> е синът на Стоян и Султана. Той е образ на новото поколение — образовано, мислещо, борещо се за народното дело вече не с железарски чук, а с перо и слово. Лазар е учителят, просветителят. Но пътят му е белязан от лична драма — любовта към Ния, която не може да бъде реализирана поради обществени препятствия.</p>
+
+              <p><strong>Ния</strong> (или Катерина) е любовта на Лазар. Тя е гъркоманка по произход — дъщеря на семейство, свързано с Патриаршията. Любовта между Лазар и Ния е символ на трагичния сблъсък между <em>лично чувство и народен дълг</em>. Ния сама разбира, че тяхната любов е невъзможна в света, разделен от националния конфликт.</p>
+
+              <p><strong>Хаджи Серафим</strong> е антагонистът — гъркоманинът, представителят на „чуждото" в общността. Той не е изграден като плосък злодей, а като сложен образ на човек, избрал удобството пред верността.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">5. Символиката на железния светилник</div>
+            <div class="lesson-body">
+              <p>Заглавният образ е едновременно <strong>конкретен предмет и многопластов символ</strong>.</p>
+
+              <div class="poem-block">„В черквата висяха железни светилници — тежки, ковани, непоколебими. Всеки род имаше своя. Светлината им не угасваше — тя пазеше паметта на живите и мъртвите, свързваше поколенията в едно."
+<div class="poem-author">— в духа на романа „Железният светилник"</div></div>
+
+              <p>Светилникът е <strong>железен</strong> — не от злато или сребро. Това е съзнателен избор на Талев. Желязото е метал на труда, на занаята, на обикновения човек. То не блести, но е <em>трайно, непоколебимо, устойчиво</em>. Именно такъв е и народът — не благороден и бляскав, а издръжлив и верен.</p>
+
+              <p>Светилникът <strong>свети в черквата</strong> — в свещеното пространство на общността. Черквата е не само място за молитва, но и символ на националната идентичност. Борбата за черквата (между гъркомани и екзархисти) е борба за душата на народа.</p>
+
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🔥</div>
+                  <div class="key-point-text"><strong>Светлината</strong> — символ на живота, паметта, надеждата. Докато светилникът гори, родът съществува.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⚙️</div>
+                  <div class="key-point-text"><strong>Желязото</strong> — символ на твърдост, непреклонност, устойчивост. Стоян Глаушев е железар — самото му занятие е метафора за характера му.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔗</div>
+                  <div class="key-point-text"><strong>Непрекъснатостта</strong> — светилникът свети непрекъснато, свързвайки миналото с настоящето. Родовата памет е нишката, която народът не трябва да скъса.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">⛪</div>
+                  <div class="key-point-text"><strong>Принадлежността</strong> — всеки род има свой светилник. Да загубиш светилника означава да загубиш идентичността си.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">6. Художествени средства и жанр</div>
+            <div class="lesson-body">
+              <p>„Железният светилник" е <strong>роман-сага</strong> — мащабно епично произведение, проследяващо съдбата на рода през поколения. Характерно за сагата е:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">📖</div>
+                  <div class="key-point-text"><strong>Епична широта</strong> — романът обхваща десетилетия, множество герои, цяла общност. Не само семейство, а народ.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🎭</div>
+                  <div class="key-point-text"><strong>Психологическа дълбочина</strong> — Талев изгражда герои с вътрешни противоречия, с развитие, с трагедия. Особено Лазар и Ния.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🏔️</div>
+                  <div class="key-point-text"><strong>Пейзажни описания</strong> — природата на Македония е не просто фон, а участник в действието. Планините, Вардар, Прилеп — всичко е одухотворено.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🗣️</div>
+                  <div class="key-point-text"><strong>Диалог</strong> — народната реч, характерна за Прилеп, придава автентичност. Героите говорят на своя език, с регионален колорит.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔤</div>
+                  <div class="key-point-text"><strong>Символика</strong> — освен железния светилник, важни символи са: кованата порта (затворен, защитен дом), черквата (националната идентичност), учителят (просвещението).</div>
+                </div>
+              </div>
+
+              <p>Стилът на Талев е <strong>тържествен, бавен, епичен</strong>. Изреченията са дълги, описателни, с множество детайли. Това не е роман за четене набързо — той изисква потапяне, точно като народния живот, за който разказва.</p>
+
+              <div class="poem-block">„Стоян Глаушев беше железар. Цял живот беше ковал желязо — ковал го, докато не го огъне по своята воля. И тъй ковеше той и своя живот, и живота на своите."
+<div class="poem-author">— в духа на романа</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">7. Ключови цитати и мотиви</div>
+            <div class="lesson-body">
+              <div class="poem-block">„Нека светилникът да гори. Нека да гори и после нас — за децата ни, за внуците ни, за всички, дето ще дойдат след нас. Той ще пази нашата памет."
+<div class="poem-author">— Стоян Глаушев, в духа на романа</div></div>
+
+              <div class="poem-block">„Лазар, синко, ти трябва да учиш. Не за себе си — за народа. Народът има нужда от хора, дето знаят."
+<div class="poem-author">— Стоян към Лазар, в духа на романа</div></div>
+
+              <div class="poem-block">„Аз съм от тук. Тази земя е моя земя, тези камъни са мои камъни. Никой не може да ми каже, че съм чужд на моята земя."
+<div class="poem-author">— в духа на романа</div></div>
+
+              <p>Важни <strong>мотиви</strong> в романа:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🔑</div>
+                  <div class="key-point-text"><strong>Огънят и светлината</strong> — животворна сила, памет, надежда; противостои на тъмнината на забравата и асимилацията.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔑</div>
+                  <div class="key-point-text"><strong>Черквата</strong> — не само религиозен, но и национален символ. Борбата за черквата = борбата за идентичност.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔑</div>
+                  <div class="key-point-text"><strong>Семейството и родът</strong> — основна социална единица, която трябва да се пази. Разпадането на рода = разпадане на народа.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🔑</div>
+                  <div class="key-point-text"><strong>Любовта и народният дълг</strong> — личното щастие (Лазар и Ния) е принесено в жертва на колективната кауза. Трагичният избор между сърцето и народа.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">8. Значение за матурата</div>
+            <div class="lesson-body">
+              <p>„Железният светилник" е задължително произведение за матурата по БЕЛ. Ето какво трябва да знаеш:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🎯</div>
+                  <div class="key-point-text"><strong>Централна тема:</strong> Родното и чуждото — конфликтът между запазването на националната идентичност и натиска на чужди сили.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🎯</div>
+                  <div class="key-point-text"><strong>Символният образ:</strong> Железният светилник = неугасима родова памет, твърдост, непреклонност на духа.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🎯</div>
+                  <div class="key-point-text"><strong>Жанр:</strong> Роман-сага, първа книга от тетралогия за Македония.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🎯</div>
+                  <div class="key-point-text"><strong>Главни герои:</strong> Стоян Глаушев (народният борец), Султана (пазителката на огнището), Лазар (просветителят), Ния (любовта и трагедията).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🎯</div>
+                  <div class="key-point-text"><strong>Автор и дата:</strong> Димитър Талев, роден в Прилеп (1898), романът е издаден 1952 г.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🎯</div>
+                  <div class="key-point-text"><strong>Връзки с програмата:</strong> Темата за родното и националния дух свързва романа с Вазов, Яворов и Ботев. Македонският контекст е уникален.</div>
+                </div>
+              </div>
+              <p>В есе по матурата, ако пишеш за <em>„Железният светилник"</em>, акцентирай върху <strong>символиката на светлината и желязото</strong>, върху <strong>противопоставянето между личното и колективното</strong> и върху образа на <strong>Стоян като народен герой</strong> — не войн, а занаятчия, пазил духа на рода.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <!-- QUIZ CTA -->
+            <div class="lesson-panel" style="margin-top:0;">
+              <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+              <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <a href="/lessons/bel11-talev-zhelezniyat-svetilnik-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+                <a href="/lessons/bel11-talev-zhelezniyat-svetilnik-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+                <a href="/lessons/bel11-talev-zhelezniyat-svetilnik-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Родното и чуждото в „Железният светилник" на Димитър Талев';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed?'✓':'✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Въглеводороди · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem12-vaglevodorodi-q2',
+      lessonUrl:   '/lessons/chem12-vaglevodorodi.html',
+      lessonName:  'Органична химия — въглеводороди',
+      eyebrow:     'ХИМИЯ · 12 КЛАС',
+      title:       'Куиз — Въглеводороди — Тест 2',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     2,
+      nextQuizUrl: '/lessons/chem12-vaglevodorodi-quiz-3.html',
+      questions: [
+        { q:'Ацетиленът HC≡CH е пример за:', opts:['Алкан','Алкен','Алкин','Ароматен въглеводород'], correct:2, explanation:'Ацетиленът (етин, HC≡CH) е най-простият алкин — съдържа тройна C≡C връзка. Формула C₂H₂, обща формула CₙH₂ₙ₋₂. Използва се при заваряване (ацетиленово-кислородни горелки).' },
+        { q:'Реакцията на бензен с бромна вода (Br₂/H₂O) без катализатор:', opts:['Обезцветява бромната вода бързо','Не протича — бензенът е стабилен спрямо адиция без катализатор','Дава полибромиран продукт','Образува фенол'], correct:1, explanation:'За разлика от алкените, бензенът не обезцветява бромна вода без катализатор — ароматната система е стабилна и не претърпява лесно адиция. За заместване (бромиране) е необходим катализатор AlBr₃ или FeBr₃.' },
+        { q:'Кой алкан е основната съставка на природния газ?', opts:['Етан','Пропан','Бутан','Метан'], correct:3, explanation:'Природният газ се състои предимно от метан (CH₄, около 85–95%). Метанът е и основна суровина за производство на водород, метанол, амоняк и много химикали.' },
+        { q:'Реакцията CH₂=CH₂ + H₂ → CH₃CH₃ се нарича:', opts:['Дехидрогениране','Хидрогениране (хидриране)','Халогениране','Хидратация'], correct:1, explanation:'Присъединяването на водород (H₂) към алкен се нарича хидрогениране или хидриране. Продуктът е съответният алкан. Реакцията протича при катализатор (Ni, Pd, Pt) и е екзотермична.' },
+        { q:'Кое вещество обезцветява бромна вода (Br₂/CCl₄)?', opts:['Метан','Бутан','Бутен (1-бутен, CH₂=CH–CH₂–CH₃)','Бензен'], correct:2, explanation:'Алкените обезцветяват бромна вода при адиция на бром към двойната C=C връзка. Алканите и бензенът (без катализатор) не реагират. Качествена реакция за ненаситеност.' },
+        { q:'Какво е „изомеризация" при въглеводородите?', opts:['Реакция с кислород','Преобразуване на праволинеен въглеводород в разклонен изомер','Добавяне на водород','Разграждане на молекулата'], correct:1, explanation:'Изомеризацията е преобразуване на един изомер в друг: напр. нормален бутан → изобутан. Бензинът с по-разклонени молекули има по-високо октаново число (по-добро качество).' },
+        { q:'Кое от следните е ненаситен въглеводород?', opts:['Метан','Пропан','Пропен','Нео-пентан'], correct:2, explanation:'Пропенът (CH₂=CH–CH₃) е ненаситен — съдържа двойна C=C връзка, т.е. е алкен. Метан, пропан и нео-пентан са алкани (наситени, само единични връзки).' },
+        { q:'Толуенът C₆H₅–CH₃ е:', opts:['Алкан','Алкен','Алкилбензен (ароматен въглеводород с метилова група)','Алкин'], correct:2, explanation:'Толуенът е метилбензен — ароматен въглеводород (бензенов пръстен + метилова група CH₃). Широко използван разтворител и изходен материал за производство на ТНТ, полиуретани, аспирин и много друго.' },
+        { q:'Как се получава полиетиленът?', opts:['Хидролиза на етанол','Полимеризация на етилен CH₂=CH₂','Окисляване на метан','Крекинг на нефт'], correct:1, explanation:'Полиетиленът се получава чрез полимеризация на етилен: n(CH₂=CH₂) → (–CH₂–CH₂–)ₙ. При полимеризацията двойните С=С връзки се отварят и мономерите се свързват в дълга верига (полимер). Полиетиленът е най-широко произвежданата пластмаса.' },
+        { q:'Каква е молярна маса на пропан (C₃H₈)?', opts:['30 g/mol','44 g/mol','58 g/mol','72 g/mol'], correct:1, explanation:'M(C₃H₈) = 3×12 + 8×1 = 36 + 8 = 44 g/mol. Сравни: метан CH₄ = 16, етан C₂H₆ = 30, пропан C₃H₈ = 44, бутан C₄H₁₀ = 58 g/mol.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

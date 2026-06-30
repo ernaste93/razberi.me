@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Лексикална норма · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .example-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0; font-size: 14px; line-height: 1.9; color: var(--text); }
+    .example-block .wrong { color: #dc2626; text-decoration: line-through; }
+    .example-block .right { color: #16a34a; font-weight: 700; }
+    .example-block .label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 12 клас</a>
+        <span>›</span>
+        Лексикална норма
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📚 БЕЛ · 12 КЛАС · ЕЗИК</div>
+          <div class="lesson-title">Лексикална норма в българския език</div>
+          <div class="lesson-meta">Синоними · Антоними · Омоними · Пароними · Фразеологизми · Чуждици · ~10 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. КАКВО Е ЛЕКСИКАЛНА НОРМА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Какво е лексикална норма?</div>
+            <div class="lesson-body">
+              <p><strong>Лексикалната норма</strong> урежда правилното употребяване на думите — избора на точната дума в правилния контекст. Нарушенията й са <strong>лексикални грешки</strong>: употреба на дума в неподходящо значение, объркване на близкозвучащи думи, стилистично несъответствие.</p>
+              <p>На матурата лексикалните задачи проверяват: познаваш ли разликите между синоними, умееш ли да разпознаеш паронима грешка, разбираш ли фразеологизми и чуждици.</p>
+            </div>
+
+            <!-- ══ 2. СИНОНИМИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Синоними</div>
+            <div class="lesson-body">
+              <p><strong>Синонимите</strong> са думи с близко или еднакво значение, но различна форма. В книжовния език никога не са напълно взаимозаменяеми — всяка дума носи свой нюанс (стилистичен, емоционален или семантичен).</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔵</div>
+                <div class="key-point-text"><strong>Стилистични синоними</strong> — различна стилова окраска: <em>лице / физиономия / муцуна / лик</em>. „Лик" е книжовно, „муцуна" е разговорно/грубо, „лице" е неутрално.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔵</div>
+                <div class="key-point-text"><strong>Семантични синоними</strong> — различен нюанс в значението: <em>гледам / наблюдавам / взирам се / разглеждам</em>. „Взирам се" предполага съсредоточено, напрегнато гледане.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>Честа грешка:</strong> „Той <em>извърши</em> грешка" вместо „Той <em>допусна</em> грешка" — глаголите са синоними, но „извърша" се употребява за съзнателни действия (престъпления), а „допусна" — за неволни грешки.</div>
+              </div>
+            </div>
+            <div class="example-block">
+              <div class="label">Синонимни редове за матурата</div>
+              <strong>бърз:</strong> стремителен, мигновен, светкавичен, скоростен, хаотичен ✗ (хаотичен не е синоним!)<br>
+              <strong>тъжен:</strong> меланхоличен, натъжен, скръбен, унил, мрачен<br>
+              <strong>красив:</strong> хубав, привлекателен, изящен, величествен, грозен ✗<br>
+              <strong>говоря:</strong> казвам, заявявам, изричам, шепна (тихо), викам (силно)
+            </div>
+
+            <!-- ══ 3. АНТОНИМИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Антоними</div>
+            <div class="lesson-body">
+              <p><strong>Антонимите</strong> са думи с противоположно значение. Могат да бъдат <strong>прости</strong> (ден — нощ, бял — черен) или <strong>образувани с представки</strong> (щастие — нещастие, добро — зло).</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">↔️</div>
+                <div class="key-point-text"><strong>Контрарни антоними</strong> — позволяват средна степен: <em>горещ — хладен — студен</em>. Между двете крайности има преходни степени.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">↔️</div>
+                <div class="key-point-text"><strong>Комплементарни антоними</strong> — не позволяват средна степен: <em>жив — мъртъв, женен — неженен</em>. Или едното, или другото.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">↔️</div>
+                <div class="key-point-text"><strong>Конверсивни антоними</strong> — взаимно обратни действия или отношения: <em>купувам — продавам, учител — ученик, родител — дете</em>.</div>
+              </div>
+            </div>
+            <div class="lesson-body">
+              <p><strong>Антитезата</strong> в литературата разчита на антоними: „Далечна, но присъща" (Дебелянов), „Смях и плач" (Вазов). Разпознаването на антоними помага и при анализа на художествени текстове.</p>
+            </div>
+
+            <!-- ══ 4. ОМОНИМИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Омоними</div>
+            <div class="lesson-body">
+              <p><strong>Омонимите</strong> са думи с еднакъв звуков облик, но напълно различно значение и произход. Разграничават се само от контекста.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Пълни омоними (лексикални):</strong> <em>лук</em> (зеленчук) и <em>лук</em> (оръжие); <em>коса</em> (коса за косене) и <em>коса</em> (коса на глава).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Омофони</strong> — еднакво се произнасят, различно се пишат: <em>раса / раза, мога / могъ</em>. Важни при диктовките.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Омографи</strong> — еднакво се пишат, различно се произнасят: <em>замък (ударение на 1-ва сричка = крепост) / замък (ударение на 2-ра = брава)</em>.</div>
+              </div>
+            </div>
+
+            <!-- ══ 5. ПАРОНИМИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Пароними — най-честите грешки!</div>
+            <div class="lesson-body">
+              <p><strong>Паронимите</strong> са думи с близко звучене, но различно значение. Объркването им е <strong>най-честата лексикална грешка</strong> на матурата. Паронимите са различни думи — не варианти на едно и също!</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>адресат / адресант:</strong> Адресатът е получателят (към когото е адресирано). Адресантът е изпращачът. „Писмото е адресирано до адресата."</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>ефектен / ефективен:</strong> Ефектен = впечатляващ на вид. Ефективен = дава резултат. „Ефектното представление беше и ефективна реклама."</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>представям / предоставям:</strong> Представям = показвам, запознавам. Предоставям = давам на ползване. „Представям ти новия колега. Предоставям ти стаята."</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>образован / образователен:</strong> Образован = с образование (прилагателно за човек). Образователен = свързан с образованието (прилагателно за система, институция).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>завет / завещание:</strong> Завет = духовно послание, наследство от идеи. Завещание = юридически документ за имущество. „Вазов пази завета на възрожденците. Дядото остави завещание."</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>принципен / принципиален:</strong> И двете са правилни, но различни: Принципен = последователен, стриктен. Принципиален = свързан с принцип (основен, водещ).</div>
+              </div>
+            </div>
+            <div class="example-block">
+              <div class="label">Паронимни грешки — разпознай и поправи</div>
+              <span class="wrong">Той е много ефектен метод за работа</span> → <span class="right">Той е много ефективен метод за работа</span> ✓<br>
+              <span class="wrong">Предоставям ти новия директор</span> → <span class="right">Представям ти новия директор</span> ✓<br>
+              <span class="wrong">Адресантът на писмото е неизвестен</span> (когато питат за получателя) → <span class="right">Адресатът на писмото е неизвестен</span> ✓
+            </div>
+
+            <!-- ══ 6. ФРАЗЕОЛОГИЗМИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Фразеологизми</div>
+            <div class="lesson-body">
+              <p><strong>Фразеологизмите</strong> (устойчиви словосъчетания) са изрази с преносно значение, чийто смисъл не се извежда от значенията на отделните думи. Те са <em>идиоми</em> — неразрушими цялости.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">💬</div>
+                <div class="key-point-text"><strong>„Хвърлям камък в нечия градина"</strong> = отправям непряка критика. НЕ се разчита буквално!</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💬</div>
+                <div class="key-point-text"><strong>„Правя от мухата слон"</strong> = преувеличавам. <strong>„Пия бира"</strong> — не е фразеологизъм, защото се разбира буквално.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💬</div>
+                <div class="key-point-text"><strong>„Нося кръста си"</strong> = понасям страдание. <strong>„Вземам думата"</strong> = започвам да говоря. <strong>„Изгарям от срам"</strong> = чувствам силен срам.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>Стилистична грешка:</strong> Използване на разговорен фразеологизъм в официален текст. <em>„Министърът си вдигна чергата"</em> — неуместно в официален доклад.</div>
+              </div>
+            </div>
+            <div class="example-block">
+              <div class="label">Фразеологизми от матурата</div>
+              <strong>„Вдигам ръка за/срещу"</strong> = гласувам за/против<br>
+              <strong>„Извиквам на килима"</strong> = извиквам за обяснение/нагонвам<br>
+              <strong>„Имам пръст в нещо"</strong> = участвам тайно в нещо<br>
+              <strong>„Бия камбаната"</strong> = предупреждавам, алармирам<br>
+              <strong>„Ядовита хапка"</strong> = нещо неприятно, трудно за понасяне
+            </div>
+
+            <!-- ══ 7. ЧУЖДИЦИ И ЗАЕМКИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Чуждици и заемки</div>
+            <div class="lesson-body">
+              <p><strong>Заемките</strong> са думи, влезли от чужди езици и приети в книжовния език — те са нормативни. <strong>Чуждиците</strong> са думи, за които съществува книжовна българска замяна и чиято употреба е стилистически нежелана в официален текст.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🌍</div>
+                <div class="key-point-text"><strong>Нормативни заемки</strong> (приети в книжовния език): <em>телефон, компютър, автомобил, интернет, програма</em>. За тях няма точна замяна на български.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌍</div>
+                <div class="key-point-text"><strong>Чуждици (нежелани в официален текст):</strong> <em>мениджър</em> → <em>управител</em>; <em>имидж</em> → <em>образ/облик</em>; <em>тийнейджър</em> → <em>юноша/тийнейджър</em> (и двете се допускат).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>Тавтология</strong> — употреба на думи с едно и също значение в едно изречение: <em>„Свободна ваканция"</em> (ваканцията по дефиниция е свободна). <em>„Мъртъв труп"</em> (трупът е мъртъв по дефиниция).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>Плеоназъм</strong> — излишно удвояване на значение: <em>„Слизам надолу"</em> (слизам е надолу), <em>„Качвам се нагоре"</em> (качвам е нагоре), <em>„Две близначки"</em> (близначките са двама).</div>
+              </div>
+            </div>
+
+            <!-- ══ 8. СТИЛИСТИЧНИ ГРЕШКИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стилистични лексикални грешки</div>
+            <div class="lesson-body">
+              <p><strong>Стилистичните грешки</strong> се появяват, когато думата е употребена в неподходящ стилов регистър — разговорна дума в официален текст или обратното.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🎭</div>
+                <div class="key-point-text"><strong>Разговорна дума в официален текст:</strong> <em>„Министърът се скара на депутатите"</em> → по-подходящо: <em>„Министърът отправи критики към депутатите"</em>.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎭</div>
+                <div class="key-point-text"><strong>Книжовна дума в разговорен контекст:</strong> Стилистично неестествено, но рядко е грешка — по-скоро неуместност.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎭</div>
+                <div class="key-point-text"><strong>Смесване на стилове</strong> в един текст: едновременна употреба на книжовни и жаргонни думи разрушава стиловото единство.</div>
+              </div>
+            </div>
+            <div class="example-block">
+              <div class="label">Стилистични грешки — поправи ги</div>
+              <span class="wrong">Романът разглежда яко сложни проблеми</span> → <span class="right">Романът разглежда сложни проблеми</span> ✓ (разговорното „яко" е неуместно)<br>
+              <span class="wrong">Мъртъв труп беше намерен в гората</span> → <span class="right">Труп беше намерен в гората</span> ✓ (плеоназъм)<br>
+              <span class="wrong">Свободна ваканция прекарахме на море</span> → <span class="right">Ваканцията прекарахме на море</span> ✓ (тавтология)
+            </div>
+
+            <!-- ══ 9. ПОЛИСЕМИЯ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Полисемия — многозначност на думите</div>
+            <div class="lesson-body">
+              <p><strong>Полисемията</strong> е явлението, при което една дума има повече от едно значение. Различни от омонимите — при полисемията значенията са свързани исторически.</p>
+              <p>Пример: <em>глава</em> — 1) анатомична част; 2) ръководител (глава на семейство); 3) глава на книга (раздел); 4) зеле глава (вилица). Всички значения са свързани с идеята за „нещо главно, водещо, кръгло".</p>
+              <p>При <strong>преносното значение</strong> думата се употребява метафорично: <em>„сърцето на града"</em> (центърът), <em>„бурен аплодисмент"</em> (силен, стихиен).</p>
+            </div>
+
+            <!-- ══ 10. ОБОБЩЕНИЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното за матурата</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Синоними</strong> — близко, но не еднакво значение. Всеки носи нюанс (стилов или семантичен).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Антоними</strong> — противоположно значение; могат да са прости или с представки.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Омоними</strong> — еднакъв звук/облик, различно значение и произход. Разграничават се от контекста.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Пароними</strong> — близко звучене, различно значение. Най-честата грешка! (адресат/адресант, ефектен/ефективен)</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Фразеологизми</strong> — преносно значение, не се разчита буквално. Не могат да се разделят.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Тавтология и плеоназъм</strong> — излишно повторение или удвояване на значение — стилистична грешка.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Стилистична грешка</strong> — неуместна дума в дадения стилов регистър (разговорно в официален текст).</div></div>
+            </div>
+
+          </div><!-- /#lesson-content -->
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel12-leksika-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel12-leksika-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel12-leksika-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div><!-- /.lesson-panel -->
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Лексикална норма в българския език';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

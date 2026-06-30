@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Геометрия · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-geometriya-q2',
+      lessonUrl:  '/lessons/math12-geometriya.html',
+      lessonName: 'Геометрия — преговор',
+      eyebrow:    'МАТЕМАТИКА · 12 КЛАС',
+      title:      'Куиз — Геометрия — Тест 2',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    2,
+      nextQuizUrl: '/lessons/math12-geometriya-quiz-3.html',
+      questions: [
+        { q:'Цилиндър с радиус 2 и височина 5. Какъв е обемът?', opts:['10π','20π','40π','25π'], correct:1, explanation:'V = πr²h = π·4·5 = 20π. Обемът на цилиндъра е основата (πr²) умножена по височината.' },
+        { q:'Каква е формулата за лице на повърхнина на сфера?', opts:['4πr²','2πr²','(4/3)πr³','πr²'], correct:0, explanation:'Лицето на сфера е S = 4πr². Обемът е V = (4/3)πr³. Запомни: лице → 4πr², обем → (4/3)πr³.' },
+        { q:'Синусовата теорема a/sinA = b/sinB = 2R. Какво е R?', opts:['Радиус на вписаната окръжност','Радиус на описаната окръжност','Страна на триъгълника','Полупериметър'], correct:1, explanation:'2R е диаметърът на описаната окръжност около триъгълника. Синусовата теорема свързва страните и ъглите на произволен триъгълник чрез радиуса на описаната окръжност.' },
+        { q:'Триъгълник с основа 6 cm и височина 4 cm. Каква е площта?', opts:['24 cm²','12 cm²','10 cm²','18 cm²'], correct:1, explanation:'S = (a·h)/2 = (6·4)/2 = 12 cm². Формулата „основа по височина, разделено на 2" е базова за триъгълника.' },
+        { q:'Правоъгълен паралелепипед с размери 3, 4, 5. Лице на повърхнина?', opts:['60','94','120','47'], correct:1, explanation:'S = 2(ab + bc + ca) = 2(3·4 + 4·5 + 5·3) = 2(12 + 20 + 15) = 2·47 = 94.' },
+        { q:'Как се намери третата страна на триъгълник, ако знаем две страни (4, 6) и ъгъла между тях (60°)?', opts:['Синусова теорема','Косинусова теорема','Питагорова теорема','Формула на Херон'], correct:1, explanation:'При дадени две страни и ъгълът между тях се използва косинусовата теорема: c² = a² + b² − 2ab·cosC = 16 + 36 − 2·4·6·cos60° = 52 − 24 = 28, c = √28 = 2√7.' },
+        { q:'Средният отрязък на триъгълника свързва:', opts:['Средите на двете основи','Средата на страна с противоположното теме','Средите на две страни','Двете основи на трапец'], correct:2, explanation:'Средният отрязък на триъгълника свързва средите на две негови страни. Той е успореден на третата страна и равен на половината й. Пример: ако AB = 10, средният отрязък, свързващ средите на другите две страни, е 5.' },
+        { q:'Ако лицата на два подобни триъгълника са 16 и 36, какъв е коефициентът на подобие?', opts:['2/3','3/2','4/6','9/4'], correct:1, explanation:'S₁/S₂ = k², 16/36 = k², k² = 4/9, k = 2/3. Но ако S₁ < S₂, коефициентът на подобие (по-голяма към по-малка) е √(36/16) = 6/4 = 3/2.' },
+        { q:'Каква е формулата за лице на ромб с диагонали d₁ и d₂?', opts:['S = d₁ + d₂','S = d₁·d₂','S = d₁·d₂/2','S = (d₁ + d₂)/2'], correct:2, explanation:'Лицето на ромб чрез диагонали: S = d₁·d₂/2. Диагоналите на ромба се делят взаимно наполовина и са перпендикулярни — образуват 4 правоъгълни триъгълника.' },
+        { q:'При правоъгълен триъгълник хипотенузата е 13, единият катет е 5. Какъв е другият катет?', opts:['8','9','10','12'], correct:3, explanation:'b = √(c² − a²) = √(169 − 25) = √144 = 12. Тройката (5, 12, 13) е класическа Питагорова тройка — запомни я наред с (3, 4, 5).' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

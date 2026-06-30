@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Генетика Менделови закони · Биология 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio12-genetika-mendel-q1',
+      lessonUrl:   '/lessons/bio12-genetika-mendel.html',
+      lessonName:  'Генетика — Менделови закони',
+      eyebrow:     'БИОЛОГИЯ · 12 КЛАС',
+      title:       'Куиз — Генетика: Менделови закони — Тест 1',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio12-genetika-mendel-quiz-2.html',
+      questions: [
+        { q:'Кой е Грегор Мендел и защо е важен за биологията?', opts:['Немски физик, открил структурата на ДНК','Австрийски монах, провел опити с грах и формулирал законите на наследствеността','Английски натуралист, предложил теорията за еволюцията','Американски биохимик, открил РНК'], correct:1, explanation:'Грегор Мендел (1822–1884) е австрийски монах и ботаник. Чрез хибридизационни опити с грах в продължение на 8 години открива основните закони на наследствеността, поставяйки основите на генетиката.' },
+        { q:'Кой белег е ДОМИНАНТЕН при кръстосване на грах с жълти и зелени семена?', opts:['Зеленият цвят','Жълтият цвят','Двата цвята се смесват','Нито един от двата'], correct:1, explanation:'Жълтият цвят е доминантен — при кръстосване на чисти линии (жълто × зелено) всички потомци от F1 са жълти. Зеленият цвят е рецесивен и се „скрива" в хетерозиготите.' },
+        { q:'Какво гласи Първият закон на Мендел (закон за еднообразието)?', opts:['При кръстосване на две хомозиготни линии потомците от F1 са еднообразни по фенотип','При кръстосване потомците са наполовина доминантни и наполовина рецесивни','Признаците се наследяват заедно','Рецесивните белези изчезват завинаги'], correct:0, explanation:'Законът за еднообразието (F1): при кръстосване на два чисти (хомозиготни) родители с контрастни белези всички потомци от първо поколение (F1) са фенотипно еднообразни и носят доминантния белег.' },
+        { q:'Какво е разцепването при монохибридно кръстосване в поколение F2?', opts:['1:1','2:1','3:1','9:3:3:1'], correct:2, explanation:'В F2 (при самоопрашване на F1 хетерозиготи Аа × Аа) се получава съотношение 3 доминантни : 1 рецесивен. Геnotипno е 1 АА : 2 Аа : 1 аа.' },
+        { q:'Какво представлява генотипът?', opts:['Видимите признаци на организма','Генетичният (алелен) състав на организма','Броят на хромозомите','Средата, в която живее организмът'], correct:1, explanation:'Генотипът е съвкупността от всички гени (алели) на даден организъм. Различава се от фенотипа — видимите и измерими характеристики, резултат от взаимодействието на генотипа и средата.' },
+        { q:'Какъв генотип има хетерозиготен индивид за един белег?', opts:['АА','аа','Аа','ААаа'], correct:2, explanation:'Хетерозиготен организъм носи два различни алела за даден ген — единия доминантен (А) и единия рецесивен (а), т.е. генотипът е Аа. Фенотипно изглежда като доминантния вариант.' },
+        { q:'Какво съотношение на генотипове се получава при дихибридно кръстосване в F2?', opts:['3:1','1:2:1','9:3:3:1','1:1:1:1'], correct:2, explanation:'При дихибридно кръстосване (AaBb × AaBb) в F2 се получава фенотипно съотношение 9:3:3:1 — 9 с двата доминантни белега, 3 с един доминантен, 3 с друг доминантен, 1 с двата рецесивни.' },
+        { q:'Какво гласи Вторият закон на Мендел (закон за разцепването)?', opts:['Белезите не се делят при предаване','При самоопрашване на F1 хибриди в F2 рецесивните белези се „появяват отново" в съотношение 1:3','При F2 всички потомци са хетерозиготни','Доминантните белези изчезват в F2'], correct:1, explanation:'Законът за разцепването: при самоопрашване на F1 хибриди рецесивните белези, „скрити" в F1, се проявяват отново в F2 в съотношение 3 доминантни : 1 рецесивен.' },
+        { q:'Какво означава „анализиращо кръстосване" (тестово кръстосване)?', opts:['Кръстосване между два доминантни хомозигота','Кръстосване на неизвестен организъм с рецесивен хомозигот за определяне на генотипа','Кръстосване само в лабораторни условия','Самоопрашване на F1'], correct:1, explanation:'Анализиращото (тестово) кръстосване е метод за определяне на генотипа: изследваният организъм се кръстосва с рецесивен хомозигот (аа). Ако потомците са 1:1 — изследваният е Аа; ако са 1:0 — е АА.' },
+        { q:'Кое от следните е рецесивен белег при грах в опитите на Мендел?', opts:['Жълт цвят на семената','Гладка повърхност на семената','Зелен цвят на семената','Висок ръст'], correct:2, explanation:'Зеленият цвят на семената е рецесивен спрямо жълтия. В опитите на Мендел той се „скрива" в F1 (всички жълти) и се появява отново в F2 в съотношение 1 зелено на 3 жълти.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

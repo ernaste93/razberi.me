@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Мутации и популационна генетика · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bio12-mutatsii-q3',
+      lessonUrl:  '/lessons/bio12-mutatsii.html',
+      lessonName: 'Мутации и популационна генетика',
+      eyebrow:    'БИОЛОГИЯ · 12 КЛАС',
+      title:      'Тест 3 — Мутации и популационна генетика',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        {
+          q: 'Какво описва уравнението p² + 2pq + q² = 1 на Харди-Вайнберг?',
+          options: ['Честотата на мутациите в популацията', 'Разпределението на генотиповете при едно двуалелно автозомно лице в равновесна популация', 'Броя на хромозомите при полиплоидия', 'Скоростта на естествения отбор'],
+          correct: 1,
+          explanation: 'Уравнението на Харди-Вайнберг p² + 2pq + q² = 1 описва очакваните генотипни честоти (p² = АА, 2pq = Аа, q² = аа) в популация, която се намира в генетично равновесие — т.е. не еволюира.'
+        },
+        {
+          q: 'В популация честотата на рецесивната болест е 9 на 10 000 (q² = 0.0009). Каква е честотата на рецесивния алел (q)?',
+          options: ['0.09', '0.03', '0.9', '0.003'],
+          correct: 1,
+          explanation: 'q = √q² = √0.0009 = 0.03. Това означава, че рецесивният алел се среща с честота 3% в популацията.'
+        },
+        {
+          q: 'Ако q = 0.2 в популация в равновесие на Харди-Вайнберг, каква е честотата на носителите (хетерозиготите Аа)?',
+          options: ['0.04', '0.16', '0.32', '0.64'],
+          correct: 2,
+          explanation: '2pq = 2 × (1−0.2) × 0.2 = 2 × 0.8 × 0.2 = 0.32, тоест 32% от популацията са хетерозиготи (носители). Забелязете, че носителите са много повече от болните (q² = 0.04, т.е. 4%).'
+        },
+        {
+          q: 'Кое от следните НЕ е условие за равновесие на Харди-Вайнберг?',
+          options: ['Голям размер на популацията', 'Случайни кръстосвания (панмиксия)', 'Активен естествен отбор', 'Липса на миграция'],
+          correct: 2,
+          explanation: 'За равновесие по Харди-Вайнберг са необходими: голяма популация, случайни кръстосвания, липса на мутации, липса на естествен отбор и липса на миграция. Наличието на естествен отбор нарушава равновесието и предизвиква еволюция.'
+        },
+        {
+          q: 'Генетичният дрейф е:',
+          options: ['Насочена промяна на алелните честоти под влияние на отбора', 'Случайна, ненасочена промяна на алелните честоти в популацията', 'Обмен на алели между различни видове', 'Мутация в митохондриалната ДНК'],
+          correct: 1,
+          explanation: 'Генетичният дрейф е случайна промяна на алелните честоти, предизвикана от случайни разлики в репродуктивния успех. За разлика от естествения отбор, той е ненасочен. Ефектът е най-силен в малки популации.'
+        },
+        {
+          q: 'Ефектът на тесното гърло (Bottleneck effect) настъпва, когато:',
+          options: ['Популацията нараства бързо', 'Катастрофа рязко намалява популацията до малък брой оцелели', 'Малка група основава нова популация на ново място', 'Алелните честоти достигнат равновесие по Харди-Вайнберг'],
+          correct: 1,
+          explanation: 'Ефектът на тесното гърло (Bottleneck) настъпва след рязко намаляване на популацията (болест, природна катастрофа и др.). Оцелялата малка група случайно представлява генофонда — алелното разнообразие намалява.'
+        },
+        {
+          q: 'Основателският ефект (Founder effect) се различава от тесното гърло по това, че:',
+          options: ['Основателският ефект намалява популацията, докато тесното гърло я увеличава', 'При основателския ефект малка група се отделя и заселва ново място, а не катастрофа унищожава популацията', 'Основателският ефект засяга само растенията', 'Двата ефекта са напълно идентични'],
+          correct: 1,
+          explanation: 'И двата са форми на генетичен дрейф, но механизмите се различават: при основателския ефект малка група доброволно (или случайно) основава нова популация; при тесното гърло катастрофа унищожава голяма част от популацията.'
+        },
+        {
+          q: 'Генофондът на популацията е:',
+          options: ['Само доминантните алели в популацията', 'Съвкупността от всички алели на всички гени при всички индивиди в популацията', 'Броят хромозоми в клетките на организмите', 'Генетичната последователност само на размножаващите се индивиди'],
+          correct: 1,
+          explanation: 'Генофондът включва всички алели на всички генни локуси при всички индивиди в дадена популация. Колкото по-разнообразен е генофондът, толкова по-голяма е адаптивната способност на популацията.'
+        },
+        {
+          q: 'В малка изолирана популация генетичният дрейф е по-силен, защото:',
+          options: ['Малките популации имат повече мутации', 'Случайните вариации в репродуктивния успех имат по-голям относителен ефект при малък брой индивиди', 'В малките популации естественият отбор не действа', 'Малките популации имат по-висока миграция'],
+          correct: 1,
+          explanation: 'В малка популация случайната смърт или случайното неразмножаване на 1-2 индивида може драматично да промени алелните честоти. В голяма популация тези случайни ефекти се "изглаждат" статистически.'
+        },
+        {
+          q: 'Ако в популация q² = 0.04 (4% боледуват от рецесивна болест), каква е честотата на носителите?',
+          options: ['4%', '16%', '32%', '64%'],
+          correct: 2,
+          explanation: 'q = √0.04 = 0.2; p = 1 − 0.2 = 0.8; носители (2pq) = 2 × 0.8 × 0.2 = 0.32 = 32%. Тоест за всеки болен (q² = 4%) в популацията има значително повече носители (32%) — важен факт за генетичното консултиране.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

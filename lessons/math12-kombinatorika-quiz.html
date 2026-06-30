@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз 1 — Комбинаторика · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main><div class="quiz-page">
+    <div class="breadcrumb" id="quiz-breadcrumb"></div>
+    <div class="quiz-wrap">
+      <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+      <div class="quiz-title" id="quiz-title"></div>
+      <div class="quiz-sub" id="quiz-sub"></div>
+      <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+      <div id="quiz-area">
+        <div class="quiz-q-num" id="q-num"></div>
+        <div class="quiz-q-text" id="q-text"></div>
+        <div class="quiz-options" id="q-options"></div>
+        <div class="quiz-explanation" id="q-explanation"></div>
+        <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+      </div>
+      <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+    </div>
+  </div></main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-kombinatorika-q1',
+      lessonUrl:  '/lessons/math12-kombinatorika.html',
+      lessonName: 'Комбинаторика',
+      eyebrow:    'МАТЕМАТИКА · 12 КЛАС',
+      title:      'Куиз 1 — Комбинаторика',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/math12-kombinatorika-quiz-2.html',
+      questions: [
+        {
+          q: 'Колко е 5!?',
+          opts: ['60', '100', '120', '24'],
+          correct: 2,
+          expl: '5! = 5 × 4 × 3 × 2 × 1 = 120'
+        },
+        {
+          q: 'Колко е 0!?',
+          opts: ['0', '1', 'не съществува', '∞'],
+          correct: 1,
+          expl: 'По дефиниция 0! = 1. Това е важна конвенция, използвана в комбинаторните формули.'
+        },
+        {
+          q: 'Имаш 4 блузи и 3 панталона. По колко начина можеш да се облечеш (избираш по 1 от всяко)?',
+          opts: ['7', '12', '24', '6'],
+          correct: 1,
+          expl: 'По правилото за произведение: 4 × 3 = 12 начина.'
+        },
+        {
+          q: 'Колко е A₅³ (вариации от 5 по 3)?',
+          opts: ['10', '30', '60', '120'],
+          correct: 2,
+          expl: 'A₅³ = 5! / (5−3)! = 120 / 2 = 60'
+        },
+        {
+          q: 'По колко начина могат да се наредят 4 ученика на опашка?',
+          opts: ['16', '12', '24', '48'],
+          correct: 2,
+          expl: 'P₄ = 4! = 4 × 3 × 2 × 1 = 24 начина.'
+        },
+        {
+          q: 'Колко 2-цифрени числа без повторение можеш да образуваш от цифрите 1, 2, 3, 4?',
+          opts: ['8', '12', '16', '6'],
+          correct: 1,
+          expl: 'A₄² = 4! / (4−2)! = 24 / 2 = 12. Редът има значение (12 ≠ 21).'
+        },
+        {
+          q: 'Колко е C₅²?',
+          opts: ['20', '10', '5', '15'],
+          correct: 1,
+          expl: 'C₅² = 5! / (2! · 3!) = 120 / (2 · 6) = 120 / 12 = 10'
+        },
+        {
+          q: 'Формулата за комбинации Cₙᵏ е:',
+          opts: [
+            'n! / k!',
+            'n! / (n−k)!',
+            'n! / (k! · (n−k)!)',
+            'k! / (n! · (n−k)!)'
+          ],
+          correct: 2,
+          expl: 'Cₙᵏ = n! / (k! · (n−k)!) — делим на k! защото редът не е от значение.'
+        },
+        {
+          q: 'По колко начина можеш да наредиш буквите на думата АБВ (всички различни)?',
+          opts: ['3', '6', '9', '12'],
+          correct: 1,
+          expl: 'P₃ = 3! = 6. Трите различни букви могат да се наредят по 6 начина.'
+        },
+        {
+          q: 'Вярно ли е, че Cₙᵏ = Cₙⁿ⁻ᵏ?',
+          opts: [
+            'Да, за всички n и k',
+            'Не, никога',
+            'Само когато k = n/2',
+            'Само когато n е четно'
+          ],
+          correct: 0,
+          expl: 'Да — симетричното свойство: Cₙᵏ = Cₙⁿ⁻ᵏ важи за всички допустими n и k. Избирането на k елемента е равнозначно на изоставянето на (n−k) елемента.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

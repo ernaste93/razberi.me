@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Мутации и популационна генетика · БИОЛОГИЯ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БИОЛОГИЯ 12 клас</a>
+        <span>›</span>
+        Мутации и популационна генетика
+      </div>
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">🧬 БИОЛОГИЯ · 12 КЛАС</div>
+          <div class="lesson-title">Мутации и популационна генетика</div>
+          <div class="lesson-meta">Генни, хромозомни, геномни мутации · Харди-Вайнберг · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <!-- SECTION 1 -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">За какво ще учим</div>
+            <div class="lesson-body">
+              <p>Мутациите са внезапни, наследими промени в генетичния материал на организма. Те са основен двигател на еволюцията — без мутации нямаше да съществува генетично разнообразие и естественият отбор нямаше върху какво да действа. В същото време редица мутации стоят в основата на наследствените болести при хората. В този урок ще разгледаме трите основни вида мутации, техните причини, как се предават по наследство и как се описва генетичният състав на цяла популация с помощта на закона на Харди-Вайнберг.</p>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Видове мутации</div>
+            <div class="lesson-body">
+              <p>Мутациите се делят на три основни категории според нивото, на което настъпват промените в генетичния материал.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔬</div>
+                <div class="key-point-text"><strong>Генни (точкови) мутации</strong> — промяна в 1 нуклеотид: <strong>замяна</strong> (substituция), <strong>вмъкване</strong> (инсерция) или <strong>заличаване</strong> (делеция) на нуклеотид. Вмъкването и заличаването водят до <em>изместване на рамката на четене</em> (frameshift) — всички кодони след точката на мутацията се променят. Класически пример: <strong>сърповидно-клетъчна анемия</strong> — замяна на 1 азотна база в гена за β-хемоглобин (GAG→GTG) води до синтез на хемоглобин S. Еритроцитите приемат сърповидна форма и се блокират в капилярите.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧬</div>
+                <div class="key-point-text"><strong>Хромозомни мутации</strong> — промени в структурата на хромозомата: <strong>делеция</strong> (загуба на участък), <strong>дупликация</strong> (удвояване на участък), <strong>инверсия</strong> (обръщане на участък) и <strong>транслокация</strong> (пренасяне на участък към друга хромозома). Пример: <strong>синдром "Писък на котката"</strong> (cri-du-chat) — делеция в късото рамо на хромозома 5. Засегнатите деца издават пищящ звук подобен на котешко мяукане и имат интелектуален дефицит.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔢</div>
+                <div class="key-point-text"><strong>Геномни мутации</strong> — промяна в броя на хромозомите. <strong>Полиплоидия</strong> — кратно умножаване на целия хромозомен набор (напр. 3n, 4n) — широко разпространена при растенията (пшеницата е хексаплоид, 6n). <strong>Анеуплоидия</strong> — добавена или липсваща единична хромозома. Пример: <strong>Синдром на Даун = тризомия 21</strong> — три копия на хромозома 21, общо 47 хромозоми вместо 46. Среща се по-често при по-възрастни майки заради грешки при мейозата.</div>
+              </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Причини за мутации</div>
+            <div class="lesson-body">
+              <p>Мутациите могат да бъдат <em>спонтанни</em> (настъпват сами при репликацията на ДНК) или <em>индуцирани</em> — предизвикани от външни фактори, наречени <strong>мутагени</strong>.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">☀️</div>
+                <div class="key-point-text"><strong>Физически мутагени</strong> — UV лъчение (причинява тиминови димери в ДНК), рентгенови лъчи (йонизираща радиация, предизвикват скъсвания на ДНК веригата), γ-лъчи и неутрони. UV лъчите са главна причина за рак на кожата.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧪</div>
+                <div class="key-point-text"><strong>Химически мутагени</strong> — нитрозамини и бензпирен (в цигарения дим), формалдехид, афлатоксини (в плесенясала храна), алкилиращи агенти. Много химически мутагени са едновременно и канцерогени.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🦠</div>
+                <div class="key-point-text"><strong>Биологични мутагени</strong> — вируси, чиято ДНК/РНК се вгражда в генома на гостоприемника: HPV (причинява рак на маточната шийка), EBV (вирус на Epstein-Barr). Транспозони ("скачащи гени") — ДНК елементи, способни да се преместват в генома и да нарушат функцията на гени.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎲</div>
+                <div class="key-point-text"><strong>Спонтанни мутации</strong> — грешки при репликацията на ДНК, настъпващи с честота около <strong>1 на 10⁹ нуклеотида</strong> на репликация. Клетките разполагат с механизми за поправка (DNA repair), но малка част от грешките остават.</div>
+              </div>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Наследствени болести</div>
+            <div class="lesson-body">
+              <p>Наследствените болести се класифицират според начина на унаследяване на мутантния алел.</p>
+              <p><strong>Автозомно-рецесивни:</strong> болестта се проявява само при хомозигота (генотип <em>аа</em>). Хетерозиготите (Аа) са здрави носители. Примери: <strong>фенилкетонурия (ФКУ)</strong> — дефицит на ензима фенилаланин хидроксилаза; <strong>кистозна фиброза</strong> — мутация в CFTR гена, засяга белите дробове и панкреаса; <strong>галактоземия</strong> — невъзможност за разграждане на галактоза.</p>
+              <p><strong>Автозомно-доминантни:</strong> достатъчен е само 1 мутантен (доминантен) алел за изява на болестта — генотип Аа или АА. Примери: <strong>болест на Хантингтон</strong> — прогресивно неврологично заболяване, проявяващо се обикновено след 40 г.; <strong>ахондроплазия</strong> — форма на джудже с нормален интелект.</p>
+              <p><strong>Свързани с пола (X-свързани):</strong> гените се намират на X-хромозомата. Засягат предимно мъжете.</p>
+            </div>
+
+            <!-- SECTION 5 -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Свързано с пола наследяване</div>
+            <div class="lesson-body">
+              <p>X-свързаните болести следват особен модел на унаследяване, защото мъжете имат само едно копие на X-хромозомата.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">♂️</div>
+                <div class="key-point-text"><strong>Мъже (XY):</strong> гените на X-хромозомата нямат съответен алел на Y-хромозомата. Затова момчетата <em>не могат да бъдат носители</em> — те или боледуват (X<sup>h</sup>Y), или са здрави (X<sup>H</sup>Y).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">♀️</div>
+                <div class="key-point-text"><strong>Жени носителки (XX):</strong> жена с генотип X<sup>H</sup>X<sup>h</sup> има нормален фенотип, но носи рецесивния болестотворен алел и може да го предаде на децата си. Жена с генотип X<sup>h</sup>X<sup>h</sup> боледува (рядко при тежки болести).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🩸</div>
+                <div class="key-point-text"><strong>Хемофилия А</strong> — дефицит на VIII коагулационен фактор; X-свързана рецесивна болест. Засегнатите мъже: X<sup>h</sup>Y. Засегнатите жени: X<sup>h</sup>X<sup>h</sup> (изключително рядко). <strong>Цветна слепота</strong> — X-свързана рецесивна, засяга ~8% от мъжете и ~0.4% от жените.</div>
+              </div>
+            </div>
+
+            <!-- SECTION 6 -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Закон на Харди-Вайнберг</div>
+            <div class="lesson-body">
+              <p>Законът на Харди-Вайнберг описва как алелните честоти се запазват постоянни в популация, която не еволюира. Той е теоретичен модел — отправна точка за разбиране кога и защо популациите се променят.</p>
+              <p><strong>Уравнение:</strong> <em>p² + 2pq + q² = 1</em>, където:<br>
+              — <strong>p</strong> = честота на доминантния алел (А)<br>
+              — <strong>q</strong> = честота на рецесивния алел (а)<br>
+              — <strong>p²</strong> = честота на хомозиготите AA<br>
+              — <strong>2pq</strong> = честота на хетерозиготите (носители) Aa<br>
+              — <strong>q²</strong> = честота на хомозиготите аа (боледуващи при рецесивна болест)</p>
+              <p><strong>Условия за равновесие</strong> (идеална популация): голяма популация, случайни кръстосвания (панмиксия), без мутации, без естествен отбор, без миграция (приток/отток на индивиди). Ако дори едно условие се наруши — популацията еволюира и честотите се променят.</p>
+              <p><strong>Пример за пресмятане:</strong> Ако 1% от популацията страда от автозомно-рецесивна болест (q² = 0.01), то:<br>
+              — q = √0.01 = <strong>0.1</strong><br>
+              — p = 1 − 0.1 = <strong>0.9</strong><br>
+              — Носители (2pq) = 2 × 0.9 × 0.1 = <strong>18%</strong><br>
+              Тоест за всеки 1 болен има около 18 здрави носители.</p>
+            </div>
+
+            <!-- SECTION 7 -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Популационна генетика</div>
+            <div class="lesson-body">
+              <p>Популационната генетика изучава как алелните честоти се променят във времето в рамките на популации — тя е теоретичната основа на еволюционната биология.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🧬</div>
+                <div class="key-point-text"><strong>Генофонд</strong> — съвкупността от всички алели на всички гени в дадена популация в даден момент. Колкото по-разнообразен е генофондът, толкова по-устойчива е популацията.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎲</div>
+                <div class="key-point-text"><strong>Генетичен дрейф</strong> — случайна, ненасочена промяна на алелните честоти, настъпваща поради случайни разлики в репродуктивния успех. Ефектът е особено силен в <em>малки</em> популации, където случайността е по-значима от отбора.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏝️</div>
+                <div class="key-point-text"><strong>Основателски ефект (Founder effect)</strong> — малка група индивиди се отделя и основава нова популация. Новата популация носи само малка, случайна извадка от генофонда на оригиналната и може да се различава значително от нея.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌪️</div>
+                <div class="key-point-text"><strong>Ефект на тесното гърло (Bottleneck effect)</strong> — природна катастрофа или друго събитие драстично намалява размера на популацията. Оцелялата малка група случайно представя генофонда — алелното разнообразие намалява рязко.</div>
+              </div>
+            </div>
+
+            <!-- SECTION 8 — Summary -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното — резюме</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Генна мутация</strong> = промяна в 1 нуклеотид. Пример: <strong>сърповидно-клетъчна анемия</strong> (замяна GAG→GTG в β-глобиновия ген).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Геномна мутация</strong> = промяна в броя хромозоми. Пример: <strong>Синдром на Даун — тризомия 21</strong> (47 хромозоми).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Мутагени:</strong> физически (UV, рентгенови лъчи), химически (бензпирен, нитрозамини), биологични (вируси HPV, EBV, транспозони).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Хемофилия А и цветна слепота</strong> са X-свързани рецесивни болести — момчетата боледуват по-често, момичетата могат да бъдат носителки.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Харди-Вайнберг:</strong> p² + 2pq + q² = 1. Равновесие при идеална популация. Ако q² = 0.01 → носители = 18%.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Генетичен дрейф</strong> — случайни промени в генофонда, по-силни в малки популации. Основателски ефект и ефект на тесното гърло са негови форми.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bio12-mutatsii-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bio12-mutatsii-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bio12-mutatsii-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Мутации и популационна генетика';
+    window.LESSON_SUBJECT = 'БИОЛОГИЯ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        var color = d.passed ? '#16a34a' : '#d97706';
+        var icon = d.passed ? '✓' : '✗';
+        a.style.position = 'relative';
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + icon + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

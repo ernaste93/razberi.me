@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Пунктуационна норма · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bel12-punktuatsiya-q1',
+      lessonUrl:  '/lessons/bel12-punktuatsiya.html',
+      lessonName: 'Пунктуационна норма',
+      eyebrow:    'БЕЛ · 12 КЛАС · ЕЗИК',
+      title:      'Куиз — Пунктуационна норма — Тест 1',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bel12-punktuatsiya-quiz-2.html',
+      questions: [
+        { q:'Кое изречение е пунктуационно ПРАВИЛНО?', opts:['"Мамо ела тук."','"Мамо, ела тук."','"Мамо ела, тук."','"Мамо, ела, тук."'], correct:1, explanation:'При обръщение задължително се поставя запетая след обръщението (или преди него, ако е в края): „Мамо, ела тук." Обръщенията се изолират с запетая от останалата част на изречението.' },
+        { q:'Кой знак се поставя пред пряка реч?', opts:['Запетая','Точка и запетая','Двоеточие','Тире'], correct:2, explanation:'Пред пряка реч се поставя двоеточие: „Той каза: „Ще се върна утре."" Двоеточието „обявява" следващите думи като чужди.' },
+        { q:'В кое изречение запетаята е ПОСТАВЕНА ГРЕШНО?', opts:['"Знам, че ще дойдеш."','"Момчето, което виждаш, е мой брат."','"Ученикът, учи усърдно."','"Ако вали, оставам вкъщи."'], correct:2, explanation:'„Ученикът, учи усърдно." — между подлог и сказуемо НЕ се поставя запетая. Запетаята разделя части на изречение, но не разделя подлога от сказуемото.' },
+        { q:'За какво се използват скобите в изречението „Иван Вазов (1850–1921) е велик поет"?', opts:['За пряка реч','За допълнителна, незадължителна пояснителна информация','За обособена обстоятелствена част','За изброяване'], correct:1, explanation:'Скобите съдържат информация, която е допълнителна и може да бъде пропусната без да се наруши смисълът на изречението. Тук годините на живот са именно такава допълнителна информация.' },
+        { q:'Какъв знак се поставя в началото на всяка реплика в диалог?', opts:['Запетая','Двоеточие','Тире','Многоточие'], correct:2, explanation:'В диалог всяка реплика започва с тире (—): „— Как си? — попита той. — Добре, благодаря." Тирето ясно разграничава репликите на различните говорители.' },
+        { q:'В кое изречение е правилно поставено двоеточието?', opts:['"Взех: тетрадка, химикалка и линия."','"Взех всичко необходимо: тетрадка, химикалка и линия."','"Взех всичко: необходимо, тетрадка, химикалка."','"Взех тетрадка, химикалка: и линия."'], correct:1, explanation:'Двоеточие пред изброяване се поставя след обобщаваща дума/фраза: „всичко необходимо" е такава. В другите примери позицията на двоеточието е неправилна.' },
+        { q:'Многоточието (...) се използва при:', opts:['Изброяване на три елемента','Незавършена мисъл, пауза или пропуснат текст','Директна реч','Обособени части'], correct:1, explanation:'Многоточието изразява незавършеност, колебание или пропуснат текст: „Исках да кажа…", „Ако знаех…", „[…] тогава се случи нещо…". Не означава изброяване на точно три елемента.' },
+        { q:'Кое изречение с обособена част е пунктуационно вярно?', opts:['"Иван уморен от работа легна да спи."','"Иван, уморен от работа, легна да спи."','"Иван уморен, от работа легна да спи."','"Иван, уморен от работа легна да спи."'], correct:1, explanation:'Обособената част „уморен от работа" допълнително характеризира подлога „Иван" и се отделя с две запетаи — пред и след нея: „Иван, уморен от работа, легна да спи."' },
+        { q:'Какъв знак се поставя пред обобщение след изброяване?', opts:['Двоеточие','Запетая','Тире','Точка и запетая'], correct:2, explanation:'„Книги, тетрадки, химикалки — всичко беше готово." — тире пред обобщителната дума „всичко". Обратният случай (двоеточие пред изброяване след обобщение) също е правилен: „Взех всичко: книги, тетрадки, химикалки."' },
+        { q:'За какво се използват кавичките?', opts:['Само за заглавия на книги','За пряка реч, заглавия, ирония и цитати','Само за ирония и преносни значения','За дати и числа'], correct:1, explanation:'Кавичките имат няколко функции: пряка реч („Добре дошли"), заглавия на произведения („Под игото"), думи в преносно/иронично значение (той беше „герой") и цитати от чужди текстове.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

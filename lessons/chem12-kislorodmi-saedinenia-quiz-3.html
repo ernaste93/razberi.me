@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Кислородни съединения · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'chem12-kislorodni-saedinenia-q3',
+      lessonUrl:  '/lessons/chem12-kislorodmi-saedinenia.html',
+      lessonName: 'Органична химия — кислородни съединения',
+      eyebrow:    'ХИМИЯ · 12 КЛАС',
+      title:      'Куиз — Кислородни съединения — Тест 3',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        { q:'Фенолът C₆H₅OH е ароматен алкохол. Каква е характерната му реакция с FeCl₃?', opts:['Дава жълто оцветяване','Дава виолетово оцветяване — качествена реакция за феноли','Не реагира','Образува газ'], correct:1, explanation:'Фенолът реагира с железен(III) хлорид (FeCl₃) с получаване на интензивно виолетово (лилаво) оцветяване. Тази реакция е качествена проба за феноли и е различна от реакциите на алифатни алкохоли.' },
+        { q:'Кой е правилният IUPAC суфикс за алдехиди?', opts:['-ол','-он','-ал','-ова киселина'], correct:2, explanation:'По IUPAC номенклатурата: алдехидите завършват на -ал (метанал = HCHO, етанал = CH₃CHO), кетоните на -он (пропанон = ацетон), алкохолите на -ол, карбоксилните киселини на -ова киселина.' },
+        { q:'Коя функционална група прави карбоксилните киселини киселинни?', opts:['–OH група сама по себе си','Карбонилната C=O група','Комбинацията –COOH: OH протонът се дисоциира поради активиращото влияние на C=O','Въглеродната верига'], correct:2, explanation:'В карбоксилната група –COOH, карбонилната C=O понижава електронната плътност на OH, улеснявайки отдаването на протона (H⁺). Затова карбоксилните киселини са киселинни, докато алкохолите (само –OH) са практически неутрални.' },
+        { q:'При нагряване на етанол с конц. H₂SO₄ при ~140°C се получава:', opts:['Оцетна киселина','Диетилов етер (CH₃CH₂–O–CH₂CH₃)','Ацеталдехид','Етилен'], correct:1, explanation:'При ~140°C с конц. H₂SO₄ две молекули етанол реагират с елиминиране на вода: 2C₂H₅OH → C₂H₅–O–C₂H₅ + H₂O (диетилов етер). При по-висока температура (~180°C) от единична молекула се образува етилен (CH₂=CH₂).' },
+        { q:'Какъв е процесът, при който захар се превръща в етанол и CO₂?', opts:['Окисляване','Ферментация (алкохолна)','Дестилация','Естерификация'], correct:1, explanation:'Алкохолната ферментация е анаеробен биохимичен процес при дрождите: C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂. Провежда се без кислород. Използва се при производство на вино, бира и хляб.' },
+        { q:'Аспиринът е естер на оцетна киселина и салициловата киселина. Каква реакция го произвежда?', opts:['Хидролиза','Окисляване','Естерификация (ацетилиране)','Полимеризация'], correct:2, explanation:'Аспиринът (ацетилсалицилова киселина) се получава при ацетилиране на салициловата киселина с оцетен анхидрид (или оцетна киселина) — естерификация. Той е един от най-продаваните фармацевтични продукти в историята.' },
+        { q:'Кой алкохол е токсичен и може да причини слепота при поглъщане?', opts:['Етанол','Пропанол','Метанол (метилов алкохол)','Бутанол'], correct:2, explanation:'Метанолът (CH₃OH) е силно токсичен. При метаболизиране в организма се образуват формалдехид и мравчена киселина, увреждащи зрителния нерв (слепота) и другите органи. Дори малки количества (10-20 ml) могат да причинят смърт.' },
+        { q:'Коя е правилната формула на оцетния анхидрид?', opts:['CH₃COOH','(CH₃CO)₂O','CH₃COOCH₃','CH₃CHO'], correct:1, explanation:'Оцетният анхидрид (CH₃CO)₂O е производно на оцетната киселина с две ацилни групи, свързани чрез кислороден атом. Използва се при синтез на естери (включително аспирин) и целулозен ацетат (ацетатна коприна).' },
+        { q:'Кое твърдение за естерите е ВЯРНО?', opts:['Естерите са силни киселини','Естерите не се хидролизират','Много естери имат приятна плодова или цветна миризма и се използват в парфюмерията','Естерите не могат да се синтезират от алкохоли'], correct:2, explanation:'Много естери (особено нискомолекулни) имат приятна плодова или цветна миризма: изоамилов ацетат (банан), амилов бутират (кайсия). Затова се използват като аромати в парфюмерията и хранителната промишленост.' },
+        { q:'Как се наименува естерът, образуван от метанол и пропанова киселина?', opts:['Метилпропаноат','Пропилметаноат','Метилетаноат','Пропилетаноат'], correct:0, explanation:'Естерите се именуват: алкилова група от алкохола + наименование на киселината с окончание -оат. Метанол дава „метил-", пропанова киселина дава „пропаноат". Значи: метилпропаноат (CH₃CH₂COOCH₃).' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

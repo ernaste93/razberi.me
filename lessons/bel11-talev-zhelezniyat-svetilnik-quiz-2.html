@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Железният светилник — Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel11-talev-zhelezniyat-svetilnik-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel11-talev-zhelezniyat-svetilnik-quiz-3.html',
+      lessonUrl:   '/lessons/bel11-talev-zhelezniyat-svetilnik.html',
+      lessonName:  'Талев — Железният светилник',
+      eyebrow:     'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Железният светилник — Тест 2',
+      passScore:   8,
+      questions: [
+        {
+          q: 'Как се казва синът на Стоян и Султана Глаушеви?',
+          opts: ['Петко', 'Лазар', 'Иван', 'Никола'],
+          correct: 1,
+          explanation: 'Синът на Стоян и Султана е Лазар Глаушев. Той представлява новото поколение — образованото, просветеното. Лазар е учителят, продължителят на делото на баща си, но с нови средства.'
+        },
+        {
+          q: 'Каква е ролята на Лазар Глаушев в романа?',
+          opts: ['Войник и борец с оръжие', 'Учител и просветител', 'Свещеник в черквата', 'Търговец и чорбаджия'],
+          correct: 1,
+          explanation: 'Лазар е учител — образованият представител на новото поколение. Той продължава борбата за народното дело не с чук и наковалня като баща си, а с перо и слово, чрез просвещение.'
+        },
+        {
+          q: 'Коя е Ния (Катерина) в романа?',
+          opts: ['Дъщерята на Стоян Глаушев', 'Любовта на Лазар, дъщеря на гъркоманско семейство', 'Учителката в селото', 'Съпругата на Хаджи Серафим'],
+          correct: 1,
+          explanation: 'Ния е любовта на Лазар. Тя е от гъркоманско семейство — свързано с Патриаршията. Любовта между тях символизира трагичния сблъсък между личното чувство и националния дълг.'
+        },
+        {
+          q: 'Защо любовта между Лазар и Ния е трагична?',
+          opts: ['Защото Лазар е беден', 'Защото семействата им са от враждуващи национални лагери', 'Защото Ния е болна', 'Защото Лазар заминава за чужбина'],
+          correct: 1,
+          explanation: 'Лазар е екзархист (привърженик на Българската екзархия), а Ния е от гъркоманско семейство. Националният конфликт е пречка, по-голяма от личните чувства — точно в това е трагизмът.'
+        },
+        {
+          q: 'Кой е Хаджи Серафим в романа?',
+          opts: ['Верен приятел на Стоян', 'Гъркоманинът, представител на „чуждото" в общността', 'Турски чиновник', 'Учителят на Лазар'],
+          correct: 1,
+          explanation: 'Хаджи Серафим е гъркоманинът — антагонистът на Стоян Глаушев. Той не е плосък злодей, а сложен образ на човек, избрал удобство и облага пред верността към своя народ.'
+        },
+        {
+          q: 'Кой художествен жанр определя „Железният светилник"?',
+          opts: ['Разказ', 'Поема', 'Роман-сага', 'Новела'],
+          correct: 2,
+          explanation: 'Романът е определян като роман-сага — мащабно епично произведение, проследяващо съдбата на рода Глаушеви и на цялата прилепска общност през поколения.'
+        },
+        {
+          q: 'Какво представлява черквата като символ в романа?',
+          opts: ['Само религиозно място за молитва', 'Символ на националната идентичност и борбата срещу асимилацията', 'Символ на гръцкото влияние', 'Символ на робството'],
+          correct: 1,
+          explanation: 'В романа черквата е не само място за молитва — тя е символ на националната идентичност. Борбата между гъркомани и екзархисти за черквата е всъщност борба за душата на народа.'
+        },
+        {
+          q: 'Какво е характерно за стила на Димитър Талев в романа?',
+          opts: ['Кратък, лаконичен, с много диалог', 'Тържествен, бавен, епичен, с дълги описания', 'Сатиричен и хумористичен', 'Документален, без художествени средства'],
+          correct: 1,
+          explanation: 'Стилът на Талев е тържествен, бавен и епичен. Романът е написан с дълги, описателни изречения, богати с детайли. Точно това придава усещане за епична монументалност.'
+        },
+        {
+          q: 'Какво символизира материалът желязо в романа?',
+          opts: ['Богатство и власт', 'Твърдост, устойчивост и народна непреклонност', 'Жестокост и война', 'Чужда сила и потисничество'],
+          correct: 1,
+          explanation: 'Желязото е избрано съзнателно — не злато или сребро, а желязо. Металът на труда, на занаята, на обикновения народ. Твърдо, трайно, непоколебимо — точно като духа на народа.'
+        },
+        {
+          q: 'Темата за любовта и народния дълг в романа се изразява чрез кои герои?',
+          opts: ['Стоян и Султана', 'Лазар и Ния', 'Хаджи Серафим и Стоян', 'Стоян и турския управник'],
+          correct: 1,
+          explanation: 'Лазар и Ния са двойката, чиято любов е обречена заради националния конфликт. В тях Талев показва трагичния избор между личното щастие и колективния дълг.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

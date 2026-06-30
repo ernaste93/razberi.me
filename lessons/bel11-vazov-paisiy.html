@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Иван Вазов — Паисий · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a><span>›</span>
+        Паисий — Иван Вазов
+      </div>
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Миналото и паметта — Иван Вазов „Паисий"</div>
+          <div class="lesson-meta">„О, Паисий, Паисий, старецо свети!" · Национална памет · ~9 мин четене</div>
+          <div id="lesson-content">
+
+            <!-- SECTION 1: За автора -->
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Иван Вазов (1850–1921)</strong> е наречен „Патриархът на българската литература" — титла, която отразява неговото изключително значение за националната ни словесност. Роден е в Сопот, Балкана, в семейство на търговец. Преживява Освобождението (1878), но и годините на следосвобожденска криза, когато новата свобода не отговаря на очакванията на народа.</p>
+              <p>Твори на границата между Националното Възраждане и модерната литература. Автор е на романа „Под игото" — най-превежданата българска творба в света, и на цикъла „Епопея на забравените". Стихотворението „Паисий" е написано в периода 1881–1884 г. и е ключово за разбирането на темата „Миналото и паметта" в програмата за матура.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- SECTION 2: Контекст -->
+            <div class="section-title">Контекст: Епопея на забравените</div>
+            <div class="lesson-body">
+              <p>„Епопея на забравените" е цикъл от <strong>12 оди</strong>, написани между 1881 и 1884 г. Вазов ги посвещава на хора, „забравени" от народа — будители, чиято дейност е оформила националното съзнание на българите, но чиито имена постепенно избледняват от народната памет.</p>
+              <p><strong>Паисий Хилендарски (1722–1773)</strong> е монах от Хилендарския монастир в Света гора (Атон). През 1762 г. написва „История славянобългарска" — първата история на българите на новобългарски език. Целта му е да напомни на поробения народ за неговото минало, слава и идентичност. Вазов представя Паисий като духовен будител, пробудил националното съзнание чрез историческата памет. Встъпителният стих на одата гласи: „О, Паисий, Паисий, старецо свети!"</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- SECTION 3: Стихотворението -->
+            <div class="section-title">Откъс от стихотворението</div>
+            <div class="poem-block">О, Паисий, Паисий, старецо свети!
+ти пръв събуди духа ни заспети,
+и в мрака ни ти светна, грейна пръв
+и пробуди ни с думи, с огън, с кръв!
+
+Ти пишеше, ти ревеше, ти плачеше
+пред своя труд, и душата ти тежеше
+от болки страшни, от любов голяма
+за тоя клет народ без вяра, без прослава.
+<div class="poem-author">— Иван Вазов, „Паисий" от „Епопея на забравените", 1881</div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- SECTION 4: Анализ строфа по строфа -->
+            <div class="section-title">Анализ строфа по строфа</div>
+            <div class="lesson-body">
+              <p><strong>Строфа 1:</strong> Обръщението „О, Паисий" е <em>апостроф</em> — литературна фигура, при която поетът се обръща към отсъстващо или починало лице, сякаш е живо и присъстващо. Епитетът „старецо свети" поставя Паисий в редицата на светците — духовни водачи. „Събуди духа ни заспети" изгражда централната метафора: народът е в духовен сън (=робство, потиснатост), а Паисий е този, който го пробужда. „Мракът" е метафора за турското робство и липсата на национално съзнание — светването и грейването символизират пробуждането и просвещението.</p>
+              <p><strong>Строфа 2:</strong> Триадата глаголи „пишеше, ревеше, плачеше" е <em>анафора</em> (трикратно „ти") и <em>градация</em> — три действия, показващи нарастващата страст и мъка на Паисий в работата му. <em>Антитезата</em> „болки страшни" срещу „любов голяма" представя трагичната двойственост на будителя: страданието и любовта вървят ръка за ръка. Изразът „без вяра, без прослава" рисува народа в пълна духовна деградация под робството — хора без самосъзнание, без гордост, без идентичност.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- SECTION 5: Художествени средства -->
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🗣️</div>
+                <div class="key-point-text"><strong>Апостроф:</strong> „О, Паисий!" — обръщение към починало лице, като към живо. Засилва емоционалността и присъствието на Паисий в лириката.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Анафора:</strong> „ти пишеше, ти ревеше, ти плачеше" — трикратното „ти" засилва личното участие и страстта на Паисий. Фокусира вниманието върху самотния будител.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌑</div>
+                <div class="key-point-text"><strong>Метафора:</strong> „мрак" = турско робство и духовна слепота; „светна, грейна" = национално пробуждане и просветление чрез историята.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚖️</div>
+                <div class="key-point-text"><strong>Антитеза:</strong> болки страшни ↔ любов голяма; „заспети" ↔ „събуди" — противопоставянето подчертава трагичното величие на будителя.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔥</div>
+                <div class="key-point-text"><strong>Хипербола:</strong> „с думи, с огън, с кръв" — преувеличение за силата на словото на Паисий. Думата е равностойна на огъня и кръвта.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📈</div>
+                <div class="key-point-text"><strong>Градация:</strong> думи → огън → кръв — нарастваща интензивност. От словото (разумното) до огъня (страстта) до кръвта (жертвата).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">✨</div>
+                <div class="key-point-text"><strong>Епитети:</strong> „старецо свети", „болки страшни", „любов голяма" — определенията изграждат образа на Паисий като свят страдалец с грамадна душа.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- SECTION 6: Тема, идея, мотиви -->
+            <div class="section-title">Тема, идея и мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Националната памет и ролята на историческото слово за пробуждане на народното съзнание. Стихотворението прославя онзи, който е напомнил на народа кой е и откъде идва.</p>
+              <p><strong>Идея:</strong> Паисий е духовният будител, чиято „История" разбужда спящия народ. Паметта за миналото е оръжие срещу забравата и робството — словото надживява смъртта и поражда народи.</p>
+              <p><strong>Мотиви:</strong></p>
+              <p>• <em>Пробуждане</em> — метафора за националното съзнание, което излиза от дремота (робство).<br/>
+              • <em>Мракът и светлината</em> — класическата опозиция между незнанието (мрак) и знанието/историята (светлина).<br/>
+              • <em>Словото като спасение</em> — „История славянобългарска" е представена не само като книга, а като оръжие, огън и кръв.<br/>
+              • <em>Любовта към Отечеството</em> — страданието на Паисий произтича от дълбока любов към народа.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- SECTION 7: Паисий — историческият контекст -->
+            <div class="section-title">Паисий Хилендарски — историческият контекст</div>
+            <div class="lesson-body">
+              <p><strong>Паисий Хилендарски (1722–1773)</strong> е монах в Хилендарския монастир на Атон. През <strong>1762 г.</strong> завършва „История славянобългарска" — първата история на българите на новобългарски (разговорен) език, достъпна за широките маси, а не само за духовенството.</p>
+              <p>Целта на Паисий е конкретна: да напомни на поробените под Османската империя българи кои са, откъде идват и каква е тяхната слава. В предисловието си той обръщение директно към онези, „които не обичат своя род и своя език".</p>
+              <p>„История славянобългарска" не е издадена с печат — разпространява се в <strong>преписи</strong> (ръкописни копия) в продължение на десетилетия. Това я прави уникален феномен: книга, която живее и се размножава в ръцете на народа. Тя разпалва националното самосъзнание и поставя началото на <strong>Националното Възраждане</strong>.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- SECTION 8: Значение за матурата -->
+            <div class="section-title">Значение за матурата</div>
+            <div class="lesson-body">
+              <p>Вазов „Паисий" е ключов текст за темата <strong>„Миналото и паметта"</strong> и за темата <strong>„Национален идеал"</strong> в матурата по БЕЛ. Очаквайте задачи за:</p>
+              <p>• Анализ на апострофа и неговата функция в одата.<br/>
+              • Обяснение на художествените средства (анафора, метафора, градация).<br/>
+              • <strong>Сравнение с Вапцаров „История"</strong>: и двамата пишат за историческата памет, но от коренно различни ъгли — Вазов гледа на миналото като на слава и пример, Вапцаров вижда историята като жив опит на страдащите маси в настоящето. Вазов прославя будителя, Вапцаров говори от името на забравените хора.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- SECTION 9: Най-важното -->
+            <div class="section-title">Най-важното — за бързо запомняне</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">✍️</div>
+                <div class="key-point-text"><strong>Автор:</strong> Иван Вазов (1850–1921) — „Патриарх на бг. литература", роден в Сопот, автор на „Под игото".</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📚</div>
+                <div class="key-point-text"><strong>Цикъл:</strong> „Епопея на забравените" (1881–1884) — 12 оди, посветени на будителите на националното съзнание.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏛️</div>
+                <div class="key-point-text"><strong>Паисий Хилендарски:</strong> монах (1722–1773), написал „История славянобългарска" (1762) — пробудил националното съзнание на поробените българи.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🗣️</div>
+                <div class="key-point-text"><strong>Главно средство: Апостроф</strong> — „О, Паисий!" (обръщение към отсъстващо/починало лице, засилва присъствието му).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Анафора:</strong> „ти пишеше, ти ревеше, ти плачеше" — трикратното „ти" концентрира вниманието върху личните усилия на Паисий.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌑</div>
+                <div class="key-point-text"><strong>Метафора:</strong> мракът = робство и духовна слепота; светването = пробуждане чрез историческата памет.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Идея:</strong> Словото (историческата памет) е оръжие срещу духовното робство. Паметта за миналото пробужда народното самосъзнание.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🆚</div>
+                <div class="key-point-text"><strong>За матурата — сравни с Вапцаров „История":</strong> И двамата пишат за историческата памет. Вазов — миналото като слава и пример за подражание. Вапцаров — историята като живият опит на страдащите маси.</div>
+              </div>
+            </div>
+
+          </div><!-- /lesson-content -->
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel11-vazov-paisiy-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel11-vazov-paisiy-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel11-vazov-paisiy-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Миналото и паметта — Иван Вазов „Паисий"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        var icon = d.passed ? '✓' : '✗';
+        a.style.position = 'relative';
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + icon + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

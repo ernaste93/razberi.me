@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз 3 — Тригонометрични функции · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-trigonometriya-q3',
+      lessonUrl:  '/lessons/math12-trigonometriya.html',
+      lessonName: 'Тригонометрични функции',
+      eyebrow:    'МАТЕМАТИКА · 12 КЛАС',
+      title:      'Куиз 3 — Тригонометрични функции',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        {
+          q: 'Каква е формулата за cos 2α (само с косинус)?',
+          opts: ['2 cos²α', '2 cos²α − 1', '1 − 2 cos²α', 'cos²α + sin²α'],
+          correct: 1,
+          explanation: 'cos 2α = 2cos²α − 1. Произтича от cos 2α = cos²α − sin²α, като заместим sin²α = 1 − cos²α: cos²α − (1 − cos²α) = 2cos²α − 1.'
+        },
+        {
+          q: 'Колко решения има уравнението sin x = 2?',
+          opts: ['Едно: x = 90°', 'Безкрайно много', 'Нито едно', 'Две: x = 30° и x = 150°'],
+          correct: 2,
+          explanation: 'sin x = 2 няма решения, защото областта на стойностите на sin x е [−1, 1]. Числото 2 е извън тази област.'
+        },
+        {
+          q: 'Каква е стойността на cot 30°?',
+          opts: ['√3/3', '√3', '1', '1/2'],
+          correct: 1,
+          explanation: 'cot 30° = cos 30° / sin 30° = (√3/2) / (1/2) = √3. Алтернативно: cot 30° = 1/tan 30° = 1/(√3/3) = 3/√3 = √3.'
+        },
+        {
+          q: 'Кое е общото решение на уравнението cos x = 1/2?',
+          opts: ['x = 60° + 360°·n', 'x = ±60° + 360°·n', 'x = 60° + 180°·n', 'x = (−1)ⁿ · 60° + 180°·n'],
+          correct: 1,
+          explanation: 'За cos x = a: x = ±arccos a + 360°·n. arccos(1/2) = 60°, значи x = ±60° + 360°·n, n ∈ ℤ. Двата знака ± идват от симетрията на косинуса.'
+        },
+        {
+          q: 'В кой квадрант са и sin, и cos отрицателни?',
+          opts: ['I квадрант', 'II квадрант', 'III квадрант', 'IV квадрант'],
+          correct: 2,
+          explanation: 'В III квадрант (180°–270°) и x, и y са отрицателни, затова cos α < 0 и sin α < 0. Единствено tan и cot са положителни в III квадрант.'
+        },
+        {
+          q: 'Каква е стойността на sin 270°?',
+          opts: ['0', '1', '−1', '√2/2'],
+          correct: 2,
+          explanation: 'sin 270° = −1. При 270° точката на единичната окръжност е (0, −1), затова sin = y-координата = −1.'
+        },
+        {
+          q: 'Опрости: sin²α + cos²α + tan α · cot α',
+          opts: ['1', '2', 'tan²α', 'sin 2α'],
+          correct: 1,
+          explanation: 'sin²α + cos²α = 1, а tan α · cot α = (sin α/cos α) · (cos α/sin α) = 1. Значи 1 + 1 = 2.'
+        },
+        {
+          q: 'Каква е стойността на cos(α − β), ако α = 90°, β = 30°?',
+          opts: ['cos 60° = 1/2', 'sin 30° = 1/2', 'cos 120° = −1/2', '√3/2'],
+          correct: 1,
+          explanation: 'cos(90° − 30°) = cos 60° = 1/2. Но можем и директно: cos(90° − 30°) = cos 90° · cos 30° + sin 90° · sin 30° = 0·(√3/2) + 1·(1/2) = 1/2.'
+        },
+        {
+          q: 'Колко пъти функцията sin x се повтаря (прави пълен цикъл) в интервала [0°, 720°]?',
+          opts: ['1 път', '2 пъти', '4 пъти', '3 пъти'],
+          correct: 1,
+          explanation: 'Периодът на sin x е 360°. В интервал с дължина 720° = 2 × 360° функцията прави точно 2 пълни цикъла.'
+        },
+        {
+          q: 'Каква е стойността на sin 150°?',
+          opts: ['−1/2', '√3/2', '1/2', '−√3/2'],
+          correct: 2,
+          explanation: 'sin 150° = sin(180° − 30°) = sin 30° = 1/2. В II квадрант синусът е положителен, а sin(180° − α) = sin α. Затова sin 150° = sin 30° = 1/2.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

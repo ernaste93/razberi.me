@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Размножаване, растеж и развитие · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio12-razmnozhavane-q2',
+      lessonUrl:   '/lessons/bio12-razmnozhavane.html',
+      lessonName:  'Размножаване, растеж и развитие',
+      eyebrow:     'БИОЛОГИЯ · 12 КЛАС',
+      title:       'Тест 2 — Размножаване, растеж и развитие',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio12-razmnozhavane-quiz-3.html',
+      questions: [
+        {
+          q: 'Колко деления включва мейозата и колко клетки се образуват в резултат?',
+          opts: [
+            '1 делене → 2 клетки',
+            '2 деления → 2 клетки',
+            '2 деления → 4 клетки',
+            '1 делене → 4 клетки'
+          ],
+          correct: 2,
+          explanation: 'Мейозата включва две последователни деления — мейоза I и мейоза II — и в резултат се образуват 4 хаплоидни клетки от една диплоидна изходна клетка.'
+        },
+        {
+          q: 'Как се нарича първото делене на мейозата и защо?',
+          opts: [
+            'Еквационно, защото хромозомният брой остава същият',
+            'Редукционно, защото хромозомният брой се намалява наполовина',
+            'Митотично, защото е идентично с митозата',
+            'Кросинговърно, защото се извършва обмен на генетичен материал'
+          ],
+          correct: 1,
+          explanation: 'Мейоза I се нарича редукционно делене, защото при него хомоложните хромозоми се разделят и хромозомният набор се редуцира от 2n на n. Именно тук е същността на мейозата.'
+        },
+        {
+          q: 'В коя фаза на мейозата се извършва кросинговър?',
+          opts: ['Метафаза I', 'Профаза II', 'Анафаза I', 'Профаза I'],
+          correct: 3,
+          explanation: 'Кросинговърът (обмен на участъци между хомоложни хромозоми) се извършва в профаза I на мейозата, когато хомоложните хромозоми са тясно наредени една до друга (бивалент).'
+        },
+        {
+          q: 'Каква е разликата между мейоза I и мейоза II?',
+          opts: [
+            'Мейоза I разделя сестринските хроматиди; мейоза II разделя хомоложните хромозоми',
+            'Мейоза I разделя хомоложните хромозоми; мейоза II разделя сестринските хроматиди',
+            'И двете деления са еднакви',
+            'Мейоза I е идентична с митозата'
+          ],
+          correct: 1,
+          explanation: 'В мейоза I (редукционно) хомоложните хромозоми се разделят → 2 клетки с n. В мейоза II (еквационно) сестринските хроматиди се разделят, подобно на митоза → 4 клетки с n.'
+        },
+        {
+          q: 'Каква е основната функция на кросинговъра?',
+          opts: [
+            'Намалява броя на хромозомите',
+            'Гарантира равно разпределение на хромозомите',
+            'Създава генетично разнообразие чрез обмен на участъци между хромозоми',
+            'Удвоява ДНК преди делението'
+          ],
+          correct: 2,
+          explanation: 'Кросинговърът е механизъм за генетична рекомбинация — хомоложните хромозоми разменят участъци, което води до нови комбинации от алели и увеличава генетичното разнообразие на потомството.'
+        },
+        {
+          q: 'Сперматогенезата се извършва в:',
+          opts: ['Яйчниците', 'Тестисите', 'Матката', 'Простатата'],
+          correct: 1,
+          explanation: 'Сперматогенезата е процесът на образуване на мъжки полови клетки (сперматозоиди) и протича в тестисите, по-точно в семенните каналчета.'
+        },
+        {
+          q: 'Колко функционални гамети се образуват при сперматогенезата от 1 сперматогония?',
+          opts: ['1', '2', '3', '4'],
+          correct: 3,
+          explanation: 'При сперматогенезата от 1 сперматогония се образуват 4 функционални сперматозоида, тъй като цитоплазмата се дели равномерно и всички 4 клетки от мейозата са жизнеспособни.'
+        },
+        {
+          q: 'Защо яйцеклетката е значително по-голяма от сперматозоида?',
+          opts: [
+            'Защото съдържа повече ДНК',
+            'Защото трябва да се движи бързо',
+            'Защото при оогенезата цитоплазмата се разпределя неравномерно и яйцеклетката получава почти всички хранителни запаси',
+            'Защото има двоен хромозомен набор'
+          ],
+          correct: 2,
+          explanation: 'При оогенезата делението на цитоплазмата е неравно. Яйцеклетката получава почти цялата цитоплазма с хранителни вещества, необходими за ранното развитие на зародиша. Полярните тела получават минимална цитоплазма и са нефункционални.'
+        },
+        {
+          q: 'Колко яйцеклетки и полярни тела се образуват при оогенезата от 1 оогония?',
+          opts: [
+            '4 яйцеклетки, 0 полярни тела',
+            '2 яйцеклетки, 2 полярни тела',
+            '1 яйцеклетка, 2–3 полярни тела',
+            '1 яйцеклетка, 1 полярно тяло'
+          ],
+          correct: 2,
+          explanation: 'При оогенезата от 1 оогония се образуват 1 зряла яйцеклетка и 2–3 полярни тела (нефункционални малки клетки). Неравното разпределение на цитоплазмата гарантира, че яйцеклетката получава достатъчно хранителни вещества.'
+        },
+        {
+          q: 'С какво мейозата се различава от митозата по отношение на генетичния резултат?',
+          opts: [
+            'Мейозата дава генетично идентични клетки, митозата — различни',
+            'Мейозата дава генетично различни хаплоидни клетки; митозата — генетично идентични диплоидни клетки',
+            'И двата процеса дават еднакви резултати',
+            'Мейозата дава само 2 клетки, докато митозата дава 4'
+          ],
+          correct: 1,
+          explanation: 'Митозата дава 2 генетично идентични диплоидни (2n) клетки. Мейозата дава 4 генетично различни хаплоидни (n) клетки, благодарение на кросинговъра и независимото разпределение на хромозомите.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

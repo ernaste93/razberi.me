@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Граматична норма · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    .example-block {
+      background: var(--soft); border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0;
+      font-size: 14px; line-height: 1.9; color: var(--text);
+    }
+    .example-block .wrong { color: #dc2626; text-decoration: line-through; }
+    .example-block .right { color: #16a34a; font-weight: 700; }
+    .example-block .label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    #btn-ask-znaiko {
+      position: fixed; bottom: 28px; right: 32px; z-index: 999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 20px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    #selection-tooltip {
+      position: fixed; z-index: 9999; display: none;
+      transform: translateX(-50%); pointer-events: none;
+    }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+      transition: opacity .12s, transform .12s;
+    }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 6px solid transparent; border-top-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 12 клас</a>
+        <span>›</span>
+        Граматична норма
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">✏️ БЕЛ · 12 КЛАС · ЕЗИК</div>
+          <div class="lesson-title">Граматична норма в българския език</div>
+          <div class="lesson-meta">Части на речта · Глаголни времена · Съгласуване · Падежи · ~10 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. КАКВО Е ГРАМАТИЧНА НОРМА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Какво е граматична норма?</div>
+            <div class="lesson-body">
+              <p><strong>Граматичната норма</strong> са правилата за строеж на думите и изреченията в книжовния български език. Тя урежда как се изменят думите (форми), как се съгласуват помежду си и как се наредждат в изречението. Нарушенията на граматичната норма са <strong>граматически грешки</strong> — те засягат не правописа, а самата структура на езика.</p>
+              <p>На матурата по БЕЛ езиковите задачи проверяват дали умееш да разпознаеш и поправиш граматически грешки. Затова е важно да знаеш: части на речта, глаголни времена, правилно съгласуване и падежни форми на местоименията.</p>
+            </div>
+
+            <!-- ══ 2. ЧАСТИ НА РЕЧТА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Части на речта — преглед</div>
+            <div class="lesson-body">
+              <p>Частите на речта в българския език са <strong>10</strong>. Разделят се на <strong>изменяеми</strong> (имат форми за род, число, падеж, лице) и <strong>неизменяеми</strong>.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📝</div>
+                <div class="key-point-text"><strong>Съществително име</strong> — назовава предмети и понятия. Изменя се по род (м., ж., ср.), число (ед., мн.) и определеност (с/без член). Пример: <em>момче, момчето, момчета, момчетата</em>.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📝</div>
+                <div class="key-point-text"><strong>Прилагателно име</strong> — описва качество на предмет. Съгласува се по род и число с определяемото съществително. Пример: <em>красив момък, красива жена, красиво дете</em>.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📝</div>
+                <div class="key-point-text"><strong>Числително</strong> — бройни (две, три) и редни (втори, трети). Важно: <em>двама, трима</em> — за лица от мъжки пол; <em>две, три</em> — за женски пол и неодушевени предмети.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📝</div>
+                <div class="key-point-text"><strong>Местоимение</strong> — замества съществително. Единственото, което има падежни форми в съвременния български език. Пример: <em>аз/ме/ми, той/го/му, ние/ни/нам</em>.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📝</div>
+                <div class="key-point-text"><strong>Глагол</strong> — назовава действие или състояние. Изменя се по лице, число, вид (свършен/несвършен), залог (деятелен/страдателен) и наклонение.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📝</div>
+                <div class="key-point-text"><strong>Наречие, предлог, съюз, частица, междуметие</strong> — неизменяеми части на речта. Не се изменят по форма.</div>
+              </div>
+            </div>
+
+            <!-- ══ 3. ГЛАГОЛНИ ВРЕМЕНА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Глаголни времена — система и употреба</div>
+            <div class="lesson-body">
+              <p>Българският глагол има богата система от времена. На матурата най-често се проверяват <strong>правилната употреба</strong> на времената и образуването на трудни форми.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⏰</div>
+                <div class="key-point-text"><strong>Сегашно (Praesens)</strong> — действие, което се извършва сега или е постоянно. <em>Чета, четеш, чете, четем, четете, четат.</em></div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⏰</div>
+                <div class="key-point-text"><strong>Минало свършено (Aorist)</strong> — действие, извършено в миналото като цяло. <em>Прочетох, прочете, прочетохме.</em> Внимание: НЕ „прочетях" — честа грешка!</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⏰</div>
+                <div class="key-point-text"><strong>Минало несвършено (Imperfectum)</strong> — действие, протичало в миналото без граница. <em>Четях, четеше, четяхме.</em> Внимание: НЕ „четевах" — чести грешки в окончанията.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⏰</div>
+                <div class="key-point-text"><strong>Минало предварително (Plusquamperfectum)</strong> — действие, извършено преди друго минало действие. <em>Бях прочел, беше дошъл.</em></div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⏰</div>
+                <div class="key-point-text"><strong>Бъдеще (Futurum)</strong> — действие в бъдещето. <em>Ще чета, ще четеш.</em> Отрицателна форма: <em>няма да чета</em> (НЕ „не ще чета" — архаично).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⏰</div>
+                <div class="key-point-text"><strong>Преизказно наклонение (Renarativum)</strong> — предава чужда реч без потвърждение. <em>Той щял да дойде. Тя казала, че го знаела.</em> Характерно за разказвача в третолично повествование.</div>
+              </div>
+            </div>
+            <div class="lesson-body" style="margin-top:12px;">
+              <p><strong>Чести грешки с глаголни времена на матурата:</strong></p>
+            </div>
+            <div class="example-block">
+              <div class="label">Грешно → Правилно</div>
+              <span class="wrong">Той дойде вчера и каза</span> → <span class="right">Той дойде вчера и каза</span> ✓ (двете действия са еднократни в миналото — аорист)<br>
+              <span class="wrong">Четях книгата и заспивах</span> → <span class="right">Четях книгата и заспих</span> ✓ (заспиването е еднократно — аорист)<br>
+              <span class="wrong">Ще съм дошъл утре</span> → <span class="right">Ще дойда утре</span> ✓ (бъдеще предварително се употребява само при предходност)<br>
+              <span class="wrong">Отидях на магазина</span> → <span class="right">Отидох на магазина</span> ✓ (аорист от „отида" е „отидох")
+            </div>
+
+            <!-- ══ 4. СЪГЛАСУВАНЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Съгласуване — правила и грешки</div>
+            <div class="lesson-body">
+              <p><strong>Съгласуването</strong> е приспособяването на формата на дадена дума към формата на друга. В българския език се съгласуват: подлог — сказуемо, съществително — прилагателно/числително, съществително — причастие.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔗</div>
+                <div class="key-point-text"><strong>Подлог — сказуемо:</strong> Глаголът се съгласува по лице и число с подлога. <em>Децата играят</em> (мн.ч.) НЕ „децата играе". <em>Групата реши</em> (ед.ч.) — събирателните съществителни изискват ед.ч.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔗</div>
+                <div class="key-point-text"><strong>Числително + съществително от м.р.:</strong> <em>двама ученика, трима мъже, четирима приятели</em>. За неодушевени предмети и ж.р.: <em>две книги, три маси, четири стола</em>.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔗</div>
+                <div class="key-point-text"><strong>Прилагателно — съществително:</strong> Прилагателното приема рода и числото на определяемото съществително. <em>нов молив, нова тетрадка, ново перо, нови моливи</em>.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔗</div>
+                <div class="key-point-text"><strong>Сказуемо именно — подлог:</strong> При глагол „съм" именната част се съгласува с подлога. <em>Тя е красива</em> (ж.р.), <em>Те са красиви</em> (мн.ч.).</div>
+              </div>
+            </div>
+            <div class="example-block">
+              <div class="label">Чести грешки в съгласуването</div>
+              <span class="wrong">Двама книги лежаха на масата</span> → <span class="right">Две книги лежаха на масата</span> ✓<br>
+              <span class="wrong">Класът решиха задачата</span> → <span class="right">Класът реши задачата</span> ✓ (събирателно — ед.ч.)<br>
+              <span class="wrong">Тя е добър ученик</span> → <span class="right">Тя е добра ученичка / добър ученик</span> ✓ (допустимо и двете, но ж.р. е по-прецизно)<br>
+              <span class="wrong">Три ученика дойдоха</span> → <span class="right">Трима ученика дойдоха</span> ✓ (за лица от м.р.)
+            </div>
+
+            <!-- ══ 5. ПАДЕЖИ ПРИ МЕСТОИМЕНИЯ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Падежи при личните местоимения</div>
+            <div class="lesson-body">
+              <p>Съвременният български книжовен език е загубил падежната система при съществителните, но <strong>личните местоимения</strong> запазват три падежни форми: <strong>именителен, винителен и дателен</strong>.</p>
+            </div>
+            <div class="example-block">
+              <div class="label">Таблица на местоименните форми</div>
+              <strong>1 л. ед.ч.:</strong> аз (имен.) | мен/ме (вин.) | мен/ми (дат.)<br>
+              <strong>2 л. ед.ч.:</strong> ти (имен.) | теб/те (вин.) | теб/ти (дат.)<br>
+              <strong>3 л. ед.ч. м.р.:</strong> той (имен.) | него/го (вин.) | нему/му (дат.)<br>
+              <strong>3 л. ед.ч. ж.р.:</strong> тя (имен.) | нея/я (вин.) | ней/й (дат.)<br>
+              <strong>1 л. мн.ч.:</strong> ние (имен.) | нас/ни (вин.) | нам/ни (дат.)<br>
+              <strong>2 л. мн.ч.:</strong> вие (имен.) | вас/ви (вин.) | вам/ви (дат.)
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>Именителен падеж</strong> — само като подлог: <em>Аз отидох. Той дойде. Ние решихме.</em> НЕ: „Обади се на аз" — грешка!</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>Дателен падеж</strong> — след глаголи, изискващи косвено допълнение (давам, казвам, помагам): <em>Казах му. Помогнах й. Дадоха ни задача.</em></div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>Винителен падеж</strong> — след глаголи, изискващи пряко допълнение: <em>Видях го. Обичам те. Поканиха ни.</em></div>
+              </div>
+            </div>
+            <div class="example-block">
+              <div class="label">Чести падежни грешки</div>
+              <span class="wrong">Обади се на аз утре</span> → <span class="right">Обади ми се утре</span> ✓<br>
+              <span class="wrong">Между ти и аз</span> → <span class="right">Между теб и мен</span> ✓ (след предлог — не именителен!)<br>
+              <span class="wrong">Те ми видяха</span> → <span class="right">Те ме видяха</span> ✓ (виждат = пряко допълнение → вин.)<br>
+              <span class="wrong">Дадоха му на нас</span> → <span class="right">Дадоха ни</span> ✓
+            </div>
+
+            <!-- ══ 6. ВИДОВЕ ГЛАГОЛИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Свършен и несвършен вид — правила</div>
+            <div class="lesson-body">
+              <p>Всеки глагол в българския език принадлежи към един от двата вида: <strong>свършен (перфективен)</strong> или <strong>несвършен (имперфективен)</strong>. Видът влияе на употребата на времената.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">✅</div>
+                <div class="key-point-text"><strong>Несвършен вид</strong> — действие продължаващо, повтарящо се или в процес. Образува и двете минали времена: <em>четях (минало несвършено), чел съм (минало перфекто).</em></div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">✅</div>
+                <div class="key-point-text"><strong>Свършен вид</strong> — действие завършено, еднократно. Образува: <em>прочетох (аорист), прочел съм (перфекто).</em> НЕ образува минало несвършено.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>Честа грешка:</strong> <em>„Четях книгата и я прочитах"</em> — „прочитах" е форма на несвършен вид, но действието е завършено. Правилно: <em>„Четях книгата и я прочетох"</em>.</div>
+              </div>
+            </div>
+
+            <!-- ══ 7. ГРЕШКИ ОТ МАТУРАТА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Топ 10 граматически грешки на матурата</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">❌</div><div class="key-point-text"><strong>„Отидях"</strong> вместо <strong>„отидох"</strong> — неправилна аористна форма.</div></div>
+              <div class="key-point"><div class="key-point-icon">❌</div><div class="key-point-text"><strong>„Двама книги"</strong> вместо <strong>„две книги"</strong> — бройните числителни за мъжки лица са „двама/трима".</div></div>
+              <div class="key-point"><div class="key-point-icon">❌</div><div class="key-point-text"><strong>„Между аз и ти"</strong> вместо <strong>„между мен и теб"</strong> — след предлог не се ползва именителен падеж.</div></div>
+              <div class="key-point"><div class="key-point-icon">❌</div><div class="key-point-text"><strong>„Класът решиха"</strong> вместо <strong>„класът реши"</strong> — събирателното съществително изисква ед.ч. на глагола.</div></div>
+              <div class="key-point"><div class="key-point-icon">❌</div><div class="key-point-text"><strong>„Той ми видя"</strong> вместо <strong>„той ме видя"</strong> — „виждам" изисква пряко допълнение (вин. пад.).</div></div>
+              <div class="key-point"><div class="key-point-icon">❌</div><div class="key-point-text"><strong>„Не ще дойда"</strong> вместо <strong>„няма да дойда"</strong> — отрицание на бъдеще в съвременен книжовен език.</div></div>
+              <div class="key-point"><div class="key-point-icon">❌</div><div class="key-point-text"><strong>„Пет ученика"</strong> вместо <strong>„петима ученика"</strong> — за лица от м.р. с числителни 2–9 се ползват формите двама, трима, четирима...</div></div>
+              <div class="key-point"><div class="key-point-icon">❌</div><div class="key-point-text"><strong>„Много хора дойде"</strong> вместо <strong>„много хора дойдоха"</strong> — „хора" е мн.ч. → глаголът е мн.ч.</div></div>
+              <div class="key-point"><div class="key-point-icon">❌</div><div class="key-point-text"><strong>Причастия без съгласуване:</strong> „Тя беше дошъл" вместо „Тя беше дошла" — причастието се съгласува с подлога по род.</div></div>
+              <div class="key-point"><div class="key-point-icon">❌</div><div class="key-point-text"><strong>„Четях и внезапно заспивах"</strong> вместо „заспах" — внезапното еднократно действие е аорист, не имперфект.</div></div>
+            </div>
+
+            <!-- ══ 8. ЗАЛОГ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Деятелен и страдателен залог</div>
+            <div class="lesson-body">
+              <p><strong>Деятелен залог (активен)</strong>: субектът извършва действието. <em>Учителят обяснява урока.</em></p>
+              <p><strong>Страдателен залог (пасивен)</strong>: субектът понася действието. Образува се с помощния глагол „съм" + минало страдателно причастие. <em>Урокът е обяснен от учителя.</em></p>
+              <p><strong>Важно за матурата:</strong> При страдателния залог причастието трябва да се съгласува с подлога! <em>Книгите са прочетени. Задачата е решена. Задачите са решени.</em></p>
+            </div>
+            <div class="example-block">
+              <div class="label">Грешки в страдателния залог</div>
+              <span class="wrong">Книгите са прочетен</span> → <span class="right">Книгите са прочетени</span> ✓<br>
+              <span class="wrong">Задачите е решена</span> → <span class="right">Задачите са решени</span> ✓<br>
+              <span class="wrong">Той беше изпратена</span> → <span class="right">Той беше изпратен</span> ✓
+            </div>
+
+            <!-- ══ 9. ПОДЛОГ И СКАЗУЕМО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Главни части на изречението</div>
+            <div class="lesson-body">
+              <p><strong>Подлогът</strong> е главната именна част — отговаря на въпросите кой? какво? Изразява се най-вече чрез съществително или местоимение в именителен падеж. <strong>Сказуемото</strong> е глаголната или именна предикативна част.</p>
+              <p><strong>Безподложни изречения</strong>: изречения без изразен подлог — <em>Вали. Мълни. Трябва да учиш.</em> Сказуемото е в 3 л. ед.ч.</p>
+              <p><strong>Еднородни подлози</strong>: когато има няколко подлога, глаголът е в мн.ч. <em>Петър и Мария дойдоха.</em></p>
+            </div>
+
+            <!-- ══ 10. ОБОБЩЕНИЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното за матурата</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Падежи при местоимения:</strong> след предлог — не именителен! „Между мен и теб", не „между аз и ти".</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Числителни:</strong> двама/трима/четирима — само за лица от м.р. Две/три/четири — за ж.р. и неодушевени.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Събирателни съществителни</strong> (клас, екип, народ) — изискват глагол в ед.ч.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Аористни форми:</strong> отидох, дойдох, казах — НЕ отидях, дойдях, казях.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Бъдеще отрицателно:</strong> „няма да дойда" — НЕ „не ще дойда".</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Страдателен залог:</strong> причастието се съгласува по род и число с подлога.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Вид на глагола:</strong> свършен вид → аорист за еднократно завършено действие; несвършен → имперфект за продължително действие.</div></div>
+            </div>
+
+          </div><!-- /#lesson-content -->
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel12-gramatika-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel12-gramatika-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel12-gramatika-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div><!-- /.lesson-panel -->
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+      btnTop.classList.toggle('visible', window.scrollY > 200);
+    });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Граматична норма в българския език';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

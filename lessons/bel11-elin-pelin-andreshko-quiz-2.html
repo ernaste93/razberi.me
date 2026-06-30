@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Елин Пелин — Андрешко · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel11-elin-pelin-andreshko-q2',
+      lessonUrl:   '/lessons/bel11-elin-pelin-andreshko.html',
+      lessonName:  'Елин Пелин — Андрешко',
+      eyebrow:     'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Елин Пелин — Андрешко — Тест 2',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel11-elin-pelin-andreshko-quiz-3.html',
+      questions: [
+        { q:'Как е изобразена властта в „Андрешко"?', opts:['Справедлива и разумна','Арогантна, бюрократична и откъсната от народния живот','Добронамерена но слаба','Корумпирана само поради пари'], correct:1, explanation:'Властта (олицетворена в приставa) е показана като арогантна и бюрократична — следва формалните правила без да разбира или се интересува от реалния живот на хората.' },
+        { q:'Кое е основното художествено средство в разказа?', opts:['Трагична ирония','Хумор и ирония за разкриване на социалните противоречия','Лирически отклонения','Символизъм'], correct:1, explanation:'Хуморът и иронията са главните средства — чрез смеха Елин Пелин разкрива сериозните социални противоречия между народ и власт, между хитрост и формализъм.' },
+        { q:'Кога живее и твори Елин Пелин?', opts:['1820–1870','1877–1949','1900–1960','1850–1910'], correct:1, explanation:'Елин Пелин (псевдоним на Димитър Иванов) живее от 1877 до 1949 г. Твори в края на XIX и първата половина на XX в., изобразявайки живота на българското село.' },
+        { q:'Как се нарича техниката, при която героят се преструва на по-прост, отколкото е?', opts:['Ирония','Хипербола','Симулация на простота / народна хитрост','Метафора'], correct:2, explanation:'Андрешко използва народна хитрост — преструва се на прост, безхарактерен и неразбиращ, за да постигне целта си. Това е широко разпространена стратегия в народния бит.' },
+        { q:'Какво означава „малкият човек" като литературен тип?', opts:['Физически нисък човек','Незначителен по социален статус, но морално достоен','Дете герой','Селянин без образование'], correct:1, explanation:'„Малкият човек" е литературен тип — незначителен по обществено положение, но с вътрешно достойнство и мъдрост. Андрешко е класически пример за този тип в българската литература.' },
+        { q:'Каква е ролята на диалога в разказа?', opts:['Само декоративна','Основно средство за характеризиране на героите и развитие на конфликта','Забавяне на действието','Въвеждане на нови персонажи'], correct:1, explanation:'Диалогът е централен — чрез него виждаме интелекта и хитростта на Андрешко срещу самомнението на приставa. Говорът характеризира всеки герой по-ясно от авторски описания.' },
+        { q:'Какъв социален коментар прави Елин Пелин чрез „Андрешко"?', opts:['Прославя властта','Критикува административния произвол и безправието на обикновения човек','Препоръчва революция','Описва само бита на селото'], correct:1, explanation:'Елин Пелин критикува административния произвол — властта злоупотребява с позицията си, а простият човек е принуден да прибягва до хитрост, за да защити достойнството си.' },
+        { q:'Кой е разказвачът в „Андрешко"?', opts:['Самият Андрешко','Приставът','Всезнаещ разказвач в трето лице','Съселянин на Андрешко'], correct:2, explanation:'Разказвачът е всезнаещ (omniscient) в трето лице — вижда и знае всичко, може да разкрие мислите и чувствата на героите, без да е пряк участник в действието.' },
+        { q:'Какво е значението на пътуването с каруцата като рамка на разказа?', opts:['Просто транспортно средство','Затворено пространство, в което се развива целият конфликт между двете страни','Символ на свободата','Начин да се покаже природата'], correct:1, explanation:'Каруцата е ограничено пространство — „сцената", върху която се развива целият конфликт. Тесното пространство принуждава двамата герои в директна конфронтация.' },
+        { q:'С кои черти е характеризиран приставът?', opts:['Скромен и справедлив','Арогантен, самонадеян, откъснат от реалността','Добре запознат с народния живот','Приятелски настроен'], correct:1, explanation:'Приставът е арогантен и самонадеян — убеден в превъзходството на позицията си, той подценява „простия" Андрешко. Тази самонадеяност е причината за неговия провал.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

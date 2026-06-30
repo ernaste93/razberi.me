@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Сако от велур — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel11-stratiev-sako-q1',
+      lessonUrl: '/lessons/bel11-stratiev-sako.html',
+      lessonName: 'Стратиев — Сако от велур',
+      eyebrow: 'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title: 'Куиз — Сако от велур — Тест 1',
+      sub: '10 въпроса · Избери верния отговор',
+      passScore: 8,
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel11-stratiev-sako-quiz-2.html',
+      questions: [
+        {
+          q: 'Кога е роден Станислав Стратиев?',
+          opts: ['1935 г.', '1941 г.', '1950 г.', '1929 г.'],
+          correct: 1,
+          explanation: 'Станислав Стратиев е роден на 2 юни 1941 г. в София.'
+        },
+        {
+          q: 'Какво образование е завършил Станислав Стратиев?',
+          opts: ['Право в СУ', 'Философия в СУ „Св. Климент Охридски"', 'Литература в ПУ', 'Журналистика в СУ'],
+          correct: 1,
+          explanation: 'Стратиев завършва философия в Софийския университет „Св. Климент Охридски".'
+        },
+        {
+          q: 'В коя година е написан разказът „Сако от велур"?',
+          opts: ['1968 г.', '1971 г.', '1976 г.', '1983 г.'],
+          correct: 2,
+          explanation: '„Сако от велур" е написан през 1976 г. — в разгара на социалистическия период в България.'
+        },
+        {
+          q: 'Какво символизира велуреното сако в разказа?',
+          opts: ['Бедността и мизерията', 'Западния свят, лукса и недостъпното', 'Традиционните български ценности', 'Властта и политическото влияние'],
+          correct: 1,
+          explanation: 'Велуреното сако символизира Западния свят — лукса, свободата и всичко, което социалистическият дефицит не може да осигури.'
+        },
+        {
+          q: 'Как се описва жанрът на „Сако от велур"?',
+          opts: ['Роман', 'Пиеса', 'Разказ', 'Поема'],
+          correct: 2,
+          explanation: '„Сако от велур" е разказ — кратка прозаична творба, характерна за Стратиев.'
+        },
+        {
+          q: 'Какво се случва с отношенията на главния герой след като облича сакото?',
+          opts: ['Стават по-искрени и топли', 'Никой не обръща внимание', 'Хората спират да го виждат като човек и се интересуват само от сакото', 'Всички го завиждат, но мълчат'],
+          correct: 2,
+          explanation: 'Сакото предизвиква обсебващ интерес у всички — хората спират да виждат человека и виждат само вещта.'
+        },
+        {
+          q: 'Коя е централната тема на разказа „Сако от велур"?',
+          opts: ['Любовта и предателството', 'Родното и чуждото', 'Войната и мира', 'Детството и зрелостта'],
+          correct: 1,
+          explanation: 'Централната тема е сблъсъкът между родното и чуждото — как „чуждото" (сакото/Западът) деформира ценностите и отношенията.'
+        },
+        {
+          q: 'Кой е главният герой на разказа?',
+          opts: ['Политик с голямо влияние', 'Обикновен гражданин-разказвач, притежател на велуреното сако', 'Директор на фабрика', 'Чуждестранен дипломат'],
+          correct: 1,
+          explanation: 'Главният герой е обикновен човек — разказвачът, притежател на сакото. Той е наблюдател на собствения си живот.'
+        },
+        {
+          q: 'Защо западните стоки са символ на статус в контекста на разказа?',
+          opts: ['Защото България не умее да произвежда дрехи', 'Защото при социализма западните стоки са почти недостъпни поради дефицит', 'Защото са по-евтини от местните', 'Защото правителството ги препоръчва'],
+          correct: 1,
+          explanation: 'По времето на социализма западните стоки са рядкост — набавят се само чрез роднини в чужбина или на черния пазар, което ги превръща в символ на статус.'
+        },
+        {
+          q: 'Как завършва разказът по отношение на социалните отношения на героя?',
+          opts: ['Героят придобива нови верни приятели', 'Без сакото героят се връща към невидимостта — хората са обичали вещта, не него', 'Жена му го напуска заради сакото', 'Героят дарява сакото и е почетен от обществото'],
+          correct: 1,
+          explanation: 'Финалът е горчив: без сакото героят се завръща към социалната невидимост. Оказва се, че са обичали сакото, а не него.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

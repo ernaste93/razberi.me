@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Кислородни съединения · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem12-kislorodni-saedinenia-q1',
+      lessonUrl:   '/lessons/chem12-kislorodmi-saedinenia.html',
+      lessonName:  'Органична химия — кислородни съединения',
+      eyebrow:     'ХИМИЯ · 12 КЛАС',
+      title:       'Куиз — Кислородни съединения — Тест 1',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem12-kislorodmi-saedinenia-quiz-2.html',
+      questions: [
+        { q:'Каква е функционалната група на алкохолите?', opts:['–COOH','–CHO','–OH (хидроксилна група)','–C=O (кетонна група)'], correct:2, explanation:'Алкохолите съдържат хидроксилна функционална група –OH, свързана с въглероден атом. Примери: метанол CH₃OH, етанол C₂H₅OH, глицерол (тривалентен алкохол).' },
+        { q:'Кое е правилното наименование на CH₃CH₂OH?', opts:['Метанол','Пропанол','Етанол','Бутанол'], correct:2, explanation:'CH₃CH₂OH е етанол (етилов алкохол) — двувъглероден алкохол. Той е познатото „питейно" вещество в алкохолните напитки, получавано при ферментация на захари.' },
+        { q:'Алдехидите съдържат функционалната група:', opts:['–OH','–COOH','–CHO (алдехидна група)','–CO– (кетонна група)'], correct:2, explanation:'Алдехидите съдържат алдехидна група –CHO (–C(=O)H) на края на въглеродната верига. Примери: формалдехид HCHO (метанал), ацеталдехид CH₃CHO (етанал).' },
+        { q:'Каква е разликата между алдехид и кетон?', opts:['Алдехидите имат OH група, кетоните нямат','В алдехидите карбонилната група е на края на веригата, в кетоните — вътре','Кетоните имат само един въглероден атом','Алдехидите са газообразни, кетоните са течни'], correct:1, explanation:'И алдехидите, и кетоните съдържат карбонилна група C=O. Разликата: при алдехидите тя е терминална (–CHO), при кетоните е вътрешна (–CO–, свързана с два въглеродни атома). Пример: пропанал (алдехид) срещу пропанон/ацетон (кетон).' },
+        { q:'Карбоксилните киселини имат функционална група:', opts:['–OH','–CHO','–COOH (карбоксилна група)','–CO–'], correct:2, explanation:'Карбоксилните киселини съдържат карбоксилна група –COOH, която е комбинация от карбонилна (C=O) и хидроксилна (–OH) група. Оцетната киселина (CH₃COOH) е най-познатият пример.' },
+        { q:'При реакция между алкохол и карбоксилна киселина се получава:', opts:['Алдехид + вода','Естер + вода (естерификация)','Кетон + водород','Алкен + вода'], correct:1, explanation:'Естерификацията е реакция между алкохол и карбоксилна киселина с отделяне на вода: R–COOH + HO–R\' → R–COO–R\' + H₂O. Катализира се от силни киселини (H₂SO₄). Обратната реакция е хидролиза на естера.' },
+        { q:'Ацетонът (пропанон) CH₃COCH₃ е:', opts:['Алкохол','Алдехид','Кетон','Карбоксилна киселина'], correct:2, explanation:'Ацетонът е кетон — карбонилната група е между две метилови групи (CH₃–CO–CH₃). Той е разтворител и се използва в козметиката (лакочистители) и химическата промишленост.' },
+        { q:'Оцетната киселина (CH₃COOH) реагира с NaOH по реакция:', opts:['Esterификация','Неутрализация: CH₃COOH + NaOH → CH₃COONa + H₂O','Окисляване','Полимеризация'], correct:1, explanation:'Карбоксилните киселини реагират с основи (неутрализация). Оцетната киселина + NaOH дава натриев ацетат (сол) и вода. Тази реакция е аналогична на реакциите на неорганичните киселини с основи.' },
+        { q:'Какво е „многовалентен алкохол"? Дай пример.', opts:['Алкохол с двойна С=С връзка; пример: бутенол','Алкохол с повече от една –OH група; пример: глицерол (3 OH групи)','Алкохол с разклонена верига; пример: изопропанол','Алкохол без водородни атоми; пример: ацетон'], correct:1, explanation:'Многовалентните алкохоли имат повече от една хидроксилна група. Глицерол (пропан-1,2,3-триол) е тривалентен алкохол — важен компонент на мазнините и козметичните продукти. Етиленгликол (двувалентен) се използва като антифриз.' },
+        { q:'Формулата на мравчената киселина (метанова киселина) е:', opts:['CH₃COOH','HCOOH','C₂H₅COOH','CH₃CH₂CH₂COOH'], correct:1, explanation:'Мравчената (метанова) киселина е HCOOH — най-простата карбоксилна киселина с един въглероден атом. Съдържа се в ужилванията на мравките. Следва оцетна CH₃COOH (2С), пропанова C₂H₅COOH (3С).' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

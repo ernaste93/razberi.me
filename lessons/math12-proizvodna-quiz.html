@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз 1 — Производна и приложения · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-proizvodna-q1',
+      lessonUrl:  '/lessons/math12-proizvodna.html',
+      lessonName: 'Производна и приложения',
+      eyebrow:    'МАТЕМАТИКА · 12 КЛАС',
+      title:      'Куиз 1 — Производна и приложения',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/math12-proizvodna-quiz-2.html',
+      questions: [
+        {
+          q: 'Каква е производната на f(x) = x⁵?',
+          opts: ['5x⁴', 'x⁴', '5x⁶', '4x⁵'],
+          correct: 0,
+          explanation: 'Прилагаме степенното правило (xⁿ)\' = n·xⁿ⁻¹. При n=5: (x⁵)\' = 5·x⁴ = 5x⁴.'
+        },
+        {
+          q: 'Каква е производната на f(x) = 7?',
+          opts: ['7', '1', '0', '7x'],
+          correct: 2,
+          explanation: 'Производната на всяка константа е 0. (c)\' = 0, следователно (7)\' = 0.'
+        },
+        {
+          q: 'Каква е производната на f(x) = sin x?',
+          opts: ['−sin x', 'cos x', '−cos x', '1/cos x'],
+          correct: 1,
+          explanation: '(sin x)\' = cos x — основна формула, задължителна за матурата.'
+        },
+        {
+          q: 'Каква е производната на f(x) = eˣ?',
+          opts: ['x·eˣ⁻¹', 'eˣ⁻¹', 'eˣ', 'ln x'],
+          correct: 2,
+          explanation: 'Показателната функция eˣ е специална — нейната производна е тя самата: (eˣ)\' = eˣ.'
+        },
+        {
+          q: 'Каква е производната на f(x) = ln x?',
+          opts: ['ln x', 'x', '1/x', 'eˣ'],
+          correct: 2,
+          explanation: '(ln x)\' = 1/x, при x > 0. Тази формула се използва при логаритмично диференциране.'
+        },
+        {
+          q: 'Каква е производната на f(x) = cos x?',
+          opts: ['sin x', '−sin x', 'cos x', '−cos x'],
+          correct: 1,
+          explanation: '(cos x)\' = −sin x. Обърнете внимание на минуса — честа грешка на изпита.'
+        },
+        {
+          q: 'Намерете f\'(x), ако f(x) = 4x³ − 5x + 2.',
+          opts: ['12x² − 5', '12x² + 5', '4x² − 5', '12x³ − 5'],
+          correct: 0,
+          explanation: 'Диференцираме член по член: (4x³)\' = 12x², (5x)\' = 5, (2)\' = 0. Следователно f\'(x) = 12x² − 5.'
+        },
+        {
+          q: 'Какъв е геометричният смисъл на f\'(a)?',
+          opts: ['Площта под графиката', 'Наклонът на допирателната в точката (a, f(a))', 'Стойността на функцията в a', 'Дължината на дъгата'],
+          correct: 1,
+          explanation: 'f\'(a) е ъгловият коефициент (наклонът) на допирателната към графиката на f в точката с абсциса x = a.'
+        },
+        {
+          q: 'Ако f\'(x) > 0 за x ∈ (2, 5), какво можем да кажем за f?',
+          opts: ['f е константа в (2,5)', 'f е намаляваща в (2,5)', 'f е нарастваща в (2,5)', 'f има минимум в (2,5)'],
+          correct: 2,
+          explanation: 'Когато производната е положителна в даден интервал, функцията е нарастваща в него — основен критерий за монотонност.'
+        },
+        {
+          q: 'Намерете f\'(x), ако f(x) = 3·sin x + 2x.',
+          opts: ['3·cos x + 2', '3·cos x − 2', '−3·cos x + 2', '3·sin x + 2'],
+          correct: 0,
+          explanation: 'f\'(x) = 3·(sin x)\' + (2x)\' = 3·cos x + 2. Прилагаме правилата за константен множител и сума.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

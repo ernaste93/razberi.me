@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Мутации и популационна генетика · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio12-mutatsii-q2',
+      lessonUrl:   '/lessons/bio12-mutatsii.html',
+      lessonName:  'Мутации и популационна генетика',
+      eyebrow:     'БИОЛОГИЯ · 12 КЛАС',
+      title:       'Тест 2 — Мутации и популационна генетика',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio12-mutatsii-quiz-3.html',
+      questions: [
+        {
+          q: 'При автозомно-рецесивно унаследяване болестта се проявява при генотип:',
+          options: ['АА', 'Аа', 'аа', 'аY'],
+          correct: 2,
+          explanation: 'При автозомно-рецесивно унаследяване болестта се изявява само при хомозигота аа. Хетерозиготите Аа са здрави носители — те не боледуват, но могат да предадат рецесивния алел на децата си.'
+        },
+        {
+          q: 'Фенилкетонурията (ФКУ) е:',
+          options: ['Автозомно-доминантна болест', 'Автозомно-рецесивна болест', 'X-свързана рецесивна болест', 'Геномна мутация'],
+          correct: 1,
+          explanation: 'ФКУ е автозомно-рецесивна болест, причинена от дефицит на ензима фенилаланин хидроксилаза. При липса на лечение фенилаланинът се натрупва и уврежда мозъка. Открива се при новородените чрез скрининг.'
+        },
+        {
+          q: 'Болестта на Хантингтон се унаследява:',
+          options: ['Автозомно-рецесивно', 'Автозомно-доминантно', 'X-свързано рецесивно', 'Y-свързано'],
+          correct: 1,
+          explanation: 'Болестта на Хантингтон е автозомно-доминантна — достатъчен е само 1 мутантен алел (генотип Аа) за изява на болестта. Тя е прогресивно неврологично заболяване, което обикновено се проявява след 40-годишна възраст.'
+        },
+        {
+          q: 'При X-свързани рецесивни болести момчетата боледуват по-често от момичетата, защото:',
+          options: ['Момчетата имат два X алела и единият е засегнат', 'Момчетата имат само 1 X-хромозома и нямат втори алел, който да компенсира', 'Y-хромозомата носи мутантния алел', 'Момчетата са изложени на повече мутагени'],
+          correct: 1,
+          explanation: 'Момчетата (XY) имат само 1 X-хромозома. Ако тя носи рецесивния болестотворен алел, болестта се проявява — няма втори X алел, който да компенсира. Момичетата (XX) боледуват само ако и двата X алела са засегнати.'
+        },
+        {
+          q: 'Жена с генотип XᴴXʰ (носителка на хемофилия А) е:',
+          options: ['Болна от хемофилия', 'Здрава, но може да предаде болестта на синовете си', 'Здрава и не може да предаде болестта', 'Болна само при стрес'],
+          correct: 1,
+          explanation: 'Носителката XᴴXʰ (XH = нормален алел, Xh = мутантен алел) е здрава, тъй като нормалният алел е достатъчен. Но тя има 50% шанс да предаде Xʰ на синовете си — те ще боледуват (XʰY).'
+        },
+        {
+          q: 'Кистозната фиброза е причинена от мутация в:',
+          options: ['Гена за хемоглобин', 'CFTR гена, кодиращ хлориден канален протеин', 'Гена за фенилаланин хидроксилаза', 'Гена за VIII коагулационен фактор'],
+          correct: 1,
+          explanation: 'Кистозната фиброза е автозомно-рецесивна болест, причинена от мутации в CFTR гена (Cystic Fibrosis Transmembrane conductance Regulator). Засяга транспорта на хлоридни йони, което води до гъсти секрети в белите дробове и панкреаса.'
+        },
+        {
+          q: 'Мъж с хемофилия А (XʰY) и здрава жена без носителство (XᴴXᴴ) ще имат деца:',
+          options: ['Всички синове ще боледуват, всички дъщери ще са носителки', 'Всички дъщери ще боледуват, синовете са здрави', 'Всички деца ще боледуват', 'Всички дъщери ще са носителки, всички синове здрави'],
+          correct: 3,
+          explanation: 'Бащата предава Xʰ на всички дъщери (те получават Xᴴ от майката → XᴴXʰ, носителки) и Y на всички синове (те получават Xᴴ от майката → XᴴY, здрави). Значи всички дъщери са носителки, всички синове са здрави.'
+        },
+        {
+          q: 'Ахондроплазията (форма на нанизъм) се унаследява:',
+          options: ['Автозомно-рецесивно', 'X-свързано доминантно', 'Автозомно-доминантно', 'Митохондриално'],
+          correct: 2,
+          explanation: 'Ахондроплазията е автозомно-доминантна болест — достатъчен е 1 мутантен алел в FGFR3 гена. Около 80% от случаите са de novo мутации (при двама здрави родители). Засегнатите имат нормален интелект.'
+        },
+        {
+          q: 'При галактоземия организмът не може да:',
+          options: ['Синтезира глюкоза', 'Разгражда галактоза поради ензимен дефицит', 'Произведе хемоглобин', 'Усвои фенилаланин'],
+          correct: 1,
+          explanation: 'Галактоземията е автозомно-рецесивна болест, при която липсва ензимът галактоза-1-фосфат уридилтрансфераза. Галактозата (съдържа се в млякото) не може да бъде разградена и се натрупва токсично в органите.'
+        },
+        {
+          q: 'Кой генотип представлява НОСИТЕЛ при автозомно-рецесивна болест?',
+          options: ['АА (хомозигота по доминантния алел)', 'Аа (хетерозигота)', 'аа (хомозигота по рецесивния алел)', 'Нито един от изброените'],
+          correct: 1,
+          explanation: 'Носителят е хетерозигота Аа — притежава 1 нормален (А) и 1 болестотворен (а) алел. Нормалният алел е достатъчен за нормален фенотип, но носителят може да предаде рецесивния алел на децата си.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

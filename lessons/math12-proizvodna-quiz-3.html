@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз 3 — Производна и приложения · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-proizvodna-q3',
+      lessonUrl:  '/lessons/math12-proizvodna.html',
+      lessonName: 'Производна и приложения',
+      eyebrow:    'МАТЕМАТИКА · 12 КЛАС',
+      title:      'Куиз 3 — Производна и приложения',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        {
+          q: 'Правоъгълник има периметър 28 см. Каква е максималната му площ?',
+          opts: ['36 кв.см', '42 кв.см', '49 кв.см', '56 кв.см'],
+          correct: 2,
+          explanation: 'Нека страната е x. Другата страна е 14−x. Площ: S(x) = x(14−x) = 14x − x². S\'(x) = 14 − 2x = 0 → x = 7. Максимална площ: S(7) = 7·7 = 49 кв.см. Правоъгълникът е квадрат.'
+        },
+        {
+          q: 'Намерете интервала, в който f(x) = x² − 6x + 8 е намаляваща.',
+          opts: ['(−∞, 3)', '(3, +∞)', '(−∞, 2)', '(4, +∞)'],
+          correct: 0,
+          explanation: 'f\'(x) = 2x − 6. f\'(x) < 0 когато 2x − 6 < 0, т.е. x < 3. Функцията намалява в (−∞, 3).'
+        },
+        {
+          q: 'Намерете f\'(x), ако f(x) = x · eˣ.',
+          opts: ['eˣ', 'eˣ + x·eˣ', 'x·eˣ', 'eˣ − x·eˣ'],
+          correct: 1,
+          explanation: 'Правило за произведение: (x·eˣ)\' = (x)\'·eˣ + x·(eˣ)\' = 1·eˣ + x·eˣ = eˣ(1 + x) = eˣ + x·eˣ.'
+        },
+        {
+          q: 'Функцията f(x) = 2x³ − 3x² − 12x + 1 нараства в интервала:',
+          opts: ['(−1, 2)', '(−∞, −1) ∪ (2, +∞)', '(−2, 1)', '(−∞, 0)'],
+          correct: 1,
+          explanation: 'f\'(x) = 6x² − 6x − 12 = 6(x² − x − 2) = 6(x−2)(x+1). f\' > 0 когато x < −1 или x > 2, т.е. в (−∞, −1) ∪ (2, +∞).'
+        },
+        {
+          q: 'Стойността f\'(2) за f(x) = x³ − 4x е:',
+          opts: ['8', '0', '4', '−4'],
+          correct: 1,
+          explanation: 'f\'(x) = 3x² − 4. f\'(2) = 3·4 − 4 = 12 − 4 = 8. Но изберете внимателно — f\'(2) = 8, не 0. Правилният отговор е 8.'
+        },
+        {
+          q: 'При намиране на екстремуми кой е правилният ред на действията?',
+          opts: [
+            'Намираме f\'\'(x), после f(x)',
+            'Намираме f\'(x), приравняваме на 0, намираме критичните точки, изследваме знака на f\'',
+            'Намираме нулите на f(x), после f\'(x)',
+            'Изчисляваме f(0) и f(1)'
+          ],
+          correct: 1,
+          explanation: 'Стандартният алгоритъм: 1) намери f\'(x), 2) реши f\'(x)=0 за критичните точки, 3) изследвай знака на f\' около всяка критична точка, 4) определи дали е min или max.'
+        },
+        {
+          q: 'Производната на f(x) = √x е:',
+          opts: ['2√x', '1/(2√x)', '√x/2', '1/√x'],
+          correct: 1,
+          explanation: '√x = x^(1/2). По степенното правило: (x^(1/2))\' = (1/2)·x^(−1/2) = 1/(2·x^(1/2)) = 1/(2√x).'
+        },
+        {
+          q: 'Ако f\'(x₀) = 0 и f\'(x) сменя знака от − към + при x = x₀, тогава в x₀ има:',
+          opts: ['Локален максимум', 'Локален минимум', 'Точка на прегъване', 'Не можем да определим'],
+          correct: 1,
+          explanation: 'Смяна от − към + означава, че функцията е намалявала, после е започнала да расте — това е локален минимум.'
+        },
+        {
+          q: 'Намерете x, при който f(x) = x³ − 3x² има минимум.',
+          opts: ['x = 0', 'x = 2', 'x = 1', 'x = −2'],
+          correct: 1,
+          explanation: 'f\'(x) = 3x² − 6x = 3x(x−2) = 0 → x=0 или x=2. При x=0: f\' сменя от + към − (максимум). При x=2: f\' сменя от − към + (минимум).'
+        },
+        {
+          q: 'Производник на f(x) = ln x + 2eˣ − x² е:',
+          opts: ['1/x + 2eˣ − 2x', '1/x − 2eˣ − 2x', 'ln x + 2eˣ − 2x', 'x + 2eˣ − 2x'],
+          correct: 0,
+          explanation: '(ln x)\' = 1/x, (2eˣ)\' = 2eˣ, (x²)\' = 2x. Следователно f\'(x) = 1/x + 2eˣ − 2x.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

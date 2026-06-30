@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Емилиян Станев — Крадецът на праскови · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel11-stanev-kradetsat-q3',
+      lessonUrl:   '/lessons/bel11-stanev-kradetsat.html',
+      lessonName:  'Емилиян Станев — Крадецът на праскови',
+      eyebrow:     'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Емилиян Станев — Крадецът на праскови — Тест 3',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     3,
+      questions: [
+        { q:'Каква е разликата между любовта в „Крадецът на праскови" и любовта в народната балада?', opts:['Няма разлика','При Станев любовта е психологически реалистична и трагична поради конкретни исторически обстоятелства','Народната балада е по-трагична','При Станев любовта е щастлива'], correct:1, explanation:'Народната балада обяснява трагедията с митологични или съдбови причини. При Станев причината е историческа и конкретна — войната е тази, която разделя. Психологическият реализъм е ключов.' },
+        { q:'Как образът на „затворника" се пресича с темата за свободата?', opts:['Затворникът е свободен защото е в плен','Парадоксът: физически в плен, но духовно свободен чрез любовта — и обратното, войниците са „свободни", но духовно пленени от войната','Затворникът символизира само наказанието','Няма пресичане'], correct:1, explanation:'Парадоксът е ключов: пленникът е духовно свободен — любовта му дава свобода. Победителите (войниците) са духовно пленени от системата на войната. Истинската свобода е вътрешна.' },
+        { q:'Каква е ролята на „мълчанието" в комуникацията между героите?', opts:['Липса на комуникация','Мълчанието е по-красноречиво от думите — то изразява неизказаното, защото думите не могат да преодолеят пропастта','Страх да говорят','Езиковата бариера'], correct:1, explanation:'Мълчанието е значимо — двамата герои говорят различни езици (в буквален и метафоричен смисъл). Неизказаното е по-дълбоко от казаното. Мълчанието е формата на невъзможния диалог.' },
+        { q:'Как Станев изобразява военния ред като система?', opts:['С възхищение','Критично — военният ред е безчовечен, принуждава хората да потискат човечността си','Неутрално','Като необходимо зло'], correct:1, explanation:'Станев е критичен към военния ред като система — той принуждава хората да игнорират човечността си и да следват абстрактни заповеди. Системата превръща хората в части от машина.' },
+        { q:'Каква е значимостта на детайла „ботуши" в образа на героя?', opts:['Само описание на облеклото','Ботушите символизират военната система, в която е потопен героят — той е войник преди всичко','Показват богатство','Символ на свободата'], correct:1, explanation:'Конкретните детайли (ботуши, мундир) напомнят постоянно, че героят е войник — системата е буквално „облечена" върху него. Те са материален знак за потапянето в военната идентичност.' },
+        { q:'Как любовната история в повестта функционира като морален урок?', opts:['Тя не е морален урок','Показва, че дори в най-тежките обстоятелства хората могат да запазят човечността си','Учи, че любовта е глупост','Показва, че войните са добри'], correct:1, explanation:'Моралният урок е: дори в лудостта на войната, хората могат да запазят и демонстрират човечността си чрез любов, съчувствие и доброта. Това е заявка за вяра в човека.' },
+        { q:'Как може да се интерпретира заглавието „Крадецът на праскови"?', opts:['Буквална история за кражба','Метафора за желанието за живот и красота в ситуация, в която са забранени','Осъждане на крадеца','Ирония към войната'], correct:1, explanation:'Заглавието е метафоричен ключ — „крадецът" е онзи, който тайно си взима красота (праскови = живот, любов) оттам, където е забранено. Той „краде" от войната за да остане човек.' },
+        { q:'Как повестта поставя въпроса „кой е врагът"?', opts:['Врагът е ясен — противоположната армия','Повестта размива границата — истинският враг е войната като система, не конкретните хора','Всеки е враг на всеки','Врагът е случаен'], correct:1, explanation:'Станев размива картата на вражданата — конкретните хора (Иван, Елза) не са врагове. Врагът е системата на войната, която ги принуждава да бъдат такива. Хуманизмът победава национализма.' },
+        { q:'Каква е ролята на паметта в повестта?', opts:['Паметта е само биографичен детайл','Паметта запазва любовта дори след края — тя е формата на победата на любовта над войната','Паметта причинява болка','Героите нямат памет'], correct:1, explanation:'Паметта е последното убежище на любовта — когато войната унищожи всичко конкретно, паметта запазва чувството. Тя е невидимата победа на любовта над войната.' },
+        { q:'Какво прави „Крадецът на праскови" актуален и за съвременния читател?', opts:['Историческите факти','Темата за любовта, хуманизма и безсмислието на войната е вечна и актуална — войните не са спрели','Само литературната стойност','Само за любителите на история'], correct:1, explanation:'Повестта е актуална, защото темата е вечна — войните не са спрели, разделени народи продължават да съществуват, а любовта и хуманизмът са постоянно застрашени от системи на омразата.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

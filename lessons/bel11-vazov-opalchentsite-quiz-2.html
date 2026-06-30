@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Иван Вазов — Опълченците на Шипка · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/дневник.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel11-vazov-opalchentsite-q2',
+      lessonUrl:   '/lessons/bel11-vazov-opalchentsite.html',
+      lessonName:  'Иван Вазов — Опълченците на Шипка',
+      eyebrow:     'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Иван Вазов — Опълченците на Шипка — Тест 2',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel11-vazov-opalchentsite-quiz-3.html',
+      questions: [
+        { q:'Как Вазов изгражда героичния образ на опълченците?', opts:['Чрез биографии на отделни личности','Чрез гиперболи, патос и антитеза между слабостта на оръжията и силата на духа','Чрез исторически документи','Чрез диалог между войниците'], correct:1, explanation:'Вазов използва хипербола (велик подвиг), патос (тържествен тон) и антитеза: малкото оръжие срещу грамадната сила на духа. Контрастът прави подвига по-величествен.' },
+        { q:'Каква е ролята на Шипченския проход в Руско-турската война?', opts:['Второстепенна позиция','Стратегически ключова позиция — задържането й е от решаващо значение за хода на войната','Просто красив пейзаж','Място за отбраняване на цивилни'], correct:1, explanation:'Шипка е стратегически ключова — задържането на прохода осигурява руската комуникационна линия. Загубата й щеше да промени хода на войната. Опълченците са наясно с тежестта на задачата.' },
+        { q:'Как природата (Балканът) участва в стихотворението?', opts:['Не участва','Балканът е свидетел и пазител на подвига — природата е велика сцена на героизма','Природата е враждебна','Природата описва само зимата'], correct:1, explanation:'Балканът е повече от фон — той е свидетел и пазител на подвига. Стихотворението го персонифицира като мълчалив очевидец, пазещ паметта за това, което се е случило на прохода.' },
+        { q:'Как е изразена жертвоготовността на опълченците?', opts:['Страхуват се, но продължават','Безрезервна и радостна жертва — животът се дава без колебание за Родината','Само под заповед','Поради принуда'], correct:1, explanation:'Жертвоготовността е безрезервна — опълченците дават живота си радостно и без колебание. За Вазов това е върхът на патриотизма: да обичаш Родината повече от живота си.' },
+        { q:'Коя изразна средства преобладава в стихотворението?', opts:['Ирония','Хипербола и апостроф — за засилване на патоса и обръщение към читателя','Метафора и символ','Алегория'], correct:1, explanation:'Хиперболата (великите дела са описани в грандиозен мащаб) и апострофът (директното обръщение) са водещи — те създават усещането за непосредственост и тържественост.' },
+        { q:'Каква е разликата между „опълченци" и „редовна армия"?', opts:['Никаква разлика','Опълченците са доброволци — без военна подготовка, мотивирани от патриотизъм, не от задължение','Опълченците са по-добре въоръжени','Редовната армия е по-патриотична'], correct:1, explanation:'Доброволността е ключова — опълченците не са задължени. Те доброволно рискуват живота си, движени от патриотизъм. Именно тази свободна жертва прави подвига им по-велик.' },
+        { q:'Как стихотворението определя понятието „победа"?', opts:['Победата е само военна','Победата е морална и духовна — задържането на Шипка е победа на духа над материалното превъзходство','Победата е случайна','Победата зависи само от броя на войниците'], correct:1, explanation:'Победата при Вазов е предимно духовна — малкото опълченци побеждават превъзхождащия враг чрез силата на духа и патриотизма. Материалното неравенство прави духовната победа по-значима.' },
+        { q:'Как Вазов свързва Шипка с националното самосъзнание?', opts:['Шипка е само географска точка','Шипка се превръща в национален символ — синоним на жертва, героизъм и патриотизъм','Шипка е само военна история','Шипка е символ на руско-българското приятелство'], correct:1, explanation:'Вазов прави Шипка национален символ — тя вече не е само историческо място, а синоним на всичко, което сме готови да направим за Родината. „Шипка е наша" означава „България е наша".' },
+        { q:'Каква е функцията на прякото изказване (директна реч) в стихотворението?', opts:['Без функция','Прави подвига жив и непосредствен — читателят „чува" гласа на опълченците','Само за рима','Историческо документиране'], correct:1, explanation:'Директната реч (ако е използвана) прави историята жива — читателят не само научава за подвига, но го „присъства" чрез гласовете на участниците. Ефектът е непосредственост и емоционален контакт.' },
+        { q:'Какво послание отправя Вазов към читателите чрез стихотворението?', opts:['Война е страшна, избягвайте я','Помнете Шипка — подвигът е модел за патриотизъм и жертвоготовност за бъдните поколения','Руснаците са победили','Само военните могат да бъдат герои'], correct:1, explanation:'Посланието е към бъдните поколения — помнете Шипка като модел. Подвигът не е само история, а жив ориентир: да обичате Родината с готовност за жертва, каквато са дали опълченците.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

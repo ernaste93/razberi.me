@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Еволюция на биологичните системи · БИОЛОГИЯ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БИОЛОГИЯ 12 клас</a>
+        <span>›</span>
+        Еволюция на биологичните системи
+      </div>
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">🦕 БИОЛОГИЯ · 12 КЛАС</div>
+          <div class="lesson-title">Еволюция на биологичните системи</div>
+          <div class="lesson-meta">Ламарк · Дарвин · Естествен отбор · Видообразуване · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <!-- 1. ПРЕДИ ДАРВИН — ЛАМАРК -->
+            <div class="section-title">1. Преди Дарвин — Ламарк</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">👤</div>
+                <div class="key-point-text"><strong>Жан-Батист Ламарк (1744–1829)</strong>: организмите се изменят под влияние на средата.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💪</div>
+                <div class="key-point-text"><strong>Принцип на упражняването:</strong> използваният орган се развива, неизползваният атрофира. Пример: жирафът вдига врат → вратът расте.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧬</div>
+                <div class="key-point-text"><strong>Принцип на наследяването на придобитите признаци:</strong> тези промени се предават на потомството.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❌</div>
+                <div class="key-point-text"><strong>Грешката на Ламарк:</strong> придобитите признаци НЕ се наследяват — това е опровергано от генетиката.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 2. ТЕОРИЯ НА ДАРВИН -->
+            <div class="section-title">2. Теория на Дарвин</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📖</div>
+                <div class="key-point-text"><strong>Чарлз Дарвин (1809–1882)</strong>: „Произход на видовете" (1859) — основополагащ труд на еволюционната биология.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🐣</div>
+                <div class="key-point-text"><strong>Свръхпроизводство:</strong> организмите произвеждат повече потомство, отколкото може да оцелее.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔀</div>
+                <div class="key-point-text"><strong>Изменчивост:</strong> индивидите в популацията се различават помежду си по различни белези.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧬</div>
+                <div class="key-point-text"><strong>Наследственост:</strong> белезите се предават на потомците от родителите.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚔️</div>
+                <div class="key-point-text"><strong>Борба за съществуване:</strong> ресурсите са ограничени → конкуренция между индивидите.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏆</div>
+                <div class="key-point-text"><strong>Естествен отбор:</strong> оцеляват и се размножават тези с изгодни (адаптивни) белези.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📈</div>
+                <div class="key-point-text"><strong>Акумулиране на изменения:</strong> постепенното натрупване на изменения с времето води до нови видове.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 3. ФОРМИ НА ЕСТЕСТВЕНИЯ ОТБОР -->
+            <div class="section-title">3. Форми на естествения отбор</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚖️</div>
+                <div class="key-point-text"><strong>Стабилизиращ отбор:</strong> средните стойности се запазват, крайните се елиминират. Пример: тегло на новородени — много леките и много тежките оцеляват по-трудно.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">➡️</div>
+                <div class="key-point-text"><strong>Движещ отбор:</strong> условията на средата се сменят → отборът измества нормата в едната посока. Пример: устойчивост към антибиотици при бактериите.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">↔️</div>
+                <div class="key-point-text"><strong>Разривен (дисруптивен) отбор:</strong> крайностите се запазват, средните стойности се елиминират → може да доведе до образуване на 2 нови вида.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 4. ДОКАЗАТЕЛСТВА ЗА ЕВОЛЮЦИЯТА -->
+            <div class="section-title">4. Доказателства за еволюцията</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🦴</div>
+                <div class="key-point-text"><strong>Палеонтологични:</strong> фосили, преходни форми (<em>Archaeopteryx</em> — между влечугите и птиците), геоложки слоеве от различни периоди.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🥚</div>
+                <div class="key-point-text"><strong>Ембриологични:</strong> ембрионите на различни гръбначни си приличат в ранните стадии на развитие (Хекел).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🦾</div>
+                <div class="key-point-text"><strong>Сравнителноанатомични:</strong> <em>хомоложни органи</em> — еднакъв произход, различна функция (ръка на човек, перо на птица, плавник на кит); <em>аналогични органи</em> — обща функция, различна структура (крило на птица и крило на пеперуда); <em>рудиментарни органи</em> — атрофирали в хода на еволюцията (апендикс при човека, задни крайници при кита).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧪</div>
+                <div class="key-point-text"><strong>Биохимични:</strong> всички живи организми използват ДНК, АТФ и единния генетичен код — доказателство за общ произход.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🗺️</div>
+                <div class="key-point-text"><strong>Биогеографски:</strong> островите имат уникални видове; Галапагоските острови — чинките на Дарвин (<em>Darwin's finches</em>) са класически пример.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 5. ВИДООБРАЗУВАНЕ -->
+            <div class="section-title">5. Видообразуване</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🏔️</div>
+                <div class="key-point-text"><strong>Алопатрично (географско) видообразуване:</strong> популациите се разделят от географска бариера → изолирано еволюират → нови видове. Пример: врабчета от двете страни на планинска верига.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌱</div>
+                <div class="key-point-text"><strong>Симпатрично видообразуване:</strong> в една и съща среда, без географска изолация — например полиплоидия при растенията или екологична специализация.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔬</div>
+                <div class="key-point-text"><strong>Биологичен вид:</strong> група организми, способни да се кръстосват помежду си и да дадат плодовито потомство.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 6. ПРОИЗХОД НА ЧОВЕКА -->
+            <div class="section-title">6. Произход на човека</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🦴</div>
+                <div class="key-point-text"><strong>Еволюционна линия:</strong> Австралопитек (4–1 млн. г.) → <em>Homo habilis</em> (2,5 млн. г.) → <em>Homo erectus</em> (1,8 млн. г.) → <em>Homo sapiens</em> (~300 хил. г.).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🤝</div>
+                <div class="key-point-text"><strong>Homo sapiens и Homo neanderthalensis</strong> са съществували едновременно (преди ~50–40 хил. г.).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🚶</div>
+                <div class="key-point-text"><strong>Основни адаптации:</strong> изправена походка, свободни ръце, голям мозък, способност за реч.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌍</div>
+                <div class="key-point-text"><strong>„Из Африка" хипотеза:</strong> <em>Homo sapiens</em> произхожда от Африка преди ~200 хил. г. и впоследствие се разпространява по света.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 7. СИНТЕТИЧНА ТЕОРИЯ НА ЕВОЛЮЦИЯТА -->
+            <div class="section-title">7. Синтетична теория на еволюцията (СТЕ)</div>
+            <div class="lesson-body">
+              <p>СТЕ обединява <strong>дарвинизма</strong> с <strong>генетиката на Мендел</strong> и <strong>популационната генетика</strong> в единна теоретична рамка.</p>
+              <p>Основните <strong>еволюционни фактори</strong> според СТЕ са: мутации, естествен отбор, генетичен дрейф, поток на гени и изолация. Видообразуването се разглежда като постепенен процес.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 8. НАЙ-ВАЖНОТО -->
+            <div class="section-title">8. Най-важното — резюме</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Ламарк vs Дарвин:</strong> Ламарк — придобитите признаци се наследяват (ГРЕШНО); Дарвин — естественият отбор движи еволюцията (ВЯРНО).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Доказателства:</strong> палеонтологични (фосили), ембриологични, сравнителноанатомични, биохимични, биогеографски.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Хомоложни органи:</strong> еднакъв произход, различна функция. <strong>Аналогични органи:</strong> обща функция, различен произход.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Форми на отбор:</strong> стабилизиращ (запазва средата), движещ (измества в една крайност), разривен (запазва 2 крайности).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Видообразуване:</strong> алопатрично (географска изолация) и симпатрично (без географска изолация).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Homo sapiens:</strong> произход от Африка, преди ~200 хил. г. Еволюционна линия: Австралопитек → H. habilis → H. erectus → H. sapiens.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- QUIZ LINKS PANEL -->
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bio12-evolyutsiya-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bio12-evolyutsiya-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bio12-evolyutsiya-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Еволюция на биологичните системи';
+    window.LESSON_SUBJECT = 'БИОЛОГИЯ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed?'✓':'✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

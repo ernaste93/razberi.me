@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Лексикална норма · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel12-leksika-q3',
+      lessonUrl:   '/lessons/bel12-leksika.html',
+      lessonName:  'Лексикална норма',
+      eyebrow:     'БЕЛ · 12 КЛАС · ЕЗИК',
+      title:       'Куиз — Лексикална норма — Тест 3',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     3,
+      questions: [
+        { q:'Кое от следните е стилистична грешка в официален текст?', opts:['Моля да се вземат необходимите мерки.','Ще трябва да се поправи работата.','Яко трябва да поправим нещата.','Следва да се предприемат мерки.'], correct:2, explanation:'„Яко трябва да поправим нещата" е разговорен (неофициален) стил — „яко" е жаргон, „да поправим нещата" е размито. В официален текст се изисква точен, неутрален стил.' },
+        { q:'Коя двойка думи са контекстуални антоними (стават антоними само в конкретен текст)?', opts:['бял / черен','живот / смърт','светлина / тъмнина','„бебе" и „старец" в „Децата са бъдещето, старците са миналото"'], correct:3, explanation:'Контекстуалните антоними са противопоставени само в конкретен контекст. „Бебе" и „старец" нямат общ антонимен корен, но в конкретното изречение са противопоставени по смисъл.' },
+        { q:'Каква е разликата между „ефективен" и „ефикасен"?', opts:['Нямат разлика','„Ефективен" означава „постигащ резултат", „ефикасен" е „бърз и точен в постигането му" — нюанс в степента','„Ефикасен" е по-общата дума','„Ефективен" е разговорна дума'], correct:1, explanation:'Паронимите „ефективен" и „ефикасен" са близки, но с нюанс: „ефективен" (постигащ желания резултат), „ефикасен" (действащ бързо и точно). В строгия стил разграничаването е важно.' },
+        { q:'Кое изречение е с правилна употреба на „буквално"?', opts:['Буквално ми е мъчно.','Той буквално изяде цялата торта.','Буквално умирам от смях.','Буквално не мога да понасям шума.'], correct:1, explanation:'„Той буквално изяде цялата торта" означава в точния смисъл — изял е цялата. Употребите „буквално умирам", „буквално ми е мъчно" са хиперболни и неточни — „буквално" стои вместо „много".' },
+        { q:'Какво е „евфемизъм"?', opts:['Директна обида','Смекчена, по-учтива дума вместо груба или неприятна дума','Преувеличение','Ирония'], correct:1, explanation:'Евфемизмът заменя грубата или неприятна дума с по-мека: „почина" вместо „умря", „посети тоалетната" вместо директното обозначение. Използва се в официален и учтив стил.' },
+        { q:'Кое е правилното значение на „апология"?', opts:['Извинение','Защита, оправдание на нечии идеи или действия','Критика','Биография'], correct:1, explanation:'„Апология" е защита и оправдание на нечии идеи, действия или личност. Сходно звучи с „апологет" (защитник). Не трябва да се бърка с „апологетика" (богословска дисциплина).' },
+        { q:'Каква е разликата между „гарантирам" и „осигурявам"?', opts:['Нямат разлика','„Гарантирам" = поемам отговорност за резултата; „осигурявам" = правя условия за нещо','„Осигурявам" е по-силно','„Гарантирам" е разговорно'], correct:1, explanation:'Нюансът е важен: „гарантирам успех" = поемам лична отговорност за успеха. „Осигурявам условия за успех" = правя предпоставки, но не поемам гаранция за резултата.' },
+        { q:'Кое е правилното изречение от лексикална гледна точка?', opts:['Той направи добро впечатление.','Той направи отлична услуга.','Той направи добра услуга.','Той направи отлично впечатление.'], correct:3, explanation:'„Направи отлично впечатление" е правилно — „впечатление" се „прави". „Услуга" се „оказва" или „прави", но „направи добра услуга" е правилно. Проблемът е в „отлична услуга" + направи. Всъщност и двете последни са приемливи; изречение 1 е основно правилно.' },
+        { q:'Какво е „жаргон"?', opts:['Официален научен език','Специален речник на определена социална група, неразбираем за аутсайдери','Архаичен книжовен стил','Диалектни думи от определен регион'], correct:1, explanation:'Жаргонът е специалният речник на определена група (тийнейджъри, спортисти, хакери) — понятия, разбираеми само за членовете на групата. Не е диалект (регионален), а социолект (групов).' },
+        { q:'Кое от следните е калка (преведена чуждица)?', opts:['компютър (директна заемка)','небостъргач (превод на „skyscraper")','интернет (директна заемка)','уикенд (директна заемка)'], correct:1, explanation:'„Небостъргач" е калка — дословен превод на английското „skyscraper" (sky=небе, scraper=стъргало). Калките са думи, образувани по модела на чужди думи, но с български корени.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

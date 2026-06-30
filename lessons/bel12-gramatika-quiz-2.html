@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Граматична норма · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel12-gramatika-q2',
+      lessonUrl:   '/lessons/bel12-gramatika.html',
+      lessonName:  'Граматична норма',
+      eyebrow:     'БЕЛ · 12 КЛАС · ЕЗИК',
+      title:       'Куиз — Граматична норма — Тест 2',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel12-gramatika-quiz-3.html',
+      questions: [
+        { q:'Кое от следните изречения съдържа грешка?', opts:['Тя пише писмо.','Той четоха книги.','Ние отидохме на театър.','Те се върнаха вкъщи.'], correct:1, explanation:'„Той четоха" е грешно — „той" е 3 л. ед.ч., глаголът трябва да е „четеше" (мин. несв.) или „прочете" (мин. св.). „Четоха" е 3 л. мн.ч. и не съответства на подлога „той".' },
+        { q:'Кое е правилното пълно членуване на „стол"?', opts:['столът','столя','столна','стола'], correct:0, explanation:'„Столът" е правилното пълно членуване (определителен член -ът за мъжки род в именителен падеж — когато думата е подлог). „Стола" е кратко членуване (в другите случаи).' },
+        { q:'В кое изречение е правилно употребен краткият местоименен израз?', opts:['Дай го на мен.','Дай ми го.','Дай него.','Дай то на мене.'], correct:1, explanation:'„Дай ми го" е правилно — „ми" е кратка форма на „на мен", „го" е кратка форма за директния обект. Краткият израз е предпочитан в книжовния език.' },
+        { q:'Как се образува сравнителна степен при прилагателното „добър"?', opts:['добрий','по-добър','добри','добре'], correct:1, explanation:'Сравнителната степен на „добър" е „по-добър" — чрез добавяне на „по-" пред прилагателното. „Добрий" е архаична форма, „добри" е мн.ч., „добре" е наречие.' },
+        { q:'Кой е правилният вид на глагола в изречението „Тя ___ да учи всеки ден"?', opts:['обичаше','обичала е','обича','обичан'], correct:2, explanation:'„Обича" (сегашно време) е правилно в контекста на навик или постоянно действие. „Обичаше" е минало, „обичала е" е перфект, „обичан" е страдателно причастие — не пасват.' },
+        { q:'Кое изречение е с правилна употреба на „се" и „си"?', opts:['Миех се ръцете.','Миех си ръцете.','Миех ги ръцете.','Миех ръцете ми.'], correct:1, explanation:'„Миех си ръцете" е правилно — „си" е кратка форма на дателен падеж (за притежание). „Се" е за действия върху самия себе си (рефлексив без обект). „Миех си" означава „миех ръцете на себе си".' },
+        { q:'Коя форма е правилна: „двеста" или „двести"?', opts:['двеста','двести','и двете са грешни','двеести'], correct:0, explanation:'Правилната форма е „двеста" — не „двести". Честа грешка е използването на „двести" по аналогия с „триста" и „четиристотин". В книжовния стандарт е „двеста".' },
+        { q:'Кое изречение е граматически коректно?', opts:['Нито Иван, нито Мария дойде.','Нито Иван, нито Мария дойдоха.','Нито Иван, нито Мария дойдох.','Нито Иван, нито Мария дойдохте.'], correct:0, explanation:'При „нито...нито" с две ед.ч. имена глаголът е в ед.ч. — „дойде". Това е нормата на книжовния Bulgarian. Мн.ч. „дойдоха" би было приемливо в разговорната реч, но е ненормативно.' },
+        { q:'Какво е „четейки" — каква глаголна форма?', opts:['Минало деятелно причастие','Деепричастие (сегашно деятелно причастие)','Страдателно причастие','Герундий'], correct:1, explanation:'„Четейки" е деепричастие (или сегашно деятелно причастие) — изразява съпътстващо действие. Напр. „Четейки книгата, той заспа" — чете и заспива едновременно.' },
+        { q:'Кое е правилното изречение с числително?', opts:['Пет ученика дойдоха.','Петима ученика дойдоха.','Петима ученици дойдоха.','Пет ученици дойдоха.'], correct:2, explanation:'„Петима ученици дойдоха" е правилно — за мъжки род се използва бройното числително „петима" (не „пет"), а след него съществителното е в мн.ч. „ученици" (не „ученика" с т.нар. бройна форма, която е за „пет книги" и под.).' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

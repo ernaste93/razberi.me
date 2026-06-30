@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Производна и приложения · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .formula-block { background: #f0f4ff; border: 1.5px solid #c7d2fe; border-radius: 12px; padding: 16px 20px; margin: 16px 0; text-align: center; font-size: 18px; font-weight: 800; color: var(--accent); letter-spacing: 0.02em; }
+    .formula-block .formula-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; display: block; }
+    .formula-inline { background: #eef2ff; color: var(--accent); padding: 1px 7px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .example-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.8; }
+    .example-block strong { color: var(--accent); }
+    .example-step { display: flex; gap: 10px; align-items: flex-start; justify-content: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; width: 100%; }
+    .example-step:last-child { border-bottom: none; }
+    .example-step > div:last-child { flex: 1; }
+    .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+    .compare-card { border: 1.5px solid var(--line); border-radius: 12px; padding: 14px; text-align: center; font-size: 13px; }
+    .compare-card.pos { border-color: #86efac; background: #f0fdf4; }
+    .compare-card.neg { border-color: #fca5a5; background: #fff5f5; }
+    .compare-card .cc-title { font-weight: 800; font-size: 15px; margin-bottom: 6px; }
+    .compare-card.pos .cc-title { color: #16a34a; }
+    .compare-card.neg .cc-title { color: #dc2626; }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); }
+    #selection-tooltip.show { display: block; }
+    #explain-selection { background: var(--accent); color: #fff; border: none; padding: 7px 14px; border-radius: 20px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); }
+    #explain-selection::after { content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); border-bottom: none; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <nav style="display:flex;align-items:center;gap:4px;margin:0 auto;">
+        <a href="/urotsi.html" class="nav-btn">Уроци</a>
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Математика</a>
+        <span>›</span>
+        Производна и приложения
+      </div>
+
+      <section class="demo-layout">
+        <div class="lesson-panel">
+          <div id="lesson-content">
+
+            <div class="lesson-tag">МАТЕМАТИКА · 12 КЛАС</div>
+            <h1 class="lesson-title">Производна и приложения</h1>
+            <div class="lesson-meta">Диференциране · Монотонност · Екстремуми · ~15 мин</div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 1. ОПРЕДЕЛЕНИЕ НА ПРОИЗВОДНАТА -->
+            <div class="section-title">1. Определение на производната</div>
+            <div class="lesson-body">
+              <p>Производната на функция <span class="formula-inline">f(x)</span> в точка <span class="formula-inline">x</span> мери скоростта, с която се изменя функцията — с други думи, наклона на допирателната към графиката в тази точка.</p>
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Дефиниция</span>
+              f'(x) = lim[h→0] (f(x+h) − f(x)) / h
+            </div>
+            <div class="lesson-body">
+              <p><strong>Геометричен смисъл:</strong> стойността <span class="formula-inline">f'(a)</span> е наклонът (ъгловият коефициент) на допирателната към графиката на <span class="formula-inline">f</span> в точката <span class="formula-inline">x = a</span>. Ако <span class="formula-inline">f'(a) > 0</span>, допирателната се издига наляво надясно. Ако <span class="formula-inline">f'(a) < 0</span>, тя се спуска. Ако <span class="formula-inline">f'(a) = 0</span>, допирателната е хоризонтална — типично в екстремум.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 2. ПРАВИЛА ЗА ДИФЕРЕНЦИРАНЕ -->
+            <div class="section-title">2. Правила за диференциране</div>
+            <div class="lesson-body">
+              <p>Не е нужно да смятате всяка производна от дефиниция. Следните правила покриват всички задачи на матурата:</p>
+            </div>
+
+            <div class="formula-block">
+              <span class="formula-label">Константа</span>
+              (c)' = 0
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Степенна функция</span>
+              (xⁿ)' = n · xⁿ⁻¹
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Константен множител</span>
+              (c · f)' = c · f'
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Сума / разлика</span>
+              (f + g)' = f' + g'
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Произведение</span>
+              (f · g)' = f' · g + f · g'
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Частно</span>
+              (f / g)' = (f' · g − f · g') / g²
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Тригонометрични функции</span>
+              (sin x)' = cos x &nbsp;&nbsp;·&nbsp;&nbsp; (cos x)' = −sin x
+            </div>
+            <div class="formula-block">
+              <span class="formula-label">Показателна и логаритмична</span>
+              (eˣ)' = eˣ &nbsp;&nbsp;·&nbsp;&nbsp; (ln x)' = 1/x
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 3. ПРИМЕРИ -->
+            <div class="section-title">3. Примери за намиране на производна</div>
+
+            <div class="example-block">
+              <strong>Пример 1:</strong> Намери производната на f(x) = 3x³ − 2x + 5
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>Диференцираме член по член, като използваме правилата за сума и константен множител:<br>f'(x) = (3x³)' − (2x)' + (5)'</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>Прилагаме степенното правило <span class="formula-inline">(xⁿ)' = n·xⁿ⁻¹</span> за всеки член:<br>(3x³)' = 3·3·x² = 9x²<br>(2x)' = 2·1·x⁰ = 2<br>(5)' = 0</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div><strong>Резултат:</strong> f'(x) = 9x² − 2</div>
+              </div>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример 2:</strong> Намери производната на f(x) = x² · sin x
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>Разпознаваме произведение на две функции: <span class="formula-inline">f = x²</span> и <span class="formula-inline">g = sin x</span>. Прилагаме правилото за произведение:<br>(f · g)' = f' · g + f · g'</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>Намираме производните на всяка функция поотделно:<br>f' = (x²)' = 2x<br>g' = (sin x)' = cos x</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div><strong>Резултат:</strong> f'(x) = 2x · sin x + x² · cos x</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 4. МОНОТОННОСТ -->
+            <div class="section-title">4. Монотонност на функция</div>
+            <div class="lesson-body">
+              <p>Производната ни казва дали функцията расте или намалява в даден интервал. Намерете <span class="formula-inline">f'(x)</span> и определете знака му:</p>
+            </div>
+            <div class="compare-grid">
+              <div class="compare-card pos">
+                <div class="cc-title">f'(x) &gt; 0</div>
+                Функцията е <strong>нарастваща</strong> в този интервал — графиката се издига отляво надясно.
+              </div>
+              <div class="compare-card neg">
+                <div class="cc-title">f'(x) &lt; 0</div>
+                Функцията е <strong>намаляваща</strong> в този интервал — графиката се спуска отляво надясно.
+              </div>
+            </div>
+            <div class="lesson-body">
+              <p><strong>Метод:</strong> Намерете нулите на <span class="formula-inline">f'(x)</span>, после проверете знака на <span class="formula-inline">f'</span> в характерна точка от всеки интервал между нулите.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 5. ЕКСТРЕМУМИ -->
+            <div class="section-title">5. Екстремуми (минимум и максимум)</div>
+            <div class="lesson-body">
+              <p><strong>Критични точки:</strong> точките, в които <span class="formula-inline">f'(x) = 0</span> (или <span class="formula-inline">f'</span> не съществува), са кандидати за екстремуми.</p>
+              <p><strong>Достатъчно условие:</strong> ако f' сменя знака си при преминаване през критичната точка x₀:</p>
+            </div>
+            <div class="compare-grid">
+              <div class="compare-card pos">
+                <div class="cc-title">Локален минимум</div>
+                f' сменя знака от <strong>−</strong> към <strong>+</strong><br>(функцията спира да намалява и започва да расте)
+              </div>
+              <div class="compare-card neg">
+                <div class="cc-title">Локален максимум</div>
+                f' сменя знака от <strong>+</strong> към <strong>−</strong><br>(функцията спира да расте и започва да намалява)
+              </div>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример:</strong> Намери екстремумите на f(x) = x³ − 3x
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>Намираме производната: f'(x) = 3x² − 3 = 3(x² − 1) = 3(x−1)(x+1)</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>Намираме критичните точки: f'(x) = 0 → x = −1 и x = 1</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div>Проверяваме знака на f':<br>При x &lt; −1: f'(−2) = 3(4−1) = 9 &gt; 0 (нараства)<br>При −1 &lt; x &lt; 1: f'(0) = −3 &lt; 0 (намалява)<br>При x &gt; 1: f'(2) = 3(4−1) = 9 &gt; 0 (нараства)</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">4</div>
+                <div><strong>Резултат:</strong> При x = −1: локален максимум, f(−1) = 2. При x = 1: локален минимум, f(1) = −2.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 6. ОПТИМИЗАЦИЯ -->
+            <div class="section-title">6. Задачи за оптимизация</div>
+            <div class="lesson-body">
+              <p>Производната е мощен инструмент за намиране на най-добра (максимална или минимална) стойност на величина при зададено условие.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">1️⃣</div>
+                <div class="key-point-text"><strong>Дефинирай променливите</strong> — какво е x, какво търсиш.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">2️⃣</div>
+                <div class="key-point-text"><strong>Запиши функцията</strong>, която ще оптимизираш (площ, обем, цена...).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">3️⃣</div>
+                <div class="key-point-text"><strong>Използвай ограничението</strong>, за да изразиш функцията само с една променлива.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">4️⃣</div>
+                <div class="key-point-text"><strong>Намери производната</strong> и я приравни на нула, за да намериш критичните точки.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">5️⃣</div>
+                <div class="key-point-text"><strong>Провери дали е max или min</strong> чрез знака на f' или стойностите в краищата на дефиниционната област.</div>
+              </div>
+            </div>
+
+            <div class="example-block">
+              <strong>Пример:</strong> Намери размерите на правоъгълник с периметър 20 и максимална площ.
+              <div class="example-step">
+                <div class="step-num">1</div>
+                <div>Нека едната страна е x. Тогава другата страна е (10 − x), защото 2x + 2(10−x) = 20.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">2</div>
+                <div>Площта е: S(x) = x · (10 − x) = 10x − x², при 0 &lt; x &lt; 10.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">3</div>
+                <div>Производната: S'(x) = 10 − 2x. Нулираме: 10 − 2x = 0 → x = 5.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">4</div>
+                <div>S''(x) = −2 &lt; 0, следователно x = 5 е максимум. Другата страна: 10 − 5 = 5.</div>
+              </div>
+              <div class="example-step">
+                <div class="step-num">5</div>
+                <div><strong>Отговор:</strong> Правоъгълникът е квадрат 5 × 5, с максимална площ S = 25.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 7. НАЙ-ВАЖНОТО ЗА МАТУРАТА -->
+            <div class="section-title">7. Най-важното за матурата</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Степенното правило е задължително:</strong> (xⁿ)' = n·xⁿ⁻¹. Прилага се за всяка степенна функция — включително и за корени: (√x)' = 1/(2√x).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Производната на константа е 0:</strong> (7)' = 0, (−π)' = 0. Много ученици го забравят при по-сложни изрази.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Критична точка ≠ Екстремум:</strong> f'(x₀) = 0 е необходимо условие, но не достатъчно. Трябва да проверите смяната на знака на f'.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Монотонност:</strong> запомнете — f' &gt; 0 значи нараства, f' &lt; 0 значи намалява. Правете таблица на знаците.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Геометричен смисъл:</strong> f'(a) е наклонът на допирателната в точка (a, f(a)). Уравнението й е y − f(a) = f'(a)·(x − a).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>При оптимизация:</strong> винаги проверявайте физическия смисъл на отговора — дали x попада в допустимия интервал.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <div class="lesson-panel" style="margin-top:0; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+              <div>
+                <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+                <div style="font-size:13px;color:var(--muted);">30 въпроса в 3 части · след като си прочел урока</div>
+              </div>
+              <a href="/lessons/math12-proizvodna-quiz.html" style="display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:14px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;">Към куиза →</a>
+            </div>
+
+          </div>
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай формула или текст от урока и цъкни <strong>„Обясни"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Производна и приложения — диференциране, монотонност, екстремуми, оптимизация';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+</body>
+</html>

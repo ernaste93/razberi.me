@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — ДНК, РНК и Биосинтеза · Биология 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bio12-dnk-rnk-q1',
+      lessonUrl:  '/lessons/bio12-dnk-rnk.html',
+      lessonName: 'ДНК, РНК и Биосинтеза на Белтъци',
+      eyebrow:    'БИОЛОГИЯ · 12 КЛАС · ТЕМА 1',
+      title:      'Тест 1 — ДНК, РНК и Биосинтеза',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/bio12-dnk-rnk-quiz-2.html',
+      questions: [
+        { q:'Кои са азотните основи в ДНК?', opts:['А, У, Г, Ц','А, Т, Г, Ц','А, Т, Г, У','У, Т, Г, Ц'], correct:1, explanation:'ДНК съдържа Аденин, Тимин, Гуанин и Цитозин. Урацилът е само в РНК — при транскрипция той замества Тимина.' },
+        { q:'Какъв е принципът на репликацията на ДНК?', opts:['Консервативен','Полуконсервативен','Дисперсивен','Случаен'], correct:1, explanation:'Полуконсервативен — всяка нова молекула ДНК съдържа 1 стара (оригинална) и 1 новосинтезирана верига.' },
+        { q:'Кой ензим разплита двойната спирала на ДНК по време на репликацията?', opts:['ДНК-полимераза','РНК-полимераза','Хеликаза','Лигаза'], correct:2, explanation:'Хеликазата разкъсва водородните връзки между двете вериги и разплита двойната спирала, откривайки матричните вериги за репликация.' },
+        { q:'По кое правило А (ДНК) се заменя при транскрипция?', opts:['с Т','с А','с У','с Г'], correct:2, explanation:'При транскрипция А в ДНК се заменя с У в иРНК (не с Т, тъй като в РНК няма Тимин — вместо него е Урацил).' },
+        { q:'Какво е кодон?', opts:['3 нуклеотида на ДНК','3 нуклеотида на иРНК кодиращи 1 аминокиселина','Структура на тРНК','Ензим при транслацията'], correct:1, explanation:'Кодонът е последователност от 3 нуклеотида на иРНК, кодираща конкретна аминокиселина. Генетичният код е триплетен.' },
+        { q:'Кой е старт кодонът при транслацията?', opts:['УАА','УГА','АУГ','УАГ'], correct:2, explanation:'АУГ е старт кодонът, кодиращ аминокиселината метионин. Той инициира транслацията и определя рамката на четене.' },
+        { q:'Каква е функцията на тРНК?', opts:['Изгражда рибозомите','Пренася генетична информация от ядрото','Носи аминокиселини до рибозомата','Разплита ДНК'], correct:2, explanation:'тРНК (транспортна РНК) носи специфична аминокиселина до рибозомата и я прикрепя чрез антикодон-кодон взаимодействие с иРНК.' },
+        { q:'Къде протича транслацията?', opts:['В ядрото','На рибозомите в цитоплазмата','В митохондриите','В ядрото и цитоплазмата'], correct:1, explanation:'Транслацията протича на рибозомите в цитоплазмата (свободни или свързани с ендоплазмения ретикулум). В ядрото протича транскрипцията.' },
+        { q:'Колко водородни връзки свързват двойката Г-Ц?', opts:['1','2','3','4'], correct:2, explanation:'Г-Ц са свързани с 3 водородни връзки (по-силна и стабилна двойка), а А-Т с 2 водородни връзки.' },
+        { q:'Кой открива структурата на двойната спирала на ДНК и кога?', opts:['Уотсън и Крик, 1953','Уотсън и Крик, 1969','Менделеев, 1869','Дарвин, 1859'], correct:0, explanation:'Джеймс Уотсън и Франсис Крик публикуват модела на двойната спирала на ДНК през 1953 г. в списание Nature.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

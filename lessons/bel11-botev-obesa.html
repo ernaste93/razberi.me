@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Христо Ботев — Обесването на Васил Левски · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a><span>›</span>
+        Обесването на Васил Левски — Христо Ботев
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Христо Ботев — „Обесването на Васил Левски"</div>
+          <div class="lesson-meta">Елегия · Образът на Левски · Природата като съучастник · ~8 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Христо Ботев (1848–1876)</strong> е роден в Калофер. Поет, публицист и революционер — три роли, неотделими едно от друго. Образован в Одеса, Ботев се запознава с революционните идеи на руските нихилисти и народолюбци.</p>
+              <p>Емигрира в Румъния, където издава вестници („Дума на българските емигранти", „Будилник", „Знаме") и организира революционната дейност. Загива при Враца на <strong>1 юли 1876 г.</strong>, воювайки начело на четата си по време на Априлското въстание — на 27-годишна възраст.</p>
+              <p>Поезията му е малко на брой (около 20 стихотворения), но с изключителна сила. Съчетава <strong>романтизъм и революционна страст</strong>, лиризъм и бунтарски дух. Ботев е националният поет на България.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Историческият контекст</div>
+            <div class="lesson-body">
+              <p>Стихотворението е написано след <strong>обесването на Васил Левски на 18 февруари 1873 г.</strong> в София. Левски — Апостолът на свободата — е заловен, съден и екзекутиран от османските власти. Смъртта му е национална трагедия.</p>
+              <p>Ботев, в емиграция в Румъния, пише елегия по повод на тази смърт. Стихотворението не е просто плач — то е обвинение срещу тираните и прослава на героя.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стихотворението — откъс</div>
+            <div class="poem-block">И бесит го тоз народ юнашки?
+Къде си, смърт? Де е тоз народ?
+Събуди се, стани, роде братски!
+Бунтувай се, въстани, народ!
+
+О, Боже, Боже! Де е правдата?
+Защо мълчи тъй хладно небето?
+Тоз свят, тоз ад — тъй страшна лъжата,
+и тъй зловещо плаче детето!
+<div class="poem-author">— Христо Ботев, „Обесването на Васил Левски" (откъс)</div></div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Жанрът — елегия</div>
+            <div class="lesson-body">
+              <p><strong>Елегията</strong> е лирически жанр на скръбта, тъгата, плача по загубеното. При Ботев обаче тя е особена — не е само плач, а <strong>плач-призив</strong>. Скръбта прераства в гняв, тъгата — в бунт.</p>
+              <p>Традиционната елегия е спокойна и меланхолична. При Ботев тя е бурна — въпросителните изречения, гневните обрати, директните обръщения към народа превръщат плача в революционен апел.</p>
+              <p>Ботев скърби за Левски, но едновременно <strong>обвинява</strong>: обвинява поробителите, обвинява Бога за мълчанието си, обвинява народа за пасивността му. Скръбта е горива за бунта.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Образът на Левски</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🦅</div>
+                <div class="key-point-text"><strong>Национален герой</strong> — Левски е „светец" и „юнак" едновременно. Ботев го издига до символ на жертвата заради народа.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">✝️</div>
+                <div class="key-point-text"><strong>Христова жертва</strong> — паралелът с Христос е ясен: праведникът, убит от тирани, за да спаси народа си. Обесването = разпятие.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔥</div>
+                <div class="key-point-text"><strong>Безсмъртие</strong> — смъртта на Левски не е край. Тя е семе — от нея ще поникне свободата. Жертвата не е безсмислена.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚔️</div>
+                <div class="key-point-text"><strong>Идеалният революционер</strong> — Левски е пример за саможертва. Ботев го противопоставя на пасивния народ, за да го събуди.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Природата като съучастник</div>
+            <div class="lesson-body">
+              <p>При Ботев природата не е просто фон — тя <strong>участва в скръбта</strong>. Зимата, студът, тъмнината са съучастници в националната трагедия. Природата скърби заедно с народа.</p>
+              <p>Тази техника се нарича <strong>„пейзажен паралелизъм"</strong> — природното се слива с душевното. Мрачният зимен пейзаж отразява мрака в душата на поета и народа.</p>
+              <p>Важен образ: <strong>„хладно небето"</strong> — небето мълчи, Бог мълчи пред тази несправедливост. Ботев, богоборец, обвинява дори небесата за пасивността им.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Патриотизъм и изразни средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">❓</div>
+                <div class="key-point-text"><strong>Риторични въпроси</strong> — „О, Боже, Боже! Де е правдата?" — не очакват отговор, а изразяват отчаяние и обвинение.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📣</div>
+                <div class="key-point-text"><strong>Апостроф (обръщение)</strong> — „Събуди се, стани, роде братски!" — директно обръщение към народа като призив за действие.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📈</div>
+                <div class="key-point-text"><strong>Градация</strong> — „Събуди се, стани... Бунтувай се, въстани!" — нарастване на интензивността на призива.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌑</div>
+                <div class="key-point-text"><strong>Символиката на зимата</strong> — студена, тъмна, безжизнена зима = робство, смърт, тирания. Противопоставена на пролетта на свободата.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Скръбта по обесения Левски и призивът към народа за бунт срещу тиранията.</p>
+              <p><strong>Идея:</strong> Жертвата на героя не е безсмислена — тя е семе на свободата. Народът трябва да се събуди и да отмъсти за нея.</p>
+              <p><strong>Основни мотиви:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Героичната жертва</strong> — смъртта за народа е висше дело</li>
+                <li><strong>Тиранията и несправедливостта</strong> — обвинение срещу поробителите</li>
+                <li><strong>Пасивността на народа</strong> — и призивът да се събуди</li>
+                <li><strong>Богоборчеството</strong> — Ботев обвинява дори Бога за мълчанието</li>
+              </ul>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Христо Ботев (1848–1876) — поет и революционер, загинал на 27 г. в Априлското въстание.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Повод:</strong> Обесването на Васил Левски на 18 февруари 1873 г. в София.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Жанр:</strong> Елегия — но не само плач, а плач-призив. Скръбта прераства в революционен бунт.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Левски = Христос:</strong> жертвата на праведника за народа — паралел с разпятието.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Природата:</strong> участник в скръбта — зимата = робство; пейзажен паралелизъм.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Богоборчество:</strong> „О, Боже, Боже! Де е правдата?" — обвинение срещу небесата за мълчанието им.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Призив:</strong> „Събуди се, стани, роде братски!" — апостроф към народа да се вдигне на бунт.</div></div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel11-botev-obesa-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel11-botev-obesa-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel11-botev-obesa-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Христо Ботев — „Обесването на Васил Левски"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

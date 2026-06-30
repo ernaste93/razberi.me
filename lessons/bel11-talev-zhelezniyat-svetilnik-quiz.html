@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз — Железният светилник — Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel11-talev-zhelezniyat-svetilnik-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel11-talev-zhelezniyat-svetilnik-quiz-2.html',
+      lessonUrl:   '/lessons/bel11-talev-zhelezniyat-svetilnik.html',
+      lessonName:  'Талев — Железният светилник',
+      eyebrow:     'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Железният светилник — Тест 1',
+      passScore:   8,
+      questions: [
+        {
+          q: 'В кой град е роден Димитър Талев?',
+          opts: ['Охрид', 'Битоля', 'Прилеп', 'Скопие'],
+          correct: 2,
+          explanation: 'Димитър Талев е роден в Прилеп, Македония (тогава в пределите на Османската империя) през 1898 г. Именно Прилеп е главният град в романа „Железният светилник".'
+        },
+        {
+          q: 'В коя година е издаден романът „Железният светилник"?',
+          opts: ['1945', '1952', '1960', '1966'],
+          correct: 1,
+          explanation: '„Железният светилник" е издаден през 1952 г. Той е първата книга от тетралогията на Талев за Македония.'
+        },
+        {
+          q: 'Каква е професията на главния герой Стоян Глаушев?',
+          opts: ['Учител', 'Свещеник', 'Железар', 'Търговец'],
+          correct: 2,
+          explanation: 'Стоян Глаушев е железар — занаятчия, който кове желязо. Това е не само биографична подробност, но и символ: той е твърд и непреклонен като самото желязо.'
+        },
+        {
+          q: 'Как се казва съпругата на Стоян Глаушев?',
+          opts: ['Ния', 'Султана', 'Елена', 'Мария'],
+          correct: 1,
+          explanation: 'Съпругата на Стоян е Султана — силна, горда жена, пазителка на дома и огнището. Тя е един от най-ярките женски образи в романа.'
+        },
+        {
+          q: 'Срещу кои в религиозно-националния конфликт се бори Стоян Глаушев?',
+          opts: ['Срещу протестантите', 'Срещу гъркоманите (патриаршистите)', 'Срещу католиците', 'Срещу мюсюлманите'],
+          correct: 1,
+          explanation: 'Стоян се бори срещу гъркоманите — онези, които приемат Цариградската патриаршия и гръцкото богослужение. Той е привърженик на Българската екзархия и настоява за богослужение и образование на български.'
+        },
+        {
+          q: 'Какво символизира „железният светилник" в черквата?',
+          opts: ['Богатството на рода', 'Неугасимата родова памет и принадлежност', 'Турското владичество', 'Силата на гръцкото влияние'],
+          correct: 1,
+          explanation: 'Железният светилник е символ на рода и неговата неугасима памет. Всеки род има свой светилник в черквата — докато той гори, родът е жив и запазен.'
+        },
+        {
+          q: 'Под чия власт се развива действието на романа?',
+          opts: ['Австро-Унгарска', 'Руска', 'Османска', 'Гръцка'],
+          correct: 2,
+          explanation: 'Действието се развива в Прилеп в края на XIX век, когато Македония е под Османска власт. Именно в условията на тази власт се развива борбата за запазване на националната идентичност.'
+        },
+        {
+          q: 'Коя е темата на „Железният светилник", централна за матурата?',
+          opts: ['Любовта и смъртта', 'Войната и мира', 'Родното и чуждото', 'Природата и цивилизацията'],
+          correct: 2,
+          explanation: 'Централната тема е „Родното и чуждото" — конфликтът между запазването на националната идентичност (родното) и натиска на различни чужди сили (гъркомани, Османска власт, асимилация).'
+        },
+        {
+          q: 'От колко книги се състои тетралогията на Талев за Македония?',
+          opts: ['2', '3', '4', '5'],
+          correct: 2,
+          explanation: 'Тетралогията се състои от 4 книги: „Железният светилник" (1952), „Илинден" (1953), „Преспанските камбани" (1954) и „Гласовете ви чувам" (1966).'
+        },
+        {
+          q: 'Кои години са на живота на Димитър Талев?',
+          opts: ['1870–1940', '1898–1964', '1880–1952', '1900–1970'],
+          correct: 1,
+          explanation: 'Димитър Талев е роден на 1 септември 1898 г. в Прилеп и умира на 20 октомври 1964 г. в София. Животът му обхваща бурния период от робството до социализма.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Пейо Яворов — Градушка · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a>
+        <span>›</span>
+        Градушка — Пейо Яворов
+      </div>
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Природата в поезията на Пейо Яворов — „Градушка"</div>
+          <div class="lesson-meta">Социална лирика · Народопсихология · ~8 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Пейо Яворов</strong> (1878–1914) е роден като <strong>Пейо Тотев Крачолов</strong> в Чирпан на 1 януари 1878 г. Псевдонимът „Яворов" произлиза от думата „явор" — вид дърво, символ на самотата и трагичната красота в народната поезия.</p>
+              <p>По професия е <strong>телеграфист</strong>. Работи в различни градове — Чирпан, Сливен, Анхиало — и тъкмо тази работа го поставя в пряк контакт с бедния народ, неговите беди и ежедневното страдание. Именно тогава се ражда ранната му социална лирика.</p>
+              <p>В творчеството му се открояват <strong>два ясно разграничени периода</strong>:</p>
+              <p><strong>1. Ранен (социален) период</strong> — пише за страданието на народа, за бедните селяни, за угнетените. Типични творби: „Градушка", „Арменци", „Калиопа".</p>
+              <p><strong>2. Символистичен период</strong> — интроспективен, меланхоличен, белязан от личната трагедия. Типични творби: „Маска", „Две хубави очи", „Заточеници".</p>
+              <p>Яворов е активен член на <strong>Върховния македонски комитет</strong> и участва в четническата борба за освобождение на Македония. Загива трагично — след смъртта на жена му <strong>Лора</strong> (Елеонора Каравелова) се опитва да се самоубие. Умира на <strong>29 октомври 1914 г.</strong> при спорни обстоятелства.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Контекст: Ранната социална лирика</div>
+            <div class="lesson-body">
+              <p>„Градушка" е написана около <strong>1901 г.</strong> — в разгара на ранния период, когато Яворов е телеграфист и живее сред обикновените хора. Подходът е <strong>реалистично-романтичен</strong>: поетът описва конкретна народна беда с очите на съпричастен наблюдател, но я извисява до символ.</p>
+              <p>Яворов е съвременник на народните страдания — вижда ги с очите си, не ги измисля от кабинета. Това придава на поезията му автентичност и болезнена непосредственост.</p>
+              <p>Съществува <strong>ясна връзка с традицията на Вазов</strong> — и двамата се вълнуват от народното страдание и малкия човек. Но там, където Вазов вижда надежда и национален патос, <strong>Яворов вижда тъмнина и безнадеждност</strong>. Социалното виждане е по-остро, по-безкомпромисно.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стихотворението</div>
+            <div class="lesson-body">
+              <p>„Градушка" изобразява природна катастрофа — внезапна буря с градушка, унищожаваща реколтата на селяните. Но това е само повърхностният пласт. Под него се крие апокалиптична картина на народната участ.</p>
+            </div>
+            <div class="poem-block">Градушка бие — в бягство хвърлен
+от смерч и вихър бесен, черен,
+небето — пламък мрачен, търен —
+надвисна над полето...
+
+Навалица от суетня,
+дечица плачат, псета лаят,
+стари ридаят — земята
+да поглъща ги с болката...
+
+Градушка бие! Нивите
+ще бъдат голи, дървената
+надежда — труп. И трябва ли
+да живееш след туй, сетне?<div class="poem-author">— Пейо Яворов, „Градушка" (1901)</div></div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Строфен анализ</div>
+            <div class="lesson-body">
+              <p>Стихотворението се разгръща в <strong>три строфи</strong>, всяка от които задълбочава катастрофата до различно ниво:</p>
+              <p><strong>Първа строфа</strong> — природната картина. Смерч и вихър, почернялото небе като „пламък мрачен". Природата е враждебна, заплашителна, надвиснала отгоре. Усещането е апокалиптично.</p>
+              <p><strong>Втора строфа</strong> — социалният план. Хората бягат, децата плачат, старците ридаят. Катастрофата засяга цялата общност — от най-малките до най-старите. Желанието земята да ги „погълне" е изказ на абсолютно отчаяние.</p>
+              <p><strong>Трета строфа</strong> — философският план. „Надежда — труп." Нивите ще останат голи. И тогава риторичният въпрос: „И трябва ли да живееш след туй, сетне?" — поставящ под въпрос самия смисъл на съществуването след такова унищожение.</p>
+              <p>Природата тук не е фон — тя е <strong>социален катаклизъм</strong>. Градушката символизира историческата участ на народа: безсилният малък човек срещу сляпата разрушителна сила на обстоятелствата.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства</div>
+            <div class="lesson-body">
+              <p><strong>Персонификация на природата</strong> — небето „надвисна" (глагол на живо същество), смерчът е „бесен". Природата получава характер — тя е активен враг, не пасивен фон.</p>
+              <p><strong>Метафора</strong> — „небето — пламък мрачен, търен". Оксиморонът „мрачен пламък" усилва апокалиптичната атмосфера. Небето гори, но с тъмна, унищожителна светлина.</p>
+              <p><strong>Ключова метафора: „надежда — труп"</strong> — компресирана и брутална. Надеждата, вложена в семето, в труда на цяла година, е убита от градушката. Животът, превърнат в труп.</p>
+              <p><strong>Хипербола</strong> — „земята да поглъща ги с болката" — желанието за смърт, изказано чрез природен образ.</p>
+              <p><strong>Градация на ужаса</strong> — строфите ескалират: природна картина → социална паника → философска безнадеждност. Всяка строфа надгражда предишната.</p>
+              <p><strong>Звукопис (алитерация)</strong> — повторението на звуковете „б", „г", „р" в „Градушка бие — в бягство хвърлен" имитира ударите на градушката върху покрива. Звукът сам по себе си е образ.</p>
+              <p><strong>Риторичен въпрос</strong> — финалният въпрос не търси отговор. Той е изказ на предела на отчаянието.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея, мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Природната катастрофа като народна трагедия. Градушката унищожава не само реколтата, но и смисъла на живота за бедния селянин.</p>
+              <p><strong>Идея:</strong> Безсилието на малкия човек пред природата и съдбата. Трудът и надеждата могат да бъдат унищожени за секунди от сляпа стихия — и тогава самото съществуване губи смисъл.</p>
+              <p><strong>Мотиви:</strong></p>
+              <p>— <em>Страданието</em> — изобразено не само като физическа болка, но и като екзистенциална криза.</p>
+              <p>— <em>Безнадеждността</em> — „надежда — труп" е квинтесенцията на мотива. Надеждата е мъртва.</p>
+              <p>— <em>Общностната участ</em> — страданието е колективно, не индивидуално. Цяло село, цял народ.</p>
+              <p>— <em>Природата като враг</em> — природата не е красива и хармонична (Романтизъм), а разрушителна и безмилостна.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Лирическият говорител</div>
+            <div class="lesson-body">
+              <p>Говорителят в „Градушка" е <strong>наблюдател и съпричастник</strong> — не участник. Той не е пострадал пряко от бурята. Стои отстрани и наблюдава, но неговото наблюдение е наситено с болка и морален гняв.</p>
+              <p>Тази дистанция е важна: тя позволява на говорителя да обхване <strong>цялата картина</strong> — природата, хората, философският смисъл. Ако беше участник, щеше да вижда само своята болка.</p>
+              <p>Говорителят <strong>косвено обвинява</strong> — не конкретен виновник, а самата съдба, самата система, в която бедният човек е лишен от всякаква защита. Финалният въпрос е и обвинение: за какво е вложен целият този труд, ако може да бъде унищожен за мигове?</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Връзки с други творби</div>
+            <div class="lesson-body">
+              <p><strong>„Калиопа"</strong> — друга творба от ранния период на Яворов. Темата е социална несправедливост, страданието на бедния, невъзможността за достоен живот. Същата болка, различна форма.</p>
+              <p><strong>„Арменци"</strong> — изобразява страданието на цял народ (арменците след геноцида). Подобно на „Градушка", страданието е колективно и тотално. Тук обаче виновникът е исторически и конкретен.</p>
+              <p><strong>„Маска"</strong> — от символистичния период. Показва съвсем различния Яворов — интроспективен, психологически, личен. Сравнението с „Градушка" илюстрира огромния разрив между двата периода.</p>
+              <p><strong>Елин Пелин</strong> — разказите му (напр. „Гераците") описват същия бит на бедния селянин, но в проза. Жанровата разлика (лирика срещу проза) е ключова разлика с Яворов.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното накратко</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📅</div>
+                <div class="key-point-text"><strong>Творбата:</strong> „Градушка" (1901) — от ранния, социален период на Яворов.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">👤</div>
+                <div class="key-point-text"><strong>Авторът:</strong> Пейо Тотев Крачолов (Яворов), 1878–1914, роден в Чирпан, телеграфист, член на Върховния македонски комитет.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌩️</div>
+                <div class="key-point-text"><strong>Символиката:</strong> Градушката = природна стихия, но и метафора за историческата участ на бедния народ.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📐</div>
+                <div class="key-point-text"><strong>Три плана:</strong> природен (бурята), социален (разоряването на селяните), философски (безсмислеността на живота след катастрофата).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💀</div>
+                <div class="key-point-text"><strong>Ключова метафора:</strong> „надежда — труп" — надеждата, вложена в труда, е убита от стихията.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">👁️</div>
+                <div class="key-point-text"><strong>Лирически говорител:</strong> наблюдател и съпричастник, не пряк участник; вижда цялата трагедия отстрани.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❓</div>
+                <div class="key-point-text"><strong>Финалният въпрос:</strong> „И трябва ли да живееш след туй, сетне?" — риторичен, изразява предела на отчаянието и обезсмислянето на съществуването.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔗</div>
+                <div class="key-point-text"><strong>Два периода:</strong> ранен социален (Градушка, Арменци, Калиопа) и символистичен (Маска, Две хубави очи) — Яворов е различен поет в двата периода.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel11-yavorov-gradushka-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel11-yavorov-gradushka-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel11-yavorov-gradushka-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Природата в поезията на Пейо Яворов — „Градушка"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        var icon = d.passed ? '✓' : '✗';
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + icon + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

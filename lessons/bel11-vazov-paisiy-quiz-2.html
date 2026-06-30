@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Вазов Паисий · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel11-vazov-paisiy-q2',
+      lessonUrl: '/lessons/bel11-vazov-paisiy.html',
+      lessonName: 'Вазов — Паисий',
+      eyebrow: 'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title: 'Куиз — Вазов „Паисий" — Тест 2',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel11-vazov-paisiy-quiz-3.html',
+      passScore: 8,
+      questions: [
+        {
+          q: 'Какво е „апостроф" като художествен похват и как се проявява в „Паисий"?',
+          opts: [
+            'Вмъкнато изречение в скоби, уточняващо действието',
+            'Директно обръщение към отсъстващо лице, абстрактно понятие или предмет',
+            'Повторение на една дума в началото на последователни стихове',
+            'Преувеличение с цел засилване на ефекта'
+          ],
+          correct: 1,
+          explanation: 'Апострофът е директно обръщение към отсъстващо лице или абстрактно понятие. В „Паисий" Вазов се обръща директно към Паисий и към народа — „О, неразумни и юроде..." — сякаш разговаря с тях лично. Това придава патетичност и непосредственост.'
+        },
+        {
+          q: 'Колко години пише Паисий „История славянобългарска"?',
+          opts: ['1 година', '3 години', '5 години', '10 години'],
+          correct: 1,
+          explanation: 'Паисий работи над „История славянобългарска" около 3 години в килията си в Хилендарския и Зографския манастир. Трудът е написан на достъпен за народа старобългарски език с новобългарски елементи.'
+        },
+        {
+          q: 'Кого прославя цикълът „Епопея на забравените" на Вазов?',
+          opts: [
+            'Средновековните царе и владетели на България',
+            'Съвременните политици след Освобождението',
+            'Забравените герои на Българското Възраждане',
+            'Природата и красотата на родната земя'
+          ],
+          correct: 2,
+          explanation: '„Епопея на забравените" прославя забравените герои на Възраждането — Паисий, Левски, Ботев, Каблешков, Раковски и др. Вазов се страхува, че след Освобождението новите поколения ще забравят онези, които са дали живота си за свободата.'
+        },
+        {
+          q: 'С кой свой знаменит роман е известен Иван Вазов освен с поезията?',
+          opts: ['Тютюн', 'Железният светилник', 'Под игото', 'Крадецът на праскови'],
+          correct: 2,
+          explanation: '„Под игото" (1888–1889) е най-известният роман на Иван Вазов и първият голям български роман. Той описва живота в навечерието на Априлското въстание (1876) и е преведен на над 30 езика.'
+        },
+        {
+          q: 'Какво е Българското Възраждане (XVIII–XIX в.)?',
+          opts: [
+            'Период на завоюване на независимост чрез военни победи',
+            'Период на национално, културно и духовно пробуждане на българите под Османска власт',
+            'Епоха на икономически просперитет под османска управа',
+            'Движение за религиозна реформа на Православната църква'
+          ],
+          correct: 1,
+          explanation: 'Българското Възраждане (XVIII–XIX в.) е период на национално, културно и духовно пробуждане. Характеризира се с развитие на образованието, литературата, националното самосъзнание и подготовката за политическо освобождение от Османската империя.'
+        },
+        {
+          q: 'Кога е роден Паисий Хилендарски?',
+          opts: ['около 1680 г.', 'около 1700 г.', 'около 1722 г.', 'около 1750 г.'],
+          correct: 2,
+          explanation: 'Паисий Хилендарски е роден около 1722 г. Точното му място на раждане е неизвестно. Умира около 1773 г. Животът му съвпада с началото на Българското Възраждане, което той сам поставя в ход.'
+        },
+        {
+          q: 'Каква роля играят православните манастири за запазването на българската култура по време на Османската власт?',
+          opts: [
+            'Нямат особена роля — всичко е запазено в градовете',
+            'Те са огнища на книжнина, образование и национална идентичност, пазещи езика и традициите',
+            'Служат само като места за религиозни обреди',
+            'Играят роля само за запазване на иконописта'
+          ],
+          correct: 1,
+          explanation: 'Православните манастири (Рилски, Хилендарски, Бачковски и др.) са огнища на книжнина и образование по време на Османската власт. Те пазят езика, традициите и историческата памет, като служат като духовни центрове на нацията.'
+        },
+        {
+          q: 'Какво е „народно съзнание" (национално самосъзнание) като понятие?',
+          opts: [
+            'Осъзнаването на принадлежността към определен народ, неговата история, език и традиции',
+            'Способността на народа да управлява сам себе си политически',
+            'Религиозната идентичност на православните християни',
+            'Икономическата независимост на дадена нация'
+          ],
+          correct: 0,
+          explanation: 'Народното (национално) самосъзнание е осъзнаването на принадлежността към даден народ — неговата история, език, традиции и ценности. Паисий пробужда това съзнание у българите, показвайки им тяхната славна история.'
+        },
+        {
+          q: 'Как се проявява анафората в „Паисий" на Вазов?',
+          opts: [
+            'Чрез сравнения между Паисий и съвременни герои',
+            'Чрез повторение на думи или изрази в началото на стихове, засилващо патоса',
+            'Чрез описание на природата в началото на всяка строфа',
+            'Чрез рими в края на стиховете'
+          ],
+          correct: 1,
+          explanation: 'Анафората в „Паисий" се проявява чрез повторение на думи и изрази в началото на стихове. Това засилва патоса, ритъма и убедителността на призива. Анафората е типична за ораторски и патетичен стил.'
+        },
+        {
+          q: 'Каква е разликата между Паисий (историческата личност) и образа му в поезията на Вазов?',
+          opts: [
+            'Няма разлика — Вазов описва само исторически факти',
+            'Историческият Паисий е книжовник, а Вазов го превръща в символ на народното пробуждане и героичния дух',
+            'Вазов критикува Паисий, докато историята го хвали',
+            'Историческият Паисий е воин, а Вазов го представя като свещеник'
+          ],
+          correct: 1,
+          explanation: 'Историческият Паисий е монах и книжовник. Вазов обаче го превръща в поетичен символ — герой на духа, чието перо е по-силно от меча. В „Паисий" литературният образ надхвърля историческия факт и придобива митологично значение за националната идентичност.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

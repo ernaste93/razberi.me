@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Многоклетъчна организация · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio12-mnogokletchna-q1',
+      lessonUrl:   '/lessons/bio12-mnogokletchna.html',
+      lessonName:  'Многоклетъчна организация',
+      eyebrow:     'БИОЛОГИЯ · 12 КЛАС',
+      title:       'Тест 1 — Многоклетъчна организация',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio12-mnogokletchna-quiz-2.html',
+      questions: [
+        {
+          q: 'Кой е правилният ред на нивата на организация при многоклетъчните организми (от най-малко към най-голямо)?',
+          opts: [
+            'Орган → Тъкан → Клетка → Органна система → Организъм',
+            'Клетка → Тъкан → Орган → Органна система → Организъм',
+            'Тъкан → Клетка → Органна система → Орган → Организъм',
+            'Клетка → Орган → Тъкан → Организъм → Органна система'
+          ],
+          correct: 1,
+          explanation: 'Правилният ред е: Клетка → Тъкан → Орган → Органна система → Организъм. Всяко ниво е изградено от елементите на предходното.'
+        },
+        {
+          q: 'Колко основни вида тъкани има при животните (и човека)?',
+          opts: ['2', '3', '4', '5'],
+          correct: 2,
+          explanation: 'При животните има 4 основни вида тъкани: епителна, съединителна, мускулна и нервна.'
+        },
+        {
+          q: 'Коя тъкан покрива повърхностите и кухините на тялото и е характерна с плътно наредени клетки без пространство между тях?',
+          opts: [
+            'Съединителна тъкан',
+            'Мускулна тъкан',
+            'Епителна тъкан',
+            'Нервна тъкан'
+          ],
+          correct: 2,
+          explanation: 'Епителната тъкан покрива повърхности и кухини. Клетките й са плътно наредени без пространство между тях — основна разлика от съединителната тъкан.'
+        },
+        {
+          q: 'Кой вид тъкан се характеризира с голямо количество извънклетъчно вещество (матрикс)?',
+          opts: [
+            'Епителна тъкан',
+            'Съединителна тъкан',
+            'Мускулна тъкан',
+            'Нервна тъкан'
+          ],
+          correct: 1,
+          explanation: 'Съединителната тъкан има много извънклетъчно вещество (матрикс). Именно матриксът определя свойствата на различните видове съединителна тъкан — течен при кръвта, минерализиран при костта.'
+        },
+        {
+          q: 'Кръвта е вид:',
+          opts: [
+            'Епителна тъкан',
+            'Мускулна тъкан',
+            'Нервна тъкан',
+            'Съединителна тъкан'
+          ],
+          correct: 3,
+          explanation: 'Кръвта е вид съединителна тъкан с течен матрикс — плазмата. Кръвните клетки (еритроцити, левкоцити, тромбоцити) са потопени в нея.'
+        },
+        {
+          q: 'Кой вид мускулна тъкан е набразден, но неволен и притежава автоматизъм?',
+          opts: [
+            'Скелетна мускулна тъкан',
+            'Гладка мускулна тъкан',
+            'Сърдечна мускулна тъкан',
+            'Гладка и скелетна едновременно'
+          ],
+          correct: 2,
+          explanation: 'Сърдечният мускул е набразден (като скелетния), но неволен и с автоматизъм (бие само по себе си без нервен импулс). Среща се само в сърцето.'
+        },
+        {
+          q: 'Гладката мускулна тъкан се среща:',
+          opts: [
+            'Само в сърцето',
+            'Прикрепена към костите',
+            'В стените на вътрешните органи (стомах, черва, кръвоносни съдове)',
+            'Само в скелетната мускулатура'
+          ],
+          correct: 2,
+          explanation: 'Гладката мускулна тъкан е ненабраздена и неволна — открива се в стените на вътрешните органи: стомах, черва, пикочен мехур, кръвоносни съдове.'
+        },
+        {
+          q: 'Скелетната мускулна тъкан се характеризира с:',
+          opts: [
+            'Ненабраздена структура и неволен контрол',
+            'Набраздена структура и доброволен контрол',
+            'Набраздена структура и неволен контрол',
+            'Автоматизъм и набраздена структура'
+          ],
+          correct: 1,
+          explanation: 'Скелетната мускулна тъкан е набраздена (под микроскоп се виждат напречни ивици) и доброволна — контролира се съзнателно. Прикрепена е към костите чрез сухожилия.'
+        },
+        {
+          q: 'Сухожилията и връзките са изградени от:',
+          opts: [
+            'Епителна тъкан',
+            'Плътна съединителна тъкан',
+            'Рехава съединителна тъкан',
+            'Мускулна тъкан'
+          ],
+          correct: 1,
+          explanation: 'Сухожилията (свързват мускул с кост) и връзките (свързват кост с кост) са изградени от плътна съединителна тъкан — колагенови влакна, наредени успоредно.'
+        },
+        {
+          q: 'Коя тъкан НЕ е вид съединителна тъкан?',
+          opts: [
+            'Хрущял',
+            'Кост',
+            'Мастна тъкан',
+            'Ресничест епител'
+          ],
+          correct: 3,
+          explanation: 'Ресничестият епител е вид епителна тъкан — покрива дихателните пътища и движи частиците с ресничките си. Хрущялът, костта и мастната тъкан са видове съединителна тъкан.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

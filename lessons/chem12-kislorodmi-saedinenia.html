@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Кислородни съединения · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+    table.chem-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+    table.chem-table th { background: var(--accent); color: #fff; padding: 8px 12px; text-align: left; }
+    table.chem-table td { padding: 8px 12px; border-bottom: 1px solid var(--line); }
+    table.chem-table tr:nth-child(even) td { background: var(--soft); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Химия 12 клас</a>
+        <span>›</span>
+        Кислородни съединения
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">⚗️ ХИМИЯ · 12 КЛАС</div>
+          <div class="lesson-title">Органична химия — Кислородни съединения</div>
+          <div class="lesson-meta">Алкохоли, алдехиди, кетони, карбоксилни киселини, естери · ~13 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- 1. УВОД -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Обзор на кислородните органични съединения</div>
+            <div class="lesson-body">
+              <p><strong>Кислородните органични съединения</strong> съдържат освен C и H и кислород (O). Делят се според функционалната група — групата атоми, която определя химичните свойства:</p>
+            </div>
+            <table class="chem-table">
+              <tr><th>Клас</th><th>Функционална група</th><th>Пример</th><th>Наставка</th></tr>
+              <tr><td>Алкохоли</td><td>–OH (хидроксилна)</td><td>C₂H₅OH (етанол)</td><td>-ол</td></tr>
+              <tr><td>Алдехиди</td><td>–CHO (алдехидна)</td><td>HCHO (метанал)</td><td>-ал</td></tr>
+              <tr><td>Кетони</td><td>C=O (карбонилна, в средата)</td><td>CH₃COCH₃ (пропанон)</td><td>-он</td></tr>
+              <tr><td>Карбоксилни киселини</td><td>–COOH (карбоксилна)</td><td>CH₃COOH (оцетна к-на)</td><td>-ова к-на</td></tr>
+              <tr><td>Естери</td><td>–COO– (естерна)</td><td>CH₃COOC₂H₅ (етилацетат)</td><td>-ил -ат</td></tr>
+            </table>
+
+            <!-- 2. АЛКОХОЛИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Алкохоли</div>
+            <div class="lesson-body">
+              <p>Алкохолите съдържат <strong>хидроксилна група (–OH)</strong>, свързана с наситен C атом. Обща формула: <strong>CₙH₂ₙ₊₁OH</strong> (едновалентни алкохоли). Делят се на първични, вторични и третични в зависимост от броя на заместителите при C–OH.</p>
+              <p><strong>Важни алкохоли:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Метанол (CH₃OH)</strong> — метилов алкохол; силно токсичен, причинява слепота и смърт</li>
+                <li><strong>Етанол (C₂H₅OH)</strong> — етилов алкохол; в алкохолни напитки, горива, дезинфектанти</li>
+                <li><strong>Глицерол (C₃H₅(OH)₃)</strong> — трихидроксилен алкохол; в козметика, сапуни, храни</li>
+                <li><strong>Етиленгликол (C₂H₄(OH)₂)</strong> — в антифриз</li>
+              </ul>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">💧</div>
+                <div class="key-point-text"><strong>Разтворимост:</strong> Нискомолекулните алкохоли се смесват с вода (водородни връзки между –OH и H₂O). Разтворимостта намалява с нарастване на въглеродната верига.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔥</div>
+                <div class="key-point-text"><strong>Горене:</strong> C₂H₅OH + 3O₂ → 2CO₂ + 3H₂O. Етанолът гори с почти безцветен пламък.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚗️</div>
+                <div class="key-point-text"><strong>Окисление на алкохоли:</strong> Първичните алкохоли → алдехиди → карбоксилни киселини. Вторичните → кетони. Третичните — трудно се окисляват. Окислител: KMnO₄ или K₂Cr₂O₇.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧪</div>
+                <div class="key-point-text"><strong>Реакция с натрий:</strong> 2C₂H₅OH + 2Na → 2C₂H₅ONa + H₂↑. Алкохолите реагират с активни метали, отделяйки водород.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌡️</div>
+                <div class="key-point-text"><strong>Дехидратация:</strong> При нагряване с H₂SO₄: C₂H₅OH → CH₂=CH₂ + H₂O (при 170°C, образува се алкен) или 2C₂H₅OH → C₂H₅–O–C₂H₅ + H₂O (при 140°C, образува се етер).</div>
+              </div>
+            </div>
+
+            <!-- 3. АЛДЕХИДИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Алдехиди</div>
+            <div class="lesson-body">
+              <p>Алдехидите съдържат <strong>алдехидна група –CHO</strong> на края на молекулата. Обща формула: <strong>CₙH₂ₙO</strong>.</p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Метанал (HCHO, формалдехид)</strong> — дезинфектант, консервант (формалин = 40% р-р)</li>
+                <li><strong>Етанал (CH₃CHO, ацеталдехид)</strong> — образува се при окисление на етанол в организма</li>
+              </ul>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔍</div>
+                <div class="key-point-text"><strong>Реакция с амонячен разтвор на AgNO₃ (Tollens, сребърно огледало):</strong> RCHO + Ag⁺ → RCOOH + Ag↓. Алдехидите редуцират Ag⁺ до метален Ag, отложен като огледало.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔴</div>
+                <div class="key-point-text"><strong>Реакция с Cu(OH)₂ (Fehling):</strong> RCHO + Cu²⁺ → RCOOH + Cu₂O↓ (тухленочервена утайка). Качествена реакция за алдехиди и редуциращи захари!</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⬆️</div>
+                <div class="key-point-text"><strong>Окисление → карбоксилни киселини:</strong> CH₃CHO + [O] → CH₃COOH. Алдехидите лесно се окисляват до карбоксилни киселини.</div>
+              </div>
+            </div>
+
+            <!-- 4. КЕТОНИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Кетони</div>
+            <div class="lesson-body">
+              <p>Кетоните съдържат <strong>карбонилна група C=O в средата</strong> на молекулата (не на края). Обща формула: <strong>CₙH₂ₙO</strong> (изомерни с алдехидите).</p>
+              <p><strong>Ацетон (пропанон, CH₃–CO–CH₃)</strong> — най-простият кетон. Отличен разтворител (лак за нокти!), използва се в синтеза на пластмаси и фармацевтика.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">❌</div>
+                <div class="key-point-text"><strong>Кетоните НЕ реагират с Tollens и Fehling реактиви</strong> — това разграничава кетони от алдехиди! Кетоните са по-слаби редуктори.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔬</div>
+                <div class="key-point-text"><strong>Кетонурия:</strong> В организма, при диабет или гладуване, се натрупват кетонни тела (ацетон, ацетооцетна и β-хидромаслена киселина) — признак на метаболитни нарушения.</div>
+              </div>
+            </div>
+
+            <!-- 5. КАРБОКСИЛНИ КИСЕЛИНИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Карбоксилни киселини</div>
+            <div class="lesson-body">
+              <p>Карбоксилните киселини съдържат <strong>карбоксилна група –COOH</strong>. Обща формула на наситените: <strong>CₙH₂ₙO₂</strong>.</p>
+            </div>
+            <table class="chem-table">
+              <tr><th>Формула</th><th>Систематично наименование</th><th>Тривиално</th><th>Среща се в</th></tr>
+              <tr><td>HCOOH</td><td>Метанова</td><td>Мравчена</td><td>мравки, коприва</td></tr>
+              <tr><td>CH₃COOH</td><td>Етанова</td><td>Оцетна</td><td>оцет (~5% р-р)</td></tr>
+              <tr><td>C₂H₅COOH</td><td>Пропанова</td><td>Пропионова</td><td>млечни продукти</td></tr>
+              <tr><td>C₁₅H₃₁COOH</td><td>Хексадеканова</td><td>Палмитинова</td><td>мазнини (наситена)</td></tr>
+              <tr><td>C₁₇H₃₅COOH</td><td>Октадеканова</td><td>Стеаринова</td><td>животински мазнини</td></tr>
+              <tr><td>C₁₇H₃₃COOH</td><td>цис-9-Октадеценова</td><td>Олеинова</td><td>зехтин (ненаситена)</td></tr>
+            </table>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🧪</div>
+                <div class="key-point-text"><strong>Киселинни свойства:</strong> Карбоксилните киселини реагират с метали (Fe + 2CH₃COOH → (CH₃COO)₂Fe + H₂↑), с основи (CH₃COOH + NaOH → CH₃COONa + H₂O) и с карбонати (2CH₃COOH + Na₂CO₃ → 2CH₃COONa + H₂O + CO₂↑).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔗</div>
+                <div class="key-point-text"><strong>Естерификация:</strong> RCOOH + R'OH ⇌ RCOOR' + H₂O (при H₂SO₄, обратима реакция). Продуктите — естерите — имат приятни аромати.</div>
+              </div>
+            </div>
+
+            <!-- 6. ЕСТЕРИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Естери</div>
+            <div class="lesson-body">
+              <p>Естерите се получават при реакция между <strong>карбоксилна киселина и алкохол</strong> с отделяне на вода (естерификация). Обща формула: <strong>RCOOR'</strong>.</p>
+              <p><strong>Примери:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li>CH₃COOC₂H₅ (етилацетат) — разтворител, аромат на плодове</li>
+                <li>C₃H₇COOCH₃ (метилбутаноат) — аромат на ябълка</li>
+                <li>Мазнините са триестери на глицерола с висши мастни киселини (триглицериди)</li>
+              </ul>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Хидролиза на естери:</strong> RCOOR' + H₂O ⇌ RCOOH + R'OH (обратна на естерификацията). Реакцията е обратима.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧼</div>
+                <div class="key-point-text"><strong>Осапуняване:</strong> Хидролиза на мазнини (естери) в алкална среда: триглицерид + 3NaOH → глицерол + 3 соли на мастни киселини (сапуни). Солите на висши мастни киселини = сапун.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌺</div>
+                <div class="key-point-text"><strong>Аромати:</strong> Много естери имат приятни плодови аромати и се използват в парфюмерия, хранително-вкусовата промишленост и производство на изкуствени аромати.</div>
+              </div>
+            </div>
+
+            <!-- 7. МАТУРА -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Важно за матурата</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Алкохоли:</strong> –OH група. Окисление: 1° → алдехид → кис-на; 2° → кетон. Реагират с Na (отделят H₂). Дехидратация → алкен или етер.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Алдехиди:</strong> –CHO на края. Дават "сребърно огледало" (Tollens) и тухленочервена утайка с Fehling (Cu₂O). Кетоните НЕ дават тези реакции.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Оцетна киселина (CH₃COOH):</strong> слаба киселина, реагира с метали, основи, карбонати (CO₂↑). Оцетът = ~5% разтвор на оцетна киселина.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Естерификация:</strong> кис-на + алкохол ⇌ естер + H₂O (при H₂SO₄). Обратима реакция. Осапуняване = алкална хидролиза на естер.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Метанол (CH₃OH):</strong> токсичен! 10 мл причинява слепота, 30 мл смърт. Да не се бърка с етанол!</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Глицерол:</strong> трихидроксилен алкохол C₃H₅(OH)₃. Компонент на мазнините. Безцветна вискозна течност, разтворима във вода.</div></div>
+            </div>
+
+          </div>
+
+          <!-- QUIZ CTA -->
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/chem12-kislorodmi-saedinenia-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/chem12-kislorodmi-saedinenia-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/chem12-kislorodmi-saedinenia-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- AI PANEL -->
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Органична химия — Кислородни съединения (алкохоли, алдехиди, кетони, киселини, естери)';
+    window.LESSON_SUBJECT = 'Химия';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

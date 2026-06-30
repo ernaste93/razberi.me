@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Граматична норма · БЕЛ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel12-gramatika-q3',
+      lessonUrl:   '/lessons/bel12-gramatika.html',
+      lessonName:  'Граматична норма',
+      eyebrow:     'БЕЛ · 12 КЛАС · ЕЗИК',
+      title:       'Куиз — Граматична норма — Тест 3',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     3,
+      questions: [
+        { q:'Кое изречение е с правилна употреба на „като"?', opts:['Той работи като бърз.','Той работи бързо, като добър специалист.','Той бърз като работи.','Като той работи бърз.'], correct:1, explanation:'„Като добър специалист" е сравнително изречение — правилна употреба на „като" за сравнение. Другите варианти са синтактично некоректни.' },
+        { q:'Кое е правилно: „въпреки" или „въпреки че"?', opts:['Само „въпреки" е правилно','„Въпреки" се използва с именна група, „въпреки че" — с изречение','Само „въпреки че" е правилно','Двата израза са взаимозаменяеми'], correct:1, explanation:'„Въпреки умората той работи" (именна група). „Въпреки че беше уморен, той работи" (изречение). Смесването е честа грешка: „въпреки да беше уморен" е нередно.' },
+        { q:'Кой е правилният ред на думите в изречението с кратко местоимение?', opts:['Казах го него вчера.','Вчера казах му го.','Вчера му го казах.','Му го вчера казах.'], correct:2, explanation:'Краткото местоимение следва глагола или стои преди него в определен ред. „Вчера му го казах" е нормативното — наречие + кратко местоимение + глагол е допустимо.' },
+        { q:'Кое от следните е правилна форма на глагола „ям" в 1 л. ед.ч. сег. вр.?', opts:['ядам','ям','яда','ядя'], correct:1, explanation:'„Ям" е правилната форма в 1 л. ед.ч. сег. вр. „Ядам" е диалектна форма. „Яда" и „ядя" не са книжовни форми за сегашно време.' },
+        { q:'Кое изречение е с правилна употреба на „поради" и „заради"?', opts:['Закъснях поради теб.','Закъснях заради болестта.','Закъснях поради болестта.','Поради теб закъснях.'], correct:2, explanation:'„Поради" изисква причина-обстоятелство (нещо, не лице): „поради болестта". „Заради" може да се употребява с лице: „заради теб". Грешка: „поради теб".' },
+        { q:'Каква е частта на речта на „вчера" в „Вчера валя дъжд"?', opts:['Прилагателно','Наречие за време','Съществително','Числително'], correct:1, explanation:'„Вчера" е наречие за време — отговаря на въпроса „кога?". Наречията не се менят по род, число или падеж — те са неизменяема част на речта.' },
+        { q:'Кое е правилното изречение?', opts:['Очаквам да дойдеш.','Очаквам да дойде ти.','Очаквам ти да дойдеш.','Очаквам дойдеш.'], correct:0, explanation:'„Очаквам да дойдеш" е правилно. В книжовния Bulgarian след „очаквам" следва подчинено изречение с „да". „Очаквам дойдеш" пропуска съюза „да".' },
+        { q:'Кое от следните е неправилно съгласуване по род?', opts:['голям успех','голяма успех','голяма победа','голям подвиг'], correct:1, explanation:'„Голяма успех" е грешно — „успех" е мъжки род, правилното е „голям успех". Прилагателното се съгласува по род, число и определеност с определяемото съществително.' },
+        { q:'Кое изречение е в бъдеще предварително (futurum exactum) време?', opts:['Ще чета.','Ще съм прочел.','Четях.','Прочетох.'], correct:1, explanation:'„Ще съм прочел" е бъдеще предварително — изразява действие, което ще е завършено преди друго бъдещо действие. „Ще чета" е обикновено бъдеще.' },
+        { q:'Кое предложение е за вземане на решение чрез глагола „нека"?', opts:['Нека да отидем.','Нека ще отидем.','Нека сме отишли.','Нека бихме отишли.'], correct:0, explanation:'„Нека да отидем" е правилното подбудително изречение с „нека". „Нека" + „да" + глагол е стандартната конструкция за подбудително изречение в 1 л. мн.ч.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

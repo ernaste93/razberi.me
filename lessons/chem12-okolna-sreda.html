@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Химия и опазване на околната среда · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    #btn-ask-znaiko {
+      position: fixed;
+      bottom: 28px;
+      right: 32px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 99px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    #selection-tooltip {
+      position: fixed;
+      z-index: 9999;
+      display: none;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    #selection-tooltip.show {
+      display: block;
+      pointer-events: auto;
+    }
+    #explain-selection {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px;
+      background: var(--accent); color: #fff;
+      border: none; border-radius: 99px;
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+      transition: opacity .12s, transform .12s;
+    }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after {
+      content: '';
+      position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Химия 12 клас</a>
+        <span>›</span>
+        Химия и опазване на околната среда
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">🌿 ХИМИЯ · 12 КЛАС</div>
+          <div class="lesson-title">Химия и опазване на околната среда</div>
+          <div class="lesson-meta">Парников ефект · Киселинни дъждове · Озонов слой · Зелена химия · ~10 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. ПАРНИКОВ ЕФЕКТ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Парников ефект и климатични промени</div>
+            <div class="lesson-body">
+              <p>Парниковият ефект е естествено явление: атмосферата задържа топлинното излъчване на Земята и поддържа средна температура около +15 °C. Без него температурата би была около −18 °C. Проблемът е <strong>засиленият парников ефект</strong> — причинен от нарастване на концентрацията на парникови газове поради човешка дейност.</p>
+              <p><strong>Основни парникови газове:</strong></p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🏭</div>
+                <div class="key-point-text"><strong>CO₂ (въглероден диоксид)</strong> — основният парников газ. Отделя се при горене на изкопаеми горива (въглища, нефт, природен газ), производство на цимент и обезлесяване. Концентрацията му нараства от ~280 ppm (преди индустриализацията) до над 420 ppm днес.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🐄</div>
+                <div class="key-point-text"><strong>CH₄ (метан)</strong> — около 25 пъти по-силен парников газ от CO₂ за 100-годишен период. Отделя се от животновъдство (ентерална ферментация при говеда), оризови полета, нефтодобив и сметища.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌾</div>
+                <div class="key-point-text"><strong>N₂O (диазотен оксид)</strong> — около 298 пъти по-силен от CO₂. Отделя се от азотни торове и горивни процеси.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❄️</div>
+                <div class="key-point-text"><strong>Фреони (ХФВ)</strong> — хлорофлуоровъглероди. Изключително мощни парникови газове и разрушители на озоновия слой.</div>
+              </div>
+            </div>
+            <div class="lesson-body" style="margin-top:12px;">
+              <p>Последици от засиления парников ефект: повишаване на средната температура, топене на ледниците, покачване на морското равнище, по-чести екстремни метеорологични явления.</p>
+            </div>
+
+            <!-- ══ 2. КИСЕЛИННИ ДЪЖДОВЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Киселинни дъждове</div>
+            <div class="lesson-body">
+              <p>Нормалният дъжд има pH ≈ 5.6 (леко кисел поради разтворен CO₂). <strong>Киселинният дъжд</strong> има pH под 5.6 — понякога под 4. Причиняват го серен диоксид (SO₂) и азотни оксиди (NOₓ), изпускани главно от електроцентрали, металургичната промишленост и транспорта.</p>
+              <p><strong>Химични реакции:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li>SO₂ + H₂O → H₂SO₃ (сярна киселина) → при окисление: SO₃ + H₂O → H₂SO₄ (сярна киселина)</li>
+                <li>NO + ½O₂ → NO₂; 3NO₂ + H₂O → 2HNO₃ + NO (азотна киселина)</li>
+              </ul>
+              <p><strong>Последици:</strong> Киселинните дъждове увреждат горите (изсъхване на листа), закиселяват езерата и реките (загиват риби и водни организми), корозират сгради и паметници (карбонатен варовик реагира с H₂SO₄), влошават качеството на почвата.</p>
+              <p><strong>Мерки:</strong> Изсерване на горивата, монтиране на катализатори в автомобилни изпускателни системи, десулфуризация на отработените газове в промишлеността.</p>
+            </div>
+
+            <!-- ══ 3. ОЗОНОВ СЛОЙ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Озонов слой и фреони</div>
+            <div class="lesson-body">
+              <p>Озоновият слой (стратосфера, 15–35 km) поглъща по-голямата част от UV-B и UV-C лъчението, което иначе би унищожавало живи организми и причинявало рак на кожата, катаракта и увреждане на имунната система.</p>
+              <p><strong>Фреони (CFC — хлорофлуоровъглероди)</strong> са използвани в хладилници, климатици и аерозоли. Те са химично стабилни и достигат стратосферата. Там UV-лъчението освобождава Cl атоми:</p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li>CF₂Cl₂ → CF₂Cl• + Cl•</li>
+                <li>Cl• + O₃ → ClO• + O₂</li>
+                <li>ClO• + O• → Cl• + O₂ (Cl• се регенерира — верижна реакция)</li>
+              </ul>
+              <p>Един Cl атом може да разруши около <strong>100 000 молекули О₃</strong>. Озоновата дупка над Антарктида се появява всяка пролет. Монреалският протокол (1987) постигна ограничаване и постепенно изтегляне на CFC-те.</p>
+            </div>
+
+            <!-- ══ 4. ЗАМЪРСЯВАНЕ НА ВЪЗДУХ, ВОДА, ПОЧВА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Замърсяване на въздух, вода и почва</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">💨</div>
+                <div class="key-point-text"><strong>Замърсяване на въздуха</strong> — прахови частици (PM2.5, PM10), CO, NOₓ, SO₂, летливи органични съединения (ЛОС), тежки метали (Pb, Hg). Причиняват респираторни заболявания, сърдечно-съдови проблеми. Основни източници: транспорт, промишленост, битово отопление.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💧</div>
+                <div class="key-point-text"><strong>Замърсяване на водата</strong> — нитрати и фосфати от земеделие (еутрофикация — прекомерен растеж на водорасли, изразходване на О₂, загиване на риба), тежки метали (Pb, Cd, Hg), нефт и нефтопродукти, синтетични детергенти, фармацевтични продукти.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌱</div>
+                <div class="key-point-text"><strong>Замърсяване на почвата</strong> — пестициди (ДДТ, органофосфати), тежки метали (от топилници, торове), пластмасови отпадъци, радиоактивно замърсяване. Замърсената почва засяга хранителните вериги и качеството на подземните води.</div>
+              </div>
+            </div>
+
+            <!-- ══ 5. РЕЦИКЛИРАНЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Рециклиране</div>
+            <div class="lesson-body">
+              <p>Рециклирането намалява количеството отпадъци, спестява суровини и енергия и намалява замърсяването.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🥤</div>
+                <div class="key-point-text"><strong>Стъкло</strong> — може да се рециклира неограничен брой пъти без загуба на качество. Стопяването на стъклена скрап спестява до 30% енергия спрямо производство от суровини.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📦</div>
+                <div class="key-point-text"><strong>Хартия и картон</strong> — рециклирането спестява дървета и вода. 1 тон рециклирана хартия заменя около 17 дървета. Хартията може да се рециклира 5–7 пъти.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔩</div>
+                <div class="key-point-text"><strong>Метали</strong> — алуминият е особено ценен: рециклирането му използва само 5% от енергията, необходима за производство от боксит. Стоманата, медта и оловото също се рециклират масово.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧴</div>
+                <div class="key-point-text"><strong>Пластмаси</strong> — рециклирането е по-сложно, тъй като различните видове пластмаса (PET, HDPE, PVC, PP) не могат да се смесват. PET бутилките се превръщат в полиестерни влакна. Само около 9% от пластмасата в света се рециклира.</div>
+              </div>
+            </div>
+
+            <!-- ══ 6. ЗЕЛЕНА ХИМИЯ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Зелена химия</div>
+            <div class="lesson-body">
+              <p><strong>Зелената химия</strong> (устойчива химия) е концепция за проектиране на химични процеси и продукти, които намаляват или елиминират опасни вещества. Формулирана е от Пол Анастас и Джон Уорнър (1998) чрез 12 принципа.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">♻️</div>
+                <div class="key-point-text"><strong>Атомна икономия</strong> — максимизиране на дела на атомите от изходните вещества, влизащи в крайния продукт. Реакции без или с минимални странични продукти.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌿</div>
+                <div class="key-point-text"><strong>Използване на възобновяеми суровини</strong> — биомаса вместо нефт, биоетанол, биополимери (PLA — полимолочна киселина) вместо петрохимични пластмаси.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚗️</div>
+                <div class="key-point-text"><strong>Каталитични процеси</strong> — катализаторите позволяват реакции при по-ниска температура и налягане, с по-малко отпадъци. Предпочитат се каталитичните реакции пред стехиометричните.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💧</div>
+                <div class="key-point-text"><strong>Безопасни разтворители</strong> — замяна на токсични органични разтворители (бензен, хлороформ) с вода, свръхкритичен CO₂ или йонни течности.</div>
+              </div>
+            </div>
+
+            <!-- ══ 7. НАЙ-ВАЖНОТО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Парников ефект:</strong> CO₂ и CH₄ задържат топлината → затопляне на климата. CO₂ е основен; CH₄ е ~25 пъти по-силен.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Киселинни дъждове:</strong> SO₂ и NOₓ от промишлеността и транспорта → H₂SO₄ и HNO₃ в дъжда → pH под 5.6. Увреждат горите, водоемите и сградите.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Озонов слой:</strong> Фреоните (CFC) освобождават Cl•, разрушаващ О₃ верижно. Монреалският протокол (1987) постигна ограничаване на CFC.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Замърсяване:</strong> Въздух (прах, CO, NOₓ), вода (нитрати → еутрофикация, тежки метали), почва (пестициди, тежки метали).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Рециклиране:</strong> Алуминий — 95% икономия на енергия. Стъкло — неограничено рециклируем. Пластмасата — само 9% се рециклира глобално.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Зелена химия:</strong> 12 принципа за намаляване на опасни вещества в химичните процеси: атомна икономия, каталитичност, безопасни разтворители, възобновяеми суровини.</div></div>
+            </div>
+
+          </div><!-- /#lesson-content -->
+
+          <!-- ── QUIZ CTA ── -->
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/chem12-okolna-sreda-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/chem12-okolna-sreda-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/chem12-okolna-sreda-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div><!-- /.lesson-panel -->
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+      btnTop.classList.toggle('visible', window.scrollY > 200);
+    });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Химия и опазване на околната среда';
+    window.LESSON_SUBJECT = 'Химия';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        var color = d.passed ? '#16a34a' : '#d97706';
+        var icon = d.passed ? '✓' : '✗';
+        a.style.position = 'relative';
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + icon + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) {
+          a.style.background = '#16a34a';
+          a.style.color = '#fff';
+          a.style.borderColor = '#16a34a';
+        } else {
+          a.style.borderColor = '#d97706';
+          a.style.color = '#92400e';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Комбинаторика · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .formula-block { background: #f0f4ff; border: 1.5px solid #c7d2fe; border-radius: 12px; padding: 16px 20px; margin: 16px 0; text-align: center; font-size: 18px; font-weight: 800; color: var(--accent); letter-spacing: 0.02em; }
+    .formula-block .formula-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; display: block; }
+    .formula-inline { background: #eef2ff; color: var(--accent); padding: 1px 7px; border-radius: 6px; font-weight: 700; font-size: 13px; }
+    .example-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0; font-size: 13px; line-height: 1.8; }
+    .example-block strong { color: var(--accent); }
+    .example-step { display: flex; gap: 10px; align-items: flex-start; justify-content: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13px; width: 100%; }
+    .example-step:last-child { border-bottom: none; }
+    .example-step > div:last-child { flex: 1; }
+    .step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+    .compare-card { border: 1.5px solid var(--line); border-radius: 12px; padding: 14px; text-align: center; font-size: 13px; }
+    .compare-card.pos { border-color: #86efac; background: #f0fdf4; }
+    .compare-card.neg { border-color: #fca5a5; background: #fff5f5; }
+    .compare-card .cc-title { font-weight: 800; font-size: 15px; margin-bottom: 6px; }
+    .compare-card.pos .cc-title { color: #16a34a; }
+    .compare-card.neg .cc-title { color: #dc2626; }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); }
+    #selection-tooltip.show { display: block; }
+    #explain-selection { background: var(--accent); color: #fff; border: none; padding: 7px 14px; border-radius: 20px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); }
+    #explain-selection::after { content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); border-bottom: none; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <nav style="display:flex;align-items:center;gap:4px;margin:0 auto;">
+        <a href="/urotsi.html" class="nav-btn">Уроци</a>
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Математика</a>
+        <span>›</span>
+        Комбинаторика
+      </div>
+      <section class="demo-layout">
+        <div class="lesson-panel">
+          <div id="lesson-content">
+            <div class="lesson-tag">МАТЕМАТИКА · 12 КЛАС</div>
+            <h1 class="lesson-title">Комбинаторика</h1>
+            <div class="lesson-meta">Наредби · Пермутации · Комбинации · Биномен коефициент · ~15 мин</div>
+            <div class="lesson-divider"></div>
+
+            <!-- 1. Правило за произведение -->
+            <div class="lesson-body">
+              <div class="section-title">1. Правило за произведение</div>
+              <p>Ако едно събитие A може да се случи по <strong>m начина</strong>, а друго събитие B може да се случи по <strong>n начина</strong>, то двете заедно могат да се случат по <strong>m · n начина</strong>.</p>
+
+              <div class="formula-block">
+                <span class="formula-label">Правило за произведение</span>
+                m · n начина
+              </div>
+
+              <div class="example-block">
+                <strong>Пример:</strong> Имаш 3 ризи и 4 панталона. По колко начина можеш да се облечеш?
+                <div class="example-step">
+                  <div class="step-num">1</div>
+                  <div>Ризи: 3 избора. Панталони: 4 избора.</div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">2</div>
+                  <div>Общо комбинации: 3 × 4 = <strong>12 начина</strong></div>
+                </div>
+              </div>
+
+              <div class="lesson-divider"></div>
+
+              <!-- 2. Наредени наредби (вариации) -->
+              <div class="section-title">2. Наредени наредби (Вариации) — Aₙᵏ</div>
+              <p>Когато избираш <strong>k елемента от n</strong> и <strong>редът има значение</strong>, използваш формулата за вариации (наредени наредби).</p>
+
+              <div class="formula-block">
+                <span class="formula-label">Вариации без повторение</span>
+                Aₙᵏ = n! / (n − k)!
+              </div>
+
+              <div class="example-block">
+                <strong>Пример:</strong> Колко 3-цифрени числа можеш да образуваш от цифрите 1, 2, 3, 4, 5 без повторение?
+                <div class="example-step">
+                  <div class="step-num">1</div>
+                  <div>n = 5 цифри, k = 3 позиции. Редът има значение (123 ≠ 321).</div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">2</div>
+                  <div>A₅³ = 5! / (5 − 3)! = 5! / 2! = 120 / 2 = <strong>60 числа</strong></div>
+                </div>
+              </div>
+
+              <div class="lesson-divider"></div>
+
+              <!-- 3. Пермутации -->
+              <div class="section-title">3. Пермутации — Pₙ</div>
+              <p>Пермутацията е наредба на <strong>всички n елемента</strong>. Това е частен случай на вариацията, когато k = n.</p>
+
+              <div class="formula-block">
+                <span class="formula-label">Пермутации</span>
+                Pₙ = n!
+              </div>
+
+              <div class="example-block">
+                <strong>Пример:</strong> По колко начина могат да се наредят 5 ученика на опашка?
+                <div class="example-step">
+                  <div class="step-num">1</div>
+                  <div>n = 5 ученика. Нареждаме всичките.</div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">2</div>
+                  <div>P₅ = 5! = 5 × 4 × 3 × 2 × 1 = <strong>120 начина</strong></div>
+                </div>
+              </div>
+
+              <div class="lesson-divider"></div>
+
+              <!-- 4. Пермутации с повторение -->
+              <div class="section-title">4. Пермутации с повторение</div>
+              <p>Когато в редицата от n елемента има <strong>повтарящи се</strong>, броят на различните наредби се намалява. Делим на факториела на броя на всяко повторение.</p>
+
+              <div class="formula-block">
+                <span class="formula-label">Пермутации с повторение</span>
+                n! / (k₁! · k₂! · … · kₘ!)
+              </div>
+
+              <div class="example-block">
+                <strong>Пример:</strong> По колко начина може да се наредят буквите на думата МАМА?
+                <div class="example-step">
+                  <div class="step-num">1</div>
+                  <div>Общо букви: n = 4. Буквата М се повтаря 2 пъти, буквата А се повтаря 2 пъти.</div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">2</div>
+                  <div>Брой наредби = 4! / (2! · 2!) = 24 / 4 = <strong>6 начина</strong></div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">3</div>
+                  <div>Те са: МАМА, МААМ, АММА, АМАМ, ААММ, ММАА</div>
+                </div>
+              </div>
+
+              <div class="lesson-divider"></div>
+
+              <!-- 5. Комбинации -->
+              <div class="section-title">5. Комбинации — Cₙᵏ</div>
+              <p>Когато избираш <strong>k елемента от n</strong>, но <strong>редът няма значение</strong>, използваш комбинации. Групите {А, Б, В} и {В, А, Б} се броят за едно и също.</p>
+
+              <div class="formula-block">
+                <span class="formula-label">Комбинации без повторение</span>
+                Cₙᵏ = n! / (k! · (n − k)!)
+              </div>
+
+              <div class="example-block">
+                <strong>Пример:</strong> По колко начина можеш да избереш 3 ученика от 8 за отбор?
+                <div class="example-step">
+                  <div class="step-num">1</div>
+                  <div>n = 8, k = 3. Редът не е важен — {Иван, Мария, Петър} = {Петър, Иван, Мария}.</div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">2</div>
+                  <div>C₈³ = 8! / (3! · 5!) = (8 × 7 × 6) / (3 × 2 × 1) = 336 / 6 = <strong>56 начина</strong></div>
+                </div>
+              </div>
+
+              <div class="lesson-divider"></div>
+
+              <!-- 6. Свойства на комбинациите -->
+              <div class="section-title">6. Свойства на комбинациите</div>
+
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">1️⃣</div>
+                  <div class="key-point-text"><strong>Cₙ⁰ = Cₙⁿ = 1</strong> — има само 1 начин да избереш нула елемента (нищо) или всички n елемента.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">2️⃣</div>
+                  <div class="key-point-text"><strong>Cₙᵏ = Cₙⁿ⁻ᵏ</strong> — симетрично свойство. Да избереш 3 от 8 е същото като да "изоставиш" 5 от 8: C₈³ = C₈⁵ = 56.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">3️⃣</div>
+                  <div class="key-point-text"><strong>Cₙᵏ + Cₙᵏ⁺¹ = Cₙ₊₁ᵏ⁺¹</strong> — формула на Паскал. Сумата от два съседни елемента в ред n дава елемент в ред n+1.</div>
+                </div>
+              </div>
+
+              <div class="lesson-divider"></div>
+
+              <!-- 7. Биномен коефициент и формула на Нютон -->
+              <div class="section-title">7. Биномен коефициент и формула на Нютон</div>
+              <p>Когато повдигаш двучлен (a + b) на степен n, коефициентите пред всеки член са точно комбинациите Cₙᵏ. Това е <strong>формулата на Нютон</strong>:</p>
+
+              <div class="formula-block">
+                <span class="formula-label">Формула на Нютон (биномна формула)</span>
+                (a + b)ⁿ = Σ Cₙᵏ · aⁿ⁻ᵏ · bᵏ, k от 0 до n
+              </div>
+
+              <div class="example-block">
+                <strong>Пример — разпис на (a + b)³:</strong>
+                <div class="example-step">
+                  <div class="step-num">1</div>
+                  <div>k=0: C₃⁰ · a³ · b⁰ = <strong>a³</strong></div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">2</div>
+                  <div>k=1: C₃¹ · a² · b¹ = <strong>3a²b</strong></div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">3</div>
+                  <div>k=2: C₃² · a¹ · b² = <strong>3ab²</strong></div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">4</div>
+                  <div>k=3: C₃³ · a⁰ · b³ = <strong>b³</strong></div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">5</div>
+                  <div>Резултат: <strong>(a + b)³ = a³ + 3a²b + 3ab² + b³</strong></div>
+                </div>
+              </div>
+
+              <div class="example-block">
+                <strong>Триъгълник на Паскал</strong> — всеки ред дава биномните коефициенти:
+                <div style="text-align:center; font-family:monospace; margin-top:8px; line-height:2; font-size:14px;">
+                  <div>n=0:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1</div>
+                  <div>n=1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 1</div>
+                  <div>n=2:&nbsp;&nbsp;&nbsp;&nbsp;1 2 1</div>
+                  <div>n=3:&nbsp;&nbsp;&nbsp;1 3 3 1</div>
+                  <div>n=4:&nbsp;&nbsp;1 4 6 4 1</div>
+                  <div>n=5:&nbsp;1 5 10 10 5 1</div>
+                </div>
+                <div style="margin-top:8px; font-size:12px; color:var(--muted);">Сумата на всеки ред е 2ⁿ: ред 4 → 1+4+6+4+1 = 16 = 2⁴</div>
+              </div>
+
+              <div class="lesson-divider"></div>
+
+              <!-- 8. Кога наредба, кога комбинация? -->
+              <div class="section-title">8. Кога вариация, кога комбинация?</div>
+              <p>Ключовият въпрос: <strong>важен ли е редът?</strong></p>
+
+              <div class="compare-grid">
+                <div class="compare-card pos">
+                  <div class="cc-title">Вариация (Aₙᵏ)</div>
+                  <div>Редът <strong>има значение</strong></div>
+                  <div style="margin-top:8px; font-size:12px; line-height:1.7;">
+                    ПИН код (1234 ≠ 4321)<br>
+                    Медали: злато, сребро, бронз<br>
+                    Наредени числа без повторение<br>
+                    Президент и вицепрезидент
+                  </div>
+                </div>
+                <div class="compare-card neg">
+                  <div class="cc-title">Комбинация (Cₙᵏ)</div>
+                  <div>Редът <strong>няма значение</strong></div>
+                  <div style="margin-top:8px; font-size:12px; line-height:1.7;">
+                    Избор на комитет/отбор<br>
+                    Пица с 3 топинга<br>
+                    Лотария (числата нямат ред)<br>
+                    Групиране без позиции
+                  </div>
+                </div>
+              </div>
+
+              <div class="lesson-divider"></div>
+
+              <!-- 9. Типични задачи от матура -->
+              <div class="section-title">9. Типични задачи от матура</div>
+
+              <div class="example-block">
+                <strong>Задача 1:</strong> По колко начина могат да се наредят на ред 4 момчета и 3 момичета, ако момичетата трябва да стоят заедно?
+                <div class="example-step">
+                  <div class="step-num">1</div>
+                  <div>Третираме 3-те момичета като 1 блок. Имаме 4 + 1 = 5 обекта за наредба.</div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">2</div>
+                  <div>Наредби на 5 обекта: P₅ = 5! = 120</div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">3</div>
+                  <div>Вътре в блока момичетата се нареждат: P₃ = 3! = 6</div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">4</div>
+                  <div>Общо: 120 × 6 = <strong>720 начина</strong></div>
+                </div>
+              </div>
+
+              <div class="example-block">
+                <strong>Задача 2:</strong> Намери коефициента пред x² в разложението на (x + 2)⁵.
+                <div class="example-step">
+                  <div class="step-num">1</div>
+                  <div>Общият член е: C₅ᵏ · x⁵⁻ᵏ · 2ᵏ</div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">2</div>
+                  <div>Искаме x², значи 5 − k = 2, откъдето k = 3.</div>
+                </div>
+                <div class="example-step">
+                  <div class="step-num">3</div>
+                  <div>C₅³ · 2³ = 10 · 8 = <strong>80</strong></div>
+                </div>
+              </div>
+
+              <div class="lesson-divider"></div>
+
+              <!-- 10. Най-важното -->
+              <div class="section-title">10. Най-важното</div>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">📌</div>
+                  <div class="key-point-text"><strong>0! = 1</strong> — нулевият факториел е единица, не нула. Важно за всички формули.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">📌</div>
+                  <div class="key-point-text"><strong>Вариация vs Комбинация:</strong> задай си въпроса „важен ли е редът?" Ако да — Aₙᵏ. Ако не — Cₙᵏ.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">📌</div>
+                  <div class="key-point-text"><strong>Симетрия:</strong> Cₙᵏ = Cₙⁿ⁻ᵏ. Ако пресмяташ C₁₀⁸, по-лесно е да смяташ C₁₀² = 45.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">📌</div>
+                  <div class="key-point-text"><strong>Пермутации с повторение:</strong> брой на повтарящите се елементи отиват в знаменателя като факториели.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">📌</div>
+                  <div class="key-point-text"><strong>Биномна формула:</strong> коефициентите на (a+b)ⁿ са редът n от триъгълника на Паскал. Сумата им е 2ⁿ.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">📌</div>
+                  <div class="key-point-text"><strong>Правило за произведение:</strong> ако изборите са независими, множим броя им.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <div class="lesson-panel" style="margin-top:0; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+              <div>
+                <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+                <div style="font-size:13px;color:var(--muted);">30 въпроса в 3 части · след като си прочел урока</div>
+              </div>
+              <a href="/lessons/math12-kombinatorika-quiz.html" style="display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:14px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;">Към куиза →</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай формула или текст от урока и цъкни <strong>„Обясни"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Комбинаторика — наредби, пермутации, комбинации, биномен коефициент';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+</body>
+</html>

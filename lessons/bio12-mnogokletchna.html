@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Многоклетъчна организация · БИОЛОГИЯ 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БИОЛОГИЯ 12 клас</a>
+        <span>›</span>
+        Многоклетъчна организация
+      </div>
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">🫀 БИОЛОГИЯ · 12 КЛАС</div>
+          <div class="lesson-title">Многоклетъчна организация</div>
+          <div class="lesson-meta">Тъкани · Органи · Органни системи · Хомеостаза · ~9 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">1. Нива на организация</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔬</div>
+                <div class="key-point-text"><strong>Клетка → Тъкан → Орган → Органна система → Организъм</strong> — йерархия на многоклетъчната организация. Всяко ниво надгражда предишното.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎯</div>
+                <div class="key-point-text"><strong>Специализация на клетките</strong> — при многоклетъчните организми клетките са диференцирани: всяка изпълнява конкретна функция, вместо да прави „всичко". Това е основното предимство пред едноклетъчните.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">2. Животински тъкани — 4 основни вида</div>
+            <div class="lesson-body">
+              <p>Тъканта е група от сходни клетки с обща структура и функция. При животните (и човека) съществуват четири основни вида тъкани:</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🧱</div>
+                <div class="key-point-text">
+                  <strong>Епителна тъкан</strong> — покрива повърхности и кухини; клетките са плътно наредени без пространство между тях.<br>
+                  <strong>Видове:</strong> плоскоепителна (кожа), цилиндричен епител (черво), кубичен епител (бъбречни тубули), ресничест (дихателни пътища).<br>
+                  <strong>Функции:</strong> защита, секреция, усвояване.
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🕸️</div>
+                <div class="key-point-text">
+                  <strong>Съединителна тъкан</strong> — поддържа и свързва; характерно е много извънклетъчно вещество (матрикс).<br>
+                  <strong>Видове:</strong> рехава (около органи), плътна (сухожилия, връзки), хрущял (еластичен матрикс), кост (минерализиран матрикс), <strong>кръв</strong> (течен матрикс — плазма), мастна тъкан (адипоцити).
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💪</div>
+                <div class="key-point-text">
+                  <strong>Мускулна тъкан</strong> — осигурява контракция (съкращение).<br>
+                  <strong>Скелетна:</strong> набраздена, доброволна — прикрепена към кости.<br>
+                  <strong>Гладка:</strong> ненабраздена, неволна — в стените на вътрешни органи (стомах, черва, кръвоносни съдове).<br>
+                  <strong>Сърдечна:</strong> набраздена, но неволна — само в сърцето; има автоматизъм (бие само по себе си).
+                </div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text">
+                  <strong>Нервна тъкан</strong> — провежда нервни импулси.<br>
+                  Изградена от <strong>неврони</strong> (нервни клетки) + <strong>глиални клетки</strong> (поддържащи, изолиращи).<br>
+                  <strong>Неврон:</strong> тяло (сома) + дендрити (приемат сигнали) + аксон (провежда сигнал).<br>
+                  <strong>Синапс:</strong> специализиран контакт между два неврона или между неврон и ефектор; предаването е химично (чрез невромедиатори).
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">3. Органи и органни системи</div>
+            <div class="lesson-body">
+              <p><strong>Орган</strong> = съвкупност от различни тъкани, организирани да изпълняват обща функция. Пример: стомахът съдържа епителна тъкан (лигавица), мускулна тъкан (перисталтика), нервна тъкан (регулация) и съединителна тъкан (опора).</p>
+              <p>Органите се обединяват в <strong>органни системи</strong>:</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🦴</div>
+                <div class="key-point-text"><strong>Опорно-двигателна:</strong> скелет + мускули → движение и опора на тялото.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🍽️</div>
+                <div class="key-point-text"><strong>Храносмилателна:</strong> уста → хранопровод → стомах → тънко черво → дебело черво → ректум. Разгражда храната и усвоява хранителни вещества.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🫁</div>
+                <div class="key-point-text"><strong>Дихателна:</strong> нос → трахея → бронхи → бели дробове → алвеоли. Газообменът (O₂/CO₂) се осъществява в алвеолите.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❤️</div>
+                <div class="key-point-text"><strong>Кръвоносна:</strong> сърце (4 камери: 2 предсърдия + 2 камери) + артерии + вени + капиляри. Голям кръг (тяло) и малък кръг (бели дробове) на кровообращението.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🫘</div>
+                <div class="key-point-text"><strong>Отделителна:</strong> бъбреци → уретери → пикочен мехур → уретра. Бъбреците филтрират кръвта и отстраняват отпадъчните продукти.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧠</div>
+                <div class="key-point-text"><strong>Нервна:</strong> ЦНС (главен мозък + гръбначен мозък) + ПНС (периферни нерви). Регулира и интегрира всички функции на организма.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔬</div>
+                <div class="key-point-text"><strong>Ендокринна:</strong> жлези с вътрешна секреция отделят хормони директно в кръвта. Хипофиза (главна жлеза), щитовидна, панкреас (инсулин/глюкагон), надбъбречни (адреналин, кортизол).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🛡️</div>
+                <div class="key-point-text"><strong>Имунна:</strong> лимфоцити, антитела, лимфни възли, слезка. Защитава организма от патогени (бактерии, вируси, паразити).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌱</div>
+                <div class="key-point-text"><strong>Репродуктивна:</strong> осигурява полово размножаване и продължаване на вида.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">4. Хомеостаза</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚖️</div>
+                <div class="key-point-text"><strong>Хомеостаза</strong> = поддържане на постоянна вътрешна среда въпреки промените в外ната среда. Термин въведен от Уолтър Кенън.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌡️</div>
+                <div class="key-point-text"><strong>Контролирани параметри:</strong> температура (36.6°C), pH на кръвта (7.35–7.45), кръвна захар (3.9–5.5 mmol/L), осмотично налягане, концентрация на йони.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Отрицателна обратна връзка</strong> (основният механизъм): отклонението от нормата задейства механизъм, който го коригира и връща към нормата. Пример: висока температура → изпотяване → охлаждане на тялото.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📈</div>
+                <div class="key-point-text"><strong>Положителна обратна връзка</strong> (по-рядка): отклонението засилва сигнала, довеждайки процеса до завършване. Примери: кръвосъсирване (тромбоцитите привличат още тромбоцити), раждане (окситоцин усилва контракциите).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🤝</div>
+                <div class="key-point-text"><strong>Регулация</strong> — нервната система реагира бързо (секунди), ендокринната по-бавно (минути до часове), но по-продължително. Двете системи работят заедно.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">5. Растителни тъкани</div>
+            <div class="lesson-body">
+              <p>При растенията тъканите са организирани по различен принцип:</p>
+              <div class="key-points">
+                <div class="key-point">
+                  <div class="key-point-icon">🌿</div>
+                  <div class="key-point-text"><strong>Меристемни (образователни)</strong> — активно делящи се клетки; осигуряват растеж. Апикална меристема (връхче на корен и стъбло), латерална (камбий — вторично задебеляване).</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🍃</div>
+                  <div class="key-point-text"><strong>Покривни (епидермис)</strong> — защита от изсъхване и механични наранявания. Устица в листата регулират газообмена и транспирацията.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">☀️</div>
+                  <div class="key-point-text"><strong>Основни (паренхим)</strong> — хлоропластите осъществяват фотосинтеза; също и съхранение на вода и хранителни вещества.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">💧</div>
+                  <div class="key-point-text"><strong>Провеждащи тъкани:</strong> <strong>Ксилем</strong> — провежда вода и минерални соли нагоре (от корена към листата); мъртви клетки. <strong>Флоем</strong> — провежда органични вещества (захари) надолу (от листата към останалите части); живи клетки.</div>
+                </div>
+                <div class="key-point">
+                  <div class="key-point-icon">🪨</div>
+                  <div class="key-point-text"><strong>Механични тъкани:</strong> склеренхим (мъртви клетки с дебели стени — твърда опора) и колленхим (живи клетки — гъвкава опора в млади органи).</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">6. Най-важното</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>4 вида животински тъкани:</strong> епителна, съединителна, мускулна, нервна.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Кръвта е вид съединителна тъкан</strong> — матриксът е течен (плазма).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Сърдечен мускул:</strong> набразден (като скелетния), но неволен и с автоматизъм (за разлика от скелетния).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Хомеостаза:</strong> отрицателната обратна връзка е основният механизъм за поддържане на постоянство.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Неврон = тяло + дендрити + аксон;</strong> предава сигнал чрез синапс (химично, с невромедиатори).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Ксилем:</strong> вода нагоре; <strong>Флоем:</strong> органични вещества надолу (при растенията).</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bio12-mnogokletchna-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bio12-mnogokletchna-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bio12-mnogokletchna-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Многоклетъчна организация';
+    window.LESSON_SUBJECT = 'БИОЛОГИЯ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        var icon = d.passed ? '✓' : '✗';
+        a.style.position = 'relative';
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + icon + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Химия и околната среда · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'chem12-okolna-sreda-q2',
+      lessonUrl:  '/lessons/chem12-okolna-sreda.html',
+      lessonName: 'Химия и опазване на околната среда',
+      eyebrow:    'ХИМИЯ · 12 КЛАС',
+      title:      'Куиз — Химия и околна среда — Тест 2',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    2,
+      nextQuizUrl: '/lessons/chem12-okolna-sreda-quiz-3.html',
+      questions: [
+        { q:'В кой слой на атмосферата се намира озоновият слой?', opts:['Тропосфера','Стратосфера','Мезосфера','Термосфера'], correct:1, explanation:'Озоновият слой е в стратосферата на височина 15–35 км. Там O₃ поглъща UV лъчението. В тропосферата (0–12 км) озонът е замърсител — участва в образуването на фотохимичен смог.' },
+        { q:'Каква химична реакция образува сярна киселина в атмосферата при киселинни дъждове?', opts:['N₂ + O₂ → 2NO','SO₃ + H₂O → H₂SO₄','CO₂ + H₂O → H₂CO₃','CH₄ + 2O₂ → CO₂ + 2H₂O'], correct:1, explanation:'SO₂ се окислява до SO₃, след което SO₃ + H₂O → H₂SO₄ (сярна киселина). Тя пада с дъжда, закислявайки почвата и водните басейни.' },
+        { q:'Кое рециклиране е НАЙ-ЕНЕРГИЙНО ефективно?', opts:['Хартия','Пластмаса','Алуминий','Стъкло'], correct:2, explanation:'Рециклирането на алуминий изразходва само ~5% от енергията, необходима за производството от боксит. Алуминиевите кутии могат да бъдат рециклирани и върнати на пазара само за 60 дни.' },
+        { q:'Какъв е главният естествен парников газ в атмосферата (преди човешко влияние)?', opts:['CO₂','H₂O (водни пари)','CH₄','N₂O'], correct:1, explanation:'Водните пари (H₂O) са всъщност най-значимият естествен парников газ — отговорни за около 50% от естествения парников ефект. CO₂ допринася около 20%, но е по-чувствителен на промени от човешка дейност.' },
+        { q:'Какво означава „зелена химия"?', opts:['Химия с растителни суровини','Проектиране на процеси/продукти, минимизиращи опасни вещества','Химия на хлорофила','Химия на фотосинтезата'], correct:1, explanation:'Зелената химия (устойчива химия) е принципна рамка за проектиране на химични продукти и процеси, която предотвратява замърсяването от самото начало, вместо да го почиства после.' },
+        { q:'Какви са последиците от киселинните дъждове върху горите?', opts:['Ускорен растеж поради азот','Изсъхване на листата, увреждане на корените, загиване на дървета','По-добра минерализация на почвата','Никакви, само водоемите се засягат'], correct:1, explanation:'Киселинните дъждове извличат хранителни вещества (Ca, Mg, K) от листата и почвата. Мобилизират токсични Al³⁺ йони → увреждат корените. Особено уязвими са иглолистните гори.' },
+        { q:'Кое вещество в изпускателните газове на автомобилите е основен предшественик на фотохимичния смог?', opts:['CO₂','NOₓ и летливи органични съединения (ЛОС)','SO₂','Водни пари'], correct:1, explanation:'Фотохимичният смог се образува при реакции на NOₓ и ЛОС под действие на слънчева светлина, при което се получава приземен О₃ и PAN (пероксиацетилнитрат) — дразнещи белодробно замърсители.' },
+        { q:'Каква е ролята на пестицидите в замърсяването на почвата?', opts:['Подобряват структурата на почвата','Натрупват се в храните и живите организми (биоакумулация), увреждат полезни организми','Неутрализират тежките метали','Нямат траен ефект — бързо се разграждат'], correct:1, explanation:'Персистентните пестициди (като ДДТ) се натрупват в мазнините на организмите (биоакумулация) и концентрацията им нараства по хранителната верига (биомагнификация). ДДТ е забранен в повечето страни.' },
+        { q:'Кой процес от зелената химия замества стехиометричните реагенти с по-малко отпадъци?', opts:['Хидролиза','Каталитична реакция','Пиролиза','Електролиза'], correct:1, explanation:'Каталитичните реакции използват малки количества катализатор, регенериращ се в процеса. Вместо еквивалентни количества стехиометричен реагент → минимум странични продукти и отпадъци.' },
+        { q:'Каква е разликата между парниковия ефект и засиления (антропогенен) парников ефект?', opts:['Нямат разлика — едно и също явление','Естественият е необходим за живота; засиленият е причинен от хора и водр до нежелано затопляне','Естественият е вреден, а засиленият е полезен','Засиленият засяга само тропиците'], correct:1, explanation:'Естественият парников ефект поддържа средна температура ~15 °C — без него Земята би была ~−18 °C. Засиленият ефект, причинен от горенето на изкопаеми горива, води до нежелано затопляне на климата.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

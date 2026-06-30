@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Анализ на веществата · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem12-analiz-q1',
+      lessonUrl:   '/lessons/chem12-analiz.html',
+      lessonName:  'Анализ на веществата',
+      eyebrow:     'ХИМИЯ · 12 КЛАС',
+      title:       'Тест 1 — Качествен анализ на йони',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem12-analiz-quiz-2.html',
+      questions: [
+        {
+          q: 'Кой реагент се използва за доказване на Fe³⁺ йони?',
+          opts: ['NaOH', 'KSCN', 'BaCl₂', 'AgNO₃'],
+          correct: 1,
+          explanation: 'Fe³⁺ + KSCN дава кървавочервен разтвор — това е характерната и специфична реакция за доказване на Fe³⁺.'
+        },
+        {
+          q: 'Каква утайка се образува при реакцията на Fe²⁺ с NaOH?',
+          opts: ['Кафява утайка Fe(OH)₃', 'Синя утайка Cu(OH)₂', 'Зеленикава утайка Fe(OH)₂', 'Бяла утайка Fe(OH)₂'],
+          correct: 2,
+          explanation: 'Fe²⁺ + 2NaOH → Fe(OH)₂↓ + 2Na⁺. Утайката е зеленикава. Не я бъркайте с Fe(OH)₃, която е кафява (образува се от Fe³⁺).'
+        },
+        {
+          q: 'С кой реагент се доказват Cl⁻ йони?',
+          opts: ['BaCl₂', 'HCl', 'AgNO₃', 'NaOH'],
+          correct: 2,
+          explanation: 'Cl⁻ + AgNO₃ → AgCl↓ (бяла утайка, неразтворима в HNO₃). Тази реакция е специфична за хлоридния йон.'
+        },
+        {
+          q: 'Каква е характеристиката на утайката AgCl?',
+          opts: [
+            'Жълта утайка, разтворима в HNO₃',
+            'Бяла утайка, неразтворима в HNO₃',
+            'Бяла утайка, разтворима в HNO₃',
+            'Сива утайка, неразтворима в вода'
+          ],
+          correct: 1,
+          explanation: 'AgCl е бяла утайка, която е неразтворима в HNO₃. Неразтворимостта в HNO₃ е ключова за разграничаване от другите бели утайки.'
+        },
+        {
+          q: 'Кой реагент се използва за доказване на SO₄²⁻ йони?',
+          opts: ['AgNO₃', 'NaOH', 'BaCl₂', 'HNO₃'],
+          correct: 2,
+          explanation: 'SO₄²⁻ + BaCl₂ → BaSO₄↓ (бяла утайка, неразтворима в HCl). Именно неразтворимостта в HCl отличава BaSO₄ от BaCO₃.'
+        },
+        {
+          q: 'Как се доказва наличието на CO₃²⁻ йони?',
+          opts: [
+            'С AgNO₃ → жълта утайка',
+            'С HCl → отделя се CO₂, помътнява варова вода',
+            'С BaCl₂ → синя утайка',
+            'С NaOH → зелен газ'
+          ],
+          correct: 1,
+          explanation: 'CO₃²⁻ + 2HCl → CO₂↑ + H₂O + 2Cl⁻. Отделеният CO₂ помътнява варова вода (Ca(OH)₂): CO₂ + Ca(OH)₂ → CaCO₃↓ + H₂O.'
+        },
+        {
+          q: 'Какво се наблюдава при реакцията на Cu²⁺ с NaOH?',
+          opts: ['Кафява утайка', 'Зеленикава утайка', 'Синя утайка Cu(OH)₂', 'Безцветен разтвор'],
+          correct: 2,
+          explanation: 'Cu²⁺ + 2NaOH → Cu(OH)₂↓ + 2Na⁺. Синята утайка Cu(OH)₂ е характерна за медния йон Cu²⁺.'
+        },
+        {
+          q: 'Как се доказва наличието на NH₄⁺ йони?',
+          opts: [
+            'С AgNO₃ → бяла утайка',
+            'С HCl → жълта утайка',
+            'С NaOH при загряване → NH₃ обезцветява лакмус',
+            'С BaCl₂ → бяла утайка'
+          ],
+          correct: 2,
+          explanation: 'NH₄⁺ + NaOH → NH₃↑ + H₂O + Na⁺. При загряване се отделя NH₃, който превръща червения лакмус в синьо. Амонякът има характерна миризма.'
+        },
+        {
+          q: 'Ca²⁺ йони реагират с Na₂CO₃ и образуват:',
+          opts: ['Бяла утайка CaCO₃', 'Синя утайка CaSO₄', 'Жълта утайка CaCl₂', 'Не реагират'],
+          correct: 0,
+          explanation: 'Ca²⁺ + CO₃²⁻ → CaCO₃↓. Калциевият карбонат е бяла утайка, неразтворима във вода. Тази реакция се използва за доказване на Ca²⁺.'
+        },
+        {
+          q: 'При реакцията на Fe³⁺ с NaOH каква утайка се образува?',
+          opts: ['Зеленикава Fe(OH)₂', 'Синя Fe(OH)₃', 'Кафява Fe(OH)₃', 'Бяла Fe(OH)₃'],
+          correct: 2,
+          explanation: 'Fe³⁺ + 3NaOH → Fe(OH)₃↓ + 3Na⁺. Утайката е кафява. Разграничете: Fe²⁺ + NaOH → зеленикава Fe(OH)₂; Fe³⁺ + NaOH → кафява Fe(OH)₃.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

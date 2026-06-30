@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Вазов Под игото · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel11-vazov-pod-igoto-q2',
+      lessonUrl: '/lessons/bel11-vazov-pod-igoto.html',
+      lessonName: 'Вазов — Под игото',
+      eyebrow: 'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title: 'Куиз — Вазов „Под игото" — Тест 2',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel11-vazov-pod-igoto-quiz-3.html',
+      passScore: 8,
+      questions: [
+        {
+          q: 'Каква е двойната роля на Бойчо Огнянов в Бяла черква?',
+          opts: [
+            'Търговец и шпионин',
+            'Учител и революционер-конспиратор',
+            'Свещеник и воевода',
+            'Лекар и журналист'
+          ],
+          correct: 1,
+          explanation: 'Огнянов пристига в Бяла черква с прикритието на учител, но всъщност е революционер, организиращ подготовката за въстание. Двойната му самоличност е централна за сюжета — той балансира между личното (любовта към Рада) и националното (революцията).'
+        },
+        {
+          q: 'Как темата за предателството е представена в „Под игото"?',
+          opts: [
+            'Чрез образа на Огнянов, предал революцията',
+            'Чрез Кириак Стефчов — донесъл на властите за революционните дейности',
+            'Само чрез мотива за любовната изневяра',
+            'Предателството не е важна тема в романа'
+          ],
+          correct: 1,
+          explanation: 'Кириак Стефчов олицетворява предателството — той доносничи на турските власти и осуетява революционните планове. Чрез него Вазов критикува онези, поставили личната изгода над националния дълг.'
+        },
+        {
+          q: 'Какво означава заглавието „Под игото"?',
+          opts: [
+            'Под игото на бедността и мизерията',
+            'Под игото на Османската власт — живот в робство',
+            'Под игото на любовта и страстта',
+            'Под игото на религиозните предразсъдъци'
+          ],
+          correct: 1,
+          explanation: '„Игото" е метафора за Османското владичество — тежко бреме върху раменете на българския народ. Заглавието обобщава условията, при които живеят героите: в политическо, икономическо и духовно робство, от което се стремят да се освободят.'
+        },
+        {
+          q: 'В кой руски град е публикувано списание „Денница", в което излиза „Под игото"?',
+          opts: ['Москва', 'Одеса', 'Санкт Петербург', 'Киев'],
+          correct: 2,
+          explanation: 'Списание „Денница" излиза в Санкт Петербург. Вазов го избира, защото руската публика е симпатизираща на каузата на българите след Освободителната война (1877–1878) и защото там живее голяма диаспора.'
+        },
+        {
+          q: 'Как завършва Бяла черква при кулминацията в „Под игото"?',
+          opts: [
+            'Градът е освободен от руските войски',
+            'Въстаниците запалват Бяла черква, за да не се предадат — трагичен финал',
+            'Градът се предава мирно и е пощаден',
+            'Бяла черква се превръща в революционна крепост'
+          ],
+          correct: 1,
+          explanation: 'При потушаването на Априлското въстание въстаниците слагат огън на Бяла черква. Краят е трагичен — много герои загиват, но пожарът символизира и пречистването, и надеждата: свободата ще дойде. Вазов съчетава трагизъм с исторически оптимизъм.'
+        },
+        {
+          q: 'Кой е реалният прототип на измисления град Бяла черква?',
+          opts: ['Копривщица', 'Панагюрище', 'Сопот — родният град на Вазов', 'Клисура'],
+          correct: 2,
+          explanation: 'Бяла черква е измислен град, но прототипът му е Сопот — родният град на Вазов. Така романът придобива автобиографично измерение: Вазов описва родния си край, преживян от него самия.'
+        },
+        {
+          q: 'Как темата за образованието е свързана с националното пробуждане в „Под игото"?',
+          opts: [
+            'Образованието е представено като безсмислено в условия на робство',
+            'Образованието е инструмент на националното пробуждане — учителите са революционери',
+            'Образованието се свързва само с гръцки и турски влияния',
+            'Романът не третира темата за образованието'
+          ],
+          correct: 1,
+          explanation: 'В „Под игото" образованието е представено като инструмент на националното освобождение. Огнянов е учител — но не само за да преподава грамотност, а за да буди националното съзнание. Самото преподаване е форма на революционна дейност.'
+        },
+        {
+          q: 'Каква е връзката между „Под игото" и творчеството на Ботев?',
+          opts: [
+            'Няма връзка — те описват различни исторически периоди',
+            'И двамата пишат за Априлското въстание от 1876 г., но от различен ъгъл — Ботев поетически, Вазов в проза',
+            'Вазов заимства мотиви директно от Ботев',
+            'Ботев е описан като персонаж в „Под игото"'
+          ],
+          correct: 1,
+          explanation: 'И Ботев (поезия), и Вазов (роман) се вдъхновяват от Априлското въстание от 1876 г. Ботев го превръща в лирически апотеоз на жертвата, докато Вазов го описва епически — с герои, сюжет и исторически детайли. Два различни поглъд към едно събитие.'
+        },
+        {
+          q: 'Каква е личната връзка на Вазов с описваните в романа събития?',
+          opts: [
+            'Вазов е роден след Освобождението и пише по исторически документи',
+            'Вазов е живял в Сопот по времето на Априлското въстание и е свидетел на тези събития',
+            'Вазов е взел пряко участие в Априлското въстание като четник',
+            'Вазов е бил в чужбина по времето на въстанието'
+          ],
+          correct: 1,
+          explanation: 'Вазов (роден 1850 г.) е живял в Сопот — прототипа на Бяла черква — по времето на Априлското въстание (1876). Той е очевидец на тези събития, което придава на романа автентичност и дълбоко лично измерение.'
+        },
+        {
+          q: 'Защо „Под игото" е важен за българската национална идентичност?',
+          opts: [
+            'Защото е написан на руски и утвърждава руско-българските отношения',
+            'Защото е първият голям български роман, представящ националноосвободителната борба и запазващ паметта за Априлското въстание',
+            'Защото критикува Освобождението от 1878 г.',
+            'Защото прославя само военните победи без да засяга обикновените хора'
+          ],
+          correct: 1,
+          explanation: '„Под игото" е първият голям български роман. Той кодифицира паметта за Априлското въстание, представя националноосвободителната борба и нейните герои. Преведен на 30+ езика, той разказва на света историята на малкия български народ.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

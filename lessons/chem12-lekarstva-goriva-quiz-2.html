@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Лекарства, горива и полимери · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem12-lekarstva-goriva-q2',
+      lessonUrl:   '/lessons/chem12-lekarstva-goriva.html',
+      lessonName:  'Лекарства, горива и полимери',
+      eyebrow:     'ХИМИЯ · 12 КЛАС',
+      title:       'Тест 2 — Полимери',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     2,
+      nextQuizUrl: '/lessons/chem12-lekarstva-goriva-quiz-3.html',
+      questions: [
+        {
+          q: 'Какво е полимер?',
+          opts: ['Малка молекула с молекулно тегло под 1000', 'Голяма молекула, изградена от многократно повтарящи се мономерни единици', 'Смес от различни соли', 'Вид изкопаемо гориво'],
+          correct: 1,
+          explanation: 'Полимерите са макромолекули, изградени от многократно повтарящи се малки молекули — мономери, свързани чрез ковалентни връзки. Реакцията на образуване се нарича полимеризация. Примери: полиетилен, нишесте, ДНК.'
+        },
+        {
+          q: 'Кой е мономерът на полиетилена?',
+          opts: ['Пропилен (CH₂=CHCH₃)', 'Стирен (C₆H₅CH=CH₂)', 'Етилен (CH₂=CH₂)', 'Винилхлорид (CH₂=CHCl)'],
+          correct: 2,
+          explanation: 'Полиетиленът (PE) се получава чрез полимеризация на етилен (CH₂=CH₂). Двойната C=C връзка на етилена се разкъсва и мономерите се свързват в дълга верига: −[CH₂−CH₂]ₙ−. Полиетиленът е най-широко произвежданата пластмаса в света.'
+        },
+        {
+          q: 'Какво се съдържа в структурата на PVC (поливинилхлорид), което го отличава от другите пластмаси?',
+          opts: ['Азот', 'Хлор', 'Сяра', 'Фосфор'],
+          correct: 1,
+          explanation: 'PVC (поливинилхлорид) съдържа хлорни атоми в структурата си. Мономерът е винилхлорид (CH₂=CHCl). Хлорът придава на PVC огнеустойчивост и химична стабилност, но при изгаряне отделя токсични хлорсъдържащи съединения.'
+        },
+        {
+          q: 'Кой полимер се получава чрез кондензационна полимеризация между диамин и дикарбоксилна киселина?',
+          opts: ['Полиетилен', 'Полистирен', 'PVC', 'Найлон (полиамид)'],
+          correct: 3,
+          explanation: 'Найлонът (полиамид) се получава чрез кондензационна полимеризация: при всяко свързване на диамин с дикарбоксилна киселина се образува пептидна (амидна) връзка −CO−NH− и се отделя молекула H₂O. Типичен пример: найлон-6,6 от хексаметилендиамин и адипинова киселина.'
+        },
+        {
+          q: 'Какво е вулканизация на каучука?',
+          opts: ['Разтваряне на каучука в разтворители', 'Нагряване с елементарна сяра, при което се образуват дисулфидни мостове между веригите', 'Охлаждане под −80°C', 'Реакция с азотна киселина'],
+          correct: 1,
+          explanation: 'Вулканизацията е процес, открит от Чарлз Гудиър, при който каучукът се нагрява с елементарна сяра (S). Сярата образува дисулфидни (−S−S−) мостове между полимерните вериги, правейки материала здрав, еластичен и устойчив на температури. Без вулканизация каучукът е лепкав и нетраен.'
+        },
+        {
+          q: 'От какво е изграден природният каучук?',
+          opts: ['Полиетилен', 'Полиизопрен', 'Полистирен', 'Полипропилен'],
+          correct: 1,
+          explanation: 'Природният каучук е полиизопрен — полимер на изопрена (2-метилбутадиен-1,3). Получава се от латекса на каучуковото дърво (Hevea brasiliensis). Молекулата съдържа двойни C=C връзки в цис-конфигурация, което му придава еластичност.'
+        },
+        {
+          q: 'Кое изделие се произвежда от полипропилен (PP)?',
+          opts: ['Стиропор (разпенени опаковки)', 'Прозоречни профили и тръби (PVC)', 'Канализационни тръби и кутии', 'Найлонови чорапи'],
+          correct: 2,
+          explanation: 'Полипропиленът (PP) е по-твърд и термоустойчив от полиетилена. Използва се за производство на канализационни тръби, кутии за хранителни продукти, автомобилни броячи, медицински спринцовки и контейнери. Прозоречните профили и тръбите за вода обикновено са PVC.'
+        },
+        {
+          q: 'Полистиренът (PS) се използва за производство на:',
+          opts: ['Автомобилни гуми', 'Разпенени (стиропорени) опаковки и еднократни съдове', 'Найлонови влакна', 'Тръбопроводи'],
+          correct: 1,
+          explanation: 'Полистиренът (PS) е полимер на стирена. В разпенен вид (EPS — expandable polystyrene) образува стиропора — лек, добър топлоизолатор. Използва се за опаковки на електроника, термоси, еднократни чаши и чинии.'
+        },
+        {
+          q: 'Кои полимери се разграждат от микроорганизми в природата?',
+          opts: ['Полиетилен и PVC', 'Полипропилен и полистирен', 'Полилактид (PLA) и полигидроксиалканоати (PHA)', 'Найлон и тефлон'],
+          correct: 2,
+          explanation: 'Биоразградимите полимери като полилактид (PLA, от млечна киселина) и полигидроксиалканоати (PHA, произведени от бактерии) могат да се разграждат от микроорганизми в почвата. Традиционните пластмаси (PE, PVC, PP) остават в природата стотици години.'
+        },
+        {
+          q: 'Кой тип полимеризация се осъществява при образуване на полиетилен?',
+          opts: ['Кондензационна полимеризация', 'Верижна (адиционна) полимеризация', 'Йонна обмяна', 'Хидролиза'],
+          correct: 1,
+          explanation: 'Полиетиленът се получава чрез адиционна (верижна) полимеризация: двойните C=C връзки на етилена се разкъсват и мономерите се добавят един към друг без отделяне на странични продукти. Кондензационната полимеризация (при найлон, полиестер) отделя малки молекули като H₂O.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Пенчо Славейков — Cis moll · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel11-slaveykov-cis-moll-q1',
+      lessonUrl:   '/lessons/bel11-slaveykov-cis-moll.html',
+      lessonName:  'Пенчо Славейков — Cis moll',
+      eyebrow:     'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title:       'Куиз — Пенчо Славейков — Cis moll — Тест 1',
+      sub:         '10 въпроса · Избери верния отговор',
+      passScore:   8,
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel11-slaveykov-cis-moll-quiz-2.html',
+      questions: [
+        { q:'Какво означава „Cis moll" в музикалната терминология?', opts:['Мажорна гама','До-диез минор — тъжна, меланхолична тоналност','Бързо и весело темпо','Музикална пауза'], correct:1, explanation:'„Cis moll" е до-диез минор — минорна тоналност, свързана с тъга, меланхолия и дълбоко чувство. Заглавието веднага задава емоционалния ключ на стихотворението.' },
+        { q:'Какво изразява стихотворението „Cis moll"?', opts:['Радостна любов','Любовта като дълбоко, меланхолично и изгарящо чувство','Разочарование от живота','Природни пейзажи'], correct:1, explanation:'Стихотворението изразява любовта в нейния най-дълбок и меланхоличен вид — не бурна страст, а изгарящо копнение, близко до мъка по неосъщественото.' },
+        { q:'Към кое литературно течение принадлежи Пенчо Славейков?', opts:['Романтизъм','Реализъм','Символизъм','Нихилизъм'], correct:2, explanation:'Пенчо Славейков е представител на символизма и естетизма в България, свързан с кръга „Мисъл". Той въвежда в литературата идеята за изкуството като висша ценност.' },
+        { q:'Каква е ролята на музиката в стихотворението?', opts:['Просто фон','Музиката е метафора на любовното чувство — и двете са неуловими и дълбоки','Начин за забавление','Критика на музикантите'], correct:1, explanation:'Музиката (минорната тоналност) е централна метафора — тя изразява онова, което думите не могат да кажат напълно: дълбочината на любовното чувство и неговата тъжна красота.' },
+        { q:'Как е изобразена жената в „Cis moll"?', opts:['Конкретна личност с биографични детайли','Идеализиран образ — съзвучен с музиката и меланхолията','Жена, която го изоставила','Майчина фигура'], correct:1, explanation:'Жената е идеализирана и абстрактна — тя е по-скоро настроение, звук, усещане, отколкото конкретна личност. Образът й е съзвучен с минорната тоналност на стихотворението.' },
+        { q:'Какво е кръгът „Мисъл" и каква е ролята на Славейков в него?', opts:['Политическа партия','Литературно списание и кръг за ново изкуство, в което Славейков е водеща фигура','Музикално дружество','Академия на науките'], correct:1, explanation:'Кръгът „Мисъл" (около списание „Мисъл") е литературно движение за модерно изкуство в България. Пенчо Славейков е водеща фигура — той въвежда европейски идеи за чистото изкуство.' },
+        { q:'Какво е значението на минорната тоналност за темата на любовта?', opts:['Любовта е весела и безгрижна','Любовта е дълбока, меланхолична, с примес на болка и копнеж','Любовта е невъзможна','Тоналността е случайна'], correct:1, explanation:'Минорната тоналност подсказва, че любовта в стихотворението не е лека и весела, а дълбока и болезнена — изпълнена с копнеж и меланхолия, красота и тъга едновременно.' },
+        { q:'Каква е формата на стихотворението?', opts:['Народна песен','Сонет','Лирическа поема с музикална структура','Баlade'], correct:2, explanation:'Стихотворението е лирическа поема с музикална структура — повторенията, ритъмът и звуковата организация наподобяват музикална композиция, съответстваща на заглавието.' },
+        { q:'Как се проявява символизмът в „Cis moll"?', opts:['Директно изказване на чувствата','Символи, настроения и музикалност вместо прямо описание','Точно описание на природата','Социална критика'], correct:1, explanation:'Символизмът се проявява чрез неизразимото — чувствата се предават чрез символи (музикалната тоналност), настроения и звуковата организация на текста, не чрез директно описание.' },
+        { q:'Кой е Пенчо Славейков и каква е връзката му с баща му?', opts:['Не е свързан с Петко Р. Славейков','Син на Петко Р. Славейков — поет от Възраждането','Братовчед на Ботев','Зет на Вазов'], correct:1, explanation:'Пенчо Р. Славейков (1866–1912) е син на Петко Р. Славейков — поет от Националното Възраждане. Двамата представляват различни епохи, но са свързани кръвно и литературно.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

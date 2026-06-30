@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Биохимия · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'chem12-biohimiya-q3',
+      lessonUrl:  '/lessons/chem12-biohimiya.html',
+      lessonName: 'Биохимия',
+      eyebrow:    'ХИМИЯ · 12 КЛАС',
+      title:      'Куиз — Биохимия — Тест 3',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        { q:'Кой полизахарид изпълнява резервна функция при животните?', opts:['Целулоза','Нишесте','Гликоген','Хитин'], correct:2, explanation:'Гликогенът е резервен полизахарид при животните — аналог на нишестето при растенията. Съхранява се предимно в черния дроб и мускулите и се разгражда до глюкоза при нужда от енергия.' },
+        { q:'Комплементарните азотни бази в ДНК са:', opts:['A-G и T-C','A-T и G-C','A-U и G-C','A-C и G-T'], correct:1, explanation:'В ДНК комплементарните двойки са: Аденин (A) с Тимин (T) — свързани с 2 водородни връзки, и Гуанин (G) с Цитозин (C) — свързани с 3 водородни връзки. Това е основата на двойната спирала на Уотсън и Крик.' },
+        { q:'Фотосинтезата е процес, при който растенията:', opts:['Разграждат глюкоза до СО₂ и вода с отделяне на енергия','Синтезират глюкоза от СО₂ и вода с използване на светлинна енергия','Синтезират белтъци от аминокиселини','Разграждат мазнини до глицерол и мастни киселини'], correct:1, explanation:'Фотосинтеза: 6CO₂ + 6H₂O + светлинна енергия → C₆H₁₂O₆ + 6O₂. Хлорофилът поглъща светлинна енергия, която се използва за синтеза на глюкоза от CO₂ и вода.' },
+        { q:'Кое от изброените е пример за липид, различен от триглицерид?', opts:['Глюкоза','Холестерол','Аланин','Целулоза'], correct:1, explanation:'Холестеролът е стероид — вид липид с различна структура от триглицеридите. Той е важна съставка на клетъчните мембрани и прекурсор на стероидни хормони, жлъчни киселини и витамин D.' },
+        { q:'Каква е функцията на хемоглобина?', opts:['Катализира разграждане на захари','Пренася кислород в кръвта','Съхранява генетична информация','Разгражда мазнините в червата'], correct:1, explanation:'Хемоглобинът е железосъдържащ белтък в червените кръвни клетки. Желязото в хема се свързва обратимо с O₂ в белите дробове и го освобождава в тъканите. Всяка молекула хемоглобин носи 4 молекули O₂.' },
+        { q:'Каква е ролята на тРНК при транслацията?', opts:['Копира ДНК','Синтезира рибозоми','Доставя аминокиселини до рибозомата и ги свързва с кодоните на иРНК','Разгражда стари белтъци'], correct:2, explanation:'тРНК (транспортна РНК) е адаптерна молекула: свързва специфична аминокиселина на 3\'-края си и чрез антикодона разпознава съответния кодон на иРНК. Осигурява точното подреждане на аминокиселините при синтеза на белтъка.' },
+        { q:'Кое е основното място за синтез на белтъци в клетката?', opts:['Ядро','Митохондрия','Рибозома','Клетъчна мембрана'], correct:2, explanation:'Рибозомите са органелите, на които се извършва транслацията — синтезът на белтъци. Те се намират в цитоплазмата (свободни рибозоми) или свързани с ендоплазмения ретикулум (гранулиран ЕР).' },
+        { q:'Кое твърдение за ензимите е ВЯРНО?', opts:['Ензимите се изразходват в реакцията','Ензимите само забавят реакциите','Ензимите са специфични — действат на определен субстрат','Всички ензими изискват метален йон'], correct:2, explanation:'Ензимите са специфични: всеки ензим действа само на определен субстрат или тип реакция. Тази специфичност се дължи на активния център — трето измерна структура, която е комплементарна на субстрата (модел „ключ-ключалка" или „индуцирано прилягане").' },
+        { q:'При осапунване на мазнина с NaOH се получава:', opts:['Глицерол + мастни киселини','Глицерол + натриеви соли на мастни киселини (сапун)','Глицерол + естери','Само CO₂ и H₂O'], correct:1, explanation:'Осапунването е алкална хидролиза на мазнини: триглицерид + 3 NaOH → глицерол + 3 натриеви соли на мастни киселини. Натриевите соли са твърди сапуни; калиевите соли — течни сапуни.' },
+        { q:'Кои са четирите нива на структурна организация на белтъците?', opts:['Атомна, молекулна, клетъчна, органна','Първична, вторична, третична, четвъртична','Проста, сложна, разклонена, неразклонена','Йонна, ковалентна, водородна, вандерваалсова'], correct:1, explanation:'Четирите нива на белтъчна структура: 1) Първична — аминокиселинна последователност. 2) Вторична — алфа-спирала или бета-листа (водородни връзки). 3) Третична — 3D гънка на полипептидната верига. 4) Четвъртична — обединение на няколко субединици (само при мулти-субединични белтъци).' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

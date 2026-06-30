@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Анализ на веществата · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <!-- ══ QUIZ CONFIG ══ -->
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'chem12-analiz-q3',
+      lessonUrl:  '/lessons/chem12-analiz.html',
+      lessonName: 'Анализ на веществата',
+      eyebrow:    'ХИМИЯ · 12 КЛАС',
+      title:      'Куиз — Анализ на веществата — Тест 3',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      questions: [
+        { q:'Каква реакция доказва наличие на сулфатни йони SO₄²⁻ в разтвор?', opts:['Добавяне на AgNO₃','Добавяне на BaCl₂','Добавяне на NaOH','Добавяне на HCl'], correct:1, explanation:'Ba²⁺ + SO₄²⁻ → BaSO₄↓ (бяла утайка). BaSO₄ е неразтворима в разредена HCl и HNO₃ — това потвърждава присъствието на сулфатни йони.' },
+        { q:'Кой метод за анализ използва светлинно излъчване от атоми при нагряване?', opts:['Хроматография','Пламъчна спектроскопия','Гравиметрия','Електрофореза'], correct:1, explanation:'При пламъчната спектроскопия (AES — Atomic Emission Spectroscopy) атомите се нагряват и излъчват светлина с характерни дължини на вълната. Всеки елемент има уникален спектър.' },
+        { q:'Кой реагент доказва наличие на амонячни йони NH₄⁺?', opts:['AgNO₃','NaOH (загряване и тест с лакмус)','BaCl₂','HCl'], correct:1, explanation:'При добавяне на NaOH и загряване, NH₄⁺ се превръща в NH₃ (амоняк) — газ с характерна миризма, който оцветява влажния червен лакмус в синьо.' },
+        { q:'Какво е хроматография?', opts:['Разделяне на смеси по различна скорост на движение в неподвижна фаза','Измерване на електрическо съпротивление','Количествено измерване чрез утаяване','Метод за нагряване на проби'], correct:0, explanation:'Хроматографията разделя компонентите на смес по различния им афинитет към подвижна и неподвижна фаза. Прилага се в аналитичната химия, биологията и медицината.' },
+        { q:'Каква утайка се получава при добавяне на NaOH към разтвор, съдържащ Cu²⁺?', opts:['CuO (черна)','Cu(OH)₂ (синя)','Cu₂O (червена)','CuCl₂ (жълта)'], correct:1, explanation:'Cu²⁺ + 2OH⁻ → Cu(OH)₂↓ — синя желатинозна утайка. При загряване се разлага до CuO (черен). Тестът се използва за доказване на Cu²⁺ йони.' },
+        { q:'Кое твърдение за pH скалата е ВЯРНО?', opts:['pH може да е само от 0 до 7','pH = -log[H⁺]','При неутрален разтвор pH = 0','pH се измерва само с лакмус'], correct:1, explanation:'pH = -log[H⁺]. При [H⁺] = 10⁻⁷ mol/L, pH = 7 (неутрален). Скалата обичайно е 0–14, но теоретично може да е извън тези граници.' },
+        { q:'Каква е разликата между качествен и количествен анализ?', opts:['Качественият е по-точен от количествения','Качественият определя КАКВО е в пробата; количественият — КОЛКО','Те са едно и също нещо','Количественият анализ не изисква реагенти'], correct:1, explanation:'Качественият анализ идентифицира вещества (КАКВО?), докато количественият определя точното количество/концентрация (КОЛКО?). И двата метода са основни за аналитичната химия.' },
+        { q:'Какъв цвят придобива разтворът при добавяне на метилово оранжево при pH 3?', opts:['Жълт','Оранжев','Червен','Безцветен'], correct:2, explanation:'Метиловото оранжево е червено при pH < 3.1, оранжево при pH 3.1–4.4 и жълто при pH > 4.4. При pH 3 разтворът е ясно червен.' },
+        { q:'Кой метод позволява точно измерване на маса на утайка за количествен анализ?', opts:['Титруване','Гравиметрия','Спектроскопия','Хроматография'], correct:1, explanation:'Гравиметрията включва утаяване на анализирания компонент, филтруване, изсушаване и претегляне на утайката. Масата й се свързва с количеството на търсеното вещество.' },
+        { q:'Какъв газ се отделя при реакцията на карбонатни соли с киселина?', opts:['O₂','H₂','CO₂','N₂'], correct:2, explanation:'CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂↑. Отделеният CO₂ избистря варна вода — Ca(OH)₂ + CO₂ → CaCO₃↓. Тестът доказва наличие на карбонатен йон CO₃²⁻.' },
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

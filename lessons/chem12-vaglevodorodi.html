@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Въглеводороди · Химия 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .chem-formula {
+      background: var(--soft); border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0; padding: 14px 20px; margin: 14px 0;
+      font-family: 'Courier New', monospace; font-size: 14px; line-height: 2; color: var(--text);
+    }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+    table.chem-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+    table.chem-table th { background: var(--accent); color: #fff; padding: 8px 12px; text-align: left; }
+    table.chem-table td { padding: 8px 12px; border-bottom: 1px solid var(--line); }
+    table.chem-table tr:nth-child(even) td { background: var(--soft); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">Химия 12 клас</a>
+        <span>›</span>
+        Въглеводороди
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">⚗️ ХИМИЯ · 12 КЛАС</div>
+          <div class="lesson-title">Органична химия — Въглеводороди</div>
+          <div class="lesson-meta">Алкани, алкени, алкини, арени · Номенклатура, свойства, реакции · ~12 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- 1. ВЪВЕДЕНИЕ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Какво са въглеводородите?</div>
+            <div class="lesson-body">
+              <p><strong>Въглеводородите</strong> са органични съединения, изградени само от въглерод (C) и водород (H). Те са основата на органичната химия и изходен материал за синтеза на хиляди вещества. Делят се на:</p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Наситени въглеводороди</strong> — само единични C–C връзки (алкани)</li>
+                <li><strong>Ненаситени въглеводороди</strong> — двойни (алкени) или тройни (алкини) C–C връзки</li>
+                <li><strong>Ароматни въглеводороди</strong> — бензенов пръстен (арени)</li>
+              </ul>
+            </div>
+
+            <!-- 2. АЛКАНИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Алкани (парафини)</div>
+            <div class="lesson-body">
+              <p><strong>Алканите</strong> са наситени въглеводороди с обща формула <strong>CₙH₂ₙ₊₂</strong>. Всички C–C връзки са единични (σ-връзки). Атомите на въглерода са в sp³ хибридно състояние.</p>
+            </div>
+            <table class="chem-table">
+              <tr><th>Брой C атоми</th><th>Формула</th><th>Наименование</th><th>Агрегатно състояние (н.у.)</th></tr>
+              <tr><td>1</td><td>CH₄</td><td>Метан</td><td>газ</td></tr>
+              <tr><td>2</td><td>C₂H₆</td><td>Етан</td><td>газ</td></tr>
+              <tr><td>3</td><td>C₃H₈</td><td>Пропан</td><td>газ</td></tr>
+              <tr><td>4</td><td>C₄H₁₀</td><td>Бутан</td><td>газ</td></tr>
+              <tr><td>5</td><td>C₅H₁₂</td><td>Пентан</td><td>течност</td></tr>
+              <tr><td>16+</td><td>CₙH₂ₙ₊₂</td><td>Хексадекан и нагоре</td><td>твърдо вещество</td></tr>
+            </table>
+            <div class="lesson-body">
+              <p><strong>Номенклатура на алканите:</strong> корен = брой C атоми (мет-, ет-, проп-, бут-, пент-, хекс-, хепт-, окт-, нон-, дек-) + наставка <strong>-ан</strong>. При разклонени вериги се избира най-дълга верига, номерира се от края, по-близо до разклонението. Заместителите (алкилни групи: метил –CH₃, етил –C₂H₅) се посочват с числа и наименование.</p>
+              <p><strong>Пример:</strong> 2-метилбутан = бутанова верига с метилова група на 2-ри въглерод.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔥</div>
+                <div class="key-point-text"><strong>Горене (пълно):</strong> CₙH₂ₙ₊₂ + O₂ → CO₂ + H₂O. Пример: CH₄ + 2O₂ → CO₂ + 2H₂O. Алканите горят с почти безцветен пламък.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">☀️</div>
+                <div class="key-point-text"><strong>Реакция на заместване (халогениране):</strong> CH₄ + Cl₂ → CH₃Cl + HCl (при UV светлина). Характерна реакция за алкани — замества се Н атом с Cl.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Приложения:</strong> Метан — природен газ; пропан и бутан — втечнен газ (бутилки); парафин (твърди алкани) — свещи, козметика.</div>
+              </div>
+            </div>
+
+            <!-- 3. АЛКЕНИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Алкени (олефини)</div>
+            <div class="lesson-body">
+              <p><strong>Алкените</strong> са ненаситени въглеводороди с обща формула <strong>CₙH₂ₙ</strong>. Съдържат поне една C=C двойна връзка (1 σ + 1 π връзка). Въглеродните атоми при двойната връзка са в sp² хибридно състояние и са в обща равнина.</p>
+              <p>Най-простият алкен е <strong>етен (етилен) C₂H₄</strong>: CH₂=CH₂. Следващите: пропен (C₃H₆), бутен (C₄H₈).</p>
+              <p><strong>Номенклатура:</strong> Основна верига — тази, съдържаща двойната връзка. Наставка <strong>-ен</strong>. Номерирането започва от края, по-близо до двойната връзка. Пример: бут-1-ен, бут-2-ен.</p>
+              <p><strong>Изомерия:</strong> Алкените могат да имат цис-транс (геометрична) изомерия около двойната връзка, когато и двата въглерода от нея носят различни заместители.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Присъединяване на H₂ (хидрогениране):</strong> CH₂=CH₂ + H₂ → CH₃–CH₃. Реакцията протича при катализатор (Ni, Pt, Pd) и се разкъсва π-връзката.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧪</div>
+                <div class="key-point-text"><strong>Присъединяване на Br₂ (бромиране):</strong> CH₂=CH₂ + Br₂ → CH₂Br–CH₂Br. Бромната вода се обезцветява — качествена реакция за ненаситени съединения!</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏭</div>
+                <div class="key-point-text"><strong>Полимеризация:</strong> n·CH₂=CH₂ → (–CH₂–CH₂–)ₙ (полиетилен). Основен промишлен процес за производство на пластмаси.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📌</div>
+                <div class="key-point-text"><strong>Правило на Марковников:</strong> При присъединяване на HX към несиметричен алкен, H се присъединява към по-наситения C атом (носещ повече H). Пример: пропен + HBr → 2-бромпропан (не 1-бромпропан).</div>
+              </div>
+            </div>
+
+            <!-- 4. АЛКИНИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Алкини</div>
+            <div class="lesson-body">
+              <p><strong>Алкините</strong> са ненаситени въглеводороди с обща формула <strong>CₙH₂ₙ₋₂</strong>. Съдържат поне една C≡C тройна връзка (1 σ + 2 π връзки). Въглеродните атоми при тройната връзка са в sp хибридно състояние и молекулата е <strong>линейна</strong> в тази зона.</p>
+              <p>Най-важният алкин е <strong>ацетилен (етин) C₂H₂</strong>: HC≡CH. Гори с много горещ пламък (над 3000°C) — използва се за заваряване и рязане на метали.</p>
+              <p><strong>Номенклатура:</strong> Наставка <strong>-ин</strong>. Пример: проп-1-ин (HC≡C–CH₃), бут-2-ин (CH₃–C≡C–CH₃).</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Присъединяване на H₂:</strong> протича на два етапа — HC≡CH + H₂ → CH₂=CH₂ (алкен), след това → CH₃–CH₃ (алкан). При точен контрол може да спрем на алкен.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧪</div>
+                <div class="key-point-text"><strong>Обезцветяване на бромна вода:</strong> HC≡CH + 2Br₂ → CHBr₂–CHBr₂ (1,1,2,2-тетрабромоетан). Алкините, като алкените, обезцветяват бромна вода.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔥</div>
+                <div class="key-point-text"><strong>Горене:</strong> 2HC≡CH + 5O₂ → 4CO₂ + 2H₂O. Пламъкът е ярко светещ поради висок процент C.</div>
+              </div>
+            </div>
+
+            <!-- 5. АРЕНИ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Арени — Бензен и неговите производни</div>
+            <div class="lesson-body">
+              <p><strong>Бензенът (C₆H₆)</strong> е най-простият арен. Молекулата е <strong>плоска, правилен шестоъгълник</strong>. Всичките 6 C атоми са в sp² хибридно състояние. Шестте π-електрона са делокализирани над и под равнината на пръстена — това е <strong>ароматна система</strong>.</p>
+              <p>Бензенът НЕ обезцветява бромна вода и КМnO₄ при стайна температура (за разлика от алкените и алкините). Структурно е различен от циклохексадиен — ароматността е особено стабилно електронно състояние.</p>
+              <p><strong>Производни на бензена (арени):</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Толуен</strong> — метилбензен (C₆H₅–CH₃)</li>
+                <li><strong>Ксилен</strong> — диметилбензен</li>
+                <li><strong>Стирен</strong> — винилбензен (C₆H₅–CH=CH₂)</li>
+                <li><strong>Нафтален</strong> — два слети бензенови пръстена (C₁₀H₈)</li>
+              </ul>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Характерна реакция: електрофилно заместване.</strong> При бензена π-електроните привличат електрофили. Пример: нитриране — C₆H₆ + HNO₃ → C₆H₅NO₂ + H₂O (нитробензен, при H₂SO₄ катализатор).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧪</div>
+                <div class="key-point-text"><strong>Халогениране (заместване):</strong> C₆H₆ + Cl₂ → C₆H₅Cl + HCl (при FeCl₃ катализатор, без светлина). Заместване, не присъединяване!</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚠️</div>
+                <div class="key-point-text"><strong>Токсичност:</strong> Бензенът е канцерогенен — не трябва да се вдишва или да влиза в контакт с кожата. Замества се в промишлеността с по-малко токсични разтворители.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Приложения:</strong> Синтез на пластмаси, синтетични каучуци, бои, лекарства, взривни вещества (TNT = тринитротолуен).</div>
+              </div>
+            </div>
+
+            <!-- 6. СРАВНЕНИЕ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Сравнение на видовете въглеводороди</div>
+            <table class="chem-table">
+              <tr><th>Клас</th><th>Формула</th><th>Вр.</th><th>Хибридизация</th><th>Хар. реакция</th><th>Тест за разпознаване</th></tr>
+              <tr><td>Алкани</td><td>CₙH₂ₙ₊₂</td><td>единична</td><td>sp³</td><td>заместване</td><td>не реагира с Br₂/KMnO₄</td></tr>
+              <tr><td>Алкени</td><td>CₙH₂ₙ</td><td>двойна</td><td>sp²</td><td>присъединяване</td><td>обезцветява Br₂(водна)</td></tr>
+              <tr><td>Алкини</td><td>CₙH₂ₙ₋₂</td><td>тройна</td><td>sp</td><td>присъединяване</td><td>обезцветява Br₂(водна)</td></tr>
+              <tr><td>Арени</td><td>CₙH₂ₙ₋₆</td><td>делокализ.</td><td>sp²</td><td>ел. заместване</td><td>НЕ обезцветява Br₂(водна)</td></tr>
+            </table>
+
+            <!-- 7. МАТУРА -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Важно за матурата</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Общи формули:</strong> алкани CₙH₂ₙ₊₂, алкени CₙH₂ₙ, алкини CₙH₂ₙ₋₂, арени CₙH₂ₙ₋₆ (бензен C₆H₆).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Хибридизация:</strong> sp³ (алкани), sp² (алкени, арени), sp (алкини). Ъгли на връзките: 109,5° / 120° / 180°.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Качествена реакция за ненаситеност:</strong> обезцветяване на бромна вода (Br₂/H₂O) и разтвор на KMnO₄. Алканите и арените (чисти) НЕ обезцветяват.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Правило на Марковников:</strong> при несиметрични алкени H се присъединява към C с повече H атоми.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Полимеризация:</strong> алкени → полимери. Etилен → полиетилен. Пропилен → полипропилен. Стирен → полистирен.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Ацетилен (етин):</strong> гори при 3000°C, използва се за заваряване. Получава се от CaC₂ + H₂O → HC≡CH + Ca(OH)₂.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Бензен:</strong> не обезцветява бромна вода. Реагира чрез електрофилно заместване. Канцерогенен!</div></div>
+            </div>
+
+          </div>
+
+          <!-- QUIZ CTA -->
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/chem12-vaglevodorodi-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/chem12-vaglevodorodi-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/chem12-vaglevodorodi-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- AI PANEL -->
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Органична химия — Въглеводороди (алкани, алкени, алкини, арени)';
+    window.LESSON_SUBJECT = 'Химия';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

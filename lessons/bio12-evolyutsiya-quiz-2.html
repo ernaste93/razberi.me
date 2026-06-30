@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Еволюция · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'bio12-evolyutsiya-q2',
+      lessonUrl:  '/lessons/bio12-evolyutsiya.html',
+      lessonName: 'Еволюция на биологичните системи',
+      eyebrow:    'БИОЛОГИЯ · 12 КЛАС',
+      title:      'Тест 2 — Еволюция на биологичните системи',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    2,
+      nextQuizUrl: '/lessons/bio12-evolyutsiya-quiz-3.html',
+      questions: [
+        {
+          q: 'Какво са фосилите като доказателство за еволюцията?',
+          opts: [
+            'Живи организми, запазени в лед',
+            'Вкаменени останки или отпечатъци на организми от минали геоложки епохи',
+            'Синтетични модели на изчезнали видове',
+            'Генетични последователности от древна ДНК'
+          ],
+          correct: 1,
+          explanation: 'Фосилите са вкаменени останки, черупки, отпечатъци или следи от организми, живяли в миналото. Те дават директни доказателства за съществуването на видове, живяли преди милиони години.'
+        },
+        {
+          q: 'Archaeopteryx е преходна форма между кои две групи животни?',
+          opts: [
+            'Между рибите и земноводните',
+            'Между земноводните и влечугите',
+            'Между влечугите и птиците',
+            'Между бозайниците и птиците'
+          ],
+          correct: 2,
+          explanation: 'Archaeopteryx (юра, ~150 млн. г.) е класическа преходна форма: има черти и на влечугите (зъби, костена опашка, нокти на крилата) и на птиците (пера, крила). Доказва еволюционната връзка между двете групи.'
+        },
+        {
+          q: 'Какво представляват хомоложните органи?',
+          opts: [
+            'Органи с обща функция, но различен еволюционен произход',
+            'Органи с еднакъв еволюционен произход, но различна функция',
+            'Органи, изгубили своята функция в хода на еволюцията',
+            'Органи, открити само при изчезнали видове'
+          ],
+          correct: 1,
+          explanation: 'Хомоложните органи имат общ еволюционен произход (развити от едни и същи ембрионални структури), но изпълняват различни функции. Пример: предните крайници на човек, кит и прилеп — различни функции, но сходна костна структура.'
+        },
+        {
+          q: 'Ръката на човека, плавникът на кита и крилото на прилепа са пример за:',
+          opts: [
+            'Аналогични органи',
+            'Рудиментарни органи',
+            'Хомоложни органи',
+            'Конвергентни структури'
+          ],
+          correct: 2,
+          explanation: 'Ръката на човека, плавникът на кита и крилото на прилепа са хомоложни органи — имат еднакъв произход (от предния крайник на общ прародител), но изпълняват различни функции (хващане, плуване, летене).'
+        },
+        {
+          q: 'Какво са аналогичните органи?',
+          opts: [
+            'Органи с общ произход и обща функция',
+            'Органи с различен произход, но изпълняващи сходна функция',
+            'Органи с общ произход и различна функция',
+            'Изчезнали органи без функция'
+          ],
+          correct: 1,
+          explanation: 'Аналогичните органи имат различен еволюционен произход, но изпълняват сходна функция — резултат от конвергентна еволюция. Пример: крилото на птицата и крилото на пеперудата — и двете служат за летене, но са се развили независимо.'
+        },
+        {
+          q: 'Крилото на птица и крилото на насекомо (пеперуда) са пример за:',
+          opts: [
+            'Хомоложни органи',
+            'Рудиментарни органи',
+            'Аналогични органи',
+            'Преходни форми'
+          ],
+          correct: 2,
+          explanation: 'Крилото на птица и крилото на пеперуда са аналогични органи — изпълняват сходна функция (летене), но имат коренно различен еволюционен произход и различна вътрешна структура.'
+        },
+        {
+          q: 'Какво са рудиментарните органи?',
+          opts: [
+            'Новообразувани органи в резултат на адаптация',
+            'Органи с много важна функция за организма',
+            'Органи, загубили функционалното си значение в хода на еволюцията, но все още налични',
+            'Органи, открити само при ембрионите'
+          ],
+          correct: 2,
+          explanation: 'Рудиментарните органи са органи, изгубили основната си функция в хода на еволюцията, но все още присъстват в организма. Пример: апендиксът при човека (рудимент от тревопасни предци) и задните крайници при кита.'
+        },
+        {
+          q: 'Какво доказват ембриологичните сходства между гръбначните животни?',
+          opts: [
+            'Че всички животни се развиват по абсолютно еднакъв начин',
+            'Общ еволюционен произход — ранните ембриони на риби, влечуги, птици и бозайници си приличат',
+            'Че ембриогенезата не се е променила в хода на еволюцията',
+            'Че всички гръбначни са всъщност един и същи вид'
+          ],
+          correct: 1,
+          explanation: 'В ранните стадии на развитие ембрионите на различни гръбначни (риба, жаба, птица, човек) си приличат изключително много — имат хрилни цепки, опашка и сходна форма. Това е доказателство за общ еволюционен прародител.'
+        },
+        {
+          q: 'Биохимичните доказателства за еволюцията се основават на:',
+          opts: [
+            'Сходства в цвета и формата на животните',
+            'Факта, че всички живи организми използват ДНК, АТФ и единния генетичен код',
+            'Географското разпределение на видовете',
+            'Сравнението на черепи от различни епохи'
+          ],
+          correct: 1,
+          explanation: 'Всички живи организми — от бактерии до хора — използват ДНК за наследствена информация, АТФ за енергия и един и същи генетичен код. Тази универсалност е силно доказателство за общ произход на живота.'
+        },
+        {
+          q: 'Палеонтологичните доказателства за еволюцията включват:',
+          opts: [
+            'Само сравнение на живи организми',
+            'Само генетични анализи',
+            'Фосили, преходни форми и геоложки слоеве с остатъци от различни епохи',
+            'Само лабораторни експерименти с изкуствена еволюция'
+          ],
+          correct: 2,
+          explanation: 'Палеонтологичните доказателства включват фосили (вкаменени останки), преходни форми (като Archaeopteryx) и геоложките слоеве, в които се намират — по-старите слоеве съдържат по-примитивни форми, по-новите — по-съвременни.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

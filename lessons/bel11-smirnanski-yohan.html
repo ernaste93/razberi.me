@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Христо Смирненски — Йохан · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+
+    .breadcrumb {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+
+    .lesson-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+      padding: 4px 12px; border-radius: 99px; margin-bottom: 14px;
+    }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent); margin-bottom: 10px;
+    }
+
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+
+    .poem-block {
+      background: var(--soft); border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0;
+      font-style: italic; font-size: 14px; line-height: 2; color: var(--text);
+      white-space: pre-line;
+    }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 14px; background: var(--soft); border-radius: 10px;
+    }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+
+    #btn-ask-znaiko {
+      position: fixed; bottom: 28px; right: 32px; z-index: 999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 20px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(30,58,95,0.30);
+      transition: opacity .15s, transform .15s;
+    }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+
+    #selection-tooltip {
+      position: fixed; z-index: 9999; display: none;
+      transform: translateX(-50%); pointer-events: none;
+    }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px; background: var(--accent); color: #fff;
+      border: none; border-radius: 99px; font-family: inherit;
+      font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(30,58,95,0.28);
+      transition: opacity .12s, transform .12s;
+    }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 6px solid transparent; border-top-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a>
+        <span>›</span>
+        Йохан — Христо Смирненски
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Христо Смирненски — „Йохан"</div>
+          <div class="lesson-meta">Пролетарско страдание · Социален протест · ~8 мин четене</div>
+
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Христо Смирненски (1898–1923)</strong> е един от най-значимите поети на пролетарската лирика в България. Роден в Македония (Кукуш), той израства в крайна бедност в София след Балканските войни. Работи като вестникар и художник-карикатурист, публикува стихове с революционен заряд.</p>
+              <p>Умира от туберкулоза на едва <strong>25 години</strong>, оставяйки творчество, което съчетава хуманизъм, социален гняв и дълбоко съчувствие към бедните. Основни теми: страданието на работническата класа, надеждата за революция, смъртта на невинните.</p>
+              <p>Принадлежи към литературния кръг около сп. „Червен смях" и е свързан с комунистическото движение. Поезията му е пряко политически ангажирана — не като пропаганда, а като плач за онеправданите.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Историческият контекст</div>
+            <div class="lesson-body">
+              <p>„Йохан" е написана в контекста на следвоенната криза в България след <strong>Първата световна война (1918)</strong>. Страната е опустошена, хиляди семейства живеят в мизерия. В Европа се разгаря пролетарско движение под влияние на Руската революция (1917).</p>
+              <p>Смирненски пише за конкретни хора — работниците, децата на улицата, бежанците. „Йохан" е образ-тип на чужденеца (германецът Йохан), изгубил всичко в страшна война, сега скитащ по улиците на чуждо за него място.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стихотворението — откъс</div>
+            <div class="poem-block">По тъмните улици скита Йохан,
+с прегърбени плещи, с ботуши в кал —
+пред очи му — мрак, зад гърба — куфар,
+и тежко му е, и наред му е зле.
+
+Вървял е дълго, скитал е много,
+в нечисти хотели е нощувал той —
+от немска земя до България дошъл,
+а ням е Йохан — само бие чук.
+<div class="poem-author">— Христо Смирненски</div></div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Образът на Йохан</div>
+            <div class="lesson-body">
+              <p><strong>Йохан е образ-тип, не индивидуален образ.</strong> Той е всеки работник, всеки бежанец, всеки човек, разгромен от войната и бедността. Националността му (германец) е показателна — войната е унищожила хора от всички страни, без разлика.</p>
+              <p>Характеристиките на Йохан: <strong>нем е</strong> (не говори езика — метафора за липсата на глас, за изключеността от обществото), <strong>скита</strong> (без постоянен дом и работа), <strong>прегърбен</strong> (тежестта на живота). Той не протестира — просто съществува в мрак.</p>
+              <p>Важен детайл: <strong>„само бие чук"</strong> — единственото, което Йохан може да прави, е физически труд. Той е сведен до функция, лишен от личност и достойнство от системата.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Пролетарското страдание</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚙️</div>
+                <div class="key-point-text"><strong>Работникът като жертва</strong> — Йохан не е злодей, не е мързелив. Той работи, но системата го е обрекла на мизерия. Вината е на обществения ред.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌑</div>
+                <div class="key-point-text"><strong>Символиката на тъмнината</strong> — „тъмните улици", „мрак пред очи" — не са само физически описания, а образи на безнадеждност и социална слепота.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🚶</div>
+                <div class="key-point-text"><strong>Скитничеството</strong> — движението без цел е метафора за живота на пролетария: движи се, но никъде не пристига, никъде не е приет.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌍</div>
+                <div class="key-point-text"><strong>Интернационализмът</strong> — Смирненски избира немец, не българин. Страданието е универсално — не познава граници. Войната е виновна и за двете страни.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Социален протест и символика</div>
+            <div class="lesson-body">
+              <p>„Йохан" не е патетичен призив — протестът е тих, скрит в описанието. Смирненски не казва „системата е лоша" директно — той показва конкретен човек в конкретна мизерия и оставя читателя сам да направи извода.</p>
+              <p>Символиката включва: <strong>куфарът</strong> (всичкото притежание, цял живот в един куфар), <strong>калта по ботушите</strong> (физическото унижение, потъването в мръсотия), <strong>прегърбените плещи</strong> (не от старост, а от тежестта на социалните условия).</p>
+              <p>Гласът на Йохан — или по-скоро <strong>липсата му</strong> — е ключов. Той е „ням". Не може да говори за себе си. Поетът говори вместо него. Това е функцията на социалната лирика: да даде глас на безгласните.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🖼️</div>
+                <div class="key-point-text"><strong>Конкретност на образа</strong> — за разлика от символизма, Смирненски описва конкретни детайли (ботуши, куфар, кал). Реализмът на детайла прави страданието осезаемо.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎵</div>
+                <div class="key-point-text"><strong>Ритмика и звукопис</strong> — „само бие чук" звучи монотонно, като самия труд. Ритъмът имитира движението на работника.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Антитеза</strong> — немската земя срещу България, войната срещу мира, труда срещу нищетата. Контрастите усилват безизходицата.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔍</div>
+                <div class="key-point-text"><strong>Епитети</strong> — „тъмните улици", „прегърбени плещи", „нечисти хотели" — не украшения, а социална характеристика на средата.</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Лирическият герой и говорителят</div>
+            <div class="lesson-body">
+              <p>Лирическият говорител при Смирненски е <strong>свидетел и обвинител</strong>. Той не е Йохан — той гледа Йохан с болка и гняв. Разказва от позицията на съзнателния наблюдател, който вижда несправедливостта там, където другите минават с безразличие.</p>
+              <p>Важно е, че говорителят не жалее Йохан сантиментално. Той описва фактите — и фактите сами по себе си са присъда над обществото. Това е характерна черта на пролетарската лирика: <strong>показвай, не обяснявай</strong>.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Тема, идея и мотиви</div>
+            <div class="lesson-body">
+              <p><strong>Тема:</strong> Страданието на пролетария в следвоенния свят — човекът, унищожен от войната и капиталистическата система.</p>
+              <p><strong>Идея:</strong> Войната и социалната несправедливост нямат национални граници — унищожават хора навсякъде. Единствената надежда е солидарността.</p>
+              <p><strong>Основни мотиви:</strong></p>
+              <ul style="font-size:14px;line-height:2;color:var(--text);padding-left:20px;">
+                <li><strong>Скитничеството</strong> — бездомността като социален проблем</li>
+                <li><strong>Немотата</strong> — лишаването от глас и достойнство</li>
+                <li><strong>Тъмнината</strong> — символ на безнадеждност</li>
+                <li><strong>Войната като причина</strong> — войната е в основата на всяко страдание</li>
+                <li><strong>Интернационализмът</strong> — страданието е универсално</li>
+              </ul>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Христо Смирненски (1898–1923) — пролетарски поет, умира на 25 г. от туберкулоза.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Образът на Йохан:</strong> германски работник, бежанец от войната — образ-тип на пролетарското страдание.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>„Ням е Йохан":</strong> ключова характеристика — символ на лишаването от глас и социална изключеност.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Интернационализъм:</strong> страданието не познава граници — Смирненски избира немец, за да покаже универсалността на мизерията.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Тъмните улици:</strong> символ на безнадеждност и социална слепота на обществото.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Протестът е тих:</strong> не директен призив, а описание на факти — реализмът на детайла е присъда над системата.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Направление:</strong> Пролетарска лирика — конкретност, социален ангажимент, хуманизъм, класова солидарност.</div></div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel11-smirnanski-yohan-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel11-smirnanski-yohan-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel11-smirnanski-yohan-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => {
+      btnTop.classList.toggle('visible', window.scrollY > 200);
+    });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+
+  <script>
+    window.LESSON_TITLE   = 'Христо Смирненски — „Йохан"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

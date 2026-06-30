@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Христо Ботев — Хаджи Димитър · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 11 клас</a>
+        <span>›</span>
+        Ботев — Хаджи Димитър
+      </div>
+      <section class="demo-layout" style="margin:0 0 0 0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 11 КЛАС · ПРЕГОВОР</div>
+          <div class="lesson-title">Обществото и властта в „Хаджи Димитър" на Христо Ботев</div>
+          <div class="lesson-meta">Балада · Романтизъм · ~9 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- 1. За автора -->
+            <div class="section-title">За автора</div>
+            <div class="lesson-body">
+              <p><strong>Христо Ботев</strong> (1848–1876) е роден в Калофер в семейството на учителя Ботьо Петков. Детството му преминава в атмосфера на народно будителство и патриотизъм — баща му е един от видните просветители на епохата. На 16-годишна възраст Ботев заминава за Одеса, Русия, за да учи, но революционните идеи скоро го поглъщат изцяло.</p>
+              <p>Той е не само поет, но и журналист и революционер. Публикува в изданията <strong>„Дума на българските емигранти"</strong> и <strong>„Будилник"</strong> — трибуни на националноосвободителното движение. Написва само <strong>20 стихотворения</strong>, но те определят цяла епоха в българската литература.</p>
+              <p>На 1 юни 1876 г. Ботев преминава Дунава начело на чета от 205 четници на борда на австрийския параход „Радецки". Загива на <strong>2 юли 1876 г. на връх Камарото</strong> в Стара планина — само на 28 години. Смъртта му се превръща в легенда, която той сам предрича в своята поезия.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 2. Исторически контекст -->
+            <div class="section-title">Историческият контекст</div>
+            <div class="lesson-body">
+              <p>„Хаджи Димитър" е написана от Ботев през <strong>1873 г.</strong> и публикувана в сп. „Независимост". Поемата е вдъхновена от историческа личност — <strong>Хаджи Димитър Асенов</strong> (ок. 1840–1868), войвода от Сливенско.</p>
+              <p>Реалният Хаджи Димитър организира чета заедно с <strong>Стефан Караджа</strong> и на 6 юли 1868 г. преминава Дунава с около 130 четници. При сблъсъка с османските войски край с. Вола (Влашко) Хаджи Димитър е смъртоносно ранен. Умира, без да успее да стъпи на българска земя.</p>
+              <p>Ботев познава добре тази история. За него Хаджи Димитър не е просто паднал войвода — той е <strong>символ на саможертвата</strong> и на неумиращия стремеж към свобода. В поемата историческата реалност се превръща в мит.</p>
+              <p>Историческият контекст — <strong>Освободителното движение</strong> срещу Османската власт — е определящ за разбирането на творбата. България е под робство от края на 14 в. Борбата за освобождение е въпрос на живот и смърт за целия народ.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 3. Жанрът -->
+            <div class="section-title">Жанрът — балада и романтизъм</div>
+            <div class="lesson-body">
+              <p><strong>Баладата</strong> е лирико-епически жанр: тя разказва история (епическото начало), но я пречупва през силна лирична емоция. В „Хаджи Димитър" епическото е историята на умиращия войвода; лиричното е скръбта на природата, патосът на безсмъртието.</p>
+              <p>Ботев пише в духа на <strong>романтизма</strong> — литературно течение, което поставя в центъра героичната личност, природата като жив организъм и смъртта като тема с дълбок философски смисъл. Романтическият герой е изключителен, самотен, избрал свободата пред живота.</p>
+              <p>Характерни романтически белези в „Хаджи Димитър":</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🗻</div>
+                <div class="key-point-text"><strong>Природата</strong> — Балканът не е фон, а участник в действието: скърби, оплаква, прегръща героя</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚔️</div>
+                <div class="key-point-text"><strong>Героят</strong> — изключителна личност, която жертва живота си за висша цел — свободата на народа</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💀</div>
+                <div class="key-point-text"><strong>Смъртта</strong> — не е край, а преход към безсмъртие; загиналият за свобода не умира</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧚</div>
+                <div class="key-point-text"><strong>Митологичните образи</strong> — самодивите, юнакът, Балканът — свързват действителността с легендата</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 4. Структура и сюжет -->
+            <div class="section-title">Структурата и сюжетът</div>
+            <div class="lesson-body">
+              <p>Поемата е изградена от <strong>7 строфи с по 8 стиха</strong>. Условно се делят на три части с различна емоционална тоналност:</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">1️⃣</div>
+                <div class="key-point-text"><strong>Първа част (строфи 1–2) — Умиращият герой на Балкана.</strong> Хаджи Димитър лежи ранен. Около него — орли, вълци, змии. Природата е сурова и застинала в очакване.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">2️⃣</div>
+                <div class="key-point-text"><strong>Втора част (строфи 3–5) — Природата оплаква героя.</strong> Самодивите слизат да го пазят; слънцето, вятърът, Балканът скърбят. Природата се очовечава в траурен ритуал.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">3️⃣</div>
+                <div class="key-point-text"><strong>Трета част (строфи 6–7) — Апотеоз.</strong> Хаджи Димитър е безсмъртен. Смъртта за свобода го превръща в легенда, надхвърляща физическото съществуване.</div>
+              </div>
+            </div>
+            <div class="lesson-body">
+              <p>Движението в поемата е от конкретното (ранен войвода) към универсалното (безсмъртният борец). Ботев превръща единичния случай в общочовешка истина.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 5. Тема: Общество и власт -->
+            <div class="section-title">Темата — Обществото и властта</div>
+            <div class="lesson-body">
+              <p>„Хаджи Димитър" е дълбоко политическа творба. Под формата на балада Ботев поставя ключовите въпроси на своето време:</p>
+              <p><strong>Властта на Османската империя</strong> не е назована директно, но присъства като мрачен фон — тя е силата, срещу която Хаджи Димитър е паднал. Ботев не описва битката; той описва последицата — умиращия борец — и така обвинява системата, която го е довела до тази смърт.</p>
+              <p><strong>Народът</strong> е скрит участник в поемата. Ботев пита: докато героят умира за свободата на народа, какво прави самият народ? Природата скърби и пази тялото — но хората? Тази мълчалива укор е насочена към пасивното общество.</p>
+              <p><strong>Саможертвата</strong> е представена като единственият достоен отговор срещу тиранията. Смъртта за свобода не е трагедия — тя е победа. Ботев обръща логиката на властта: тя може да убие тялото, но не може да убие идеята.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 6. Анализ на ключови строфи -->
+            <div class="section-title">Анализ на ключови строфи</div>
+            <div class="lesson-body">
+              <p>Поемата започва с антитеза, която разтресва: героят е умиращ, но природата около него е жива и грижовна:</p>
+            </div>
+            <div class="poem-block">Умира се! Тихо, като листа
+пада смъртта на безлюдни места —
+и сам умрял хайдутин лежи
+при Балкана, в сенките тъмни!
+<div class="poem-author">— Христо Ботев, „Хаджи Димитър"</div>
+            </div>
+            <div class="lesson-body">
+              <p>Централният образ на поемата е парадоксалното твърдение за безсмъртието. В 6-та строфа Ботев произнася философската сърцевина на творбата:</p>
+            </div>
+            <div class="poem-block">Жив е той, жив е! Там на Балкана,
+потънал в кърви, лежи и пъшка
+юнак с дълбока на гърди рана,
+юнак в сила и на младост хубав.
+<div class="poem-author">— Христо Ботев, „Хаджи Димитър"</div>
+            </div>
+            <div class="lesson-body">
+              <p>Тук „жив е" не означава биологичен живот — героят очевидно умира. „Жив е" означава, че идеята, която той въплъщава, е безсмъртна. Анафората „жив е, жив е!" е емоционален удар, изричане на вяра срещу очевидността на смъртта.</p>
+              <p>Най-цитираните стихове от поемата съдържат цялата философия на Ботев за саможертвата:</p>
+            </div>
+            <div class="poem-block">Тоз, който падне в бой за свобода,
+той не умира: него жалее
+земя и небе, звяр и природа
+и певци песни за него пеят...
+<div class="poem-author">— Христо Ботев, „Хаджи Димитър"</div>
+            </div>
+            <div class="lesson-body">
+              <p>В тези стихове природата (земя и небе, звяр и природа) се представя като свидетел и пазител на паметта за героя. Изброителността — земя, небе, звяр, природа — създава усещане за всеобхватност: целият свят признава жертвата.</p>
+              <p><strong>Ролята на самодивите</strong> е ключова за митологизирането на образа. Те слизат от Балкана да пазят и лекуват героя:</p>
+            </div>
+            <div class="poem-block">...и самодиви в бяла премяна
+песни му пеят, рани му пеят —
+за него грее там ясна звезда!
+<div class="poem-author">— Христо Ботев, „Хаджи Димитър"</div>
+            </div>
+            <div class="lesson-body">
+              <p>Самодивите са фигури от българската народна митология — свръхестествени същества, живеещи в планините. Тяхното присъствие превръща умиращия хайдутин в митологичен герой, равностоен на легендарните юнаци от народните песни.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 7. Художествени средства -->
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🔆</div>
+                <div class="key-point-text"><strong>Апотеоз</strong> — прославяне на героя; превръщането му в безсмъртна легенда чрез поетическото слово</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌿</div>
+                <div class="key-point-text"><strong>Персонификация на природата</strong> — Балканът скърби, слънцето грее нежно, вятърът носи вести; природата е очовечена и участва в траура</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚖️</div>
+                <div class="key-point-text"><strong>Антитеза жив/мъртъв</strong> — основното противоречие на поемата: физически умира, но духовно е безсмъртен</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Анафора</strong> — „Жив е той, жив е!" — повторението в началото на изречения усилва емоционалния ефект и звучи като заклинание</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧚</div>
+                <div class="key-point-text"><strong>Митологични образи</strong> — самодивите, юнакът, Балканът като свещено място; свързват реалното с легендарното</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🦅</div>
+                <div class="key-point-text"><strong>Символика на животните</strong> — орли (величие, свобода), вълци (смърт, природна сила), змии (опасност, земята) обграждат героя като природен ритуал</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 8. Образът на героя -->
+            <div class="section-title">Образът на героя</div>
+            <div class="lesson-body">
+              <p>Хаджи Димитър в поемата е <strong>архетип на борца</strong> — не просто историческа личност, а общочовешки тип. Ботев изгражда образа му чрез контраста между физическата слабост (ранен, умиращ) и духовната сила (идеята, за която е паднал, е жива).</p>
+              <p>Образът съчетава <strong>индивидуалното и колективното</strong>: Хаджи Димитър е конкретен човек с рани и болка, но едновременно е глас на целия поробен народ. Той умира вместо другите — и за другите.</p>
+              <p>В романтическата традиция героят е <strong>самотник</strong>: около него са само природата и митичните самодиви. Народът — тези, за чието освобождение умира — отсъства. Тази самота е и обвинение, и тъга.</p>
+              <p>Ботев проецира себе си в образа на Хаджи Димитър: три години след написването на поемата той сам ще повтори съдбата на войводата. Поемата е едновременно паметник на миналото и пророчество за бъдещето.</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+            <!-- 9. Най-важното -->
+            <div class="section-title">Най-важното — резюме</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">✍️</div>
+                <div class="key-point-text"><strong>Автор и контекст:</strong> Христо Ботев, 1873 г.; вдъхновена от реалния войвода Хаджи Димитър Асенов, загинал 1868 г.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📚</div>
+                <div class="key-point-text"><strong>Жанр:</strong> балада (лирико-епически жанр) в духа на романтизма</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏗️</div>
+                <div class="key-point-text"><strong>Структура:</strong> 7 строфи по 8 стиха; три части — умиращият герой, природата скърби, апотеоз</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💡</div>
+                <div class="key-point-text"><strong>Централна идея:</strong> „Тоз, който падне в бой за свобода, той не умира" — саможертвата за свобода е безсмъртна</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎭</div>
+                <div class="key-point-text"><strong>Художествени средства:</strong> апотеоз, персонификация, антитеза жив/мъртъв, анафора „жив е той, жив е!", митологични образи (самодиви)</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏛️</div>
+                <div class="key-point-text"><strong>Обществото и властта:</strong> Ботев обвинява тиранията косвено — чрез образа на жертвата; смъртта за свобода е морална победа над властта</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌍</div>
+                <div class="key-point-text"><strong>Природата:</strong> не е фон, а активен участник — скърби, пази, митологизира героя; персонифицирана чрез самодивите</div>
+              </div>
+            </div>
+
+            <div class="lesson-divider"></div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel11-botev-hadzhi-dimityr-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel11-botev-hadzhi-dimityr-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel11-botev-hadzhi-dimityr-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Обществото и властта в „Хаджи Димитър" на Христо Ботев';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed?'✓':'✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+</body>
+</html>

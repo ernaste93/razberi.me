@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Ботев Хаджи Димитър · БЕЛ 11 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel11-botev-hadzhi-dimityr-q1',
+      lessonUrl: '/lessons/bel11-botev-hadzhi-dimityr.html',
+      lessonName: 'Ботев — Хаджи Димитър',
+      eyebrow: 'БЕЛ · 11 КЛАС · ПРЕГОВОР',
+      title: 'Куиз — Ботев „Хаджи Димитър" — Тест 1',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel11-botev-hadzhi-dimityr-quiz-2.html',
+      passScore: 8,
+      questions: [
+        {
+          q: 'В кой град е роден Христо Ботев?',
+          opts: ['Копривщица', 'Калофер', 'Сопот', 'Сливен'],
+          correct: 1,
+          explanation: 'Христо Ботев е роден на 6 януари 1848 г. в Калофер — малък балкански град, известен с будното си население и революционни традиции.'
+        },
+        {
+          q: 'Колко стихотворения е написал Христо Ботев общо?',
+          opts: ['10', '15', '20', '30'],
+          correct: 2,
+          explanation: 'Ботев е оставил само 20 стихотворения, но всяко от тях е шедьовър на българската лирика. Малкото по брой, но огромно по стойност творческо наследство го прави уникален.'
+        },
+        {
+          q: 'Как се казва корабът, с който Ботев преминава Дунава на 1 юни 1876 г.?',
+          opts: ['Голубец', 'Радецки', 'Дунав', 'Свобода'],
+          correct: 1,
+          explanation: 'На 1 юни 1876 г. Ботев и четата му превземат австрийския параход „Радецки" и преминават Дунава. Четата се състои от 205 четници.'
+        },
+        {
+          q: 'В коя година е написана балада „Хаджи Димитър"?',
+          opts: ['1868', '1870', '1873', '1876'],
+          correct: 2,
+          explanation: 'Стихотворението „Хаджи Димитър" е написано от Ботев през 1873 г. и публикувано в списание „Независимост". То е вдъхновено от подвига на войводата Хаджи Димитър Асенов.'
+        },
+        {
+          q: 'Какъв е жанрът на „Хаджи Димитър"?',
+          opts: ['Ода', 'Елегия', 'Епопея', 'Балада'],
+          correct: 3,
+          explanation: '„Хаджи Димитър" е балада — лирико-епически жанр, в духа на романтизма. Баладата съчетава лирическа емоционалност с епично повествование и обикновено съдържа трагични или фантастични елементи.'
+        },
+        {
+          q: 'В коя година загива реалният Хаджи Димитър Асенов?',
+          opts: ['1865', '1868', '1871', '1876'],
+          correct: 1,
+          explanation: 'Реалният Хаджи Димитър Асенов (ок. 1840–1868) загива на 18 юли 1868 г. след тежки рани, получени по време на четническата акция. Той действа заедно с войводата Стефан Караджа.'
+        },
+        {
+          q: 'Кое е централното послание на „Хаджи Димитър", изразено с думите „Тоз, който падне в бой за свобода..."?',
+          opts: [
+            'Тоз, който падне в бой за свобода, той страда вечно.',
+            'Тоз, който падне в бой за свобода, той не умира.',
+            'Тоз, който падне в бой за свобода, той е победител.',
+            'Тоз, който падне в бой за свобода, той е забравен.'
+          ],
+          correct: 1,
+          explanation: '„Тоз, който падне в бой за свобода, той не умира!" — това е централната идея на творбата. Героят е физически умиращ, но духовно безсмъртен. Идеята за свободата го прави вечен.'
+        },
+        {
+          q: 'Кои животни са около умиращия герой в „Хаджи Димитър"?',
+          opts: [
+            'Кучета, котки и коне',
+            'Лисици, зайци и елени',
+            'Орли, вълци и змии',
+            'Гарвани, мечки и вепри'
+          ],
+          correct: 2,
+          explanation: 'Около умиращия Хаджи Димитър са орли, вълци и змии. Тези животни символизират величието (орелът), дивостта на природата (вълкът) и хтоничните сили (змията). Те са свидетели на героичната смърт.'
+        },
+        {
+          q: 'Какво правят самодивите в стихотворението?',
+          opts: [
+            'Плачат и оплакват героя',
+            'Слизат да пазят и лекуват героя',
+            'Танцуват и пеят около него',
+            'Отнасят душата му на небето'
+          ],
+          correct: 1,
+          explanation: 'Самодивите слизат от планините, за да пазят и лекуват умиращия герой. Те са митологични същества от българския фолклор и тяхната намеса превръща героя в свръхестествена фигура — полубог.'
+        },
+        {
+          q: 'Коя е художествената фигура в „Жив е той, жив е! И ще да живее..." — многократното повторение в началото на стихове?',
+          opts: ['Метафора', 'Хипербола', 'Анафора', 'Антитеза'],
+          correct: 2,
+          explanation: 'Анафората е художествен похват, при който едни и същи думи или изрази се повтарят в началото на последователни стихове или изречения. „Жив е той, жив е! И ще да живее..." — повторението на „жив е" е класически пример за анафора в „Хаджи Димитър".'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>
