@@ -58,6 +58,15 @@
       var email = user.email;
       window.__supabaseToken = session.access_token;
 
+      // При смяна на акаунт — изчисти trial данните на предишния потребител
+      var storedUserId = localStorage.getItem('current_user_id');
+      if (storedUserId && storedUserId !== user.id) {
+        Object.keys(localStorage).filter(function(k) {
+          return k.startsWith('quiz_') || k === 'trial_lessons';
+        }).forEach(function(k) { localStorage.removeItem(k); });
+      }
+      localStorage.setItem('current_user_id', user.id);
+
       // Show/hide elements for logged-in vs guest state
       ['btn-login', 'btn-try'].forEach(function (id) {
         var el = document.getElementById(id);
