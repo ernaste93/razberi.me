@@ -102,10 +102,10 @@
           modal.innerHTML = '<div style="background:#fff;border-radius:20px;padding:40px 36px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25);">' +
             '<div style="font-size:40px;margin-bottom:12px;">⏳</div>' +
             '<h2 style="font-size:22px;font-weight:800;color:#0f172a;margin:0 0 10px;">Безплатен пробен период</h2>' +
-            '<p style="font-size:15px;color:#475569;margin:0 0 24px;line-height:1.6;">Имаш още <strong>' + daysLeft + ' ' + dayWord + '</strong> безплатен достъп. След това ще трябва да избереш план, за да продължиш да учиш.</p>' +
+            '<p style="font-size:15px;color:#475569;margin:0 0 24px;line-height:1.6;">Имаш още <strong>' + daysLeft + ' ' + dayWord + '</strong> безплатен достъп. След това ще трябва да избереш план, за да продължиш.</p>' +
             '<div style="background:#f0f7ff;border-radius:12px;padding:14px 18px;margin-bottom:24px;text-align:left;">' +
-              '<div style="font-size:13px;color:#1e40af;font-weight:600;margin-bottom:6px;">В триала имаш достъп до:</div>' +
-              '<div style="font-size:13px;color:#334155;line-height:1.8;">✅ Всички БЕЛ уроци и тестове<br>✅ 30 въпроса до Знайко на ден<br>🔒 Математика, Биология, Химия — заключени</div>' +
+              '<div style="font-size:13px;color:#1e40af;font-weight:600;margin-bottom:6px;">Сега имаш достъп само до:</div>' +
+              '<div style="font-size:13px;color:#334155;line-height:1.8;">✅ Всички БЕЛ уроци и тестове<br>✅ 30 въпроса към Знайко на ден<br>🔒 Математика, Биология, Химия — заключени</div>' +
             '</div>' +
             '<a href="/index.html#pricing" style="display:block;background:#1d4ed8;color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 24px;border-radius:12px;margin-bottom:12px;">Виж плановете →</a>' +
             '<button style="background:none;border:none;color:#94a3b8;font-size:14px;cursor:pointer;padding:4px;">Продължи с безплатната версия</button>' +
