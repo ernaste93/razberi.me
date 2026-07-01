@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз 1 — Прогресии · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-progresii-q1',
+      lessonUrl:  '/lessons/math12-progresii.html',
+      lessonName: 'Прогресии',
+      eyebrow:    'МАТЕМАТИКА · 12 КЛАС',
+      title:      'Куиз 1 — Основни свойства и формули',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    1,
+      nextQuizUrl: '/lessons/math12-progresii-quiz-2.html',
+      questions: [
+        {
+          q: 'В аритметичната прогресия 2, 5, 8, 11, ... каква е разликата d?',
+          opts: ['2', '3', '5', '4'],
+          correct: 1,
+          explanation: 'Разликата d = a₂ − a₁ = 5 − 2 = 3. Проверка: 8 − 5 = 3, 11 − 8 = 3. Разликата е постоянна, значи прогресията е аритметична с d = 3.'
+        },
+        {
+          q: 'Каква е формулата за n-тия член на аритметична прогресия?',
+          opts: ['aₙ = a₁ · n · d', 'aₙ = a₁ + n · d', 'aₙ = a₁ + (n−1) · d', 'aₙ = a₁ · (n−1) · d'],
+          correct: 2,
+          explanation: 'Формулата е aₙ = a₁ + (n−1)·d. Важно: (n−1), не n. Причина: от a₁ до aₙ има (n−1) стъпки с разлика d.'
+        },
+        {
+          q: 'В геометричната прогресия 3, 6, 12, 24, ... кой е знаменателят q?',
+          opts: ['3', '6', '2', '4'],
+          correct: 2,
+          explanation: 'Знаменателят q = b₂/b₁ = 6/3 = 2. Проверка: 12/6 = 2, 24/12 = 2. Отношението е постоянно, значи q = 2.'
+        },
+        {
+          q: 'Каква е формулата за n-тия член на геометрична прогресия?',
+          opts: ['bₙ = b₁ + qⁿ⁻¹', 'bₙ = b₁ · (n−1) · q', 'bₙ = b₁ · qⁿ', 'bₙ = b₁ · qⁿ⁻¹'],
+          correct: 3,
+          explanation: 'Формулата е bₙ = b₁ · qⁿ⁻¹. Знаменателят е на степен (n−1), не n. Пример: b₁ = b₁ · q⁰ = b₁ ✓'
+        },
+        {
+          q: 'В аритметична прогресия a₁ = 4 и d = 3. Намери a₆.',
+          opts: ['19', '18', '21', '15'],
+          correct: 0,
+          explanation: 'a₆ = a₁ + (6−1)·d = 4 + 5·3 = 4 + 15 = 19.'
+        },
+        {
+          q: 'Намери сумата S₅ на аритметична прогресия с a₁ = 1, a₅ = 9.',
+          opts: ['25', '30', '20', '45'],
+          correct: 0,
+          explanation: 'S₅ = 5·(a₁ + a₅)/2 = 5·(1 + 9)/2 = 5·5 = 25.'
+        },
+        {
+          q: 'В геометрична прогресия b₁ = 5 и q = 2. Намери b₄.',
+          opts: ['20', '40', '80', '160'],
+          correct: 1,
+          explanation: 'b₄ = b₁ · q⁴⁻¹ = 5 · 2³ = 5 · 8 = 40.'
+        },
+        {
+          q: 'Кое е условието за съществуване на безкрайна геометрична сума?',
+          opts: ['q > 1', 'q ≠ 0', '|q| < 1', 'q > 0'],
+          correct: 2,
+          explanation: 'Безкрайната геометрична сума S = b₁/(1−q) съществува само при |q| < 1 (т.е. −1 < q < 1). При |q| ≥ 1 сборът расте до безкрайност.'
+        },
+        {
+          q: 'Кое е правилото за разпознаване на аритметична прогресия?',
+          opts: [
+            'Отношението на два последователни члена е постоянно',
+            'Разликата на два последователни члена е постоянна',
+            'Сборът на два последователни члена е постоянен',
+            'Произведението на два последователни члена е постоянно'
+          ],
+          correct: 1,
+          explanation: 'В аритметичната прогресия разликата a₂ − a₁ = a₃ − a₂ = ... = d = const. В геометричната — отношението е постоянно (b₂/b₁ = b₃/b₂ = ... = q = const).'
+        },
+        {
+          q: 'Каква е безкрайната сума на прогресията 9, 3, 1, 1/3, ...?',
+          opts: ['12', '13.5', '27', '18'],
+          correct: 1,
+          explanation: 'b₁ = 9, q = 3/9 = 1/3. |q| = 1/3 < 1 ✓. S = 9/(1 − 1/3) = 9/(2/3) = 9 · 3/2 = 13.5.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

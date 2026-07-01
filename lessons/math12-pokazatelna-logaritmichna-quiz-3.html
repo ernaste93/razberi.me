@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз 3 — Показателна и логаритмична функция · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-pokazatelna-logaritmichna-q3',
+      lessonUrl:  '/lessons/math12-pokazatelna-logaritmichna.html',
+      lessonName: 'Показателна и логаритмична функция',
+      eyebrow:    'МАТЕМАТИКА · 12 КЛАС',
+      title:      'Куиз 3 — Матурен формат, смесени задачи',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    3,
+      nextQuizUrl: null,
+      questions: [
+        {
+          q: 'Намери стойността на израза log₄(64) − log₄(4).',
+          opts: ['1', '2', '3', '4'],
+          correct: 1,
+          explanation: 'log₄(64) = log₄(4³) = 3 и log₄(4) = 1. Изразът е 3 − 1 = 2. Алтернативно: log₄(64/4) = log₄(16) = log₄(4²) = 2.'
+        },
+        {
+          q: 'Функцията y = (1/4)ˣ е:',
+          opts: [
+            'Нарастваща, с асимптота y = 1',
+            'Намаляваща, с асимптота y = 0',
+            'Нарастваща, с асимптота y = 0',
+            'Намаляваща, без асимптота'
+          ],
+          correct: 1,
+          explanation: '1/4 < 1, следователно y = (1/4)ˣ е намаляваща функция. При x → +∞, y → 0⁺, значи y = 0 е хоризонтална асимптота. При x → −∞, y → +∞.'
+        },
+        {
+          q: 'Реши уравнението 5ˣ⁺² = 125.',
+          opts: ['x = 1', 'x = 0', 'x = −1', 'x = 3'],
+          correct: 0,
+          explanation: '125 = 5³. Уравнението е 5ˣ⁺² = 5³ → x + 2 = 3 → x = 1. Проверка: 5¹⁺² = 5³ = 125 ✓'
+        },
+        {
+          q: 'Реши неравенството log₅(x + 1) > 0.',
+          opts: ['x > −1', 'x > 0', 'x > 4', 'x > 1'],
+          correct: 1,
+          explanation: 'ОДЗ: x + 1 > 0 → x > −1. log₅(x+1) > 0 = log₅(1) → при a = 5 > 1 знакът се запазва: x + 1 > 1 → x > 0. Пресичаме с ОДЗ: x > 0.'
+        },
+        {
+          q: 'Опрости: 2·log₁₀(5) + log₁₀(4).',
+          opts: ['log₁₀(14)', 'log₁₀(100)', '2', 'log₁₀(40)'],
+          correct: 2,
+          explanation: '2·log₁₀(5) = log₁₀(5²) = log₁₀(25). log₁₀(25) + log₁₀(4) = log₁₀(25·4) = log₁₀(100) = 2. Отговор: 2 (т.е. числото 2, понеже log₁₀(100) = 2).'
+        },
+        {
+          q: 'При кои стойности на x изразът log₂(x² − 4) е дефиниран?',
+          opts: ['x > 2', 'x ∈ (−∞, −2) ∪ (2, +∞)', 'x ∈ (−2, 2)', 'x ∈ ℝ'],
+          correct: 1,
+          explanation: 'ОДЗ: x² − 4 > 0 → x² > 4 → |x| > 2 → x < −2 или x > 2. Отговор: x ∈ (−∞, −2) ∪ (2, +∞).'
+        },
+        {
+          q: 'Реши уравнението 9ˣ − 4 · 3ˣ + 3 = 0.',
+          opts: ['x = 0 или x = 1', 'x = 1 или x = 2', 'x = −1 или x = 1', 'x = 0 или x = 2'],
+          correct: 0,
+          explanation: '9ˣ = (3²)ˣ = (3ˣ)². Заместваме t = 3ˣ: t² − 4t + 3 = 0 → (t−1)(t−3) = 0 → t = 1 или t = 3. 3ˣ = 1 = 3⁰ → x = 0; 3ˣ = 3¹ → x = 1.'
+        },
+        {
+          q: 'Ако log_a(b) = 3 и log_a(c) = −1, намери log_a(b²/c).',
+          opts: ['5', '7', '9', '4'],
+          correct: 1,
+          explanation: 'log_a(b²/c) = log_a(b²) − log_a(c) = 2·log_a(b) − log_a(c) = 2·3 − (−1) = 6 + 1 = 7.'
+        },
+        {
+          q: 'Реши неравенството log₁/₂(x) > 3.',
+          opts: ['x > 1/8', '0 < x < 1/8', 'x < 1/8', 'x > 8'],
+          correct: 1,
+          explanation: 'ОДЗ: x > 0. log₁/₂(x) > 3 = log₁/₂((1/2)³) = log₁/₂(1/8). Основата 1/2 < 1 → функцията е намаляваща → знакът се ОБРЪЩА: x < 1/8. Пресичаме с ОДЗ: 0 < x < 1/8.'
+        },
+        {
+          q: 'Кое твърдение е ВЯРНО?',
+          opts: [
+            'log_a(0) = 0 за всяко a > 1',
+            'Показателната функция aˣ винаги е положителна',
+            'log_a(x) е дефиниран за x ≥ 0',
+            'При a > 1 логаритмичната функция е намаляваща'
+          ],
+          correct: 1,
+          explanation: 'Показателната функция y = aˣ е винаги положителна (aˣ > 0 за всяко x ∈ ℝ). log_a(0) не е дефиниран; log_a(x) изисква x > 0 (не x ≥ 0); при a > 1 логаритмичната е нарастваща.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

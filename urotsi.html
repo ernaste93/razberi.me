@@ -737,7 +737,7 @@
           </div>
           <div>
             <div class="subject-section-name">Математика</div>
-            <div class="subject-section-sub">5 теми · матурна подготовка</div>
+            <div class="subject-section-sub">9 теми · матурна подготовка</div>
           </div>
         </div>
         <div class="lessons-grid">
@@ -774,9 +774,21 @@
             <div class="lesson-card-meta">Лице · Обем · Питагор · Теореми · 3 теста</div>
             <div id="quiz-result-math12-geometriya"></div>
           </a>
-          <div class="lesson-card-soon">🔒 Квадратни неравенства <span style="margin-left:auto;font-size:11px;">Скоро</span></div>
-          <div class="lesson-card-soon">🔒 Показателна и логаритмична функция <span style="margin-left:auto;font-size:11px;">Скоро</span></div>
-          <div class="lesson-card-soon">🔒 Прогресии <span style="margin-left:auto;font-size:11px;">Скоро</span></div>
+          <a href="/lessons/math12-kvadratni-neravenstva.html" class="lesson-card" id="card-math12-kvadratni-neravenstva">
+            <div class="lesson-card-title">Квадратни неравенства</div>
+            <div class="lesson-card-meta">Метод на параболата · Знакова схема · 3 теста</div>
+            <div id="quiz-result-math12-kvadratni-neravenstva"></div>
+          </a>
+          <a href="/lessons/math12-pokazatelna-logaritmichna.html" class="lesson-card" id="card-math12-pokazatelna-logaritmichna">
+            <div class="lesson-card-title">Показателна и логаритмична функция</div>
+            <div class="lesson-card-meta">aˣ · log_a(x) · Уравнения · 3 теста</div>
+            <div id="quiz-result-math12-pokazatelna-logaritmichna"></div>
+          </a>
+          <a href="/lessons/math12-progresii.html" class="lesson-card" id="card-math12-progresii">
+            <div class="lesson-card-title">Прогресии</div>
+            <div class="lesson-card-meta">Аритметична · Геометрична · Безкрайна · 3 теста</div>
+            <div id="quiz-result-math12-progresii"></div>
+          </a>
         </div>
       </div>
 
@@ -883,6 +895,50 @@
     const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { window.location.href = '/auth.html'; }
+
+    // Trial gating — заключи не-БЕЛ карти ако потребителят е на trial
+    const { data: profileRows } = await sb
+      .from('profiles')
+      .select('plan, trial_started_at')
+      .eq('user_id', session.user.id)
+      .limit(1);
+    const profile = profileRows?.[0];
+    const isTrial = !profile || profile.plan === 'trial';
+    const trialExpired = isTrial && profile?.trial_started_at &&
+      (Date.now() - new Date(profile.trial_started_at)) / 86400000 > 3;
+
+    if (isTrial || trialExpired) {
+      // Заключи всички карти, които не са БЕЛ
+      document.querySelectorAll('.lesson-card[id]').forEach(card => {
+        const id = card.getAttribute('id') || '';
+        const isBel = id.startsWith('card-bel');
+        if (!isBel) {
+          card.classList.add('locked');
+          card.removeAttribute('href');
+          // Добави катинар ако няма
+          if (!card.querySelector('.lock-icon')) {
+            const lock = document.createElement('span');
+            lock.className = 'lock-icon';
+            lock.textContent = '🔒';
+            lock.style.cssText = 'position:absolute;top:10px;right:12px;font-size:16px;';
+            card.style.position = 'relative';
+            card.prepend(lock);
+          }
+        }
+      });
+
+      // Ако trial-ът е изтекъл — заключи и БЕЛ
+      if (trialExpired) {
+        document.querySelectorAll('.lesson-card').forEach(card => {
+          card.classList.add('locked');
+          card.removeAttribute('href');
+        });
+        const banner = document.createElement('div');
+        banner.style.cssText = 'background:#fee2e2;border:1px solid #fca5a5;border-radius:12px;padding:16px 20px;text-align:center;margin:20px 0;font-weight:600;color:#b91c1c;';
+        banner.innerHTML = 'Пробният ти период е изтекъл. <a href="/index.html#pricing" style="color:#b91c1c;text-decoration:underline;">Избери план, за да продължиш.</a>';
+        document.querySelector('main')?.prepend(banner);
+      }
+    }
   </script>
 
   <script>
@@ -903,6 +959,42 @@
         'bel12-hristov-chesten-krast',
       ];
       belKeys.forEach(key => {
+        const results = [1,2,3].map(n => {
+          const raw = localStorage.getItem('quiz_' + key + '-q' + n);
+          return raw ? JSON.parse(raw) : null;
+        });
+        const done = results.filter(Boolean).length;
+        const el = document.getElementById('quiz-result-' + key);
+        if (!el || done === 0) return;
+
+        const dots = results.map((r, i) => {
+          if (!r) return `<span style="width:10px;height:10px;border-radius:50%;background:var(--line);display:inline-block;" title="Тест ${i+1} — неправен"></span>`;
+          const bg = r.passed ? '#16a34a' : '#d97706';
+          return `<span style="width:10px;height:10px;border-radius:50%;background:${bg};display:inline-block;" title="Тест ${i+1}: ${r.correct}/${r.total}${r.passed ? ' ✓' : ' ✗'}"></span>`;
+        }).join('');
+
+        const allPassed = results.every(r => !r || r.passed);
+        const doneAll = done === 3;
+        const labelColor = doneAll && allPassed ? '#16a34a' : doneAll ? '#d97706' : 'var(--accent)';
+        const label = doneAll ? (allPassed ? '✓ Всички тестове' : `${done}/3 теста`) : `${done}/3 теста`;
+
+        el.innerHTML = `<div style="display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">
+          <span style="display:flex;gap:4px;align-items:center;">${dots}</span>
+          <span style="font-size:11px;font-weight:700;color:${labelColor};">${label}</span>
+        </div>`;
+      });
+      // Math12 — урок теми с 3 куиза всяка
+      const math12Keys = [
+        'math12-trigonometriya',
+        'math12-proizvodna',
+        'math12-kombinatorika',
+        'math12-veroyatnosti',
+        'math12-geometriya',
+        'math12-kvadratni-neravenstva',
+        'math12-pokazatelna-logaritmichna',
+        'math12-progresii',
+      ];
+      math12Keys.forEach(key => {
         const results = [1,2,3].map(n => {
           const raw = localStorage.getItem('quiz_' + key + '-q' + n);
           return raw ? JSON.parse(raw) : null;

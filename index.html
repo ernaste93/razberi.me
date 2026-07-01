@@ -238,60 +238,65 @@
       <div class="teacher-note" style="margin-top:-4px;margin-bottom:32px;font-size:14px;font-weight:500;">Без дългосрочен ангажимент. Спираш, когато решиш.</div>
       <div class="pricing-grid pricing-grid-3">
 
-        <!-- План 1 -->
-        <div class="price-card">
-          <p class="eyebrow">Ученик</p>
-          <strong class="price-amount"><span id="price-student">€30</span><span class="price-period"> / месец</span></strong>
-          <p class="price-desc">Личен учебен помощник за самостоятелно учене.</p>
+        <!-- План А — декой -->
+        <div class="price-card price-card-basic">
+          <div class="price-badge price-badge-basic">Базов</div>
+          <h3 class="plan-name">Фокус</h3>
+          <span class="plan-tag">Задължителна матура</span>
+          <strong class="price-amount">€20<span class="price-period"> / месец</span></strong>
+          <p class="price-desc">За ученици, които искат помощ по БЕЛ — задължителната матура за всички.</p>
           <ul>
-            <li>Обяснения по уроците</li>
-            <li>Маркиране на неясни части</li>
-            <li>Упражнения и кратки тестове</li>
-            <li>Всички налични предмети</li>
-            <li>Достъп 24/7</li>
-            <li>Самостоятелен ученически профил</li>
+            <li>Всички уроци по БЕЛ — 11 и 12 клас</li>
+            <li>Куизове и тестове по БЕЛ</li>
+            <li>Неограничени въпроси към Знайко</li>
+            <li>Проверка на съчинения</li>
+            <li>Дневник с напредък</li>
           </ul>
           <div class="price-spacer"></div>
-          <a href="/auth.html" class="nav-btn nav-btn-outline price-btn">Избери план</a>
+          <button onclick="startCheckout('focus')" class="nav-btn nav-btn-primary price-btn">Избери план</button>
         </div>
 
-        <!-- План 2 — Featured -->
+        <!-- План Б — основен -->
         <div class="price-card price-card-featured">
           <div class="price-badge">Препоръчан</div>
-          <p class="eyebrow">Ученик + Родител</p>
-          <strong class="price-amount"><span id="price-family">€50</span><span class="price-period"> / месец</span></strong>
-          <p class="price-desc">За родители, които искат да следят напредъка на детето.</p>
+          <h3 class="plan-name">Подготовка</h3>
+          <span class="plan-tag">всички предмети</span>
+          <strong class="price-amount">€30<span class="price-period"> / месец</span></strong>
+          <p class="price-desc">За редовно учене, упражнения и тестове по всички предмети.</p>
           <ul>
-            <li>Всичко от „Ученик"</li>
-            <li>Родителски профил</li>
-            <li>Проследяване на напредъка</li>
-            <li>Статистики по теми и предмети</li>
-            <li>Подготовка за НВО, матури и кандидатстване</li>
-            <li>Ясна картина къде детето има нужда от помощ</li>
+            <li>Всички уроци — БЕЛ, Математика, Биология, Химия</li>
+            <li>Куизове и тестове (3 нива)</li>
+            <li>Знайко — неограничени въпроси към него</li>
+            <li>Проверка на съчинения с оценка</li>
+            <li>Дневник с напредък по предмет</li>
+            <li>Подготовка за матура и НВО</li>
           </ul>
           <div class="price-spacer"></div>
-          <a href="/auth.html" class="nav-btn nav-btn-gold price-btn">Избери план</a>
+          <button onclick="startCheckout('podgotovka')" class="nav-btn nav-btn-gold price-btn">Избери план</button>
         </div>
 
-        <!-- План 3 -->
-        <div class="price-card price-card-teacher">
-          <p class="eyebrow">С Учител</p>
-          <strong class="price-amount"><span id="price-teacher">от €99</span><span class="price-period"> / месец</span></strong>
-          <p class="price-desc">Пълен достъп + жива помощ от учител.</p>
+        <!-- План В — висок марж -->
+        <div class="price-card price-card-premium">
+          <div class="price-badge price-badge-premium">Пълен достъп</div>
+          <h3 class="plan-name">Отличник</h3>
+          <span class="plan-tag">всичко включено</span>
+          <strong class="price-amount">€45<span class="price-period"> / месец</span></strong>
+          <p class="price-desc">За максимална практика и сериозна подготовка за матура.</p>
           <ul>
-            <li>Всичко от „Ученик + Родител"</li>
-            <li>1 онлайн среща с учител месечно</li>
-            <li>60 минути индивидуална помощ</li>
-            <li>Насоки според трудните теми</li>
-            <li>Възможност за допълнителни срещи</li>
+            <li>Всичко от план Б</li>
+            <li>Конспекти по всяка тема</li>
+            <li>Речник на термините</li>
+            <li>Въпроси за устен изпит</li>
+            <li>Сравнителен анализ на произведения</li>
+            <li>Приоритетни обновления</li>
           </ul>
           <div class="price-spacer"></div>
-          <a href="/auth.html" class="nav-btn nav-btn-outline price-btn">Заяви план с учител</a>
+          <button onclick="startCheckout('otlichnik')" class="nav-btn nav-btn-primary price-btn">Избери план</button>
         </div>
 
       </div>
 
-      <div class="teacher-note" id="price-teacher-note">Планът с учител започва от €99 и включва 1 среща месечно.<br>Допълнителни срещи: 2 / месец — от €149 &nbsp;·&nbsp; 4 / месец — от €249</div>
+      <p class="teacher-note" style="text-align:center;margin-top:24px;">Всички планове включват 3-дневен безплатен пробен период. Без кредитна карта при регистрация.</p>
     </section>
 
     <!-- CTA -->
@@ -582,15 +587,47 @@
     const { data } = await sb.from('settings').select('key, value').in('key', ['price_student','price_family','price_teacher','price_teacher_note']);
     if (data) {
       data.forEach(({ key, value }) => {
-        if (key === 'price_teacher_note') {
-          const el = document.getElementById('price-teacher-note');
-          if (el) el.innerHTML = value;
-        } else {
-          const el = document.getElementById(key.replace('_', '-'));
-          if (el) el.textContent = value;
-        }
+        const el = document.getElementById(key.replace('_', '-'));
+        if (el) el.textContent = value;
       });
     }
+  </script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co', 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+
+    window.startCheckout = async function(plan) {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) {
+        window.location.href = '/auth.html?next=pricing&plan=' + plan;
+        return;
+      }
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = 'Зареждане...';
+      try {
+        const resp = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + session.access_token,
+          },
+          body: JSON.stringify({ plan }),
+        });
+        const data = await resp.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert(data.error || 'Грешка при зареждане на плащането.');
+          btn.disabled = false;
+          btn.textContent = 'Избери план';
+        }
+      } catch {
+        alert('Грешка. Опитай пак.');
+        btn.disabled = false;
+        btn.textContent = 'Избери план';
+      }
+    };
   </script>
 </body>
 </html>

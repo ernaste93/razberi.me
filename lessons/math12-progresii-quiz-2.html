@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз 2 — Прогресии · Математика 12 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:  'math12-progresii-q2',
+      lessonUrl:  '/lessons/math12-progresii.html',
+      lessonName: 'Прогресии',
+      eyebrow:    'МАТЕМАТИКА · 12 КЛАС',
+      title:      'Куиз 2 — Намиране на членове и суми',
+      sub:        '10 въпроса · Избери верния отговор',
+      passScore:  8,
+      quizNum:    2,
+      nextQuizUrl: '/lessons/math12-progresii-quiz-3.html',
+      questions: [
+        {
+          q: 'В аритметична прогресия a₁ = 3, d = 5. Намери a₈.',
+          opts: ['35', '38', '40', '43'],
+          correct: 1,
+          explanation: 'a₈ = a₁ + (8−1)·d = 3 + 7·5 = 3 + 35 = 38. Проверка: a₁=3, a₂=8, a₃=13, a₄=18, a₅=23, a₆=28, a₇=33, a₈=38 ✓'
+        },
+        {
+          q: 'В АП a₁ = 10 и a₅ = 26. Намери разликата d.',
+          opts: ['3', '4', '6', '8'],
+          correct: 1,
+          explanation: 'a₅ = a₁ + 4d → 26 = 10 + 4d → 4d = 16 → d = 4.'
+        },
+        {
+          q: 'Намери S₆ на аритметична прогресия с a₁ = 2 и d = 4.',
+          opts: ['52', '72', '48', '60'],
+          correct: 1,
+          explanation: 'a₆ = 2 + 5·4 = 22. S₆ = 6·(a₁ + a₆)/2 = 6·(2 + 22)/2 = 6·12 = 72.'
+        },
+        {
+          q: 'В геометрична прогресия b₁ = 3 и q = 2. Намери b₅.',
+          opts: ['24', '48', '32', '96'],
+          correct: 1,
+          explanation: 'b₅ = 3 · 2⁵⁻¹ = 3 · 2⁴ = 3 · 16 = 48.'
+        },
+        {
+          q: 'В ГП b₁ = 2 и b₄ = 54. Намери знаменателя q.',
+          opts: ['2', '3', '4', '6'],
+          correct: 1,
+          explanation: 'b₄ = 2 · q³ = 54 → q³ = 27 → q = 3.'
+        },
+        {
+          q: 'Намери S₄ на геометрична прогресия с b₁ = 1 и q = 3.',
+          opts: ['30', '40', '40', '40'],
+          correct: 1,
+          explanation: 'S₄ = 1·(3⁴ − 1)/(3 − 1) = (81 − 1)/2 = 80/2 = 40.'
+        },
+        {
+          q: 'В аритметична прогресия a₃ = 11 и a₇ = 23. Намери a₁.',
+          opts: ['3', '5', '7', '9'],
+          correct: 1,
+          explanation: 'a₇ − a₃ = 4d → 23 − 11 = 4d → d = 3. a₃ = a₁ + 2·3 = 11 → a₁ = 5.'
+        },
+        {
+          q: 'Намери безкрайната сума на ГП с b₁ = 8 и q = 1/2.',
+          opts: ['12', '16', '8', '24'],
+          correct: 1,
+          explanation: '|q| = 1/2 < 1 ✓. S = 8/(1 − 1/2) = 8/(1/2) = 16.'
+        },
+        {
+          q: 'В аритметична прогресия a₁ = 1, d = 2. При коe n е aₙ = 21?',
+          opts: ['n = 10', 'n = 11', 'n = 12', 'n = 9'],
+          correct: 1,
+          explanation: 'aₙ = 1 + (n−1)·2 = 21 → 2(n−1) = 20 → n−1 = 10 → n = 11.'
+        },
+        {
+          q: 'Каква е сумата S₅ на геометрична прогресия 1, −2, 4, −8, 16?',
+          opts: ['10', '11', '12', '13'],
+          correct: 1,
+          explanation: 'b₁ = 1, q = −2. S₅ = 1·((−2)⁵ − 1)/(−2 − 1) = (−32 − 1)/(−3) = −33/(−3) = 11.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+
+</body>
+</html>

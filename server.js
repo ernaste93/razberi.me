@@ -24,7 +24,8 @@ function loadLocalEnv() {
 loadLocalEnv();
 
 const PORT = Number(process.env.PORT || 3000);
-const MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5';
+const MODEL       = process.env.ANTHROPIC_MODEL        || 'claude-haiku-4-5';
+const MODEL_ESSAY = process.env.ANTHROPIC_MODEL_ESSAY  || 'claude-sonnet-4-6';
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 const PUBLIC_DIR = __dirname;
 
@@ -32,6 +33,77 @@ const anthropicClient = API_KEY ? new Anthropic({ apiKey: API_KEY }) : null;
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://wbcppvfgtvkrsfmclmjp.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l';
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+const STRIPE_PRICES = {
+  focus:       process.env.STRIPE_PRICE_FOCUS,
+  podgotovka:  process.env.STRIPE_PRICE_PODGOTOVKA,
+  otlichnik:   process.env.STRIPE_PRICE_OTLICHNIK,
+};
+
+const TRIAL_ZNAYKO_DAILY = 30;
+const TRIAL_ESSAY_MAX    = 3;
+const TRIAL_DAYS         = 3;
+
+async function getProfile(userId, token) {
+  try {
+    const resp = await fetch(
+      `${SUPABASE_URL}/rest/v1/profiles?user_id=eq.${userId}&select=plan,trial_started_at,znayko_count_today,znayko_reset_date,essay_count&limit=1`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } }
+    );
+    if (!resp.ok) return null;
+    const rows = await resp.json();
+    return rows[0] || null;
+  } catch { return null; }
+}
+
+async function patchProfile(userId, token, updates) {
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/profiles?user_id=eq.${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(updates),
+    });
+  } catch { /* non-blocking */ }
+}
+
+function trialExpired(profile) {
+  if (!profile?.trial_started_at) return false;
+  return (Date.now() - new Date(profile.trial_started_at)) / 86400000 > TRIAL_DAYS;
+}
+
+async function checkZnayko(userId, token, profile) {
+  if (!profile || profile.plan !== 'trial') return null;
+  if (trialExpired(profile))
+    return { error: 'Пробният период е изтекъл. Избери план, за да продължиш.', code: 'trial_expired' };
+
+  const today = new Date().toISOString().slice(0, 10);
+  const count = profile.znayko_reset_date === today ? (profile.znayko_count_today || 0) : 0;
+  if (count >= TRIAL_ZNAYKO_DAILY)
+    return { error: `Достигна дневния лимит от ${TRIAL_ZNAYKO_DAILY} въпроса. Продължи утре или избери платен план.`, code: 'daily_limit' };
+
+  await patchProfile(userId, token, { znayko_count_today: count + 1, znayko_reset_date: today });
+  return null;
+}
+
+async function checkEssay(userId, token, profile) {
+  if (!profile || profile.plan !== 'trial') return null;
+  if (trialExpired(profile))
+    return { error: 'Пробният период е изтекъл. Избери план, за да продължиш.', code: 'trial_expired' };
+
+  const count = profile.essay_count || 0;
+  if (count >= TRIAL_ESSAY_MAX)
+    return { error: `Използва ${TRIAL_ESSAY_MAX} проверки на съчинения за пробния период. Избери план за неограничен достъп.`, code: 'essay_limit' };
+
+  await patchProfile(userId, token, { essay_count: count + 1 });
+  return null;
+}
 
 const MODEL_PRICES = {
   'claude-opus-4-8':   { input: 5.00,  output: 25.00 },
@@ -175,6 +247,15 @@ async function handleExplain(req, res) {
   const authHeader = req.headers['authorization'] || '';
   const userToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
 
+  if (userToken) {
+    const userId = getUserIdFromJwt(userToken);
+    if (userId) {
+      const profile = await getProfile(userId, userToken);
+      const err = await checkZnayko(userId, userToken, profile);
+      if (err) return sendJson(res, 403, err);
+    }
+  }
+
   let payload;
   try {
     const rawBody = await readBody(req);
@@ -269,6 +350,251 @@ async function handleQuizFeedback(req, res) {
   }
 }
 
+async function handleGradeEssay(req, res) {
+  if (!anthropicClient) return sendJson(res, 500, { error: 'ANTHROPIC_API_KEY липсва.' });
+
+  const authHeader = req.headers['authorization'] || '';
+  const userToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+
+  if (userToken) {
+    const userId = getUserIdFromJwt(userToken);
+    if (userId) {
+      const profile = await getProfile(userId, userToken);
+      const err = await checkEssay(userId, userToken, profile);
+      if (err) return sendJson(res, 403, err);
+    }
+  }
+
+  let payload;
+  try {
+    const rawBody = await readBody(req);
+    payload = JSON.parse(rawBody || '{}');
+  } catch {
+    return sendJson(res, 400, { error: 'Невалиден JSON.' });
+  }
+
+  const { lessonTitle, topicText, essayText } = payload;
+
+  const systemPrompt = `Ти си строг и справедлив оценител на интерпретативни съчинения по български език и литература за ДЗИ.
+Оценявай по официалните критерии:
+- К1 Теза: 0-4 точки — ясна ли е позицията, формулирана ли е в увода
+- К2 Аргументация: 0-8 точки — цитати от текста, литературен анализ, дълбочина на интерпретацията
+- К3 Композиция: 0-4 точки — увод/изложение/заключение, логическа свързаност
+- К4 Езикова грамотност: 0-4 точки — граматика, пунктуация, правопис
+- К5 Стил: 0-4 точки — богатство на изказа, подходящ регистър, изразни средства
+Общо максимум: 24 точки. Минимален праг за издържал: 13 точки.
+
+Отговори САМО с валиден JSON, без обяснения извън него. ВАЖНО: не използвай кавички (нито " нито „ ") вътре в текста на feedback и summary — замени ги с тире или перифраза. Само чист JSON:
+{
+  "criteria": {
+    "k1": {"score": <число 0-4>, "feedback": "<1-2 изречения на български>"},
+    "k2": {"score": <число 0-8>, "feedback": "<1-2 изречения на български>"},
+    "k3": {"score": <число 0-4>, "feedback": "<1-2 изречения на български>"},
+    "k4": {"score": <число 0-4>, "feedback": "<1-2 изречения на български>"},
+    "k5": {"score": <число 0-4>, "feedback": "<1-2 изречения на български>"}
+  },
+  "total": <сума на всички>,
+  "summary": "<2-3 изречения обща оценка и насоки за подобрение>"
+}`;
+
+  const userMsg = `Урок: ${lessonTitle}
+Тема: ${topicText}
+
+Съчинение на ученика:
+${essayText}`;
+
+  try {
+    const message = await anthropicClient.messages.create({
+      model: MODEL_ESSAY,
+      max_tokens: 800,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userMsg }],
+    });
+
+    const text = message.content.filter(b => b.type === 'text').map(b => b.text).join('').trim();
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) return sendJson(res, 502, { error: 'AI не върна валиден JSON.' });
+
+    const parsed = parseClaudeJson(jsonMatch[0]);
+    if (!parsed) return sendJson(res, 502, { error: 'AI върна невалиден JSON — опитай пак.' });
+    if (userToken && message.usage) logApiUsage(userToken, message.usage.input_tokens, message.usage.output_tokens);
+
+    return sendJson(res, 200, parsed);
+  } catch (e) {
+    return sendJson(res, 500, { error: `Claude API грешка: ${e.message}` });
+  }
+}
+
+// Парсва JSON от Claude — опитва директно, после repair за незаекранени кавички
+function parseClaudeJson(raw) {
+  try { return JSON.parse(raw); } catch {}
+  // Repair: заменя незаекранени ASCII " вътре в string стойности
+  // Стратегия: за всеки "ключ": "стойност" — заменя вътрешните " с \"
+  const repaired = raw.replace(
+    /:\s*"([\s\S]*?)(?<!\\)"(?=\s*[,\}])/g,
+    (match, inner) => ': "' + inner.replace(/(?<!\\)"/g, '\\"') + '"'
+  );
+  try { return JSON.parse(repaired); } catch {}
+  // Последен опит: изтрий всички специални кавички
+  const stripped = raw
+    .replace(/„/g, '"').replace(/"/g, '"').replace(/"/g, '"')
+    .replace(/'/g, "'").replace(/'/g, "'");
+  try { return JSON.parse(stripped); } catch {}
+  return null;
+}
+
+async function handleGenerateKonspekt(req, res) {
+  if (!anthropicClient) return sendJson(res, 500, { error: 'ANTHROPIC_API_KEY липсва.' });
+
+  const authHeader = req.headers['authorization'] || '';
+  const userToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+
+  let payload;
+  try {
+    const rawBody = await readBody(req);
+    payload = JSON.parse(rawBody || '{}');
+  } catch {
+    return sendJson(res, 400, { error: 'Невалиден JSON.' });
+  }
+
+  const { lessonTitle, lessonText } = payload;
+
+  const systemPrompt = `Ти си експерт по български език и литература. Генерираш структуриран конспект от урок за ученик в 12 клас, подготвящ се за ДЗИ.
+
+Отговори САМО с валиден JSON, без обяснения извън него:
+{
+  "summary": "<2-3 изречения: кратко резюме на произведението/темата>",
+  "themes": ["<тема 1>", "<тема 2>", "<тема 3>"],
+  "keyPoints": ["<ключов момент 1>", "<ключов момент 2>", "<ключов момент 3>", "<ключов момент 4>", "<ключов момент 5>"],
+  "literaryDevices": [
+    {"name": "<художествено средство>", "example": "<цитат или пример от творбата>"},
+    {"name": "<художествено средство>", "example": "<цитат или пример от творбата>"},
+    {"name": "<художествено средство>", "example": "<цитат или пример от творбата>"}
+  ],
+  "quotes": ["<важен цитат 1>", "<важен цитат 2>", "<важен цитат 3>"],
+  "forExam": ["<задължително за матурата 1>", "<задължително за матурата 2>", "<задължително за матурата 3>", "<задължително за матурата 4>"]
+}
+
+Бъди конкретен — само факти от точно това произведение/урок. Без общи приказки.`;
+
+  const userMsg = `Урок: ${lessonTitle}\n\nСъдържание:\n${lessonText.slice(0, 8000)}`;
+
+  try {
+    const message = await anthropicClient.messages.create({
+      model: MODEL,
+      max_tokens: 1200,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userMsg }],
+    });
+
+    const text = message.content.filter(b => b.type === 'text').map(b => b.text).join('').trim();
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) return sendJson(res, 502, { error: 'AI не върна валиден JSON.' });
+
+    const parsed = JSON.parse(jsonMatch[0]);
+    if (userToken && message.usage) logApiUsage(userToken, message.usage.input_tokens, message.usage.output_tokens);
+
+    return sendJson(res, 200, parsed);
+  } catch (e) {
+    return sendJson(res, 500, { error: `Claude API грешка: ${e.message}` });
+  }
+}
+
+async function handleCheckout(req, res) {
+  const authHeader = req.headers['authorization'] || '';
+  const userToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  if (!userToken) return sendJson(res, 401, { error: 'Не си влязъл в профила си.' });
+
+  let payload;
+  try {
+    const rawBody = await readBody(req);
+    payload = JSON.parse(rawBody || '{}');
+  } catch {
+    return sendJson(res, 400, { error: 'Невалиден JSON.' });
+  }
+
+  const { plan } = payload;
+  const priceId = STRIPE_PRICES[plan];
+  if (!priceId) return sendJson(res, 400, { error: 'Невалиден план.' });
+
+  const userId = getUserIdFromJwt(userToken);
+  const origin = req.headers.origin || 'http://localhost:3000';
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      mode: 'subscription',
+      payment_method_types: ['card'],
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${origin}/urotsi.html?checkout=success`,
+      cancel_url: `${origin}/index.html#pricing`,
+      metadata: { user_id: userId, plan },
+      subscription_data: { metadata: { user_id: userId, plan } },
+    });
+    return sendJson(res, 200, { url: session.url });
+  } catch (e) {
+    return sendJson(res, 500, { error: `Stripe грешка: ${e.message}` });
+  }
+}
+
+async function handleWebhook(req, res) {
+  const sig = req.headers['stripe-signature'];
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  let rawBody = '';
+  await new Promise((resolve, reject) => {
+    req.on('data', chunk => rawBody += chunk);
+    req.on('end', resolve);
+    req.on('error', reject);
+  });
+
+  let event;
+  try {
+    event = webhookSecret
+      ? stripe.webhooks.constructEvent(rawBody, sig, webhookSecret)
+      : JSON.parse(rawBody);
+  } catch (e) {
+    return sendJson(res, 400, { error: `Webhook грешка: ${e.message}` });
+  }
+
+  if (event.type === 'checkout.session.completed' || event.type === 'invoice.paid') {
+    const obj = event.data.object;
+    const meta = obj.metadata || obj.subscription_details?.metadata || {};
+    const userId = meta.user_id;
+    const plan = meta.plan;
+    if (userId && plan) {
+      await fetch(`${SUPABASE_URL}/rest/v1/profiles?user_id=eq.${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal',
+        },
+        body: JSON.stringify({ plan, trial_started_at: null }),
+      });
+    }
+  }
+
+  if (event.type === 'customer.subscription.deleted') {
+    const sub = event.data.object;
+    const userId = sub.metadata?.user_id;
+    if (userId) {
+      await fetch(`${SUPABASE_URL}/rest/v1/profiles?user_id=eq.${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal',
+        },
+        body: JSON.stringify({ plan: 'expired' }),
+      });
+    }
+  }
+
+  sendJson(res, 200, { received: true });
+}
+
 function serveStatic(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
   let filePath = decodeURIComponent(url.pathname);
@@ -302,6 +628,18 @@ const server = http.createServer((req, res) => {
   }
   if (req.method === 'POST' && req.url === '/api/quiz-feedback') {
     return handleQuizFeedback(req, res);
+  }
+  if (req.method === 'POST' && req.url === '/api/generate-konspekt') {
+    return handleGenerateKonspekt(req, res);
+  }
+  if (req.method === 'POST' && req.url === '/api/grade-essay') {
+    return handleGradeEssay(req, res);
+  }
+  if (req.method === 'POST' && req.url === '/api/checkout') {
+    return handleCheckout(req, res);
+  }
+  if (req.method === 'POST' && req.url === '/api/webhook') {
+    return handleWebhook(req, res);
   }
   if (req.method === 'GET') {
     return serveStatic(req, res);

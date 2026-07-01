@@ -956,7 +956,10 @@ footer { padding: 30px 6vw; border-top: 1px solid var(--line); color: var(--mute
 /* Pricing grid */
 .pricing-grid { display: grid; gap: 24px; max-width: 980px; margin: 0 auto; }
 .pricing-grid-3 { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
-.price-amount { display: block; font-size: 34px; font-weight: 800; color: var(--accent); margin: 10px 0 4px; }
+.plan-name { font-size: 26px; font-weight: 800; color: var(--ink); margin: 0 0 6px; line-height: 1.1; text-align: center; }
+.plan-tag { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); background: var(--line); border-radius: 20px; padding: 3px 10px; margin-bottom: 4px; text-align: center; }
+.price-card-featured .plan-name { color: var(--gold); }
+.price-amount { display: block; font-size: 28px; font-weight: 800; color: var(--accent); margin: 10px 0 4px; }
 .price-period { font-size: 15px; font-weight: 400; color: var(--muted); }
 .price-desc { font-size: 14px; color: var(--muted); margin: 0 0 18px; line-height: 1.5; }
 .price-card ul { list-style: none; padding: 0; margin: 0 0 20px; }
@@ -981,6 +984,19 @@ footer { padding: 30px 6vw; border-top: 1px solid var(--line); color: var(--mute
 .price-card-featured { border-color: var(--gold); border-width: 2px; }
 .price-card-featured .price-amount { color: var(--gold); }
 .price-card-featured li::before { color: var(--gold); }
+.price-card-premium { border-color: var(--accent); border-width: 2px; }
+.price-card-premium .plan-name { color: var(--accent); }
+.price-card-premium .price-amount { color: var(--accent); }
+.price-card-premium li::before { color: var(--accent); }
+.price-badge-premium { background: var(--accent); }
+.price-badge-basic { background: #8da6c4; }
+.price-card-basic { border-color: var(--line); border-width: 1px; }
+.price-card-basic .plan-name { color: #4a6080; }
+.price-card-basic .plan-tag { background: #eef2f7; color: #4a6080; }
+.price-card-basic .price-amount { color: #4a6080; }
+.price-card-basic li::before { color: #8da6c4; }
+.nav-btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.nav-btn-blue { background: #8da6c4; color: #fff; border-color: #8da6c4; }
 .price-spacer { flex: 1; }
 .teacher-note {
   max-width: 680px;
