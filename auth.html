@@ -268,7 +268,7 @@
       const password = document.getElementById('login-password').value;
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) return showMsg(error.message, 'error');
-      window.location.href = '/urotsi.html';
+      window.location.href = '/dnevnik.html';
     };
 
     window.handleRegister = async function(e) {
@@ -302,7 +302,7 @@
 
     // Redirect if already logged in
     const { data: { session } } = await supabase.auth.getSession();
-    if (session) window.location.href = '/urotsi.html';
+    if (session) window.location.href = '/dnevnik.html';
   </script>
 </body>
 </html>
