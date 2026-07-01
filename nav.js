@@ -87,11 +87,41 @@
         var fn = document.getElementById('user-fullname-label');
         if (fn) fn.textContent = fullName || email.split('@')[0];
 
-        // Trial popup — веднъж на сесия след логин
+        // Trial state
         var plan = r.data && r.data.plan;
         var trialStarted = r.data && r.data.trial_started_at;
         var isTrial = !plan || plan === 'trial' || plan === 'free';
         var expired = isTrial && trialStarted && (Date.now() - new Date(trialStarted)) / 86400000 > 3;
+
+        // Trial gating за lesson и quiz страници
+        if (isTrial && !expired) {
+          var path = window.location.pathname;
+          var isLesson = path.startsWith('/lessons/') && path.indexOf('-quiz') === -1;
+          var isQuiz   = path.startsWith('/lessons/') && path.indexOf('-quiz') !== -1;
+
+          if (isLesson) {
+            var slug = path.replace('/lessons/', '').replace('.html', '');
+            var trialLessons = JSON.parse(localStorage.getItem('trial_lessons') || '[]');
+            if (trialLessons.indexOf(slug) === -1) {
+              if (trialLessons.length >= 3) {
+                window.location.href = '/urotsi.html?trial_limit=lesson';
+                return;
+              }
+              trialLessons.push(slug);
+              localStorage.setItem('trial_lessons', JSON.stringify(trialLessons));
+            }
+          }
+
+          if (isQuiz) {
+            var quizDone = Object.keys(localStorage).filter(function(k) { return k.startsWith('quiz_'); }).length;
+            if (quizDone >= 3) {
+              window.location.href = '/urotsi.html?trial_limit=quiz';
+              return;
+            }
+          }
+        }
+
+        // Trial popup — веднъж на сесия след логин
         if (isTrial && !expired && trialStarted && !sessionStorage.getItem('trial_popup_shown')) {
           sessionStorage.setItem('trial_popup_shown', '1');
           var daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(trialStarted)) / 86400000));
@@ -105,7 +135,7 @@
             '<p style="font-size:15px;color:#475569;margin:0 0 24px;line-height:1.6;">Имаш още <strong>' + daysLeft + ' ' + dayWord + '</strong> безплатен достъп. След това ще трябва да избереш план, за да продължиш.</p>' +
             '<div style="background:#f0f7ff;border-radius:12px;padding:14px 18px;margin-bottom:24px;text-align:left;">' +
               '<div style="font-size:13px;color:#1e40af;font-weight:600;margin-bottom:6px;">Сега имаш достъп само до:</div>' +
-              '<div style="font-size:13px;color:#334155;line-height:1.8;">✅ Всички БЕЛ уроци и тестове<br>✅ 30 въпроса към Знайко на ден<br>🔒 Математика, Биология, Химия — заключени</div>' +
+              '<div style="font-size:13px;color:#334155;line-height:1.8;">✅ 3 БЕЛ урока по избор<br>✅ 3 теста<br>✅ 3 съчинения<br>✅ 30 въпроса към Знайко на ден<br>🔒 Математика, Биология, Химия — заключени</div>' +
             '</div>' +
             '<a href="/index.html#pricing" style="display:block;background:#1d4ed8;color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 24px;border-radius:12px;margin-bottom:12px;">Виж плановете →</a>' +
             '<button style="background:none;border:none;color:#94a3b8;font-size:14px;cursor:pointer;padding:4px;">Продължи с безплатната версия</button>' +

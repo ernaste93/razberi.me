@@ -241,8 +241,6 @@
   <!-- Trial top banner -->
   <div id="trial-banner" style="display:none; background:linear-gradient(90deg,#1d4ed8,#2563eb); color:#fff; padding:11px 24px; text-align:center; font-size:14px; font-weight:500; letter-spacing:0.01em;">
     <span id="trial-banner-text"></span>
-    &nbsp;&nbsp;
-    <a href="/index.html#pricing" style="font-weight:700; color:#fde68a; text-decoration:underline; white-space:nowrap;">Избери план →</a>
   </div>
 
 
@@ -917,49 +915,71 @@
 
 
     if (isTrial && !trialExpired && profile?.trial_started_at) {
-      const daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(profile.trial_started_at)) / 86400000));
-      const dayWord = daysLeft === 1 ? 'ден' : 'дни';
-
-      // Top banner — винаги видим
       const banner = document.getElementById('trial-banner');
-      const text = document.getElementById('trial-banner-text');
-      if (banner && text) {
-        text.innerHTML = `Безплатна версия — остават ти <strong>${daysLeft} ${dayWord}</strong>. Отключи всички предмети и неограничен Знайко с платен план.`;
-        banner.style.display = 'block';
-      }
+      if (banner) banner.style.display = 'block';
+    }
 
+    function lockCard(card) {
+      card.classList.add('locked');
+      card.removeAttribute('href');
+      if (!card.querySelector('.lock-icon')) {
+        const lock = document.createElement('span');
+        lock.className = 'lock-icon';
+        lock.textContent = '🔒';
+        lock.style.cssText = 'position:absolute;top:10px;right:12px;font-size:16px;';
+        card.style.position = 'relative';
+        card.prepend(lock);
+      }
     }
 
     if (isTrial || trialExpired) {
-      // Заключи всички карти, които не са БЕЛ
+      // Скрий "11 клас Преговор" таба изцяло
+      document.querySelectorAll('.class-tab').forEach(btn => {
+        if (btn.dataset.class === '11') btn.style.display = 'none';
+      });
+
+      const trialLessons = JSON.parse(localStorage.getItem('trial_lessons') || '[]');
+      const quizDone = Object.keys(localStorage).filter(k => k.startsWith('quiz_')).length;
+
+      // Покажи trial progress в банера
+      const text = document.getElementById('trial-banner-text');
+      if (text) {
+        const daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(profile?.trial_started_at)) / 86400000));
+        text.innerHTML = `Безплатна версия — <strong>${trialLessons.length}/3 урока</strong> · <strong>${quizDone}/3 теста</strong> · остават <strong>${daysLeft} дни</strong>. <a href="/index.html#pricing" style="color:#fde68a;font-weight:700;text-decoration:underline;">Виж плановете →</a>`;
+      }
+
       document.querySelectorAll('.lesson-card[id]').forEach(card => {
         const id = card.getAttribute('id') || '';
+        const slug = id.replace('card-', '');
         const isBel = id.startsWith('card-bel');
+
         if (!isBel) {
-          card.classList.add('locked');
-          card.removeAttribute('href');
-          // Добави катинар ако няма
-          if (!card.querySelector('.lock-icon')) {
-            const lock = document.createElement('span');
-            lock.className = 'lock-icon';
-            lock.textContent = '🔒';
-            lock.style.cssText = 'position:absolute;top:10px;right:12px;font-size:16px;';
-            card.style.position = 'relative';
-            card.prepend(lock);
-          }
+          // Заключи Математика, Биология, Химия
+          lockCard(card);
+        } else if (trialLessons.length >= 3 && trialLessons.indexOf(slug) === -1) {
+          // Заключи БЕЛ карти извън избраните 3
+          lockCard(card);
         }
       });
 
-      // Ако trial-ът е изтекъл — заключи и БЕЛ
+      // Ако trial-ът е изтекъл — заключи всичко
       if (trialExpired) {
-        document.querySelectorAll('.lesson-card').forEach(card => {
-          card.classList.add('locked');
-          card.removeAttribute('href');
-        });
-        const banner = document.createElement('div');
-        banner.style.cssText = 'background:#fee2e2;border:1px solid #fca5a5;border-radius:12px;padding:16px 20px;text-align:center;margin:20px 0;font-weight:600;color:#b91c1c;';
-        banner.innerHTML = 'Пробният ти период е изтекъл. <a href="/index.html#pricing" style="color:#b91c1c;text-decoration:underline;">Избери план, за да продължиш.</a>';
-        document.querySelector('main')?.prepend(banner);
+        document.querySelectorAll('.lesson-card').forEach(card => lockCard(card));
+        const expiredBanner = document.createElement('div');
+        expiredBanner.style.cssText = 'background:#fee2e2;border:1px solid #fca5a5;border-radius:12px;padding:16px 20px;text-align:center;margin:20px 0;font-weight:600;color:#b91c1c;';
+        expiredBanner.innerHTML = 'Пробният ти период е изтекъл. <a href="/index.html#pricing" style="color:#b91c1c;text-decoration:underline;">Избери план, за да продължиш.</a>';
+        document.querySelector('main')?.prepend(expiredBanner);
+      }
+
+      // Покажи съобщение ако е достигнат лимит
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('trial_limit') === 'lesson' || params.get('trial_limit') === 'quiz') {
+        const limitType = params.get('trial_limit') === 'lesson' ? 'уроци' : 'теста';
+        const msg = document.createElement('div');
+        msg.style.cssText = 'background:#fef3c7;border:1px solid #fcd34d;border-radius:12px;padding:14px 20px;text-align:center;margin:16px 0;color:#92400e;font-weight:600;';
+        msg.innerHTML = `Достигна лимита от 3 ${limitType} в безплатната версия. <a href="/index.html#pricing" style="color:#92400e;text-decoration:underline;">Виж плановете →</a>`;
+        document.querySelector('main')?.prepend(msg);
+        history.replaceState({}, '', '/urotsi.html');
       }
     }
   </script>
