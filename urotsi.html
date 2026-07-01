@@ -908,14 +908,18 @@
       .select('plan, trial_started_at')
       .eq('id', session.user.id)
       .limit(1);
-    console.log('[trial] user_id:', session.user.id);
-    console.log('[trial] profileRows:', profileRows);
-    console.log('[trial] profileErr:', profileErr);
     const profile = profileRows?.[0];
     const isTrial = !profile || profile.plan === 'trial' || profile.plan === 'free';
     const trialExpired = isTrial && profile?.trial_started_at &&
       (Date.now() - new Date(profile.trial_started_at)) / 86400000 > 3;
-    console.log('[trial] isTrial:', isTrial, '| trialExpired:', trialExpired, '| plan:', profile?.plan);
+
+    // Debug box — ще го махнем след оправяне
+    {
+      const dbg = document.createElement('div');
+      dbg.style.cssText = 'position:fixed;bottom:12px;right:12px;background:#1e293b;color:#a3e635;font:12px/1.6 monospace;padding:12px 16px;border-radius:8px;z-index:9999;max-width:340px;word-break:break-all;';
+      dbg.innerHTML = `id: ${session.user.id}<br>plan: ${profile?.plan ?? 'NO PROFILE'}<br>trial_started_at: ${profile?.trial_started_at ?? '-'}<br>isTrial: ${isTrial} | expired: ${trialExpired}<br>err: ${profileErr?.message ?? 'none'}`;
+      document.body.appendChild(dbg);
+    }
 
     if (isTrial && !trialExpired && profile?.trial_started_at) {
       const daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(profile.trial_started_at)) / 86400000));
