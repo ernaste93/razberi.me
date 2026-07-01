@@ -906,7 +906,7 @@
     const { data: profileRows, error: profileErr } = await sb
       .from('profiles')
       .select('plan, trial_started_at')
-      .eq('user_id', session.user.id)
+      .eq('id', session.user.id)
       .limit(1);
     console.log('[trial] user_id:', session.user.id);
     console.log('[trial] profileRows:', profileRows);

@@ -49,7 +49,7 @@ const TRIAL_DAYS         = 3;
 async function getProfile(userId, token) {
   try {
     const resp = await fetch(
-      `${SUPABASE_URL}/rest/v1/profiles?user_id=eq.${userId}&select=plan,trial_started_at,znayko_count_today,znayko_reset_date,essay_count&limit=1`,
+      `${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}&select=plan,trial_started_at,znayko_count_today,znayko_reset_date,essay_count&limit=1`,
       { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } }
     );
     if (!resp.ok) return null;
@@ -60,7 +60,7 @@ async function getProfile(userId, token) {
 
 async function patchProfile(userId, token, updates) {
   try {
-    await fetch(`${SUPABASE_URL}/rest/v1/profiles?user_id=eq.${userId}`, {
+    await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}`, {
       method: 'PATCH',
       headers: {
         'apikey': SUPABASE_KEY,
@@ -562,7 +562,7 @@ async function handleWebhook(req, res) {
     const userId = meta.user_id;
     const plan = meta.plan;
     if (userId && plan) {
-      await fetch(`${SUPABASE_URL}/rest/v1/profiles?user_id=eq.${userId}`, {
+      await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
           'apikey': SUPABASE_KEY,
@@ -579,7 +579,7 @@ async function handleWebhook(req, res) {
     const sub = event.data.object;
     const userId = sub.metadata?.user_id;
     if (userId) {
-      await fetch(`${SUPABASE_URL}/rest/v1/profiles?user_id=eq.${userId}`, {
+      await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
           'apikey': SUPABASE_KEY,
