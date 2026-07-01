@@ -78,7 +78,7 @@
       document.getElementById('user-email-label') &&
         (document.getElementById('user-email-label').textContent = email);
 
-      sb.from('profiles').select('full_name').eq('id', user.id).maybeSingle().then(function (r) {
+      sb.from('profiles').select('full_name, plan, trial_started_at').eq('id', user.id).maybeSingle().then(function (r) {
         var fullName = (r.data && r.data.full_name) || '';
         var initials = getInitials(fullName, email);
         localStorage.setItem('userInitials', initials);
@@ -86,6 +86,33 @@
         if (av) av.textContent = initials;
         var fn = document.getElementById('user-fullname-label');
         if (fn) fn.textContent = fullName || email.split('@')[0];
+
+        // Trial popup — веднъж на сесия след логин
+        var plan = r.data && r.data.plan;
+        var trialStarted = r.data && r.data.trial_started_at;
+        var isTrial = !plan || plan === 'trial' || plan === 'free';
+        var expired = isTrial && trialStarted && (Date.now() - new Date(trialStarted)) / 86400000 > 3;
+        if (isTrial && !expired && trialStarted && !sessionStorage.getItem('trial_popup_shown')) {
+          sessionStorage.setItem('trial_popup_shown', '1');
+          var daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(trialStarted)) / 86400000));
+          var dayWord = daysLeft === 1 ? 'ден' : 'дни';
+          var modal = document.createElement('div');
+          modal.id = 'nav-trial-modal';
+          modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:10000;display:flex;align-items:center;justify-content:center;';
+          modal.innerHTML = '<div style="background:#fff;border-radius:20px;padding:40px 36px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25);">' +
+            '<div style="font-size:40px;margin-bottom:12px;">⏳</div>' +
+            '<h2 style="font-size:22px;font-weight:800;color:#0f172a;margin:0 0 10px;">Безплатен пробен период</h2>' +
+            '<p style="font-size:15px;color:#475569;margin:0 0 24px;line-height:1.6;">Имаш още <strong>' + daysLeft + ' ' + dayWord + '</strong> безплатен достъп. След това ще трябва да избереш план, за да продължиш да учиш.</p>' +
+            '<div style="background:#f0f7ff;border-radius:12px;padding:14px 18px;margin-bottom:24px;text-align:left;">' +
+              '<div style="font-size:13px;color:#1e40af;font-weight:600;margin-bottom:6px;">В триала имаш достъп до:</div>' +
+              '<div style="font-size:13px;color:#334155;line-height:1.8;">✅ Всички БЕЛ уроци и тестове<br>✅ 30 въпроса до Знайко на ден<br>🔒 Математика, Биология, Химия — заключени</div>' +
+            '</div>' +
+            '<a href="/index.html#pricing" style="display:block;background:#1d4ed8;color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:14px 24px;border-radius:12px;margin-bottom:12px;">Виж плановете →</a>' +
+            '<button style="background:none;border:none;color:#94a3b8;font-size:14px;cursor:pointer;padding:4px;">Продължи с безплатната версия</button>' +
+          '</div>';
+          modal.querySelector('button').onclick = function () { modal.remove(); };
+          document.body.appendChild(modal);
+        }
       });
 
       // Logout
