@@ -87,7 +87,7 @@
       document.getElementById('user-email-label') &&
         (document.getElementById('user-email-label').textContent = email);
 
-      sb.from('profiles').select('full_name, plan, trial_started_at').eq('id', user.id).maybeSingle().then(function (r) {
+      sb.from('profiles').select('full_name, plan, trial_started_at, trial_quiz_count, trial_lessons_opened').eq('id', user.id).maybeSingle().then(function (r) {
         var fullName = (r.data && r.data.full_name) || '';
         var initials = getInitials(fullName, email);
         localStorage.setItem('userInitials', initials);
@@ -101,6 +101,14 @@
         var trialStarted = r.data && r.data.trial_started_at;
         var isTrial = !plan || plan === 'trial' || plan === 'free';
         var expired = isTrial && trialStarted && (Date.now() - new Date(trialStarted)) / 86400000 > 3;
+        var trialQuizCount = (r.data && r.data.trial_quiz_count) || 0;
+        var trialLessonsOpened = (r.data && r.data.trial_lessons_opened) || [];
+
+        // Expose за quiz.js
+        window.__trialUserId = user.id;
+        window.__trialToken  = session.access_token;
+        window.__isTrial     = isTrial && !expired;
+        window.__trialQuizCount = trialQuizCount;
 
         // Trial gating за lesson и quiz страници
         if (isTrial && !expired) {
@@ -110,20 +118,19 @@
 
           if (isLesson) {
             var slug = path.replace('/lessons/', '').replace('.html', '');
-            var trialLessons = JSON.parse(localStorage.getItem('trial_lessons') || '[]');
-            if (trialLessons.indexOf(slug) === -1) {
-              if (trialLessons.length >= 3) {
+            if (trialLessonsOpened.indexOf(slug) === -1) {
+              if (trialLessonsOpened.length >= 3) {
                 window.location.href = '/urotsi.html?trial_limit=lesson';
                 return;
               }
-              trialLessons.push(slug);
-              localStorage.setItem('trial_lessons', JSON.stringify(trialLessons));
+              // Запиши в Supabase
+              var newLessons = trialLessonsOpened.concat([slug]);
+              sb.from('profiles').update({ trial_lessons_opened: newLessons }).eq('id', user.id).then(function(){});
             }
           }
 
           if (isQuiz) {
-            var quizDone = Object.keys(localStorage).filter(function(k) { return k.startsWith('quiz_'); }).length;
-            if (quizDone >= 3) {
+            if (trialQuizCount >= 3) {
               window.location.href = '/urotsi.html?trial_limit=quiz';
               return;
             }

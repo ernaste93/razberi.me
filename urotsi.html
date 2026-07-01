@@ -905,7 +905,7 @@
     // Trial gating — заключи не-БЕЛ карти ако потребителят е на trial
     const { data: profileRows, error: profileErr } = await sb
       .from('profiles')
-      .select('plan, trial_started_at')
+      .select('plan, trial_started_at, trial_quiz_count, trial_lessons_opened')
       .eq('id', session.user.id)
       .limit(1);
     const profile = profileRows?.[0];
@@ -938,8 +938,8 @@
         if (btn.dataset.class === '11') btn.style.display = 'none';
       });
 
-      const trialLessons = JSON.parse(localStorage.getItem('trial_lessons') || '[]');
-      const quizDone = Object.keys(localStorage).filter(k => k.startsWith('quiz_')).length;
+      const trialLessons = profile?.trial_lessons_opened || [];
+      const quizDone = profile?.trial_quiz_count || 0;
 
       // Покажи trial progress в банера
       const text = document.getElementById('trial-banner-text');
@@ -954,10 +954,8 @@
         const isBel = id.startsWith('card-bel');
 
         if (!isBel) {
-          // Заключи Математика, Биология, Химия
           lockCard(card);
         } else if (trialLessons.length >= 3 && trialLessons.indexOf(slug) === -1) {
-          // Заключи БЕЛ карти извън избраните 3
           lockCard(card);
         }
       });
