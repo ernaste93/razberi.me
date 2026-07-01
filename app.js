@@ -497,7 +497,7 @@ function escapeHtml(str) {
   }[tag]));
 }
 
-lessonSelect.addEventListener('change', (e) => {
+if (lessonSelect) lessonSelect.addEventListener('change', (e) => {
   currentLesson = e.target.value;
   renderLesson(currentLesson);
   aiOutput.innerHTML = '<p>Избери част от новия урок, която не разбираш, и ще я обясня по друг начин.</p>';

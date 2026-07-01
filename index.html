@@ -516,7 +516,7 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
     drawer.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMenu));
 
-    document.querySelector('a[href="/about.html"]').addEventListener('click', function(e) {
+    document.querySelector('a[href="/about.html"]')?.addEventListener('click', function(e) {
       e.preventDefault();
       document.body.style.transition = 'opacity 0.35s ease';
       document.body.style.opacity = '0';
