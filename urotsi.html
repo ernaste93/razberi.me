@@ -903,15 +903,19 @@
     if (!session) { window.location.href = '/auth.html'; }
 
     // Trial gating — заключи не-БЕЛ карти ако потребителят е на trial
-    const { data: profileRows } = await sb
+    const { data: profileRows, error: profileErr } = await sb
       .from('profiles')
       .select('plan, trial_started_at')
       .eq('user_id', session.user.id)
       .limit(1);
+    console.log('[trial] user_id:', session.user.id);
+    console.log('[trial] profileRows:', profileRows);
+    console.log('[trial] profileErr:', profileErr);
     const profile = profileRows?.[0];
     const isTrial = !profile || profile.plan === 'trial' || profile.plan === 'free';
     const trialExpired = isTrial && profile?.trial_started_at &&
       (Date.now() - new Date(profile.trial_started_at)) / 86400000 > 3;
+    console.log('[trial] isTrial:', isTrial, '| trialExpired:', trialExpired, '| plan:', profile?.plan);
 
     if (isTrial && !trialExpired && profile?.trial_started_at) {
       const daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(profile.trial_started_at)) / 86400000));
