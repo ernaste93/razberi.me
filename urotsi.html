@@ -909,7 +909,7 @@
       .eq('user_id', session.user.id)
       .limit(1);
     const profile = profileRows?.[0];
-    const isTrial = !profile || profile.plan === 'trial';
+    const isTrial = !profile || profile.plan === 'trial' || profile.plan === 'free';
     const trialExpired = isTrial && profile?.trial_started_at &&
       (Date.now() - new Date(profile.trial_started_at)) / 86400000 > 3;
 

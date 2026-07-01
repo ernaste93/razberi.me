@@ -79,7 +79,7 @@ function trialExpired(profile) {
 }
 
 async function checkZnayko(userId, token, profile) {
-  if (!profile || profile.plan !== 'trial') return null;
+  if (!profile || (profile.plan !== 'trial' && profile.plan !== 'free')) return null;
   if (trialExpired(profile))
     return { error: 'Пробният период е изтекъл. Избери план, за да продължиш.', code: 'trial_expired' };
 
@@ -93,7 +93,7 @@ async function checkZnayko(userId, token, profile) {
 }
 
 async function checkEssay(userId, token, profile) {
-  if (!profile || profile.plan !== 'trial') return null;
+  if (!profile || (profile.plan !== 'trial' && profile.plan !== 'free')) return null;
   if (trialExpired(profile))
     return { error: 'Пробният период е изтекъл. Избери план, за да продължиш.', code: 'trial_expired' };
 
