@@ -945,7 +945,7 @@
       const text = document.getElementById('trial-banner-text');
       if (text) {
         const daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(profile?.trial_started_at)) / 86400000));
-        text.innerHTML = `Безплатна версия — <strong>${trialLessons.length}/3 урока</strong> · <strong>${quizDone}/3 теста</strong> · остават <strong>${daysLeft} дни</strong>. <a href="/index.html#pricing" style="color:#fde68a;font-weight:700;text-decoration:underline;">Виж плановете →</a>`;
+        text.innerHTML = `Безплатна версия — <strong>${Math.min(trialLessons.length,3)}/3 урока</strong> · <strong>${Math.min(quizDone,3)}/3 теста</strong> · остават <strong>${daysLeft} дни</strong>. <a href="/index.html#pricing" style="color:#fde68a;font-weight:700;text-decoration:underline;">Виж плановете →</a>`;
       }
 
       document.querySelectorAll('.lesson-card[id]').forEach(card => {
