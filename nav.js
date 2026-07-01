@@ -125,7 +125,9 @@
               }
               // Запиши в Supabase
               var newLessons = trialLessonsOpened.concat([slug]);
-              sb.from('profiles').update({ trial_lessons_opened: newLessons }).eq('id', user.id).then(function(){});
+              sb.from('profiles').update({ trial_lessons_opened: newLessons }).eq('id', user.id).then(function(res){
+                console.log('[trial] lesson update:', res.error || 'OK', newLessons);
+              });
             }
           }
 
