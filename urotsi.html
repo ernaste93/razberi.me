@@ -905,7 +905,7 @@
     // Trial gating — заключи не-БЕЛ карти ако потребителят е на trial
     const { data: profileRows, error: profileErr } = await sb
       .from('profiles')
-      .select('plan, trial_started_at, trial_quiz_count, trial_lessons_opened')
+      .select('plan, trial_started_at, trial_quizzes_done, trial_lessons_opened')
       .eq('id', session.user.id)
       .limit(1);
     const profile = profileRows?.[0];
@@ -939,7 +939,7 @@
       });
 
       const trialLessons = profile?.trial_lessons_opened || [];
-      const quizDone = profile?.trial_quiz_count || 0;
+      const quizDone = (profile?.trial_quizzes_done || []).length;
 
       // Покажи trial progress в банера
       const text = document.getElementById('trial-banner-text');

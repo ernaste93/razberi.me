@@ -101,14 +101,15 @@
         var trialStarted = r.data && r.data.trial_started_at;
         var isTrial = !plan || plan === 'trial' || plan === 'free';
         var expired = isTrial && trialStarted && (Date.now() - new Date(trialStarted)) / 86400000 > 3;
-        var trialQuizCount = (r.data && r.data.trial_quiz_count) || 0;
         var trialLessonsOpened = (r.data && r.data.trial_lessons_opened) || [];
+        var trialQuizzesDone  = (r.data && r.data.trial_quizzes_done)  || [];
 
         // Expose за quiz.js
-        window.__trialUserId = user.id;
-        window.__trialToken  = session.access_token;
-        window.__isTrial     = isTrial && !expired;
-        window.__trialQuizCount = trialQuizCount;
+        window.__trialUserId       = user.id;
+        window.__trialToken        = session.access_token;
+        window.__isTrial           = isTrial && !expired;
+        window.__trialQuizzesDone  = trialQuizzesDone;
+        window.__sbClient          = sb;
 
         // Trial gating за lesson и quiz страници
         if (isTrial && !expired) {
@@ -123,14 +124,41 @@
                 window.location.href = '/urotsi.html?trial_limit=lesson';
                 return;
               }
-              // Запиши в Supabase
               var newLessons = trialLessonsOpened.concat([slug]);
               sb.from('profiles').update({ trial_lessons_opened: newLessons }).eq('id', user.id).then(function(){});
+            }
+
+            // Ако quiz-ът за този урок е вече направен — заключи бутоните с tooltip
+            if (trialQuizzesDone.indexOf(slug) !== -1) {
+              document.addEventListener('DOMContentLoaded', function() { lockQuizButtons(); });
+              if (document.readyState !== 'loading') lockQuizButtons();
+              function lockQuizButtons() {
+                document.querySelectorAll('a[href*="-quiz"]').forEach(function(btn, i) {
+                  btn.removeAttribute('href');
+                  btn.style.opacity = '0.45';
+                  btn.style.cursor = 'default';
+                  btn.style.position = 'relative';
+                  btn.addEventListener('mouseenter', function() {
+                    var tip = document.createElement('div');
+                    tip.className = '__trial-tip';
+                    tip.style.cssText = 'position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;font-size:12px;font-weight:500;padding:7px 12px;border-radius:8px;white-space:nowrap;z-index:999;pointer-events:none;';
+                    tip.innerHTML = 'Вече направи тест за този урок.<br><a href="/index.html#pricing" style="color:#93c5fd;text-decoration:underline;">Избери план за повече →</a>';
+                    tip.style.pointerEvents = 'auto';
+                    btn.appendChild(tip);
+                  });
+                  btn.addEventListener('mouseleave', function() {
+                    var tip = btn.querySelector('.__trial-tip');
+                    if (tip) tip.remove();
+                  });
+                });
+              }
             }
           }
 
           if (isQuiz) {
-            if (trialQuizCount >= 3) {
+            // Извади lesson slug от quiz URL: bel12-debelyanov-lyubov-quiz-2 → bel12-debelyanov-lyubov
+            var quizLessonSlug = path.replace('/lessons/', '').replace('.html', '').replace(/-quiz.*$/, '');
+            if (trialQuizzesDone.indexOf(quizLessonSlug) !== -1) {
               window.location.href = '/urotsi.html?trial_limit=quiz';
               return;
             }

@@ -200,20 +200,15 @@
       wrong: wrongTexts
     }));
 
-    // Запиши в Supabase за trial потребители
-    if (window.__isTrial && window.__trialUserId && window.__trialToken) {
-      var newCount = (window.__trialQuizCount || 0) + 1;
-      window.__trialQuizCount = newCount;
-      fetch('https://wbcppvfgtvkrsfmclmjp.supabase.co/rest/v1/profiles?id=eq.' + window.__trialUserId, {
-        method: 'PATCH',
-        headers: {
-          'apikey': 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l',
-          'Authorization': 'Bearer ' + window.__trialToken,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify({ trial_quiz_count: newCount })
-      });
+    // Запиши в Supabase за trial потребители (1 тест на урок)
+    if (window.__isTrial && window.__trialUserId && window.__sbClient) {
+      var baseSlug = cfg.lessonKey.replace(/-q\d+$/, '');
+      var done = window.__trialQuizzesDone || [];
+      if (done.indexOf(baseSlug) === -1) {
+        var newDone = done.concat([baseSlug]);
+        window.__trialQuizzesDone = newDone;
+        window.__sbClient.from('profiles').update({ trial_quizzes_done: newDone }).eq('id', window.__trialUserId).then(function(){});
+      }
     }
 
     document.getElementById('quiz-area').style.display = 'none';
