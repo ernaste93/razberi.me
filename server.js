@@ -619,7 +619,80 @@ function serveStatic(req, res) {
   });
 }
 
+const MAINTENANCE   = process.env.MAINTENANCE_MODE === 'true';
+const BYPASS_SECRET = process.env.ADMIN_BYPASS_SECRET || 'razberi-admin-2026';
+
+function getCookie(req, name) {
+  const cookies = req.headers.cookie || '';
+  const match = cookies.split(';').map(c => c.trim()).find(c => c.startsWith(name + '='));
+  return match ? match.slice(name.length + 1) : null;
+}
+
+function hasBypassCookie(req) {
+  return getCookie(req, 'admin_bypass') === BYPASS_SECRET;
+}
+
+const MAINTENANCE_HTML = `<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Razberi.me — Очаквайте скоро</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
+  .logo{font-size:32px;font-weight:900;color:#1d4ed8;margin-bottom:16px;letter-spacing:-1px;}
+  h1{font-size:28px;font-weight:800;color:#0f172a;margin-bottom:12px;text-align:center;}
+  p{font-size:16px;color:#64748b;text-align:center;max-width:400px;line-height:1.6;}
+  .admin-form{margin-top:60px;opacity:0.3;transition:opacity 0.3s;}
+  .admin-form:hover{opacity:1;}
+  .admin-form input{display:block;width:200px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:8px;margin-bottom:8px;font-size:14px;}
+  .admin-form button{width:200px;padding:8px;background:#1d4ed8;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;}
+  .err{color:#dc2626;font-size:13px;margin-top:6px;}
+</style>
+</head>
+<body>
+  <div class="logo">razberi.me</div>
+  <h1>Очаквайте скоро 🚀</h1>
+  <p>Платформата за матурна подготовка е в процес на изработка. Скоро ще бъде готова!</p>
+  <form class="admin-form" method="POST" action="/admin-bypass">
+    <input type="password" name="secret" placeholder="Admin парола" autocomplete="off">
+    <button type="submit">Влез</button>
+    %ERROR%
+  </form>
+</body>
+</html>`;
+
 const server = http.createServer((req, res) => {
+  // Maintenance mode
+  if (MAINTENANCE) {
+    // Admin bypass login
+    if (req.method === 'POST' && req.url === '/admin-bypass') {
+      let body = '';
+      req.on('data', d => body += d);
+      req.on('end', () => {
+        const secret = new URLSearchParams(body).get('secret');
+        if (secret === BYPASS_SECRET) {
+          res.writeHead(302, {
+            'Set-Cookie': `admin_bypass=${BYPASS_SECRET}; Path=/; HttpOnly; SameSite=Strict`,
+            'Location': '/'
+          });
+          return res.end();
+        }
+        const html = MAINTENANCE_HTML.replace('%ERROR%', '<div class="err">Грешна парола</div>');
+        res.writeHead(401, { 'Content-Type': 'text/html; charset=utf-8' });
+        return res.end(html);
+      });
+      return;
+    }
+    // Allow API calls through (for Stripe webhooks etc)
+    if (!req.url.startsWith('/api/') && !hasBypassCookie(req)) {
+      const html = MAINTENANCE_HTML.replace('%ERROR%', '');
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      return res.end(html);
+    }
+  }
+
   if (req.method === 'GET' && req.url === '/api/health') {
     return sendJson(res, 200, { ok: true, hasAnthropicKey: Boolean(API_KEY), model: MODEL });
   }
