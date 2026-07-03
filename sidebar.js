@@ -143,7 +143,7 @@
       var user = userRes.data?.user || session.user;
 
       var profileRes = await sb.from('profiles')
-        .select('full_name,plan,plan_expires_at')
+        .select('full_name,plan')
         .eq('id', user.id)
         .single();
       var profile = profileRes.data || {};
@@ -185,11 +185,6 @@
       if (plan && plan !== 'free' && plan !== 'trial') {
         var names = { focus: 'Фокус план', podgotovka: 'Подготовка', otlichnik: 'Отличник' };
         document.getElementById('sb-plan-name').textContent = names[plan] || 'Активен план';
-        if (profile.plan_expires_at) {
-          var d = new Date(profile.plan_expires_at);
-          document.getElementById('sb-plan-until').textContent =
-            'Активен до ' + d.toLocaleDateString('bg-BG', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        }
         document.getElementById('sb-plan-card').style.display = 'block';
       }
     } catch (e) {}
