@@ -236,6 +236,32 @@
 
 })();
 
+// ── Бутон за писане (БЕЛ 7 литературни уроци) ──
+(function () {
+  const pishi7Lessons = new Set([
+    'bel7-narodno-tvorchestvo', 'bel7-vazov-opalchentsite', 'bel7-vazov-pod-igoto',
+    'bel7-botev-maytse-si', 'bel7-botev-hadzhi-dimityr',
+    'bel7-aleko-bay-ganyo', 'bel7-yovkov-indzhe', 'bel7-elin-pelin-zadusha',
+  ]);
+  const key = location.pathname.split('/').pop().replace('.html', '');
+  if (!pishi7Lessons.has(key)) return;
+
+  const panels = document.querySelectorAll('.lesson-panel');
+  panels.forEach(panel => {
+    if (!panel.querySelector(':scope > div > a[href*="-quiz"]')) return;
+    const div = document.createElement('div');
+    div.style.cssText = 'margin-top:18px;padding-top:18px;border-top:1px solid var(--line);';
+    div.innerHTML = `
+      <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:4px;">Практика на писане — НВО</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Преразказ · Творческо писане · AI оценяване по НВО критерии</div>
+      <a href="/lessons/pishi7.html?key=${key}" style="display:block;text-align:center;padding:12px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s;"
+        onmouseover="this.style.background='#2d5a9e'" onmouseout="this.style.background='var(--accent)'">
+        Практикувай писане за НВО →
+      </a>`;
+    panel.appendChild(div);
+  });
+})();
+
 // ── Бутон за съчинение (само БЕЛ 12 уроци) ──
 (function () {
   const essayLessons = new Set([

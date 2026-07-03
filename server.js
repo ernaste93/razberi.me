@@ -350,6 +350,84 @@ async function handleQuizFeedback(req, res) {
   }
 }
 
+async function handleGradePishi7(req, res) {
+  if (!anthropicClient) return sendJson(res, 500, { error: 'ANTHROPIC_API_KEY липсва.' });
+
+  let payload;
+  try {
+    const rawBody = await readBody(req);
+    payload = JSON.parse(rawBody || '{}');
+  } catch {
+    return sendJson(res, 400, { error: 'Невалиден JSON.' });
+  }
+
+  const { type, prompt, originalText, studentText } = payload;
+
+  let systemPrompt, userMsg;
+
+  if (type === 'prerazkas') {
+    systemPrompt = `Ти си учител по български език и литература, оценяващ преразкази за НВО 7 клас.
+Оценявай по три критерия:
+- К1 Пълнота и точност: 0-6 точки — дали всички ключови моменти от оригинала са включени и точно предадени; дали редът е запазен
+- К2 Езикова грамотност: 0-5 точки — правопис, граматика, пунктуация
+- К3 Стил и свързаност: 0-4 точки — логическа последователност, разнообразие на изказа, плавност на преразказа
+Общо максимум: 15 точки.
+
+Отговори САМО с валиден JSON, без обяснения извън него. Не използвай кавички вътре в текста на feedback и summary — замени ги с тире или перифраза:
+{
+  "criteria": {
+    "k1": {"score": <число 0-6>, "feedback": "<1-2 изречения на български>"},
+    "k2": {"score": <число 0-5>, "feedback": "<1-2 изречения на български>"},
+    "k3": {"score": <число 0-4>, "feedback": "<1-2 изречения на български>"}
+  },
+  "total": <сума>,
+  "summary": "<2-3 изречения обща оценка и насоки за подобрение>"
+}`;
+    userMsg = `Оригинален текст:\n${originalText}\n\nЗадача: ${prompt}\n\nПреразказ на ученика:\n${studentText}`;
+  } else {
+    systemPrompt = `Ти си учител по български език и литература, оценяващ творческо писане за НВО 7 клас.
+Оценявай по четири критерия:
+- К1 Съответствие с темата: 0-5 точки — дали текстът разработва зададената ситуация/тема
+- К2 Композиция: 0-5 точки — увод, изложение, заключение; логическа структура
+- К3 Съдържание и идеи: 0-5 точки — богатство на идеите, оригиналност, убедителност
+- К4 Езикова грамотност: 0-5 точки — правопис, граматика, пунктуация
+Общо максимум: 20 точки.
+
+Отговори САМО с валиден JSON, без обяснения извън него. Не използвай кавички вътре в текста на feedback и summary:
+{
+  "criteria": {
+    "k1": {"score": <число 0-5>, "feedback": "<1-2 изречения на български>"},
+    "k2": {"score": <число 0-5>, "feedback": "<1-2 изречения на български>"},
+    "k3": {"score": <число 0-5>, "feedback": "<1-2 изречения на български>"},
+    "k4": {"score": <число 0-5>, "feedback": "<1-2 изречения на български>"}
+  },
+  "total": <сума>,
+  "summary": "<2-3 изречения обща оценка и насоки за подобрение>"
+}`;
+    userMsg = `Тема за писане: ${prompt}\n\nТекст на ученика:\n${studentText}`;
+  }
+
+  try {
+    const message = await anthropicClient.messages.create({
+      model: MODEL_ESSAY,
+      max_tokens: 700,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userMsg }],
+    });
+
+    const text = message.content.filter(b => b.type === 'text').map(b => b.text).join('').trim();
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) return sendJson(res, 502, { error: 'AI не върна валиден JSON.' });
+
+    const parsed = parseClaudeJson(jsonMatch[0]);
+    if (!parsed) return sendJson(res, 502, { error: 'AI върна невалиден JSON — опитай пак.' });
+
+    return sendJson(res, 200, parsed);
+  } catch (e) {
+    return sendJson(res, 500, { error: `Claude API грешка: ${e.message}` });
+  }
+}
+
 async function handleGradeEssay(req, res) {
   if (!anthropicClient) return sendJson(res, 500, { error: 'ANTHROPIC_API_KEY липсва.' });
 
@@ -706,6 +784,9 @@ const server = http.createServer((req, res) => {
   }
   if (req.method === 'POST' && req.url === '/api/grade-essay') {
     return handleGradeEssay(req, res);
+  }
+  if (req.method === 'POST' && req.url === '/api/grade-pishi7') {
+    return handleGradePishi7(req, res);
   }
   if (req.method === 'POST' && req.url === '/api/checkout') {
     return handleCheckout(req, res);

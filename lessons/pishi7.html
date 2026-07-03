@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Писане за НВО — 7 клас · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #1e3a5f;
+      --accent2: #2d5a9e;
+      --soft: #f4f6fb;
+      --line: #e2e8f0;
+      --text: #1a2233;
+      --muted: #64748b;
+      --gold: #E8A020;
+      --green: #16a34a;
+      --red: #dc2626;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito Sans', sans-serif; background: var(--soft); color: var(--text); min-height: 100vh; }
+
+    /* Topbar */
+    .topbar {
+      background: #fff; border-bottom: 1px solid var(--line);
+      padding: 0 24px; height: 56px;
+      display: flex; align-items: center; gap: 16px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .topbar-back { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 5px; }
+    .topbar-back:hover { color: var(--accent); }
+    .topbar-title { font-size: 14px; font-weight: 800; color: var(--text); }
+    .topbar-sep { color: var(--line); }
+    .topbar-badge { margin-left: auto; font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 99px; background: #e8edf7; color: var(--accent); }
+
+    /* Write topbar */
+    #write-topbar { background: #fff; border-bottom: 1px solid var(--line); padding: 10px 24px; display: none; align-items: center; gap: 20px; flex-wrap: wrap; }
+    #write-topbar.visible { display: flex; }
+    .wt-topic { font-size: 13px; font-weight: 700; color: var(--text); flex: 1; line-height: 1.4; }
+    .wt-stat { font-size: 12px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+    .wt-stat.ok { color: var(--green); }
+
+    /* Main */
+    .main { max-width: 760px; margin: 0 auto; padding: 36px 20px 80px; }
+    .step { display: none; }
+    .step.active { display: block; }
+    .step-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .step-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+
+    /* Type tabs */
+    .type-tabs { display: flex; gap: 0; margin-bottom: 24px; border: 1.5px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff; }
+    .type-tab {
+      flex: 1; padding: 13px 16px; font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; border: none; background: none; color: var(--muted);
+      transition: background .15s, color .15s; text-align: center;
+    }
+    .type-tab:first-child { border-right: 1.5px solid var(--line); }
+    .type-tab.active { background: var(--accent); color: #fff; }
+    .type-tab:hover:not(.active) { background: var(--soft); color: var(--accent); }
+
+    /* Task cards */
+    .task-card {
+      background: #fff; border: 2px solid var(--line); border-radius: 16px;
+      padding: 18px 20px; margin-bottom: 10px; cursor: pointer;
+      display: flex; gap: 14px; align-items: flex-start;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .task-card:hover:not(.done) { border-color: var(--accent2); box-shadow: 0 4px 16px rgba(30,58,95,.08); }
+    .task-card.selected { border-color: var(--accent); background: #f0f4ff; }
+
+    .task-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line); flex-shrink: 0; margin-top: 3px; display: flex; align-items: center; justify-content: center; transition: border-color .15s; }
+    .task-card.selected .task-radio { border-color: var(--accent); background: var(--accent); }
+    .task-card.selected .task-radio::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; display: block; }
+
+    .task-body { flex: 1; }
+    .task-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 4px; }
+    .task-text { font-size: 14px; line-height: 1.55; font-weight: 600; color: var(--text); }
+    .task-hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .task-score-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; flex-shrink: 0; align-self: center; background: #e8f0fe; color: var(--accent2); }
+
+    /* Buttons */
+    .btn-primary { display: block; width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 14px; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 20px; transition: background .15s; }
+    .btn-primary:hover { background: var(--accent2); }
+    .btn-primary:disabled { opacity: .4; cursor: default; }
+    .btn-pill { padding: 11px 24px; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: background .15s, transform .12s; }
+    .btn-pill:hover { transform: scale(1.03); }
+    .btn-pill.accent { background: var(--accent); color: #fff; }
+    .btn-pill.accent:hover { background: var(--accent2); }
+    .btn-pill.soft { background: var(--soft); color: var(--text); border: 1.5px solid var(--line); }
+    .btn-pill.soft:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-pill:disabled { opacity: .4; cursor: default; transform: none; }
+
+    /* Original text box (for преразказ) */
+    .orig-box {
+      background: #fff; border: 1.5px solid var(--line); border-radius: 14px;
+      padding: 18px 20px; margin-bottom: 18px;
+    }
+    .orig-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 10px; }
+    .orig-text { font-size: 14px; line-height: 1.85; color: var(--text); }
+
+    /* Task prompt box */
+    .prompt-box {
+      background: #fffbf0; border: 1.5px solid #fde68a; border-radius: 14px;
+      padding: 16px 20px; margin-bottom: 18px;
+    }
+    .prompt-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--gold); margin-bottom: 8px; }
+    .prompt-text { font-size: 14px; line-height: 1.65; color: var(--text); font-weight: 600; }
+
+    /* Textarea */
+    #write-textarea {
+      width: 100%; min-height: 320px; padding: 18px 20px;
+      font-family: 'Nunito Sans', sans-serif; font-size: 15px; line-height: 1.85;
+      color: var(--text); border: 2px solid var(--line); border-radius: 16px;
+      background: #fff; resize: vertical; outline: none; transition: border-color .15s;
+    }
+    #write-textarea:focus { border-color: var(--accent); }
+
+    .write-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; gap: 12px; flex-wrap: wrap; }
+    .word-count { font-size: 13px; font-weight: 700; color: var(--muted); }
+    .word-count b { color: var(--accent); }
+    .word-count.enough b { color: var(--green); }
+
+    /* Spinner */
+    #step-grade { text-align: center; padding: 80px 20px; }
+    .grade-spinner { font-size: 48px; margin-bottom: 16px; animation: spin 2s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .grade-text { font-size: 16px; font-weight: 700; color: var(--muted); }
+
+    /* Results */
+    .result-ring { width: 120px; height: 120px; border-radius: 50%; border: 7px solid; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .result-ring-num { font-size: 34px; font-weight: 800; line-height: 1; }
+    .result-ring-max { font-size: 12px; font-weight: 700; color: var(--muted); }
+    .result-title { text-align: center; font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+    .result-sub { text-align: center; font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+    .criteria-wrap { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+    .criteria-row { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: start; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .criteria-row:last-child { border-bottom: none; }
+    .cr-key { font-size: 12px; font-weight: 800; color: var(--accent); padding-top: 2px; }
+    .cr-name { font-size: 15px; font-weight: 800; color: var(--text); }
+    .cr-feedback { font-size: 14px; color: var(--muted); margin-top: 5px; line-height: 1.65; }
+    .cr-score { font-size: 15px; font-weight: 800; white-space: nowrap; }
+
+    .summary-box { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; font-size: 15px; line-height: 1.75; color: var(--text); margin-bottom: 24px; }
+    .summary-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 10px; }
+
+    .result-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* Pause */
+    #pause-overlay { display: none; position: fixed; inset: 0; background: rgba(10,20,40,0.82); z-index: 500; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+    #pause-overlay.visible { display: flex; }
+    .pause-box { background: #fff; border-radius: 24px; padding: 40px 48px; text-align: center; max-width: 380px; width: 90%; }
+    .pause-countdown { font-size: 42px; font-weight: 800; color: var(--accent); margin: 16px 0 24px; font-variant-numeric: tabular-nums; }
+    .pause-countdown.urgent { color: var(--red); }
+    .btn-resume { display: inline-block; padding: 13px 32px; background: var(--accent); color: #fff; border: none; border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; }
+    .btn-resume:hover { background: var(--accent2); }
+    .btn-pause { padding: 8px 16px; border-radius: 99px; border: 1.5px solid var(--line); background: #fff; color: var(--muted); font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: border-color .15s, color .15s; }
+    .btn-pause:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+  const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) window.location.href = '/auth.html';
+  window.__supabaseToken = session?.access_token;
+  window.__isAdmin = session?.user?.email === 'kirilmodev@gmail.com';
+</script>
+
+<header class="topbar">
+  <a class="topbar-back" id="back-link" href="/urotsi.html">← Уроци</a>
+  <span class="topbar-sep">|</span>
+  <span class="topbar-title">Писане за НВО — 7 клас</span>
+  <span class="topbar-badge">НВО формат</span>
+</header>
+
+<!-- Rules modal -->
+<div id="rules-modal" style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.7);z-index:480;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+  <div style="background:#fff;border-radius:24px;padding:36px 40px;max-width:460px;width:92%;max-height:90vh;overflow-y:auto;position:relative;">
+    <button id="btn-rules-close" style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;line-height:1;padding:4px;">✕</button>
+    <div style="font-size:40px;text-align:center;margin-bottom:10px;">✏️</div>
+    <div style="font-size:20px;font-weight:800;color:var(--text);text-align:center;margin-bottom:6px;">Преди да започнеш</div>
+    <div style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:24px;">Симулираме реален НВО изпит по БЕЛ.</div>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:28px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <span style="font-size:22px;flex-shrink:0;">⏱️</span>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;">Таймерът тече от старта</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.55;">Времето се отчита от момента, в който натиснеш „Разбрах, започвам".</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <span style="font-size:22px;flex-shrink:0;">🚫</span>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;">Copy &amp; Paste е забранен</div>
+          <div id="rules-paste-text" style="font-size:13px;color:var(--muted);line-height:1.55;">Копирането е блокирано — пиши ръчно. Минимум <strong id="rules-min-words">80</strong> думи за предаване.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <span style="font-size:22px;flex-shrink:0;">📝</span>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;" id="rules-type-title">Преразказ</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.55;" id="rules-type-desc">Прочети оригиналния текст внимателно, след което го преразкажи с твои думи. Не копирай изречения — преразкажи съдържанието накратко и последователно.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <span style="font-size:22px;flex-shrink:0;">🤖</span>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;">Знайко оценява по НВО критерии</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.55;">Получаваш оценка по критериите за 7 клас НВО с конкретни коментари. Можеш да пишеш неограничено пъти.</div>
+        </div>
+      </div>
+    </div>
+    <button id="btn-rules-start" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;"
+      onmouseover="this.style.background='#2d5a9e'" onmouseout="this.style.background='var(--accent)'">
+      Разбрах, започвам →
+    </button>
+  </div>
+</div>
+
+<!-- Pause confirm -->
+<div id="pause-confirm" style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.6);z-index:490;align-items:center;justify-content:center;backdrop-filter:blur(3px);">
+  <div style="background:#fff;border-radius:20px;padding:32px 36px;max-width:340px;width:90%;text-align:center;">
+    <div style="font-size:36px;margin-bottom:12px;">⏸️</div>
+    <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:10px;">Сигурен ли си?</div>
+    <div style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:24px;">Имаш право на <strong>3 минути</strong> пауза.</div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button id="btn-confirm-cancel" style="padding:10px 22px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;color:var(--muted);">Отмени</button>
+      <button id="btn-confirm-pause" style="padding:10px 22px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;">Взимам почивка</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pause overlay -->
+<div id="pause-overlay">
+  <div class="pause-box">
+    <div style="font-size:48px;">⏸️</div>
+    <div style="font-size:22px;font-weight:800;color:var(--text);margin:10px 0 6px;">Пауза</div>
+    <div style="font-size:14px;color:var(--muted);margin-bottom:0;">Максимум 3 минути почивка.</div>
+    <div class="pause-countdown" id="pause-countdown">3:00</div>
+    <button class="btn-resume" id="btn-resume">▶ Продължи</button>
+  </div>
+</div>
+
+<!-- Write topbar -->
+<div id="write-topbar">
+  <span class="wt-topic" id="wt-topic-text"></span>
+  <span class="wt-stat" id="wt-timer">0:00</span>
+  <span class="wt-stat" id="wt-words">0 думи</span>
+  <button class="btn-pause" id="btn-pause">⏸ Пауза</button>
+</div>
+
+<main class="main">
+
+  <!-- STEP 1: Избор -->
+  <div class="step active" id="step-select">
+    <div class="step-title">Практика на писане — НВО 7 клас</div>
+    <div class="step-sub">Избери тип задача и тема. Можеш да пишеш неограничено пъти и да следиш как се подобряваш.</div>
+
+    <div class="type-tabs">
+      <button class="type-tab active" id="tab-prerazkas" onclick="setType('prerazkas')">📄 Преразказ</button>
+      <button class="type-tab" id="tab-creative" onclick="setType('creative')">✍️ Творческо писане</button>
+    </div>
+
+    <div id="tasks-list"></div>
+    <button class="btn-primary" id="btn-start" disabled>Започни →</button>
+  </div>
+
+  <!-- STEP 2: Писане -->
+  <div class="step" id="step-write">
+    <div class="step-title" id="write-title"></div>
+    <div class="step-sub" id="write-sub"></div>
+
+    <div id="orig-box-wrap"></div>
+    <div id="prompt-box-wrap"></div>
+
+    <textarea id="write-textarea"
+      autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+      placeholder="Започни да пишеш тук..."></textarea>
+
+    <div class="write-bottom">
+      <div class="word-count" id="word-count-el"><b>0</b> думи</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn-pill soft" id="btn-back-select">← Смени задача</button>
+        <button class="btn-pill accent" id="btn-submit" disabled>Предай →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Оценяване -->
+  <div class="step" id="step-grade">
+    <div class="grade-spinner">👀</div>
+    <div class="grade-text">Знайко чете текста...</div>
+  </div>
+
+  <!-- STEP 4: Резултат -->
+  <div class="step" id="step-result">
+    <div class="result-ring" id="result-ring">
+      <div class="result-ring-num" id="result-num">—</div>
+      <div class="result-ring-max" id="result-max">от 15</div>
+    </div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-sub" id="result-sub"></div>
+    <div class="criteria-wrap" id="criteria-wrap"></div>
+    <div class="summary-box">
+      <div class="summary-label">Обща оценка от Знайко</div>
+      <div id="result-summary"></div>
+    </div>
+    <div class="result-actions">
+      <button class="btn-pill accent" id="btn-retry">Пиши пак</button>
+      <button class="btn-pill soft" id="btn-other-task">Избери друга задача</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ══════════════════════════════════════════════
+//  ЗАДАЧИ
+// ══════════════════════════════════════════════
+const TASKS = {
+  prerazkas: [
+    {
+      id: 'p1',
+      label: 'Преразказ 1',
+      hint: '~100–120 думи · природата',
+      prompt: 'Прочети текста внимателно и го преразкажи с твои думи. Спазвай последователността на събитията и включи всички ключови моменти.',
+      original: `Пролетта дойде тихо и незабелязано. Само реката издаде сигнал — тя се надигна, замътня се и понесе по течението счупени клони и сухи листа от миналата есен. После се успокои и притихна в бреговете си, сякаш се беше засрамила от прекалената си смелост.
+
+По баирите над селото зазеленяха дъбовете. Отначало съвсем бледо, почти жълто, после зелено — силно и весело. Птиците се върнаха по едно и по две. Лястовиците първи огласиха небето с остри вопли. По-кротките птички — синигерите и чинките — се настаниха в градините и почнаха да чуруликат сутрин от изгрев до залез слънце.
+
+Децата изсипаха на улицата. Събличаха кожушетата едно след друго с нежелание на майките и с нескрита радост на самите тях. Босите крака затупаха по мократа пръст. Пролетта беше вече тук — в реката, по дъбовете, в небето, в гласовете на птиците и в смеха на децата.`
+    },
+    {
+      id: 'p2',
+      label: 'Преразказ 2',
+      hint: '~100–120 думи · историческо',
+      prompt: 'Прочети текста внимателно и го преразкажи с твои думи. Запази хронологичния ред и предай основните факти точно.',
+      original: `Шипченският проход е тесен планински проход в Стара планина, висок около 1185 метра. В българската история той е известен с битките от Руско-турската война от 1877–1878 година, когато руски войски и български опълченци отбраняват прохода срещу превъзхождащите ги турски сили.
+
+Отбраната на Шипка продължава от юли до декември 1877 година. Турците предприемат неколкократни атаки, но защитниците устояват въпреки огромните загуби. По спомени на участниците, при недостиг на боеприпаси защитниците хвърлят камъни и дори телата на паднали другари срещу нападателите.
+
+Победата при Шипка отваря пътя към освобождението на България. Проходът е превърнат в паметно място, а на връх Шипка е издигнат паметник-костница в памет на загиналите руски войници и български опълченци.`
+    },
+    {
+      id: 'p3',
+      label: 'Преразказ 3',
+      hint: '~100–120 думи · литературен',
+      prompt: 'Прочети откъса и го преразкажи с твои думи. Предай действието последователно и посочи характера на героя.',
+      original: `Андрешко беше известен с конете си. Нямаше по-бързи коне в цялата околия. Той знаеше това и се гордееше. Когато ги впрягаше, ставаше горд, изправен, и стъпваше тежко по земята, сякаш и сам беше коне.
+
+Един ден го повикаха да закара съдебния пристав до съседното село. Андрешко не обичаше властта — тя беше взела нивата му за дългове. Но какво да прави — нареждането беше от кмета.
+
+По пътя приставът се разкомандва: „По-бързо! Бавно вървим!" Андрешко мълчеше. Само конете знаеха кога да бързат и кога не. Преди целевото село, при завоя покрай реката, Андрешко спря колата и се обърна: „Господине, нататък дупки — слезте да вървите пешком." Приставът се ядоса, но слезе. Андрешко обърна колата и тръгна обратно — бавно, с достойнство.`
+    },
+    {
+      id: 'p4',
+      label: 'Преразказ 4',
+      hint: '~100–120 думи · научен текст',
+      prompt: 'Прочети текста и го преразкажи с твои думи. Предай основната информация ясно и точно, без да копираш изречения.',
+      original: `Слънцето е звезда — огромна топка от горещ газ. То е на разстояние около 150 милиона километра от Земята. При тази огромна дистанция светлината от Слънцето достига до нас за около 8 минути.
+
+Слънцето се състои главно от водород и хелий. В неговото ядро протичат ядрени реакции — водородът се превръща в хелий и при това се освобождава огромно количество енергия. Тази енергия достига до повърхността и оттам се излъчва като светлина и топлина.
+
+Без Слънцето животът на Земята е невъзможен. То дава енергия на растенията за фотосинтеза, поддържа температурата на планетата в граници, подходящи за живот, и задвижва климата и времето. Слънцето е на около 4,6 милиарда години и ще „живее" още толкова.`
+    },
+    {
+      id: 'p5',
+      label: 'Преразказ 5',
+      hint: '~100–120 думи · народна легенда',
+      prompt: 'Прочети легендата и я преразкажи с твои думи. Предай сюжета последователно, включи главните герои и нравствения извод.',
+      original: `Разказват, че някога, в дълбока древност, орелът и гарванът живели като добри приятели. Летели заедно, деляли храна, пазели си гнездата. Но веднъж между тях израснала завист.
+
+Орелът бил по-силен и летял по-високо. Гарванът решил да го надхитри. „Хайде да видим кой ще лети по-дълго без почивка" — казал гарванът. Орелът се съгласил.
+
+Летели цял ден. Орелът се уморил пръв и кацнал на върха на висок бор. Гарванът кацнал до него и закрякал тържествуващо. „Спечелих!" — крякал той.
+
+„Спечели" — казал орелът спокойно — „но аз кацнах, защото исках. Ти — защото ми следваш." Гарванът млъкнал засрамен. Оттогава орелът лети сам, а гарванът — по следите на другите.`
+    },
+  ],
+  creative: [
+    {
+      id: 'c1',
+      label: 'Творческо 1',
+      hint: '~150–200 думи · разказ',
+      prompt: 'Напиши кратък разказ по дадено начало:\n\n„Когато отворих старата кутия на тавана, не очаквах да намеря там..."',
+    },
+    {
+      id: 'c2',
+      label: 'Творческо 2',
+      hint: '~150–200 думи · описание',
+      prompt: 'Представи си, че гледаш от прозореца в ранната утрин. Опиши картината пред теб — улицата, природата, хората или животните, които виждаш. Предай атмосферата на момента.',
+    },
+    {
+      id: 'c3',
+      label: 'Творческо 3',
+      hint: '~150–200 думи · разсъждение',
+      prompt: 'Смяташ ли, че приятелството е по-важно от успеха? Напиши кратко разсъждение, в което изразяваш своята позиция и я подкрепяш с поне два аргумента или примера.',
+    },
+    {
+      id: 'c4',
+      label: 'Творческо 4',
+      hint: '~150–200 думи · писмо',
+      prompt: 'Напиши писмо до герой от книга или стихотворение, което сте учили. Кажи му какво мислиш за постъпките му, съгласен ли си с неговия избор и какво би направил ти на негово място.',
+    },
+    {
+      id: 'c5',
+      label: 'Творческо 5',
+      hint: '~150–200 думи · разказ',
+      prompt: 'Напиши кратък разказ за момент, в който си помогнал на някого или някой ти е помогнал в труден момент. Може да е реален или измислен. Предай какво си почувствал.',
+    },
+  ],
+};
+
+// ══════════════════════════════════════════════
+//  КРИТЕРИИ
+// ══════════════════════════════════════════════
+const CRITERIA_META = {
+  prerazkas: [
+    { key: 'k1', name: 'Пълнота и точност', max: 6 },
+    { key: 'k2', name: 'Езикова грамотност', max: 5 },
+    { key: 'k3', name: 'Стил и свързаност',  max: 4 },
+  ],
+  creative: [
+    { key: 'k1', name: 'Съответствие с темата', max: 5 },
+    { key: 'k2', name: 'Композиция',            max: 5 },
+    { key: 'k3', name: 'Съдържание и идеи',     max: 5 },
+    { key: 'k4', name: 'Езикова грамотност',    max: 5 },
+  ],
+};
+
+const MAX_SCORE = { prerazkas: 15, creative: 20 };
+const MIN_WORDS = { prerazkas: 80, creative: 120 };
+
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+let currentType = 'prerazkas';
+let selectedTaskId = null;
+let currentTask = null;
+let timerInterval = null;
+let timerSecs = 0;
+let pauseInterval = null;
+let pauseSecs = 0;
+const PAUSE_MAX = 180;
+
+function lsKey(type, id) { return `pishi7_${type}_${id}`; }
+function getAttempts(type, id) {
+  try { return JSON.parse(localStorage.getItem(lsKey(type, id)) || '[]'); } catch { return []; }
+}
+function saveAttempt(type, id, data) {
+  const arr = getAttempts(type, id);
+  arr.push(data);
+  localStorage.setItem(lsKey(type, id), JSON.stringify(arr));
+}
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+const params = new URLSearchParams(location.search);
+const lessonKey = params.get('key') || '';
+if (lessonKey) {
+  document.getElementById('back-link').href = `/lessons/${lessonKey}.html`;
+}
+
+renderTasks();
+
+function setType(type) {
+  currentType = type;
+  selectedTaskId = null;
+  document.getElementById('tab-prerazkas').classList.toggle('active', type === 'prerazkas');
+  document.getElementById('tab-creative').classList.toggle('active', type === 'creative');
+  document.getElementById('btn-start').disabled = true;
+  renderTasks();
+}
+
+function renderTasks() {
+  const list = document.getElementById('tasks-list');
+  list.innerHTML = '';
+  TASKS[currentType].forEach(task => {
+    const attempts = getAttempts(currentType, task.id);
+    const best = attempts.length ? Math.max(...attempts.map(a => a.total)) : null;
+    const max = MAX_SCORE[currentType];
+    const card = document.createElement('div');
+    card.className = 'task-card';
+    card.dataset.id = task.id;
+    card.innerHTML = `
+      <div class="task-radio"></div>
+      <div class="task-body">
+        <div class="task-label">${task.label}</div>
+        <div class="task-text">${task.prompt.split('\n')[0].slice(0, 120)}${task.prompt.length > 120 ? '…' : ''}</div>
+        <div class="task-hint">${task.hint}</div>
+      </div>
+      ${best !== null ? `<div class="task-score-badge">Най-добро: ${best}/${max}</div>` : ''}`;
+    card.addEventListener('click', () => selectTask(task.id));
+    list.appendChild(card);
+  });
+}
+
+function selectTask(id) {
+  selectedTaskId = id;
+  document.querySelectorAll('.task-card').forEach(c => c.classList.remove('selected'));
+  document.querySelector(`.task-card[data-id="${id}"]`).classList.add('selected');
+  document.getElementById('btn-start').disabled = false;
+}
+
+document.getElementById('btn-start').addEventListener('click', () => {
+  if (!selectedTaskId) return;
+  currentTask = TASKS[currentType].find(t => t.id === selectedTaskId);
+
+  // Update rules modal
+  const isPrerazkas = currentType === 'prerazkas';
+  document.getElementById('rules-min-words').textContent = MIN_WORDS[currentType];
+  document.getElementById('rules-type-title').textContent = isPrerazkas ? 'Преразказ' : 'Творческо писане';
+  document.getElementById('rules-type-desc').textContent = isPrerazkas
+    ? 'Прочети оригиналния текст внимателно, след което го преразкажи с твои думи. Не копирай изречения — предай съдържанието накратко и последователно.'
+    : 'Разработи зададената тема или ситуация в кратък текст. Следи за логическа структура — увод, изложение, заключение.';
+  document.getElementById('rules-modal').style.display = 'flex';
+});
+
+document.getElementById('btn-rules-start').addEventListener('click', () => {
+  document.getElementById('rules-modal').style.display = 'none';
+  startWriting();
+});
+document.getElementById('btn-rules-close').addEventListener('click', () => {
+  document.getElementById('rules-modal').style.display = 'none';
+});
+
+// ══════════════════════════════════════════════
+//  WRITING
+// ══════════════════════════════════════════════
+function startWriting() {
+  const task = currentTask;
+  const minW = MIN_WORDS[currentType];
+
+  document.getElementById('wt-topic-text').textContent = task.label + ' — ' + (currentType === 'prerazkas' ? 'Преразказ' : 'Творческо писане');
+  document.getElementById('write-topbar').classList.add('visible');
+
+  document.getElementById('write-title').textContent = task.label;
+  document.getElementById('write-sub').textContent = currentType === 'prerazkas'
+    ? `Прочети текста, след това го преразкажи с твои думи. Минимум ${minW} думи.`
+    : `Разработи зададената ситуация. Минимум ${minW} думи.`;
+
+  // Original text box (преразказ only)
+  const origWrap = document.getElementById('orig-box-wrap');
+  if (currentType === 'prerazkas' && task.original) {
+    origWrap.innerHTML = `<div class="orig-box"><div class="orig-label">Оригинален текст — прочети внимателно</div><div class="orig-text">${task.original.replace(/\n\n/g, '</p><p>').replace(/^/, '<p>').replace(/$/, '</p>')}</div></div>`;
+  } else {
+    origWrap.innerHTML = '';
+  }
+
+  // Prompt box
+  const promptWrap = document.getElementById('prompt-box-wrap');
+  promptWrap.innerHTML = `<div class="prompt-box"><div class="prompt-label">${currentType === 'prerazkas' ? 'Задача' : 'Тема за писане'}</div><div class="prompt-text">${task.prompt.replace(/\n/g, '<br>')}</div></div>`;
+
+  document.getElementById('write-textarea').value = '';
+  updateWordCount();
+
+  showStep('step-write');
+  startTimer();
+  document.getElementById('write-textarea').focus();
+}
+
+const ta = document.getElementById('write-textarea');
+ta.addEventListener('paste', e => { if (!window.__isAdmin) e.preventDefault(); });
+ta.addEventListener('drop', e => { if (!window.__isAdmin) e.preventDefault(); });
+ta.addEventListener('input', updateWordCount);
+
+function updateWordCount() {
+  const words = ta.value.trim().split(/\s+/).filter(Boolean).length;
+  const minW = MIN_WORDS[currentType] || 80;
+  const el = document.getElementById('word-count-el');
+  if (window.__isAdmin) {
+    el.innerHTML = `<b>${words}</b> думи <span style="color:var(--gold);font-size:11px;">★ admin</span>`;
+    el.className = 'word-count enough';
+  } else {
+    el.innerHTML = `<b>${words}</b> думи (мин. ${minW})`;
+    el.className = 'word-count' + (words >= minW ? ' enough' : '');
+  }
+  document.getElementById('wt-words').textContent = `${words} думи`;
+  document.getElementById('btn-submit').disabled = !window.__isAdmin && words < minW;
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerSecs = 0;
+  timerInterval = setInterval(() => {
+    timerSecs++;
+    const m = Math.floor(timerSecs / 60);
+    const s = timerSecs % 60;
+    document.getElementById('wt-timer').textContent = `${m}:${String(s).padStart(2,'0')}`;
+  }, 1000);
+}
+
+// Pause
+function openPause() {
+  clearInterval(timerInterval);
+  pauseSecs = PAUSE_MAX;
+  updatePauseCountdown();
+  document.getElementById('pause-overlay').classList.add('visible');
+  clearInterval(pauseInterval);
+  pauseInterval = setInterval(() => { pauseSecs--; updatePauseCountdown(); if (pauseSecs <= 0) closePause(); }, 1000);
+}
+function closePause() {
+  clearInterval(pauseInterval);
+  document.getElementById('pause-overlay').classList.remove('visible');
+  timerInterval = setInterval(() => {
+    timerSecs++;
+    const m = Math.floor(timerSecs / 60);
+    const s = timerSecs % 60;
+    document.getElementById('wt-timer').textContent = `${m}:${String(s).padStart(2,'0')}`;
+  }, 1000);
+  ta.focus();
+}
+function updatePauseCountdown() {
+  const m = Math.floor(pauseSecs / 60);
+  const s = pauseSecs % 60;
+  const el = document.getElementById('pause-countdown');
+  el.textContent = `${m}:${String(s).padStart(2,'0')}`;
+  el.classList.toggle('urgent', pauseSecs <= 30);
+}
+
+document.getElementById('btn-pause').addEventListener('click', () => { document.getElementById('pause-confirm').style.display = 'flex'; });
+document.getElementById('btn-confirm-cancel').addEventListener('click', () => { document.getElementById('pause-confirm').style.display = 'none'; });
+document.getElementById('btn-confirm-pause').addEventListener('click', () => { document.getElementById('pause-confirm').style.display = 'none'; openPause(); });
+document.getElementById('btn-resume').addEventListener('click', closePause);
+
+document.getElementById('btn-back-select').addEventListener('click', () => {
+  clearInterval(timerInterval); clearInterval(pauseInterval);
+  document.getElementById('pause-overlay').classList.remove('visible');
+  document.getElementById('pause-confirm').style.display = 'none';
+  document.getElementById('write-topbar').classList.remove('visible');
+  showStep('step-select');
+});
+
+document.getElementById('btn-submit').addEventListener('click', submitWriting);
+
+// ══════════════════════════════════════════════
+//  GRADING
+// ══════════════════════════════════════════════
+async function submitWriting() {
+  clearInterval(timerInterval); clearInterval(pauseInterval);
+  document.getElementById('pause-overlay').classList.remove('visible');
+  document.getElementById('write-topbar').classList.remove('visible');
+  showStep('step-grade');
+
+  const studentText = ta.value.trim();
+  const task = currentTask;
+
+  try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (window.__supabaseToken) headers['Authorization'] = 'Bearer ' + window.__supabaseToken;
+
+    const res = await fetch('/api/grade-pishi7', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        type: currentType,
+        prompt: task.prompt,
+        originalText: task.original || null,
+        studentText,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Грешка');
+
+    const dateStr = new Date().toLocaleDateString('bg-BG', { day: 'numeric', month: 'short' });
+    saveAttempt(currentType, task.id, { total: data.total, date: dateStr });
+
+    showResults(data);
+  } catch (e) {
+    showStep('step-select');
+    alert('Грешка при оценяването: ' + e.message);
+  }
+}
+
+// ══════════════════════════════════════════════
+//  RESULTS
+// ══════════════════════════════════════════════
+function scoreColor(total, max) {
+  const pct = total / max;
+  if (pct >= 0.8) return '#16a34a';
+  if (pct >= 0.6) return '#d97706';
+  return '#dc2626';
+}
+
+function gradeLabel(total, max) {
+  const pct = total / max;
+  if (pct >= 0.9) return 'Отличен (6)';
+  if (pct >= 0.75) return 'Много добър (5)';
+  if (pct >= 0.6) return 'Добър (4)';
+  if (pct >= 0.5) return 'Среден (3)';
+  return 'Слаб (2)';
+}
+
+function showResults(data) {
+  const max = MAX_SCORE[currentType];
+  const total = data.total;
+  const color = scoreColor(total, max);
+  const meta = CRITERIA_META[currentType];
+
+  const ring = document.getElementById('result-ring');
+  ring.style.borderColor = color; ring.style.color = color;
+  document.getElementById('result-num').textContent = total;
+  document.getElementById('result-max').textContent = `от ${max}`;
+  document.getElementById('result-title').textContent = gradeLabel(total, max);
+  document.getElementById('result-title').style.color = color;
+  document.getElementById('result-sub').textContent =
+    total / max >= 0.5 ? 'Над минималния праг — добра работа!' : 'Под минималния праг. Прегледай коментарите и опитай пак!';
+
+  document.getElementById('criteria-wrap').innerHTML = meta.map(m => {
+    const c = data.criteria[m.key] || {};
+    const score = c.score ?? 0;
+    const crColor = score >= m.max * 0.75 ? '#16a34a' : score >= m.max * 0.5 ? '#d97706' : '#dc2626';
+    return `<div class="criteria-row">
+      <div class="cr-key">${m.key.toUpperCase()}</div>
+      <div>
+        <div class="cr-name">${m.name}</div>
+        <div class="cr-feedback">${c.feedback || ''}</div>
+      </div>
+      <div class="cr-score" style="color:${crColor}">${score}/${m.max}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('result-summary').textContent = data.summary || '';
+  showStep('step-result');
+  renderTasks();
+}
+
+document.getElementById('btn-retry').addEventListener('click', startWriting);
+document.getElementById('btn-other-task').addEventListener('click', () => showStep('step-select'));
+
+function showStep(id) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>
