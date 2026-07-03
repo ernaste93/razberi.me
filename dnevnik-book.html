@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Оценки — Разбери.Ме</title>
+  <title>Бележник — Разбери.Ме</title>
   <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -32,15 +32,18 @@
     .topbar-title { color: #fff; font-size: 16px; font-weight: 800; }
 
     /* ── Page ── */
-    .page { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+    .page { max-width: 900px; margin: 0 auto; padding: 32px 20px 60px; }
 
     /* ── Student header ── */
     .student-hdr {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: flex-start; justify-content: space-between;
       margin-bottom: 28px; gap: 16px; flex-wrap: wrap;
     }
     .student-name { font-size: 22px; font-weight: 800; color: var(--navy); }
     .student-year { font-size: 12px; color: var(--muted); font-weight: 700; margin-top: 2px; }
+    .student-meta { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
+    .student-stat { font-size: 12px; font-weight: 700; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+    .student-stat strong { color: var(--ink); }
     .overall-chip {
       display: flex; flex-direction: column; align-items: center;
       background: var(--navy); color: #fff;
@@ -70,8 +73,7 @@
     }
     .subj-card-hdr {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px;
-      border-bottom: 1.5px solid var(--border);
+      padding: 16px 20px 12px;
     }
     .subj-color-dot {
       width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-right: 10px;
@@ -81,36 +83,57 @@
     .subj-avg { font-size: 28px; font-weight: 900; line-height: 1; letter-spacing: -.5px; }
     .subj-avg-cat { font-size: 12px; font-weight: 800; margin-top: 2px; }
     .subj-avg-lbl { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
-    .subj-pct { font-size: 12px; font-weight: 700; color: var(--muted); }
+
+    /* ── Subject stats row ── */
+    .subj-stats {
+      display: flex; gap: 12px; padding: 0 20px 12px; flex-wrap: wrap;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .stat-pill {
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: 3px 10px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .stat-pill strong { color: var(--ink); }
+
+    /* ── Progress bar ── */
+    .subj-prog { padding: 10px 20px 14px; border-bottom: 1.5px solid var(--border); }
+    .prog-bar { height: 5px; background: var(--border); border-radius: 5px; overflow: hidden; margin-top: 6px; }
+    .prog-fill { height: 100%; border-radius: 5px; }
 
     /* ── Tests table ── */
     .tests-table { width: 100%; border-collapse: collapse; }
     .tests-table th {
-      padding: 8px 16px; font-size: 10px; font-weight: 800;
+      padding: 8px 14px; font-size: 10px; font-weight: 800;
       text-transform: uppercase; letter-spacing: .07em; color: var(--muted);
       text-align: left; background: #f8fafc; border-bottom: 1px solid var(--border);
     }
-    .tests-table th:last-child { text-align: right; }
+    .tests-table th:last-child, .tests-table th.th-r { text-align: right; }
     .tests-table td {
-      padding: 11px 16px; font-size: 13px; font-weight: 600;
+      padding: 10px 14px; font-size: 13px; font-weight: 600;
       border-bottom: 1px solid var(--border); color: var(--ink);
     }
     .tests-table tr:last-child td { border-bottom: none; }
     .tests-table td.td-grade {
       font-size: 13px; font-weight: 800;
-      text-align: right; padding-right: 20px;
+      text-align: right; padding-right: 18px;
     }
-    .tests-table td.td-pct { text-align: right; }
+    .tests-table td.td-r { text-align: right; }
     .tests-table td.td-date { color: var(--muted); font-size: 12px; }
+    .tests-table td.td-attempt { color: var(--muted); font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .tests-table td.td-delta { font-size: 11px; font-weight: 800; text-align: right; white-space: nowrap; }
     .badge {
       display: inline-block; border-radius: 6px; padding: 2px 7px;
       font-size: 11px; font-weight: 800;
     }
 
-    /* ── Progress bar ── */
-    .subj-prog { padding: 0 20px 14px; }
-    .prog-bar { height: 5px; background: var(--border); border-radius: 5px; overflow: hidden; margin-top: 8px; }
-    .prog-fill { height: 100%; border-radius: 5px; }
+    /* ── Section divider in table ── */
+    .tbl-section-hdr td {
+      background: #f8fafc; font-size: 10px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .07em; color: var(--muted);
+      padding: 6px 14px; border-bottom: 1px solid var(--border);
+    }
 
     /* ── Empty ── */
     .empty-card {
@@ -135,8 +158,8 @@
 <body>
 
 <header class="topbar">
-  <a class="topbar-back" href="/dnevnik.html" draggable="false">← Дашборд</a>
-  <div class="topbar-title">Оценки</div>
+  <a class="topbar-back" href="/dnevnik.html" draggable="false">← Дневник</a>
+  <div class="topbar-title">Бележник</div>
 </header>
 
 <div class="page">
@@ -150,6 +173,7 @@
       <div>
         <div class="student-name" id="student-name">—</div>
         <div class="student-year">Учебна година 2025 – 2026</div>
+        <div class="student-meta" id="student-meta"></div>
       </div>
       <div class="overall-chip" id="overall-chip" style="display:none">
         <div class="overall-chip-lbl">Обща</div>
@@ -175,9 +199,9 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
   const uid = session.user.id;
 
   const [quizR, essayR, profR] = await Promise.all([
-    sb.from('quiz_results').select('*').eq('user_id',uid).order('created_at',{ascending:false}),
+    sb.from('quiz_results').select('*').eq('user_id',uid).order('created_at',{ascending:true}),
     sb.from('essay_results').select('*').eq('user_id',uid).order('created_at',{ascending:false}),
-    sb.from('profiles').select('full_name,grade').eq('id',uid).maybeSingle(),
+    sb.from('profiles').select('full_name,grade,znayko_count_today,znayko_reset_date').eq('id',uid).maybeSingle(),
   ]);
   const quizAll  = quizR.data   || [];
   const essayAll = essayR.data  || [];
@@ -192,7 +216,6 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
   ];
 
   // ── Helpers ──
-  function gradeNum(pct) { return pct>=92?6 : pct>=76?5 : pct>=56?4 : pct>=36?3 : 2; }
   function gradeLabel(g) {
     if (g >= 5.50) return 'Отличен';
     if (g >= 4.50) return 'Много добър';
@@ -202,6 +225,15 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
   }
   function gradeColor(g) { return g>=5.5?'#15803d' : g>=4.5?'#65a30d' : g>=3.5?'#ca8a04' : g>=3?'#f97316' : '#dc2626'; }
   function fmtGrade(g)   { return g.toFixed(2); }
+  function pctToGrade(pct) { return 2 + pct / 100 * 4; }
+  function essayTotalToGrade(total) {
+    if (total >= 22) return 6;
+    if (total >= 19) return 5;
+    if (total >= 15) return 4;
+    if (total >= 13) return 3;
+    return 2;
+  }
+
   const LESSON_TITLES = {
     'bel12-debelyanov-lyubov':            'Дебелянов — „Аз искам да те помня все така"',
     'bel12-fotev-lyubov':                 'Фотев — „Колко си хубава!"',
@@ -232,6 +264,17 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     'bel11-smirnanski-yohan':            'Смирненски — „Йохан"',
     'bel11-vaptsarov-istoriya':          'Вапцаров — „История"',
     'bel11-radichkov-nezhnata-spirala':  'Радичков — „Нежната спирала"',
+    'bel7-aleko-bay-ganyo':              'Алеко Константинов — „Бай Ганьо"',
+    'bel7-botev-hadzhi-dimityr':         'Ботев — „Хаджи Димитър"',
+    'bel7-botev-maytse-si':              'Ботев — „Майце си"',
+    'bel7-elin-pelin-zadusha':           'Елин Пелин — „Задушница"',
+    'bel7-morfologia':                   'Морфология',
+    'bel7-narodno-tvorchestvo':          'Народно творчество',
+    'bel7-pravopis':                     'Правопис — 7 клас',
+    'bel7-sintaksis':                    'Синтаксис',
+    'bel7-vazov-opalchentsite':          'Вазов — „Опълченците на Шипка"',
+    'bel7-vazov-pod-igoto':              'Вазов — „Под игото"',
+    'bel7-yovkov-indzhe':                'Йовков — „Инджето"',
     'bio11-kletkata':                    'Клетката — структура и органели',
     'bio11-fotosinteza':                 'Фотосинтеза',
     'bio11-dishane':                     'Клетъчно дишане',
@@ -242,6 +285,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     'bio12-razmnozhavane':               'Размножаване — 12 клас',
     'bio12-mutatsii':                    'Мутации',
     'bio12-mnogokletchna':               'Многоклетъчни организми',
+    'bio12-dnk-rnk':                     'ДНК и РНК',
+    'bio12-genetika-mendel':             'Генетика — закони на Мендел',
     'chem11-stroezh-atoma':             'Строеж на атома',
     'chem11-himichna-vrazka':           'Химична връзка',
     'chem11-rastvori':                  'Разтвори и рН',
@@ -250,6 +295,10 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     'chem11-skorost-ravnovesie':        'Скорост и равновесие',
     'chem12-analiz':                    'Качествен анализ',
     'chem12-lekarstva-goriva':          'Лекарства и горива',
+    'chem12-biohimiya':                 'Биохимия',
+    'chem12-vaglevodorodi':             'Въглеводороди',
+    'chem12-kislorodmi-saedinenia':     'Кислородни органични съединения',
+    'chem12-okolna-sreda':              'Химия и околна среда',
     'math11-trigonometriya':            'Тригонометрия',
     'math11-pokazatelna-logaritmichna': 'Показателна и логаритмична функция',
     'math11-kvadratni-neravenstva':     'Квадратни неравенства',
@@ -264,11 +313,22 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     'math12-veroyatnosti':              'Вероятности',
     'math12-pokazatelna-logaritmichna': 'Показателна и логаритмична функция',
     'math12-progresii':                 'Прогресии',
+    'math7-ratsionalni-chisla':         'Рационални числа',
+    'math7-linearni-uravnenia':         'Линейни уравнения',
+    'math7-sistemi-uravnenia':          'Системи уравнения',
+    'math7-lineyna-funkciya':           'Линейна функция',
+    'math7-stepeni':                    'Степени с естествен показател',
+    'math7-triagalnik':                 'Триъгълник',
+    'math7-pitagorova-teorema':         'Питагорова теорема',
+    'math7-chetiriagalnitsi':           'Четириъгълници',
+    'math7-okrazhnost':                 'Окръжност и кръг',
+    'math7-statistika':                 'Статистика',
     'bel12-pravopis':                   'Правопис',
     'bel12-punktuatsiya':               'Пунктуация',
     'bel12-gramatika':                  'Граматика',
     'bel12-leksika':                    'Лексика',
   };
+
   function shortName(slug) {
     if (!slug) return '—';
     return LESSON_TITLES[slug] || slug.replace(/^(bel|math|bio|chem)\d*-/,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
@@ -277,33 +337,131 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     const d = new Date(s), diff = Math.floor((Date.now()-d)/86400000);
     if (diff===0) return 'Днес'; if (diff===1) return 'Вчера';
     if (diff<7) return `Пр. ${diff} дни`;
-    return d.toLocaleDateString('bg-BG',{day:'numeric',month:'short',year:'numeric'});
+    return d.toLocaleDateString('bg-BG',{day:'numeric',month:'short'});
+  }
+
+  // ── Read lessons from localStorage ──
+  function getReadCount(subjectKey) {
+    let count = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith('lp_' + subjectKey)) continue;
+      try {
+        const d = JSON.parse(localStorage.getItem(k));
+        if (d && (d.p || 0) >= 10) count++;
+      } catch {}
+    }
+    return count;
+  }
+
+  // ── Essay data from localStorage (sachine.html format) ──
+  function getBelEssayLS() {
+    const bySlug = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k || !k.startsWith('essay_bel')) continue;
+      const m = k.match(/^essay_(bel[^_]+)_t(\d+)$/);
+      if (!m) continue;
+      const slug = m[1];
+      try {
+        const attempts = JSON.parse(localStorage.getItem(k) || '[]');
+        if (attempts.length) {
+          const best = attempts.reduce((a, b) => (b.total ?? 0) > (a.total ?? 0) ? b : a);
+          if (!bySlug[slug]) bySlug[slug] = [];
+          bySlug[slug].push({ total: best.total ?? 0, date: best.date || '—', topicIdx: parseInt(m[2]) });
+        }
+      } catch {}
+    }
+    return bySlug; // { slug: [{total, date, topicIdx}] }
   }
 
   // ── Render student header ──
   const name = profile.full_name || session.user.email?.split('@')[0] || '—';
   document.getElementById('student-name').textContent = name;
 
+  // Знайко count (today only)
+  const today = new Date().toISOString().slice(0,10);
+  const znaykoToday = profile.znayko_reset_date === today ? (profile.znayko_count_today || 0) : 0;
+
+  // Total quizzes and lessons across all subjects
+  const totalQuizLessons = new Set(quizAll.map(r => r.lesson_slug)).size;
+  const totalReadLessons = SUBJECTS.reduce((sum, s) => sum + getReadCount(s.key), 0);
+
+  const metaEl = document.getElementById('student-meta');
+  const metaItems = [
+    totalQuizLessons ? `<span class="student-stat">📝 <strong>${totalQuizLessons}</strong> теста</span>` : '',
+    totalReadLessons ? `<span class="student-stat">📖 <strong>${totalReadLessons}</strong> урока</span>` : '',
+    znaykoToday ? `<span class="student-stat">💬 Знайко днес: <strong>${znaykoToday}</strong></span>` : '',
+  ].filter(Boolean);
+  metaEl.innerHTML = metaItems.join('');
+
+  // ── Essay data from localStorage ──
+  const belEssayLS = getBelEssayLS();
+
   // ── Compute per-subject data ──
   const subjData = SUBJECTS.map(s => {
-    const qRows  = quizAll.filter(r => r.lesson_slug?.startsWith(s.key));
-    const eRows  = essayAll.filter(r => r.lesson_slug?.startsWith(s.key));
-    // Group by lesson slug, average per lesson (same algorithm as dashboard)
-    const bySlug = {};
+    const qRows = quizAll.filter(r => r.lesson_slug?.startsWith(s.key));
+    const eRows = essayAll.filter(r => r.lesson_slug?.startsWith(s.key)); // from Supabase
+
+    // Group by lesson_slug → quiz_num → best pct
+    const byLesson = {}; // { slug: { quizNum: {pct, created_at} } }
     qRows.forEach(r => {
-      if (!bySlug[r.lesson_slug]) bySlug[r.lesson_slug] = [];
-      bySlug[r.lesson_slug].push(r.pct);
+      if (!byLesson[r.lesson_slug]) byLesson[r.lesson_slug] = {};
+      const qn = r.quiz_num || 1;
+      if (!byLesson[r.lesson_slug][qn] || r.pct > byLesson[r.lesson_slug][qn].pct) {
+        byLesson[r.lesson_slug][qn] = { pct: r.pct, created_at: r.created_at };
+      }
     });
-    const lessonAvgs = Object.values(bySlug).map(pcts => Math.round(pcts.reduce((a,p)=>a+p,0)/pcts.length));
-    const avgPct = lessonAvgs.length ? Math.round(lessonAvgs.reduce((a,p)=>a+p,0)/lessonAvgs.length) : null;
-    const avg    = avgPct !== null ? 2 + avgPct/100*4 : null;
-    return { ...s, qRows, eRows, avgPct, avg };
+
+    // Per-lesson average pct (across all quiz_nums done for that lesson)
+    const lessonAvgs = Object.values(byLesson).map(qnMap => {
+      const pcts = Object.values(qnMap).map(v => v.pct);
+      return Math.round(pcts.reduce((a, p) => a + p, 0) / pcts.length);
+    });
+    const avgPct = lessonAvgs.length ? Math.round(lessonAvgs.reduce((a, p) => a + p, 0) / lessonAvgs.length) : null;
+    const quizGrade = avgPct !== null ? pctToGrade(avgPct) : null;
+
+    // Essay grade
+    let essayGradeAvg = null;
+    if (s.essay) {
+      // From Supabase essay_results (if populated)
+      let essayGrades = eRows.map(e => e.grade ?? e.score ?? null).filter(g => g !== null);
+      // From localStorage (sachine.html)
+      const lsData = s.key === 'bel' ? belEssayLS : {};
+      Object.values(lsData).forEach(topics => {
+        topics.forEach(t => essayGrades.push(essayTotalToGrade(t.total)));
+      });
+      if (essayGrades.length) {
+        essayGradeAvg = essayGrades.reduce((a, g) => a + g, 0) / essayGrades.length;
+      }
+    }
+
+    // Combined grade for БЕЛ
+    let avg = null;
+    if (quizGrade !== null && essayGradeAvg !== null) {
+      avg = (quizGrade + essayGradeAvg) / 2;
+    } else if (quizGrade !== null) {
+      avg = quizGrade;
+    } else if (essayGradeAvg !== null) {
+      avg = essayGradeAvg;
+    }
+
+    const readCount = getReadCount(s.key);
+    const quizCount = Object.keys(byLesson).length;
+
+    // Essay count from localStorage for BEL
+    const essayLSCount = s.key === 'bel'
+      ? Object.values(belEssayLS).reduce((sum, arr) => sum + arr.length, 0)
+      : 0;
+    const essayCount = eRows.length + essayLSCount;
+
+    return { ...s, qRows, eRows, byLesson, lessonAvgs, avgPct, avg, quizGrade, essayGradeAvg, readCount, quizCount, essayCount };
   });
 
   // ── Overall average ──
   const withGrade = subjData.filter(s => s.avg !== null);
   if (withGrade.length) {
-    const overall = withGrade.reduce((a,s)=>a+s.avg,0)/withGrade.length;
+    const overall = withGrade.reduce((a, s) => a + s.avg, 0) / withGrade.length;
     const chip = document.getElementById('overall-chip');
     chip.style.display = 'flex';
     chip.querySelector('#overall-val').textContent = fmtGrade(overall);
@@ -333,7 +491,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     const toShow = activeKey==='all' ? subjData : subjData.filter(s=>s.key===activeKey);
 
     toShow.forEach(s => {
-      const hasData = s.qRows.length > 0 || s.eRows.length > 0;
+      const hasData = s.qRows.length > 0 || s.eRows.length > 0 || (s.key === 'bel' && Object.keys(belEssayLS).length > 0);
       if (!hasData) {
         cardsEl.insertAdjacentHTML('beforeend', `
           <div class="empty-card">
@@ -344,71 +502,122 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
         return;
       }
 
-      const avg   = s.avg;
-      const gNum  = avg !== null ? fmtGrade(avg) : '—';
-      const pct   = s.avgPct !== null ? Math.round(s.avgPct) : 0;
+      const avg = s.avg;
+      const gNum = avg !== null ? fmtGrade(avg) : '—';
+      const pct  = s.avgPct !== null ? Math.round(s.avgPct) : 0;
 
-      // Group quiz rows by base lesson
-      const byLesson = {};
-      s.qRows.forEach(r => {
-        const base = r.lesson_slug.replace(/-q\d+$/,'');
-        if (!byLesson[base]) byLesson[base] = [];
-        byLesson[base].push(r);
-      });
+      // Grade label breakdown (for BEL show quiz + essay separately if both)
+      let avgSubLabel = '';
+      if (s.essay && s.quizGrade !== null && s.essayGradeAvg !== null) {
+        avgSubLabel = `<div style="font-size:10px;color:var(--muted);font-weight:700;text-align:right;margin-top:2px;">Тест ${fmtGrade(s.quizGrade)} + Съч. ${fmtGrade(s.essayGradeAvg)}</div>`;
+      }
 
-      const testRows = Object.entries(byLesson).map(([slug, rows]) => {
-        const best   = rows.reduce((a,b) => a.pct>=b.pct ? a : b);
-        const gRaw   = 2 + best.pct/100*4;
-        const gc2    = gradeColor(gRaw);
-        const gDisp  = gradeNum(best.pct);
-        const gLbl   = gradeLabel(gRaw);
-        return `<tr>
-          <td>${shortName(slug)}</td>
-          <td class="td-date">${relDate(best.created_at)}</td>
-          <td class="td-pct"><span class="badge" style="background:${gc2}18;color:${gc2}">${best.pct}%</span></td>
-          <td class="td-grade" style="color:${gc2}">${gDisp} <span style="font-size:11px;font-weight:700">${gLbl}</span></td>
-        </tr>`;
+      // Stats pills
+      const statPills = [
+        s.quizCount ? `<span class="stat-pill">📝 <strong>${s.quizCount}</strong> ${s.quizCount === 1 ? 'тест' : 'теста'}</span>` : '',
+        s.readCount ? `<span class="stat-pill">📖 <strong>${s.readCount}</strong> ${s.readCount === 1 ? 'урок' : 'урока'}</span>` : '',
+        s.essay && s.essayCount ? `<span class="stat-pill">✍️ <strong>${s.essayCount}</strong> ${s.essayCount === 1 ? 'съчинение' : 'съчинения'}</span>` : '',
+      ].filter(Boolean).join('');
+
+      // Build quiz rows — one row per lesson per quiz_num, sorted by lesson then quiz_num
+      const quizRows = Object.entries(s.byLesson).map(([slug, qnMap]) => {
+        const qnsSorted = Object.entries(qnMap).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
+        const pcts = qnsSorted.map(([,v]) => v.pct);
+        return qnsSorted.map(([qn, v], idx) => {
+          const gRaw  = pctToGrade(v.pct);
+          const gc    = gradeColor(gRaw);
+          const gInt  = Math.round(gRaw);
+          const gLbl  = gradeLabel(gRaw);
+          const delta = idx > 0 ? v.pct - pcts[idx - 1] : null;
+          const deltaHtml = delta !== null
+            ? `<span style="color:${delta >= 0 ? '#15803d' : '#dc2626'}">${delta >= 0 ? '↑' : '↓'} ${Math.abs(delta)}%</span>`
+            : '<span style="color:var(--muted)">—</span>';
+          const lessonLabel = idx === 0
+            ? `${shortName(slug)}`
+            : `<span style="color:var(--muted);padding-left:10px">↳ ${shortName(slug)}</span>`;
+          const attemptLabel = qnsSorted.length > 1 ? `Тест ${qn}` : '';
+          return `<tr>
+            <td>${lessonLabel}</td>
+            <td class="td-attempt">${attemptLabel}</td>
+            <td class="td-date">${relDate(v.created_at)}</td>
+            <td class="td-r"><span class="badge" style="background:${gc}18;color:${gc}">${v.pct}%</span></td>
+            <td class="td-delta">${deltaHtml}</td>
+            <td class="td-grade" style="color:${gc}">${gInt} <span style="font-size:11px;font-weight:700">${gLbl}</span></td>
+          </tr>`;
+        }).join('');
       }).join('');
 
-      const essayRows = s.essay && s.eRows.length ? s.eRows.slice(0,5).map(e => {
-        const g  = e.grade ?? '—';
-        const gc3 = typeof g==='number' ? gradeColor(g/6*100) : '#64748b';
+      // Essay rows from Supabase
+      const supabaseEssayRows = s.essay && s.eRows.length ? s.eRows.map(e => {
+        const g  = e.grade ?? e.score ?? '—';
+        const gc = typeof g === 'number' ? gradeColor(g) : '#64748b';
         return `<tr>
-          <td>${shortName(e.lesson_slug)} <span style="font-size:11px;color:var(--muted)">(съчинение)</span></td>
+          <td>${shortName(e.lesson_slug)}</td>
+          <td class="td-attempt" style="color:#7c3aed">Съчинение</td>
           <td class="td-date">${relDate(e.created_at)}</td>
           <td></td>
-          <td class="td-grade" style="color:${gc3}">${g}</td>
+          <td></td>
+          <td class="td-grade" style="color:${gc}">${typeof g === 'number' ? g.toFixed(2) : g}</td>
         </tr>`;
       }).join('') : '';
+
+      // Essay rows from localStorage (sachine.html)
+      const lsEssayRows = s.key === 'bel' ? Object.entries(belEssayLS).map(([slug, topics]) =>
+        topics.map(t => {
+          const g  = essayTotalToGrade(t.total);
+          const gc = gradeColor(g);
+          return `<tr>
+            <td>${shortName(slug)}</td>
+            <td class="td-attempt" style="color:#7c3aed">Съчинение</td>
+            <td class="td-date">${t.date || '—'}</td>
+            <td><span class="badge" style="background:#7c3aed18;color:#7c3aed">${t.total}/24</span></td>
+            <td></td>
+            <td class="td-grade" style="color:${gc}">${g} <span style="font-size:11px;font-weight:700">${gradeLabel(g)}</span></td>
+          </tr>`;
+        }).join('')
+      ).join('') : '';
+
+      const hasQuizRows = s.qRows.length > 0;
+      const hasEssayRows = supabaseEssayRows || lsEssayRows;
+
+      const sectionDivider = hasQuizRows && hasEssayRows
+        ? `<tr class="tbl-section-hdr"><td colspan="6">Съчинения</td></tr>` : '';
 
       cardsEl.insertAdjacentHTML('beforeend', `
         <div class="subj-card">
           <div class="subj-card-hdr">
             <div class="subj-color-dot" style="background:${s.color}"></div>
             <div class="subj-name" style="color:${s.color}">${s.label}</div>
-            <div class="subj-avg-wrap">
+            <div>
               ${avg !== null ? `
                 <div style="text-align:right">
                   <div class="subj-avg" style="color:${gradeColor(avg)}">${gNum}</div>
                   <div class="subj-avg-cat" style="color:${gradeColor(avg)}">${gradeLabel(avg)}</div>
+                  ${avgSubLabel}
                 </div>
               ` : '<div class="subj-avg-lbl" style="color:var(--muted)">Няма данни</div>'}
             </div>
           </div>
+          ${statPills ? `<div class="subj-stats">${statPills}</div>` : ''}
           ${avg !== null ? `
             <div class="subj-prog">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
-                <span style="font-size:11px;font-weight:700;color:var(--muted)">Успеваемост</span>
-                <span style="font-size:11px;font-weight:800;color:${gradeColor(avg)}">${pct}%</span>
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:11px;font-weight:700;color:var(--muted)">Успеваемост (тестове)</span>
+                <span style="font-size:11px;font-weight:800;color:${gradeColor(pctToGrade(pct))}">${pct}%</span>
               </div>
               <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${s.color}"></div></div>
             </div>
           ` : ''}
           <table class="tests-table">
             <thead><tr>
-              <th>Урок / Тема</th><th>Дата</th><th style="text-align:right">Резултат</th><th style="text-align:right">Оценка</th>
+              <th>Урок / Тема</th>
+              <th>Опит</th>
+              <th>Дата</th>
+              <th class="th-r">Резултат</th>
+              <th class="th-r">Промяна</th>
+              <th class="th-r">Оценка</th>
             </tr></thead>
-            <tbody>${testRows}${essayRows}</tbody>
+            <tbody>${quizRows}${sectionDivider}${supabaseEssayRows}${lsEssayRows}</tbody>
           </table>
         </div>`);
     });

@@ -496,14 +496,22 @@
 
     const belTopics = BEL_TOPICS.map(t => ({ ...t, ...getTopicResult(t.slug) }));
     const belDone = belTopics.filter(t => t.done);
-    const belQuizPct = belDone.length
-      ? Math.round(belDone.reduce((s, t) => s + t.pct, 0) / belDone.length) : 0;
+    // Grade uses ALL bel* quiz results (same algorithm as бележника, not limited to BEL_TOPICS)
+    const allBelRows = quizResults.filter(r => r.lesson_slug?.startsWith('bel'));
+    const belBySlug = {};
+    allBelRows.forEach(r => {
+      if (!belBySlug[r.lesson_slug]) belBySlug[r.lesson_slug] = [];
+      belBySlug[r.lesson_slug].push(r.pct);
+    });
+    const belSlugAvgs = Object.values(belBySlug).map(pcts => Math.round(pcts.reduce((a, p) => a + p, 0) / pcts.length));
+    const belQuizCount = belSlugAvgs.length;
+    const belQuizPct = belQuizCount ? Math.round(belSlugAvgs.reduce((a, p) => a + p, 0) / belQuizCount) : 0;
     const belEssays = essayResults.filter(e => e.lesson_slug && e.lesson_slug.startsWith('bel'));
     const belEssayPct = belEssays.length
-      ? Math.round(belEssays.reduce((s, e) => s + (e.score || 0), 0) / belEssays.length) : 0;
-    const belTotalCount = belDone.length + belEssays.length;
+      ? Math.round(belEssays.reduce((s, e) => s + (e.score || e.grade || 0), 0) / belEssays.length) : 0;
+    const belTotalCount = belQuizCount + belEssays.length;
     const belPct = belTotalCount > 0
-      ? Math.round((belQuizPct * belDone.length + belEssayPct * belEssays.length) / belTotalCount)
+      ? Math.round((belQuizPct * belQuizCount + belEssayPct * belEssays.length) / belTotalCount)
       : 0;
 
     // ── Subject definitions ──
