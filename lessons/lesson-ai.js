@@ -2,6 +2,9 @@
 (function () {
   const key = location.pathname.split('/').pop().replace('.html', '');
   if (key) localStorage.setItem('lesson_visited_' + key, '1');
+  // Извлича клас от slug (bel7-*, math7-* → 7; bel11-* → 11; bel12-* → 12)
+  const gradeMatch = key.match(/(?:^|\D)(\d{1,2})-/);
+  if (gradeMatch && !window.LESSON_GRADE) window.LESSON_GRADE = gradeMatch[1];
 })();
 
 // Знайко AI assistant — shared across all lesson pages
@@ -142,6 +145,7 @@
         body: JSON.stringify({
           lessonTitle:   window.LESSON_TITLE   || '',
           lessonSubject: window.LESSON_SUBJECT || '',
+          lessonGrade:   window.LESSON_GRADE   || '',
           lessonText:    getLessonText(),
           selectedText:  text,
           mode,
