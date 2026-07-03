@@ -139,32 +139,35 @@
       var session = sessionRes.data.session;
       if (!session) return;
 
+      var userRes = await sb.auth.getUser();
+      var user = userRes.data?.user || session.user;
+
       var profileRes = await sb.from('profiles')
         .select('full_name,plan,plan_expires_at')
-        .eq('id', session.user.id)
+        .eq('id', user.id)
         .single();
       var profile = profileRes.data || {};
-      console.log('[sidebar] profile:', profile, 'meta:', session.user.user_metadata);
+      console.log('[sidebar] profile:', profile, 'error:', profileRes.error);
 
       // User row
       var initials = (function () {
-        var n = profile.full_name || session.user.user_metadata?.full_name || '';
+        var n = profile.full_name || user.user_metadata?.full_name || '';
         if (n.trim()) {
           var parts = n.trim().split(' ');
           return parts.length >= 2
             ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
             : parts[0].slice(0, 2).toUpperCase();
         }
-        return session.user.email.slice(0, 2).toUpperCase();
+        return user.email.slice(0, 2).toUpperCase();
       })();
 
       var displayName = (function () {
-        var n = (profile.full_name || session.user.user_metadata?.full_name || '').trim();
+        var n = (profile.full_name || user.user_metadata?.full_name || '').trim();
         if (n) {
           var parts = n.split(' ').filter(Boolean);
           return parts.length >= 2 ? parts[0] + ' ' + parts[1][0] + '.' : parts[0];
         }
-        return session.user.email.split('@')[0];
+        return user.email.split('@')[0];
       })();
 
       document.getElementById('sb-avatar').textContent = initials;
