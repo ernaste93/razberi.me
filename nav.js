@@ -210,6 +210,22 @@
       }
     });
   });
+  // ── Inject "Материали" button in lesson topbar ──────────────────────────────
+  (function () {
+    var p = window.location.pathname;
+    if (!p.startsWith('/lessons/') || !p.endsWith('.html')) return;
+    var slug = p.split('/').pop().replace('.html', '');
+    if (!slug || slug === 'materiali' || slug.includes('quiz') || slug === 'pishi7' || slug === 'sachine' || slug === 'lesson-ai') return;
+    var userMenu = document.getElementById('user-menu');
+    if (!userMenu || !userMenu.parentNode) return;
+    var link = document.createElement('a');
+    link.href = '/lessons/materiali.html?key=' + slug;
+    link.className = 'nav-btn';
+    link.textContent = 'Материали';
+    link.style.fontWeight = '700';
+    userMenu.parentNode.insertBefore(link, userMenu);
+  })();
+
   // ── Reading progress tracking (lesson pages only) ───────────────────────────
   (function () {
     var p = window.location.pathname;
