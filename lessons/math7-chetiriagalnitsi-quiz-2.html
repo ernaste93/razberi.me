@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Четириъгълници · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-chetiriagalnitsi-q2',
+      lessonUrl: '/lessons/math7-chetiriagalnitsi.html',
+      lessonName: 'Четириъгълници',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 2 — Ромб, квадрат и свойства',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/math7-chetiriagalnitsi-quiz-3.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Намери лицето на ромб с диагонали d₁ = 6 cm и d₂ = 8 cm.',
+          opts: ['14 cm²', '24 cm²', '48 cm²', '96 cm²'],
+          correct: 1,
+          explanation: 'S = ½ · d₁ · d₂ = ½ · 6 · 8 = ½ · 48 = 24 cm². Лицето на ромба се пресмята чрез диагоналите, защото те са перпендикулярни.'
+        },
+        {
+          q: 'Намери лицето на квадрат с страна a = 5 cm.',
+          opts: ['10 cm²', '20 cm²', '25 cm²', '50 cm²'],
+          correct: 2,
+          explanation: 'S = a² = 5² = 25 cm². Периметърът би бил P = 4·5 = 20 cm.'
+        },
+        {
+          q: 'Намери диагонала на квадрат с страна a = 4 cm.',
+          opts: ['4 cm', '4√2 cm ≈ 5.66 cm', '8 cm', '16 cm'],
+          correct: 1,
+          explanation: 'd = a√2 = 4√2 ≈ 5.66 cm. Проверка по Питагор: d = √(4² + 4²) = √32 = 4√2.'
+        },
+        {
+          q: 'Кое е ВЯРНО за диагоналите на ромба?',
+          opts: ['Равни по дължина', 'Перпендикулярни един на друг', 'Паралелни', 'Не се пресичат'],
+          correct: 1,
+          explanation: 'Диагоналите на ромба са ПЕРПЕНДИКУЛЯРНИ (образуват 90°) и се делят наполовина. Не са задължително равни (за разлика от квадрата).'
+        },
+        {
+          q: 'Каква е разликата между ромб и квадрат?',
+          opts: ['Квадратът има 4 равни страни, а ромбът — само 2', 'В квадрата всички ъгли са 90°, в ромба не е задължително', 'Ромбът е по-голям от квадрата', 'Квадратът няма диагонали'],
+          correct: 1,
+          explanation: 'И ромбът, и квадратът имат 4 равни страни. Разликата е, че в квадрата ВСИЧКИ ЪГЛИ са по 90°, докато в ромба ъглите могат да са различни (но противоположните са равни). Квадратът е специален случай на ромб.'
+        },
+        {
+          q: 'Намери периметъра на ромб с страна a = 7 cm.',
+          opts: ['14 cm', '21 cm', '28 cm', '49 cm'],
+          correct: 2,
+          explanation: 'P = 4a = 4 · 7 = 28 cm. В ромба всичките четири страни са равни.'
+        },
+        {
+          q: 'Намери периметъра на квадрат с лице S = 36 cm².',
+          opts: ['12 cm', '18 cm', '24 cm', '36 cm'],
+          correct: 2,
+          explanation: 'S = a² = 36 → a = 6 cm. P = 4a = 4 · 6 = 24 cm.'
+        },
+        {
+          q: 'Коя фигура е едновременно и ромб, и правоъгълник?',
+          opts: ['Успоредник', 'Трапец', 'Квадрат', 'Равнобедрен трапец'],
+          correct: 2,
+          explanation: 'Квадратът е едновременно ромб (четири равни страни) и правоъгълник (четири ъгъла по 90°). Затова квадратът има свойствата и на двете фигури.'
+        },
+        {
+          q: 'Ромб с диагонали d₁ = 10 cm и d₂ = 10 cm. Каква фигура е той?',
+          opts: ['Обикновен ромб', 'Квадрат', 'Правоъгълник', 'Трапец'],
+          correct: 1,
+          explanation: 'Ако диагоналите на ромба са равни (d₁ = d₂), то ромбът е квадрат. В квадрата диагоналите са равни, перпендикулярни и се делят наполовина.'
+        },
+        {
+          q: 'Намери лицето на квадрат с диагонал d = 6 cm.',
+          opts: ['9 cm²', '12 cm²', '18 cm²', '36 cm²'],
+          correct: 2,
+          explanation: 'Можем да ползваме формулата за ромб: S = ½ · d · d = ½ · 6 · 6 = 18 cm². Или: d = a√2 → a = d/√2 = 6/√2 → S = a² = 36/2 = 18 cm².'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

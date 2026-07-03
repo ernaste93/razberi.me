@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Народно творчество · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 7 клас</a>
+        <span>›</span>
+        Народно творчество
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА</div>
+          <div class="lesson-title">Народно творчество — митове, легенди, приказки</div>
+          <div class="lesson-meta">Видове · Характеристики · Жанрове · Образи и символи · ~10 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. КАКВО Е НАРОДНО ТВОРЧЕСТВО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Какво е народното творчество?</div>
+            <div class="lesson-body">
+              <p><strong>Народното творчество (фолклорът)</strong> е съвкупността от художествени творби, създадени от народа и предавани устно от поколение на поколение. За разлика от авторската литература, фолклорните творби нямат конкретен автор — те са плод на колективното творчество на целия народ.</p>
+              <p>Думата <strong>„фолклор"</strong> идва от английски (folk — народ, lore — знание, мъдрост) и означава „народна мъдрост". В България народното творчество се е развивало особено богато по времето на османското владичество (XV–XIX в.), когато е bilo единственото средство за съхраняване на езика, бита и националния дух.</p>
+            </div>
+
+            <!-- ══ 2. ОСНОВНИ БЕЛЕЗИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Основни белези на народното творчество</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🗣️</div>
+                <div class="key-point-text"><strong>Устно предаване:</strong> Творбите се предават от уста на уста, от поколение на поколение. Нямат фиксиран текст — всеки изпълнител може да добавя или изменя.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">👥</div>
+                <div class="key-point-text"><strong>Анонимност:</strong> Творбите нямат конкретен автор. Дори ако някой ги е съчинил, неговото/нейното име се губи с времето. Авторът е „народът".</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔄</div>
+                <div class="key-point-text"><strong>Вариантност:</strong> Всяка творба съществува в множество варианти. Едно и също предание може да се разказва по различен начин в различни краища на страната.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌍</div>
+                <div class="key-point-text"><strong>Колективност:</strong> Фолклорът е дело на целия народ — изразява колективния опит, вярвания, мечти и страхове на общността.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📅</div>
+                <div class="key-point-text"><strong>Традиционност:</strong> Фолклорните творби следват утвърдени образци (формули, герои, сюжети), предавани от векове.</div>
+              </div>
+            </div>
+
+            <!-- ══ 3. ВИДОВЕ НАРОДНО ТВОРЧЕСТВО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Видове народно творчество</div>
+            <div class="lesson-body">
+              <p>Народното творчество се дели на <strong>народна проза</strong> (разказвателно — митове, легенди, приказки, предания) и <strong>народна поезия</strong> (песни — обредни, лирически, епически).</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Мит:</strong> Разказ за произхода на света, боговете и природните явления. Героите са богове или полубогове. Пример: митовете за Орфей и Прометей от древногръцката митология.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏔️</div>
+                <div class="key-point-text"><strong>Легенда:</strong> Разказ, основан на исторически факт или реално събитие, но с фантастични елементи. Обяснява произхода на места, природни явления или исторически личности.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧚</div>
+                <div class="key-point-text"><strong>Народна приказка:</strong> Вълшебен разказ с измислени герои. Темата е борбата между доброто и злото, като доброто винаги побеждава. Три вида: вълшебни, битови и за животни.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📜</div>
+                <div class="key-point-text"><strong>Предание:</strong> Народен разказ, представящ се за достоверен. За разлика от легендата, е по-тясно свързано с конкретно място или събитие.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎵</div>
+                <div class="key-point-text"><strong>Народна песен:</strong> Поетична творба, предназначена за пеене. Видове: обредни (хороводни, сватбени, коледни), битови (любовни, трудови) и юнашки (за хайдути и борци).</div>
+              </div>
+            </div>
+
+            <!-- ══ 4. НАРОДНИ ПРИКАЗКИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Народни приказки — видове и характеристики</div>
+            <div class="lesson-body">
+              <p>Народните приказки са най-популярният жанр на фолклорната проза. Те се делят на три основни вида:</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">✨</div>
+                <div class="key-point-text"><strong>Вълшебни приказки:</strong> Герои са принцове, принцеси, магьосници. Присъстват магически предмети (вълшебна пръчица, летящ кон, самоделна покривка). Сюжетът следва схема: герой в беда → изпитания → помощ от вълшебни помощници → победа. Пример: „Хитър Петър и дяволът".</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏠</div>
+                <div class="key-point-text"><strong>Битови приказки:</strong> Герои са обикновени хора — селяни, занаятчии, бедни и богати. Темата е ежедневният живот и социалните противоречия. Насмиват глупостта, алчността и несправедливостта. Умен срещу глупав, беден срещу богат. Пример: „Хитър Петър".</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🦊</div>
+                <div class="key-point-text"><strong>Приказки за животни:</strong> Героите са животни с човешки черти. Всяко животно символизира определена черта: лисицата — хитрост, вълкът — жестокост, мечката — добродушие и глупост, зайчето — страхливост. Поучителни истории.</div>
+              </div>
+            </div>
+            <div class="lesson-body" style="margin-top:14px;">
+              <p><strong>Общи черти на приказките:</strong> Устойчиви начала и краища („Имало едно време...", „...и живели дълго и щастливо"), тройно повторение на изпитанията, ясно разделение добро–зло, нравствено послание.</p>
+            </div>
+
+            <!-- ══ 5. НАРОДНИ ЛЕГЕНДИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Народни легенди</div>
+            <div class="lesson-body">
+              <p>Легендата е народен разказ с фантастични елементи, основан на реален факт. Народът вярва в истинността на разказаното. Видове легенди:</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🏞️</div>
+                <div class="key-point-text"><strong>Топонимични легенди:</strong> Обясняват произхода на имена на места — реки, планини, градове. Пример: „Защо се казва Искър" или „Легендата за Перперикон".</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚙️</div>
+                <div class="key-point-text"><strong>Етиологични легенди:</strong> Обясняват произхода на природни явления, животни, растения. Защо петелът пее на разсъмване, защо котката мърка и т.н.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚔️</div>
+                <div class="key-point-text"><strong>Исторически легенди:</strong> За реални исторически личности и събития, но с фантастични добавки. Легенди за Крали Марко, Ботев, Левски — предаващи тяхното величие по легендарен начин.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⛪</div>
+                <div class="key-point-text"><strong>Религиозни легенди:</strong> За светци, чудеса, свещени места. Тясно свързани с православната традиция. Легенди за Иван Рилски, за светите места.</div>
+              </div>
+            </div>
+
+            <!-- ══ 6. МИТОВЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Митове — Орфей и Прометей</div>
+            <div class="lesson-body">
+              <p>Митът е свещен разказ за произхода на света, боговете и хората. Героите са богове, полубогове или герои с необичайни способности. Митовете обясняват природни явления и моралните закони чрез образни разкази.</p>
+              <p><strong>Митът за Орфей:</strong> Орфей е тракийски певец с дарба да омагьосва природата с музиката си. Когато неговата любима Евридика умира, той слиза в подземното царство, за да я върне. С пеенето си омайва Харон и Хадес. Получава правото да я изведе, но с условие — да не се обръща. В последния момент се обръща и губи Евридика завинаги. <strong>Идеята:</strong> силата на изкуството, трагедията на изгубената любов, невъзможността да се победи смъртта.</p>
+              <p><strong>Митът за Прометей:</strong> Прометей е титан, откраднал огъня от Олимп и го дал на хората. Зевс го наказва — прикован към скала, орел яде черния му дроб всеки ден (и всяка нощ се възстановява). Освобожден е от Херакъл. <strong>Идеята:</strong> саможертвата за другите, борбата срещу тиранията, ценността на знанието и огъня (символ на цивилизацията).</p>
+            </div>
+
+            <!-- ══ 7. СИМВОЛИКА И ОБРАЗИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Символика и образи в народното творчество</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🐦</div>
+                <div class="key-point-text"><strong>Птици:</strong> Соколът — смелост и свобода; орелът — сила и власт; кукувицата — самота и тъга; лястовицата — пролет и обновление.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌳</div>
+                <div class="key-point-text"><strong>Дърво и природа:</strong> Дъбът — сила и трайност; явор — красота; цветя — младост. Природата отразява настроенията на героите.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔢</div>
+                <div class="key-point-text"><strong>Числата:</strong> Три — свещено число (три сина, три изпитания, три дни); седем — пълнота; девет — магическо; дванадесет — цялостност.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚖️</div>
+                <div class="key-point-text"><strong>Нравствено послание:</strong> Във фолклора винаги доброто побеждава злото. Честните, трудолюбивите и добросърдечните хора са награждавани; мързеливите, алчните и злите — наказвани.</div>
+              </div>
+            </div>
+
+            <!-- ══ 8. НВО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното за НВО</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Народното творчество:</strong> анонимно, устно предавано, вариантно, колективно.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Три вида приказки:</strong> вълшебни, битови, за животни.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Легенда:</strong> основана на реален факт, с фантастични елементи; видове: топонимични, етиологични, исторически, религиозни.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Мит:</strong> разказ за богове и произхода на света; Орфей (сила на изкуството), Прометей (саможертва).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Символи:</strong> соколът = свобода, дъбът = сила, числото 3 = свещено.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Нравствено послание:</strong> доброто побеждава злото; честността и трудолюбието са наградени.</div></div>
+            </div>
+
+          </div><!-- /#lesson-content -->
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel7-narodno-tvorchestvo-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel7-narodno-tvorchestvo-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel7-narodno-tvorchestvo-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div><!-- /.lesson-panel -->
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Народно творчество — митове, легенди, приказки';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+  <script src="/sidebar.js"></script>
+</body>
+</html>

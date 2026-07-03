@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Опълченците на Шипка · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 7 клас</a>
+        <span>›</span>
+        Опълченците на Шипка
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА</div>
+          <div class="lesson-title">„Опълченците на Шипка" — Иван Вазов</div>
+          <div class="lesson-meta">Биография · Епопея на забравените · Образи · Художествени средства · ~10 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. ИВАН ВАЗОВ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Иван Вазов — „Патриархът на българската литература"</div>
+            <div class="lesson-body">
+              <p><strong>Иван Вазов</strong> (1850–1921) е роден в Сопот. Той е най-великият български писател — поет, романист и драматург. Наричат го <strong>„Патриарх на българската литература"</strong>, защото е пръв и по значение, и по обем на творчеството си.</p>
+              <p>Вазов живее в бурна епоха — съвременник е на Априлското въстание (1876), Освобождението (1878) и изграждането на свободна България. Тези исторически събития намират отражение в почти всички негови творби. Творческото му дело обхваща поезия, проза и драматургия — стихосбирки, романи, разкази, пиеси.</p>
+            </div>
+
+            <!-- ══ 2. ЕПОПЕЯ НА ЗАБРАВЕНИТЕ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">„Епопея на забравените" — цикълът оди</div>
+            <div class="lesson-body">
+              <p><strong>„Епопея на забравените"</strong> е цикъл от <strong>12 оди</strong>, написани от Вазов в периода <strong>1881–1884 г.</strong> Названието е промислено: „епопея" означава „велик разказ за героични дела", а „забравени" — защото Вазов иска да увековечи хората, чиито подвизи рискуват да се забравят след Освобождението.</p>
+              <p>В цикъла Вазов прославя 12 ключови личности и събития от националноосвободителното движение: Паисий, Раковски, Левски, Ботев, Каблешков, Бенковски, Волов и Кабесков, Хаджи Димитър и Стефан Кара, Стефан Стамболов, Панайот Хитов, Брат Миладинови и Шипченските опълченци.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📅</div>
+                <div class="key-point-text"><strong>Период:</strong> 1881–1884 г. — написани в изгнание в Одеса, Румъния.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔢</div>
+                <div class="key-point-text"><strong>Брой:</strong> 12 оди (ода = тържествено стихотворение, прославящо герои).</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🎯</div>
+                <div class="key-point-text"><strong>Цел:</strong> Да увековечи героите на Освобождението, преди историята да ги забрави.</div>
+              </div>
+            </div>
+
+            <!-- ══ 3. ИСТОРИЧЕСКА ОСНОВА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Историческа основа — Битката при Шипка</div>
+            <div class="lesson-body">
+              <p>Одата „Опълченците на Шипка" е посветена на защитниците на <strong>Шипченския проход</strong> по време на <strong>Руско-турската освободителна война (1877–1878)</strong>.</p>
+              <p>В августа на 1877 г. малоброен отряд от <strong>руски войски и български опълченци</strong> трябва да задържи прохода срещу многократно превъзхождащата ги турска армия. Боят продължава три дни. Когато патроните свършват, защитниците хвърлят по врага трупове, камъни и дори оръдия. Опълченците устояват. Тази победа е ключова за изхода на войната.</p>
+            </div>
+
+            <!-- ══ 4. СЪДЪРЖАНИЕ НА ОДАТА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Съдържание и образи в одата</div>
+            <div class="lesson-body">
+              <p>Одата е лирическо произведение — лирическият говорител (аз) се обръща към Балкана и пита дали помни онова велико сражение. Стихотворението не разказва с военна точност, а изгражда <strong>монументален образ на масовия героизъм</strong>.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🗻</div>
+                <div class="key-point-text"><strong>Балканът:</strong> Обърнат директно (апострофа), той е свидетел и пазител на паметта за героите. „Ти, Балкане, помниш ли оня ден?"</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚔️</div>
+                <div class="key-point-text"><strong>Опълченците:</strong> Не са представени като индивидуални герои — важен е масовият подвиг. Те са символ на целия народ в борбата за свобода.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🩸</div>
+                <div class="key-point-text"><strong>Жертвата:</strong> Кървавата битка, падналите бойци — тяхната смърт е представена като безсмъртен подвиг, а не като трагедия.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌟</div>
+                <div class="key-point-text"><strong>Безсмъртието:</strong> Героите не умират — те живеят в паметта на народа и в природата (Балкана ги помни вечно).</div>
+              </div>
+            </div>
+
+            <!-- ══ 5. КЛЮЧОВ ЦИТАТ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Ключови стихове</div>
+            <div class="poem-block">Но ти, Балкане, помниш ли оня ден,
+когато твоят връх, облян в кръв и огън,
+гърмеше страшно — и тоз гърмеж свещен
+и днеска дълбоко в нас тъй ехти богат?
+<div class="poem-author">— Иван Вазов, „Опълченците на Шипка"</div>
+            </div>
+            <div class="lesson-body">
+              <p>Обръщението към Балкана (апострофата) е водещ похват в одата. Планината е превърната в жив свидетел на историята. Риторичният въпрос „помниш ли?" не очаква отговор — той утвърждава, че подвигът е вечен.</p>
+            </div>
+
+            <!-- ══ 6. ХУДОЖЕСТВЕНИ СРЕДСТВА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">📣</div>
+                <div class="key-point-text"><strong>Апострофа (обръщение):</strong> Обръщение към неодушевен предмет или отсъстващо лице. Вазов се обръща към Балкана: „Ти, Балкане...". Засилва емоционалния ефект.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">📏</div>
+                <div class="key-point-text"><strong>Хипербола (преувеличение):</strong> „Стотина пъти повече турци" — преувеличава числата, за да подчертае величието на подвига.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚖️</div>
+                <div class="key-point-text"><strong>Антитеза (противопоставяне):</strong> Живот срещу смърт, малцина срещу мнозина, свобода срещу робство — контрастът подчертава величието на героите.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❓</div>
+                <div class="key-point-text"><strong>Риторичен въпрос:</strong> Въпрос, на който не се очаква отговор — „помниш ли оня ден?" Служи за емоционално въздействие.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Повторение (анафора):</strong> Повторение на думи в началото на стихове — засилва ритъма и патоса на произведението.</div>
+              </div>
+            </div>
+
+            <!-- ══ 7. ТЕМИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Теми и идеи</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🏅</div>
+                <div class="key-point-text"><strong>Героизмът:</strong> Централна тема — опълченците се бият до последен дъх без оглед на числения превес.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🙏</div>
+                <div class="key-point-text"><strong>Жертвата:</strong> Смъртта в битката за свобода е представена не като трагедия, а като свещен акт и висш смисъл.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🇧🇬</div>
+                <div class="key-point-text"><strong>Националната гордост:</strong> Одата буди гордост у читателите — те са потомци на тези герои.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">♾️</div>
+                <div class="key-point-text"><strong>Безсмъртието на героите:</strong> Паметта за падналите живее вечно в природата и в душите на народа.</div>
+              </div>
+            </div>
+
+            <!-- ══ 8. НВО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното за НВО</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Иван Вазов (1850–1921)</strong> — „Патриарх на българската литература", роден в Сопот.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>„Епопея на забравените"</strong> — цикъл от 12 оди, написани 1881–1884 г.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>„Опълченците на Шипка"</strong> — ода за защитниците на Шипченския проход (1877 г.).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Ключов цитат:</strong> „Но ти, Балкане, помниш ли оня ден?"</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Художествени средства:</strong> апострофа, хипербола, антитеза, риторичен въпрос, повторение.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Теми:</strong> героизъм, жертва, национална гордост, безсмъртие на героите.</div></div>
+            </div>
+
+          </div><!-- /#lesson-content -->
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel7-vazov-opalchentsite-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel7-vazov-opalchentsite-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel7-vazov-opalchentsite-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div><!-- /.lesson-panel -->
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = '„Опълченците на Шипка" — Иван Вазов';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+  <script src="/sidebar.js"></script>
+</body>
+</html>

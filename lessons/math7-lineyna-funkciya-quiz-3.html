@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Линейна функция · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-lineyna-funkciya-q3',
+      lessonUrl: '/lessons/math7-lineyna-funkciya.html',
+      lessonName: 'Линейна функция',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Пропорционалност и пресичане с оси',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Цената на 1 кг ябълки е 3 лв. Колко лв ще костват x кг?',
+          opts: ['y = x + 3', 'y = 3x', 'y = x/3', 'y = 3x + 3'],
+          correct: 1,
+          explanation: 'Това е права пропорционалност: y = 3x. За 1 кг: y = 3×1 = 3 лв. За 2 кг: y = 6 лв. Формулата не съдържа b (свободен член), тъй като при 0 кг плащаме 0 лв.'
+        },
+        {
+          q: 'Таксиметрова компания взима 2 лв стартова такса + 1.5 лв/км. При x км, цената е:',
+          opts: ['y = 1.5x', 'y = 2x + 1.5', 'y = 1.5x + 2', 'y = 2x'],
+          correct: 2,
+          explanation: 'y = 1.5x + 2. Стартова такса = b = 2, цена за км = k = 1.5. При 0 км: y = 2 лв (таксата). При 10 км: y = 15 + 2 = 17 лв.'
+        },
+        {
+          q: 'y = 4x е права пропорционалност. Кое е вярно?',
+          opts: ['Минава през (0, 4)', 'Минава през (0, 0)', 'Минава през (4, 0)', 'Е намаляваща'],
+          correct: 1,
+          explanation: 'y = 4x (b = 0) е права пропорционалност. При x = 0: y = 0. Минава през O(0, 0). k = 4 > 0, значи е нараства. Не минава само през (0,4) или (4,0).'
+        },
+        {
+          q: 'Намери пресечната точка на y = 2x − 6 с оста Ox.',
+          opts: ['(3, 0)', '(0, 3)', '(6, 0)', '(0, −6)'],
+          correct: 0,
+          explanation: 'Пресичане с Ox: y = 0. 2x − 6 = 0 → 2x = 6 → x = 3. Пресечна точка: (3, 0).'
+        },
+        {
+          q: 'Намери пресечната точка на y = −x + 5 с оста Oy.',
+          opts: ['(5, 0)', '(0, 5)', '(0, −1)', '(−5, 0)'],
+          correct: 1,
+          explanation: 'Пресичане с Oy: x = 0. y = −0 + 5 = 5. Пресечна точка: (0, 5). b = 5 директно ни дава тази точка.'
+        },
+        {
+          q: 'Две функции y = 2x + 3 и y = 2x − 1 са:',
+          opts: ['Пресичащи се', 'Успоредни', 'Съвпадащи', 'Перпендикулярни'],
+          correct: 1,
+          explanation: 'Двете функции имат еднакъв наклон k = 2, но различен b (3 ≠ −1). Графиките им са успоредни прави (не се пресичат никога).'
+        },
+        {
+          q: 'За да намерим x при дадено y за y = 3x − 9, трябва да:',
+          opts: ['Умножим y по 3 и добавим 9', 'Добавим 9 към y и разделим на 3', 'Изваждаме 9 от y и умножаваме по 3', 'Разделим y на 3 и добавим 9'],
+          correct: 1,
+          explanation: 'y = 3x − 9 → y + 9 = 3x → x = (y + 9)/3. Пример: ако y = 6: x = (6+9)/3 = 15/3 = 5. Проверка: 3×5 − 9 = 6 ✓'
+        },
+        {
+          q: 'Плуването на Марин с постоянна скорост 2 км/ч. Колко км ще е изминал след t часа?',
+          opts: ['d = 2 + t', 'd = t/2', 'd = 2t', 'd = t − 2'],
+          correct: 2,
+          explanation: 'd = 2t е права пропорционалност (скорост × време = разстояние). При t = 3 ч: d = 6 км. k = 2 (скоростта), b = 0 (в началото е изминал 0 км).'
+        },
+        {
+          q: 'Функцията y = −2x + 10. При каква стойност на x, y > 0?',
+          opts: ['x < 5', 'x > 5', 'x < −5', 'x > −5'],
+          correct: 0,
+          explanation: 'y > 0: −2x + 10 > 0 → −2x > −10 → x < 5 (знакът се обръща при деление с −2). При x = 4: y = −8+10 = 2 > 0 ✓; при x = 6: y = −12+10 = −2 < 0 ✓.'
+        },
+        {
+          q: 'Кое изречение е ГРЕШНО за y = 3x + 5?',
+          opts: ['При x = 0, y = 5', 'k = 3 означава нарастваща функция', 'Пресича Ox в (5, 0)', 'При x = −1, y = 2'],
+          correct: 2,
+          explanation: 'Грешното е "пресича Ox в (5,0)". При y = 0: 3x + 5 = 0 → x = −5/3. Пресича Ox в (−5/3, 0), не в (5, 0). Другите са верни: при x=0: y=5 ✓; k=3>0 → нараства ✓; при x=−1: y=−3+5=2 ✓.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

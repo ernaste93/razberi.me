@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Системи уравнения · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-sistemi-uravnenia-q2',
+      lessonUrl: '/lessons/math7-sistemi-uravnenia.html',
+      lessonName: 'Системи линейни уравнения',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 2 — Метод на събиране',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/math7-sistemi-uravnenia-quiz-3.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Реши системата чрез събиране: { x + y = 8 и { x − y = 2',
+          opts: ['(3, 5)', '(5, 3)', '(4, 4)', '(6, 2)'],
+          correct: 1,
+          explanation: 'Събираме уравненията: (x+y) + (x−y) = 8+2 → 2x = 10 → x = 5. Заместваме: 5 + y = 8 → y = 3. Решение: (5, 3).'
+        },
+        {
+          q: 'Реши чрез събиране: { 2x + 3y = 7 и { 2x − 3y = 1',
+          opts: ['(2, 1)', '(1, 2)', '(4, −1)', '(3, 0)'],
+          correct: 0,
+          explanation: 'Събираме: 4x = 8 → x = 2. В 1-во: 4 + 3y = 7 → 3y = 3 → y = 1. Решение: (2, 1). Проверка: 2×2+3×1=7 ✓; 2×2−3×1=1 ✓'
+        },
+        {
+          q: 'За да елиминираме x от системата { 3x + 2y = 10 и { x − y = 1, умножаваме 2-рото по:',
+          opts: ['2', '3', '−3', '−2'],
+          correct: 2,
+          explanation: 'Умножаваме 2-рото по −3: −3x + 3y = −3. Сега събираме с 1-вото: (3x + 2y) + (−3x + 3y) = 10 + (−3) → 5y = 7 → y = 7/5. Умножаваме по −3, за да получим −3x, противоположно на 3x.'
+        },
+        {
+          q: 'Реши: { 4x + y = 9 и { 2x + y = 5',
+          opts: ['(2, 1)', '(1, 5)', '(3, −3)', '(4, −7)'],
+          correct: 0,
+          explanation: 'Изваждаме 2-рото от 1-вото: (4x+y) − (2x+y) = 9−5 → 2x = 4 → x = 2. В 2-ро: 4 + y = 5 → y = 1. Проверка: 4×2+1=9 ✓; 2×2+1=5 ✓'
+        },
+        {
+          q: 'Реши: { x + 2y = 5 и { 3x − 2y = 7',
+          opts: ['(3, 1)', '(2, 1.5)', '(1, 2)', '(5, 0)'],
+          correct: 0,
+          explanation: 'Коефициентите на y са 2 и −2 (противоположни). Събираме: 4x = 12 → x = 3. В 1-во: 3 + 2y = 5 → 2y = 2 → y = 1. Проверка: 3+2=5 ✓; 9−2=7 ✓'
+        },
+        {
+          q: 'Реши: { 2x + 5y = 1 и { 2x − 3y = 9',
+          opts: ['(4, −1)', '(−1, 4)', '(3, −1)', '(5, −2)'],
+          correct: 0,
+          explanation: 'Изваждаме: (2x+5y) − (2x−3y) = 1−9 → 8y = −8 → y = −1. В 1-во: 2x − 5 = 1 → 2x = 6 → x = 3. Решение: (3, −1). Проверка: 6−5=1 ✓; 6+3=9 ✓'
+        },
+        {
+          q: 'Реши: { x + y = 7 и { 2x + 3y = 17',
+          opts: ['(4, 3)', '(3, 4)', '(5, 2)', '(2, 5)'],
+          correct: 0,
+          explanation: 'Умножаваме 1-вото по −2: −2x − 2y = −14. Събираме с 2-рото: y = 3. В 1-во: x + 3 = 7 → x = 4. Решение: (4, 3). Проверка: 4+3=7 ✓; 8+9=17 ✓'
+        },
+        {
+          q: 'Реши: { 3x − y = 5 и { 6x − 2y = 10',
+          opts: ['(2, 1)', 'Безброй решения', 'Няма решение', '(1, −2)'],
+          correct: 1,
+          explanation: '2-рото уравнение е 2 × 1-вото (умножаваме по 2). При събиране получаваме 0 = 0 — вярно тъждество. Системата е неопределена (безброй решения).'
+        },
+        {
+          q: 'Реши: { x + y = 5 и { x + y = 7',
+          opts: ['(6, 1)', '(3, 2)', 'Безброй решения', 'Няма решение'],
+          correct: 3,
+          explanation: 'Изваждаме: 0 = −2. Невярно тъждество → системата е несъвместима (няма решение). Геометрично: двете прави са успоредни.'
+        },
+        {
+          q: 'Реши: { 5x + 2y = 16 и { 3x − 2y = 8',
+          opts: ['(3, 0.5)', '(2, 3)', '(4, −2)', '(3, 1)'],
+          correct: 0,
+          explanation: 'Коефициентите на y са 2 и −2. Събираме: 8x = 24 → x = 3. В 1-во: 15 + 2y = 16 → 2y = 1 → y = 0.5. Решение: (3, 0.5). Проверка: 15+1=16 ✓; 9−1=8 ✓'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -241,6 +241,7 @@
             <option value="all">Всички класове</option>
             <option value="12">12 клас</option>
             <option value="11">11 клас</option>
+            <option value="7">7 клас</option>
           </select>
           <svg class="ur-grade-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
@@ -313,6 +314,19 @@ const SUBJECTS = [
         { title:'Пенчо Славейков — „Cis moll"',                      slug:'bel11-slaveykov-cis-moll',          meta:'Символизъм · Любовна лирика',      time:'~7 мин',  group:'Природата' },
         { title:'Иван Вазов — „Епопея на забравените"',              slug:'bel11-vazov-epopea',                meta:'Цикъл оди · Национални герои',     time:'~9 мин',  group:'Иван Вазов — Епопея' },
         { title:'Иван Вазов — „Под игото"',                          slug:'bel11-vazov-pod-igoto',             meta:'Роман · Освобождение',             time:'~10 мин', group:'Иван Вазов — Епопея' },
+      ],
+      7:[
+        { title:'Народно творчество — митове, легенди, приказки',    slug:'bel7-narodno-tvorchestvo',          meta:'Народна литература · Устно творчество', time:'~7 мин',  group:'Народна литература' },
+        { title:'Иван Вазов — „Опълченците на Шипка"',               slug:'bel7-vazov-opalchentsite',          meta:'Поема · Героизъм · НВО',           time:'~8 мин',  group:'Иван Вазов' },
+        { title:'Иван Вазов — „Под игото" (откъс)',                  slug:'bel7-vazov-pod-igoto',              meta:'Роман · Априлско въстание · НВО',  time:'~8 мин',  group:'Иван Вазов' },
+        { title:'Христо Ботев — „Майце си"',                         slug:'bel7-botev-maytse-si',              meta:'Лирика · Носталгия · НВО',         time:'~6 мин',  group:'Христо Ботев' },
+        { title:'Христо Ботев — „Хаджи Димитър"',                   slug:'bel7-botev-hadzhi-dimityr',         meta:'Поема · Патриотизъм · НВО',        time:'~8 мин',  group:'Христо Ботев' },
+        { title:'Алеко Константинов — „Бай Ганьо"',                 slug:'bel7-aleko-bay-ganyo',              meta:'Сатира · Фейлетон · НВО',          time:'~7 мин',  group:'Алеко и Йовков' },
+        { title:'Йордан Йовков — „Индже"',                           slug:'bel7-yovkov-indzhe',                meta:'Разказ · Нравствена промяна · НВО', time:'~7 мин', group:'Алеко и Йовков' },
+        { title:'Елин Пелин — „Задушница"',                          slug:'bel7-elin-pelin-zadusha',           meta:'Разказ · Хуманизъм · НВО',         time:'~6 мин',  group:'Елин Пелин' },
+        { title:'Морфология — части на речта',                       slug:'bel7-morfologia',                   meta:'Глагол · Съществително · Прилагателно', time:'~8 мин', group:'Езикова компетентност' },
+        { title:'Синтаксис — изречения и части',                     slug:'bel7-sintaksis',                    meta:'Подлог · Сказуемо · Сложни изречения', time:'~8 мин', group:'Езикова компетентност' },
+        { title:'Правопис и пунктуация за НВО',                      slug:'bel7-pravopis',                     meta:'Членуване · Запетая · Слято писане', time:'~7 мин', group:'Езикова компетентност' },
       ]
     }
   },
@@ -335,6 +349,18 @@ const SUBJECTS = [
         { title:'Квадратни неравенства',                    slug:'math11-kvadratni-neravenstva',     meta:'Параболи · Знакова схема · Системи',  time:'~8 мин',  group:'Функции и графики' },
         { title:'Аритметична и геометрична прогресия',      slug:'math11-progresii',                 meta:'Редици · Суми · Формули',             time:'~8 мин',  group:'Редици и геометрия' },
         { title:'Планиметрия',                              slug:'math11-planimeriya',               meta:'Триъгълник · Четириъгълник · Окръжност',time:'~9 мин',group:'Редици и геометрия' },
+      ],
+      7:[
+        { title:'Рационални числа и действия',              slug:'math7-ratsionalni-chisla',         meta:'Дроби · Модул · Числова ос',          time:'~7 мин',  group:'Числа и изрази' },
+        { title:'Степени с естествен показател',            slug:'math7-stepeni',                    meta:'aⁿ · Правила · Стандартен запис',     time:'~7 мин',  group:'Числа и изрази' },
+        { title:'Линейни уравнения с едно неизвестно',      slug:'math7-linearni-uravnenia',         meta:'ax+b=0 · Алгоритъм · Текстови задачи', time:'~8 мин', group:'Уравнения и функции' },
+        { title:'Системи линейни уравнения',                slug:'math7-sistemi-uravnenia',          meta:'Заместване · Събиране · Графичен метод', time:'~8 мин', group:'Уравнения и функции' },
+        { title:'Линейна функция y=kx+b',                   slug:'math7-lineyna-funkciya',           meta:'Наклон · Графика · Права пропорционалност', time:'~8 мин', group:'Уравнения и функции' },
+        { title:'Триъгълник — видове и теореми',            slug:'math7-triagalnik',                 meta:'Ъгли · Медиана · Лице',               time:'~8 мин',  group:'Геометрия' },
+        { title:'Теорема на Питагор',                       slug:'math7-pitagorova-teorema',         meta:'a²+b²=c² · Питагорови тройки',        time:'~7 мин',  group:'Геометрия' },
+        { title:'Четириъгълници',                           slug:'math7-chetiriagalnitsi',           meta:'Успоредник · Ромб · Трапец · Лице',   time:'~8 мин',  group:'Геометрия' },
+        { title:'Окръжност и кръг',                         slug:'math7-okrazhnost',                 meta:'Радиус · C=2πr · S=πr²',             time:'~7 мин',  group:'Геометрия' },
+        { title:'Статистика и вероятности',                 slug:'math7-statistika',                 meta:'Средно · Диаграми · Класическа вероятност', time:'~7 мин', group:'Статистика' },
       ]
     }
   },
@@ -390,7 +416,7 @@ let progressMap   = {};
 function renderPanels() {
   document.getElementById('ur-panels').innerHTML = SUBJECTS.map(s => `
     <div class="ur-panel${s.id === currentTab ? ' active' : ''}" id="tab-${s.id}">
-      ${[12, 11].filter(g => s.grades[g]).map(g => {
+      ${[12, 11, 7].filter(g => s.grades[g]).map(g => {
         const byCat = {};
         s.grades[g].forEach(t => { if (!byCat[t.group]) byCat[t.group] = []; byCat[t.group].push(t); });
         return `

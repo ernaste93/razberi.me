@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Степени с естествен показател · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: normal; font-size: 15px; line-height: 2; color: var(--text); white-space: pre-line; font-family: 'Courier New', monospace; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>›</span>
+        <a href="/urotsi.html">Математика 7 клас</a><span>›</span>
+        Степени с естествен показател
+      </div>
+      <section class="demo-layout" style="margin:0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📐 МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА</div>
+          <div class="lesson-title">Степени с естествен показател</div>
+          <div class="lesson-meta">Числа и изрази · Правила за степени · Стандартен запис · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Определение на степен</div>
+            <div class="lesson-body">
+              <p><strong>Степен</strong> aⁿ е произведение на n множители, всеки равен на a. Числото a се нарича <strong>основа</strong>, а n — <strong>показател</strong>.</p>
+            </div>
+            <div class="poem-block">aⁿ = a × a × a × ... × a  (n пъти)
+
+Примери:
+2³ = 2 × 2 × 2 = 8
+(−3)² = (−3) × (−3) = 9
+(1/2)³ = 1/2 × 1/2 × 1/2 = 1/8</div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Степен с показател 0 и 1</div>
+            <div class="poem-block">a¹ = a          (за всяко a)
+a⁰ = 1          (за всяко a ≠ 0)
+
+Примери: 5⁰ = 1 ; (−7)⁰ = 1 ; (3/4)⁰ = 1</div>
+            <div class="lesson-body">
+              <p><strong>Важно:</strong> 0⁰ е неопределено (не се дефинира).</p>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Знак на степен</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">➕</div><div class="key-point-text"><strong>Положителна основа:</strong> резултатът е винаги положителен. Напр. 3⁴ = 81 > 0.</div></div>
+              <div class="key-point"><div class="key-point-icon">🔢</div><div class="key-point-text"><strong>Отрицателна основа, четен показател:</strong> резултатът е положителен. (−2)⁴ = 16 > 0.</div></div>
+              <div class="key-point"><div class="key-point-icon">➖</div><div class="key-point-text"><strong>Отрицателна основа, нечетен показател:</strong> резултатът е отрицателен. (−2)³ = −8 < 0.</div></div>
+              <div class="key-point"><div class="key-point-icon">⚠️</div><div class="key-point-text"><strong>Внимание:</strong> −2⁴ = −(2⁴) = −16, но (−2)⁴ = 16. Скобите са важни!</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Правила (тъждества) за степени</div>
+            <div class="poem-block">1. aᵐ · aⁿ = aᵐ⁺ⁿ       (умножение — събираме показателите)
+   Пример: 2³ · 2⁴ = 2⁷ = 128
+
+2. aᵐ ÷ aⁿ = aᵐ⁻ⁿ       (деление — изваждаме показателите)
+   Пример: 3⁵ ÷ 3² = 3³ = 27
+
+3. (aᵐ)ⁿ = aᵐ·ⁿ          (степен на степен — умножаваме показателите)
+   Пример: (2³)⁴ = 2¹² = 4096
+
+4. (a·b)ⁿ = aⁿ·bⁿ         (степен на произведение)
+   Пример: (2·3)⁴ = 2⁴·3⁴ = 16·81 = 1296
+
+5. (a/b)ⁿ = aⁿ/bⁿ  (b≠0)  (степен на дроб)
+   Пример: (2/3)³ = 8/27</div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стандартен (научен) запис</div>
+            <div class="lesson-body">
+              <p>Много голямо или много малко число може да се запише като произведение на число между 1 и 10 и степен на 10.</p>
+            </div>
+            <div class="poem-block">Стандартен запис: a × 10ⁿ, където 1 ≤ a &lt; 10
+
+Примери:
+300 000 = 3 × 10⁵
+0.0047 = 4.7 × 10⁻³
+1 560 000 = 1.56 × 10⁶</div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното за НВО</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>aⁿ:</strong> основа a, показател n. aⁿ = a×a×...×a (n пъти).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>a⁰ = 1</strong> за всяко a ≠ 0.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>aᵐ · aⁿ = aᵐ⁺ⁿ</strong> — умножение → събираме показателите.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>aᵐ ÷ aⁿ = aᵐ⁻ⁿ</strong> — деление → изваждаме показателите.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>(aᵐ)ⁿ = aᵐ·ⁿ</strong> — степен на степен → умножаваме показателите.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Знак:</strong> (−a)четен = +; (−a)нечетен = −. Скобите са от значение!</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Стандартен запис:</strong> a × 10ⁿ, където 1 ≤ a &lt; 10.</div></div>
+            </div>
+
+          </div>
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/math7-stepeni-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/math7-stepeni-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/math7-stepeni-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header"><div class="ai-header-title"><strong>Знайко</strong></div><button id="ai-panel-close" aria-label="Затвори">×</button></div>
+          <div id="ai-output" class="ai-output"><p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong>.</p></div>
+          <div class="feedback-row" id="feedback-row" style="display:none;"><button id="understood">Продължи с урока</button><button id="still-confused">Обясни пак</button></div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;"><input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" /><button type="submit">→</button></form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.LESSON_TITLE = 'Степени с естествен показател';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script src="/sidebar.js"></script>
+</body>
+</html>

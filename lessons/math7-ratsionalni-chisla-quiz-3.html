@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Рационални числа · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-ratsionalni-chisla-q3',
+      lessonUrl: '/lessons/math7-ratsionalni-chisla.html',
+      lessonName: 'Рационални числа',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Модул, смесени числа, приложни задачи',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Смесеното число 3 2/5 е равно на коя неправилна дроб?',
+          opts: ['5/3', '17/5', '32/5', '15/2'],
+          correct: 1,
+          explanation: '3 2/5 = (3×5 + 2)/5 = (15 + 2)/5 = 17/5. Правилото: цялата числа × знаменател + числителя на дробната част, деленo на знаменателя.'
+        },
+        {
+          q: 'Колко е |−4.5|?',
+          opts: ['−4.5', '4.5', '−9/2', '1/4.5'],
+          correct: 1,
+          explanation: '|−4.5| = 4.5. Модулът (абсолютната стойност) на отрицателно число е положителното число. 4.5 = 9/2.'
+        },
+        {
+          q: 'Наредете в нарастващ ред: −2/3, 1/2, −1/4, 0',
+          opts: ['0, −1/4, −2/3, 1/2', '−2/3, −1/4, 0, 1/2', '−1/4, −2/3, 0, 1/2', '1/2, 0, −1/4, −2/3'],
+          correct: 1,
+          explanation: 'Преобразуваме в десетични: −2/3 ≈ −0.667; −1/4 = −0.25; 0 = 0; 1/2 = 0.5. В нарастващ ред: −0.667, −0.25, 0, 0.5, т.е. −2/3, −1/4, 0, 1/2.'
+        },
+        {
+          q: 'Ако |x| = 5/3, кои са стойностите на x?',
+          opts: ['Само 5/3', 'Само −5/3', '5/3 и −5/3', 'Няма решение'],
+          correct: 2,
+          explanation: '|x| = 5/3 означава, че разстоянието от x до 0 е 5/3. Две числа отговарят: x = 5/3 (вдясно от 0) и x = −5/3 (вляво от 0). Уравнението |x| = a има две решения: x = a и x = −a (при a > 0).'
+        },
+        {
+          q: 'Магазин продава 3/4 от стоките си. Ако е имало 120 артикула, колко са продадени?',
+          opts: ['30', '40', '90', '100'],
+          correct: 2,
+          explanation: '3/4 от 120 = 120 × 3/4 = 360/4 = 90. Продадени са 90 артикула. (Оставащите са 120 − 90 = 30 артикула.)'
+        },
+        {
+          q: 'Смесеното число 2 1/3 + 1 1/2 е равно на:',
+          opts: ['3 2/5', '3 5/6', '4 1/6', '3 1/6'],
+          correct: 1,
+          explanation: '2 1/3 = 7/3 и 1 1/2 = 3/2. НОК(3,2) = 6. 7/3 = 14/6; 3/2 = 9/6. 14/6 + 9/6 = 23/6 = 3 5/6.'
+        },
+        {
+          q: 'Ако един ученик е решил 7/10 от задачите, а в теста има 50 задачи, колко е решил?',
+          opts: ['7', '35', '43', '70'],
+          correct: 1,
+          explanation: '7/10 от 50 = 50 × 7/10 = 350/10 = 35. Решил е 35 задачи от 50.'
+        },
+        {
+          q: 'Колко е (−3/4) ÷ (−3/8)?',
+          opts: ['9/32', '2', '−2', '1/2'],
+          correct: 1,
+          explanation: '(−3/4) ÷ (−3/8) = (−3/4) × (−8/3) = +(3×8)/(4×3) = 24/12 = 2. Минус по минус дава плюс. 24/12 = 2.'
+        },
+        {
+          q: 'Кое число е противоположно на −5/7?',
+          opts: ['7/5', '−7/5', '5/7', '−5/7'],
+          correct: 2,
+          explanation: 'Противоположно на число a е числото −a. Противоположно на −5/7 е −(−5/7) = 5/7. Две числа са противоположни, ако сборът им е 0: −5/7 + 5/7 = 0. ✓'
+        },
+        {
+          q: 'Температурата е −3.5°C сутринта и се повишава с 7.25°C. Каква е температурата след това?',
+          opts: ['3.75°C', '4.25°C', '3.25°C', '10.75°C'],
+          correct: 0,
+          explanation: '−3.5 + 7.25 = 3.75°C. −3.5 = −3.50; −3.50 + 7.25 = 3.75. Добавяме: 7.25 − 3.50 = 3.75 (тъй като 7.25 > 3.50, резултатът е положителен).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

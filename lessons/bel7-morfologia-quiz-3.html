@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Морфология · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-morfologia-q3',
+      lessonUrl: '/lessons/bel7-morfologia.html',
+      lessonName: 'Морфология',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Морфология',
+      sub: '10 въпроса · Наречие, предлог, съюз, частица',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Кое от следните е наречие за МЯСТО?',
+          opts: ['бързо', 'тук', 'сега', 'много'],
+          correct: 1,
+          explanation: '„Тук" е наречие за място — отговаря на въпрос „къде?". Наречия за място: тук, там, горе, долу, вдясно, вляво, наблизо. „Бързо" е за начин, „сега" за време, „много" за количество.'
+        },
+        {
+          q: 'Кое от следните е наречие за НАЧИН?',
+          opts: ['тогава', 'там', 'тихо', 'малко'],
+          correct: 2,
+          explanation: '„Тихо" е наречие за начин — отговаря на въпрос „как?". Наречия за начин: бързо, тихо, добре, зле, внимателно. „Тогава" е за време, „там" за място, „малко" за количество.'
+        },
+        {
+          q: 'Кое от следните е наречие за КОЛИЧЕСТВО?',
+          opts: ['защо', 'нарочно', 'много', 'когато'],
+          correct: 2,
+          explanation: '„Много" е наречие за количество — отговаря на въпрос „колко?". Наречия за количество: много, малко, повече, по-малко, достатъчно, твърде. „Защо" е за причина, „нарочно" за начин, „когато" е съюз.'
+        },
+        {
+          q: 'Кое от следните е ПРЕДЛОГ?',
+          opts: ['бързо', 'и', 'в', 'не'],
+          correct: 2,
+          explanation: '„В" е предлог — свързва думите в изречението и показва отношения (място, посока, принадлежност). Предлози: в, на, от, за, с, до, при, под, над, пред. „И" е съюз, „не" е частица, „бързо" е наречие.'
+        },
+        {
+          q: 'Кои от следните са СЪЧИНИТЕЛНИ съюзи?',
+          opts: ['че, защото, когато', 'и, или, но, а', 'в, на, от, за', 'не, ли, да, нека'],
+          correct: 1,
+          explanation: 'Съчинителните съюзи свързват равнопоставени части: „и" (свързващ), „или" (разделителен), „но/а/обаче" (противопоставителен). Подчинителните съюзи (че, защото, когато) свързват главно с подчинено изречение.'
+        },
+        {
+          q: 'Кои от следните са ПОДЧИНИТЕЛНИ съюзи?',
+          opts: ['и, или, но', 'нека, ли, да', 'защото, когато, че', 'в, на, до'],
+          correct: 2,
+          explanation: 'Подчинителните съюзи въвеждат подчинени изречения: „защото" (причина), „когато" (време), „че" (допълнение), „ако" (условие), „за да" (цел), „въпреки че" (отстъпване). Те създават зависимост между главното и подчиненото изречение.'
+        },
+        {
+          q: 'Кое от следните е ЧАСТИЦА?',
+          opts: ['на', 'и', 'ли', 'бързо'],
+          correct: 2,
+          explanation: '„Ли" е частица — неизменяема дума, която видоизменя значението на изречението (въпрос: „Дойде ли?"). Частици: не, ли, да, нека, даже, само, дори, именно. „На" е предлог, „и" е съюз, „бързо" е наречие.'
+        },
+        {
+          q: 'Как се различава наречието от предлога?',
+          opts: [
+            'Наречието е по-дълга дума',
+            'Наречието стои самостоятелно; предлогът стои пред съществително или местоимение',
+            'Предлогът описва действие, наречието — предмет',
+            'Няма разлика — те са еднакви части на речта'
+          ],
+          correct: 1,
+          explanation: 'Ключовата разлика: наречието стои самостоятелно в изречението (Той дойде тук.), а предлогът задължително се свързва с друга дума — съществително или местоимение (Той дойде в стаята.). Думата „вкъщи" е наречие; „в кашата" съдържа предлог „в".'
+        },
+        {
+          q: 'Кое от следните е наречие за ПРИЧИНА?',
+          opts: ['нарочно', 'затова', 'скоро', 'горе'],
+          correct: 1,
+          explanation: '„Затова" е наречие за причина — отговаря на въпрос „защо?". Наречия за причина: затова, поради това, ето защо. „Нарочно" е за начин, „скоро" за време, „горе" за място.'
+        },
+        {
+          q: 'В изречението „Не отивай там!" — кое е частицата?',
+          opts: ['отивай', 'там', 'не', 'там и не са частици'],
+          correct: 2,
+          explanation: '„Не" е отрицателна частица — видоизменя глагола и прави изречението отрицателно. „Там" е наречие за място. Частицата „не" пред глагол създава забрана или отрицание (не ходи, не говори, не чети).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

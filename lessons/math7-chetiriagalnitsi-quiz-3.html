@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Четириъгълници · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-chetiriagalnitsi-q3',
+      lessonUrl: '/lessons/math7-chetiriagalnitsi.html',
+      lessonName: 'Четириъгълници',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Трапец и смесени задачи',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Намери лицето на трапец с основи a = 10 cm, c = 6 cm и височина h = 4 cm.',
+          opts: ['20 cm²', '24 cm²', '32 cm²', '64 cm²'],
+          correct: 2,
+          explanation: 'S = ½ · (a + c) · h = ½ · (10 + 6) · 4 = ½ · 16 · 4 = ½ · 64 = 32 cm².'
+        },
+        {
+          q: 'При равнобедрен трапец, кое от следните е ВЯРНО?',
+          opts: ['Двете основи са равни', 'Двете бедра (страните) са равни', 'Всички страни са равни', 'Всички ъгли са 90°'],
+          correct: 1,
+          explanation: 'При равнобедрен трапец двете бедра (страните, свързващи двете основи) са равни: b = d. Ъглите при по-голямата основа са равни, а ъглите при по-малката са равни.'
+        },
+        {
+          q: 'Намери периметъра на трапец с a = 12 cm, b = 5 cm, c = 8 cm, d = 5 cm.',
+          opts: ['20 cm', '25 cm', '30 cm', '35 cm'],
+          correct: 2,
+          explanation: 'P = a + b + c + d = 12 + 5 + 8 + 5 = 30 cm.'
+        },
+        {
+          q: 'Каква фигура е: четири равни страни и всички ъгли 90°?',
+          opts: ['Ромб', 'Правоъгълник', 'Квадрат', 'Успоредник'],
+          correct: 2,
+          explanation: 'Квадратът има четири равни страни (като ромба) И четири ъгъла по 90° (като правоъгълника). Именно затова квадратът е специален случай и на двете.'
+        },
+        {
+          q: 'Намери лицето на трапец с основи 8 cm и 12 cm и височина 6 cm.',
+          opts: ['30 cm²', '60 cm²', '72 cm²', '96 cm²'],
+          correct: 1,
+          explanation: 'S = ½ · (a + c) · h = ½ · (8 + 12) · 6 = ½ · 20 · 6 = ½ · 120 = 60 cm².'
+        },
+        {
+          q: 'Фигура с 4 страни, в която само две са успоредни, е:',
+          opts: ['Успоредник', 'Правоъгълник', 'Трапец', 'Ромб'],
+          correct: 2,
+          explanation: 'Трапецът е четириъгълник с ТОЧНО две успоредни страни (основи). В успоредника двете двойки срещуположни страни са успоредни. Трапецът е по-общото понятие.'
+        },
+        {
+          q: 'Правоъгълник с S = 48 cm² и страна a = 8 cm. Намери периметъра.',
+          opts: ['16 cm', '22 cm', '28 cm', '32 cm'],
+          correct: 2,
+          explanation: 'S = a · b → b = S/a = 48/8 = 6 cm. P = 2(a + b) = 2(8 + 6) = 2 · 14 = 28 cm.'
+        },
+        {
+          q: 'Ромб с лице S = 30 cm² и диагонал d₁ = 6 cm. Намери d₂.',
+          opts: ['5 cm', '10 cm', '12 cm', '15 cm'],
+          correct: 1,
+          explanation: 'S = ½ · d₁ · d₂ → 30 = ½ · 6 · d₂ → 30 = 3 · d₂ → d₂ = 10 cm.'
+        },
+        {
+          q: 'Квадрат с периметър 24 cm. Намери лицето.',
+          opts: ['16 cm²', '24 cm²', '36 cm²', '48 cm²'],
+          correct: 2,
+          explanation: 'P = 4a → a = 24/4 = 6 cm. S = a² = 6² = 36 cm².'
+        },
+        {
+          q: 'Кое твърдение е ВЯРНО за трапеца?',
+          opts: ['Диагоналите му са равни', 'Точно две от страните му са успоредни', 'Всички ъгли му са равни', 'Противоположните страни са равни'],
+          correct: 1,
+          explanation: 'В трапеца точно ДВЕТЕ ОСНОВИ са успоредни, а бедрата не са. При равнобедрения трапец диагоналите са равни, но при общия трапец не е задължително.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

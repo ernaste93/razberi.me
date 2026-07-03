@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Теорема на Питагор · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; } .breadcrumb a:hover { color: var(--accent); } .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); } .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: normal; font-size: 15px; line-height: 2; color: var(--text); white-space: pre-line; font-family: 'Courier New', monospace; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); } .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>›</span><a href="/urotsi.html">Математика 7 клас</a><span>›</span>Теорема на Питагор
+      </div>
+      <section class="demo-layout" style="margin:0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📐 МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА</div>
+          <div class="lesson-title">Теорема на Питагор</div>
+          <div class="lesson-meta">Геометрия · Питагорови тройки · Обратна теорема · ~12 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Формулата a² + b² = c²</div>
+            <div class="lesson-body">
+              <p><strong>Теорема на Питагор:</strong> В правоъгълен триъгълник квадратът на хипотенузата е равен на сумата от квадратите на катетите.</p>
+            </div>
+            <div class="poem-block">В правоъгълен триъгълник:
+a² + b² = c²
+
+където:
+  a, b — катети (страните, образуващи правия ъгъл)
+  c — хипотенуза (страната срещу правия ъгъл, най-дългата)</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📐</div><div class="key-point-text"><strong>Хипотенузата</strong> е винаги срещу 90° и е най-дългата страна в правоъгълния триъгълник.</div></div>
+              <div class="key-point"><div class="key-point-icon">📐</div><div class="key-point-text"><strong>Катетите</strong> са двете страни, образуващи правия ъгъл. Те са по-къси от хипотенузата.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Намиране на хипотенуза</div>
+            <div class="poem-block">Формула: c = √(a² + b²)
+
+Пример 1: a = 3, b = 4
+c = √(3² + 4²) = √(9 + 16) = √25 = 5
+
+Пример 2: a = 5, b = 12
+c = √(5² + 12²) = √(25 + 144) = √169 = 13
+
+Пример 3: a = 6, b = 8
+c = √(6² + 8²) = √(36 + 64) = √100 = 10</div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Намиране на катет</div>
+            <div class="poem-block">Формула: a = √(c² - b²)
+
+Пример 1: c = 13, b = 5
+a = √(13² - 5²) = √(169 - 25) = √144 = 12
+
+Пример 2: c = 10, b = 8
+a = √(10² - 8²) = √(100 - 64) = √36 = 6
+
+Пример 3: c = 17, b = 15
+a = √(17² - 15²) = √(289 - 225) = √64 = 8</div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Питагорови тройки</div>
+            <div class="lesson-body">
+              <p>Питагорова тройка е наредена тройка от естествени числа (a, b, c), за която a² + b² = c². Тези тройки трябва да се запомнят — много задачи на НВО ги използват.</p>
+            </div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">🔢</div><div class="key-point-text"><strong>(3, 4, 5)</strong> — 9 + 16 = 25. Основна питагорова тройка.</div></div>
+              <div class="key-point"><div class="key-point-icon">🔢</div><div class="key-point-text"><strong>(5, 12, 13)</strong> — 25 + 144 = 169. Много честа в задачите.</div></div>
+              <div class="key-point"><div class="key-point-icon">🔢</div><div class="key-point-text"><strong>(8, 15, 17)</strong> — 64 + 225 = 289.</div></div>
+              <div class="key-point"><div class="key-point-icon">🔢</div><div class="key-point-text"><strong>(6, 8, 10)</strong> — умножение на (3,4,5) по 2. 36 + 64 = 100.</div></div>
+              <div class="key-point"><div class="key-point-icon">🔢</div><div class="key-point-text"><strong>(7, 24, 25)</strong> — 49 + 576 = 625.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Обратна теорема на Питагор</div>
+            <div class="lesson-body">
+              <p>Ако в триъгълник с страни a, b, c е изпълнено a² + b² = c², тогава триъгълникът е правоъгълен и правият ъгъл е срещу страната c.</p>
+            </div>
+            <div class="poem-block">Проверка: Дали триъгълник с страни 9, 40, 41 е правоъгълен?
+9² + 40² = 81 + 1600 = 1681
+41² = 1681 ✓
+ДА, триъгълникът е правоъгълен!</div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Приложни задачи</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">🏗️</div><div class="key-point-text"><strong>Стълба на стена:</strong> Стълба с дължина 10 м стои с основата 6 м от стената. До каква височина стига? h = √(10² − 6²) = √(100 − 36) = √64 = 8 м.</div></div>
+              <div class="key-point"><div class="key-point-icon">📦</div><div class="key-point-text"><strong>Диагонал на правоъгълник:</strong> Правоъгълник 3×4 → d = √(3² + 4²) = √25 = 5. Диагоналът е хипотенуза на правоъгълния триъгълник.</div></div>
+              <div class="key-point"><div class="key-point-icon">📍</div><div class="key-point-text"><strong>Разстояние между точки:</strong> A(0,0) и B(3,4) → AB = √((3−0)² + (4−0)²) = √(9+16) = √25 = 5.</div></div>
+              <div class="key-point"><div class="key-point-icon">⬜</div><div class="key-point-text"><strong>Диагонал на квадрат:</strong> Квадрат с страна a → d = a√2. При a = 5: d = 5√2 ≈ 7.07.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното за НВО</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>a² + b² = c²</strong> — формулата на Питагор. Работи само в правоъгълен триъгълник!</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Хипотенуза:</strong> c = √(a² + b²). Катет: a = √(c² − b²).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Запомни тройките:</strong> (3,4,5); (5,12,13); (8,15,17); (6,8,10); (7,24,25).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Обратна теорема:</strong> Ако a² + b² = c² → триъгълникът е правоъгълен.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Диагонал на квадрат</strong> с страна a: d = a√2.</div></div>
+            </div>
+
+          </div>
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/math7-pitagorova-teorema-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/math7-pitagorova-teorema-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/math7-pitagorova-teorema-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header"><div class="ai-header-title"><strong>Знайко</strong></div><button id="ai-panel-close" aria-label="Затвори">×</button></div>
+          <div id="ai-output" class="ai-output"><p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong>.</p></div>
+          <div class="feedback-row" id="feedback-row" style="display:none;"><button id="understood">Продължи с урока</button><button id="still-confused">Обясни пак</button></div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;"><input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" /><button type="submit">→</button></form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.LESSON_TITLE = 'Теорема на Питагор';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script src="/sidebar.js"></script>
+</body>
+</html>

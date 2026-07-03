@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Линейни уравнения · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: normal; font-size: 15px; line-height: 2; color: var(--text); white-space: pre-line; font-family: 'Courier New', monospace; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+  <div id="selection-tooltip"><button id="explain-selection">💡 Обясни</button></div>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>›</span>
+        <a href="/urotsi.html">Математика 7 клас</a><span>›</span>
+        Линейни уравнения
+      </div>
+      <section class="demo-layout" style="margin:0;">
+        <div class="lesson-panel">
+          <div class="lesson-tag">📐 МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА</div>
+          <div class="lesson-title">Линейни уравнения с едно неизвестно</div>
+          <div class="lesson-meta">Уравнения и функции · Алгоритъм за решаване · ~10 мин четене</div>
+          <div id="lesson-content">
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Какво е линейно уравнение?</div>
+            <div class="lesson-body">
+              <p><strong>Линейно уравнение с едно неизвестно</strong> е уравнение от вид <strong>ax + b = 0</strong>, където a ≠ 0 и x е неизвестното. Решението е стойността на x, за която уравнението е вярно.</p>
+              <p>По-общо, линейно уравнение е всяко уравнение, което след преобразувания се привежда до ax + b = 0.</p>
+            </div>
+            <div class="poem-block">Общ вид: ax + b = 0  (a ≠ 0)
+
+Примери:
+2x + 6 = 0
+3x − 9 = 0
+5x + 3 = 2x − 6</div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Алгоритъм за решаване</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">1️⃣</div><div class="key-point-text"><strong>Отвори скобите</strong> (ако има) и разпредели умножението.</div></div>
+              <div class="key-point"><div class="key-point-icon">2️⃣</div><div class="key-point-text"><strong>Прехвърли неизвестните вляво</strong>, числата вдясно (знакът се сменя при прехвърляне).</div></div>
+              <div class="key-point"><div class="key-point-icon">3️⃣</div><div class="key-point-text"><strong>Привеждай подобни</strong> — събери всички x от лявата страна, всички числа от дясната.</div></div>
+              <div class="key-point"><div class="key-point-icon">4️⃣</div><div class="key-point-text"><strong>Раздели на коефициента</strong> пред x. Получаваш x = …</div></div>
+              <div class="key-point"><div class="key-point-icon">5️⃣</div><div class="key-point-text"><strong>Проверка:</strong> замести x в оригиналното уравнение и провери дали е вярно.</div></div>
+            </div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Примери стъпка по стъпка</div>
+            <div class="poem-block">Задача: Реши 3x − 9 = 0
+
+Стъпка 1: Прехвърли −9 вдясно:
+  3x = 9
+
+Стъпка 2: Раздели на 3:
+  x = 3
+
+Проверка: 3·3 − 9 = 9 − 9 = 0 ✓</div>
+            <div class="poem-block">Задача: Реши 5x + 3 = 2x − 6
+
+Стъпка 1: Прехвърли 2x вляво, 3 вдясно:
+  5x − 2x = −6 − 3
+
+Стъпка 2: Привеждай подобни:
+  3x = −9
+
+Стъпка 3: Раздели на 3:
+  x = −3
+
+Проверка: 5·(−3)+3 = −15+3 = −12
+          2·(−3)−6 = −6−6 = −12 ✓</div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Уравнения с отрицателни числа и скоби</div>
+            <div class="poem-block">Задача: Реши 2(x + 3) = 4(x − 1)
+
+Стъпка 1: Отвори скобите:
+  2x + 6 = 4x − 4
+
+Стъпка 2: Прехвърли:
+  2x − 4x = −4 − 6
+
+Стъпка 3: Привеждай подобни:
+  −2x = −10
+
+Стъпка 4: Раздели на −2:
+  x = 5
+
+Проверка: 2(5+3) = 16  ;  4(5−1) = 16 ✓</div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Текстови задачи с уравнение</div>
+            <div class="lesson-body">
+              <p><strong>Алгоритъм за текстови задачи:</strong></p>
+              <p>1. Нека x е търсеното число (или количество). 2. Съставяме уравнение от условието. 3. Решаваме уравнението. 4. Проверяваме в условието (не в уравнението!).</p>
+            </div>
+            <div class="poem-block">Задача: Едно число, увеличено 3 пъти, е с 8 повече от 16.
+Намери числото.
+
+Нека x = числото.
+Уравнение: 3x = 16 + 8
+            3x = 24
+             x = 8
+
+Проверка: 3 × 8 = 24 = 16 + 8 ✓</div>
+
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното за НВО</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Вид:</strong> ax + b = 0, a ≠ 0. Решението: x = −b/a.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>При прехвърляне</strong> от едната страна на другата — знакът се сменя.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Скоби</strong> — отвори ги първо! 2(x+3) = 2x + 6.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Проверка</strong> — задължително! Замести x в оригиналното уравнение.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Текстови задачи:</strong> въведи неизвестно, състави уравнение, реши, провери.</div></div>
+            </div>
+
+          </div>
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/math7-linearni-uravnenia-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/math7-linearni-uravnenia-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/math7-linearni-uravnenia-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+        </div>
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header"><div class="ai-header-title"><strong>Знайко</strong></div><button id="ai-panel-close" aria-label="Затвори">×</button></div>
+          <div id="ai-output" class="ai-output"><p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong>.</p></div>
+          <div class="feedback-row" id="feedback-row" style="display:none;"><button id="understood">Продължи с урока</button><button id="still-confused">Обясни пак</button></div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;"><input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" /><button type="submit">→</button></form>
+        </aside>
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.LESSON_TITLE = 'Линейни уравнения с едно неизвестно';
+    window.LESSON_SUBJECT = 'Математика';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script src="/sidebar.js"></script>
+</body>
+</html>

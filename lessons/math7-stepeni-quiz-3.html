@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Степени · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-stepeni-q3',
+      lessonUrl: '/lessons/math7-stepeni.html',
+      lessonName: 'Степени с естествен показател',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Стандартен запис и приложни задачи',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Напишете 45 000 в стандартен запис:',
+          opts: ['45 × 10³', '4.5 × 10⁴', '0.45 × 10⁵', '4.5 × 10³'],
+          correct: 1,
+          explanation: '45 000 = 4.5 × 10 000 = 4.5 × 10⁴. При стандартен запис числото пред 10 трябва да е между 1 и 10 (т.е. 1 ≤ a < 10). 4.5 отговаря на условието.'
+        },
+        {
+          q: 'Колко е 3.2 × 10³?',
+          opts: ['32', '320', '3200', '32 000'],
+          correct: 2,
+          explanation: '3.2 × 10³ = 3.2 × 1000 = 3200. Умножаваме 3.2 по 1000, т.е. местим десетичната запетая с 3 позиции надясно.'
+        },
+        {
+          q: 'Напишете 0.0056 в стандартен запис:',
+          opts: ['5.6 × 10⁻³', '5.6 × 10⁻⁴', '56 × 10⁻⁴', '0.56 × 10⁻²'],
+          correct: 0,
+          explanation: '0.0056 = 5.6 × 0.001 = 5.6 × 10⁻³. Местим десетичната запетая 3 позиции надясно, за да получим 5.6, затова показателят е −3.'
+        },
+        {
+          q: 'Светлинната година е около 9.46 × 10¹² км. Колко километра е това?',
+          opts: ['9 460 000 000 км', '946 000 000 000 км', '9 460 000 000 000 км', '94 600 000 000 км'],
+          correct: 2,
+          explanation: '9.46 × 10¹² = 9.46 × 1 000 000 000 000 = 9 460 000 000 000 км (9 трилиона 460 милиарда). 10¹² = 1 000 000 000 000 (1 трилион).'
+        },
+        {
+          q: 'Кое от следните е по-голямо: 2¹⁰ или 10²?',
+          opts: ['2¹⁰', '10²', 'Равни са', 'Не може да се сравни'],
+          correct: 0,
+          explanation: '2¹⁰ = 1024 и 10² = 100. Следователно 2¹⁰ > 10². 2¹⁰ = 1024 e значително по-голямо от 100.'
+        },
+        {
+          q: 'Площта на квадрат със страна 7 см е:',
+          opts: ['7 cm²', '14 cm²', '49 cm²', '28 cm²'],
+          correct: 2,
+          explanation: 'Площта на квадрат = страна² = 7² = 49 cm². Степенуването е естествено приложение при намиране на площи.'
+        },
+        {
+          q: 'Колко е 2¹⁰?',
+          opts: ['20', '100', '512', '1024'],
+          correct: 3,
+          explanation: '2¹⁰ = 1024. Можем да изчислим: 2¹=2, 2²=4, 2³=8, 2⁴=16, 2⁵=32, 2⁶=64, 2⁷=128, 2⁸=256, 2⁹=512, 2¹⁰=1024.'
+        },
+        {
+          q: 'Числото 1.25 × 10⁻² е равно на:',
+          opts: ['125', '12.5', '0.0125', '0.125'],
+          correct: 2,
+          explanation: '1.25 × 10⁻² = 1.25 × 0.01 = 0.0125. Умножаваме по 10⁻² = 1/100, т.е. местим запетаята 2 позиции наляво.'
+        },
+        {
+          q: 'Микробът е с размер около 2 × 10⁻⁶ м. Колко метра е това?',
+          opts: ['0.02 м', '0.002 м', '0.000002 м', '0.0000002 м'],
+          correct: 2,
+          explanation: '2 × 10⁻⁶ = 2 × 0.000001 = 0.000002 м = 2 микрометра. 10⁻⁶ = 0.000001 (1 с 6 нули след десетичната запетая).'
+        },
+        {
+          q: 'Ако страната на куб е 4 см, обемът му е:',
+          opts: ['12 cm³', '48 cm³', '64 cm³', '16 cm³'],
+          correct: 2,
+          explanation: 'Обемът на куб = страна³ = 4³ = 64 cm³. 4³ = 4×4×4 = 16×4 = 64. Степенуването е естествено при намиране на обеми (три измерения).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

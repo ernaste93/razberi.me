@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Под игото · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-vazov-pod-igoto-q1',
+      lessonUrl: '/lessons/bel7-vazov-pod-igoto.html',
+      lessonName: 'Под игото',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Под игото',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel7-vazov-pod-igoto-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Кой е автор на романа „Под игото"?',
+          opts: ['Христо Ботев', 'Алеко Константинов', 'Иван Вазов', 'Елин Пелин'],
+          correct: 2,
+          explanation: 'Романът „Под игото" е написан от Иван Вазов — „Патриарха на българската литература". Той е роден в Сопот (1850) и починал в София (1921).'
+        },
+        {
+          q: 'В кои години е написан романът „Под игото"?',
+          opts: ['1876–1878', '1881–1884', '1889–1890', '1894–1895'],
+          correct: 2,
+          explanation: 'Романът „Под игото" е написан в периода 1889–1890 г. Публикуван е първо в списание „Денница", а като отделна книга излиза през 1894 г.'
+        },
+        {
+          q: 'Какво историческо събитие е в основата на романа „Под игото"?',
+          opts: ['Освобождението на България (1878)', 'Руско-турската война (1877)', 'Априлското въстание (1876)', 'Балканските войни (1912–1913)'],
+          correct: 2,
+          explanation: 'Романът „Под игото" пресъздава живота на провинциален български град в навечерието и по времето на Априлското въстание от 1876 г. — последното голямо въстание срещу османската власт.'
+        },
+        {
+          q: 'Как се казва градът, в който се развива действието на „Под игото"?',
+          opts: ['Сопот', 'Бяла черква', 'Калофер', 'Панагюрище'],
+          correct: 1,
+          explanation: 'Действието на романа се развива в измисления град Бяла черква. Прототипът на Бяла черква е Сопот — родният град на Иван Вазов. Авторът го преименува, за да имa по-голяма художествена свобода.'
+        },
+        {
+          q: 'С какво заглавие е известен романът „Под игото" в световната литература?',
+          opts: ['Само с оригиналното заглавие', 'Под игото / Under the Yoke', 'Epopee des oublies', 'Bulgarian Epic'],
+          correct: 1,
+          explanation: 'Романът „Под игото" е преведен на над 30 езика. В превод на английски се издава като „Under the Yoke" — буквален превод на заглавието. Той е един от малкото български романи с международна известност.'
+        },
+        {
+          q: 'Колко части има романът „Под игото"?',
+          opts: ['Две части', 'Три части', 'Четири части', 'Пет части'],
+          correct: 1,
+          explanation: 'Романът „Под игото" е разделен на три части с общо 38 глави. Всяка глава носи отделно заглавие. Структурата следва хронологично развитието от подготовката на въстанието до неговото потушаване.'
+        },
+        {
+          q: 'Какво е жанрът на „Под игото"?',
+          opts: ['Поема', 'Разказ', 'Исторически роман', 'Драма'],
+          correct: 2,
+          explanation: '„Под игото" е исторически роман — прозаично произведение с голям обем, чиято фабула е основана на реални исторически събития. В случая — Априлското въстание от 1876 г.'
+        },
+        {
+          q: 'Кога е публикуван за пръв път романът „Под игото" като книга?',
+          opts: ['1876', '1884', '1890', '1894'],
+          correct: 3,
+          explanation: 'Романът „Под игото" излиза като книга за пръв път в 1894 г. Преди това е публикуван в списание „Денница" в периода 1889–1890 г., на части.'
+        },
+        {
+          q: 'Каква е социалната роля на романа „Под игото" в българската история?',
+          opts: ['Просто развлекателно четиво', 'Пресъздава и увековечава в художествена форма ключов момент от националната история', 'Критикува следосвобожденска България', 'Описва природата на Стара Планинa'],
+          correct: 1,
+          explanation: '„Под игото" е наречен „националният роман на България", защото пресъздава в художествена форма ключов момент от националната история. Романът съхранява духа, бита и борбата на българския народ за свобода и е своеобразен паметник на епохата.'
+        },
+        {
+          q: 'На колко езика е преведен романът „Под игото"?',
+          opts: ['На 5 езика', 'На 15 езика', 'На над 30 езика', 'На 100 езика'],
+          correct: 2,
+          explanation: '„Под игото" е преведен на над 30 езика и е един от най-превежданите български романи. Това го прави уникален — малко произведения на малки езици достигат такъв международен обхват.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

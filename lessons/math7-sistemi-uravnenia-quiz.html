@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Системи уравнения · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-sistemi-uravnenia-q1',
+      lessonUrl: '/lessons/math7-sistemi-uravnenia.html',
+      lessonName: 'Системи линейни уравнения',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Метод на заместване',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/math7-sistemi-uravnenia-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Реши системата: { x + y = 10 и { x − y = 2',
+          opts: ['(4, 6)', '(6, 4)', '(8, 2)', '(5, 5)'],
+          correct: 1,
+          explanation: 'От 1-во: x = 10 − y. Заместваме в 2-ро: (10−y) − y = 2 → 10 − 2y = 2 → 2y = 8 → y = 4. x = 6. Проверка: 6+4=10 ✓; 6−4=2 ✓'
+        },
+        {
+          q: 'Реши системата: { y = 2x и { x + y = 9',
+          opts: ['(3, 6)', '(2, 7)', '(4, 5)', '(6, 3)'],
+          correct: 0,
+          explanation: 'y = 2x е готова за заместване. В 2-ро: x + 2x = 9 → 3x = 9 → x = 3, y = 6. Проверка: 3+6=9 ✓; 6=2×3 ✓'
+        },
+        {
+          q: 'Реши системата: { x = y + 3 и { 2x + y = 12',
+          opts: ['(3, 6)', '(5, 2)', '(4, 7)', '(6, 0)'],
+          correct: 1,
+          explanation: 'Заместваме x = y+3 в 2-ро: 2(y+3) + y = 12 → 2y+6+y = 12 → 3y = 6 → y = 2, x = 5. Проверка: 2×5+2=12 ✓'
+        },
+        {
+          q: 'Какво е решението на системата: { x + 2y = 8 и { x = 2',
+          opts: ['(2, 3)', '(2, 5)', '(6, 2)', '(3, 2)'],
+          correct: 0,
+          explanation: 'x = 2 директно. Заместваме в 1-во: 2 + 2y = 8 → 2y = 6 → y = 3. Решение: (2, 3). Проверка: 2+2×3=8 ✓'
+        },
+        {
+          q: 'Реши системата: { 3x + y = 11 и { y = x − 1',
+          opts: ['(2, 5)', '(3, 2)', '(4, 3)', '(5, 4)'],
+          correct: 1,
+          explanation: 'Заместваме y = x−1 в 1-во: 3x + (x−1) = 11 → 4x − 1 = 11 → 4x = 12 → x = 3, y = 2. Проверка: 3×3+2=11 ✓'
+        },
+        {
+          q: 'Реши системата: { x + y = 5 и { x = 3y',
+          opts: ['(3.75, 1.25)', '(4, 1)', '(5, 0)', '(3, 2)'],
+          correct: 0,
+          explanation: 'Заместваме x = 3y в 1-во: 3y + y = 5 → 4y = 5 → y = 1.25. x = 3 × 1.25 = 3.75. Проверка: 3.75+1.25=5 ✓'
+        },
+        {
+          q: 'Кое е вярно за решението на системата: { 2y = 6 и { x + y = 5?',
+          opts: ['x = 2, y = 3', 'x = 3, y = 2', 'x = 1, y = 4', 'x = 4, y = 1'],
+          correct: 0,
+          explanation: 'От 1-во: 2y = 6 → y = 3. В 2-ро: x + 3 = 5 → x = 2. Решение: (2, 3). Проверка: 2+3=5 ✓'
+        },
+        {
+          q: 'Реши системата: { x − y = 1 и { y = 4',
+          opts: ['(3, 4)', '(5, 4)', '(4, 4)', '(6, 4)'],
+          correct: 1,
+          explanation: 'y = 4 е директно. Заместваме в 1-во: x − 4 = 1 → x = 5. Решение: (5, 4). Проверка: 5−4=1 ✓'
+        },
+        {
+          q: 'Реши системата: { 2x + y = 7 и { y = 3',
+          opts: ['(2, 3)', '(5, 3)', '(3, 3)', '(4, 3)'],
+          correct: 0,
+          explanation: 'y = 3. Заместваме: 2x + 3 = 7 → 2x = 4 → x = 2. Решение: (2, 3). Проверка: 2×2+3=7 ✓'
+        },
+        {
+          q: 'Наредената двойка (1, 2) решение ли е на системата: { x + y = 3 и { 2x − y = 0?',
+          opts: ['Да, решение', 'Не, само на 1-вото', 'Не, само на 2-рото', 'Не е решение на нито едното'],
+          correct: 0,
+          explanation: 'Проверка в 1-во: 1+2=3 ✓. Проверка в 2-ро: 2×1−2=0 ✓. (1,2) удовлетворява и двете уравнения → е решение на системата.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

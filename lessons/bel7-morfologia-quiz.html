@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Морфология · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span><script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script><span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a><a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div><div class="quiz-title" id="quiz-title"></div><div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div><div class="quiz-q-text" id="q-text"></div><div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-morfologia-q1',
+      lessonUrl: '/lessons/bel7-morfologia.html',
+      lessonName: 'Морфология — части на речта',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Съществително, прилагателно, числително',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel7-morfologia-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Коя от следните думи е собствено съществително?',
+          opts: ['маса', 'дърво', 'Дунав', 'учител'],
+          correct: 2,
+          explanation: '„Дунав" е собствено съществително — то е конкретно географско название (река). Собствените съществителни се пишат с главна буква и назовават конкретен предмет, лице или място. Масата, дървото и учителят са нарицателни.'
+        },
+        {
+          q: 'Какъв е родът на съществителното „маса"?',
+          opts: ['Мъжки', 'Женски', 'Среден', 'Няма род'],
+          correct: 1,
+          explanation: '„Маса" е от женски род — членува се с –та (масата). Мъжки род: стол (столът/стола). Среден род: дете (детето). Родът на съществителните в Bulgarian може да се определи по члена.'
+        },
+        {
+          q: 'Кога се използва ПЪЛНИЯТ член (-ът/-ят) при мъжки род?',
+          opts: ['Винаги', 'Само когато думата е подлог в изречението', 'Само при глаголи', 'При всички части на изречението'],
+          correct: 1,
+          explanation: 'Пълният член (-ът/-ят) се използва само когато съществителното от мъжки род е подлог (субект) в изречението. Пример: „Столът е дървен." Когато не е подлог, се използва кратък член (-а/-я): „Виждам стола."'
+        },
+        {
+          q: 'Кое прилагателно е качествено?',
+          opts: ['дървен', 'морски', 'бащин', 'висок'],
+          correct: 3,
+          explanation: '„Висок" е качествено прилагателно — означава вътрешно или външно качество и може да има степени (висок, по-висок, най-висок). „Дървен" е относително (от дърво), „морски" е относително (от море), „бащин" е притежателно.'
+        },
+        {
+          q: 'Коя е превъзходната степен на прилагателното „добър"?',
+          opts: ['по-добър', 'много добър', 'най-добър', 'добре'],
+          correct: 2,
+          explanation: 'Превъзходната степен на „добър" е „най-добър". Трите степени: положителна (добър), сравнителна (по-добър), превъзходна (най-добър). Степените на прилагателните са характерни само за качествените прилагателни.'
+        },
+        {
+          q: 'Какъв вид числително е думата „трима"?',
+          opts: ['Бройно', 'Редно', 'Събирателно', 'Дробно'],
+          correct: 2,
+          explanation: '„Трима" е събирателно числително — те се използват за означаване на група лица (предимно мъже или смесена група): двама, трима, четирима. Бройно е „три", редно — „трети", дробно — „три четвърти".'
+        },
+        {
+          q: 'Кое числително е редно?',
+          opts: ['пет', 'петима', 'пети', 'пет шести'],
+          correct: 2,
+          explanation: '„Пети" е редно числително — означава пореден номер и отговаря на въпроса „Кой по ред?". „Пет" е бройно (Колко?), „петима" е събирателно, „пет шести" е дробно.'
+        },
+        {
+          q: 'Какъв вид е прилагателното „детски"?',
+          opts: ['Качествено', 'Относително', 'Притежателно', 'Степенувано'],
+          correct: 1,
+          explanation: '„Детски" е относително прилагателно — изразява отношение (свързано с деца) и НЕ може да се степенува. Не можем да кажем „по-детски" или „най-детски". Относителните прилагателни изразяват материал, произход, отношение.'
+        },
+        {
+          q: 'Как се членува съществителното „учител" когато е подлог?',
+          opts: ['учителя', 'учителят', 'учителя', 'учители'],
+          correct: 1,
+          explanation: '„Учителят" — с пълен член (-ят) се членува, когато е подлог. Пример: „Учителят обяснява урока." Когато не е подлог: „Виждам учителя" (кратък член -я). Тази разлика е важна за НВО!'
+        },
+        {
+          q: 'Кое от следните е дробно числително?',
+          opts: ['двама', 'двойно', 'две трети', 'втори'],
+          correct: 2,
+          explanation: '„Две трети" е дробно числително — означава дробна (частична) величина. Дробните числителни изразяват части: половин, четвърт, три четвърти, две трети. „Двама" е събирателно, „двойно" не е числително, „втори" е редно.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

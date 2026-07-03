@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Степени · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-stepeni-q2',
+      lessonUrl: '/lessons/math7-stepeni.html',
+      lessonName: 'Степени с естествен показател',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 2 — Правила за степени',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/math7-stepeni-quiz-3.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Колко е 3² × 3³?',
+          opts: ['9⁵', '3⁵', '3⁶', '9⁶'],
+          correct: 1,
+          explanation: 'aᵐ × aⁿ = aᵐ⁺ⁿ. Следователно 3² × 3³ = 3²⁺³ = 3⁵ = 243. Основата остава, показателите се събират.'
+        },
+        {
+          q: 'Колко е 2⁷ ÷ 2⁴?',
+          opts: ['2³', '2¹¹', '1³', '2²⁸'],
+          correct: 0,
+          explanation: 'aᵐ ÷ aⁿ = aᵐ⁻ⁿ. Следователно 2⁷ ÷ 2⁴ = 2⁷⁻⁴ = 2³ = 8. При деление изваждаме показателите.'
+        },
+        {
+          q: 'Колко е (3²)⁴?',
+          opts: ['3⁶', '3⁸', '9⁸', '6⁴'],
+          correct: 1,
+          explanation: '(aᵐ)ⁿ = aᵐ·ⁿ. Следователно (3²)⁴ = 3²ˣ⁴ = 3⁸ = 6561. При степен на степен умножаваме показателите.'
+        },
+        {
+          q: 'Колко е (2×5)³?',
+          opts: ['2³+5³', '2³×5³', '10⁶', '30'],
+          correct: 1,
+          explanation: '(a×b)ⁿ = aⁿ×bⁿ. Следователно (2×5)³ = 2³×5³ = 8×125 = 1000. (Можем да проверим: (2×5)³ = 10³ = 1000 ✓)'
+        },
+        {
+          q: 'Колко е (2/3)²?',
+          opts: ['2/3', '4/9', '2/6', '4/6'],
+          correct: 1,
+          explanation: '(a/b)ⁿ = aⁿ/bⁿ. Следователно (2/3)² = 2²/3² = 4/9. Степенуваме числителя и знаменателя поотделно.'
+        },
+        {
+          q: 'Опрости: a⁵ × a³ ÷ a⁴',
+          opts: ['a⁴', 'a¹²', 'a²', 'a⁶'],
+          correct: 0,
+          explanation: 'a⁵ × a³ = a⁸ (събираме 5+3). a⁸ ÷ a⁴ = a⁴ (изваждаме 8−4). Резултатът е a⁴.'
+        },
+        {
+          q: 'Кое е вярно: 2³ × 3³ = ?',
+          opts: ['6³', '6⁹', '5³', '2⁹'],
+          correct: 0,
+          explanation: 'aⁿ × bⁿ = (a×b)ⁿ. Следователно 2³ × 3³ = (2×3)³ = 6³ = 216. Проверка: 2³=8, 3³=27, 8×27=216=6³ ✓'
+        },
+        {
+          q: 'Колко е 5⁰ + 5¹ + 5²?',
+          opts: ['15', '31', '125', '10'],
+          correct: 1,
+          explanation: '5⁰ = 1; 5¹ = 5; 5² = 25. Сбор: 1 + 5 + 25 = 31.'
+        },
+        {
+          q: 'Колко е (2³)⁰?',
+          opts: ['0', '8', '1', '2³'],
+          correct: 2,
+          explanation: 'Всяко ненулево число на степен 0 е равно на 1. (2³)⁰ = 8⁰ = 1. Може и: (2³)⁰ = 2³×⁰ = 2⁰ = 1.'
+        },
+        {
+          q: 'Опрости: (x³)² × x⁴',
+          opts: ['x⁹', 'x¹⁰', 'x²⁴', 'x⁵'],
+          correct: 1,
+          explanation: '(x³)² = x⁶ (умножаваме показателите: 3×2=6). x⁶ × x⁴ = x⁶⁺⁴ = x¹⁰ (събираме показателите).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

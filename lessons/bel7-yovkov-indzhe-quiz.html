@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Йовков Индже · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-yovkov-indzhe-q1',
+      lessonUrl: '/lessons/bel7-yovkov-indzhe.html',
+      lessonName: 'Йовков — Индже',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Йовков „Индже"',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel7-yovkov-indzhe-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Кога е роден Йордан Йовков?',
+          opts: ['1850 г.', '1877 г.', '1880 г.', '1895 г.'],
+          correct: 2,
+          explanation: 'Йордан Йовков е роден на 9 ноември 1880 г. в Жеравна, Котленско. Произхожда от семейство с тракийски корени, което оказва голямо влияние на творчеството му.'
+        },
+        {
+          q: 'В кой сборник е включен разказът „Индже"?',
+          opts: ['„Вечери в Антимовския хан"', '„Старопланински легенди"', '„Женско сърце"', '„Под игото"'],
+          correct: 1,
+          explanation: '„Индже" е включен в сборника „Старопланински легенди" (1927) — едно от шедьоврите на Йовков, съдържащ 12 разказа с легендарна атмосфера и поетичен стил.'
+        },
+        {
+          q: 'Кой е Индже в разказа?',
+          opts: ['Мирен земеделец', 'Жесток хайдутин, войвода', 'Православен свещеник', 'Богат търговец'],
+          correct: 1,
+          explanation: 'Индже е хайдутин — жесток и безмилостен войвода, чиято слава е изградена върху страх и насилие. В началото на разказа той е представен като злодей, ограбващ и тероризиращ хората.'
+        },
+        {
+          q: 'Кой е повратният момент в живота на Индже?',
+          opts: ['Срещата с турска войска', 'Среща с красива жена', 'Среща с неговата стара майка', 'Болест и оздравяване'],
+          correct: 2,
+          explanation: 'Повратният момент е срещата на Индже с неговата стара майка. В нейния поглед той вижда целия си грях. Тази среща събужда съвестта му и предизвиква пълна нравствена промяна.'
+        },
+        {
+          q: 'В кои войни участва Йовков, повлияли на хуманистичния му светоглед?',
+          opts: ['Руско-турска война и Освобождение', 'Балканска война и Първа световна война', 'Втора световна война', 'Войната за Сърбия'],
+          correct: 1,
+          explanation: 'Йовков участва в Балканската война (1912-1913) и Първата световна война (1914-1918). Тези преживявания го изправят пред смъртта и страданието, но и пред човешкото величие, оформяйки дълбокия му хуманизъм.'
+        },
+        {
+          q: 'Какъв е стилът на Йовков в „Старопланински легенди"?',
+          opts: ['Сух и документален', 'Поетичен, мелодичен, с легендарен тон', 'Хумористичен и сатиричен', 'Исторически и фактологичен'],
+          correct: 1,
+          explanation: 'Стилът на Йовков е поетичен и мелодичен — изреченията му текат плавно, пълни с образи и метафори. Природата е одухотворена, а легендарният тон прави историите да звучат като народни предания.'
+        },
+        {
+          q: 'Каква роля играе природата в разказите на Йовков?',
+          opts: ['Тя е само фон за действието', 'Тя е жива, одухотворена и отразява душевните състояния на героите', 'Природата не е описана', 'Природата е заплаха за героите'],
+          correct: 1,
+          explanation: 'В разказите на Йовков природата не е само фон — тя е жива, одухотворена и активно участва в разказа. Тя отразява душевните състояния на героите и е неотделима от атмосферата на легендарността.'
+        },
+        {
+          q: 'Какво символизира образът на майката в „Индже"?',
+          opts: ['Физическа сила и власт', 'Съвестта и нравственото начало', 'Отмъщението', 'Слабостта и покорността'],
+          correct: 1,
+          explanation: 'Майката в „Индже" е символ на съвестта и нравственото начало. Нейният поглед — без думи, без упреци — е по-силен от всичко. Тя олицетворява безусловната майчина любов, която едновременно приема и съди.'
+        },
+        {
+          q: 'Колко разказа съдържа сборникът „Старопланински легенди"?',
+          opts: ['7 разказа', '10 разказа', '12 разказа', '15 разказа'],
+          correct: 2,
+          explanation: '„Старопланински легенди" (1927) съдържа 12 разказа с легендарна атмосфера. Сборникът е смятан за шедьовър на Йовков и едно от върховните постижения на българската проза.'
+        },
+        {
+          q: 'Каква е основната нравствена идея в „Индже"?',
+          opts: ['Злите хора не могат да се променят', 'Всеки човек може да се промени и да изкупи греховете си', 'Хайдутите са задължително злодеи', 'Само смъртта може да изкупи греховете'],
+          correct: 1,
+          explanation: 'Основната нравствена идея е, че всеки човек може да се промени. Дори Индже — жесток злодей — открива пътя към доброто чрез пробуждане на съвестта. Йовков вярва в красотата и потенциала на човека.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

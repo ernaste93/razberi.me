@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ботев „Хаджи Димитър" · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 7 клас</a>
+        <span>›</span>
+        Ботев „Хаджи Димитър"
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА</div>
+          <div class="lesson-title">Христо Ботев — „Хаджи Димитър"</div>
+          <div class="lesson-meta">Биография · Историческа основа · Образи · Теми · Художествени средства · ~10 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. ЗА БОТЕВ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">За Христо Ботев</div>
+            <div class="lesson-body">
+              <p><strong>Христо Ботев (1848–1876)</strong> е един от най-великите български поети и революционери. Роден е в Калофер. Учи в Одеса, а по-късно живее в Румъния, където пише голяма част от творбите си и се занимава с революционна дейност. Загива на 1/2 юли 1876 г. при преминаването на Дунава начело на въоръжена чета.</p>
+              <p>Ботев пише само около 20 стихотворения и поеми, но те са сред най-великите образци на българската поезия. Творчеството му е пронизано от любов към родината, ненавист към потисничеството и вяра в революцията.</p>
+            </div>
+
+            <!-- ══ 2. ИСТОРИЧЕСКА ОСНОВА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Историческата основа на поемата</div>
+            <div class="lesson-body">
+              <p>Поемата „Хаджи Димитър" е написана от Ботев през <strong>1873 г.</strong> и е посветена на реален исторически герой — <strong>Хаджи Димитър Асенов</strong>, хайдутин от Сливен.</p>
+              <p>Хаджи Димитър загива през <strong>1868 г.</strong> при четата на Стефан Карачоолу — опит за въоръжено въстание срещу османската власт. Ранен смъртоносно на Балкана, той умира сам, изоставен на полето. Ботев поема тази трагична история и я превръща в символ на героизма и безсмъртието.</p>
+            </div>
+
+            <!-- ══ 3. СЮЖЕТНА СХЕМА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Сюжетна схема на поемата</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">1️⃣</div>
+                <div class="key-point-text"><strong>Умиращият юнак на полето:</strong> Хаджи Димитър лежи ранен на Балкана. Жега, самота, болка — но духът му не е сломен.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">2️⃣</div>
+                <div class="key-point-text"><strong>Природата го оплаква и се грижи за него:</strong> Соколите кръжат над него, самодивите (горски феи) идват нощем и облизват раните му, орлите го пазят. Природата е жива и съчувстваща.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">3️⃣</div>
+                <div class="key-point-text"><strong>Безсмъртието:</strong> Юнакът може да умре физически, но в народната памет ще живее вечно. „Тоз, който падне в бой за свобода, той не умира."</div>
+              </div>
+            </div>
+            <div class="poem-block">„Жив е той, жив е! Там на Балкана,
+потънал в кърви, лежи и пъшка
+юнак с дълбока на гърди рана,
+до него вярна пушка."
+              <div class="poem-author">— Христо Ботев, „Хаджи Димитър" (1873)</div>
+            </div>
+
+            <!-- ══ 4. ОБРАЗИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Образи в поемата</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⚔️</div>
+                <div class="key-point-text"><strong>Образът на юнака (Хаджи Димитър):</strong> Ранен, но непокорен. Символ на борческия дух и готовността за саможертва за свободата. Не се оплаква — умира достойно.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🦅</div>
+                <div class="key-point-text"><strong>Соколите:</strong> Кръжат около умиращия юнак. В народното творчество соколът е символ на смелост, свобода и благородство — юнашка птица.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🧝</div>
+                <div class="key-point-text"><strong>Самодивите:</strong> Горски феи, митологични същества от народното творчество. Те идват нощем и облизват раните на юнака — природата го приема и се грижи за него.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🦁</div>
+                <div class="key-point-text"><strong>Орлите:</strong> Символи на сила и величие. Пазят тялото на юнака — природата го признава за свой герой.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🏔️</div>
+                <div class="key-point-text"><strong>Балканът:</strong> Не просто планина — символ на свободата, хайдушката традиция и родината. Умирането на Балкана е смърт в обятията на родната земя.</div>
+              </div>
+            </div>
+
+            <!-- ══ 5. ТЕМИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Теми в поемата</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🇧🇬</div>
+                <div class="key-point-text"><strong>Патриотизъм и героизъм:</strong> Хаджи Димитър е отдал живота си за свободата на България. Ботев прославя това себеотрицание като висша ценност.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">✨</div>
+                <div class="key-point-text"><strong>Безсмъртието на героя:</strong> Физическата смърт не е край. Героят, паднал в бой за свобода, живее вечно в паметта на народа — духовно безсмъртие.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌿</div>
+                <div class="key-point-text"><strong>Природата и героят:</strong> Природата не е безразличен фон — тя участва активно: оплаква юнака, грижи се за него и го признава за герой.</div>
+              </div>
+            </div>
+
+            <!-- ══ 6. ХУДОЖЕСТВЕНИ СРЕДСТВА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Художествени средства</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">🌟</div>
+                <div class="key-point-text"><strong>Персонификация (олицетворение):</strong> Природата е одухотворена — соколите, самодивите и орлите действат като живи същества, съчувстващи на юнака. „Жив е той, жив е!" — самата природа говори.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🔁</div>
+                <div class="key-point-text"><strong>Анафора:</strong> Повторение на думи или изрази в началото на стихове/строфи. Усилва ритъма и подчертава основните идеи.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">⚡</div>
+                <div class="key-point-text"><strong>Антитеза:</strong> Противопоставяне — животът и смъртта, физическата смърт и духовното безсмъртие. „Той не умира — тоз ще живее вечно."</div>
+              </div>
+            </div>
+
+            <!-- ══ 7. НВО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното за НВО</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Ботев (1848–1876)</strong> — поет и революционер, роден в Калофер, загива 1876 при преминаването на Дунава.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Поемата е написана 1873 г.</strong> в памет на реалния хайдутин Хаджи Димитър, загинал 1868.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Жанр: поема</strong> (по-дълго лирическо произведение с епически елементи).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Образи:</strong> умиращ юнак, соколи (смелост), самодиви (грижа), орли (сила), Балканът (родина).</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Теми:</strong> патриотизъм, героична смърт, безсмъртие на героя, природата и героят.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Художествени средства:</strong> персонификация на природата, анафора, антитеза живот/смърт.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Ключова идея:</strong> „Тоз, който падне в бой за свобода, той не умира" — духовното безсмъртие на героя.</div></div>
+            </div>
+
+          </div><!-- /#lesson-content -->
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel7-botev-hadzhi-dimityr-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel7-botev-hadzhi-dimityr-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel7-botev-hadzhi-dimityr-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div><!-- /.lesson-panel -->
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Ботев „Хаджи Димитър"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+  <script src="/sidebar.js"></script>
+</body>
+</html>

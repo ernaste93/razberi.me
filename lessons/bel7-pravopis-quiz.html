@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Правопис и пунктуация · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-pravopis-q1',
+      lessonUrl: '/lessons/bel7-pravopis.html',
+      lessonName: 'Правопис и пунктуация',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Правопис и пунктуация',
+      sub: '10 въпроса · Членуване — пълен vs. кратък член',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel7-pravopis-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'В изречението „___ учител обясни урока" — кой член трябва да се употреби?',
+          opts: ['учителя', 'учителят', 'учителе', 'учителю'],
+          correct: 1,
+          explanation: '„Учителят обясни" — „учителят" е подлог (кой обясни?). При подлог се употребява ПЪЛЕН член (-ът/-ят). Проверка: замести с „той" — „Той обясни урока" ✓ → подлог → пълен член.'
+        },
+        {
+          q: 'В изречението „Видях ___ в парка" — кой член?',
+          opts: ['учителят', 'учителя', 'учителе', 'учителю'],
+          correct: 1,
+          explanation: '„Видях учителя" — „учителя" е допълнение (кого видях?). При допълнение НЕ е подлог → КРАТЪК член (-а/-я). Проверка: „Видях той" ✗ → не е подлог → кратък член.'
+        },
+        {
+          q: 'Кога се употребява ПЪЛЕН член (-ът/-ят)?',
+          opts: ['Когато думата е допълнение', 'Когато думата е подлог в изречението', 'Винаги при мъжки род', 'Никога — употребява се само краткият член'],
+          correct: 1,
+          explanation: 'Пълен член (-ът/-ят) се употребява, когато съществителното мъжки род е ПОДЛОГ в изречението (или уточнение на подлога). В всички останали случаи — кратък член (-а/-я).'
+        },
+        {
+          q: '„Мъжът дойде." — „мъжът" е с пълен член, защото:',
+          opts: ['Всяко мъжко съществително се членува с пълен член', 'Е подлог — кой дойде? Мъжът', 'Стои в началото на изречението', 'Е до глагол'],
+          correct: 1,
+          explanation: '„Мъжът" е с пълен член, защото е ПОДЛОГ — кой дойде? Мъжът. Пълен член се употребява при подлог, независимо от позицията в изречението. Стоенето в началото само по себе си не определя члена.'
+        },
+        {
+          q: '„Книгата е на мъжа." — „мъжа" е с кратък член, защото:',
+          opts: ['Стои след предлог', 'Не е подлог — е обстоятелствено пояснение', 'Думата свършва на „а"', 'Стои в края на изречението'],
+          correct: 1,
+          explanation: '„На мъжа" — „мъжа" НЕ е подлог (кой е подлогът? „Книгата"). „Мъжа" е обстоятелствено пояснение. При всяка синтактична роля, различна от подлог → кратък член.'
+        },
+        {
+          q: 'В изречението „Директорът поздрави учителя" — кой/кое е с ПЪЛЕН член?',
+          opts: ['учителя', 'директорът', 'и двете са с пълен член', 'нито едното'],
+          correct: 1,
+          explanation: '„Директорът" е с пълен член (-ът), защото е ПОДЛОГ (кой поздрави? Директорът). „Учителя" е с кратък член (-а), защото е ДОПЪЛНЕНИЕ (кого поздрави? Учителя). Само подлогът получава пълен член.'
+        },
+        {
+          q: 'Как се проверява дали дадена дума трябва пълен или кратък член?',
+          opts: [
+            'Ако думата е мъжки род → пълен член',
+            'Заменя се с „той" — ако изречението звучи правилно → подлог → пълен член',
+            'Ако думата стои в началото → пълен член',
+            'Ако след думата има глагол → пълен член'
+          ],
+          correct: 1,
+          explanation: 'Трикът: замени думата с личното местоимение „той". „Той дойде" ✓ → „мъжът дойде" (пълен). „Видях той" ✗ → „видях мъжа" (кратък). Ако „той" звучи правилно → думата е подлог → пълен член.'
+        },
+        {
+          q: 'В изречението „Зъбарят прегледа пациента" — кой е с пълен член?',
+          opts: ['пациента', 'зъбарят', 'и двата', 'нито един'],
+          correct: 1,
+          explanation: '„Зъбарят" е с пълен член (-ят), защото е ПОДЛОГ (кой прегледа? Зъбарят). „Пациента" е с кратък член (-а), защото е ДОПЪЛНЕНИЕ (кого прегледа? Пациента).'
+        },
+        {
+          q: 'Кой от следните примери е ПРАВИЛНО членуван?',
+          opts: [
+            '„Учителят влезе в стаята и учителят обясни урока."',
+            '„Учителят влезе в стаята и учителя обясни урока."',
+            '„Учителя влезе в стаята и учителят обясни урока."',
+            '„Учителя влезе в стаята и учителя обясни урока."'
+          ],
+          correct: 0,
+          explanation: 'И в двете части „учителят" е подлог (кой влезе? кой обясни? — учителят), затова и в двата случая се употребява ПЪЛЕН член (-ят). „Учителят влезе... и учителят обясни" — правилно.'
+        },
+        {
+          q: 'Съществителното „прозорец" (мъжки род) в изречението „Прозорецът е отворен" е с:',
+          opts: ['Кратък член (прозореца)', 'Пълен член (прозорецът)', 'Без член', 'И двата члена са грешни'],
+          correct: 1,
+          explanation: '„Прозорецът е отворен" — „прозорецът" е ПОДЛОГ (кой е отворен? Прозорецът). При подлог → ПЪЛЕН член (-ът → след „ц" е -ецът). Ако изречението беше „Затвори прозореца" — там е допълнение → кратък член.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

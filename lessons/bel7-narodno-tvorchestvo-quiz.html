@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Народно творчество · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-narodno-tvorchestvo-q1',
+      lessonUrl: '/lessons/bel7-narodno-tvorchestvo.html',
+      lessonName: 'Народно творчество',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Народно творчество',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel7-narodno-tvorchestvo-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Кое от следните твърдения е ВЯРНО за народното творчество?',
+          opts: ['Има конкретен известен автор', 'Предава се само в писмена форма', 'Е анонимно и се предава устно', 'Е създадено само в епохата на Възраждането'],
+          correct: 2,
+          explanation: 'Народното творчество е анонимно (нямa конкретен автор) и се предава устно от поколение на поколение. Това е основният му белег, отличаващ го от авторската литература.'
+        },
+        {
+          q: 'Какво означава понятието „вариантност" при народното творчество?',
+          opts: ['Творбата е написана в различни версии от един автор', 'Едно произведение съществува в множество варианти, разказвани по различни места', 'Творбата се превежда на много езици', 'Произведението съдържа много различни герои'],
+          correct: 1,
+          explanation: 'Вариантността означава, че едно фолклорно произведение съществува в много различни варианти — в различни краища на страната то може да се разказва или пее по малко по-различен начин, тъй като няма фиксиран текст.'
+        },
+        {
+          q: 'Кой е основният белег, по който митът се различава от легендата?',
+          opts: ['Митът е по-кратък', 'Митът разказва за богове и произхода на света, а легендата е основана на реален факт', 'Легендата е по-стара от мита', 'В мита няма фантастика'],
+          correct: 1,
+          explanation: 'Митът е свещен разказ за произхода на света, боговете и природните явления — героите му са богове или полубогове. Легендата пък е основана на реален исторически факт или събитие, но е обогатена с фантастични елементи.'
+        },
+        {
+          q: 'Как се казва тракийският певец от древногръцката митология, слязъл в подземното царство заради любовта си?',
+          opts: ['Прометей', 'Херакъл', 'Орфей', 'Хермес'],
+          correct: 2,
+          explanation: 'Орфей е тракийският певец с дарба да омагьосва природата с музиката си. Той слиза в подземното царство, за да върне починалата Евридика, като с пеенето си омайва Харон и Хадес.'
+        },
+        {
+          q: 'Кой е Прометей в древногръцката митология?',
+          opts: ['Бог на слънцето', 'Титан, откраднал огъня от Олимп и го дал на хората', 'Цар на подземното царство', 'Герой, убил дракона'],
+          correct: 1,
+          explanation: 'Прометей е титан, откраднал огъня от Олимп и го дал на хората. Зевс го наказва, като го приковава към скала, а орел яде черния му дроб всеки ден. Прометей символизира саможертвата за доброто на другите.'
+        },
+        {
+          q: 'Кои са трите вида народни приказки?',
+          opts: ['Исторически, религиозни, топонимични', 'Вълшебни, битови и за животни', 'Лирически, епически, драматически', 'Юнашки, любовни, обредни'],
+          correct: 1,
+          explanation: 'Трите вида народни приказки са: вълшебни (с магически герои и предмети), битови (за обикновени хора и ежедневния живот) и приказки за животни (с животни с човешки черти).'
+        },
+        {
+          q: 'Какво характеризира вълшебните народни приказки?',
+          opts: ['Героите са само животни', 'Разказват за реални исторически личности', 'Присъстват магически предмети и вълшебни помощници, героят преминава изпитания', 'Нямат нравствено послание'],
+          correct: 2,
+          explanation: 'Вълшебните приказки се характеризират с наличие на магически предмети (вълшебна пръчица, летящ кон), вълшебни помощници, изпитания за героя и неизменна победа на доброто над злото.'
+        },
+        {
+          q: 'Легендата, обясняваща произхода на имена на реки, планини и градове, се нарича:',
+          opts: ['Религиозна легенда', 'Историческа легенда', 'Топонимична легенда', 'Етиологична легенда'],
+          correct: 2,
+          explanation: 'Топонимичната легенда обяснява произхода на имена на географски места — реки, планини, градове. „Топоним" идва от гръцки: „topos" (място) + „onoma" (име).'
+        },
+        {
+          q: 'Какво символизира соколът в народното творчество?',
+          opts: ['Тъга и самота', 'Смелост и свобода', 'Хитрост и коварство', 'Мъдрост и знание'],
+          correct: 1,
+          explanation: 'В народното творчество соколът е символ на смелост и свобода. Той е благородна птица, използвана за сравнение с юнаците и героите. Орелът символизира сила и власт, а кукувицата — тъга и самота.'
+        },
+        {
+          q: 'Кое число е „свещено" в народните приказки и се среща най-често при изпитанията и героите?',
+          opts: ['Числото 7', 'Числото 10', 'Числото 3', 'Числото 12'],
+          correct: 2,
+          explanation: 'Числото 3 е свещено в народните приказки — три сина, три изпитания, три дни за решение. Тройното повторение е структурен елемент на приказния жанр. Числото 7 също е важно (7 джуджета), но 3 е най-характерното за изпитанията.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

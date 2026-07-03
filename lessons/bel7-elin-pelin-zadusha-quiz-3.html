@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Елин Пелин Задушница · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span><script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script><span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a><a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div><div class="quiz-title" id="quiz-title"></div><div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div><div class="quiz-q-text" id="q-text"></div><div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-elin-pelin-zadusha-q3',
+      lessonUrl: '/lessons/bel7-elin-pelin-zadusha.html',
+      lessonName: 'Елин Пелин — Задушница',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Стил и хуманизъм на Елин Пелин',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Как описваме жанра на „Задушница"?',
+          opts: ['Поема', 'Кратък лиричен разказ', 'Роман', 'Пиеса'],
+          correct: 1,
+          explanation: '„Задушница" е кратък лиричен разказ — концентриран, поетичен, съсредоточен върху едно събитие (задушницата) и едно настроение (тихата скръб и памет). Лиричността идва от начина, по който Елин Пелин описва природата и чувствата.'
+        },
+        {
+          q: 'Какво означава думата „хуманизъм" в контекста на Елин Пелин?',
+          opts: ['Критика на обществото', 'Вяра в достойнството и красотата на простия човек', 'Интерес само към образованите хора', 'Религиозност'],
+          correct: 1,
+          explanation: 'Хуманизмът на Елин Пелин е вяра в достойнството и красотата на простия човек. Той обича своите герои — прости селяни и бедни хора — и ги показва с разбиране, без присмех, без идеализация.'
+        },
+        {
+          q: 'Коя черта е НЕ-характерна за стила на Елин Пелин?',
+          opts: ['Лиричност', 'Близост до народната реч', 'Студен, документален подход', 'Мек хумор'],
+          correct: 2,
+          explanation: 'Студеният, документален подход НЕ е характерен за Елин Пелин. Точно обратното — неговият стил е топъл, лиричен, близо до народната реч. Документалният, студен подход е характерен по-скоро за натурализма.'
+        },
+        {
+          q: 'Какво е посланието на „Задушница" за отношението ни към починалите?',
+          opts: ['Трябва да забравяме за мъртвите', 'Паметта за починалите е акт на любов, поддържащ духовната им присъствие', 'Обредите са безсмислени суеверия', 'Трябва да скърбим гласно и показно'],
+          correct: 1,
+          explanation: 'Посланието е, че паметта за починалите е акт на любов и уважение. Обредите (задушницата) поддържат „живота" на починалите в паметта на близките. Дядо Пею чрез обреда поддържа живата връзка с жена си.'
+        },
+        {
+          q: 'Как природата е изобразена в разказите на Елин Пелин?',
+          opts: ['Като врага на хората', 'Като одухотворена, жива, участваща в живота на героите', 'Като безразличен фон', 'Като заплаха'],
+          correct: 1,
+          explanation: 'При Елин Пелин природата е одухотворена и жива. Тя участва в живота на героите — полето, дъждът, слънцето не са просто фон, а са свързани с настроенията и съдбите на хората. Природата е партньор на човека.'
+        },
+        {
+          q: 'Какво общо имат Елин Пелин и Йовков като писатели?',
+          opts: ['И двамата пишат исторически романи', 'И двамата са хуманисти с поетичен стил и дълбока обич към хората', 'И двамата са сатирици', 'И двамата пишат само поезия'],
+          correct: 1,
+          explanation: 'Елин Пелин и Йовков са обединени от хуманизъм и поетичен стил. И двамата вярват в достойнството на простия човек, пишат с разбиране и любов, и описват природата с особена чувствителност. Жанрът и темите им обаче се различават.'
+        },
+        {
+          q: 'Кое твърдение за обреда задушница е ПРАВИЛНО?',
+          opts: ['Задушницата е само в православното вероизповедание', 'Задушницата е мост между живите и мъртвите — поддържа паметта за тях', 'Задушницата е само за деца', 'Задушницата е новогодишен обичай'],
+          correct: 1,
+          explanation: 'Задушницата е мост между живите и мъртвите — тя поддържа паметта за починалите и израз на вярата, че те продължават да „живеят" в паметта на близките. Макар задушницата да е в православната традиция, подобни обреди съществуват в много култури.'
+        },
+        {
+          q: 'Коя е повторяема тема в творчеството на Елин Пелин?',
+          opts: ['Революционна борба', 'Животът на простия селянин, природата и народните традиции', 'Животът в столицата', 'Любовта на аристократите'],
+          correct: 1,
+          explanation: 'Повторяемата тема при Елин Пелин е животът на простия селянин, природата и народните традиции. Той е „певецът на селото" в Bulgarian литература — описва бедността, земята, обичаите, семейството с разбиране и любов.'
+        },
+        {
+          q: 'Какво е значението на дядо Пею за разказа „Задушница"?',
+          opts: ['Той е злодей, наказан накрая', 'Той е символ на вярността, паметта и достойната скръб', 'Той е комичен герой', 'Той е второстепенен образ'],
+          correct: 1,
+          explanation: 'Дядо Пею е символ на вярността (не забравя жена си), паметта (поддържа връзката с нея чрез обреда) и достойната скръб (тихото, вътрешното преживяване на загубата). Той е типичен герой на Елин Пелин — прост, но дълбок.'
+        },
+        {
+          q: 'Кой е приносът на Елин Пелин в българската литература?',
+          opts: ['Първият роман за националноосвободителното движение', 'Майстор на разказа за селския живот с хуманизъм и лиризъм', 'Основоположник на драматургията', 'Пионер на документалния жанр'],
+          correct: 1,
+          explanation: 'Приносът на Елин Пелин е преди всичко в разказите за живота на българското село — той ги описва с уникална хуманистична топлота и лиризъм. Разказите му са шедьоври на малката проза и остават обичани от читателите и до днес.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

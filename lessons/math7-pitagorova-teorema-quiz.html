@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Теорема на Питагор · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-pitagorova-teorema-q1',
+      lessonUrl: '/lessons/math7-pitagorova-teorema.html',
+      lessonName: 'Теорема на Питагор',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Формулата и намиране на хипотенуза',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/math7-pitagorova-teorema-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Каква е формулата на теоремата на Питагор?',
+          opts: ['a + b = c', 'a² − b² = c²', 'a² + b² = c²', 'a · b = c²'],
+          correct: 2,
+          explanation: 'Теоремата на Питагор гласи: в правоъгълен триъгълник квадратът на хипотенузата (c) е равен на сумата от квадратите на катетите (a и b). Формулата е a² + b² = c².'
+        },
+        {
+          q: 'Намери хипотенузата, ако катетите са a = 6 cm и b = 8 cm.',
+          opts: ['7 cm', '10 cm', '12 cm', '14 cm'],
+          correct: 1,
+          explanation: 'c = √(a² + b²) = √(36 + 64) = √100 = 10 cm. Тройката (6, 8, 10) е питагорова — умножена (3, 4, 5) по 2.'
+        },
+        {
+          q: 'Намери хипотенузата, ако катетите са a = 5 cm и b = 12 cm.',
+          opts: ['11 cm', '13 cm', '15 cm', '17 cm'],
+          correct: 1,
+          explanation: 'c = √(5² + 12²) = √(25 + 144) = √169 = 13 cm. Запомни питагоровата тройка (5, 12, 13)!'
+        },
+        {
+          q: 'Намери хипотенузата, ако катетите са a = 9 cm и b = 12 cm.',
+          opts: ['13 cm', '14 cm', '15 cm', '21 cm'],
+          correct: 2,
+          explanation: 'c = √(9² + 12²) = √(81 + 144) = √225 = 15 cm. Тройката (9, 12, 15) е умножена (3, 4, 5) по 3.'
+        },
+        {
+          q: 'Кое от следните е ПИТАГОРОВА тройка?',
+          opts: ['(2, 3, 4)', '(3, 4, 6)', '(5, 12, 13)', '(6, 7, 9)'],
+          correct: 2,
+          explanation: '5² + 12² = 25 + 144 = 169 = 13². Тройката (5, 12, 13) е питагорова. Проверка: (2,3,4): 4+9=13≠16. (3,4,6): 9+16=25≠36. (6,7,9): 36+49=85≠81.'
+        },
+        {
+          q: 'Хипотенузата в правоъгълен триъгълник е:',
+          opts: ['Един от катетите', 'Страната, срещу правия ъгъл', 'Страната, която е успоредна на основата', 'Средната по дължина страна'],
+          correct: 1,
+          explanation: 'Хипотенузата е страната, срещу правия ъгъл (90°). Тя е ВИНАГИ най-дългата страна в правоъгълния триъгълник.'
+        },
+        {
+          q: 'Намери хипотенузата при a = 3 cm и b = 4 cm.',
+          opts: ['4 cm', '5 cm', '6 cm', '7 cm'],
+          correct: 1,
+          explanation: 'c = √(3² + 4²) = √(9 + 16) = √25 = 5 cm. Това е основната питагорова тройка (3, 4, 5). Запомни я!'
+        },
+        {
+          q: 'Дали (3, 4, 5) е питагорова тройка?',
+          opts: ['Не, защото 3² + 4² ≠ 5²', 'Да, защото 3² + 4² = 5²', 'Не, защото числата не са достатъчно големи', 'Да, но само приблизително'],
+          correct: 1,
+          explanation: '3² + 4² = 9 + 16 = 25 = 5². Да, (3, 4, 5) е питагорова тройка. Тя е основата, от която се получават (6,8,10), (9,12,15) и др. чрез умножение.'
+        },
+        {
+          q: 'В правоъгълен триъгълник с катети 7 cm и 24 cm, хипотенузата е:',
+          opts: ['23 cm', '25 cm', '27 cm', '31 cm'],
+          correct: 1,
+          explanation: 'c = √(7² + 24²) = √(49 + 576) = √625 = 25 cm. Питагоровата тройка (7, 24, 25) е по-рядка, но важна.'
+        },
+        {
+          q: 'Кое твърдение за хипотенузата е ВЯРНО?',
+          opts: ['Може да е по-малка от катет', 'Равна е на сбора на катетите', 'Квадратът й е равен на сбора от квадратите на катетите', 'Е половината от периметъра'],
+          correct: 2,
+          explanation: 'По теоремата на Питагор: c² = a² + b². Хипотенузата е ВИНАГИ по-голяма от всеки катет поотделно (c > a и c > b), но по-малка от сбора им (c < a + b).'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

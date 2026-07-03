@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Народно творчество · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-narodno-tvorchestvo-q2',
+      lessonUrl: '/lessons/bel7-narodno-tvorchestvo.html',
+      lessonName: 'Народно творчество',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 2 — Народни приказки',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel7-narodno-tvorchestvo-quiz-3.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Коя е основната тема на битовите народни приказки?',
+          opts: ['Борбата между богове', 'Ежедневният живот на обикновените хора и социалните противоречия', 'Магически пътешествия в отвъдни светове', 'Произходът на природни явления'],
+          correct: 1,
+          explanation: 'Битовите народни приказки разказват за ежедневния живот на обикновени хора — селяни, занаятчии, богати и бедни. Те насмиват глупостта, алчността и несправедливостта, като умният или добрият герой побеждава.'
+        },
+        {
+          q: 'Кой фолклорен герой е символ на народната хитрост и находчивост в битовите приказки?',
+          opts: ['Крали Марко', 'Хитър Петър', 'Прометей', 'Орфей'],
+          correct: 1,
+          explanation: 'Хитър Петър е най-популярният герой на битовите народни приказки — символ на народната хитрост, остроумие и находчивост. Той побеждава богатите, чорбаджиите и дори дявола не с физическа сила, а с ум.'
+        },
+        {
+          q: 'Какви са героите в приказките за животни?',
+          opts: ['Реални исторически личности', 'Животни с човешки черти и поведение', 'Само митични чудовища', 'Изключително деца'],
+          correct: 1,
+          explanation: 'В приказките за животни героите са животни, надарени с човешки черти — говорят, мислят и действат като хора. Всяко животно олицетворява определена черта: лисицата — хитрост, вълкът — жестокост, мечката — добродушна глупост.'
+        },
+        {
+          q: 'Какво символизира лисицата в народните приказки за животни?',
+          opts: ['Смелост и сила', 'Хитрост и коварство', 'Добросърдечност и наивност', 'Мъдрост и справедливост'],
+          correct: 1,
+          explanation: 'Лисицата е устойчив символ на хитрост и коварство в приказките за животни. Тя винаги измамва другите животни с ума си. Тази символика е характерна не само за българския фолклор, но и за фолклора на много народи.'
+        },
+        {
+          q: 'Как обикновено завършват народните приказки?',
+          opts: ['Трагично — героят загива', 'С неясен финал', 'Доброто побеждава злото, героят е награден', 'Героят се примирява с несправедливостта'],
+          correct: 2,
+          explanation: 'Народните приказки задължително завършват с победа на доброто над злото. Добрият, честният и трудолюбивият герой е награден (получава царска дъщеря, съкровище, щастие), а злият е наказан. Това е основното нравствено послание.'
+        },
+        {
+          q: 'Коя формула е характерно начало на народната приказка?',
+          opts: ['"В оня свят, в друго измерение..."', '"Имало едно време..."', '"Преди хиляди години боговете..."', '"Чул съм от стари хора..."'],
+          correct: 1,
+          explanation: 'Народните приказки традиционно започват с формулата „Имало едно време..." (или варианти като „Имало едно се"), която поставя събитията в неопределено, вълшебно минало. Краищата също са формулни: „и живели дълго и щастливо".'
+        },
+        {
+          q: 'Колко пъти обикновено се повтарят изпитанията в народните вълшебни приказки?',
+          opts: ['Два пъти', 'Три пъти', 'Пет пъти', 'Само веднъж'],
+          correct: 1,
+          explanation: 'Тройното повторение на изпитанията е структурна особеност на вълшебните приказки. Героят преминава три препятствия, три пъти се изправя пред изпитание — само при третото успява напълно. Числото 3 е свещено в народното творчество.'
+        },
+        {
+          q: 'Какво са „вълшебните помощници" в народните приказки?',
+          opts: ['Злите герои, изпращащи героя на изпитание', 'Магически същества или предмети, помагащи на героя', 'Богатите покровители на героя', 'Приятелите на главния герой от реалния свят'],
+          correct: 1,
+          explanation: 'Вълшебните помощници са магически същества (стар дядо, хубава фея, говорящо животно) или предмети (вълшебна пръчица, самоделна покривка, летящ кон), които помагат на героя да преодолее изпитанията. Те се появяват, когато героят е добър и честен.'
+        },
+        {
+          q: 'Коя от следните черти НЕ е характерна за народното творчество?',
+          opts: ['Анонимност', 'Устно предаване', 'Фиксиран авторски текст', 'Вариантност'],
+          correct: 2,
+          explanation: 'Фиксираният авторски текст НЕ е черта на народното творчество — точно обратното. При фолклора текстът не е фиксиран, може да се изменя при всяко изпълнение. Авторска творба има фиксиран текст, написан от конкретен автор.'
+        },
+        {
+          q: 'В кой период народното творчество в България се е развивало особено богато?',
+          opts: ['По времето на Освобождението (1878)', 'По времето на Второто Българско царство', 'По времето на османското владичество (XV–XIX в.)', 'В периода след Освобождението'],
+          correct: 2,
+          explanation: 'По времето на османското владичество (XV–XIX в.) народното творчество е bilo особено богато — то е служило като единственото средство за съхраняване на езика, бита, историческата памет и националния дух на българите.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

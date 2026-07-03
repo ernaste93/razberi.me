@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Триъгълник · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-triagalnik-q2',
+      lessonUrl: '/lessons/math7-triagalnik.html',
+      lessonName: 'Триъгълник',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 2 — Елементи на триъгълника',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/math7-triagalnik-quiz-3.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Какво е медиана на триъгълник?',
+          opts: ['Перпендикуляр от връх към страна', 'Отсечка, която дели ъгъл на две равни части', 'Отсечка от връх до средата на срещуположната страна', 'Линия, успоредна на основата'],
+          correct: 2,
+          explanation: 'Медианата е отсечка, която свързва един връх на триъгълника с СРЕДАТА на срещуположната страна. Всеки триъгълник има точно 3 медиани, които се пресичат в центъра на тежестта.'
+        },
+        {
+          q: 'Какво е биссектриса (ъглополовяща) на триъгълник?',
+          opts: ['Дели ъгъл на две равни части', 'Свързва връх с средата на страната', 'Е перпендикулярна на страна', 'Е успоредна на основата'],
+          correct: 0,
+          explanation: 'Биссектрисата (ъглополовящата) е отсечка от един връх, която дели ъгъла при него на две равни части. Трите биссектриси на триъгълника се пресичат в центъра на вписаната окръжност.'
+        },
+        {
+          q: 'Какво е височина на триъгълник?',
+          opts: ['Свързва два върха', 'Перпендикуляр от връх към срещуположната страна', 'Дели ъгъл на равни части', 'Свързва средите на две страни'],
+          correct: 1,
+          explanation: 'Височината е перпендикуляр, спуснат от един връх към срещуположната страна (или нейното продължение). Трите височини на триъгълника се пресичат в точка, наречена ортоцентър.'
+        },
+        {
+          q: 'Колко медиани има един триъгълник?',
+          opts: ['1', '2', '3', '4'],
+          correct: 2,
+          explanation: 'Всеки триъгълник има точно 3 медиани — по една от всеки връх. Те се пресичат в обща точка — центъра на тежестта (тежестният center), при съотношение 2:1 от върха.'
+        },
+        {
+          q: 'В точката на пресичане на трите медиани, всяка медиана се дели в съотношение:',
+          opts: ['1:1 от върха', '1:2 от върха', '2:1 от върха', '3:1 от върха'],
+          correct: 2,
+          explanation: 'Медианите се пресичат в центъра на тежестта, където всяка медиана се дели в съотношение 2:1, считано от върха. По-дългата част (2/3 от медианата) е от страната на върха.'
+        },
+        {
+          q: 'В триъгълник ∠A = 50°, ∠B = 60°. Намери ∠C.',
+          opts: ['60°', '70°', '80°', '90°'],
+          correct: 1,
+          explanation: '∠A + ∠B + ∠C = 180°. Следователно ∠C = 180° − 50° − 60° = 70°.'
+        },
+        {
+          q: 'Ако в триъгълник двата ъгъла са по 45°, третият ъгъл е:',
+          opts: ['45°', '90°', '135°', '180°'],
+          correct: 1,
+          explanation: '∠C = 180° − 45° − 45° = 90°. Триъгълникът е правоъгълен и равнобедрен едновременно — такъв триъгълник се среща много при НВО задачи.'
+        },
+        {
+          q: 'Трите биссектриси на триъгълник се пресичат в:',
+          opts: ['Центъра на описаната окръжност', 'Ортоцентъра', 'Центъра на вписаната окръжност', 'Центъра на тежестта'],
+          correct: 2,
+          explanation: 'Трите биссектриси (ъглополовящи) се пресичат в центъра на вписаната окръжност — точката, която е равноотдалечена от трите страни на триъгълника.'
+        },
+        {
+          q: 'Трите височини на триъгълник се пресичат в:',
+          opts: ['Центъра на тежестта', 'Ортоцентъра', 'Центъра на вписаната окръжност', 'Средата на хипотенузата'],
+          correct: 1,
+          explanation: 'Трите височини на триъгълника се пресичат в ортоцентъра. При правоъгълния триъгълник ортоцентърът съвпада с върха при правия ъгъл.'
+        },
+        {
+          q: 'В правоъгълен триъгълник, ако единият катет е 3 cm, а другият е 4 cm, каква е хипотенузата?',
+          opts: ['5 cm', '6 cm', '7 cm', '12 cm'],
+          correct: 0,
+          explanation: 'По теоремата на Питагор: c² = a² + b² = 3² + 4² = 9 + 16 = 25. Следователно c = √25 = 5 cm. Тройката (3, 4, 5) е питагорова.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

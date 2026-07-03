@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Синтаксис · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-sintaksis-q2',
+      lessonUrl: '/lessons/bel7-sintaksis.html',
+      lessonName: 'Синтаксис',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 2 — Синтаксис',
+      sub: '10 въпроса · Второстепенни части, еднородни и обособени',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel7-sintaksis-quiz-3.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'В изречението „Момчето чете интересна книга" — „интересна" е:',
+          opts: ['Подлог', 'Сказуемо', 'Допълнение', 'Определение'],
+          correct: 3,
+          explanation: 'Определението отговаря на въпроса „какъв? коя? кое?" — каква книга? Интересна. „Интересна" е определение към „книга". Подлог е „Момчето", сказуемо е „чете", допълнение е „книга".'
+        },
+        {
+          q: 'В изречението „Тя пише писмо на майка си" — „писмо" е:',
+          opts: ['Подлог', 'Допълнение', 'Определение', 'Обстоятелствено пояснение'],
+          correct: 1,
+          explanation: 'Допълнението отговаря на въпросите „кого? какво? кому?" — Тя пише какво? Писмо. „Писмо" е допълнение. „На майка си" е обстоятелствено пояснение (на кого? — на майка си). Тук допълнението е пряко (кого/какво).'
+        },
+        {
+          q: 'В изречението „Той тича бързо сутрин в парка" — „бързо" е:',
+          opts: ['Определение', 'Допълнение', 'Обстоятелствено пояснение за начин', 'Подлог'],
+          correct: 2,
+          explanation: 'Обстоятелственото пояснение за начин отговаря на въпроса „как?" — той тича как? Бързо. „Сутрин" е обстоятелствено за време (кога?), „в парка" — за място (къде?).'
+        },
+        {
+          q: 'Кое изречение съдържа ЕДНОРОДНИ части?',
+          opts: [
+            'Детето спи.',
+            'Купих хляб, мляко и сирене.',
+            'Момчето, уморено от игра, легна.',
+            'Тя каза, че ще дойде.'
+          ],
+          correct: 1,
+          explanation: '„Купих хляб, мляко и сирене." — „хляб", „мляко" и „сирене" са еднородни допълнения (три предмета, изпълняващи еднаква синтактична роля). Те са разделени с запетаи, а преди последното „и" обикновено НЕ се слага запетая.'
+        },
+        {
+          q: 'Кое изречение съдържа ОБОСОБЕНА ЧАСТ?',
+          opts: [
+            'Детето тича.',
+            'Купих мляко и хляб.',
+            'Момчето, уморено от игра, легна да спи.',
+            'Той каза, че ще дойде.'
+          ],
+          correct: 2,
+          explanation: '„Момчето, уморено от игра, легна да спи." — „уморено от игра" е обособено определение. То е отделено с две запетаи, защото е допълнителна информация, която може да бъде изпусната, без изречението да губи смисъл.'
+        },
+        {
+          q: 'Правилото за запетая при ЕДНОРОДНИ части гласи:',
+          opts: [
+            'Никога не се слага запетая между еднородни части',
+            'Между еднородните части се слага запетая; преди последното „и" обикновено НЕ се слага',
+            'Винаги се слага запетая, включително преди „и"',
+            'Запетая само при повече от 5 еднородни части'
+          ],
+          correct: 1,
+          explanation: 'При еднородни части се слага запетая между всяка двойка, но преди последното „и" (или „или") обикновено НЕ се слага запетая: „хляб, мляко и сирене". Изключение: ако частите са дълги или ако има нужда от пауза за яснота.'
+        },
+        {
+          q: 'В изречението „Книгата, купена вчера, е много интересна" — „купена вчера" е:',
+          opts: ['Подлог', 'Сказуемо', 'Обособено определение', 'Еднородна част'],
+          correct: 2,
+          explanation: '„Купена вчера" е обособено определение — допълнителна характеристика на „книгата", отделена с две запетаи. Може да бъде изпусната без загуба на основния смисъл: „Книгата е много интересна." остава граматически правилно.'
+        },
+        {
+          q: 'Обстоятелственото пояснение за МЯСТО отговаря на въпроса:',
+          opts: ['Кога?', 'Как?', 'Защо?', 'Къде?'],
+          correct: 3,
+          explanation: 'Обстоятелственото пояснение за място отговаря на въпроса „Къде?". Видове обстоятелствени пояснения: за място (къде?), за време (кога?), за начин (как?), за причина (защо?), за цел (за какво?).'
+        },
+        {
+          q: 'В изречението „Тя пее красиво на сцената всяка вечер" — „всяка вечер" е:',
+          opts: ['Определение', 'Обстоятелствено пояснение за начин', 'Обстоятелствено пояснение за време', 'Допълнение'],
+          correct: 2,
+          explanation: '„Всяка вечер" е обстоятелствено пояснение за време — отговаря на „кога?" (кога пее? — всяка вечер). „Красиво" е за начин (как?), „на сцената" е за място (къде?).'
+        },
+        {
+          q: 'Определението се открива с въпроса:',
+          opts: ['Кога? Къде? Как?', 'Кого? Какво?', 'Какъв? Коя? Чий? Кое?', 'Кой? Кое?'],
+          correct: 2,
+          explanation: 'Определението отговаря на въпросите „какъв?/каква?/какво?", „коя?", „чий?", „кое?". „Голямата врата" — каква врата? Голямата. Подлогът отговаря на „кой/кое?", допълнението на „кого/какво?".'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

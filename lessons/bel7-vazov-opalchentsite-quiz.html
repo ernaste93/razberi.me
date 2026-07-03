@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Опълченците на Шипка · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-vazov-opalchentsite-q1',
+      lessonUrl: '/lessons/bel7-vazov-opalchentsite.html',
+      lessonName: 'Опълченците на Шипка',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Опълченците на Шипка',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel7-vazov-opalchentsite-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'В коя година е роден Иван Вазов?',
+          opts: ['1830', '1850', '1876', '1900'],
+          correct: 1,
+          explanation: 'Иван Вазов е роден на 9 юли 1850 г. в Сопот. Умира през 1921 г. в София. Живял е 71 години и е бил свидетел на Освобождението и изграждането на свободна България.'
+        },
+        {
+          q: 'С какво прозвище е известен Иван Вазов в историята на българската литература?',
+          opts: ['Апостолът на свободата', 'Патриархът на българската литература', 'Ботевият наследник', 'Бащата на романа'],
+          correct: 1,
+          explanation: 'Иван Вазов е известен като „Патриарх на българската литература" — пръв по значение и по обем творчество. Той е поет, романист и драматург, чието дело обхваща всички литературни жанрове.'
+        },
+        {
+          q: 'Как се казва цикълът оди, в който е включено стихотворението „Опълченците на Шипка"?',
+          opts: ['Под игото', 'Великите на деня', 'Епопея на забравените', 'Сказания за времето'],
+          correct: 2,
+          explanation: '„Епопея на забравените" е цикъл от 12 оди на Вазов, написани в периода 1881–1884 г. Названието означава „велик разказ за героите, чиито подвизи рискуват да бъдат забравени".'
+        },
+        {
+          q: 'Колко оди съдържа „Епопея на забравените"?',
+          opts: ['7', '10', '12', '15'],
+          correct: 2,
+          explanation: '„Епопея на забравените" се състои от точно 12 оди, посветени на 12 ключови личности и събития от националноосвободителното движение.'
+        },
+        {
+          q: 'В кой период са написани одите от „Епопея на забравените"?',
+          opts: ['1870–1875', '1876–1880', '1881–1884', '1890–1895'],
+          correct: 2,
+          explanation: 'Одите от „Епопея на забравените" са написани в периода 1881–1884 г., когато Вазов е в изгнание — първо в Румъния (Браила), а после в Одеса (Русия).'
+        },
+        {
+          q: 'Каква е историческата основа на одата „Опълченците на Шипка"?',
+          opts: ['Априлското въстание от 1876 г.', 'Битката при Шипченския проход по време на Руско-турската война (1877)', 'Боят при Стара Загора (1877)', 'Четата на Хаджи Димитър (1868)'],
+          correct: 1,
+          explanation: 'Одата е посветена на защитниците на Шипченския проход по времето на Руско-турската освободителна война (1877–1878). В август 1877 г. малоброен отряд от руски войски и български опълченци задържа прохода срещу многократно превъзхождащата ги турска армия.'
+        },
+        {
+          q: 'В кой град е роден Иван Вазов?',
+          opts: ['София', 'Пловдив', 'Сопот', 'Калофер'],
+          correct: 2,
+          explanation: 'Иван Вазов е роден в Сопот, Карловско. Интересно е, че в романа „Под игото" действието се развива в измислен град Бяла Черква, чийто прототип е именно Сопот.'
+        },
+        {
+          q: 'Какво означава думата „епопея" в заглавието „Епопея на забравените"?',
+          opts: ['Тъжна история', 'Велик разказ за героични дела', 'Стихотворение за природата', 'Молба към боговете'],
+          correct: 1,
+          explanation: '„Епопея" идва от гръцки и означава „велик разказ за героични дела". Вазов избира тази дума, за да подчертае величието на делата на героите от националноосвободителното движение.'
+        },
+        {
+          q: 'Защо Вазов пише одите в изгнание?',
+          opts: ['Защото там имал по-добри условия за писане', 'Защото бил принуден да напусне България поради политическо преследване', 'Защото искал да научи руски език', 'Защото му харесвало да пътува'],
+          correct: 1,
+          explanation: 'След Освобождението в България настъпват политически размирици. Вазов е принуден да напусне страната — заминава за Румъния (Браила), а после за Одеса (Русия). Именно в изгнание пише по-голямата част от одите в „Епопея на забравените".'
+        },
+        {
+          q: 'Към кого е посветена одата „Опълченците на Шипка" в цикъла?',
+          opts: ['Само към руските войски', 'Само към Левски', 'Към българските опълченци, защитили Шипченския проход', 'Към цар Александър II'],
+          correct: 2,
+          explanation: 'Одата „Опълченците на Шипка" е посветена на българските опълченци (и руските им съратници), защитили Шипченския проход в август 1877 г. Тяхната защита е ключов момент в Руско-турската война.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

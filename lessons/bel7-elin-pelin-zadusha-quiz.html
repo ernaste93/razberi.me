@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Елин Пелин Задушница · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span><script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script><span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a><a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div><div class="quiz-title" id="quiz-title"></div><div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div><div class="quiz-q-text" id="q-text"></div><div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-elin-pelin-zadusha-q1',
+      lessonUrl: '/lessons/bel7-elin-pelin-zadusha.html',
+      lessonName: 'Елин Пелин — Задушница',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Елин Пелин, биография и творчество',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel7-elin-pelin-zadusha-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Кое е истинското име на Елин Пелин?',
+          opts: ['Иван Минчов', 'Димитър Иванов Стоянов', 'Петко Тодоров', 'Алеко Константинов'],
+          correct: 1,
+          explanation: 'Елин Пелин е псевдоним. Истинското му име е Димитър Иванов Стоянов. Псевдонимът е взет от родното му село Байлово, Елинпелинско (сега общината носи неговото литературно име).'
+        },
+        {
+          q: 'В кое село е роден Елин Пелин?',
+          opts: ['Жеравна', 'Сопот', 'Байлово', 'Клисура'],
+          correct: 2,
+          explanation: 'Елин Пелин е роден в село Байлово, Елинпелинско (днес Елин Пелин е и название на цяла община). Селото е в Софийско и оказва голямо влияние на неговото творчество.'
+        },
+        {
+          q: 'Кои са годините на живот на Елин Пелин?',
+          opts: ['1850–1921', '1877–1949', '1848–1876', '1880–1937'],
+          correct: 1,
+          explanation: 'Елин Пелин живее от 1877 до 1949 г. — дълъг живот от 72 години. Той е съвременник на Йовков, но за разлика от него умира на напреднала възраст.'
+        },
+        {
+          q: 'С какво е известен Елин Пелин в българската литература?',
+          opts: ['Исторически романи за Освобождението', 'Разкази за живота на българското село с лирична топлота', 'Революционна поезия', 'Исторически драми'],
+          correct: 1,
+          explanation: 'Елин Пелин е известен с разказите и повестите си за живота на българското село. Стилът му се отличава с лирична топлота, мек хумор и дълбок хуманизъм. Обича своите герои — прости хора, но с богат вътрешен живот.'
+        },
+        {
+          q: 'Коя е най-известната детска книга на Елин Пелин?',
+          opts: ['„Под игото"', '„Ян Бибиян"', '„Бай Ганьо"', '„Хаджи Димитър"'],
+          correct: 1,
+          explanation: '„Ян Бибиян" (1933) е най-известната детска книга на Елин Пелин — за малчугана Ян Бибиян и неговите фантастични приключения с дявол Фют. Книгата е обичана от поколения български деца.'
+        },
+        {
+          q: 'Каква е темата на разказа „Андрешко" от Елин Пелин?',
+          opts: ['За любовта в селото', 'За хитър и горделив селянин, противопоставящ се на властта', 'За задушницата', 'За войната'],
+          correct: 1,
+          explanation: '„Андрешко" е един от най-известните разкази на Елин Пелин — за горделив селянин, отказващ да превози съдебен пристав в колата си. Той е символ на народната гордост и независимост.'
+        },
+        {
+          q: 'Кой е главният герой на разказа „Задушница"?',
+          opts: ['Хитър Петър', 'Дядо Пею', 'Индже', 'Дядо Йоцо'],
+          correct: 1,
+          explanation: 'Главният герой на „Задушница" е дядо Пею — стар селянин, отиващ на гробищата да поменува починалата си жена. Той е прост, но дълбок — тихата му скръб е трогателна.'
+        },
+        {
+          q: 'Какъв е стилът на Елин Пелин?',
+          opts: ['Суров и документален', 'Сатиричен и злобен', 'Лиричен, топъл, с мек хумор и близо до народната реч', 'Патетичен и героичен'],
+          correct: 2,
+          explanation: 'Елин Пелин пише с лирична топлота — езикът му е прост и ясен, близо до народната реч. Описанията на природата са поетични. Хуморът му е мек и добродушен — той не осмива, а разбира и обича героите си.'
+        },
+        {
+          q: 'Какво описва повестта „Гераците" (1911) на Елин Пелин?',
+          opts: ['Историята на революционер', 'Разпадането на едно селско семейство поради алчност', 'Любовна история в града', 'Народни предания за хайдути'],
+          correct: 1,
+          explanation: '„Гераците" описва разпадането на едно голямо селско семейство поради алчност и егоизъм. Повестта е критика на социалните промени в селото — разпадането на традиционния бит и ценности под натиска на парите и индивидуализма.'
+        },
+        {
+          q: 'За какъв тип герои пише предимно Елин Пелин?',
+          opts: ['Богати търговци и аристократи', 'Прости селяни, земеделци и бедни хора', 'Революционери и национални герои', 'Свещеници и монаси'],
+          correct: 1,
+          explanation: 'Елин Пелин пише предимно за прости селяни, земеделци и бедни хора — те са неговите любими герои. Той ги показва с достойнство и разбиране. В тяхната простота открива красота и мъдрост.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

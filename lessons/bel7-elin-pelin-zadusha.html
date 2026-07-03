@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Елин Пелин — Задушница · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .poem-block { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0; font-style: italic; font-size: 14px; line-height: 2; color: var(--text); white-space: pre-line; }
+    .poem-author { font-size: 11px; font-style: normal; font-weight: 700; color: var(--muted); margin-top: 8px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover { opacity: .9; transform: translateY(-2px); }
+    #selection-tooltip { position: fixed; z-index: 9999; display: none; transform: translateX(-50%); pointer-events: none; }
+    #selection-tooltip.show { display: block; pointer-events: auto; }
+    #explain-selection { display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 14px rgba(30,58,95,0.28); transition: opacity .12s, transform .12s; }
+    #explain-selection:hover { opacity: .9; transform: scale(1.04); }
+    #explain-selection::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <button id="btn-top" class="scroll-top-btn" aria-label="Върни се горе">▲</button>
+
+  <button id="btn-ask-znaiko" aria-label="Попитай Знайко">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Попитай Знайко
+  </button>
+
+  <div id="selection-tooltip">
+    <button id="explain-selection">💡 Обясни</button>
+  </div>
+
+  <main>
+    <div class="lesson-page">
+
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a>
+        <span>›</span>
+        <a href="/urotsi.html">БЕЛ 7 клас</a>
+        <span>›</span>
+        Елин Пелин — Задушница
+      </div>
+
+      <section class="demo-layout" style="margin:0 0 0 0;">
+
+        <div class="lesson-panel">
+          <div class="lesson-tag">📖 БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА</div>
+          <div class="lesson-title">Елин Пелин — „Задушница"</div>
+          <div class="lesson-meta">Биография · Сюжет · Образи · Обред · Теми · ~10 мин четене</div>
+
+          <div id="lesson-content">
+
+            <!-- ══ 1. БИОГРАФИЯ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Елин Пелин — живот и творчество</div>
+            <div class="lesson-body">
+              <p><strong>Елин Пелин (1877–1949)</strong> е псевдоним на Димитър Иванов Стоянов, роден в село Байлово, Елинпелинско (откъдето и псевдонимът). Той е един от най-обичаните български писатели — майстор на разказа, с дълбоко разбиране на селския живот, природата и народната душа.</p>
+              <p>Елин Пелин пише предимно за <strong>живота на българското село</strong> в края на XIX и началото на XX в. — бедността, земята, природата, народните вярвания. Стилът му се отличава с мека хуморност, лирическа топлота и дълбок хуманизъм. Никога не е жесток към героите си — той ги разбира и обича.</p>
+              <p><strong>Основни творби:</strong> „Мечтатели" (1907), „Гераците" (1911), „Ян Бибиян" (1933), разказите „Задушница", „Андрешко", „Грехът на Иван Белин".</p>
+            </div>
+
+            <!-- ══ 2. КАКВО Е ЗАДУШНИЦА ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Народният обред „Задушница"</div>
+            <div class="lesson-body">
+              <p><strong>Задушница</strong> е народен православен обред за почит към починалите. Провежда се няколко пъти в годината (особено на Родителска събота преди Великден и на Архангелова задушница). Семействата отиват на гробища, носят храна и вино, запалват свещи и поменуват починалите.</p>
+              <p>Обредът е израз на вярата, че <strong>мъртвите не са изчезнали</strong> — те продължават да „живеят" в паметта на живите. Задушницата е мост между живите и мъртвите. Тя е тъжна, но и топла — пълна с обич и спомен.</p>
+            </div>
+
+            <!-- ══ 3. СЮЖЕТ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Сюжет на разказа „Задушница"</div>
+            <div class="lesson-body">
+              <p>Разказът е кратък и лиричен. На задушница <strong>дядо Пею</strong> — стар селянин — отива на гробищата. Той носи малко храна и вино, запалва свещ на гроба на жена си. Около него — живот и смърт преплетени: хора се молят, деца тичат, природата живее.</p>
+              <p>Дядо Пею поговаря мислено с починалата жена. Споменът е жив. Той не скърби истерично — скърбта му е тиха, дълбока, достойна. Природата около него е спокойна и красива.</p>
+              <p>В края дядо Пею се завръща в селото — но носи в себе си спомена, съхранен чрез обреда. Смъртта не е ужас, а естествена граница между живите и мъртвите, които продължават да са заедно в паметта.</p>
+            </div>
+
+            <!-- ══ 4. ОБРАЗИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Образи в разказа</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">👴</div>
+                <div class="key-point-text"><strong>Дядо Пею — главен герой:</strong> Стар селянин, носещ в себе си тихата скръб по починалата жена. Прост, но дълбок. Не показва болката си с думи — изразява я чрез обреда. Символ на достойното старчество и вярата в продължителността на любовта.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌿</div>
+                <div class="key-point-text"><strong>Природата — участник в разказа:</strong> При Елин Пелин природата е жива и чувствена. Есенните цветя, небето, земята около гробищата — всичко е описано с любов. Природата е вечна, а хората — временни, но оставят следа.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🕯️</div>
+                <div class="key-point-text"><strong>Обредът — свещен акт:</strong> Запалването на свещта, поставянето на храна, молитвата — тези действия са не просто традиция, а дълбоко значими актове. Те поддържат връзката между живите и мъртвите.</div>
+              </div>
+            </div>
+
+            <!-- ══ 5. ТЕМИ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Основни теми</div>
+            <div class="key-points">
+              <div class="key-point">
+                <div class="key-point-icon">⏳</div>
+                <div class="key-point-text"><strong>Смъртта като естествена частот живота:</strong> Елин Пелин не се страхува от темата за смъртта. При него смъртта не е ужас — тя е естествен преход, естествена граница. Хората умират, но любовта и паметта продължават.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">💭</div>
+                <div class="key-point-text"><strong>Паметта за близките:</strong> Задушницата е акт на памет — да помним тези, които са ни обичали. Паметта е начинът, по който мъртвите продължават да живеят. Дядо Пею пази жива паметта за жена си.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">🌾</div>
+                <div class="key-point-text"><strong>Народни традиции и вяра:</strong> Обредът разкрива народната психология — вярата, че мъртвите чуват молитвите, приемат жертвите. Традицията е начин да се поддържа общността на живи и мъртви.</div>
+              </div>
+              <div class="key-point">
+                <div class="key-point-icon">❤️</div>
+                <div class="key-point-text"><strong>Хуманизъм и топлота:</strong> Елин Пелин обича своите герои — дори в тъга, дори в бедност, те са достойни и красиви. Неговият хуманизъм е мек, топъл, разбиращ.</div>
+              </div>
+            </div>
+
+            <!-- ══ 6. СТИЛ ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Стил на Елин Пелин</div>
+            <div class="lesson-body">
+              <p>Елин Пелин пише с <strong>лирична топлота</strong> — езикът му е прост, ясен, близо до народната реч. Описанията на природата са живи и поетични. Героите са прости хора, но показани с достойнство и разбиране.</p>
+              <p><strong>Хуморът</strong> при Елин Пелин е мек и добродушен — не осмива, а разбира и обича. Дори в тежките разкази се промъква лека усмивка, протопление. Разказите му имат мелодична ритмика, близка до народния разказ.</p>
+            </div>
+            <div class="poem-block">„Гробищата бяха пълни с народ. Лумтяха свещи, носеше се дим от тамян..."
+<div class="poem-author">— Елин Пелин, „Задушница"</div></div>
+
+            <!-- ══ 7. НВО ══ -->
+            <div class="lesson-divider"></div>
+            <div class="section-title">Най-важното за НВО</div>
+            <div class="key-points">
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Автор:</strong> Елин Пелин (1877–1949) — псевдоним на Димитър Стоянов; роден в с. Байлово.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Разказ „Задушница":</strong> за народния обред за поменуване на починалите.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Дядо Пею:</strong> главен герой — старец с тихата скръб по жена си; символ на вярност и памет.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Задушница (обредът):</strong> народен обичай — отиване на гробища, свещи, храна, молитва.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Теми:</strong> смърт като естествена граница, памет за близките, народни традиции, хуманизъм.</div></div>
+              <div class="key-point"><div class="key-point-icon">📌</div><div class="key-point-text"><strong>Стил:</strong> лиричен, топъл, близо до народната реч; природата е одухотворена.</div></div>
+            </div>
+
+          </div>
+
+          <div class="lesson-panel" style="margin-top:0;">
+            <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">Провери знанията си</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">3 теста · по 10 въпроса всеки</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a href="/lessons/bel7-elin-pelin-zadusha-quiz.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 1</a>
+              <a href="/lessons/bel7-elin-pelin-zadusha-quiz-2.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 2</a>
+              <a href="/lessons/bel7-elin-pelin-zadusha-quiz-3.html" style="flex:1;min-width:100px;text-align:center;padding:11px 16px;background:var(--soft);color:var(--text);border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;">Тест 3</a>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="ai-panel" id="ai-panel">
+          <div class="ai-header">
+            <div class="ai-header-title"><strong>Знайко</strong></div>
+            <button id="ai-panel-close" aria-label="Затвори">×</button>
+          </div>
+          <div id="ai-output" class="ai-output">
+            <p>Маркирай дума или изречение от урока и цъкни <strong>„Обясни маркираното"</strong> — ще го обясня по друг начин.</p>
+          </div>
+          <div class="feedback-row" id="feedback-row" style="display:none;">
+            <button id="understood">Продължи с урока</button>
+            <button id="still-confused">Обясни пак</button>
+          </div>
+          <form class="ai-free-form" id="ai-free-form" style="display:none;">
+            <input type="text" id="ai-free-input" placeholder="Питай ме каквото искаш..." autocomplete="off" />
+            <button type="submit">→</button>
+          </form>
+        </aside>
+
+      </section>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    const btnTop = document.getElementById('btn-top');
+    window.addEventListener('scroll', () => { btnTop.classList.toggle('visible', window.scrollY > 200); });
+    btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+  <script>
+    window.LESSON_TITLE   = 'Елин Пелин — „Задушница"';
+    window.LESSON_SUBJECT = 'БЕЛ';
+  </script>
+  <script src="/lessons/time-tracker.js"></script>
+  <script src="/lessons/lesson-ai.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('a[href*="-quiz"]');
+      links.forEach(function(a) {
+        var href = a.getAttribute('href');
+        var key = href.replace(/.*\//, '').replace('-quiz-2.html', '-q2').replace('-quiz-3.html', '-q3').replace('-quiz.html', '-q1');
+        var raw = localStorage.getItem('quiz_' + key);
+        if (!raw) return;
+        var d = JSON.parse(raw);
+        a.innerHTML = a.innerHTML + '<span style="display:block;font-size:11px;font-weight:600;opacity:.85;margin-top:2px;">' + (d.passed ? '✓' : '✗') + ' ' + d.correct + '/' + d.total + '</span>';
+        if (d.passed) { a.style.background = '#16a34a'; a.style.color = '#fff'; a.style.borderColor = '#16a34a'; }
+        else { a.style.borderColor = '#d97706'; a.style.color = '#92400e'; }
+      });
+    })();
+  </script>
+  <script src="/sidebar.js"></script>
+</body>
+</html>

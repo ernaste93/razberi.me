@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Ботев „Майце си" · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-botev-maytse-si-q3',
+      lessonUrl: '/lessons/bel7-botev-maytse-si.html',
+      lessonName: 'Ботев „Майце си"',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Ботев „Майце си"',
+      sub: '10 въпроса · Художествени средства и цитати',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Кое художествено средство е употребено в израза „студена чужбина"?',
+          opts: ['Антитеза', 'Епитет', 'Олицетворение', 'Анафора'],
+          correct: 1,
+          explanation: '„Студена чужбина" е епитет — художествено определение, което добавя емоционална характеристика. „Студена" тук не означава само физически студ, а отчужденост, самота и липса на топлина в чуждата земя.'
+        },
+        {
+          q: 'Към кого е адресирано стихотворението „Майце си"?',
+          opts: ['Към Родината', 'Към майката', 'Към другарите', 'Към Бог'],
+          correct: 1,
+          explanation: '„Майце си" означава „На майка си" (дателен падеж). Стихотворението е адресирано към майката на Ботев — обръщението „майко" пронизва цялата творба и създава интимен, лирически тон.'
+        },
+        {
+          q: 'Обръщението „майко" в стихотворението е пример за:',
+          opts: ['Метафора', 'Сравнение', 'Апостроф (обръщение)', 'Хипербола'],
+          correct: 2,
+          explanation: 'Апострофът (обръщението) е художествено средство, при което лирическият аз се обръща директно към конкретно лице, предмет или абстрактно понятие. „Майко" е пряко обръщение към майката.'
+        },
+        {
+          q: 'Какво основно противопоставяне изгражда Ботев в „Майце си"?',
+          opts: ['Мир и война', 'Родина и чужбина (дом и изгнание)', 'Младост и старост', 'Богатство и бедност'],
+          correct: 1,
+          explanation: 'Антитезата родина–чужбина е централна в стихотворението. Лирическият аз е в чуждата земя (изгнание), копнее за дома и майката. Противопоставянето на топлия дом и студената чужбина е емоционалното ядро на творбата.'
+        },
+        {
+          q: 'Какъв жанр е „Майце си"?',
+          opts: ['Поема', 'Лирическо стихотворение', 'Балада', 'Ода'],
+          correct: 1,
+          explanation: '„Майце си" е лирическо стихотворение — изразява личните чувства и преживявания на лирическия аз. За разлика от поемата (която е по-дълга и разказва история), лирическото стихотворение се съсредоточава върху емоциите.'
+        },
+        {
+          q: 'Коя е основната тема на „Майце си"?',
+          opts: ['Борбата за свобода', 'Носталгия по дома и копнеж по майката', 'Героичната смърт', 'Предателството'],
+          correct: 1,
+          explanation: 'Основната тема е носталгията — копнежът по дома, майката и родината. Ботев пише стихотворението в изгнание и изразява болката от раздялата с близките и с България.'
+        },
+        {
+          q: 'Какво чувство преобладава в лирическия аз на „Майце си"?',
+          opts: ['Гняв и омраза', 'Тъга, самота и носталгия', 'Гордост и радост', 'Страх и безпокойство'],
+          correct: 1,
+          explanation: 'Преобладаващото чувство е тъгата и носталгията. Лирическият аз е сам в чуждата земя, далеч от майка си и родината. Стихотворението е изповед на самотен млад мъж в изгнание.'
+        },
+        {
+          q: 'Антитезата като художествено средство представлява:',
+          opts: ['Повторение на думи в началото на стихове', 'Преувеличаване на качество или явление', 'Рязко противопоставяне на два образа или понятия', 'Приписване на човешки черти на предмети'],
+          correct: 2,
+          explanation: 'Антитезата е художествено средство, основано на рязкото противопоставяне на противоположни образи, понятия или явления. В „Майце си" антитезата домашна топлина/студена чужбина е ключов структурен и емоционален елемент.'
+        },
+        {
+          q: 'Кой е лирическият аз в „Майце си"?',
+          opts: ['Стар войник', 'Млад мъж в изгнание, далеч от майка си', 'Революционер на бойното поле', 'Бедняк без дом'],
+          correct: 1,
+          explanation: 'Лирическият аз е млад мъж (Ботев), принуден да живее в чужбина далеч от дома и майка си. Стихотворението е автобиографично — Ботев е емигрирал в Румъния, където е написал много от творбите си.'
+        },
+        {
+          q: 'Кое твърдение за „Майце си" е ВЯРНО?',
+          opts: [
+            'Написано е в памет на загинал хайдутин',
+            'Разказва за героична битка',
+            'Изразява личната болка на поета от раздялата с майката и родината',
+            'Написано е в стил на народна песен без авторска намеса'
+          ],
+          correct: 2,
+          explanation: '„Майце си" е лична изповед на Ботев — изразява неговата болка от изгнанието и копнежа по майката и родината. За разлика от „Хаджи Димитър", тук темата е лична и интимна, а не героично-патриотична.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

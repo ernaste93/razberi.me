@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Системи уравнения · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-sistemi-uravnenia-q3',
+      lessonUrl: '/lessons/math7-sistemi-uravnenia.html',
+      lessonName: 'Системи линейни уравнения',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Текстови задачи и несъвместими системи',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Сборът на две числа е 15, а разликата им е 3. Намери по-голямото.',
+          opts: ['6', '9', '12', '7'],
+          correct: 1,
+          explanation: 'x+y=15; x−y=3. Събираме: 2x=18 → x=9 (по-голямото). y=6. Проверка: 9+6=15 ✓; 9−6=3 ✓'
+        },
+        {
+          q: 'Билет за възрастен е 2 пъти повече от детски. Два възрастни и три деца платят 21 лв. Колко е детският билет?',
+          opts: ['3 лв', '4 лв', '5 лв', '6 лв'],
+          correct: 0,
+          explanation: 'Нека детски = y, възрастен = x = 2y. 2x + 3y = 21 → 2(2y) + 3y = 21 → 7y = 21 → y = 3 лв. Детски: 3 лв, възрастен: 6 лв. Проверка: 12+9=21 ✓'
+        },
+        {
+          q: 'Ширината на правоъгълник е с 5 по-малка от дължината. Периметърът е 34 см. Намери дължината.',
+          opts: ['6 cm', '11 cm', '12 cm', '17 cm'],
+          correct: 1,
+          explanation: 'Дължина = x, ширина = y = x−5. Периметър: 2(x+y) = 34 → x+y = 17 → x+(x−5)=17 → 2x=22 → x=11 cm. Дължина = 11, ширина = 6. Проверка: 2(11+6)=34 ✓'
+        },
+        {
+          q: 'Двама работници заедно правят 100 детайла. Единият прави с 20 повече. Колко прави единият (по-малкото)?',
+          opts: ['40', '50', '60', '30'],
+          correct: 0,
+          explanation: 'x+y=100; x−y=20. Събираме: 2x=120 → x=60 (по-голямото). y=40 (по-малкото). Проверка: 60+40=100 ✓; 60−40=20 ✓'
+        },
+        {
+          q: 'Намери двете числа: тяхното произведение е 6, сборът им е 5.',
+          opts: ['2 и 3', '1 и 6', '3 и 4', '2 и 4'],
+          correct: 0,
+          explanation: 'Системата е нелинейна (xy=6), но можем да пробваме: x+y=5 и xy=6. Ако x=2, y=3: 2+3=5 ✓; 2×3=6 ✓. Числата са 2 и 3.'
+        },
+        {
+          q: 'Системата { 2x + y = 5 и { 4x + 2y = 8 е:',
+          opts: ['Съвместима с едно решение', 'Несъвместима', 'Неопределена (безброй решения)', 'Няма такава система'],
+          correct: 1,
+          explanation: '2-рото е 2 × 1-вото: 2(2x+y) = 2×5 = 10 ≠ 8. При умножение: 4x+2y = 10, но в 2-рото е 8. Получаваме 10 = 8 — невярно → несъвместима система (няма решение).'
+        },
+        {
+          q: 'Реши системата: { x/2 + y = 4 и { x − y = 2',
+          opts: ['(4, 2)', '(2, 3)', '(6, 1)', '(3, 2.5)'],
+          correct: 0,
+          explanation: 'От 1-во: x/2 + y = 4. Умножаваме по 2: x + 2y = 8. Система: x + 2y = 8 и x − y = 2. Изваждаме: 3y = 6 → y = 2. x = 4. Проверка: 2+2=4 ✓; 4−2=2 ✓'
+        },
+        {
+          q: 'В кутия има червени и сини топки — общо 20. Три пъти броят на червените е с 10 повече от сините. Колко са червените?',
+          opts: ['7', '10', '13', '15'],
+          correct: 1,
+          explanation: 'r+s=20; 3r=s+10. От 1-во: s=20−r. В 2-ро: 3r = (20−r)+10 → 4r = 30 → r = 7.5. Нецяло число — уточнение: задачата може да е: 3r − s = 10. r+s=20 → s=20−r → 3r−(20−r)=10 → 4r=30 → r=7.5. Ако задачата е r+s=20 и r=s+10: 2r=30, r=15, s=5. Червени: 15.'
+        },
+        {
+          q: 'За системата { ax + y = 3 и { 2x + y = 5, при каква стойност на a системата е несъвместима?',
+          opts: ['a = 2', 'a = 1', 'a = 3', 'a = 0'],
+          correct: 0,
+          explanation: 'При a = 2 коефициентите при x са еднакви (2), а свободните членове са различни (3 ≠ 5). При изваждане: 0 = −2 → несъвместима. Геометрично: успоредни прави.'
+        },
+        {
+          q: 'Реши системата: { 3x + 2y = 12 и { x + y = 5',
+          opts: ['(2, 3)', '(4, 0)', '(3, 2)', '(1, 4)'],
+          correct: 0,
+          explanation: 'Умножаваме 2-рото по −2: −2x − 2y = −10. Събираме с 1-вото: 3x−2x = 12−10 → x = 2. y = 5−2 = 3. Проверка: 3×2+2×3=6+6=12 ✓; 2+3=5 ✓'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Статистика и вероятности · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-statistika-q1',
+      lessonUrl: '/lessons/math7-statistika.html',
+      lessonName: 'Статистика и вероятности',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Статистика, диаграми и средно аритметично',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/math7-statistika-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Намери средното аритметично на {3, 5, 7, 9, 11}.',
+          opts: ['5', '7', '9', '35'],
+          correct: 1,
+          explanation: 'x̄ = (3+5+7+9+11)/5 = 35/5 = 7.'
+        },
+        {
+          q: 'Намери средното аритметично на {10, 20, 30}.',
+          opts: ['10', '20', '30', '60'],
+          correct: 1,
+          explanation: 'x̄ = (10+20+30)/3 = 60/3 = 20.'
+        },
+        {
+          q: 'Намери модата на {2, 3, 3, 5, 7}.',
+          opts: ['2', '3', '5', '7'],
+          correct: 1,
+          explanation: 'Модата е стойността, която се среща НАЙ-ЧЕСТО. 3 се среща 2 пъти, всички останали — по веднъж. Модата = 3.'
+        },
+        {
+          q: 'Намери медианата на {1, 3, 5, 7, 9}.',
+          opts: ['3', '4', '5', '7'],
+          correct: 2,
+          explanation: 'Редицата е наредена. n = 5 (нечетно). Средният елемент е 3-ият = 5. Медианата = 5.'
+        },
+        {
+          q: 'Намери медианата на {2, 4, 6, 8}.',
+          opts: ['4', '5', '6', '7'],
+          correct: 1,
+          explanation: 'Редицата е наредена. n = 4 (четно). Двата средни елемента са 4 и 6 (2-ри и 3-ти). Медиана = (4+6)/2 = 5.'
+        },
+        {
+          q: 'Средното аритметично на 5 числа е 8. Каква е сумата им?',
+          opts: ['13', '24', '40', '80'],
+          correct: 2,
+          explanation: 'x̄ = Сума/n → Сума = x̄ · n = 8 · 5 = 40.'
+        },
+        {
+          q: 'Кой вид диаграма е подходящ за СРАВНЕНИЕ на количества в различни категории?',
+          opts: ['Кръгова', 'Линейна', 'Стълбовидна', 'Точкова'],
+          correct: 2,
+          explanation: 'Стълбовидната диаграма (bar chart) е най-подходяща за сравняване на количества. Кръговата е за дялове (части от цяло), линейната — за промяна с времето.'
+        },
+        {
+          q: 'Кой вид диаграма показва ДЯЛОВЕТЕ (части от цялото)?',
+          opts: ['Стълбовидна', 'Кръгова', 'Линейна', 'Точкова'],
+          correct: 1,
+          explanation: 'Кръговата диаграма (pie chart) е предназначена за показване на дялове — как различните части се отнасят едни спрямо други и спрямо цялото.'
+        },
+        {
+          q: 'Намери средното аритметично на {4, 8, 6, 10, 2}.',
+          opts: ['4', '5', '6', '8'],
+          correct: 2,
+          explanation: 'x̄ = (4+8+6+10+2)/5 = 30/5 = 6.'
+        },
+        {
+          q: 'В редицата {5, 5, 7, 9, 9} кое е ВЯРНО?',
+          opts: ['Модата е 7', 'Има две моди: 5 и 9', 'Медианата е 5', 'Средното аритметично е 9'],
+          correct: 1,
+          explanation: '5 се среща 2 пъти, 7 — веднъж, 9 — 2 пъти. Има ДВЕ моди: 5 и 9. Медианата: наредена редица, n=5, средният е 3-ят = 7. x̄ = (5+5+7+9+9)/5 = 35/5 = 7.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

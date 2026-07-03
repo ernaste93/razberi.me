@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Синтаксис · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-sintaksis-q1',
+      lessonUrl: '/lessons/bel7-sintaksis.html',
+      lessonName: 'Синтаксис',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Синтаксис',
+      sub: '10 въпроса · Видове изречения и главни части',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel7-sintaksis-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Изречението „Отвори прозореца!" е:',
+          opts: ['Съобщително', 'Въпросително', 'Подбудително', 'Възклицателно'],
+          correct: 2,
+          explanation: 'Подбудителното изречение изразява заповед, молба или призив. „Отвори прозореца!" е заповед — типично подбудително изречение. Завършва с удивителен знак. Не бива да се бърка с възклицателното, което изразява силно чувство.'
+        },
+        {
+          q: 'Изречението „Кога ще пристигне влакът?" е:',
+          opts: ['Съобщително', 'Въпросително', 'Подбудително', 'Възклицателно'],
+          correct: 1,
+          explanation: 'Въпросителното изречение задава въпрос и завършва с въпросителен знак (?). „Кога ще пристигне влакът?" пита за информация — типично въпросително изречение.'
+        },
+        {
+          q: 'В изречението „Малкото момче тича в парка" — кой е подлогът?',
+          opts: ['малкото', 'момче', 'тича', 'парка'],
+          correct: 1,
+          explanation: 'Подлогът отговаря на въпроса „кой? кое?" — кой тича? „Момче" е подлогът. „Малкото" е определение към подлога. „Тича" е сказуемото, „в парка" е обстоятелствено пояснение.'
+        },
+        {
+          q: 'В изречението „Учителят обяснява урока" — кое е сказуемото?',
+          opts: ['Учителят', 'обяснява', 'урока', 'Учителят и урока'],
+          correct: 1,
+          explanation: 'Сказуемото отговаря на въпроса „какво прави подлогът?" — Учителят какво прави? „Обяснява." „Учителят" е подлог, „урока" е допълнение.'
+        },
+        {
+          q: 'Как се открива подлогът в изречението?',
+          opts: ['Пита се „какво прави?"', 'Пита се „кой? кое?"', 'Пита се „кога? къде?"', 'Пита се „какъв? чий?"'],
+          correct: 1,
+          explanation: 'Подлогът се открива с въпросите „кой?" или „кое?" — кой/кое извършва действието или е описван. Сказуемото отговаря на „какво прави?", определението на „какъв?", обстоятелственото на „кога/къде/как?".'
+        },
+        {
+          q: 'Изречението „Каква красива гледка!" е:',
+          opts: ['Съобщително', 'Въпросително', 'Подбудително', 'Възклицателно'],
+          correct: 3,
+          explanation: 'Възклицателното изречение изразява силно чувство — учудване, радост, страх. „Каква красива гледка!" изразява учудване и възхищение. Завършва с удивителен знак, но за разлика от подбудителното, не изразява заповед.'
+        },
+        {
+          q: 'В изречението „Слънцето грее ярко" — кое е сказуемото?',
+          opts: ['Слънцето', 'грее', 'ярко', 'грее ярко'],
+          correct: 1,
+          explanation: '„Грее" е сказуемото — изразява действието на подлога (Слънцето). „Слънцето" е подлог, „ярко" е обстоятелствено пояснение за начин (как грее? — ярко).'
+        },
+        {
+          q: 'Кое е ВЯРНО за съобщителното изречение?',
+          opts: ['Изразява заповед', 'Задава въпрос', 'Предава информация и завършва с точка', 'Изразява силно чувство'],
+          correct: 2,
+          explanation: 'Съобщителното изречение предава информация, съобщава факт. „Слънцето грее." — завършва с точка. То е най-честият вид изречение в общуването.'
+        },
+        {
+          q: 'В изречението „Бързото куче прескочи оградата" — подлогът е:',
+          opts: ['Бързото', 'куче', 'прескочи', 'оградата'],
+          correct: 1,
+          explanation: '„Куче" е подлогът — кой прескочи? Кучето. „Бързото" е определение към подлога (какво куче? — бързото). „Прескочи" е сказуемото, „оградата" е допълнение.'
+        },
+        {
+          q: 'Видовете изречения по цел на изказване са:',
+          opts: ['Прости и сложни', 'Съобщителни, въпросителни, подбудителни, възклицателни', 'ССИ и СПИ', 'Главни и подчинени'],
+          correct: 1,
+          explanation: 'По цел на изказване изреченията са четири вида: съобщителни (информация), въпросителни (въпрос), подбудителни (заповед/молба), възклицателни (силно чувство). Простите/сложните и ССИ/СПИ са видове по строеж, а не по цел.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

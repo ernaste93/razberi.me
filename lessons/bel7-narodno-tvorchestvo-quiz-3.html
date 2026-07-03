@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Народно творчество · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-narodno-tvorchestvo-q3',
+      lessonUrl: '/lessons/bel7-narodno-tvorchestvo.html',
+      lessonName: 'Народно творчество',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Народни легенди и митове',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Каква е разликата между предание и легенда?',
+          opts: ['Преданието е по-дълго', 'Преданието е свързано с конкретно място и се представя за достоверно, легендата е по-фантастична', 'Легендата е само за животни', 'Преданието е в стихове'],
+          correct: 1,
+          explanation: 'Преданието е народен разказ, представящ се за достоверен и тясно свързан с конкретно място или събитие. Легендата съдържа повече фантастични елементи и е по-„художествена". Границата между двата жанра понякога е условна.'
+        },
+        {
+          q: 'Легендата, обясняваща защо петелът пее на разсъмване или защо котката мърка, се нарича:',
+          opts: ['Топонимична легенда', 'Историческа легенда', 'Религиозна легенда', 'Етиологична легенда'],
+          correct: 3,
+          explanation: 'Етиологичната легенда обяснява произхода и причините за природни явления, поведение на животни, особености на растения. „Етиология" идва от гръцки и означава „наука за причините".'
+        },
+        {
+          q: 'За кого са историческите легенди?',
+          opts: ['За митични богове', 'За измислени герои без реална основа', 'За реални исторически личности и събития, обогатени с фантастика', 'Единствено за православни светци'],
+          correct: 2,
+          explanation: 'Историческите легенди са за реални исторически личности (Крали Марко, Ботев, Левски) и исторически събития, но са обогатени с фантастични елементи. Така народът е изразявал своята почит и е предавал исторически споменаване в по-запомняща се форма.'
+        },
+        {
+          q: 'Какво е главното послание на мита за Прометей?',
+          opts: ['Не трябва да крадеш от боговете', 'Саможертвата за доброто на другите и ценността на знанието и огъня', 'Боговете са по-силни от хората', 'Огънят е опасен и трябва да се пази'],
+          correct: 1,
+          explanation: 'Митът за Прометей носи послание за саможертвата — той е готов да понесе вечни мъки, за да даде на хората огъня (символ на цивилизацията, знанието, топлината). Прометей е символ на бунта срещу тиранията и любовта към човечеството.'
+        },
+        {
+          q: 'Каква е трагедията в мита за Орфей и Евридика?',
+          opts: ['Евридика отказва да го последва', 'Орфей не намира пътя към подземното царство', 'В последния момент Орфей се обръща и загубва Евридика завинаги', 'Хадес отказва да ги пусне'],
+          correct: 2,
+          explanation: 'Трагедията е, че Орфей получава правото да изведе Евридика от подземното царство с едно условие — да не се обръща. В последния момент, от любов и тревога, той се обръща. Евридика се завръща в царството на мъртвите и той я губи завинаги.'
+        },
+        {
+          q: 'С какво Орфей успява да „омае" Харон и Хадес?',
+          opts: ['С физическа сила', 'С пеенето и музиката си', 'С хитрост и измама', 'С дарове и злато'],
+          correct: 1,
+          explanation: 'Орфей омайва Харон (лодкаря на подземното царство) и Хадес (владетеля) с пеенето и музиката си. Дарбата му е толкова велика, че дори камъните плачели. Митът подчертава силата на изкуството над смъртта.'
+        },
+        {
+          q: 'Кой освобождава Прометей от скалата?',
+          opts: ['Зевс', 'Атина', 'Хермес', 'Херакъл'],
+          correct: 3,
+          explanation: 'Херакъл (Херкулес) е този, който освобождава Прометей от скалата, убивайки орела, изяждащ черния му дроб. Херакъл е известен с 12-те си подвига и е символ на геройска сила.'
+        },
+        {
+          q: 'Религиозните легенди са свързани предимно с:',
+          opts: ['Исторически битки и войни', 'Православни светци, чудеса и свещени места', 'Произхода на животните', 'Географски имена'],
+          correct: 1,
+          explanation: 'Религиозните легенди са свързани с православната традиция — разказват за светци (Иван Рилски, Петка Търновска), чудеса и свещени места. Те са важна част от народната вяра и духовен живот.'
+        },
+        {
+          q: 'Думата „фолклор" произлиза от английски и означава:',
+          opts: ['Стара история', 'Народна мъдрост (folk — народ, lore — знание)', 'Традиционна музика', 'Народен обичай'],
+          correct: 1,
+          explanation: 'Думата „фолклор" е съставена от английски: „folk" (народ) + „lore" (знание, мъдрост). Тя е въведена от английския учен Уилям Томс през 1846 г. и означава „народна мъдрост" или „народно знание".'
+        },
+        {
+          q: 'Кое е ВЯРНО за народните песни?',
+          opts: ['Народните песни са само любовни', 'Народните песни биват обредни, битови и юнашки', 'Народните песни нямат нравствено послание', 'Народните песни са задължително в ямбически стихове'],
+          correct: 1,
+          explanation: 'Народните песни се делят на обредни (коледни, лазарски, сватбени — свързани с обреди), битови (любовни, трудови, хумористични) и юнашки (за хайдути и борци за свобода). Всяка песен носи определено настроение и послание.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

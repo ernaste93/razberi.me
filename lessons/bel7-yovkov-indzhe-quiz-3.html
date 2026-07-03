@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Йовков Индже · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-yovkov-indzhe-q3',
+      lessonUrl: '/lessons/bel7-yovkov-indzhe.html',
+      lessonName: 'Йовков — Индже',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Теми и Йовков като автор',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Кое понятие описва идеята, че даже злодей може да намери пътя към доброто?',
+          opts: ['Трагедия', 'Нравствено изкупление', 'Социална критика', 'Романтизъм'],
+          correct: 1,
+          explanation: 'Нравственото изкупление е идеята, че чрез осъзнаване на греховете и промяна в поведението човек може да се „изкупи" — да компенсира злото, което е причинил. Именно това преживява Индже след срещата с майка си.'
+        },
+        {
+          q: 'Как можем да определим хуманизма на Йовков?',
+          opts: ['Вяра само в ума и логиката', 'Вяра в красотата и доброто у всеки човек', 'Критика на народните ценности', 'Песимизъм и неверие в хората'],
+          correct: 1,
+          explanation: 'Хуманизмът на Йовков е дълбока вяра в красотата и доброто у всеки човек. Дори злодеите у него носят потенциал за добро. Той не осъжда, а търси и открива красивото в хората, природата и живота.'
+        },
+        {
+          q: 'Какъв е жанрът на „Индже"?',
+          opts: ['Поема', 'Роман', 'Разказ (новела)', 'Пиеса'],
+          correct: 2,
+          explanation: '„Индже" е разказ (новела) — кратка художествена проза, концентрирана върху един значим епизод или промяна в живота на героя. Йовков е признат майстор именно на разказа и новелата.'
+        },
+        {
+          q: 'Коя тема е ОБЩА за разказите от „Старопланински легенди"?',
+          opts: ['Критика на политическата власт', 'Легендарни герои, природата и вечните човешки ценности', 'Градският живот и неговите проблеми', 'Историческата истина за Освобождението'],
+          correct: 1,
+          explanation: 'Разказите от „Старопланински легенди" обединява легендарна атмосфера, природата на Балкана и вечните човешки теми — любов, красота, доброта, греховност, изкупление. Героите са митизирани фигури — хайдути, хубавици, самодиви.'
+        },
+        {
+          q: 'Кой е образът на майката в „Индже" като художествен символ?',
+          opts: ['Символ на физическата сила', 'Символ на съвестта, нравственото начало и безусловната любов', 'Символ на националната свобода', 'Символ на природата'],
+          correct: 1,
+          explanation: 'Майката в „Индже" е многопластов символ: на съвестта (нейният поглед е нравственото огледало), на безусловната любов (обича сина си въпреки всичко) и на нравственото начало (тя е мерилото за доброто).'
+        },
+        {
+          q: 'Какво е значението на думата „метаморфоза" в контекста на „Индже"?',
+          opts: ['Смъртта на героя', 'Пълна промяна — от злодей към добродетелен човек', 'Завръщане в родното село', 'Среща с природата'],
+          correct: 1,
+          explanation: '„Метаморфоза" означава пълна трансформация. При Индже метаморфозата е нравствена — от жесток злодей той се превръща в закрилник на слабите. Тази промяна е сърцевината на разказа и главното послание на Йовков.'
+        },
+        {
+          q: 'Кога умира Йордан Йовков?',
+          opts: ['1920 г.', '1930 г.', '1937 г.', '1944 г.'],
+          correct: 2,
+          explanation: 'Йордан Йовков умира на 15 октомври 1937 г. от пневмония на 57-годишна възраст. Смъртта му е преждевременна — той е на върха на творческите си сили и е завършвал нови творби.'
+        },
+        {
+          q: 'Какво прави Йовков след войните — каква е работата му?',
+          opts: ['Учител в Жеравна', 'Дипломат в Букурещ', 'Лекар в София', 'Свещеник'],
+          correct: 1,
+          explanation: 'След войните Йовков работи като дипломат (аташе) в Букурещ, Румъния. Именно там пише много от своите най-значими произведения, включително „Старопланински легенди".'
+        },
+        {
+          q: 'Какво е посланието на разказа „Индже" за читателите?',
+          opts: ['Хайдутите са лоши хора', 'Злото не може да се победи', 'Всеки може да намери пътя към доброто чрез осъзнаване и промяна', 'Майките трябва да контролират децата си'],
+          correct: 2,
+          explanation: 'Посланието на „Индже" е универсално и хуманистично: всеки човек, независимо от миналото си, може да намери пътя към доброто. Осъзнаването на грешките и истинската промяна в поведението водят към духовно изкупление.'
+        },
+        {
+          q: 'Кое от следните твърдения е ВЯРНО за творчеството на Йовков?',
+          opts: ['Той е известен главно с поемите си', 'Той пише само за исторически теми', 'Той е майстор на разказа с поетичен стил и дълбок хуманизъм', 'Стилът му е сатиричен и хумористичен'],
+          correct: 2,
+          explanation: 'Йовков е признат майстор на разказа и новелата. Стилът му е поетичен и мелодичен, а светогледът му — дълбоко хуманистичен. Той вярва в красотата и доброто у човека и ги търси дори там, където другите виждат само зло.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

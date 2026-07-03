@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Триъгълник · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-triagalnik-q3',
+      lessonUrl: '/lessons/math7-triagalnik.html',
+      lessonName: 'Триъгълник',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Лице, периметър, неравенство',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Каква е формулата за лице на триъгълник?',
+          opts: ['S = a · h', 'S = ½ · a · h', 'S = a · b · c', 'S = a² · h'],
+          correct: 1,
+          explanation: 'Лицето на триъгълник е S = ½ · a · h, където a е основата, а h е съответната височина (перпендикулярът от срещуположния връх). Може да се използва всяка страна като основа с нейната височина.'
+        },
+        {
+          q: 'Намери лицето на триъгълник с основа a = 6 cm и височина h = 4 cm.',
+          opts: ['10 cm²', '12 cm²', '24 cm²', '48 cm²'],
+          correct: 1,
+          explanation: 'S = ½ · a · h = ½ · 6 · 4 = ½ · 24 = 12 cm².'
+        },
+        {
+          q: 'Периметърът на триъгълник е:',
+          opts: ['Произведение на страните', 'Сбор на трите страни', 'Половината от сбора на страните', 'Разлика на страните'],
+          correct: 1,
+          explanation: 'Периметърът на триъгълника е сборът на трите страни: P = a + b + c. Например при триъгълник с страни 3, 4 и 5: P = 3 + 4 + 5 = 12 cm.'
+        },
+        {
+          q: 'Намери периметъра на триъгълник с страни 5 cm, 7 cm и 9 cm.',
+          opts: ['16 cm', '19 cm', '21 cm', '315 cm'],
+          correct: 2,
+          explanation: 'P = a + b + c = 5 + 7 + 9 = 21 cm.'
+        },
+        {
+          q: 'Дали страните 3 cm, 4 cm и 8 cm образуват триъгълник?',
+          opts: ['Да, образуват', 'Не, защото 3 + 4 = 7 < 8', 'Не, защото 3 + 8 < 4', 'Да, защото 4 + 8 > 3'],
+          correct: 1,
+          explanation: 'За да образуват триъгълник, сумата на всяка двойка страни трябва да е по-голяма от третата. 3 + 4 = 7, но 7 < 8, значи неравенството НЕ е изпълнено. Не образуват триъгълник.'
+        },
+        {
+          q: 'Дали страните 3 cm, 4 cm и 6 cm образуват триъгълник?',
+          opts: ['Не, защото 3 + 4 < 6', 'Да, защото 3 + 4 = 7 > 6', 'Не, защото 4 + 6 е прекалено голямо', 'Да, но само ако е правоъгълен'],
+          correct: 1,
+          explanation: 'Проверяваме: 3 + 4 = 7 > 6 ✓; 3 + 6 = 9 > 4 ✓; 4 + 6 = 10 > 3 ✓. Всички три неравенства са изпълнени, следователно образуват триъгълник.'
+        },
+        {
+          q: 'Триъгълник с лице 30 cm² и основа 10 cm. Каква е височината?',
+          opts: ['3 cm', '6 cm', '15 cm', '300 cm'],
+          correct: 1,
+          explanation: 'S = ½ · a · h → h = 2S / a = 2 · 30 / 10 = 60 / 10 = 6 cm.'
+        },
+        {
+          q: 'В равностранен триъгълник с периметър 24 cm, каква е дължината на всяка страна?',
+          opts: ['4 cm', '6 cm', '8 cm', '12 cm'],
+          correct: 2,
+          explanation: 'В равностранен триъгълник трите страни са равни. P = 3a → a = P / 3 = 24 / 3 = 8 cm.'
+        },
+        {
+          q: 'Кое от следните е ВЯРНО за неравенството на триъгълника?',
+          opts: ['Сборът на две страни е равен на третата', 'Сборът на две страни е по-голям от третата', 'Произведението на две страни е по-голямо от третата', 'Разликата на две страни е по-голяма от третата'],
+          correct: 1,
+          explanation: 'Неравенство на триъгълника: сумата на всяка двойка страни трябва да е строго по-голяма от третата страна. a + b > c, a + c > b, b + c > a. Ако е изпълнено за двойката с най-малките числа, то е изпълнено и за останалите.'
+        },
+        {
+          q: 'Намери лицето на триъгълник с основа 10 cm и височина 7 cm.',
+          opts: ['17 cm²', '35 cm²', '70 cm²', '140 cm²'],
+          correct: 1,
+          explanation: 'S = ½ · a · h = ½ · 10 · 7 = ½ · 70 = 35 cm².'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

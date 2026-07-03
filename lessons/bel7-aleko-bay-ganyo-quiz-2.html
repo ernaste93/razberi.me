@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Алеко „Бай Ганьо" · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-aleko-bay-ganyo-q2',
+      lessonUrl: '/lessons/bel7-aleko-bay-ganyo.html',
+      lessonName: 'Алеко „Бай Ганьо"',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 2 — Алеко „Бай Ганьо"',
+      sub: '10 въпроса · Образът на Бай Ганьо',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel7-aleko-bay-ganyo-quiz-3.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Кое е ВЯРНО за характера на Бай Ганьо?',
+          opts: ['Образован, скромен и учтив', 'Лаком, нахален, невежа и хитър', 'Романтичен и мечтателен', 'Строг и дисциплиниран'],
+          correct: 1,
+          explanation: 'Бай Ганьо е събирателен образ на определени обществени недостатъци: лакомство (яде на чужда сметка), нахалство (натрапва се), невежество (не познава европейската цивилизация), хитрост (умее да се „нареди") и самохвалство.'
+        },
+        {
+          q: 'Как се проявява лакомството на Бай Ганьо?',
+          opts: ['Купува много скъпи вещи', 'Яде и пие на чужда сметка, използва всяка възможност за безплатна храна', 'Краде от магазини', 'Иска пари назаем'],
+          correct: 1,
+          explanation: 'Лакомството на Бай Ганьо се проявява в постоянното му ядене и пиене на чужда сметка. Той се отпуска у познати, яде максималното количество, не оставя бакшиш, и изобщо не изпитва неловкост от позицията си на паразит.'
+        },
+        {
+          q: 'Защо нахалството на Бай Ганьо е сатиричен обект?',
+          opts: ['Защото нарушава закона', 'Защото нарушава правилата на добро възпитание и приличие, без да осъзнава срама си', 'Защото е опасно за другите', 'Защото е много рядко явление'],
+          correct: 1,
+          explanation: 'Нахалството на Бай Ганьо е сатиричен обект, защото той нарушава нормите на добро възпитание, без дори да осъзнава срама. Европейците са учудени и смутени, а Бай Ганьо е доволен от себе си. Именно тази слепота към себе си е обект на сатирата.'
+        },
+        {
+          q: 'Как Алеко постига сатиричния ефект чрез противопоставяне?',
+          opts: ['Сравнява Бай Ганьо с исторически личности', 'Поставя Бай Ганьо в европейска среда, където контрастът между неговото поведение и цивилизованото общество е очевиден', 'Описва Бай Ганьо заедно с бедни хора', 'Разказва за детството на Бай Ганьо'],
+          correct: 1,
+          explanation: 'Алеко поставя Бай Ганьо в европейска среда (Виена, Прага, Берн), където контрастът е максимален. Поведението, което в България може да мине незабелязано, в Европа изпъква като неприлично, смешно и срамно. Контрастът е основното средство за сатира.'
+        },
+        {
+          q: 'Бай Ганьо е „събирателен образ" — какво означава това?',
+          opts: ['Той е исторически реален човек', 'Той олицетворява определен тип хора и обществени недостатъци, а не е конкретна личност', 'Той е събрал характеристики само от богатите хора', 'Той е измислен напълно от Алеко без основа в реалността'],
+          correct: 1,
+          explanation: 'Събирателният образ означава, че Бай Ганьо не е портрет на конкретен човек, а олицетворява определен социален тип. В него са събрани типичните черти на определена прослойка — хора с материална хватка, но без духовна и културна нагласа.'
+        },
+        {
+          q: 'Кое твърдение за невежеството на Бай Ганьо е ВЯРНО?',
+          opts: [
+            'Той е образован, но крие знанията си',
+            'Той не познава чужди езици, европейската култура и правилата на цивилизованото общество',
+            'Той е напълно неграмотен и не може да чете',
+            'Невежеството му е само по отношение на природните науки'
+          ],
+          correct: 1,
+          explanation: 'Невежеството на Бай Ганьо е многостранно: не говори чужди езици, не познава европейската култура и обичаи, не разбира правилата на цивилизованото поведение. Но той е хитър и практичен — невежеството е духовно и културно, а не липса на жизнена смекалка.'
+        },
+        {
+          q: 'Какво символизира противопоставянето „европейска цивилизация vs. Бай Ганьо"?',
+          opts: ['България е по-добра от Европа', 'Въпросът дали България е готова да се впише в европейската цивилизация', 'Европейците са лицемери', 'Търговията е по-важна от образованието'],
+          correct: 1,
+          explanation: 'Алеко поставя зад противопоставянето основен въпрос: готова ли е България (прясно освободена от Ottoman владичество) да се впише в европейската цивилизация? Бай Ганьо символизира онази прослойка, която е изоставена в духовно и културно отношение.'
+        },
+        {
+          q: 'Кое е вярно за хитростта на Бай Ганьо?',
+          opts: ['Той е хитър, но и много образован', 'Той е невежа, но е практически хитър и умее да се нарежда', 'Хитростта му е използвана за добри цели', 'Бай Ганьо изобщо не е хитър'],
+          correct: 1,
+          explanation: 'Хитростта е интересна черта на Бай Ганьо: въпреки невежеството и невъзпитаността си, той е практически сметлив — умее да се нарежда, да се прикачи при правилните хора, да получи безплатно каквото иска. Тази животинска хитрост е другата страна на невежеството.'
+        },
+        {
+          q: 'Защо Бай Ганьо се самохвали непрекъснато?',
+          opts: ['Защото наистина е постигнал много', 'Защото не осъзнава своите недостатъци и е с надута самооценка', 'Защото другите хора го хвалят', 'За да привлече купувачи за розовото масло'],
+          correct: 1,
+          explanation: 'Самохвалството на Бай Ганьо произтича от неговото невежество — той не осъзнава реалното си положение и недостатъците си. „Аз видях Европата!" — но не разбира нищо от нея. Надутата самооценка без реална основа е класически обект на сатирата.'
+        },
+        {
+          q: 'Как Бай Ганьо се отнася към европейците, с които се среща?',
+          opts: ['С уважение и желание да се учи', 'С нахалство — натрапва се, изполпзва гостоприемството им, без да спазва правилата на учтивост', 'С презрение и враждебност', 'С дипломатичност и любезност'],
+          correct: 1,
+          explanation: 'Бай Ганьо се отнася към европейците с нахалство — настанява се у тях без покана, използва гостоприемството им до краен предел, не оставя бакшиш, не спазва правилата на учтивост. Европейците реагират с учудване, неудобство и понякога отвращение.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

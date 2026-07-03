@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Ботев „Хаджи Димитър" · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-botev-hadzhi-dimityr-q3',
+      lessonUrl: '/lessons/bel7-botev-hadzhi-dimityr.html',
+      lessonName: 'Ботев „Хаджи Димитър"',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Ботев „Хаджи Димитър"',
+      sub: '10 въпроса · Теми, цитати, художествени средства',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Каква е основната тема на поемата „Хаджи Димитър"?',
+          opts: ['Любовта и раздялата', 'Патриотизмът, героичната смърт и безсмъртието на героя', 'Природата и нейната красота', 'Бедността и несправедливостта'],
+          correct: 1,
+          explanation: 'Основните теми са: патриотизмът (юнакът пада в бой за свобода), героичната смърт (умира достойно, непокорен) и безсмъртието (физическата смърт не е край — той живее вечно в паметта на народа).'
+        },
+        {
+          q: 'Каква идея изразява поемата за героя, паднал в бой за свобода?',
+          opts: ['Смъртта е край и трагедия', 'Тоз, който падне в бой за свобода, той не умира — живее вечно в паметта на народа', 'Само победителят заслужава памет', 'Борбата за свобода е безсмислена'],
+          correct: 1,
+          explanation: 'Ключовата идея на поемата е духовното безсмъртие: героят, паднал за свободата, не умира в истинския смисъл на думата. Физическата смърт е победена от паметта и почитта на народа — той живее вечно.'
+        },
+        {
+          q: 'Кое художествено средство е употребено, когато природата (соколите, орлите) действа като жива, съчувстваща сила?',
+          opts: ['Антитеза', 'Хипербола', 'Персонификация (олицетворение)', 'Метафора'],
+          correct: 2,
+          explanation: 'Персонификацията (олицетворението) е приписване на човешки черти, чувства и действия на неодушевени предмети или природни явления. В „Хаджи Димитър" природата е одухотворена — соколите, самодивите и орлите действат като съчувстващи същества.'
+        },
+        {
+          q: 'Анафората като художествено средство представлява:',
+          opts: ['Противопоставяне на два образа', 'Повторение на думи или изрази в началото на стихове или строфи', 'Преувеличаване на качество', 'Сравнение с „като" или „като че ли"'],
+          correct: 1,
+          explanation: 'Анафората е повторение на думи или изрази в началото на стихове или строфи. Тя засилва ритъма и подчертава ключовите идеи. В „Хаджи Димитър" Ботев използва анафора за изграждане на интензивност и емоционален ефект.'
+        },
+        {
+          q: 'Антитезата в „Хаджи Димитър" е свързана основно с:',
+          opts: ['Противопоставянето лято/зима', 'Противопоставянето живот/смърт и физическа смърт/духовно безсмъртие', 'Противопоставянето ден/нощ', 'Противопоставянето богати/бедни'],
+          correct: 1,
+          explanation: 'Основната антитеза в поемата е между физическата смърт и духовното безсмъртие — юнакът умира телесно, но живее вечно в паметта на народа. Тази антитеза е идейното ядро на творбата.'
+        },
+        {
+          q: 'Какво означава „Жив е той, жив е!" в контекста на поемата?',
+          opts: ['Юнакът е оцелял от раните си', 'Юнакът е духовно безсмъртен — живее в паметта на народа', 'Природата го е излекувала', 'Той се е укрил и ще продължи борбата'],
+          correct: 1,
+          explanation: '„Жив е той, жив е!" изразява идеята за духовното безсмъртие — юнакът може да е умиращ физически, но духовно е жив. Народът го помни, природата го признава, борбата му продължава в следващите поколения.'
+        },
+        {
+          q: 'Кое твърдение за темата на патриотизма в поемата е ВЯРНО?',
+          opts: [
+            'Ботев критикува патриотизма като безсмислена саможертва',
+            'Ботев прославя саможертвата за свободата като висша ценност',
+            'Патриотизмът е представен като наивно и неразумно чувство',
+            'Темата за патриотизма отсъства от поемата'
+          ],
+          correct: 1,
+          explanation: 'Ботев прославя саможертвата за свободата като висша ценност и смисъл на живота. В целия му поетичен свят гибелта за свободата на родината не е трагедия, а триумф — героят не умира, а постига безсмъртие.'
+        },
+        {
+          q: 'Как е изобразен юнакът в поемата — като слаб и победен, или като непокорен?',
+          opts: ['Слаб, съкрушен и молещ за помощ', 'Ранен телесно, но непокорен и достоен — духът му е ненарушен', 'Страхлив и разкаял се за борбата', 'Равнодушен към смъртта и свободата'],
+          correct: 1,
+          explanation: 'Юнакът е ранен смъртоносно, но духът му е непокорен. Той не се оплаква и не молберва. Умира достойно, в обятията на родната земя (Балкана). Физическата слабост контрастира с духовната непобеденост.'
+        },
+        {
+          q: 'Кое от следните е ВЯРНО за художествените средства в „Хаджи Димитър"?',
+          opts: [
+            'Поемата използва само метафори, без персонификация',
+            'Персонификацията, анафората и антитезата са основни художествени средства',
+            'Поемата е написана без художествени средства в народен стил',
+            'Единственото художествено средство е сравнението'
+          ],
+          correct: 1,
+          explanation: 'Основните художествени средства в „Хаджи Димитър" са: персонификация (одухотворяване на природата), анафора (повторения в началото на стихове) и антитеза (физическа смърт vs. духовно безсмъртие). Те изграждат художествения свят на поемата.'
+        },
+        {
+          q: 'Защо „Хаджи Димитър" е значимо произведение за българската литература?',
+          opts: [
+            'Защото е единственото произведение на Ботев',
+            'Защото прославя безсмъртието на героя и е символ на националния патриотизъм',
+            'Защото разказва историята на Освобождението',
+            'Защото е написано на чужд език и преведено'
+          ],
+          correct: 1,
+          explanation: '„Хаджи Димитър" е значимо, защото прославя безсмъртието на героя, паднал за свободата, и е мощен израз на националния патриотизъм. Поемата издига саможертвата в принцип и вдъхновява поколения българи. Тя е символ на революционния дух на епохата.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

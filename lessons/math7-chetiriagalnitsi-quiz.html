@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Четириъгълници · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-chetiriagalnitsi-q1',
+      lessonUrl: '/lessons/math7-chetiriagalnitsi.html',
+      lessonName: 'Четириъгълници',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Успоредник и правоъгълник',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/math7-chetiriagalnitsi-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Намери лицето на успоредник с основа a = 8 cm и височина h = 5 cm.',
+          opts: ['13 cm²', '26 cm²', '40 cm²', '80 cm²'],
+          correct: 2,
+          explanation: 'Лицето на успоредник: S = a · h = 8 · 5 = 40 cm². Важно: h е ВИСОЧИНАТА (перпендикулярното разстояние между основите), не страната!'
+        },
+        {
+          q: 'Намери лицето на правоъгълник с a = 6 cm и b = 4 cm.',
+          opts: ['10 cm²', '20 cm²', '24 cm²', '48 cm²'],
+          correct: 2,
+          explanation: 'Лицето на правоъгълник: S = a · b = 6 · 4 = 24 cm². Периметърът би бил P = 2(6+4) = 20 cm.'
+        },
+        {
+          q: 'Вярно ли е, че в успоредника диагоналите се делят наполовина?',
+          opts: ['Не, диагоналите са равни', 'Да, диагоналите се делят наполовина', 'Не, диагоналите са перпендикулярни', 'Да, но само в правоъгълника'],
+          correct: 1,
+          explanation: 'В успоредника диагоналите се делят наполовина в точката на пресичане. Това е важно свойство. В правоъгълника диагоналите са и равни по дължина.'
+        },
+        {
+          q: 'Какви са диагоналите на правоъгълника?',
+          opts: ['Перпендикулярни', 'Равни по дължина и се делят наполовина', 'Различни по дължина', 'Равни и перпендикулярни'],
+          correct: 1,
+          explanation: 'В правоъгълника диагоналите са равни по дължина и се делят наполовина в точката на пресичане. (В ромба те са перпендикулярни. В квадрата — и двете.)'
+        },
+        {
+          q: 'Намери периметъра на успоредник с a = 10 cm и b = 7 cm.',
+          opts: ['17 cm', '34 cm', '70 cm', '140 cm'],
+          correct: 1,
+          explanation: 'P = 2(a + b) = 2(10 + 7) = 2 · 17 = 34 cm. Тъй като в успоредника противоположните страни са равни (a=c и b=d), периметърът е 2a + 2b.'
+        },
+        {
+          q: 'Успоредник с основа a = 12 cm и лице 60 cm². Каква е височината h?',
+          opts: ['4 cm', '5 cm', '6 cm', '8 cm'],
+          correct: 1,
+          explanation: 'S = a · h → h = S/a = 60/12 = 5 cm.'
+        },
+        {
+          q: 'Правоъгълник с P = 30 cm. Ако едната страна е 8 cm, каква е другата?',
+          opts: ['5 cm', '7 cm', '9 cm', '14 cm'],
+          correct: 1,
+          explanation: 'P = 2(a + b) → 30 = 2(8 + b) → 15 = 8 + b → b = 7 cm.'
+        },
+        {
+          q: 'Правоъгълник е специален случай на:',
+          opts: ['Трапец', 'Ромб', 'Успоредник', 'Квадрат'],
+          correct: 2,
+          explanation: 'Правоъгълникът е специален случай на успоредник — успоредник с всички ъгли по 90°. Квадратът е специален случай на правоъгълник (и на ромб).'
+        },
+        {
+          q: 'Намери лицето на правоъгълник с P = 20 cm и страна a = 6 cm.',
+          opts: ['14 cm²', '24 cm²', '48 cm²', '120 cm²'],
+          correct: 1,
+          explanation: 'P = 2(a + b) → 20 = 2(6 + b) → 10 = 6 + b → b = 4 cm. S = a · b = 6 · 4 = 24 cm².'
+        },
+        {
+          q: 'В успоредник ABCD, ъгълът при A е 70°. Какъв е ъгълът при B?',
+          opts: ['70°', '90°', '110°', '140°'],
+          correct: 2,
+          explanation: 'В успоредника съседните ъгли са в сбор 180° (допълнителни). Следователно ∠B = 180° − 70° = 110°. Противоположните ъгли са равни: ∠A = ∠C = 70°; ∠B = ∠D = 110°.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Ботев „Хаджи Димитър" · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-botev-hadzhi-dimityr-q1',
+      lessonUrl: '/lessons/bel7-botev-hadzhi-dimityr.html',
+      lessonName: 'Ботев „Хаджи Димитър"',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Ботев „Хаджи Димитър"',
+      sub: '10 въпроса · Биография и исторически контекст',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/bel7-botev-hadzhi-dimityr-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Кога е роден Христо Ботев?',
+          opts: ['1835 г.', '1848 г.', '1862 г.', '1876 г.'],
+          correct: 1,
+          explanation: 'Христо Ботев е роден на 6 януари 1848 г. в Калофер. Загива на 1/2 юли 1876 г. при преминаването на Дунава начело на въоръжена чета — на 28-годишна възраст.'
+        },
+        {
+          q: 'В кой град е роден Христо Ботев?',
+          opts: ['Копривщица', 'Панагюрище', 'Калофер', 'Пловдив'],
+          correct: 2,
+          explanation: 'Христо Ботев е роден в Калофер — малък балкански град. Учи в Одеса, Русия. По-голямата част от творческата си дейност развива в Румъния, където е в емиграция.'
+        },
+        {
+          q: 'Кога е написана поемата „Хаджи Димитър"?',
+          opts: ['1868 г.', '1873 г.', '1876 г.', '1880 г.'],
+          correct: 1,
+          explanation: 'Поемата „Хаджи Димитър" е написана от Ботев през 1873 г. Тя е посветена на хайдутина Хаджи Димитър Асенов, загинал 5 години по-рано, през 1868 г.'
+        },
+        {
+          q: 'Кой е реалният исторически герой, вдъхновил поемата „Хаджи Димитър"?',
+          opts: ['Васил Левски', 'Хаджи Димитър Асенов — хайдутин от Сливен', 'Стефан Стамболов', 'Раковски'],
+          correct: 1,
+          explanation: 'Поемата е вдъхновена от реалния хайдутин Хаджи Димитър Асенов от Сливен. Той загива през 1868 г. при четата на Стефан Карачоолу — опит за въоръжено въстание срещу Ottoman властта.'
+        },
+        {
+          q: 'Кога загива историческият Хаджи Димитър?',
+          opts: ['1865 г.', '1868 г.', '1873 г.', '1876 г.'],
+          correct: 1,
+          explanation: 'Хаджи Димитър загива през 1868 г. при четата на Стефан Карачоолу. Ботев пише поемата 5 години по-късно, през 1873 г., запазвайки паметта за него в литературата.'
+        },
+        {
+          q: 'Кой е жанрът на „Хаджи Димитър"?',
+          opts: ['Разказ', 'Роман', 'Поема', 'Сонет'],
+          correct: 2,
+          explanation: '„Хаджи Димитър" е поема — по-дълга лирическа творба с епически елементи (разказ за конкретен герой). За разлика от кратко лирическо стихотворение, поемата има по-разгърнат сюжет и образна система.'
+        },
+        {
+          q: 'Как загива Христо Ботев?',
+          opts: ['При арест от турците', 'При преминаването на Дунава начело на въоръжена чета', 'При Априлското въстание 1876 г.', 'На заточение'],
+          correct: 1,
+          explanation: 'Ботев загива на 1/2 юли 1876 г. при преминаването на Дунава с въоръжената „Ботева чета". Четата преминава с парахода „Радецки" и навлиза в България. Ботев е убит при сражение край Vratsa.'
+        },
+        {
+          q: 'Каква е основната дейност на Ботев освен поезия?',
+          opts: ['Търговия', 'Революционна дейност за освобождение на България', 'Дипломация', 'Медицина'],
+          correct: 1,
+          explanation: 'Ботев е едновременно поет и революционер. Живее в Румъния, където пише, редактира вестници и организира революционна дейност срещу Ottoman властта. Смята поезията и революцията за неотделими.'
+        },
+        {
+          q: 'Кой е Стефан Карачоолу, споменат в историческия контекст на поемата?',
+          opts: ['Турски военачалник', 'Ръководителят на четата, с която е участвал Хаджи Димитър', 'Поет съвременник на Ботев', 'Приятел на Ботев'],
+          correct: 1,
+          explanation: 'Стефан Карачоолу е ръководителят на четата, при която загива историческият Хаджи Димитър през 1868 г. Четата им е опит за въоръжено въстание, завършило трагично — с гибелта на повечето участници.'
+        },
+        {
+          q: 'Колко стихотворения и поеми е написал Ботев приблизително?',
+          opts: ['Около 5', 'Около 20', 'Около 100', 'Около 300'],
+          correct: 1,
+          explanation: 'Ботев е написал около 20 стихотворения и поеми, но те са сред най-ценните образци на българската поезия. Малкото на брой произведения е компенсирано от изключително високото им художествено и идейно ниво.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

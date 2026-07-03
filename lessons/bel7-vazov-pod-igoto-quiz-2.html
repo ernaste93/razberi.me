@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Под игото · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-vazov-pod-igoto-q2',
+      lessonUrl: '/lessons/bel7-vazov-pod-igoto.html',
+      lessonName: 'Под игото',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 2 — Под игото',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel7-vazov-pod-igoto-quiz-3.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Как се казва главният герой на романа „Под игото" и каква е неговата истинска самоличност?',
+          opts: ['Чорбаджи Марко — богат търговец', 'Стефчов — доносник', 'Бойчо Огнянов (Иван Краличевски) — революционер', 'Мунчо — странен младеж'],
+          correct: 2,
+          explanation: 'Главният герой е Бойчо Огнянов, чието истинско име е Иван Краличевски. Той е революционер, избягал от турски затвор, и се укрива в Бяла черква под фалшиво самоличност — работи като учител.'
+        },
+        {
+          q: 'Каква е ролята на Бойчо Огнянов в Бяла черква?',
+          opts: ['Турски чиновник', 'Учител и таен революционен организатор', 'Богат търговец', 'Свещеник'],
+          correct: 1,
+          explanation: 'Бойчо Огнянов работи като учител в Бяла черква — легална, уважавана позиция, която му дава свобода да се движи и да организира революционното движение тайно. Неговата двойна роля — учител/революционер — е ключова за сюжета.'
+        },
+        {
+          q: 'Коя е Рада Госпожина в романа?',
+          opts: ['Турска шпионка', 'Учителка — любима на Огнянов', 'Майката на Огнянов', 'Предателката'],
+          correct: 1,
+          explanation: 'Рада Госпожина е учителка в Бяла черква и любима на Огнянов. Тя представлява образа на просветената, патриотична и смела българска девойка. Нейната любов към Огнянов е вплетена в националноосвободителните идеали.'
+        },
+        {
+          q: 'Кой е Чорбаджи Марко (Соколов) в романа?',
+          opts: ['Турският управител', 'Революционният вожд', 'Богат и уважаван гражданин, колебаещ се между страх и патриотизъм', 'Доносникът'],
+          correct: 2,
+          explanation: 'Чорбаджи Марко е богат и уважаван гражданин на Бяла черква. Той представлява консервативната, предпазлива страна на обществото — уважава борбата за свобода, но се страхува за имуществото и спокойствието си. Неговото колебание е художествено пресъздаване на реален обществен тип.'
+        },
+        {
+          q: 'Кой е Стефчов в романа „Под игото"?',
+          opts: ['Смел революционер', 'Учителят в Бяла черква', 'Предател и доносник — символ на малодушието', 'Турски военачалник'],
+          correct: 2,
+          explanation: 'Стефчов е отрицателен персонаж — предател и доносник. Той символизира малодушието, подлостта и предателството, съществуващи в обществото. Чрез него Вазов показва, че не всички хора са способни на героизъм.'
+        },
+        {
+          q: 'Какво символизира образът на Мунчо?',
+          opts: ['Образованото съсловие', 'Дори „простите" и „луди" хора имат вродена любов към свободата', 'Злото в обществото', 'Турското влияние'],
+          correct: 1,
+          explanation: 'Мунчо е представен като „луд" или наивен, но чрез него Вазов показва, че дори и „простите" хора без образование имат вродена любов към свободата. Мунчо е метафора за народния дух — неодолимото желание за свобода е дълбоко вкоренено.'
+        },
+        {
+          q: 'Каква е темата за „народния характер" в романа?',
+          opts: ['Вазов показва само героите и пропуска останалите', 'Вазов представя пълна картина: герои, страхливци, предатели, неутрални — различни типове хора', 'Всички герои в романа са смели и патриотични', 'Народният характер не е тема в романа'],
+          correct: 1,
+          explanation: 'В „Под игото" Вазов дава пълна и реалистична картина на обществото: има герои (Огнянов), смели жени (Рада), колебаещи се (Марко), предатели (Стефчов) и наивни, но добросърдечни (Мунчо). Тази многостранност е художествена сила на романа.'
+        },
+        {
+          q: 'Как е представена любовта между Огнянов и Рада в романа?',
+          opts: ['Само като лична история без връзка с историята', 'Вплетена в революционните идеали — личното се подчинява на колективното', 'Като главна тема, по-важна от борбата за свобода', 'Любовта е забранена тема в романа'],
+          correct: 1,
+          explanation: 'В „Под игото" любовта между Огнянов и Рада е вплетена в националноосвободителните идеали. Личното чувство не е изолирано — то се развива на фона на историческата борба. Двамата герои обичат едновременно своя партньор и своята родина.'
+        },
+        {
+          q: 'Кое от следните НЕ е тема в романа „Под игото"?',
+          opts: ['Национална борба за свобода', 'Народният характер', 'Животът в поробена България', 'Любовта към природата на Западна Европа'],
+          correct: 3,
+          explanation: 'Западноевропейската природа не е тема в „Под игото". Основните теми са: националната борба за свобода, народният характер (различните типове хора), животът под робство и любовта/жертвата. Действието се развива в България, не в Европа.'
+        },
+        {
+          q: 'Кой е истинският прототип на Бяла черква?',
+          opts: ['Калофер', 'Пловдив', 'Сопот', 'Тетевен'],
+          correct: 2,
+          explanation: 'Бяла черква — измисленото място на действие — е всъщност Сопот, родният град на Иван Вазов. Авторът го преименува, за да има художествена свобода да изгражда образи и събития, без да бъде ограничен от точна документалност.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

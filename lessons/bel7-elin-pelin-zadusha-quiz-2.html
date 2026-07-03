@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Елин Пелин Задушница · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span><script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script><span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a><a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div><div class="quiz-title" id="quiz-title"></div><div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div><div class="quiz-q-text" id="q-text"></div><div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-elin-pelin-zadusha-q2',
+      lessonUrl: '/lessons/bel7-elin-pelin-zadusha.html',
+      lessonName: 'Елин Пелин — Задушница',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 2 — „Задушница" — сюжет, образи, теми',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel7-elin-pelin-zadusha-quiz-3.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Какво е „задушница" като народен обред?',
+          opts: ['Пролетен празник за засяване', 'Обред за почит към починалите — отиване на гробища с храна и свещи', 'Сватбен обичай', 'Коледен ритуал'],
+          correct: 1,
+          explanation: 'Задушницата е народен православен обред за почит към починалите. Семействата отиват на гробища, носят храна и вино, запалват свещи и поменуват починалите. Провежда се няколко пъти в годината — на Родителска събота и Архангелова задушница.'
+        },
+        {
+          q: 'Кога скърби дядо Пею в разказа?',
+          opts: ['По изгубено имущество', 'По починалата си жена', 'По синовете, заминали на война', 'По родното си село'],
+          correct: 1,
+          explanation: 'Дядо Пею скърби по починалата си жена. На задушница той носи храна и запалва свещ на нейния гроб. Скръбта му е тиха и достойна — не истерична, а дълбоко човешка.'
+        },
+        {
+          q: 'Как е показана скръбта на дядо Пею?',
+          opts: ['Той плаче шумно и силно', 'Скръбта е тиха, вътрешна, изразена чрез действия и мисли', 'Той се ядосва на всички около него', 'Той не показва никакви чувства'],
+          correct: 1,
+          explanation: 'Скръбта на дядо Пею е тиха, вътрешна и достойна. Той не плаче шумно — изразява болката си чрез обреда: запалва свещта, поставя храна, мислено говори с починалата жена. Тази сдържана скръб е по-трогателна от всякакви думи.'
+        },
+        {
+          q: 'Какво символизира запалената свещ в „Задушница"?',
+          opts: ['Страх от тъмнината', 'Паметта за починалия, светлина за душата му', 'Сила и мощ', 'Есенния сезон'],
+          correct: 1,
+          explanation: 'Запалената свещ е символ на паметта за починалия — тя е светлина, изпращана към душата му. В народните вярвания свещта е мост между живите и мъртвите. Запалването й е акт на любов и уважение.'
+        },
+        {
+          q: 'Как Елин Пелин показва смъртта в „Задушница"?',
+          opts: ['Като нещо ужасно и за страх', 'Като естествена граница — тъжна, но приемана с достойнство', 'Като наказание от Бога', 'Като случайност, която трябва да се избегне'],
+          correct: 1,
+          explanation: 'Елин Пелин показва смъртта не като ужас, а като естествена граница между живите и мъртвите. Тя е тъжна, но е приета с достойнство. Животът продължава, а паметта за починалите ги прави „живи" за близките.'
+        },
+        {
+          q: 'Каква е ролята на природата в „Задушница"?',
+          opts: ['Природата е заплашителна и тъмна', 'Природата е спокойна и красива — контраст на смъртта, но и нейна рамка', 'Природата не е описана', 'Природата е символ на живота само'],
+          correct: 1,
+          explanation: 'Природата в „Задушница" е спокойна и красива — есенните цветя, небето, земята са описани с любов. Тя е едновременно контраст на смъртта (животът продължава) и нейна рамка (мъртвите са в земята). Природата е вечна, хората са временни.'
+        },
+        {
+          q: 'Каква е централната тема на „Задушница"?',
+          opts: ['Борбата за национална свобода', 'Паметта за починалите и смъртта като естествена частот живота', 'Социалното неравенство', 'Любовта между млади хора'],
+          correct: 1,
+          explanation: 'Централната тема е паметта за починалите и смъртта като естествена частот живота. Задушницата е обред, поддържащ тази памет. Елин Пелин показва, че смъртта не скъсва връзките — любовта и паметта продължават.'
+        },
+        {
+          q: 'Какво прави дядо Пею на гроба на жена си?',
+          opts: ['Плаче и се оплаква', 'Запалва свещ, носи храна, мислено разговаря с починалата', 'Чете молитви от книга', 'Пее народни песни'],
+          correct: 1,
+          explanation: 'Дядо Пею запалва свещ, поставя принесената храна и мислено разговаря с починалата жена. Тези действия са неговият начин да поддържа връзката с нея — обредът е форма на любов, надхвърляща смъртта.'
+        },
+        {
+          q: 'Какво е специалното в хуманизма на Елин Пелин?',
+          opts: ['Той критикува острo и безпощадно', 'Той е мек, топъл, разбиращ — вижда достойнство дори в бедност и простота', 'Той е безразличен към героите', 'Той идеализира и издига героите'],
+          correct: 1,
+          explanation: 'Хуманизмът на Елин Пелин е особено мек и топъл. Той разбира и обича своите прости герои — вижда в тях достойнство и красота. Не ги осмива жестоко, не ги идеализира — разгледани са с нежно и разбиращо внимание.'
+        },
+        {
+          q: 'Кога се провежда задушницата по народния обичай?',
+          opts: ['На Нова година', 'На Родителска събота (преди Великден) и Архангелова задушница', 'На Коледа', 'На Гергьовден'],
+          correct: 1,
+          explanation: 'Задушницата се провежда на Родителска събота — обикновено на събота преди Великден — и на Архангелова задушница (преди Архангеловден, 8 ноември). Тогава семействата отиват на гробищата да поменат починалите.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

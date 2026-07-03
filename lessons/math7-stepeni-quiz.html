@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 1 — Степени · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-stepeni-q1',
+      lessonUrl: '/lessons/math7-stepeni.html',
+      lessonName: 'Степени с естествен показател',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 1 — Степени: основни пресмятания',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 1,
+      nextQuizUrl: '/lessons/math7-stepeni-quiz-2.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Колко е 2⁵?',
+          opts: ['10', '25', '32', '64'],
+          correct: 2,
+          explanation: '2⁵ = 2×2×2×2×2 = 32. Изчисляваме стъпка по стъпка: 2×2=4, 4×2=8, 8×2=16, 16×2=32.'
+        },
+        {
+          q: 'Колко е 3³?',
+          opts: ['9', '27', '81', '6'],
+          correct: 1,
+          explanation: '3³ = 3×3×3 = 27. Показателят 3 означава три множителя: 3×3=9, 9×3=27.'
+        },
+        {
+          q: 'Колко е 10⁴?',
+          opts: ['40', '1000', '10 000', '100 000'],
+          correct: 2,
+          explanation: '10⁴ = 10×10×10×10 = 10 000. При степен на 10 броят нули е равен на показателя: 10⁴ = 1 с 4 нули = 10 000.'
+        },
+        {
+          q: 'Колко е (−2)³?',
+          opts: ['8', '−8', '6', '−6'],
+          correct: 1,
+          explanation: '(−2)³ = (−2)×(−2)×(−2) = 4×(−2) = −8. Нечетен показател при отрицателна основа → отрицателен резултат.'
+        },
+        {
+          q: 'Колко е (−3)²?',
+          opts: ['−9', '9', '−6', '6'],
+          correct: 1,
+          explanation: '(−3)² = (−3)×(−3) = 9. Четен показател при отрицателна основа → положителен резултат. Минус по минус = плюс.'
+        },
+        {
+          q: 'Колко е 7⁰?',
+          opts: ['0', '7', '1', '49'],
+          correct: 2,
+          explanation: 'a⁰ = 1 за всяко a ≠ 0. Следователно 7⁰ = 1. Тази дефиниция важи за всяко ненулево число.'
+        },
+        {
+          q: 'Кое е вярно: −3² или (−3)²?',
+          opts: ['−3² = 9', '(−3)² = −9', '−3² = −9', '−3² = (−3)²'],
+          correct: 2,
+          explanation: '−3² = −(3²) = −9, защото степенуването е преди умножението. (−3)² = 9 (скобите включват знака). Затова −3² ≠ (−3)².'
+        },
+        {
+          q: 'Колко е (1/2)⁴?',
+          opts: ['2', '1/8', '1/16', '4/8'],
+          correct: 2,
+          explanation: '(1/2)⁴ = 1⁴/2⁴ = 1/16. При степен на дроб, степенуваме числителя и знаменателя поотделно: 1⁴=1, 2⁴=16.'
+        },
+        {
+          q: 'Колко е 5²?',
+          opts: ['10', '25', '125', '50'],
+          correct: 1,
+          explanation: '5² = 5×5 = 25. Показателят 2 е квадрат — умножаваме числото само по себе си.'
+        },
+        {
+          q: 'В израза 4³, 4 е:',
+          opts: ['показателят', 'степента', 'основата', 'резултатът'],
+          correct: 2,
+          explanation: 'В степента aⁿ: a е основата, n е показателят. Така в 4³: 4 е основата, 3 е показателят, а резултатът (64) е стойността на степента.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

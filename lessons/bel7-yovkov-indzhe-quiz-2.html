@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 2 — Йовков Индже · БЕЛ 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'bel7-yovkov-indzhe-q2',
+      lessonUrl: '/lessons/bel7-yovkov-indzhe.html',
+      lessonName: 'Йовков — Индже',
+      eyebrow: 'БЕЛ · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 2 — Сюжет и образи в „Индже"',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 2,
+      nextQuizUrl: '/lessons/bel7-yovkov-indzhe-quiz-3.html',
+      passScore: 7,
+      questions: [
+        {
+          q: 'Как се описва Индже в началото на разказа?',
+          opts: ['Като добър и справедлив войвода', 'Като жесток и безмилостен хайдутин', 'Като мирен земеделец', 'Като богат търговец'],
+          correct: 1,
+          explanation: 'В началото Индже е представен като жесток и безмилостен хайдутин войвода. Никой не смее да се изправи срещу него — репутацията му е изградена върху страх. Той ограбва, убива и тероризира.'
+        },
+        {
+          q: 'Как Индже се променя след срещата с майка си?',
+          opts: ['Напуска хайдутлъка и заминава за Турция', 'Започва да защитава слабите и да помага на бедните', 'Остава същия злодей', 'Умира от срам'],
+          correct: 1,
+          explanation: 'След срещата с майка си Индже се превръща от злодей в закрилник. Той започва да защитава слабите и да помага на бедните. Метаморфозата е пълна — от злото той преминава към доброто.'
+        },
+        {
+          q: 'Защо майчиният поглед е толкова силен за Индже?',
+          opts: ['Защото майката го заплашва', 'Защото в нейния поглед той вижда целия си грях и осъзнава делата си', 'Защото майката е магьосница', 'Защото той никога не я е виждал преди'],
+          correct: 1,
+          explanation: 'Майчиният поглед е силен, защото в него Индже вижда себе си такъв, какъвто е — грешен и отдалечен от доброто. Майката не казва нищо, но погледът й е по-силен от всякакви думи. Той събужда спящата съвест на Индже.'
+        },
+        {
+          q: 'Как завършва разказът „Индже"?',
+          opts: ['Индже се жени и живее щастливо', 'Индже е заловен от турците', 'Индже загива, но като променен човек, изкупил греховете си', 'Индже бяга в чужбина'],
+          correct: 2,
+          explanation: 'Накрая Индже загива, но умира като различен, променен човек. Смъртта му е форма на изкупление — той е извървял пътя от злото към доброто. Йовков не показва смъртта като трагедия, а като завършеност на нравственото пътуване.'
+        },
+        {
+          q: 'Какво представляват „Старопланински легенди" по жанр?',
+          opts: ['Исторически роман', 'Сборник от разкази с легендарна атмосфера', 'Поема', 'Драма в три действия'],
+          correct: 1,
+          explanation: '„Старопланински легенди" е сборник от 12 разказа с легендарна атмосфера. Героите са хайдути, хубавици, самодиви. Стилът е поетичен и легендарен — затова „легенди", въпреки че формата е на разкази.'
+        },
+        {
+          q: 'Каква е функцията на природата в разказа „Индже"?',
+          opts: ['Само географски фон', 'Природата е одухотворена и отразява емоциите на героите', 'Заплаха за героите', 'Символ на османската власт'],
+          correct: 1,
+          explanation: 'При Йовков природата е одухотворена — не е само фон, а активен участник в разказа. Балканът „живее", наблюдава, отразява душевните преживявания на героите. Тя придава легендарност и поетичност.'
+        },
+        {
+          q: 'Кой е основният конфликт в „Индже"?',
+          opts: ['Между Индже и турците', 'Между хайдутите и богатите', 'Вътрешен конфликт — между злото и доброто в самия Индже', 'Между Индже и майка му'],
+          correct: 2,
+          explanation: 'Основният конфликт е вътрешен — в самия Индже. Той е между злото (жестокостта, насилието, в което живее) и доброто (потенциала за любов и закрила, събуден от майката). Вътрешната борба е по-важна от всеки външен конфликт.'
+        },
+        {
+          q: 'Как Йовков гледа на своите герои — дори на злодеите?',
+          opts: ['С осъждане и презрение', 'С неутралност и безразличие', 'С разбиране и любов — вижда доброто в тях', 'С ирония и сатира'],
+          correct: 2,
+          explanation: 'Хуманизмът на Йовков е особен: той вижда доброто в хората, дори в тези, определени за злодеи. Той не осъжда — наблюдава с разбиране и любов. Дори Индже е представен не като абсолютно зло, а като човек, изгубил пътя си.'
+        },
+        {
+          q: 'Каква е промяната в Индже след срещата с майка му?',
+          opts: ['От богат стана беден', 'От хайдутин стана войник', 'От злодей стана закрилник на слабите', 'От млад стана стар'],
+          correct: 2,
+          explanation: 'Промяната е нравствена: от злодей (ограбващ и убиващ) Индже се превръща в закрилник (защитаващ слабите и помагащ на бедните). Тази метаморфоза е сърцевината на разказа — доказателство, че хората могат да се променят.'
+        },
+        {
+          q: 'В кой град е роден Йордан Йовков?',
+          opts: ['Копривщица', 'Жеравна', 'Сопот', 'Калофер'],
+          correct: 1,
+          explanation: 'Йордан Йовков е роден в Жеравна, Котленско. Произхожда от семейство с тракийски корени — Тракия е основно пространство в творбите му. Жеравна е известно историческо село с богати традиции.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

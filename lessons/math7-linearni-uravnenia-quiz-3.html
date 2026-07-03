@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Линейни уравнения · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-linearni-uravnenia-q3',
+      lessonUrl: '/lessons/math7-linearni-uravnenia.html',
+      lessonName: 'Линейни уравнения',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Текстови задачи с уравнения',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Числото, увеличено 4 пъти, е 28. Намери числото.',
+          opts: ['4', '7', '24', '112'],
+          correct: 1,
+          explanation: 'Нека x е числото. 4x = 28 → x = 7. Проверка: 4 × 7 = 28 ✓'
+        },
+        {
+          q: 'Два пъти едно число, намалено с 5, е 15. Намери числото.',
+          opts: ['5', '10', '25', '5'],
+          correct: 1,
+          explanation: 'Нека x е числото. 2x − 5 = 15 → 2x = 20 → x = 10. Проверка: 2×10 − 5 = 20 − 5 = 15 ✓'
+        },
+        {
+          q: 'Перimetърът на правоъгълник е 40 см. Дължината е с 4 см повече от ширината. Намери ширината.',
+          opts: ['6 cm', '8 cm', '12 cm', '16 cm'],
+          correct: 1,
+          explanation: 'Нека ширина = x, дължина = x + 4. Периметър: 2(x + x + 4) = 40 → 2(2x + 4) = 40 → 4x + 8 = 40 → 4x = 32 → x = 8. Ширина = 8 cm, дължина = 12 cm. Проверка: 2(8+12) = 40 ✓'
+        },
+        {
+          q: 'Учениците в клас са 30. Момичетата са с 6 повече от момчетата. Колко са момчетата?',
+          opts: ['12', '16', '18', '24'],
+          correct: 0,
+          explanation: 'Нека момчета = x, момичета = x + 6. x + (x + 6) = 30 → 2x + 6 = 30 → 2x = 24 → x = 12. Момчета: 12, момичета: 18. Проверка: 12 + 18 = 30 ✓'
+        },
+        {
+          q: 'Намери три последователни числа, чийто сбор е 39.',
+          opts: ['12, 13, 14', '13, 14, 15', '11, 13, 15', '10, 13, 16'],
+          correct: 0,
+          explanation: 'Нека числата са x, x+1, x+2. x + (x+1) + (x+2) = 39 → 3x + 3 = 39 → 3x = 36 → x = 12. Числата: 12, 13, 14. Проверка: 12+13+14 = 39 ✓'
+        },
+        {
+          q: 'Баща е на 4 пъти по-голям от сина си. Разликата им е 30 години. Колко е синът?',
+          opts: ['6', '8', '10', '12'],
+          correct: 2,
+          explanation: 'Нека синът е x години, бащата — 4x. 4x − x = 30 → 3x = 30 → x = 10. Синът е на 10 год., бащата — на 40. Проверка: 40 − 10 = 30 ✓'
+        },
+        {
+          q: 'Цената на стока след намаление с 20 лв е 80 лв. Каква е оригиналната цена?',
+          opts: ['60 лв', '80 лв', '100 лв', '120 лв'],
+          correct: 2,
+          explanation: 'Нека оригиналната цена е x. x − 20 = 80 → x = 100 лв. Проверка: 100 − 20 = 80 ✓'
+        },
+        {
+          q: 'Едно влакче измина 2/3 от пътуването (240 км). Колко е цялото разстояние?',
+          opts: ['160 km', '320 km', '360 km', '480 km'],
+          correct: 2,
+          explanation: 'Нека цялото разстояние е x. 2x/3 = 240 → x = 240 × 3/2 = 360 km. Проверка: 2/3 × 360 = 240 ✓'
+        },
+        {
+          q: 'Двама ученици имат общо 54 книги. Единият има с 8 повече от другия. Колко има единият (по-малкото)?',
+          opts: ['23', '25', '29', '31'],
+          correct: 0,
+          explanation: 'Нека единият е x, другият е x + 8. x + (x+8) = 54 → 2x + 8 = 54 → 2x = 46 → x = 23. Проверка: 23 + 31 = 54 ✓'
+        },
+        {
+          q: 'Ако от три пъти едно число извадим 7, получаваме 14. Намери числото.',
+          opts: ['5', '7', '21', '9'],
+          correct: 1,
+          explanation: 'Нека x е числото. 3x − 7 = 14 → 3x = 21 → x = 7. Проверка: 3×7 − 7 = 21 − 7 = 14 ✓'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

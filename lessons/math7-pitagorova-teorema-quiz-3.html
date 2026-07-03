@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тест 3 — Теорема на Питагор · Математика 7 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a><a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false"><span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <span class="user-chevron">▾</span></button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+            <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey: 'math7-pitagorova-teorema-q3',
+      lessonUrl: '/lessons/math7-pitagorova-teorema.html',
+      lessonName: 'Теорема на Питагор',
+      eyebrow: 'МАТЕМАТИКА · 7 КЛАС · НВО ПОДГОТОВКА',
+      title: 'Тест 3 — Обратна теорема и приложни задачи',
+      sub: '10 въпроса · Избери верния отговор',
+      quizNum: 3,
+      nextQuizUrl: null,
+      passScore: 7,
+      questions: [
+        {
+          q: 'Какво гласи обратната теорема на Питагор?',
+          opts: ['Ако триъгълникът е правоъгълен, то a² + b² = c²', 'Ако a² + b² = c², то триъгълникът е правоъгълен', 'Ако a + b = c, то триъгълникът е правоъгълен', 'Ако c е най-голямото, то c² = a² · b²'],
+          correct: 1,
+          explanation: 'Обратната теорема на Питагор: Ако в триъгълник с страни a, b, c е изпълнено a² + b² = c², тогава триъгълникът е правоъгълен и правият ъгъл е срещу страната c (хипотенузата).'
+        },
+        {
+          q: 'Стълба с дължина 10 м стои с основата 6 м от стената. До каква височина стига?',
+          opts: ['4 м', '6 м', '8 м', '10 м'],
+          correct: 2,
+          explanation: 'Стълбата, стената и земята образуват правоъгълен триъгълник. h = √(10² − 6²) = √(100 − 36) = √64 = 8 м.'
+        },
+        {
+          q: 'Диагоналът на квадрат с страна 5 cm е:',
+          opts: ['5 cm', '5√2 cm ≈ 7.07 cm', '10 cm', '25 cm'],
+          correct: 1,
+          explanation: 'Диагоналът на квадрат с страна a е d = a√2. При a = 5: d = 5√2 ≈ 7.07 cm. Проверка: d = √(5² + 5²) = √50 = √(25·2) = 5√2.'
+        },
+        {
+          q: 'Разстоянието между точките A(0, 0) и B(3, 4) е:',
+          opts: ['3', '4', '5', '7'],
+          correct: 2,
+          explanation: 'AB = √((3−0)² + (4−0)²) = √(9 + 16) = √25 = 5. Разстоянието между точки в координатна система се пресмята по теоремата на Питагор.'
+        },
+        {
+          q: 'Триъгълник с страни 5, 12 и 13 — правоъгълен ли е?',
+          opts: ['Не, защото 5 + 12 ≠ 13', 'Да, защото 5² + 12² = 13²', 'Не, защото нито едно число не е квадрат', 'Да, ако ъглите се пресмятат'],
+          correct: 1,
+          explanation: '5² + 12² = 25 + 144 = 169 = 13². Тъй като a² + b² = c², по обратната теорема на Питагор триъгълникът е правоъгълен.'
+        },
+        {
+          q: 'Правоъгълен двор е с дължина 8 м и ширина 6 м. Каква е дължината на диагонала?',
+          opts: ['7 м', '10 м', '12 м', '14 м'],
+          correct: 1,
+          explanation: 'd = √(8² + 6²) = √(64 + 36) = √100 = 10 м. Тройката (6, 8, 10) е умножена (3, 4, 5) по 2.'
+        },
+        {
+          q: 'Дали триъгълник с страни 7, 24, 25 е правоъгълен?',
+          opts: ['Не', 'Да, защото 7² + 24² = 25²', 'Не може да се определи без да се измерват ъглите', 'Да, защото числата са последователни'],
+          correct: 1,
+          explanation: '7² + 24² = 49 + 576 = 625 = 25². По обратната теорема на Питагор триъгълникът е правоъгълен. Тройката (7, 24, 25) е питагорова.'
+        },
+        {
+          q: 'Диагоналът на квадрат с страна 4 cm е:',
+          opts: ['4 cm', '4√2 cm ≈ 5.66 cm', '8 cm', '16 cm'],
+          correct: 1,
+          explanation: 'd = a√2 = 4√2 ≈ 5.66 cm. Проверка: d = √(4² + 4²) = √(16 + 16) = √32 = √(16·2) = 4√2.'
+        },
+        {
+          q: 'Разстоянието между A(1, 1) и B(4, 5) е:',
+          opts: ['3', '4', '5', '6'],
+          correct: 2,
+          explanation: 'AB = √((4−1)² + (5−1)²) = √(3² + 4²) = √(9 + 16) = √25 = 5.'
+        },
+        {
+          q: 'Стълба с дължина 13 м стои с основата 5 м от стената. До каква височина стига?',
+          opts: ['8 м', '10 м', '12 м', '14 м'],
+          correct: 2,
+          explanation: 'h = √(13² − 5²) = √(169 − 25) = √144 = 12 м. Тройката (5, 12, 13) е питагорова.'
+        }
+      ]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>
