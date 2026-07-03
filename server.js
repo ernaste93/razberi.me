@@ -24,7 +24,7 @@ function loadLocalEnv() {
 loadLocalEnv();
 
 const PORT = Number(process.env.PORT || 3000);
-const MODEL       = process.env.ANTHROPIC_MODEL        || 'claude-haiku-4-5';
+const MODEL       = process.env.ANTHROPIC_MODEL        || 'claude-sonnet-4-6';
 const MODEL_ESSAY = process.env.ANTHROPIC_MODEL_ESSAY  || 'claude-sonnet-4-6';
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 const PUBLIC_DIR = __dirname;
