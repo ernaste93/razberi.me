@@ -177,17 +177,21 @@
       ? `<a href="${cfg.nextQuizUrl}" class="btn-continue">Премини към Тест ${(cfg.quizNum||1)+1} →</a>`
       : `<a href="/urotsi.html" class="btn-continue">Към уроците →</a>`;
 
+    const backBtn = `<a href="/testove.html" class="btn-lesson">← Към тестовете</a>`;
+
     let btns = '';
     if (passed) {
-      btns = nextBtn;
+      btns = `${backBtn}${nextBtn}`;
     } else if (attemptNum === 1) {
       btns = `
-        <a href="${cfg.lessonUrl}" class="btn-lesson">← Прочети урока отново</a>
+        ${backBtn}
+        <a href="${cfg.lessonUrl}" class="btn-lesson">↺ Прочети урока</a>
         <button class="btn-retry" id="btn-retry">↩ Опитай пак (остава 1 опит)</button>
         ${cfg.nextQuizUrl ? nextBtn : ''}`;
     } else {
       btns = `
-        <a href="${cfg.lessonUrl}" class="btn-lesson">← Обратно към урока</a>
+        ${backBtn}
+        <a href="${cfg.lessonUrl}" class="btn-lesson">↺ Прочети урока</a>
         ${nextBtn}`;
     }
 
@@ -200,16 +204,45 @@
       wrong: wrongTexts
     }));
 
-    // Запиши в Supabase за trial потребители (1 тест на урок)
-    if (window.__isTrial && window.__trialUserId && window.__sbClient) {
+    // Запиши в Supabase quiz_results — директно REST API (без зависимост от nav.js timing)
+    (function saveQuizResult() {
+      var SUPABASE_URL = 'https://wbcppvfgtvkrsfmclmjp.supabase.co';
+      var SUPABASE_KEY = 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l';
       var baseSlug = cfg.lessonKey.replace(/-q\d+$/, '');
-      var done = window.__trialQuizzesDone || [];
-      if (done.indexOf(baseSlug) === -1) {
-        var newDone = done.concat([baseSlug]);
-        window.__trialQuizzesDone = newDone;
-        window.__sbClient.from('profiles').update({ trial_quizzes_done: newDone }).eq('id', window.__trialUserId).then(function(){});
+      var quizNumMatch = cfg.lessonKey.match(/-q(\d+)$/);
+      var quizNum = quizNumMatch ? parseInt(quizNumMatch[1]) : (cfg.quizNum || 1);
+
+      var token = null, userId = null;
+      try {
+        var raw = localStorage.getItem('sb-wbcppvfgtvkrsfmclmjp-auth-token');
+        if (raw) { var sess = JSON.parse(raw); token = sess.access_token; userId = sess.user && sess.user.id; }
+      } catch(e) {}
+
+      if (!userId || !token) return;
+
+      fetch(SUPABASE_URL + '/rest/v1/quiz_results', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ user_id: userId, lesson_slug: baseSlug, quiz_num: quizNum, pct: pct, passed: passed })
+      }).then(function(r) {
+        if (!r.ok) r.text().then(function(t) { console.warn('[quiz] quiz_results insert failed:', r.status, t); });
+      }).catch(function(e) { console.warn('[quiz] quiz_results save error:', e); });
+
+      // Trial: запиши в profiles.trial_quizzes_done
+      if (window.__isTrial && window.__sbClient) {
+        var done = window.__trialQuizzesDone || [];
+        if (done.indexOf(baseSlug) === -1) {
+          var newDone = done.concat([baseSlug]);
+          window.__trialQuizzesDone = newDone;
+          window.__sbClient.from('profiles').update({ trial_quizzes_done: newDone }).eq('id', userId).then(function(){});
+        }
       }
-    }
+    })();
 
     document.getElementById('quiz-area').style.display = 'none';
     const res = document.getElementById('quiz-results');

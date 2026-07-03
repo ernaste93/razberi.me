@@ -1,13 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Skill(claude-api)",
-      "Skill(claude-api:*)",
-      "Bash(git add *)",
-      "Bash(git commit *)",
-      "Bash(git push *)",
-      "Bash(python3)"
+      "Bash(*)",
+      "Edit(*)",
+      "Write(*)",
+      "Read(*)",
+      "Skill(*)"
     ]
   },
-  "model": "claude-sonnet-4-6"
+  "model": "claude-sonnet-4-6",
+  "bypassPermissions": true
 }

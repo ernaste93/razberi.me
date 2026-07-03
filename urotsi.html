@@ -1,922 +1,731 @@
 <!doctype html>
 <html lang="bg">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Уроци – Разбери.Ме</title>
-  <link rel="icon" type="image/png" href="logos/tab_transparent.png?v=2" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-
+  <link rel="icon" type="image/png" href="logos/tab_transparent.png?v=2"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
   <style>
-    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .ur-wrap { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
 
-    .urotsi-page { max-width: 1100px; margin: 16px auto 80px; padding: 0 24px; }
+    /* Header */
+    .ur-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:22px; gap:16px; flex-wrap:wrap; }
+    .ur-title  { font-size:28px; font-weight:900; color:#0f172a; margin:0 0 4px; }
+    .ur-sub    { font-size:14px; color:#64748b; margin:0; }
 
-    .urotsi-intro { margin-bottom: 24px; }
-    .urotsi-intro h1 { font-size: 22px; font-weight: 800; color: var(--text); margin: 0 0 2px; }
-    .urotsi-intro p  { font-size: 14px; color: var(--muted); margin: 0; }
+    /* Search */
+    .ur-search { position:relative; }
+    .ur-search-input {
+      padding:9px 14px 9px 38px; border-radius:10px; border:1.5px solid #e2e8f0;
+      background:#fff; font-size:14px; font-family:inherit; color:#0f172a;
+      width:240px; outline:none; transition:border-color .15s;
+    }
+    .ur-search-input:focus { border-color:#1a2f5a; }
+    .ur-search-icon { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:#94a3b8; pointer-events:none; }
 
     /* Subject tabs */
-    .class-tabs {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
+    .ur-tabs { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+    .ur-tab {
+      padding:9px 22px; border-radius:10px; font-size:14px; font-weight:700;
+      cursor:pointer; border:1.5px solid #e2e8f0; background:#fff; color:#475569;
+      transition:all .15s; font-family:inherit;
     }
-    .class-tab {
-      padding: 8px 22px;
-      border-radius: 99px;
-      border: 1.5px solid var(--line);
-      background: rgba(255,255,255,0.85);
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all .15s;
-    }
-    .class-tab:hover { border-color: var(--accent); color: var(--accent); }
-    .class-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .ur-tab:hover { border-color:#1a2f5a; color:#1a2f5a; }
+    .ur-tab.active { background:#1a2f5a; color:#fff; border-color:#1a2f5a; }
 
-    .subject-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-      padding-left: 4px;
-      border-left: 3px solid var(--line);
-    }
-    .subject-tab {
-      padding: 6px 16px;
-      border-radius: 99px;
-      border: 1.5px solid var(--line);
-      background: rgba(255,255,255,0.85);
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all .15s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .subject-tab:hover { border-color: var(--accent); color: var(--accent); }
-    .subject-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-    .subject-tab.soon { opacity: 0.45; cursor: default; pointer-events: none; }
+    /* Filters */
+    .ur-filters { display:flex; gap:14px; margin-bottom:16px; flex-wrap:wrap; align-items:center; }
+    .ur-filter-group { display:flex; align-items:center; gap:7px; }
+    .ur-filter-label { font-size:10px; font-weight:700; color:#c0c9d8; text-transform:uppercase; letter-spacing:.07em; white-space:nowrap; }
+    .ur-filter-sep { width:1px; height:24px; background:#dde4ef; }
 
-    /* Subject section */
-    .subject-section { margin-bottom: 32px; animation: secFadeIn .2s ease both; }
-    @keyframes secFadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* Grade dropdown */
+    .ur-grade-wrap { position:relative; display:inline-flex; align-items:center; }
+    .ur-grade-select {
+      appearance:none; -webkit-appearance:none;
+      padding:6px 30px 6px 12px; border-radius:8px; border:1.5px solid #e2e8f0;
+      background:#fff; font-size:13px; font-weight:700; font-family:inherit;
+      color:#1a2f5a; cursor:pointer; outline:none; transition:border-color .15s;
     }
-    .subject-section-head {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-    .subject-section-icon {
-      width: 38px; height: 38px;
-      border-radius: 11px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-    }
-    .subject-section-name { font-size: 17px; font-weight: 800; color: var(--text); }
-    .subject-section-sub  { font-size: 12px; color: var(--muted); margin-top: 1px; }
+    .ur-grade-select:hover { border-color:#3b82f6; }
+    .ur-grade-select.changed { border-color:#3b82f6; background:#eff6ff; color:#1d4ed8; }
+    .ur-grade-chevron { position:absolute; right:9px; pointer-events:none; color:#64748b; }
 
-    /* Topic group */
-    .topic-group { margin-bottom: 20px; }
-    .topic-group-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      color: var(--muted);
-      margin-bottom: 8px;
-      padding-left: 2px;
+    /* Status buttons */
+    .ur-sf {
+      padding:6px 13px; border-radius:8px; font-size:13px; font-weight:700;
+      cursor:pointer; border:1.5px solid #e2e8f0; background:#fff; color:#64748b;
+      transition:all .15s; font-family:inherit;
     }
+    .ur-sf:hover  { border-color:#E8A020; color:#E8A020; }
+    .ur-sf.active { background:#E8A020; color:#fff; border-color:#E8A020; }
 
-    /* Lesson cards grid */
-    .lessons-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+    /* Summary bar */
+    .ur-summary {
+      background:#fff; border:1.5px solid #e8edf5; border-radius:12px;
+      padding:11px 18px; margin-bottom:24px;
+      display:flex; align-items:center; gap:6px; flex-wrap:wrap; min-height:44px;
     }
+    .ur-sum-item  { font-size:13px; color:#475569; white-space:nowrap; }
+    .ur-sum-num   { font-weight:800; color:#0f172a; }
+    .ur-sum-sep   { color:#cbd5e1; }
+    .ur-sum-done  { font-weight:800; color:#1a2f5a; }
+    .ur-sum-score { font-weight:800; color:#16a34a; }
 
-    .lesson-card {
-      background: rgba(255,255,255,0.95);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 18px 20px;
-      box-shadow: 0 3px 12px rgba(16,24,40,0.06);
-      cursor: pointer;
-      transition: box-shadow .18s, transform .18s;
-      text-decoration: none;
-      display: block;
+    /* Panels */
+    @keyframes ur-panel-in {
+      from { opacity:0; transform:translateY(-10px); }
+      to   { opacity:1; transform:translateY(0); }
     }
-    .lesson-card:hover {
-      box-shadow: 0 8px 24px rgba(16,24,40,0.13);
-      transform: translateY(-2px);
-    }
-    .lesson-card.locked {
-      opacity: .55;
-      cursor: default;
-      pointer-events: none;
-    }
-    .lesson-card.locked:hover { transform: none; box-shadow: 0 3px 12px rgba(16,24,40,0.06); }
+    .ur-panel { display:none; }
+    .ur-panel.active { display:block; animation:ur-panel-in .25s ease both; }
 
-    .lesson-card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 10px;
+    /* Grade sections */
+    .ur-grade { margin-bottom:36px; }
+    .ur-grade.hidden { display:none; }
+    .ur-grade-title {
+      font-size:13px; font-weight:800; text-transform:uppercase;
+      letter-spacing:.08em; color:#94a3b8; margin-bottom:14px;
+      display:flex; align-items:center; gap:10px;
     }
-    .lesson-status {
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-    .lesson-tag-sm {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .07em;
-      color: var(--muted);
-      background: var(--soft);
-      padding: 3px 8px;
-      border-radius: 99px;
-    }
-    .lesson-card-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.4;
-      margin-bottom: 6px;
-    }
-    .lesson-card-meta {
-      font-size: 12px;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .lesson-card-pct {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .mini-bar-wrap {
-      flex: 1;
-      height: 4px;
-      background: var(--soft);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .mini-bar-fill {
-      height: 100%;
-      border-radius: 99px;
-    }
-    .mini-bar-label { font-size: 11px; font-weight: 700; color: var(--muted); }
+    .ur-grade-title::after { content:''; flex:1; height:1px; background:#e8edf5; }
 
-    /* Coming soon card */
-    .lesson-card-soon {
-      background: var(--soft);
-      border: 1.5px dashed var(--line);
-      border-radius: 16px;
-      padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 600;
+    /* Category groups */
+    .ur-cat-group { margin-bottom:28px; }
+    .ur-cat-title {
+      font-size:12px; font-weight:800; color:#64748b;
+      margin-bottom:12px; display:flex; align-items:center; gap:8px;
+    }
+    .ur-cat-title::after { content:''; flex:1; height:1px; background:#f1f5f9; }
+
+    /* Cards */
+    .ur-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    @media (max-width:900px) { .ur-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:560px) { .ur-grid { grid-template-columns:1fr; } }
+
+    .ur-card {
+      background:#fff; border:1.5px solid #e8edf5; border-radius:14px;
+      padding:16px 18px; transition:box-shadow .2s, border-color .2s, transform .2s;
+      text-decoration:none; display:block; color:inherit;
+    }
+    .ur-card:hover { box-shadow:0 8px 24px rgba(26,47,90,.11); border-color:#c7d2e8; transform:translateY(-2px); }
+    .ur-card.locked { opacity:.45; pointer-events:none; }
+    .ur-card.ur-hide { display:none !important; }
+
+    .ur-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:3px; }
+    .ur-card-title { font-size:13px; font-weight:800; color:#0f172a; line-height:1.35; }
+
+    .ur-badge {
+      flex-shrink:0; font-size:10px; font-weight:800; padding:2px 8px;
+      border-radius:20px; white-space:nowrap;
+      background:#f1f5f9; color:#94a3b8; /* default: Ново */
+    }
+    .ur-badge.started  { background:#dbeafe; color:#1d4ed8; }
+    .ur-badge.done     { background:#dcfce7; color:#16a34a; }
+    .ur-badge.low      { background:#fef3c7; color:#d97706; }
+    .ur-badge.bad      { background:#fee2e2; color:#dc2626; }
+    .ur-badge.review   { background:#fef3c7; color:#d97706; }
+
+    .ur-card-meta { font-size:11px; color:#94a3b8; font-weight:600; margin-bottom:10px; }
+
+    .ur-prog { display:none; margin-bottom:0; }
+    .ur-prog-bar { height:3px; background:#f1f5f9; border-radius:2px; overflow:hidden; margin-bottom:3px; margin-top:10px; }
+    .ur-prog-fill { height:100%; background:#1a2f5a; border-radius:2px; transition:width .4s ease; }
+    .ur-prog-lbl { font-size:10px; color:#94a3b8; font-weight:600; }
+
+    .ur-card-time {
+      display:inline-block; font-size:10px; font-weight:700; text-transform:uppercase;
+      letter-spacing:.05em; color:#94a3b8; background:#f8fafc;
+      padding:2px 7px; border-radius:6px; margin-bottom:8px;
     }
 
-    @media (max-width: 800px) {
-      .lessons-grid { grid-template-columns: repeat(2, 1fr); }
+    /* Empty state */
+    .ur-empty { text-align:center; padding:56px 20px; color:#94a3b8; display:none; }
+    .ur-empty-icon { font-size:36px; margin-bottom:10px; }
+    .ur-empty-text { font-size:15px; font-weight:700; }
+    .ur-empty-sub  { font-size:13px; margin-top:4px; }
+
+    /* Review disabled button */
+    .ur-sf.review-locked { opacity:.45; cursor:not-allowed; position:relative; }
+    .ur-sf.review-locked:hover { border-color:#e2e8f0; color:#64748b; background:#fff; }
+    .ur-sf.review-locked::after {
+      content: attr(data-tip);
+      position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%);
+      background:#1e293b; color:#fff; font-size:11px; font-weight:600;
+      padding:6px 10px; border-radius:8px; white-space:nowrap;
+      pointer-events:none; opacity:0; transition:opacity .15s;
     }
-    @media (max-width: 500px) {
-      .lessons-grid { grid-template-columns: 1fr; }
+    .ur-sf.review-locked:hover::after { opacity:1; }
+
+    /* Exam prep banner */
+    #ur-exam-banner {
+      display:none; background:linear-gradient(135deg,#1a2f5a,#2563eb);
+      color:#fff; border-radius:14px; padding:16px 22px; margin-bottom:20px;
+      align-items:center; gap:16px; flex-wrap:wrap;
+    }
+    #ur-exam-banner.show { display:flex; }
+    .ur-exam-icon { font-size:28px; flex-shrink:0; }
+    .ur-exam-text { flex:1; }
+    .ur-exam-title { font-size:15px; font-weight:800; margin-bottom:2px; }
+    .ur-exam-sub   { font-size:13px; opacity:.85; }
+    .ur-exam-count { font-size:22px; font-weight:900; flex-shrink:0; }
+
+    /* Trial banner */
+    #trial-banner {
+      display:none; background:linear-gradient(90deg,#1d4ed8,#2563eb); color:#fff;
+      padding:11px 24px; text-align:center; font-size:14px; font-weight:500;
     }
   </style>
 </head>
 <body>
 
-  <header class="topbar">
-    <div class="topbar-main">
-      <div class="brand">
-        <a href="/" id="home-link"><img src="logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
-      </div>
-      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
-        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
-        <a href="/urotsi.html" class="nav-btn" style="font-weight:700;color:var(--accent);">Към уроците</a>
-        <div class="user-menu" id="user-menu">
-          <button class="user-chip" id="user-chip" aria-expanded="false">
-            <span class="user-avatar" id="user-avatar">?</span>
-            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
-            <span class="user-chevron">▾</span>
-          </button>
-          <div class="user-dropdown" id="user-dropdown">
-            <div class="user-email">
-              <div class="user-fullname" id="user-fullname-label"></div>
-              <div class="user-emailaddr" id="user-email-label"></div>
-            </div>
-            <a href="/settings.html">Настройки</a>
-            <a href="/settings.html?tab=children">Децата ми</a>
-            <a href="/dnevnik.html">Дневник</a>
-            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
-            <div class="dropdown-divider"></div>
-            <button id="btn-logout">Изход</button>
+<!-- kept for nav.js compatibility -->
+<header class="topbar" style="display:none">
+  <div class="topbar-main">
+    <div class="brand"><a href="/"><img src="logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <div class="user-menu" id="user-menu" style="display:none">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email">
+            <div class="user-fullname" id="user-fullname-label"></div>
+            <div class="user-emailaddr" id="user-email-label"></div>
           </div>
+          <a href="/settings.html">Настройки</a>
+          <a href="/dnevnik-book.html">Оценки</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div>
+          <button id="btn-logout">Изход</button>
         </div>
       </div>
     </div>
-  </header>
-
-  <!-- Trial top banner -->
-  <div id="trial-banner" style="display:none; background:linear-gradient(90deg,#1d4ed8,#2563eb); color:#fff; padding:11px 24px; text-align:center; font-size:14px; font-weight:500; letter-spacing:0.01em;">
-    <span id="trial-banner-text"></span>
   </div>
+</header>
 
+<div id="trial-banner"><span id="trial-banner-text"></span></div>
 
-  <main>
-    <div class="urotsi-page">
+<main>
+  <div class="ur-wrap">
 
-      <div class="urotsi-intro">
-        <h1>Уроци</h1>
-        <p id="grade-label">Матурна подготовка</p>
+    <div class="ur-header">
+      <div>
+        <h1 class="ur-title">Уроци</h1>
+        <p class="ur-sub">Избери предмет и клас — прочети урока, после реши тестовете.</p>
       </div>
-
-      <!-- Клас tabs (outer) -->
-      <div class="class-tabs">
-        <button class="class-tab active" data-class="12" type="button">12 клас</button>
-        <button class="class-tab" data-class="11" type="button">11 клас · Преговор</button>
+      <div class="ur-search">
+        <svg class="ur-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input class="ur-search-input" id="ur-search" type="text" placeholder="Търси автор или произведение…" oninput="applyFilters()"/>
       </div>
-
-      <!-- Предмет tabs за 12 клас -->
-      <div class="subject-tabs" id="stabs-12">
-        <button class="subject-tab active" data-subject="bel" type="button">БЕЛ</button>
-        <button class="subject-tab" data-subject="math" type="button">Математика</button>
-        <button class="subject-tab" data-subject="bio" type="button">Биология</button>
-        <button class="subject-tab" data-subject="chem" type="button">Химия</button>
-      </div>
-
-      <!-- Предмет tabs за 11 клас -->
-      <div class="subject-tabs" id="stabs-11" style="display:none;">
-        <button class="subject-tab active" data-subject="bel-pregovor" type="button">БЕЛ</button>
-        <button class="subject-tab" data-subject="math-pregovor" type="button">Математика</button>
-        <button class="subject-tab" data-subject="bio-pregovor" type="button">Биология</button>
-        <button class="subject-tab" data-subject="chem-pregovor" type="button">Химия</button>
-      </div>
-
-      <!-- БЕЛ -->
-      <div class="subject-section" data-section="bel">
-        <div class="subject-section-head">
-          <div class="subject-section-icon" style="background:#e8edf7;color:#1e3a5f;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-            </svg>
-          </div>
-          <div>
-            <div class="subject-section-name">Български език и литература</div>
-            <div class="subject-section-sub" id="bel-progress-sub">12 от 12 урока достъпни · 0% завършени</div>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label">Тема 1 — Любовта</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel12-debelyanov-lyubov.html" class="lesson-card" id="card-bel12-debelyanov-lyubov">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~8 мин</div>
-              </div>
-              <div class="lesson-card-title">Димчо Дебелянов — „Аз искам да те помня все така"</div>
-              <div class="lesson-card-meta">Символизъм · Лирика · 3 теста</div>
-              <div id="quiz-result-bel12-debelyanov-lyubov"></div>
-            </a>
-            <a href="/lessons/bel12-fotev-lyubov.html" class="lesson-card" id="card-bel12-fotev-lyubov">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~7 мин</div>
-              </div>
-              <div class="lesson-card-title">Христо Фотев — „Колко си хубава!"</div>
-              <div class="lesson-card-meta">Модернизъм · Лирика · 3 теста</div>
-              <div id="quiz-result-bel12-fotev-lyubov"></div>
-            </a>
-            <a href="/lessons/bel12-dubarova-posveshenie.html" class="lesson-card" id="card-bel12-dubarova-posveshenie">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~6 мин</div>
-              </div>
-              <div class="lesson-card-title">Петя Дубарова — „Посвещение"</div>
-              <div class="lesson-card-meta">Лирика · 3 теста</div>
-              <div id="quiz-result-bel12-dubarova-posveshenie"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label">Тема 2 — Вярата и надеждата</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel12-vaptsarov-vyara.html" class="lesson-card" id="card-bel12-vaptsarov-vyara">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~8 мин</div>
-              </div>
-              <div class="lesson-card-title">Никола Вапцаров — „Вяра"</div>
-              <div class="lesson-card-meta">Авангард · Лирика · 3 теста</div>
-              <div id="quiz-result-bel12-vaptsarov-vyara"></div>
-            </a>
-            <a href="/lessons/bel12-dalchev-molitva.html" class="lesson-card" id="card-bel12-dalchev-molitva">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~7 мин</div>
-              </div>
-              <div class="lesson-card-title">Атанас Далчев — „Молитва"</div>
-              <div class="lesson-card-meta">Предметизъм · Лирика · 3 теста</div>
-              <div id="quiz-result-bel12-dalchev-molitva"></div>
-            </a>
-            <a href="/lessons/bel12-elin-pelin-spasova-mogila.html" class="lesson-card" id="card-bel12-elin-pelin-spasova-mogila">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~8 мин</div>
-              </div>
-              <div class="lesson-card-title">Елин Пелин — „Спасова могила"</div>
-              <div class="lesson-card-meta">Критически реализъм · Разказ · 3 теста</div>
-              <div id="quiz-result-bel12-elin-pelin-spasova-mogila"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label">Тема 3 — Трудът и творчеството</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel12-elin-pelin-vetrena-melnitsa.html" class="lesson-card" id="card-bel12-elin-pelin-vetrena-melnitsa">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~8 мин</div>
-              </div>
-              <div class="lesson-card-title">Елин Пелин — „Ветрената мелница"</div>
-              <div class="lesson-card-meta">Критически реализъм · Разказ · 3 теста</div>
-              <div id="quiz-result-bel12-elin-pelin-vetrena-melnitsa"></div>
-            </a>
-            <a href="/lessons/bel12-yovkov-pesenta-na-koleletata.html" class="lesson-card" id="card-bel12-yovkov-pesenta-na-koleletata">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~8 мин</div>
-              </div>
-              <div class="lesson-card-title">Йордан Йовков — „Песента на колелетата"</div>
-              <div class="lesson-card-meta">Реализъм · Разказ · 3 теста</div>
-              <div id="quiz-result-bel12-yovkov-pesenta-na-koleletata"></div>
-            </a>
-            <a href="/lessons/bel12-paskov-balada.html" class="lesson-card" id="card-bel12-paskov-balada">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~9 мин</div>
-              </div>
-              <div class="lesson-card-title">Виктор Пасков — „Балада за Георг Хених"</div>
-              <div class="lesson-card-meta">Автобиографична проза · 3 теста</div>
-              <div id="quiz-result-bel12-paskov-balada"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label">Тема 4 — Изборът и раздвоението</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel12-yavorov-dve-dushi.html" class="lesson-card" id="card-bel12-yavorov-dve-dushi">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~8 мин</div>
-              </div>
-              <div class="lesson-card-title">Пейо Яворов — „Две души"</div>
-              <div class="lesson-card-meta">Символизъм · Лирика · 3 теста</div>
-              <div id="quiz-result-bel12-yavorov-dve-dushi"></div>
-            </a>
-            <a href="/lessons/bel12-bagryana-potomka.html" class="lesson-card" id="card-bel12-bagryana-potomka">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~7 мин</div>
-              </div>
-              <div class="lesson-card-title">Елисавета Багряна — „Потомка"</div>
-              <div class="lesson-card-meta">Модернизъм · Лирика · 3 теста</div>
-              <div id="quiz-result-bel12-bagryana-potomka"></div>
-            </a>
-            <a href="/lessons/bel12-hristov-chesten-krast.html" class="lesson-card" id="card-bel12-hristov-chesten-krast">
-              <div class="lesson-card-top">
-                <div class="lesson-tag-sm">~6 мин</div>
-              </div>
-              <div class="lesson-card-title">Борис Христов — „Честен кръст"</div>
-              <div class="lesson-card-meta">Съвременна лирика · 3 теста</div>
-              <div id="quiz-result-bel12-hristov-chesten-krast"></div>
-            </a>
-          </div>
-
-        </div>
-
-      </div><!-- /bel section -->
-
-      <!-- БЕЛ Преговор от 11 клас -->
-      <div class="subject-section" data-section="bel-pregovor">
-        <div class="subject-section-head">
-          <div class="subject-section-icon" style="background:#f5f0ff;color:#5b21b6;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-            </svg>
-          </div>
-          <div>
-            <div class="subject-section-name">БЕЛ — Преговор от 11 клас</div>
-            <div class="subject-section-sub">15 произведения + езикови теми · матурна подготовка</div>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label">Родното и чуждото</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel11-talev-zhelezniyat-svetilnik.html" class="lesson-card" id="card-bel11-talev-zhelezniyat-svetilnik">
-              <div class="lesson-card-title">Димитър Талев — „Железният светилник"</div>
-              <div class="lesson-card-meta">Роман · Национална идентичност · 3 теста</div>
-              <div id="quiz-result-bel11-talev-zhelezniyat-svetilnik"></div>
-            </a>
-            <a href="/lessons/bel11-stratiev-sako.html" class="lesson-card" id="card-bel11-stratiev-sako">
-              <div class="lesson-card-title">Станислав Стратиев — „Сако от велур"</div>
-              <div class="lesson-card-meta">Разказ · Сатира · 3 теста</div>
-              <div id="quiz-result-bel11-stratiev-sako"></div>
-            </a>
-            <a href="/lessons/bel11-aleko-bay-ganyo.html" class="lesson-card" id="card-bel11-aleko-bay-ganyo">
-              <div class="lesson-card-title">Алеко Константинов — „Бай Ганьо"</div>
-              <div class="lesson-card-meta">Пътеписи · Сатира · 3 теста</div>
-              <div id="quiz-result-bel11-aleko-bay-ganyo"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label" style="background:#f5f0ff;color:#5b21b6;border-color:#ddd6fe;">Преговор 11 клас — Обществото и властта</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel11-botev-hadzhi-dimityr.html" class="lesson-card" id="card-bel11-botev-hadzhi-dimityr">
-              <div class="lesson-card-title">Христо Ботев — „Хаджи Димитър"</div>
-              <div class="lesson-card-meta">Поема · Патриотизъм · 3 теста</div>
-              <div id="quiz-result-bel11-botev-hadzhi-dimityr"></div>
-            </a>
-            <a href="/lessons/bel11-smirnanski-yohan.html" class="lesson-card" id="card-bel11-smirnanski-yohan">
-              <div class="lesson-card-title">Христо Смирненски — „Йохан"</div>
-              <div class="lesson-card-meta">Поема · Социален протест · 3 теста</div>
-              <div id="quiz-result-bel11-smirnanski-yohan"></div>
-            </a>
-            <a href="/lessons/bel11-elin-pelin-andreshko.html" class="lesson-card" id="card-bel11-elin-pelin-andreshko">
-              <div class="lesson-card-title">Елин Пелин — „Андрешко"</div>
-              <div class="lesson-card-meta">Разказ · Хумор · Народопсихология · 3 теста</div>
-              <div id="quiz-result-bel11-elin-pelin-andreshko"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label" style="background:#f5f0ff;color:#5b21b6;border-color:#ddd6fe;">Преговор 11 клас — Миналото и паметта</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel11-vaptsarov-istoriya.html" class="lesson-card" id="card-bel11-vaptsarov-istoriya">
-              <div class="lesson-card-title">Никола Вапцаров — „История"</div>
-              <div class="lesson-card-meta">Лирика · Памет · 3 теста</div>
-              <div id="quiz-result-bel11-vaptsarov-istoriya"></div>
-            </a>
-            <a href="/lessons/bel11-radichkov-nezhnata-spirala.html" class="lesson-card" id="card-bel11-radichkov-nezhnata-spirala">
-              <div class="lesson-card-title">Йордан Радичков — „Нежната спирала"</div>
-              <div class="lesson-card-meta">Разказ · Памет · 3 теста</div>
-              <div id="quiz-result-bel11-radichkov-nezhnata-spirala"></div>
-            </a>
-            <a href="/lessons/bel11-vazov-paisiy.html" class="lesson-card" id="card-bel11-vazov-paisiy">
-              <div class="lesson-card-title">Иван Вазов — „Паисий"</div>
-              <div class="lesson-card-meta">Поема · Национална памет · 3 теста</div>
-              <div id="quiz-result-bel11-vazov-paisiy"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label" style="background:#f5f0ff;color:#5b21b6;border-color:#ddd6fe;">Преговор 11 клас — Животът и смъртта</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel11-botev-obesa.html" class="lesson-card" id="card-bel11-botev-obesa">
-              <div class="lesson-card-title">Христо Ботев — „Обесването на Васил Левски"</div>
-              <div class="lesson-card-meta">Елегия · Патриотизъм · 3 теста</div>
-              <div id="quiz-result-bel11-botev-obesa"></div>
-            </a>
-            <a href="/lessons/bel11-stanev-kradetsat.html" class="lesson-card" id="card-bel11-stanev-kradetsat">
-              <div class="lesson-card-title">Емилиян Станев — „Крадецът на праскови"</div>
-              <div class="lesson-card-meta">Повест · Хуманизъм · 3 теста</div>
-              <div id="quiz-result-bel11-stanev-kradetsat"></div>
-            </a>
-            <a href="/lessons/bel11-vazov-opalchentsite.html" class="lesson-card" id="card-bel11-vazov-opalchentsite">
-              <div class="lesson-card-title">Иван Вазов — „Опълченците на Шипка"</div>
-              <div class="lesson-card-meta">Поема · Героизъм · 3 теста</div>
-              <div id="quiz-result-bel11-vazov-opalchentsite"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label" style="background:#f5f0ff;color:#5b21b6;border-color:#ddd6fe;">Преговор 11 клас — Природата</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel11-yavorov-gradushka.html" class="lesson-card" id="card-bel11-yavorov-gradushka">
-              <div class="lesson-card-title">Пейо Яворов — „Градушка"</div>
-              <div class="lesson-card-meta">Лирика · Природа · 3 теста</div>
-              <div id="quiz-result-bel11-yavorov-gradushka"></div>
-            </a>
-            <a href="/lessons/bel11-vazov-tih-byal-dunav.html" class="lesson-card" id="card-bel11-vazov-tih-byal-dunav">
-              <div class="lesson-card-title">Иван Вазов — „Тих бял Дунав"</div>
-              <div class="lesson-card-meta">Лирика · Природа · 3 теста</div>
-              <div id="quiz-result-bel11-vazov-tih-byal-dunav"></div>
-            </a>
-            <a href="/lessons/bel11-slaveykov-cis-moll.html" class="lesson-card" id="card-bel11-slaveykov-cis-moll">
-              <div class="lesson-card-title">Пенчо Славейков — „Cis moll"</div>
-              <div class="lesson-card-meta">Символизъм · Любовна лирика · 3 теста</div>
-              <div id="quiz-result-bel11-slaveykov-cis-moll"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label" style="background:#f5f0ff;color:#5b21b6;border-color:#ddd6fe;">Преговор 11 клас — Иван Вазов (Епопея)</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel11-vazov-epopea.html" class="lesson-card" id="card-bel11-vazov-epopea">
-              <div class="lesson-card-title">Иван Вазов — „Епопея на забравените"</div>
-              <div class="lesson-card-meta">Цикъл оди · Национални герои · 3 теста</div>
-              <div id="quiz-result-bel11-vazov-epopea"></div>
-            </a>
-            <a href="/lessons/bel11-vazov-pod-igoto.html" class="lesson-card" id="card-bel11-vazov-pod-igoto">
-              <div class="lesson-card-title">Иван Вазов — „Под игото"</div>
-              <div class="lesson-card-meta">Роман · Освобождение · 3 теста</div>
-              <div id="quiz-result-bel11-vazov-pod-igoto"></div>
-            </a>
-          </div>
-        </div>
-
-        <div class="topic-group">
-          <div class="topic-group-label" style="background:#e8f4fd;color:#0369a1;border-color:#bae6fd;">Езикови теми</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bel12-pravopis.html" class="lesson-card" id="card-bel12-pravopis">
-              <div class="lesson-card-title">Правописна норма</div>
-              <div class="lesson-card-meta">Членуване · Слято/разделно · 3 теста</div>
-              <div id="quiz-result-bel12-pravopis"></div>
-            </a>
-            <a href="/lessons/bel12-punktuatsiya.html" class="lesson-card" id="card-bel12-punktuatsiya">
-              <div class="lesson-card-title">Пунктуационна норма</div>
-              <div class="lesson-card-meta">Запетая · Тире · Двоеточие · 3 теста</div>
-              <div id="quiz-result-bel12-punktuatsiya"></div>
-            </a>
-            <a href="/lessons/bel12-gramatika.html" class="lesson-card" id="card-bel12-gramatika">
-              <div class="lesson-card-title">Граматична норма</div>
-              <div class="lesson-card-meta">Части на речта · Съгласуване · 3 теста</div>
-              <div id="quiz-result-bel12-gramatika"></div>
-            </a>
-            <a href="/lessons/bel12-leksika.html" class="lesson-card" id="card-bel12-leksika">
-              <div class="lesson-card-title">Лексикална норма</div>
-              <div class="lesson-card-meta">Синоними · Пароними · Фразеологизми · 3 теста</div>
-              <div id="quiz-result-bel12-leksika"></div>
-            </a>
-          </div>
-        </div>
-      </div><!-- /bel-pregovor section -->
-
-      <!-- Математика 11 клас Преговор -->
-      <div class="subject-section" data-section="math-pregovor">
-        <div class="subject-section-head">
-          <div class="subject-section-icon" style="background:#f3f0ff;color:#5b21b6;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 21L12 3l9 18H3z"/><line x1="6.5" y1="14" x2="17.5" y2="14"/>
-            </svg>
-          </div>
-          <div>
-            <div class="subject-section-name">Математика — Преговор от 11 клас</div>
-            <div class="subject-section-sub">5 теми · матурна подготовка</div>
-          </div>
-        </div>
-        <div class="topic-group">
-          <div class="topic-group-label">Функции и графики</div>
-          <div class="lessons-grid">
-            <a href="/lessons/math11-trigonometriya.html" class="lesson-card" id="card-math11-trigonometriya">
-              <div class="lesson-card-title">Тригонометрични функции</div>
-              <div class="lesson-card-meta">sin, cos, tan · Графики · Формули · 3 теста</div>
-              <div id="quiz-result-math11-trigonometriya"></div>
-            </a>
-            <a href="/lessons/math11-pokazatelna-logaritmichna.html" class="lesson-card" id="card-math11-pokazatelna-logaritmichna">
-              <div class="lesson-card-title">Показателна и логаритмична функция</div>
-              <div class="lesson-card-meta">Степени · Логаритми · Уравнения · 3 теста</div>
-              <div id="quiz-result-math11-pokazatelna-logaritmichna"></div>
-            </a>
-            <a href="/lessons/math11-kvadratni-neravenstva.html" class="lesson-card" id="card-math11-kvadratni-neravenstva">
-              <div class="lesson-card-title">Квадратни неравенства</div>
-              <div class="lesson-card-meta">Параболи · Знакова схема · Системи · 3 теста</div>
-              <div id="quiz-result-math11-kvadratni-neravenstva"></div>
-            </a>
-          </div>
-        </div>
-        <div class="topic-group">
-          <div class="topic-group-label">Редици и геометрия</div>
-          <div class="lessons-grid">
-            <a href="/lessons/math11-progresii.html" class="lesson-card" id="card-math11-progresii">
-              <div class="lesson-card-title">Аритметична и геометрична прогресия</div>
-              <div class="lesson-card-meta">Редици · Суми · Формули · 3 теста</div>
-              <div id="quiz-result-math11-progresii"></div>
-            </a>
-            <a href="/lessons/math11-planimeriya.html" class="lesson-card" id="card-math11-planimeriya">
-              <div class="lesson-card-title">Планиметрия</div>
-              <div class="lesson-card-meta">Триъгълник · Четириъгълник · Окръжност · 3 теста</div>
-              <div id="quiz-result-math11-planimeriya"></div>
-            </a>
-          </div>
-        </div>
-      </div><!-- /math-pregovor section -->
-
-      <!-- Биология 11 клас Преговор -->
-      <div class="subject-section" data-section="bio-pregovor">
-        <div class="subject-section-head">
-          <div class="subject-section-icon" style="background:#f0fdf4;color:#15803d;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12c0-2.76 1.12-5.26 2.93-7.07"/><path d="M12 6v6l4 2"/>
-            </svg>
-          </div>
-          <div>
-            <div class="subject-section-name">Биология — Преговор от 11 клас</div>
-            <div class="subject-section-sub">6 теми · матурна подготовка</div>
-          </div>
-        </div>
-        <div class="topic-group">
-          <div class="topic-group-label">Клетка и метаболизъм</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bio11-kletkata.html" class="lesson-card" id="card-bio11-kletkata">
-              <div class="lesson-card-title">Строеж и функции на клетката</div>
-              <div class="lesson-card-meta">Органели · Мембрана · Ядро · 3 теста</div>
-              <div id="quiz-result-bio11-kletkata"></div>
-            </a>
-            <a href="/lessons/bio11-fotosinteza.html" class="lesson-card" id="card-bio11-fotosinteza">
-              <div class="lesson-card-title">Фотосинтеза</div>
-              <div class="lesson-card-meta">Светлинна фаза · Калвинов цикъл · 3 теста</div>
-              <div id="quiz-result-bio11-fotosinteza"></div>
-            </a>
-            <a href="/lessons/bio11-dishane.html" class="lesson-card" id="card-bio11-dishane">
-              <div class="lesson-card-title">Клетъчно дишане</div>
-              <div class="lesson-card-meta">Гликолиза · Кребс · АТФ · 3 теста</div>
-              <div id="quiz-result-bio11-dishane"></div>
-            </a>
-          </div>
-        </div>
-        <div class="topic-group">
-          <div class="topic-group-label">Регулация и размножаване</div>
-          <div class="lessons-grid">
-            <a href="/lessons/bio11-nervna-sistema.html" class="lesson-card" id="card-bio11-nervna-sistema">
-              <div class="lesson-card-title">Нервна система</div>
-              <div class="lesson-card-meta">Неврон · Рефлекс · ЦНС · 3 теста</div>
-              <div id="quiz-result-bio11-nervna-sistema"></div>
-            </a>
-            <a href="/lessons/bio11-endokrinna-sistema.html" class="lesson-card" id="card-bio11-endokrinna-sistema">
-              <div class="lesson-card-title">Ендокринна система</div>
-              <div class="lesson-card-meta">Хормони · Жлези · Регулация · 3 теста</div>
-              <div id="quiz-result-bio11-endokrinna-sistema"></div>
-            </a>
-            <a href="/lessons/bio11-razmnozhavane.html" class="lesson-card" id="card-bio11-razmnozhavane">
-              <div class="lesson-card-title">Размножаване</div>
-              <div class="lesson-card-meta">Мейоза · Гаметогенеза · Оплождане · 3 теста</div>
-              <div id="quiz-result-bio11-razmnozhavane"></div>
-            </a>
-          </div>
-        </div>
-      </div><!-- /bio-pregovor section -->
-
-      <!-- Химия 11 клас Преговор -->
-      <div class="subject-section" data-section="chem-pregovor">
-        <div class="subject-section-head">
-          <div class="subject-section-icon" style="background:#fff7ed;color:#c2410c;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 3h6v11l3.5 6H5.5L9 14V3z"/><line x1="6" y1="8" x2="18" y2="8"/>
-            </svg>
-          </div>
-          <div>
-            <div class="subject-section-name">Химия — Преговор от 11 клас</div>
-            <div class="subject-section-sub">6 теми · матурна подготовка</div>
-          </div>
-        </div>
-        <div class="topic-group">
-          <div class="topic-group-label">Строеж и връзки</div>
-          <div class="lessons-grid">
-            <a href="/lessons/chem11-stroezh-atoma.html" class="lesson-card" id="card-chem11-stroezh-atoma">
-              <div class="lesson-card-title">Строеж на атома и периодична система</div>
-              <div class="lesson-card-meta">Електрони · Орбитали · Периодичност · 3 теста</div>
-              <div id="quiz-result-chem11-stroezh-atoma"></div>
-            </a>
-            <a href="/lessons/chem11-himichna-vrazka.html" class="lesson-card" id="card-chem11-himichna-vrazka">
-              <div class="lesson-card-title">Химична връзка</div>
-              <div class="lesson-card-meta">Ковалентна · Йонна · Метална · 3 теста</div>
-              <div id="quiz-result-chem11-himichna-vrazka"></div>
-            </a>
-            <a href="/lessons/chem11-rastvori.html" class="lesson-card" id="card-chem11-rastvori">
-              <div class="lesson-card-title">Разтвори и електролитна дисоциация</div>
-              <div class="lesson-card-meta">рН · Киселинност · Буфери · 3 теста</div>
-              <div id="quiz-result-chem11-rastvori"></div>
-            </a>
-          </div>
-        </div>
-        <div class="topic-group">
-          <div class="topic-group-label">Реакции и съединения</div>
-          <div class="lessons-grid">
-            <a href="/lessons/chem11-okislenie-redukciya.html" class="lesson-card" id="card-chem11-okislenie-redukciya">
-              <div class="lesson-card-title">Окислително-редукционни реакции</div>
-              <div class="lesson-card-meta">Степени на окисление · Балансиране · 3 теста</div>
-              <div id="quiz-result-chem11-okislenie-redukciya"></div>
-            </a>
-            <a href="/lessons/chem11-neorganichni-saedinenia.html" class="lesson-card" id="card-chem11-neorganichni-saedinenia">
-              <div class="lesson-card-title">Неорганични съединения</div>
-              <div class="lesson-card-meta">Оксиди · Киселини · Основи · Соли · 3 теста</div>
-              <div id="quiz-result-chem11-neorganichni-saedinenia"></div>
-            </a>
-            <a href="/lessons/chem11-skorost-ravnovesie.html" class="lesson-card" id="card-chem11-skorost-ravnovesie">
-              <div class="lesson-card-title">Скорост и равновесие</div>
-              <div class="lesson-card-meta">Льо Шателие · Kc · Катализатори · 3 теста</div>
-              <div id="quiz-result-chem11-skorost-ravnovesie"></div>
-            </a>
-          </div>
-        </div>
-      </div><!-- /chem-pregovor section -->
-
-      <!-- Математика -->
-      <div class="subject-section" data-section="math">
-        <div class="subject-section-head">
-          <div class="subject-section-icon" style="background:#f3f0ff;color:#5b21b6;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 21L12 3l9 18H3z"/><line x1="6.5" y1="14" x2="17.5" y2="14"/>
-            </svg>
-          </div>
-          <div>
-            <div class="subject-section-name">Математика</div>
-            <div class="subject-section-sub">9 теми · матурна подготовка</div>
-          </div>
-        </div>
-        <div class="lessons-grid">
-          <a href="/lessons/math12-kvadratna-funkciya.html" class="lesson-card" id="card-math12-kvadratna-funkciya">
-            <div class="lesson-card-top">
-              <div class="lesson-tag-sm">~10 мин</div>
-            </div>
-            <div class="lesson-card-title">Квадратна функция</div>
-            <div class="lesson-card-meta">Парабола · Дискриминанта · Виета · 3 теста</div>
-            <div id="quiz-result-math12-kvadratna-funkciya"></div>
-          </a>
-          <a href="/lessons/math12-trigonometriya.html" class="lesson-card" id="card-math12-trigonometriya">
-            <div class="lesson-card-title">Тригонометрични функции</div>
-            <div class="lesson-card-meta">sin · cos · tan · уравнения · 3 теста</div>
-            <div id="quiz-result-math12-trigonometriya"></div>
-          </a>
-          <a href="/lessons/math12-proizvodna.html" class="lesson-card" id="card-math12-proizvodna">
-            <div class="lesson-card-title">Производна и приложения</div>
-            <div class="lesson-card-meta">Диференциране · Екстремуми · Оптимизация · 3 теста</div>
-            <div id="quiz-result-math12-proizvodna"></div>
-          </a>
-          <a href="/lessons/math12-kombinatorika.html" class="lesson-card" id="card-math12-kombinatorika">
-            <div class="lesson-card-title">Комбинаторика</div>
-            <div class="lesson-card-meta">Пермутации · Комбинации · Вариации · 3 теста</div>
-            <div id="quiz-result-math12-kombinatorika"></div>
-          </a>
-          <a href="/lessons/math12-veroyatnosti.html" class="lesson-card" id="card-math12-veroyatnosti">
-            <div class="lesson-card-title">Вероятности и статистика</div>
-            <div class="lesson-card-meta">Класическа вероятност · Статистика · 3 теста</div>
-            <div id="quiz-result-math12-veroyatnosti"></div>
-          </a>
-          <a href="/lessons/math12-geometriya.html" class="lesson-card" id="card-math12-geometriya">
-            <div class="lesson-card-title">Геометрия — преговор</div>
-            <div class="lesson-card-meta">Лице · Обем · Питагор · Теореми · 3 теста</div>
-            <div id="quiz-result-math12-geometriya"></div>
-          </a>
-          <a href="/lessons/math12-kvadratni-neravenstva.html" class="lesson-card" id="card-math12-kvadratni-neravenstva">
-            <div class="lesson-card-title">Квадратни неравенства</div>
-            <div class="lesson-card-meta">Метод на параболата · Знакова схема · 3 теста</div>
-            <div id="quiz-result-math12-kvadratni-neravenstva"></div>
-          </a>
-          <a href="/lessons/math12-pokazatelna-logaritmichna.html" class="lesson-card" id="card-math12-pokazatelna-logaritmichna">
-            <div class="lesson-card-title">Показателна и логаритмична функция</div>
-            <div class="lesson-card-meta">aˣ · log_a(x) · Уравнения · 3 теста</div>
-            <div id="quiz-result-math12-pokazatelna-logaritmichna"></div>
-          </a>
-          <a href="/lessons/math12-progresii.html" class="lesson-card" id="card-math12-progresii">
-            <div class="lesson-card-title">Прогресии</div>
-            <div class="lesson-card-meta">Аритметична · Геометрична · Безкрайна · 3 теста</div>
-            <div id="quiz-result-math12-progresii"></div>
-          </a>
-        </div>
-      </div>
-
-      <!-- Биология -->
-      <div class="subject-section" data-section="bio">
-        <div class="subject-section-head">
-          <div class="subject-section-icon" style="background:#f0fdf4;color:#15803d;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 2a10 10 0 0 0 0 20"/><line x1="2" y1="12" x2="22" y2="12"/>
-            </svg>
-          </div>
-          <div>
-            <div class="subject-section-name">Биология и здравно образование</div>
-            <div class="subject-section-sub">6 теми · матурна подготовка</div>
-          </div>
-        </div>
-        <div class="lessons-grid">
-          <a href="/lessons/bio12-dnk-rnk.html" class="lesson-card" id="card-bio12-dnk-rnk">
-            <div class="lesson-card-title">Молекулярна биология — ДНК и РНК</div>
-            <div class="lesson-card-meta">Репликация · Транскрипция · Транслация · 3 теста</div>
-            <div id="quiz-result-bio12-dnk-rnk"></div>
-          </a>
-          <a href="/lessons/bio12-genetika-mendel.html" class="lesson-card" id="card-bio12-genetika-mendel">
-            <div class="lesson-card-title">Генетика — Менделови закони</div>
-            <div class="lesson-card-meta">Кръстосване · Доминантност · Генотип · 3 теста</div>
-            <div id="quiz-result-bio12-genetika-mendel"></div>
-          </a>
-          <a href="/lessons/bio12-mutatsii.html" class="lesson-card" id="card-bio12-mutatsii">
-            <div class="lesson-card-title">Мутации и популационна генетика</div>
-            <div class="lesson-card-meta">Генни · Хромозомни · Геномни мутации · 3 теста</div>
-            <div id="quiz-result-bio12-mutatsii"></div>
-          </a>
-          <a href="/lessons/bio12-razmnozhavane.html" class="lesson-card" id="card-bio12-razmnozhavane">
-            <div class="lesson-card-title">Размножаване, растеж и развитие</div>
-            <div class="lesson-card-meta">Митоза · Мейоза · Оплождане · 3 теста</div>
-            <div id="quiz-result-bio12-razmnozhavane"></div>
-          </a>
-          <a href="/lessons/bio12-evolyutsiya.html" class="lesson-card" id="card-bio12-evolyutsiya">
-            <div class="lesson-card-title">Еволюция</div>
-            <div class="lesson-card-meta">Дарвин · Естествен отбор · Видообразуване · 3 теста</div>
-            <div id="quiz-result-bio12-evolyutsiya"></div>
-          </a>
-          <a href="/lessons/bio12-mnogokletchna.html" class="lesson-card" id="card-bio12-mnogokletchna">
-            <div class="lesson-card-title">Многоклетъчна организация</div>
-            <div class="lesson-card-meta">Тъкани · Органи · Системи · Хомеостаза · 3 теста</div>
-            <div id="quiz-result-bio12-mnogokletchna"></div>
-          </a>
-        </div>
-      </div>
-
-      <!-- Химия -->
-      <div class="subject-section" data-section="chem">
-        <div class="subject-section-head">
-          <div class="subject-section-icon" style="background:#fff7ed;color:#c2410c;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 3h6v8l3.5 7a1 1 0 0 1-.9 1.5H6.4a1 1 0 0 1-.9-1.5L9 11V3z"/><line x1="6" y1="6" x2="9" y2="6"/><line x1="15" y1="6" x2="18" y2="6"/>
-            </svg>
-          </div>
-          <div>
-            <div class="subject-section-name">Химия и опазване на околната среда</div>
-            <div class="subject-section-sub">6 теми · матурна подготовка</div>
-          </div>
-        </div>
-        <div class="lessons-grid">
-          <a href="/lessons/chem12-vaglevodorodi.html" class="lesson-card" id="card-chem12-vaglevodorodi">
-            <div class="lesson-card-title">Органична химия — въглеводороди</div>
-            <div class="lesson-card-meta">Алкани · Алкени · Алкини · Арени · 3 теста</div>
-            <div id="quiz-result-chem12-vaglevodorodi"></div>
-          </a>
-          <a href="/lessons/chem12-kislorodmi-saedinenia.html" class="lesson-card" id="card-chem12-kislorodmi-saedinenia">
-            <div class="lesson-card-title">Органична химия — кислородни съединения</div>
-            <div class="lesson-card-meta">Алкохоли · Киселини · Естери · 3 теста</div>
-            <div id="quiz-result-chem12-kislorodmi-saedinenia"></div>
-          </a>
-          <a href="/lessons/chem12-biohimiya.html" class="lesson-card" id="card-chem12-biohimiya">
-            <div class="lesson-card-title">Биохимия</div>
-            <div class="lesson-card-meta">Въглехидрати · Мазнини · Белтъци · Ензими · 3 теста</div>
-            <div id="quiz-result-chem12-biohimiya"></div>
-          </a>
-          <a href="/lessons/chem12-lekarstva-goriva.html" class="lesson-card" id="card-chem12-lekarstva-goriva">
-            <div class="lesson-card-title">Лекарства, горива и полимери</div>
-            <div class="lesson-card-meta">Горива · Полимери · Лекарства · 3 теста</div>
-            <div id="quiz-result-chem12-lekarstva-goriva"></div>
-          </a>
-          <a href="/lessons/chem12-analiz.html" class="lesson-card" id="card-chem12-analiz">
-            <div class="lesson-card-title">Анализ на веществата</div>
-            <div class="lesson-card-meta">Качествен анализ · pH · Индикатори · 3 теста</div>
-            <div id="quiz-result-chem12-analiz"></div>
-          </a>
-          <a href="/lessons/chem12-okolna-sreda.html" class="lesson-card" id="card-chem12-okolna-sreda">
-            <div class="lesson-card-title">Опазване на околната среда</div>
-            <div class="lesson-card-meta">Парников ефект · Замърсяване · Рециклиране · 3 теста</div>
-            <div id="quiz-result-chem12-okolna-sreda"></div>
-          </a>
-        </div>
-      </div>
-
     </div>
-  </main>
 
-  <script src="/nav.js"></script>
-  <script type="module">
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    <div class="ur-tabs">
+      <button class="ur-tab active" data-tab="bel"  onclick="setTab('bel',this)">БЕЛ</button>
+      <button class="ur-tab"        data-tab="math" onclick="setTab('math',this)">Математика</button>
+      <button class="ur-tab"        data-tab="bio"  onclick="setTab('bio',this)">Биология</button>
+      <button class="ur-tab"        data-tab="chem" onclick="setTab('chem',this)">Химия</button>
+    </div>
+
+    <div class="ur-filters">
+      <div class="ur-filter-group">
+        <span class="ur-filter-label">Клас</span>
+        <div class="ur-grade-wrap">
+          <select class="ur-grade-select" id="ur-grade-select" onchange="setGrade(this.value, this)">
+            <option value="all">Всички класове</option>
+            <option value="12">12 клас</option>
+            <option value="11">11 клас</option>
+          </select>
+          <svg class="ur-grade-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="ur-filter-sep"></div>
+      <div class="ur-filter-group">
+        <span class="ur-filter-label">Статус</span>
+        <button class="ur-sf active" onclick="setStatus('all',this)">Всички</button>
+        <button class="ur-sf" onclick="setStatus('unseen',this)">Незапочнати</button>
+        <button class="ur-sf" onclick="setStatus('started',this)">Започнати</button>
+        <button class="ur-sf" onclick="setStatus('done',this)">Завършени</button>
+        <button class="ur-sf review-locked" id="btn-review" onclick="setStatus('review',this)" data-tip="Достъпно след ≥80% завършени уроци">За преговор</button>
+      </div>
+    </div>
+
+    <div class="ur-summary" id="ur-summary"><span class="ur-sum-item">Зарежда…</span></div>
+
+    <div id="ur-exam-banner">
+      <div class="ur-exam-icon">📚</div>
+      <div class="ur-exam-text">
+        <div class="ur-exam-title">Режим „За преговор"</div>
+        <div class="ur-exam-sub" id="ur-exam-sub">Уроци с резултат под 80% — повтори ги преди матурата.</div>
+      </div>
+      <div class="ur-exam-count" id="ur-exam-count"></div>
+    </div>
+
+    <div id="ur-panels"></div>
+
+  </div>
+</main>
+
+<script>
+// ── Data ─────────────────────────────────────────────────────────────────────
+const SUBJECTS = [
+  { id:'bel', label:'БЕЛ', searchPlaceholder:'Търси автор или произведение…',
+    grades:{
+      12:[
+        { title:'Димчо Дебелянов — „Аз искам да те помня все така"', slug:'bel12-debelyanov-lyubov',            meta:'Символизъм · Лирика',              time:'~8 мин',  group:'Любовта' },
+        { title:'Христо Фотев — „Колко си хубава!"',                 slug:'bel12-fotev-lyubov',                meta:'Модернизъм · Лирика',              time:'~7 мин',  group:'Любовта' },
+        { title:'Петя Дубарова — „Посвещение"',                      slug:'bel12-dubarova-posveshenie',        meta:'Лирика',                           time:'~6 мин',  group:'Любовта' },
+        { title:'Никола Вапцаров — „Вяра"',                          slug:'bel12-vaptsarov-vyara',             meta:'Авангард · Лирика',                time:'~8 мин',  group:'Вярата и надеждата' },
+        { title:'Атанас Далчев — „Молитва"',                         slug:'bel12-dalchev-molitva',             meta:'Предметизъм · Лирика',             time:'~7 мин',  group:'Вярата и надеждата' },
+        { title:'Елин Пелин — „Спасова могила"',                     slug:'bel12-elin-pelin-spasova-mogila',   meta:'Критически реализъм · Разказ',     time:'~8 мин',  group:'Вярата и надеждата' },
+        { title:'Елин Пелин — „Ветрената мелница"',                  slug:'bel12-elin-pelin-vetrena-melnitsa', meta:'Критически реализъм · Разказ',     time:'~8 мин',  group:'Трудът и творчеството' },
+        { title:'Йордан Йовков — „Песента на колелетата"',           slug:'bel12-yovkov-pesenta-na-koleletata',meta:'Реализъм · Разказ',                time:'~8 мин',  group:'Трудът и творчеството' },
+        { title:'Виктор Пасков — „Балада за Георг Хених"',           slug:'bel12-paskov-balada',               meta:'Автобиографична проза',            time:'~9 мин',  group:'Трудът и творчеството' },
+        { title:'Пейо Яворов — „Две души"',                          slug:'bel12-yavorov-dve-dushi',           meta:'Символизъм · Лирика',              time:'~8 мин',  group:'Изборът и раздвоението' },
+        { title:'Елисавета Багряна — „Потомка"',                     slug:'bel12-bagryana-potomka',            meta:'Модернизъм · Лирика',              time:'~7 мин',  group:'Изборът и раздвоението' },
+        { title:'Борис Христов — „Честен кръст"',                    slug:'bel12-hristov-chesten-krast',       meta:'Съвременна лирика',                time:'~6 мин',  group:'Изборът и раздвоението' },
+        { title:'Правописна норма',                                   slug:'bel12-pravopis',                    meta:'Членуване · Слято/разделно',       time:'~7 мин',  group:'Езикова култура' },
+        { title:'Пунктуационна норма',                                slug:'bel12-punktuatsiya',                meta:'Запетая · Тире · Двоеточие',       time:'~7 мин',  group:'Езикова култура' },
+        { title:'Граматична норма',                                   slug:'bel12-gramatika',                   meta:'Части на речта · Съгласуване',     time:'~7 мин',  group:'Езикова култура' },
+        { title:'Лексикална норма',                                   slug:'bel12-leksika',                     meta:'Синоними · Пароними · Фразеологизми',time:'~7 мин', group:'Езикова култура' },
+      ],
+      11:[
+        { title:'Димитър Талев — „Железният светилник"',             slug:'bel11-talev-zhelezniyat-svetilnik', meta:'Роман · Национална идентичност',   time:'~10 мин', group:'Родното и чуждото' },
+        { title:'Станислав Стратиев — „Сако от велур"',              slug:'bel11-stratiev-sako',               meta:'Разказ · Сатира',                  time:'~8 мин',  group:'Родното и чуждото' },
+        { title:'Алеко Константинов — „Бай Ганьо"',                  slug:'bel11-aleko-bay-ganyo',             meta:'Пътеписи · Сатира',                time:'~8 мин',  group:'Родното и чуждото' },
+        { title:'Христо Ботев — „Хаджи Димитър"',                    slug:'bel11-botev-hadzhi-dimityr',        meta:'Поема · Патриотизъм',              time:'~8 мин',  group:'Обществото и властта' },
+        { title:'Христо Смирненски — „Йохан"',                       slug:'bel11-smirnanski-yohan',            meta:'Поема · Социален протест',         time:'~8 мин',  group:'Обществото и властта' },
+        { title:'Елин Пелин — „Андрешко"',                           slug:'bel11-elin-pelin-andreshko',        meta:'Разказ · Хумор',                   time:'~7 мин',  group:'Обществото и властта' },
+        { title:'Никола Вапцаров — „История"',                       slug:'bel11-vaptsarov-istoriya',          meta:'Лирика · Памет',                   time:'~7 мин',  group:'Миналото и паметта' },
+        { title:'Йордан Радичков — „Нежната спирала"',               slug:'bel11-radichkov-nezhnata-spirala',  meta:'Разказ · Памет',                   time:'~8 мин',  group:'Миналото и паметта' },
+        { title:'Иван Вазов — „Паисий"',                             slug:'bel11-vazov-paisiy',                meta:'Поема · Национална памет',         time:'~7 мин',  group:'Миналото и паметта' },
+        { title:'Христо Ботев — „Обесването на Васил Левски"',       slug:'bel11-botev-obesa',                 meta:'Елегия · Патриотизъм',             time:'~7 мин',  group:'Животът и смъртта' },
+        { title:'Емилиян Станев — „Крадецът на праскови"',           slug:'bel11-stanev-kradetsat',            meta:'Повест · Хуманизъм',               time:'~9 мин',  group:'Животът и смъртта' },
+        { title:'Иван Вазов — „Опълченците на Шипка"',               slug:'bel11-vazov-opalchentsite',         meta:'Поема · Героизъм',                 time:'~8 мин',  group:'Животът и смъртта' },
+        { title:'Пейо Яворов — „Градушка"',                          slug:'bel11-yavorov-gradushka',           meta:'Лирика · Природа',                 time:'~7 мин',  group:'Природата' },
+        { title:'Иван Вазов — „Тих бял Дунав"',                      slug:'bel11-vazov-tih-byal-dunav',        meta:'Лирика · Природа',                 time:'~7 мин',  group:'Природата' },
+        { title:'Пенчо Славейков — „Cis moll"',                      slug:'bel11-slaveykov-cis-moll',          meta:'Символизъм · Любовна лирика',      time:'~7 мин',  group:'Природата' },
+        { title:'Иван Вазов — „Епопея на забравените"',              slug:'bel11-vazov-epopea',                meta:'Цикъл оди · Национални герои',     time:'~9 мин',  group:'Иван Вазов — Епопея' },
+        { title:'Иван Вазов — „Под игото"',                          slug:'bel11-vazov-pod-igoto',             meta:'Роман · Освобождение',             time:'~10 мин', group:'Иван Вазов — Епопея' },
+      ]
+    }
+  },
+  { id:'math', label:'Математика', searchPlaceholder:'Търси тема или формула…',
+    grades:{
+      12:[
+        { title:'Квадратна функция',                        slug:'math12-kvadratna-funkciya',        meta:'Парабола · Дискриминанта · Виета',    time:'~10 мин', group:'Алгебра' },
+        { title:'Квадратни неравенства',                    slug:'math12-kvadratni-neravenstva',     meta:'Метод на параболата · Знакова схема', time:'~8 мин',  group:'Алгебра' },
+        { title:'Показателна и логаритмична функция',       slug:'math12-pokazatelna-logaritmichna', meta:'aˣ · log_a(x) · Уравнения',           time:'~9 мин',  group:'Алгебра' },
+        { title:'Прогресии',                                slug:'math12-progresii',                 meta:'Аритметична · Геометрична · Безкрайна',time:'~8 мин', group:'Алгебра' },
+        { title:'Тригонометрични функции',                  slug:'math12-trigonometriya',            meta:'sin · cos · tan · Уравнения',         time:'~9 мин',  group:'Алгебра' },
+        { title:'Производна и приложения',                  slug:'math12-proizvodna',                meta:'Диференциране · Екстремуми',          time:'~10 мин', group:'Анализ' },
+        { title:'Комбинаторика',                            slug:'math12-kombinatorika',             meta:'Пермутации · Комбинации · Вариации',  time:'~8 мин',  group:'Вероятности' },
+        { title:'Вероятности и статистика',                 slug:'math12-veroyatnosti',              meta:'Класическа вероятност · Статистика',  time:'~8 мин',  group:'Вероятности' },
+        { title:'Геометрия — преговор',                     slug:'math12-geometriya',                meta:'Лице · Обем · Теореми',               time:'~9 мин',  group:'Геометрия' },
+      ],
+      11:[
+        { title:'Тригонометрични функции',                  slug:'math11-trigonometriya',            meta:'sin, cos, tan · Графики · Формули',   time:'~9 мин',  group:'Функции и графики' },
+        { title:'Показателна и логаритмична функция',       slug:'math11-pokazatelna-logaritmichna', meta:'Степени · Логаритми · Уравнения',     time:'~9 мин',  group:'Функции и графики' },
+        { title:'Квадратни неравенства',                    slug:'math11-kvadratni-neravenstva',     meta:'Параболи · Знакова схема · Системи',  time:'~8 мин',  group:'Функции и графики' },
+        { title:'Аритметична и геометрична прогресия',      slug:'math11-progresii',                 meta:'Редици · Суми · Формули',             time:'~8 мин',  group:'Редици и геометрия' },
+        { title:'Планиметрия',                              slug:'math11-planimeriya',               meta:'Триъгълник · Четириъгълник · Окръжност',time:'~9 мин',group:'Редици и геометрия' },
+      ]
+    }
+  },
+  { id:'bio', label:'Биология', searchPlaceholder:'Търси тема или термин…',
+    grades:{
+      12:[
+        { title:'Молекулярна биология — ДНК и РНК',         slug:'bio12-dnk-rnk',          meta:'Репликация · Транскрипция · Транслация', time:'~9 мин',  group:'Молекулярна биология' },
+        { title:'Генетика — Менделови закони',               slug:'bio12-genetika-mendel',   meta:'Кръстосване · Доминантност · Генотип',  time:'~9 мин',  group:'Генетика' },
+        { title:'Мутации и популационна генетика',           slug:'bio12-mutatsii',          meta:'Генни · Хромозомни · Геномни мутации',  time:'~8 мин',  group:'Генетика' },
+        { title:'Размножаване, растеж и развитие',           slug:'bio12-razmnozhavane',     meta:'Митоза · Мейоза · Оплождане',           time:'~8 мин',  group:'Физиология' },
+        { title:'Еволюция',                                  slug:'bio12-evolyutsiya',       meta:'Дарвин · Естествен отбор · Видообразуване',time:'~9 мин',group:'Физиология' },
+        { title:'Многоклетъчна организация',                 slug:'bio12-mnogokletchna',     meta:'Тъкани · Органи · Хомеостаза',          time:'~9 мин',  group:'Физиология' },
+      ],
+      11:[
+        { title:'Строеж и функции на клетката',              slug:'bio11-kletkata',          meta:'Органели · Мембрана · Ядро',            time:'~8 мин',  group:'Клетка и метаболизъм' },
+        { title:'Фотосинтеза',                               slug:'bio11-fotosinteza',        meta:'Светлинна фаза · Калвинов цикъл',       time:'~8 мин',  group:'Клетка и метаболизъм' },
+        { title:'Клетъчно дишане',                           slug:'bio11-dishane',            meta:'Гликолиза · Кребс · АТФ',               time:'~8 мин',  group:'Клетка и метаболизъм' },
+        { title:'Нервна система',                            slug:'bio11-nervna-sistema',     meta:'Неврон · Рефлекс · ЦНС',               time:'~8 мин',  group:'Регулация' },
+        { title:'Ендокринна система',                        slug:'bio11-endokrinna-sistema', meta:'Хормони · Жлези · Регулация',           time:'~8 мин',  group:'Регулация' },
+        { title:'Размножаване',                              slug:'bio11-razmnozhavane',      meta:'Мейоза · Гаметогенеза · Оплождане',     time:'~8 мин',  group:'Регулация' },
+      ]
+    }
+  },
+  { id:'chem', label:'Химия', searchPlaceholder:'Търси тема или вещество…',
+    grades:{
+      12:[
+        { title:'Органична химия — въглеводороди',           slug:'chem12-vaglevodorodi',           meta:'Алкани · Алкени · Алкини · Арени',    time:'~9 мин',  group:'Органична химия' },
+        { title:'Органична химия — кислородни съединения',   slug:'chem12-kislorodmi-saedinenia',   meta:'Алкохоли · Киселини · Естери',        time:'~8 мин',  group:'Органична химия' },
+        { title:'Биохимия',                                  slug:'chem12-biohimiya',               meta:'Въглехидрати · Мазнини · Белтъци',    time:'~8 мин',  group:'Органична химия' },
+        { title:'Лекарства, горива и полимери',              slug:'chem12-lekarstva-goriva',        meta:'Горива · Полимери · Лекарства',       time:'~8 мин',  group:'Приложна химия' },
+        { title:'Анализ на веществата',                      slug:'chem12-analiz',                  meta:'Качествен анализ · pH · Индикатори',  time:'~8 мин',  group:'Приложна химия' },
+        { title:'Опазване на околната среда',                slug:'chem12-okolna-sreda',            meta:'Парников ефект · Замърсяване',        time:'~7 мин',  group:'Приложна химия' },
+      ],
+      11:[
+        { title:'Строеж на атома и периодична система',      slug:'chem11-stroezh-atoma',           meta:'Електрони · Орбитали · Периодичност', time:'~8 мин',  group:'Строеж и връзки' },
+        { title:'Химична връзка',                            slug:'chem11-himichna-vrazka',         meta:'Ковалентна · Йонна · Метална',        time:'~8 мин',  group:'Строеж и връзки' },
+        { title:'Разтвори и електролитна дисоциация',        slug:'chem11-rastvori',                meta:'рН · Киселинност · Буфери',           time:'~8 мин',  group:'Строеж и връзки' },
+        { title:'Окислително-редукционни реакции',           slug:'chem11-okislenie-redukciya',     meta:'Степени на окисление · Балансиране',  time:'~8 мин',  group:'Реакции' },
+        { title:'Неорганични съединения',                    slug:'chem11-neorganichni-saedinenia', meta:'Оксиди · Киселини · Основи · Соли',   time:'~8 мин',  group:'Реакции' },
+        { title:'Скорост и равновесие',                      slug:'chem11-skorost-ravnovesie',      meta:'Льо Шателие · Kc · Катализатори',     time:'~8 мин',  group:'Реакции' },
+      ]
+    }
+  },
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let currentTab    = 'bel';
+let currentGrade  = 'all';
+let currentStatus = 'all';
+let progressMap   = {};
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function renderPanels() {
+  document.getElementById('ur-panels').innerHTML = SUBJECTS.map(s => `
+    <div class="ur-panel${s.id === currentTab ? ' active' : ''}" id="tab-${s.id}">
+      ${[12, 11].filter(g => s.grades[g]).map(g => {
+        const byCat = {};
+        s.grades[g].forEach(t => { if (!byCat[t.group]) byCat[t.group] = []; byCat[t.group].push(t); });
+        return `
+          <div class="ur-grade" data-grade="${g}">
+            <div class="ur-grade-title">${g} клас</div>
+            ${Object.entries(byCat).map(([cat, lessons]) => `
+              <div class="ur-cat-group">
+                <div class="ur-cat-title">${cat}</div>
+                <div class="ur-grid">${lessons.map(l => cardHTML(l, g)).join('')}</div>
+              </div>
+            `).join('')}
+            <div class="ur-empty" id="empty-${s.id}-${g}">
+              <div class="ur-empty-icon">🔍</div>
+              <div class="ur-empty-text">Няма намерени уроци</div>
+              <div class="ur-empty-sub">Опитай с различно търсене или филтър</div>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>
+  `).join('');
+}
+
+function cardHTML(lesson, grade) {
+  return `<a class="ur-card" href="/lessons/${lesson.slug}.html"
+      data-slug="${lesson.slug}" data-grade="${grade}" data-completed="0" data-review="false" data-read-pct="0">
+    <div class="ur-card-top">
+      <div class="ur-card-title">${lesson.title}</div>
+      <div class="ur-badge" id="ubadge-${lesson.slug}">Ново</div>
+    </div>
+    <div class="ur-card-meta">${lesson.meta}</div>
+    <span class="ur-card-time">${lesson.time}</span>
+    <div class="ur-prog" id="uprog-${lesson.slug}">
+      <div class="ur-prog-bar"><div class="ur-prog-fill" id="ufill-${lesson.slug}" style="width:0%"></div></div>
+      <div class="ur-prog-lbl" id="ulbl-${lesson.slug}"></div>
+    </div>
+  </a>`;
+}
+
+// ── Controls ──────────────────────────────────────────────────────────────────
+function setTab(id, btn) {
+  currentTab = id;
+  document.querySelectorAll('.ur-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('tab-' + id);
+  panel.style.animation = 'none'; panel.offsetHeight; panel.style.animation = '';
+  panel.classList.add('active');
+  document.querySelectorAll('.ur-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+  const subject = SUBJECTS.find(s => s.id === id);
+  document.getElementById('ur-search').placeholder = subject.searchPlaceholder;
+  applyFilters();
+  updateSummary();
+  updateReviewButton();
+}
+
+function setGrade(grade, el) {
+  currentGrade = grade;
+  document.getElementById('ur-grade-select').classList.toggle('changed', grade !== 'all');
+  applyFilters();
+  updateSummary();
+  updateReviewButton();
+}
+
+function setStatus(status, btn) {
+  if (status === 'review' && btn.classList.contains('review-locked')) return;
+  currentStatus = status;
+  document.querySelectorAll('.ur-sf').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const banner = document.getElementById('ur-exam-banner');
+  if (banner) banner.classList.toggle('show', status === 'review');
+  applyFilters();
+}
+
+function getCompletionPct() {
+  const subject = SUBJECTS.find(s => s.id === currentTab);
+  let total = 0, done = 0;
+  [12, 11].forEach(g => {
+    if (!subject.grades[g]) return;
+    if (currentGrade !== 'all' && currentGrade !== String(g)) return;
+    subject.grades[g].forEach(l => {
+      total++;
+      const p = progressMap[l.slug];
+      const readPct = parseInt(localStorage.getItem('lp_' + l.slug) ? JSON.parse(localStorage.getItem('lp_' + l.slug)).p : 0);
+      if ((p && p.completed === 3) || readPct >= 100) done++;
+    });
+  });
+  return total > 0 ? done / total : 0;
+}
+
+function updateReviewButton() {
+  const btn = document.getElementById('btn-review');
+  if (!btn) return;
+  const pct = getCompletionPct();
+  const unlocked = pct >= 0.8;
+  btn.classList.toggle('review-locked', !unlocked);
+  if (unlocked) {
+    btn.removeAttribute('data-tip');
+    // Count review candidates
+    const reviewCount = document.querySelectorAll('.ur-card[data-review="true"]:not(.ur-hide)').length;
+    const countEl = document.getElementById('ur-exam-count');
+    const subEl   = document.getElementById('ur-exam-sub');
+    if (countEl) countEl.textContent = reviewCount + ' урока';
+    if (subEl)   subEl.textContent   = reviewCount > 0
+      ? 'Уроци с резултат под 80% — повтори ги преди матурата.'
+      : 'Отличен резултат — всичко е усвоено над 80%!';
+  } else {
+    const needed = Math.ceil(0.8 * (() => {
+      const s = SUBJECTS.find(x => x.id === currentTab);
+      let t = 0;
+      [12,11].forEach(g => { if (s.grades[g] && (currentGrade === 'all' || currentGrade === String(g))) t += s.grades[g].length; });
+      return t;
+    })());
+    btn.setAttribute('data-tip', `Достъпно след ${needed} завършени урока (≥80%)`);
+  }
+}
+
+// ── Filters ───────────────────────────────────────────────────────────────────
+function applyFilters() {
+  const q = document.getElementById('ur-search').value.toLowerCase().trim();
+  const panel = document.getElementById('tab-' + currentTab);
+  if (!panel) return;
+
+  panel.querySelectorAll('.ur-grade').forEach(section => {
+    const g = section.dataset.grade;
+    const gradeHidden = currentGrade !== 'all' && currentGrade !== g;
+    section.classList.toggle('hidden', gradeHidden);
+    if (gradeHidden) return;
+
+    let visible = 0;
+    section.querySelectorAll('.ur-card').forEach(card => {
+      const title     = card.querySelector('.ur-card-title').textContent.toLowerCase();
+      const meta      = card.querySelector('.ur-card-meta').textContent.toLowerCase();
+      const completed = parseInt(card.dataset.completed || '0');
+      const isReview  = card.dataset.review === 'true';
+
+      let show = true;
+      if (q && !title.includes(q) && !meta.includes(q)) show = false;
+      const readPct   = parseInt(card.dataset.readPct || '0');
+      const readDone  = readPct >= 100;
+      if (currentStatus === 'unseen'  && (completed > 0 || readPct >= 3))                                               show = false;
+      if (currentStatus === 'started' && !((completed > 0 && completed < 3) || (completed === 0 && readPct >= 3 && !readDone))) show = false;
+      if (currentStatus === 'done'    && completed < 3 && !readDone)                                                    show = false;
+      if (currentStatus === 'review'  && !isReview)                         show = false;
+
+      card.classList.toggle('ur-hide', !show);
+      if (show) visible++;
+    });
+
+    // Hide category groups with no visible cards
+    section.querySelectorAll('.ur-cat-group').forEach(group => {
+      const hasVisible = group.querySelectorAll('.ur-card:not(.ur-hide)').length > 0;
+      group.style.display = hasVisible ? '' : 'none';
+    });
+
+    const empty = document.getElementById(`empty-${currentTab}-${g}`);
+    if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+  });
+}
+
+// ── Summary bar ───────────────────────────────────────────────────────────────
+function updateSummary() {
+  const subject = SUBJECTS.find(s => s.id === currentTab);
+  let lessons = 0, doneCount = 0, scores = [];
+
+  [12, 11].forEach(g => {
+    if (!subject.grades[g]) return;
+    if (currentGrade !== 'all' && currentGrade !== String(g)) return;
+    subject.grades[g].forEach(l => {
+      lessons++;
+      const p = progressMap[l.slug];
+      if (p) {
+        if (p.completed === 3) doneCount++;
+        if (p.completed > 0) scores.push(p.avgScore);
+      }
+    });
+  });
+
+  const avgScore = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+
+  const progressPart = avgScore !== null
+    ? `<span class="ur-sum-sep">·</span>
+       <span class="ur-sum-item"><span class="ur-sum-done">${doneCount}</span> завършени</span>
+       <span class="ur-sum-sep">·</span>
+       <span class="ur-sum-item">Среден резултат <span class="ur-sum-score">${avgScore}%</span></span>`
+    : '';
+
+  document.getElementById('ur-summary').innerHTML = `
+    <span class="ur-sum-item"><span class="ur-sum-num">${lessons}</span> урока</span>
+    <span class="ur-sum-sep">·</span>
+    <span class="ur-sum-item"><span class="ur-sum-num">${lessons * 3}</span> теста</span>
+    <span class="ur-sum-sep">·</span>
+    <span class="ur-sum-item">3 нива на трудност</span>
+    ${progressPart}
+  `;
+}
+
+// ── Progress from Supabase ────────────────────────────────────────────────────
+async function loadProgress() {
+  try {
+    const mod = await import('https://esm.sh/@supabase/supabase-js@2');
+    const sb  = mod.createClient(
+      'https://wbcppvfgtvkrsfmclmjp.supabase.co',
+      'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l'
+    );
     const { data: { session } } = await sb.auth.getSession();
-    if (!session) { window.location.href = '/auth.html'; }
+    if (!session) return;
 
-    // Trial gating — заключи не-БЕЛ карти ако потребителят е на trial
-    const { data: profileRows, error: profileErr } = await sb
-      .from('profiles')
+    const { data: results } = await sb
+      .from('quiz_results')
+      .select('lesson_slug, score')
+      .eq('user_id', session.user.id);
+
+    // Apply reading progress from localStorage (works even if no quiz results)
+    applyReadingProgress();
+
+    if (!results || !results.length) return;
+
+    const raw = {};
+    results.forEach(r => {
+      const m    = r.lesson_slug.match(/-quiz(-(\d))?$/);
+      const num  = m ? (m[2] ? parseInt(m[2]) : 1) : null;
+      const base = r.lesson_slug.replace(/-quiz(-\d)?$/, '');
+      if (!num) return;
+      if (!raw[base]) raw[base] = [null, null, null];
+      raw[base][num - 1] = Number(r.score);
+    });
+
+    Object.entries(raw).forEach(([base, scores]) => {
+      const done = scores.filter(s => s !== null);
+      const avg  = done.length ? Math.round(done.reduce((a, b) => a + b, 0) / done.length) : 0;
+      progressMap[base] = { scores, completed: done.length, avgScore: avg, isReview: avg < 80 && done.length > 0 };
+    });
+
+    document.querySelectorAll('.ur-card').forEach(card => {
+      const slug = card.dataset.slug;
+      const p    = progressMap[slug];
+      if (!p) return;
+
+      card.dataset.completed = p.completed;
+      card.dataset.review    = p.isReview;
+
+      const badge = document.getElementById('ubadge-' + slug);
+      if (badge) {
+        if (p.isReview) {
+          badge.textContent = 'За преговор'; badge.className = 'ur-badge review';
+        } else if (p.completed === 3) {
+          badge.textContent = '✓ ' + p.avgScore + '%';
+          badge.className   = 'ur-badge done' + (p.avgScore < 70 ? ' low' : '');
+        } else {
+          badge.textContent = p.completed + '/3 теста'; badge.className = 'ur-badge started';
+        }
+      }
+
+      if (p.completed > 0) {
+        const prog = document.getElementById('uprog-' + slug);
+        const fill = document.getElementById('ufill-' + slug);
+        const lbl  = document.getElementById('ulbl-' + slug);
+        if (prog && fill && lbl) {
+          prog.style.display = 'block';
+          fill.style.width   = (p.completed / 3 * 100) + '%';
+          lbl.textContent    = 'Прогрес: ' + p.completed + '/3 теста';
+        }
+      }
+    });
+
+    applyFilters();
+    updateSummary();
+    updateReviewButton();
+  } catch (e) {}
+}
+
+// ── Reading progress from localStorage ───────────────────────────────────────
+function applyReadingProgress() {
+  document.querySelectorAll('.ur-card').forEach(card => {
+    const slug    = card.dataset.slug;
+    const readRaw = localStorage.getItem('lp_' + slug);
+    if (!readRaw) return;
+    const pct = JSON.parse(readRaw).p || 0;
+    if (pct < 3) return;
+
+    card.dataset.readPct = pct;
+
+    // Only update badge/bar if no quiz data exists yet
+    if (parseInt(card.dataset.completed || '0') > 0) return;
+
+    const badge = document.getElementById('ubadge-' + slug);
+    if (badge) {
+      badge.textContent = pct >= 100 ? '✓ Прочетен' : 'Четен ' + pct + '%';
+      badge.className   = pct >= 100 ? 'ur-badge done' : 'ur-badge started';
+    }
+
+    const prog = document.getElementById('uprog-' + slug);
+    const fill = document.getElementById('ufill-' + slug);
+    const lbl  = document.getElementById('ulbl-' + slug);
+    if (prog && fill && lbl) {
+      prog.style.display  = 'block';
+      fill.style.width    = pct + '%';
+      fill.style.background = '#3b82f6';
+      lbl.textContent     = 'Прочетено: ' + pct + '%';
+    }
+  });
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderPanels();
+applyReadingProgress();
+updateSummary();
+updateReviewButton();
+loadProgress();
+</script>
+
+<script src="/sidebar.js"></script>
+<script src="/nav.js"></script>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+  const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = '/auth.html'; }
+
+  const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
+  if (!ADMIN_EMAILS.includes(session.user.email)) {
+    const { data: rows } = await sb.from('profiles')
       .select('plan, trial_started_at, trial_quizzes_done, trial_lessons_opened')
-      .eq('id', session.user.id)
-      .limit(1);
-    const profile = profileRows?.[0];
-    const isTrial = !profile || profile.plan === 'trial' || profile.plan === 'free';
+      .eq('id', session.user.id).limit(1);
+    const profile     = rows?.[0];
+    const isTrial     = !profile || profile.plan === 'trial' || profile.plan === 'free';
     const trialExpired = isTrial && profile?.trial_started_at &&
       (Date.now() - new Date(profile.trial_started_at)) / 86400000 > 3;
 
-
     if (isTrial && !trialExpired && profile?.trial_started_at) {
-      const banner = document.getElementById('trial-banner');
-      if (banner) banner.style.display = 'block';
+      document.getElementById('trial-banner').style.display = 'block';
+      const daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(profile.trial_started_at)) / 86400000));
+      const trialLessons = profile?.trial_lessons_opened || [];
+      const quizDone = (profile?.trial_quizzes_done || []).length;
+      document.getElementById('trial-banner-text').innerHTML =
+        `Безплатна версия — <strong>${Math.min(trialLessons.length,3)}/3 урока</strong> · <strong>${Math.min(quizDone,3)}/3 теста</strong> · остават <strong>${daysLeft} дни</strong>. <a href="/index.html#pricing" style="color:#fde68a;font-weight:700;text-decoration:underline;">Виж плановете →</a>`;
     }
 
     function lockCard(card) {
@@ -933,191 +742,44 @@
     }
 
     if (isTrial || trialExpired) {
-      // Скрий "11 клас Преговор" таба изцяло
-      document.querySelectorAll('.class-tab').forEach(btn => {
-        if (btn.dataset.class === '11') btn.style.display = 'none';
-      });
+      // Hide 11 клас grade section
+      document.querySelectorAll('.ur-grade[data-grade="11"]').forEach(el => el.style.display = 'none');
 
       const trialLessons = profile?.trial_lessons_opened || [];
-      const quizDone = (profile?.trial_quizzes_done || []).length;
-
-      // Покажи trial progress в банера
-      const text = document.getElementById('trial-banner-text');
-      if (text) {
-        const daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(profile?.trial_started_at)) / 86400000));
-        text.innerHTML = `Безплатна версия — <strong>${Math.min(trialLessons.length,3)}/3 урока</strong> · <strong>${Math.min(quizDone,3)}/3 теста</strong> · остават <strong>${daysLeft} дни</strong>. <a href="/index.html#pricing" style="color:#fde68a;font-weight:700;text-decoration:underline;">Виж плановете →</a>`;
-      }
-
-      document.querySelectorAll('.lesson-card[id]').forEach(card => {
-        const id = card.getAttribute('id') || '';
-        const slug = id.replace('card-', '');
-        const isBel = id.startsWith('card-bel');
-
+      document.querySelectorAll('.ur-card').forEach(card => {
+        const slug  = card.dataset.slug || '';
+        const isBel = slug.startsWith('bel');
         if (!isBel) {
           lockCard(card);
-        } else if (trialLessons.length >= 3 && trialLessons.indexOf(slug) === -1) {
+        } else if (trialLessons.length >= 3 && !trialLessons.includes(slug)) {
           lockCard(card);
         }
       });
 
-      // Ако trial-ът е изтекъл — заключи всичко
       if (trialExpired) {
-        document.querySelectorAll('.lesson-card').forEach(card => lockCard(card));
-        const expiredBanner = document.createElement('div');
-        expiredBanner.style.cssText = 'background:#fee2e2;border:1px solid #fca5a5;border-radius:12px;padding:16px 20px;text-align:center;margin:20px 0;font-weight:600;color:#b91c1c;';
-        expiredBanner.innerHTML = 'Пробният ти период е изтекъл. <a href="/index.html#pricing" style="color:#b91c1c;text-decoration:underline;">Избери план, за да продължиш.</a>';
-        document.querySelector('main')?.prepend(expiredBanner);
+        document.querySelectorAll('.ur-card').forEach(card => lockCard(card));
+        const banner = document.createElement('div');
+        banner.style.cssText = 'background:#fee2e2;border:1px solid #fca5a5;border-radius:12px;padding:16px 20px;text-align:center;margin:20px 0;font-weight:600;color:#b91c1c;';
+        banner.innerHTML = 'Пробният ти период е изтекъл. <a href="/index.html#pricing" style="color:#b91c1c;text-decoration:underline;">Избери план →</a>';
+        document.querySelector('main')?.prepend(banner);
       }
 
-      // Покажи съобщение ако е достигнат лимит
       const params = new URLSearchParams(window.location.search);
-      if (params.get('trial_limit') === 'lesson' || params.get('trial_limit') === 'quiz') {
-        const limitType = params.get('trial_limit') === 'lesson' ? 'уроци' : 'теста';
+      const tabParam = params.get('tab');
+      if (tabParam && ['bel','math','bio','chem'].includes(tabParam)) {
+        const btn = document.querySelector(`.ur-tab[data-tab="${tabParam}"]`);
+        if (btn) setTab(tabParam, btn);
+      }
+      if (params.get('trial_limit')) {
+        const type = params.get('trial_limit') === 'lesson' ? 'уроци' : 'теста';
         const msg = document.createElement('div');
         msg.style.cssText = 'background:#fef3c7;border:1px solid #fcd34d;border-radius:12px;padding:14px 20px;text-align:center;margin:16px 0;color:#92400e;font-weight:600;';
-        msg.innerHTML = `Достигна лимита от 3 ${limitType} в безплатната версия. <a href="/index.html#pricing" style="color:#92400e;text-decoration:underline;">Виж плановете →</a>`;
+        msg.innerHTML = `Достигна лимита от 3 ${type}. <a href="/index.html#pricing" style="color:#92400e;text-decoration:underline;">Виж плановете →</a>`;
         document.querySelector('main')?.prepend(msg);
         history.replaceState({}, '', '/urotsi.html');
       }
     }
-  </script>
-
-  <script>
-    // ── Показва прогрес от тестовете върху картата ──
-    (function () {
-      const belKeys = [
-        'bel12-debelyanov-lyubov',
-        'bel12-fotev-lyubov',
-        'bel12-dubarova-posveshenie',
-        'bel12-vaptsarov-vyara',
-        'bel12-dalchev-molitva',
-        'bel12-elin-pelin-spasova-mogila',
-        'bel12-elin-pelin-vetrena-melnitsa',
-        'bel12-yovkov-pesenta-na-koleletata',
-        'bel12-paskov-balada',
-        'bel12-yavorov-dve-dushi',
-        'bel12-bagryana-potomka',
-        'bel12-hristov-chesten-krast',
-      ];
-      belKeys.forEach(key => {
-        const results = [1,2,3].map(n => {
-          const raw = localStorage.getItem('quiz_' + key + '-q' + n);
-          return raw ? JSON.parse(raw) : null;
-        });
-        const done = results.filter(Boolean).length;
-        const el = document.getElementById('quiz-result-' + key);
-        if (!el || done === 0) return;
-
-        const dots = results.map((r, i) => {
-          if (!r) return `<span style="width:10px;height:10px;border-radius:50%;background:var(--line);display:inline-block;" title="Тест ${i+1} — неправен"></span>`;
-          const bg = r.passed ? '#16a34a' : '#d97706';
-          return `<span style="width:10px;height:10px;border-radius:50%;background:${bg};display:inline-block;" title="Тест ${i+1}: ${r.correct}/${r.total}${r.passed ? ' ✓' : ' ✗'}"></span>`;
-        }).join('');
-
-        const allPassed = results.every(r => !r || r.passed);
-        const doneAll = done === 3;
-        const labelColor = doneAll && allPassed ? '#16a34a' : doneAll ? '#d97706' : 'var(--accent)';
-        const label = doneAll ? (allPassed ? '✓ Всички тестове' : `${done}/3 теста`) : `${done}/3 теста`;
-
-        el.innerHTML = `<div style="display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">
-          <span style="display:flex;gap:4px;align-items:center;">${dots}</span>
-          <span style="font-size:11px;font-weight:700;color:${labelColor};">${label}</span>
-        </div>`;
-      });
-      // Math12 — урок теми с 3 куиза всяка
-      const math12Keys = [
-        'math12-trigonometriya',
-        'math12-proizvodna',
-        'math12-kombinatorika',
-        'math12-veroyatnosti',
-        'math12-geometriya',
-        'math12-kvadratni-neravenstva',
-        'math12-pokazatelna-logaritmichna',
-        'math12-progresii',
-      ];
-      math12Keys.forEach(key => {
-        const results = [1,2,3].map(n => {
-          const raw = localStorage.getItem('quiz_' + key + '-q' + n);
-          return raw ? JSON.parse(raw) : null;
-        });
-        const done = results.filter(Boolean).length;
-        const el = document.getElementById('quiz-result-' + key);
-        if (!el || done === 0) return;
-
-        const dots = results.map((r, i) => {
-          if (!r) return `<span style="width:10px;height:10px;border-radius:50%;background:var(--line);display:inline-block;" title="Тест ${i+1} — неправен"></span>`;
-          const bg = r.passed ? '#16a34a' : '#d97706';
-          return `<span style="width:10px;height:10px;border-radius:50%;background:${bg};display:inline-block;" title="Тест ${i+1}: ${r.correct}/${r.total}${r.passed ? ' ✓' : ' ✗'}"></span>`;
-        }).join('');
-
-        const allPassed = results.every(r => !r || r.passed);
-        const doneAll = done === 3;
-        const labelColor = doneAll && allPassed ? '#16a34a' : doneAll ? '#d97706' : 'var(--accent)';
-        const label = doneAll ? (allPassed ? '✓ Всички тестове' : `${done}/3 теста`) : `${done}/3 теста`;
-
-        el.innerHTML = `<div style="display:flex;align-items:center;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">
-          <span style="display:flex;gap:4px;align-items:center;">${dots}</span>
-          <span style="font-size:11px;font-weight:700;color:${labelColor};">${label}</span>
-        </div>`;
-      });
-      // Единични куизове (math и др.)
-      ['math12-kvadratna-funkciya'].forEach(key => {
-        const raw = localStorage.getItem('quiz_' + key);
-        if (!raw) return;
-        const { correct, total, grade, passed } = JSON.parse(raw);
-        const el = document.getElementById('quiz-result-' + key);
-        if (!el) return;
-        const color = grade >= 5 ? '#16a34a' : grade >= 4 ? '#d97706' : '#dc2626';
-        el.innerHTML = `<div style="display:flex;align-items:center;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line);">
-          <span style="font-size:11px;font-weight:700;color:${color};">${passed ? '✓' : '✗'} Куиз: ${correct}/${total} · Оценка ${grade}/6</span>
-        </div>`;
-      });
-    })();
-
-    function showSection(sectionId) {
-      document.querySelectorAll('.subject-section').forEach(sec => {
-        const show = sec.dataset.section === sectionId;
-        if (show) {
-          sec.style.display = '';
-          sec.style.animation = 'none';
-          void sec.offsetWidth;
-          sec.style.animation = '';
-        } else {
-          sec.style.display = 'none';
-        }
-      });
-    }
-
-    // Outer class tabs
-    document.querySelectorAll('.class-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.class-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const cls = tab.dataset.class;
-        const stabs12 = document.getElementById('stabs-12');
-        const stabs11 = document.getElementById('stabs-11');
-        stabs12.style.display = cls === '12' ? '' : 'none';
-        stabs11.style.display = cls === '11' ? '' : 'none';
-        const activeRow = cls === '12' ? stabs12 : stabs11;
-        const firstActive = activeRow.querySelector('.subject-tab:not(.soon)');
-        activeRow.querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
-        firstActive.classList.add('active');
-        showSection(firstActive.dataset.subject);
-      });
-    });
-
-    // Inner subject tabs
-    document.querySelectorAll('.subject-tab:not(.soon)').forEach(tab => {
-      tab.addEventListener('click', () => {
-        tab.closest('.subject-tabs').querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        showSection(tab.dataset.subject);
-      });
-    });
-
-    // Initial state: show БЕЛ 12 клас
-    showSection('bel');
-
-  </script>
+  }
+</script>
 </body>
 </html>

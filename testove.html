@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тестове – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="logos/tab_transparent.png?v=2"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .tv-wrap { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+
+    /* ── Header ── */
+    .tv-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; gap: 16px; flex-wrap: wrap; }
+    .tv-title { font-size: 28px; font-weight: 900; color: #0f172a; margin: 0 0 4px; }
+    .tv-sub   { font-size: 14px; color: #64748b; margin: 0; }
+
+    /* ── Search ── */
+    .tv-search { position: relative; }
+    .tv-search-input {
+      padding: 9px 14px 9px 38px; border-radius: 10px; border: 1.5px solid #e2e8f0;
+      background: #fff; font-size: 14px; font-family: inherit; color: #0f172a;
+      width: 240px; outline: none; transition: border-color .15s;
+    }
+    .tv-search-input:focus { border-color: #1a2f5a; }
+    .tv-search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+
+    /* ── Subject tabs (dark navy when active) ── */
+    .tv-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .tv-tab {
+      padding: 9px 22px; border-radius: 10px; font-size: 14px; font-weight: 700;
+      cursor: pointer; border: 1.5px solid #e2e8f0; background: #fff; color: #475569;
+      transition: all .15s; font-family: inherit;
+    }
+    .tv-tab:hover { border-color: #1a2f5a; color: #1a2f5a; }
+    .tv-tab.active { background: #1a2f5a; color: #fff; border-color: #1a2f5a; }
+
+    /* ── Filter row ── */
+    .tv-filters { display: flex; gap: 14px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+    .tv-filter-group { display: flex; align-items: center; gap: 7px; }
+    .tv-filter-label { font-size: 10px; font-weight: 700; color: #c0c9d8; text-transform: uppercase; letter-spacing: .07em; white-space: nowrap; }
+    .tv-filter-sep { width: 1px; height: 24px; background: #dde4ef; }
+
+    /* Grade — styled select (light blue accent when changed) */
+    .tv-grade-wrap { position: relative; display: inline-flex; align-items: center; }
+    .tv-grade-select {
+      appearance: none; -webkit-appearance: none;
+      padding: 6px 30px 6px 12px; border-radius: 8px; border: 1.5px solid #e2e8f0;
+      background: #fff; font-size: 13px; font-weight: 700; font-family: inherit;
+      color: #1a2f5a; cursor: pointer; outline: none; transition: border-color .15s;
+    }
+    .tv-grade-select:focus, .tv-grade-select:hover { border-color: #3b82f6; }
+    .tv-grade-select.changed { border-color: #3b82f6; background: #eff6ff; color: #1d4ed8; }
+    .tv-grade-chevron {
+      position: absolute; right: 9px; pointer-events: none; color: #64748b;
+    }
+
+    /* Status buttons (orange when active) */
+    .tv-sf {
+      padding: 6px 13px; border-radius: 8px; font-size: 13px; font-weight: 700;
+      cursor: pointer; border: 1.5px solid #e2e8f0; background: #fff; color: #64748b;
+      transition: all .15s; font-family: inherit;
+    }
+    .tv-sf:hover { border-color: #E8A020; color: #E8A020; }
+    .tv-sf.active { background: #E8A020; color: #fff; border-color: #E8A020; }
+
+    /* ── Summary bar ── */
+    .tv-summary {
+      background: #fff; border: 1.5px solid #e8edf5; border-radius: 12px;
+      padding: 11px 18px; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap; min-height: 44px;
+    }
+    .tv-sum-item { font-size: 13px; color: #475569; white-space: nowrap; }
+    .tv-sum-num  { font-weight: 800; color: #0f172a; }
+    .tv-sum-sep  { color: #cbd5e1; }
+    .tv-sum-done { font-weight: 800; color: #1a2f5a; }
+    .tv-sum-score { font-weight: 800; color: #16a34a; }
+
+    /* ── Panels ── */
+    @keyframes tv-panel-in {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .tv-panel { display: none; }
+    .tv-panel.active { display: block; animation: tv-panel-in 0.25s ease both; }
+
+    /* ── Grade sections ── */
+    .tv-grade { margin-bottom: 36px; }
+    .tv-grade.hidden { display: none; }
+    .tv-grade-title {
+      font-size: 13px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .08em; color: #94a3b8; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .tv-grade-title::after { content:''; flex:1; height:1px; background:#e8edf5; }
+
+    /* ── Category groups within a grade ── */
+    .tv-cat-group { margin-bottom: 28px; }
+    .tv-cat-title {
+      font-size: 12px; font-weight: 800; color: #64748b;
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .tv-cat-title::after { content:''; flex:1; height:1px; background:#f1f5f9; }
+
+    /* ── Cards ── */
+    .tv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 900px) { .tv-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .tv-grid { grid-template-columns: 1fr; } }
+    .tv-card {
+      background: #fff; border: 1.5px solid #e8edf5; border-radius: 14px;
+      padding: 16px 18px; transition: box-shadow .2s, border-color .2s, transform .2s;
+    }
+    .tv-card:hover { box-shadow: 0 8px 24px rgba(26,47,90,.11); border-color: #c7d2e8; transform: translateY(-2px); }
+    .tv-card.tv-hide { display: none !important; }
+
+    .tv-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 3px; }
+    .tv-card-name { font-size: 13px; font-weight: 800; color: #0f172a; line-height: 1.35; }
+    .tv-badge {
+      flex-shrink: 0; font-size: 10px; font-weight: 800; padding: 2px 8px;
+      border-radius: 20px; background: #dcfce7; color: #16a34a; display: none; white-space: nowrap;
+    }
+    .tv-badge.low    { background: #fef3c7; color: #d97706; }
+    .tv-badge.bad    { background: #fee2e2; color: #dc2626; }
+    .tv-badge.new-badge { background: #f1f5f9; color: #94a3b8; display: inline-block; }
+    .tv-badge.review-badge { background: #fef3c7; color: #d97706; }
+
+    .tv-card-meta { font-size: 11px; color: #94a3b8; font-weight: 600; margin-bottom: 11px; }
+
+    .tv-prog { margin-bottom: 10px; display: none; }
+    .tv-prog-bar { height: 3px; background: #f1f5f9; border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
+    .tv-prog-fill { height: 100%; background: #1a2f5a; border-radius: 2px; transition: width .4s ease; }
+    .tv-prog-lbl { font-size: 10px; color: #94a3b8; font-weight: 600; }
+
+    /* Per-button score chip */
+    .tv-btn-score { font-size: 10px; font-weight: 700; opacity: .85; margin-left: 3px; }
+
+    /* ── Difficulty buttons ── */
+    .tv-btns { display: flex; gap: 5px; }
+    .tv-btn {
+      flex: 1; padding: 6px 2px; border-radius: 7px; text-align: center;
+      font-size: 11px; font-weight: 800; text-decoration: none;
+      transition: background .15s, color .15s, transform .12s, opacity .15s;
+    }
+    .tv-btn:hover { transform: translateY(-1px); }
+    @media (max-width: 560px) { .tv-btns { flex-direction: column; } .tv-btn { padding: 8px; } }
+    /* Лесен — most prominent */
+    .tv-btn-1 { background: #dbeafe; color: #1d4ed8; }
+    .tv-btn-1:hover { background: #1d4ed8; color: #fff; }
+    /* Среден — medium */
+    .tv-btn-2 { background: #fff7ed; color: #c2410c; }
+    .tv-btn-2:hover { background: #E8A020; color: #fff; }
+    /* Напреднал — slightly muted to signal progression */
+    .tv-btn-3 { background: #f5f3ff; color: #7c3aed; opacity: .8; }
+    .tv-btn-3:hover { background: #7c3aed; color: #fff; opacity: 1; }
+
+    /* ── Empty state ── */
+    .tv-empty { text-align: center; padding: 56px 20px; color: #94a3b8; display: none; }
+    .tv-empty-icon { font-size: 36px; margin-bottom: 10px; }
+    .tv-empty-text { font-size: 15px; font-weight: 700; }
+    .tv-empty-sub  { font-size: 13px; margin-top: 4px; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="tv-wrap">
+
+    <div class="tv-header">
+      <div>
+        <h1 class="tv-title">Тестове</h1>
+        <p class="tv-sub">Избери предмет и клас — три нива на трудност за всяка тема.</p>
+      </div>
+      <div class="tv-search">
+        <svg class="tv-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input class="tv-search-input" id="tv-search" type="text" placeholder="Търси автор, произведение или тема…" oninput="applyFilters()"/>
+      </div>
+    </div>
+
+    <!-- Subject tabs -->
+    <div class="tv-tabs">
+      <button class="tv-tab active" data-tab="bel"  onclick="setTab('bel',this)">БЕЛ</button>
+      <button class="tv-tab"        data-tab="math" onclick="setTab('math',this)">Математика</button>
+      <button class="tv-tab"        data-tab="bio"  onclick="setTab('bio',this)">Биология</button>
+      <button class="tv-tab"        data-tab="chem" onclick="setTab('chem',this)">Химия</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="tv-filters">
+      <!-- Grade dropdown -->
+      <div class="tv-filter-group">
+        <span class="tv-filter-label">Клас</span>
+        <div class="tv-grade-wrap">
+          <select class="tv-grade-select" id="tv-grade-select" onchange="setGrade(this.value, this)">
+            <option value="all">Всички класове</option>
+            <option value="12">12 клас</option>
+            <option value="11">11 клас</option>
+          </select>
+          <svg class="tv-grade-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="tv-filter-sep"></div>
+      <!-- Status buttons -->
+      <div class="tv-filter-group">
+        <span class="tv-filter-label">Статус</span>
+        <button class="tv-sf active" onclick="setStatus('all',this)">Всички</button>
+        <button class="tv-sf" onclick="setStatus('unseen',this)">Незапочнати</button>
+        <button class="tv-sf" onclick="setStatus('started',this)">Започнати</button>
+        <button class="tv-sf" onclick="setStatus('done',this)">Завършени</button>
+        <button class="tv-sf" onclick="setStatus('review',this)">За преговор</button>
+      </div>
+    </div>
+
+    <div class="tv-summary" id="tv-summary">
+      <span class="tv-sum-item">Зарежда…</span>
+    </div>
+
+    <div id="tv-panels"></div>
+
+  </div>
+</main>
+
+<script>
+// ── Subject data ─────────────────────────────────────────────────────────────
+const SUBJECTS = [
+  { id: 'bel', label: 'БЕЛ',
+    searchPlaceholder: 'Търси автор, произведение или тема…',
+    grades: {
+      12: [
+        { name: 'Яворов — Две души',              slug: 'bel12-yavorov-dve-dushi',            cat: 'Литература' },
+        { name: 'Дебелянов — Миг',                slug: 'bel12-debelyanov-lyubov',            cat: 'Литература' },
+        { name: 'Вапцаров — Вяра',                slug: 'bel12-vaptsarov-vyara',              cat: 'Литература' },
+        { name: 'Багряна — Потомка',              slug: 'bel12-bagryana-potomka',             cat: 'Литература' },
+        { name: 'Далчев — Молитва',               slug: 'bel12-dalchev-molitva',              cat: 'Литература' },
+        { name: 'Дударова — Посвещение',          slug: 'bel12-dubarova-posveshenie',         cat: 'Литература' },
+        { name: 'Фотев — Любов',                  slug: 'bel12-fotev-lyubov',                cat: 'Литература' },
+        { name: 'Христов — Честен кръст',         slug: 'bel12-hristov-chesten-krast',       cat: 'Литература' },
+        { name: 'Елин Пелин — Спасова могила',    slug: 'bel12-elin-pelin-spasova-mogila',   cat: 'Литература' },
+        { name: 'Елин Пелин — Ветрена мелница',   slug: 'bel12-elin-pelin-vetrena-melnitsa', cat: 'Литература' },
+        { name: 'Йовков — Песента на колелетата', slug: 'bel12-yovkov-pesenta-na-koleletata',cat: 'Литература' },
+        { name: 'Пасков — Балада за Георг Хених', slug: 'bel12-paskov-balada',               cat: 'Литература' },
+        { name: 'Правопис',  slug: 'bel12-pravopis',     cat: 'Езикова култура' },
+        { name: 'Пунктуация',slug: 'bel12-punktuatsiya', cat: 'Езикова култура' },
+        { name: 'Лексика',   slug: 'bel12-leksika',      cat: 'Езикова култура' },
+        { name: 'Граматика', slug: 'bel12-gramatika',    cat: 'Езикова култура' },
+      ],
+      11: [
+        { name: 'Вазов — Под игото',                     slug: 'bel11-vazov-pod-igoto',             cat: 'Литература' },
+        { name: 'Вазов — Епопея на забравените',         slug: 'bel11-vazov-epopea',                cat: 'Литература' },
+        { name: 'Вазов — Опълченците на Шипка',          slug: 'bel11-vazov-opalchentsite',         cat: 'Литература' },
+        { name: 'Вазов — Паисий',                        slug: 'bel11-vazov-paisiy',                cat: 'Литература' },
+        { name: 'Вазов — Тих бял Дунав',                 slug: 'bel11-vazov-tih-byal-dunav',        cat: 'Литература' },
+        { name: 'Ботев — Хаджи Димитър',                 slug: 'bel11-botev-hadzhi-dimityr',        cat: 'Литература' },
+        { name: 'Ботев — Обесването на Васил Левски',    slug: 'bel11-botev-obesa',                 cat: 'Литература' },
+        { name: 'Яворов — Градушка',                     slug: 'bel11-yavorov-gradushka',           cat: 'Литература' },
+        { name: 'Алеко Константинов — Бай Ганьо',        slug: 'bel11-aleko-bay-ganyo',             cat: 'Литература' },
+        { name: 'Елин Пелин — Андрешко',                 slug: 'bel11-elin-pelin-andreshko',        cat: 'Литература' },
+        { name: 'Пенчо Славейков — Cis moll',            slug: 'bel11-slaveykov-cis-moll',          cat: 'Литература' },
+        { name: 'Смирненски — Йохан',                    slug: 'bel11-smirnanski-yohan',            cat: 'Литература' },
+        { name: 'Емилиян Станев — Крадецът на праскови', slug: 'bel11-stanev-kradetsat',            cat: 'Литература' },
+        { name: 'Станислав Стратиев — Сакото',           slug: 'bel11-stratiev-sako',               cat: 'Литература' },
+        { name: 'Димитър Талев — Железният светилник',   slug: 'bel11-talev-zhelezniyat-svetilnik', cat: 'Литература' },
+        { name: 'Вапцаров — История',                    slug: 'bel11-vaptsarov-istoriya',          cat: 'Литература' },
+        { name: 'Радичков — Нежната спирала',            slug: 'bel11-radichkov-nezhnata-spirala',  cat: 'Литература' },
+      ]
+    }
+  },
+  { id: 'math', label: 'Математика',
+    searchPlaceholder: 'Търси тема или формула…',
+    grades: {
+      12: [
+        { name: 'Квадратна функция',                  slug: 'math12-kvadratna-funkciya',        cat: 'Алгебра' },
+        { name: 'Квадратни неравенства',              slug: 'math12-kvadratni-neravenstva',     cat: 'Алгебра' },
+        { name: 'Тригонометрия',                      slug: 'math12-trigonometriya',            cat: 'Алгебра' },
+        { name: 'Показателна и логаритмична функция', slug: 'math12-pokazatelna-logaritmichna', cat: 'Алгебра' },
+        { name: 'Прогресии',                          slug: 'math12-progresii',                 cat: 'Алгебра' },
+        { name: 'Производна',                         slug: 'math12-proizvodna',                cat: 'Анализ' },
+        { name: 'Геометрия',                          slug: 'math12-geometriya',                cat: 'Геометрия' },
+        { name: 'Комбинаторика',                      slug: 'math12-kombinatorika',             cat: 'Алгебра' },
+        { name: 'Вероятности и статистика',           slug: 'math12-veroyatnosti',              cat: 'Алгебра' },
+      ],
+      11: [
+        { name: 'Квадратни неравенства',              slug: 'math11-kvadratni-neravenstva',     cat: 'Алгебра' },
+        { name: 'Планиметрия',                        slug: 'math11-planimeriya',               cat: 'Геометрия' },
+        { name: 'Показателна и логаритмична функция', slug: 'math11-pokazatelna-logaritmichna', cat: 'Алгебра' },
+        { name: 'Прогресии',                          slug: 'math11-progresii',                 cat: 'Алгебра' },
+        { name: 'Тригонометрия',                      slug: 'math11-trigonometriya',            cat: 'Алгебра' },
+      ]
+    }
+  },
+  { id: 'bio', label: 'Биология',
+    searchPlaceholder: 'Търси процес, система или термин…',
+    grades: {
+      12: [
+        { name: 'ДНК и РНК',              slug: 'bio12-dnk-rnk',        cat: 'Молекулярна биология' },
+        { name: 'Генетика — Мендел',      slug: 'bio12-genetika-mendel', cat: 'Генетика' },
+        { name: 'Мутации',                slug: 'bio12-mutatsii',        cat: 'Генетика' },
+        { name: 'Еволюция',               slug: 'bio12-evolyutsiya',     cat: 'Еволюция' },
+        { name: 'Многоклетъчни организми',slug: 'bio12-mnogokletchna',   cat: 'Анатомия' },
+        { name: 'Размножаване',           slug: 'bio12-razmnozhavane',   cat: 'Физиология' },
+      ],
+      11: [
+        { name: 'Клетката',           slug: 'bio11-kletkata',          cat: 'Цитология' },
+        { name: 'Фотосинтеза',        slug: 'bio11-fotosinteza',        cat: 'Физиология' },
+        { name: 'Дишане',             slug: 'bio11-dishane',            cat: 'Физиология' },
+        { name: 'Нервна система',     slug: 'bio11-nervna-sistema',     cat: 'Анатомия' },
+        { name: 'Ендокринна система', slug: 'bio11-endokrinna-sistema', cat: 'Анатомия' },
+        { name: 'Размножаване',       slug: 'bio11-razmnozhavane',      cat: 'Физиология' },
+      ]
+    }
+  },
+  { id: 'chem', label: 'Химия',
+    searchPlaceholder: 'Търси вещество, реакция или задача…',
+    grades: {
+      12: [
+        { name: 'Въглеводороди',         slug: 'chem12-vaglevodorodi',         cat: 'Органична химия' },
+        { name: 'Кислородни съединения', slug: 'chem12-kislorodmi-saedinenia', cat: 'Органична химия' },
+        { name: 'Биохимия',              slug: 'chem12-biohimiya',             cat: 'Органична химия' },
+        { name: 'Лекарства и горива',    slug: 'chem12-lekarstva-goriva',      cat: 'Приложна химия' },
+        { name: 'Качествен анализ',      slug: 'chem12-analiz',                cat: 'Аналитична химия' },
+        { name: 'Околна среда',          slug: 'chem12-okolna-sreda',          cat: 'Приложна химия' },
+      ],
+      11: [
+        { name: 'Строеж на атома',        slug: 'chem11-stroezh-atoma',           cat: 'Обща химия' },
+        { name: 'Химична връзка',          slug: 'chem11-himichna-vrazka',         cat: 'Обща химия' },
+        { name: 'Разтвори',               slug: 'chem11-rastvori',                cat: 'Обща химия' },
+        { name: 'Окисление-редукция',     slug: 'chem11-okislenie-redukciya',     cat: 'Обща химия' },
+        { name: 'Скорост и равновесие',   slug: 'chem11-skorost-ravnovesie',      cat: 'Физикохимия' },
+        { name: 'Неорганични съединения', slug: 'chem11-neorganichni-saedinenia', cat: 'Неорганична химия' },
+      ]
+    }
+  },
+];
+
+// ── State ────────────────────────────────────────────────────────────────────
+let currentTab    = 'bel';
+let currentGrade  = 'all';
+let currentStatus = 'all';
+let progressMap   = {};
+
+// ── Render ───────────────────────────────────────────────────────────────────
+function renderPanels() {
+  document.getElementById('tv-panels').innerHTML = SUBJECTS.map(s => `
+    <div class="tv-panel${s.id === currentTab ? ' active' : ''}" id="tab-${s.id}">
+      ${[12, 11].filter(g => s.grades[g]).map(g => {
+        // Group topics by category, preserving insertion order
+        const byCat = {};
+        s.grades[g].forEach(t => {
+          if (!byCat[t.cat]) byCat[t.cat] = [];
+          byCat[t.cat].push(t);
+        });
+        const catSections = Object.entries(byCat).map(([cat, topics]) => `
+          <div class="tv-cat-group">
+            <div class="tv-cat-title">${cat}</div>
+            <div class="tv-grid">${topics.map(t => cardHTML(t, g)).join('')}</div>
+          </div>
+        `).join('');
+        return `
+          <div class="tv-grade" data-grade="${g}">
+            <div class="tv-grade-title">${g} клас</div>
+            ${catSections}
+            <div class="tv-empty" id="empty-${s.id}-${g}">
+              <div class="tv-empty-icon">🔍</div>
+              <div class="tv-empty-text">Няма намерени теми</div>
+              <div class="tv-empty-sub">Опитай с различно търсене или филтър</div>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>
+  `).join('');
+}
+
+function cardHTML(topic, grade) {
+  const base = `/lessons/${topic.slug}`;
+  return `<div class="tv-card" data-slug="${topic.slug}" data-grade="${grade}" data-completed="0" data-review="false">
+    <div class="tv-card-top">
+      <div class="tv-card-name">${topic.name}</div>
+      <div class="tv-badge new-badge" id="badge-${topic.slug}">Ново</div>
+    </div>
+    <div class="tv-card-meta">${topic.cat} · ${grade} клас · 45 въпроса</div>
+    <div class="tv-prog" id="prog-${topic.slug}">
+      <div class="tv-prog-bar"><div class="tv-prog-fill" id="fill-${topic.slug}" style="width:0%"></div></div>
+      <div class="tv-prog-lbl" id="lbl-${topic.slug}"></div>
+    </div>
+    <div class="tv-btns">
+      <a class="tv-btn tv-btn-1" href="${base}-quiz.html">Лесен<span class="tv-btn-score" id="bs1-${topic.slug}"></span></a>
+      <a class="tv-btn tv-btn-2" href="${base}-quiz-2.html">Среден<span class="tv-btn-score" id="bs2-${topic.slug}"></span></a>
+      <a class="tv-btn tv-btn-3" href="${base}-quiz-3.html">Напреднал<span class="tv-btn-score" id="bs3-${topic.slug}"></span></a>
+    </div>
+  </div>`;
+}
+
+// ── Controls ─────────────────────────────────────────────────────────────────
+function setTab(id, btn) {
+  currentTab = id;
+  document.querySelectorAll('.tv-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('tab-' + id);
+  panel.style.animation = 'none';
+  panel.offsetHeight; // force reflow so animation restarts
+  panel.style.animation = '';
+  panel.classList.add('active');
+  document.querySelectorAll('.tv-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
+  // Update search placeholder
+  const subject = SUBJECTS.find(s => s.id === id);
+  document.getElementById('tv-search').placeholder = subject.searchPlaceholder;
+  applyFilters();
+  updateSummary();
+}
+
+function setGrade(grade, el) {
+  currentGrade = grade;
+  const sel = document.getElementById('tv-grade-select');
+  sel.classList.toggle('changed', grade !== 'all');
+  applyFilters();
+  updateSummary();
+}
+
+function setStatus(status, btn) {
+  currentStatus = status;
+  document.querySelectorAll('.tv-sf').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// ── Filters ──────────────────────────────────────────────────────────────────
+function applyFilters() {
+  const q = document.getElementById('tv-search').value.toLowerCase().trim();
+  const panel = document.getElementById('tab-' + currentTab);
+  if (!panel) return;
+
+  panel.querySelectorAll('.tv-grade').forEach(section => {
+    const g = section.dataset.grade;
+    const gradeHidden = currentGrade !== 'all' && currentGrade !== g;
+    section.classList.toggle('hidden', gradeHidden);
+    if (gradeHidden) return;
+
+    let visible = 0;
+    section.querySelectorAll('.tv-card').forEach(card => {
+      const name      = card.querySelector('.tv-card-name').textContent.toLowerCase();
+      const meta      = card.querySelector('.tv-card-meta').textContent.toLowerCase();
+      const completed = parseInt(card.dataset.completed || '0');
+      const isReview  = card.dataset.review === 'true';
+
+      let show = true;
+      if (q && !name.includes(q) && !meta.includes(q)) show = false;
+      if (currentStatus === 'unseen'  && completed > 0)         show = false;
+      if (currentStatus === 'started' && (completed === 0 || completed === 3)) show = false;
+      if (currentStatus === 'done'    && completed < 3)         show = false;
+      if (currentStatus === 'review'  && !isReview)             show = false;
+
+      card.classList.toggle('tv-hide', !show);
+      if (show) visible++;
+    });
+
+    const empty = document.getElementById(`empty-${currentTab}-${g}`);
+    if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+  });
+}
+
+// ── Summary bar ──────────────────────────────────────────────────────────────
+function updateSummary() {
+  const subject = SUBJECTS.find(s => s.id === currentTab);
+  let topics = 0, doneCount = 0, scores = [];
+
+  [12, 11].forEach(g => {
+    if (!subject.grades[g]) return;
+    if (currentGrade !== 'all' && currentGrade !== String(g)) return;
+    subject.grades[g].forEach(t => {
+      topics++;
+      const p = progressMap[t.slug];
+      if (p) {
+        if (p.completed === 3) doneCount++;
+        if (p.completed > 0) scores.push(p.avgScore);
+      }
+    });
+  });
+
+  const tests     = topics * 3;
+  const questions = topics * 45;
+  const avgScore  = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+
+  const progressPart = avgScore !== null
+    ? `<span class="tv-sum-sep">·</span>
+       <span class="tv-sum-item"><span class="tv-sum-done">${doneCount}</span> завършени</span>
+       <span class="tv-sum-sep">·</span>
+       <span class="tv-sum-item">Среден резултат <span class="tv-sum-score">${avgScore}%</span></span>`
+    : `<span class="tv-sum-sep">·</span><span class="tv-sum-item">3 нива</span>`;
+
+  document.getElementById('tv-summary').innerHTML = `
+    <span class="tv-sum-item"><span class="tv-sum-num">${topics}</span> теми</span>
+    <span class="tv-sum-sep">·</span>
+    <span class="tv-sum-item"><span class="tv-sum-num">${tests}</span> теста</span>
+    <span class="tv-sum-sep">·</span>
+    <span class="tv-sum-item"><span class="tv-sum-num">${questions}</span> въпроса</span>
+    ${progressPart}
+  `;
+}
+
+// ── Progress from Supabase ───────────────────────────────────────────────────
+async function loadProgress() {
+  try {
+    const mod = await import('https://esm.sh/@supabase/supabase-js@2');
+    const sb  = mod.createClient(
+      'https://wbcppvfgtvkrsfmclmjp.supabase.co',
+      'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l'
+    );
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+
+    const { data: results } = await sb
+      .from('quiz_results')
+      .select('lesson_slug, score')
+      .eq('user_id', session.user.id);
+
+    if (!results || !results.length) return;
+
+    // Group by base slug, track score per quiz number (1/2/3)
+    const raw = {};
+    results.forEach(r => {
+      const m    = r.lesson_slug.match(/-quiz(-(\d))?$/);
+      const num  = m ? (m[2] ? parseInt(m[2]) : 1) : null;
+      const base = r.lesson_slug.replace(/-quiz(-\d)?$/, '');
+      if (!num) return;
+      if (!raw[base]) raw[base] = [null, null, null];
+      raw[base][num - 1] = Number(r.score);
+    });
+
+    Object.entries(raw).forEach(([base, scores]) => {
+      const done   = scores.filter(s => s !== null);
+      const avg    = done.length ? Math.round(done.reduce((a, b) => a + b, 0) / done.length) : 0;
+      progressMap[base] = { scores, completed: done.length, avgScore: avg, isReview: avg < 70 && done.length > 0 };
+    });
+
+    document.querySelectorAll('.tv-card').forEach(card => {
+      const slug = card.dataset.slug;
+      const p    = progressMap[slug];
+      if (!p) return;
+
+      card.dataset.completed = p.completed;
+      card.dataset.review    = p.isReview;
+
+      // Badge
+      const badge = document.getElementById('badge-' + slug);
+      if (badge) {
+        if (p.isReview) {
+          badge.textContent = 'За преговор';
+          badge.className   = 'tv-badge review-badge';
+        } else if (p.completed === 3) {
+          badge.textContent = '✓ ' + p.avgScore + '%';
+          badge.className   = 'tv-badge' + (p.avgScore < 70 ? ' low' : '');
+        } else {
+          badge.textContent = p.completed + '/3 нива';
+          badge.className   = 'tv-badge low';
+        }
+        badge.style.display = 'inline-block';
+      }
+
+      // Progress bar + label (only when started)
+      if (p.completed > 0) {
+        const prog = document.getElementById('prog-' + slug);
+        const fill = document.getElementById('fill-' + slug);
+        const lbl  = document.getElementById('lbl-' + slug);
+        if (prog && fill && lbl) {
+          prog.style.display = 'block';
+          fill.style.width   = (p.completed / 3 * 100) + '%';
+          lbl.textContent    = 'Прогрес: ' + p.completed + '/3 теста';
+        }
+      }
+
+      // Per-button scores
+      [1, 2, 3].forEach(n => {
+        const sc = p.scores[n - 1];
+        const el = document.getElementById('bs' + n + '-' + slug);
+        if (el && sc !== null) el.textContent = ' ' + sc + '%';
+      });
+    });
+
+    applyFilters();
+    updateSummary();
+  } catch (e) {}
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+renderPanels();
+updateSummary();
+loadProgress();
+</script>
+<script src="/sidebar.js"></script>
+<script src="/nav.js"></script>
+</body>
+</html>

@@ -166,27 +166,20 @@
         <input type="email" id="reg-email" placeholder="email@example.com" required />
         <label>Парола</label>
         <input type="password" id="reg-password" placeholder="Минимум 6 символа" required minlength="6" />
-        <label>Аз съм</label>
-        <div class="role-select">
-          <div class="role-btn active" id="role-student" onclick="selectRole('student')">Ученик</div>
-          <div class="role-btn" id="role-parent" onclick="selectRole('parent')">Родител</div>
-        </div>
-        <div class="grade-row visible" id="grade-row">
-          <label>Клас</label>
-          <select id="reg-grade" onchange="onGradeChange(this.value)">
-            <option value="7">7. клас</option>
-            <option value="8">8. клас</option>
-            <option value="9">9. клас</option>
-            <option value="10">10. клас</option>
-            <option value="11">11. клас</option>
-            <option value="12">12. клас</option>
-          </select>
-          <label>Цел на обучение</label>
-          <div class="role-select" id="goal-select">
-            <div class="role-btn" id="goal-general" onclick="selectGoal('general')">Общи знания</div>
-            <div class="role-btn active" id="goal-nvo" onclick="selectGoal('nvo')">НВО</div>
-            <div class="role-btn" id="goal-matura" onclick="selectGoal('matura')">Матури</div>
-          </div>
+        <label>Клас</label>
+        <select id="reg-grade" onchange="onGradeChange(this.value)">
+          <option value="7">7. клас</option>
+          <option value="8">8. клас</option>
+          <option value="9">9. клас</option>
+          <option value="10">10. клас</option>
+          <option value="11">11. клас</option>
+          <option value="12" selected>12. клас</option>
+        </select>
+        <label>Цел на обучение</label>
+        <div class="role-select" id="goal-select">
+          <div class="role-btn" id="goal-general" onclick="selectGoal('general')">Общи знания</div>
+          <div class="role-btn" id="goal-nvo" onclick="selectGoal('nvo')">НВО</div>
+          <div class="role-btn" id="goal-matura" onclick="selectGoal('matura')">Матури</div>
         </div>
         <button type="submit" class="auth-submit">Създай профил</button>
       </form>
@@ -200,8 +193,6 @@
     const SUPABASE_KEY = 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l';
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    let selectedRole = 'student';
-    let selectedGoal = 'nvo';
 
     function fadeSwitch(outEl, inEl) {
       // Fade out
@@ -231,13 +222,8 @@
       fadeSwitch(outEl, inEl);
     };
 
-    window.selectRole = function(role) {
-      selectedRole = role;
-      document.getElementById('role-student').classList.toggle('active', role === 'student');
-      document.getElementById('role-parent').classList.toggle('active', role === 'parent');
-      const gradeRow = document.getElementById('grade-row');
-      gradeRow.classList.toggle('visible', role === 'student');
-    };
+
+    let selectedGoal = '';
 
     window.selectGoal = function(goal) {
       selectedGoal = goal;
@@ -276,8 +262,8 @@
       const name = document.getElementById('reg-name').value;
       const email = document.getElementById('reg-email').value;
       const password = document.getElementById('reg-password').value;
-      const grade = selectedRole === 'student' ? parseInt(document.getElementById('reg-grade').value) : null;
-      const goal = selectedRole === 'student' ? selectedGoal : null;
+      const grade = parseInt(document.getElementById('reg-grade').value);
+      const goal = selectedGoal;
 
       const { data, error } = await supabase.auth.signUp({
         email, password,
@@ -291,7 +277,6 @@
           id: userId,
           email,
           full_name: name,
-          role: selectedRole,
           grade,
           goal,
         }, { onConflict: 'id' });
@@ -303,6 +288,9 @@
     // Redirect if already logged in
     const { data: { session } } = await supabase.auth.getSession();
     if (session) window.location.href = '/dnevnik.html';
+
+    // Auto-switch to register tab if URL has #register
+    if (window.location.hash === '#register') switchTab('register');
   </script>
 </body>
 </html>

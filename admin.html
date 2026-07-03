@@ -276,8 +276,14 @@
     }
 
     /* ── Finance tab ── */
+    .fin-month-bar { display:flex; align-items:center; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+    .fin-month-select { padding:8px 14px; border:1.5px solid var(--line); border-radius:10px; font-family:inherit; font-size:14px; font-weight:700; background:#fff; color:var(--text); cursor:pointer; outline:none; }
+    .fin-month-select:focus { border-color:var(--accent); }
+    .btn-export-csv { margin-left:auto; padding:8px 18px; background:var(--accent); color:#fff; border:none; border-radius:10px; font-family:inherit; font-size:13px; font-weight:700; cursor:pointer; transition:background .15s; }
+    .btn-export-csv:hover { background:var(--accent2); }
+
     .fin-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 14px; }
-    .fin-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-bottom: 24px; }
+    .fin-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-bottom: 20px; }
     .fin-card {
       background: rgba(255,255,255,0.95); border: 1px solid var(--line);
       border-radius: 16px; padding: 20px; box-shadow: 0 4px 16px rgba(16,24,40,0.07);
@@ -287,6 +293,23 @@
     .fin-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 4px; }
     .fin-value { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1.1; }
     .fin-sub   { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* P&L statement */
+    .pl-card { background:#fff; border:1px solid var(--line); border-radius:20px; padding:24px; margin-bottom:20px; box-shadow:0 4px 16px rgba(16,24,40,0.07); }
+    .pl-card h2 { font-size:15px; font-weight:800; margin:0 0 18px; display:flex; align-items:center; gap:8px; }
+    .pl-section-title { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:16px 0 8px; }
+    .pl-row { display:flex; justify-content:space-between; align-items:center; padding:7px 0; border-bottom:1px solid #f1f5f9; font-size:14px; }
+    .pl-row:last-of-type { border-bottom:none; }
+    .pl-row.total { font-weight:800; font-size:15px; border-top:2px solid var(--line); border-bottom:none; padding-top:12px; margin-top:4px; }
+    .pl-row.subtotal { font-weight:700; background:#f8fafc; padding:7px 10px; border-radius:8px; margin:4px 0; border-bottom:none; }
+    .pl-row-label { color:var(--text); }
+    .pl-row-label.muted { color:var(--muted); font-size:13px; }
+    .pl-row-label.indent { padding-left:16px; color:var(--muted); font-size:13px; }
+    .pl-amt { font-weight:700; }
+    .pl-amt.green { color:#16a34a; }
+    .pl-amt.red { color:#dc2626; }
+    .pl-amt.muted { color:var(--muted); font-weight:400; }
+    .pl-divider { border:none; border-top:1px dashed var(--line); margin:10px 0; }
 
     .costs-card {
       background: rgba(255,255,255,0.95); border: 1px solid var(--line);
@@ -303,6 +326,18 @@
     }
     .cost-input:focus { border-color: var(--accent); }
     .cost-note { font-size: 12px; color: var(--muted); }
+
+    /* VAT card */
+    .vat-card { background:#fffbeb; border:1px solid #fde68a; border-radius:16px; padding:18px 20px; margin-bottom:20px; }
+    .vat-card h3 { font-size:14px; font-weight:800; margin:0 0 10px; color:#92400e; }
+    .vat-row { display:flex; justify-content:space-between; font-size:13px; padding:4px 0; color:#78350f; }
+
+    /* History table */
+    .hist-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .hist-table th { text-align:left; padding:0 8px 10px; font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); border-bottom:2px solid var(--line); }
+    .hist-table th.r { text-align:right; }
+    .hist-table td { padding:10px 8px; border-bottom:1px solid var(--line); }
+    .hist-table td.r { text-align:right; }
   </style>
 </head>
 <body>
@@ -314,7 +349,7 @@
       </div>
       <nav style="display:flex;align-items:center;gap:4px;margin:0 auto;">
         <a href="/urotsi.html" class="nav-btn">Уроци</a>
-        <a href="/dnevnik.html" class="nav-btn">Дневник</a>
+        <a href="/dnevnik-book.html" class="nav-btn">Оценки</a>
         <span class="nav-btn" style="background:var(--soft);font-weight:800;color:var(--accent);">Админ</span>
       </nav>
       <div style="display:flex;align-items:center;gap:8px;">
@@ -435,37 +470,125 @@
 
       <!-- ── Таб: Финанси ── -->
       <div class="tab-section" id="tab-finances">
+
+        <!-- Month selector + Export -->
+        <div class="fin-month-bar">
+          <label style="font-size:13px;font-weight:700;color:var(--muted);">Месец:</label>
+          <select class="fin-month-select" id="fin-month-sel"></select>
+          <span style="font-size:12px;color:var(--muted);margin-left:8px;">Курс на деня:</span>
+          <span id="fin-fx-rate" style="font-size:12px;font-weight:600;color:var(--text);background:#f4f4f5;border:1px solid var(--line);border-radius:6px;padding:4px 10px;margin-left:4px;">…</span>
+          <button class="btn-export-csv" id="btn-export-csv">⬇ Свали CSV</button>
+        </div>
+
+        <!-- KPI cards -->
         <div class="fin-grid">
           <div class="fin-card">
-            <div class="fin-label">МРР (приблиз.)</div>
+            <div class="fin-label">Брутен приход</div>
             <div class="fin-value" id="fin-mrr">—</div>
-            <div class="fin-sub" id="fin-mrr-sub">активни × базова цена</div>
+            <div class="fin-sub" id="fin-mrr-sub">от абонаменти</div>
           </div>
           <div class="fin-card">
-            <div class="fin-label">Месечни разходи</div>
+            <div class="fin-label">Общи разходи</div>
             <div class="fin-value" id="fin-costs">—</div>
-            <div class="fin-sub">хостинг + Supabase + API + друго</div>
+            <div class="fin-sub">фиксирани + API + Stripe</div>
           </div>
           <div class="fin-card" id="fin-profit-card">
-            <div class="fin-label">Чиста печалба</div>
+            <div class="fin-label">Чиста печалба / Загуба</div>
             <div class="fin-value" id="fin-profit">—</div>
-            <div class="fin-sub">МРР − разходи</div>
+            <div class="fin-sub" id="fin-profit-sub">приход − разходи</div>
           </div>
         </div>
         <div class="fin-grid-2">
           <div class="fin-card">
-            <div class="fin-label">Знайко — реален API разход</div>
+            <div class="fin-label">Anthropic API — месечен разход</div>
             <div class="fin-value" id="fin-api-real">—</div>
-            <div class="fin-sub" id="fin-api-real-sub">от началото</div>
+            <div class="fin-sub" id="fin-api-real-sub">от api_usage таблицата</div>
           </div>
           <div class="fin-card">
-            <div class="fin-label">Знайко — общо запитвания</div>
-            <div class="fin-value" id="fin-api-queries">—</div>
-            <div class="fin-sub" id="fin-api-queries-sub">от всички потребители</div>
+            <div class="fin-label">Stripe такси (ест.)</div>
+            <div class="fin-value" id="fin-stripe-fees">—</div>
+            <div class="fin-sub" id="fin-stripe-fees-sub">1.5% + €0.25/транзакция</div>
           </div>
         </div>
+
+        <!-- P&L Statement -->
+        <div class="pl-card">
+          <h2>📊 Отчет за приходи и разходи (P&L)</h2>
+
+          <div class="pl-section-title">Приходи</div>
+          <div class="pl-row">
+            <span class="pl-row-label">Абонаменти — брутен приход</span>
+            <span class="pl-amt green" id="pl-gross">—</span>
+          </div>
+          <div class="pl-row">
+            <span class="pl-row-label indent">− Stripe такси (1.5% + €0.25/тр.)</span>
+            <span class="pl-amt red" id="pl-stripe">—</span>
+          </div>
+          <div class="pl-row subtotal">
+            <span class="pl-row-label">= Нетен приход</span>
+            <span class="pl-amt" id="pl-net">—</span>
+          </div>
+
+          <hr class="pl-divider">
+
+          <div class="pl-section-title">Разходи</div>
+          <div class="pl-row">
+            <span class="pl-row-label indent">Anthropic API (реален)</span>
+            <span class="pl-amt red" id="pl-api">—</span>
+          </div>
+          <div class="pl-row">
+            <span class="pl-row-label indent">Хостинг (Render)</span>
+            <span class="pl-amt red" id="pl-hosting">—</span>
+          </div>
+          <div class="pl-row">
+            <span class="pl-row-label indent">Supabase</span>
+            <span class="pl-amt red" id="pl-supabase">—</span>
+          </div>
+          <div class="pl-row">
+            <span class="pl-row-label indent">Учители</span>
+            <span class="pl-amt red" id="pl-teachers">—</span>
+          </div>
+          <div class="pl-row">
+            <span class="pl-row-label indent">Друго</span>
+            <span class="pl-amt red" id="pl-other">—</span>
+          </div>
+          <div class="pl-row subtotal">
+            <span class="pl-row-label">= Общо разходи</span>
+            <span class="pl-amt red" id="pl-total-costs">—</span>
+          </div>
+
+          <hr class="pl-divider">
+
+          <div class="pl-row total" id="pl-result-row">
+            <span class="pl-row-label" id="pl-result-label">Оперативна печалба (преди ДДС)</span>
+            <span class="pl-amt" id="pl-result">—</span>
+          </div>
+          <div class="pl-row" style="opacity:0.7;" id="pl-vat-row">
+            <span class="pl-row-label">− ДДС задължение (20%, ако регистриран)</span>
+            <span class="pl-amt red" id="pl-vat-deduct">—</span>
+          </div>
+          <div class="pl-row" style="border-top:2px solid var(--line);margin-top:4px;padding-top:8px;">
+            <span class="pl-row-label" style="font-weight:800;">= Реална печалба след ДДС</span>
+            <span class="pl-amt" style="font-weight:800;" id="pl-result-after-vat">—</span>
+          </div>
+          <div style="margin-top:8px;font-size:12px;color:var(--muted);">* Anthropic разходите са в USD, конвертирани в EUR по живия курс на ЕЦБ. Stripe таксите са изчислени от броя нови абонаменти за месеца.</div>
+        </div>
+
+        <!-- VAT estimate -->
+        <div class="vat-card">
+          <h3>🧾 ДДС / VAT</h3>
+          <div class="vat-row"><span>Брутен приход за месеца</span><span id="vat-gross">—</span></div>
+          <div class="vat-row"><span>ДДС 20% (ако е приложимо)</span><span id="vat-amount">—</span></div>
+          <div class="vat-row"><span>Натрупан приход от началото на годината</span><span id="vat-ytd">—</span></div>
+          <div style="margin-top:10px;font-size:12px;color:#92400e;line-height:1.6;">
+            ⚠ При надвишаване на <strong>€10,000</strong> годишен приход от ЕС клиенти трябва OSS регистрация.
+            При надвишаване на <strong>50,000 лв</strong> в България — задължителна ДДС регистрация.
+          </div>
+        </div>
+
+        <!-- Fixed costs form -->
         <div class="costs-card">
-          <h2>Месечни разходи</h2>
+          <h2>⚙️ Фиксирани разходи (ръчно)</h2>
           <div class="cost-row">
             <label>Хостинг (Render)</label>
             <input type="number" class="cost-input" id="cost-hosting" placeholder="0" min="0" />
@@ -477,9 +600,9 @@
             <span class="cost-note">€ / месец</span>
           </div>
           <div class="cost-row">
-            <label>Anthropic API</label>
+            <label>Anthropic API (ръчно)</label>
             <input type="number" class="cost-input" id="cost-api" placeholder="0" min="0" />
-            <span class="cost-note">€ / месец</span>
+            <span class="cost-note">€ / месец (ако не се чете автоматично)</span>
           </div>
           <div class="cost-row">
             <label>Учители</label>
@@ -496,14 +619,19 @@
             <span class="save-msg" id="save-costs-msg">Запазено!</span>
           </div>
         </div>
+
+        <!-- Monthly history -->
         <div class="costs-card">
-          <h2>Разбивка по потребители</h2>
-          <div id="fin-breakdown" style="color:var(--muted);font-size:14px;">Зарежда…</div>
+          <h2>📅 История по месеци</h2>
+          <div id="monthly-history">Зарежда…</div>
         </div>
+
+        <!-- Per-user API usage -->
         <div class="costs-card">
-          <h2>Знайко — разход по потребители</h2>
+          <h2>🤖 Anthropic API — разход по потребители</h2>
           <div id="api-usage-table" style="color:var(--muted);font-size:14px;">Зарежда…</div>
         </div>
+
       </div>
 
       <!-- ── Таб: Цени ── -->
@@ -717,7 +845,7 @@
 
       const user = allUsers.find(u => u.id === userId);
       if (user) user.plan = plan;
-      updateStats(); renderTable(); loadFinances();
+      updateStats(); renderTable();
     };
 
     // ── User detail panel ────────────────────────────────────
@@ -867,170 +995,276 @@
     // ── Finances ─────────────────────────────────────────────
     const COST_KEYS = ['cost_hosting','cost_supabase','cost_api','cost_teachers','cost_other'];
 
-    async function loadFinances() {
-      // Load prices + costs from settings
-      const { data: settings } = await sb.from('settings').select('key, value')
-        .in('key', ['price_student', ...COST_KEYS]);
-      if (!settings) return;
+    // ── Finance state ─────────────────────────────────────────────
+    let finSettings   = {};
+    let allSubs       = [];
+    let allApiUsage   = [];
+    let selectedMonth = '';  // YYYY-MM
+    let usdToEur      = 0.92; // fallback; replaced by live ECB rate
 
-      const s = Object.fromEntries(settings.map(r => [r.key, parseFloat(r.value) || 0]));
-
-      // Fill cost inputs
-      COST_KEYS.forEach(k => {
-        const el = document.getElementById(k.replace('_', '-').replace('cost-', 'cost-'));
-        if (el && s[k]) el.value = s[k];
-      });
-
-      // Revenue: active users × base price
-      const activeCount = allUsers.filter(u => u.plan === 'active' && !u.is_admin).length;
-      const basePrice   = s['price_student'] || 30;
-      const mrr         = activeCount * basePrice;
-      const totalCosts  = COST_KEYS.reduce((sum, k) => sum + (s[k] || 0), 0);
-      const profit      = mrr - totalCosts;
-
-      document.getElementById('fin-mrr').textContent    = `€${mrr}`;
-      document.getElementById('fin-mrr-sub').textContent = `${activeCount} активни × €${basePrice}`;
-      document.getElementById('fin-costs').textContent  = `€${totalCosts}`;
-      document.getElementById('fin-profit').textContent = `€${profit}`;
-      const card = document.getElementById('fin-profit-card');
-      card.classList.toggle('profit', profit >= 0);
-      card.classList.toggle('loss',   profit < 0);
-
-      // Breakdown
-      const students = allUsers.filter(u => u.role === 'student' && u.plan === 'active' && !u.is_admin).length;
-      const parents  = allUsers.filter(u => u.role === 'parent'  && u.plan === 'active' && !u.is_admin).length;
-      const avgMonths = activeCount > 0
-        ? Math.round(allUsers.filter(u => u.plan === 'active' && !u.is_admin).reduce((s, u) => s + monthsAgo(u.created_at), 0) / activeCount)
-        : 0;
-      document.getElementById('fin-breakdown').innerHTML = `
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
-          <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Ученици (платени)</div><div style="font-size:22px;font-weight:800;">${students}</div></div>
-          <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Родители (платени)</div><div style="font-size:22px;font-weight:800;">${parents}</div></div>
-          <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Средно месеци</div><div style="font-size:22px;font-weight:800;">${avgMonths} м.</div></div>
-        </div>
-        <div id="monthly-table-wrap">Зарежда месечна статистика…</div>
-        <p style="margin-top:12px;font-size:12px;color:var(--muted);">* Точни данни след Stripe интеграцията.</p>`;
-
-      // Monthly breakdown from subscriptions table
-      const { data: subs } = await sb.from('subscriptions').select('user_id, plan, price_eur, status, started_at, cancelled_at');
-      const apiCostPerUser = activeCount > 0 ? (s['cost_api'] || 0) / activeCount : 0;
-
-      if (subs && subs.length > 0) {
-        const months = {};
-        subs.forEach(sub => {
-          const m = sub.started_at.slice(0, 7);
-          if (!months[m]) months[m] = { new: 0, cancelled: 0, value: 0, renewed: 0, apiCost: 0 };
-          months[m].new++;
-          months[m].value += sub.price_eur;
-          months[m].apiCost += apiCostPerUser;
-          if (sub.cancelled_at) {
-            const cm = sub.cancelled_at.slice(0, 7);
-            if (!months[cm]) months[cm] = { new: 0, cancelled: 0, value: 0, renewed: 0, apiCost: 0 };
-            months[cm].cancelled++;
-          }
-        });
-        const rows = Object.entries(months).sort((a,b) => b[0].localeCompare(a[0])).map(([m, d]) => {
-          const [y, mo] = m.split('-');
-          const label  = new Date(+y, +mo-1).toLocaleDateString('bg-BG', { month: 'long', year: 'numeric' });
-          const netVal = d.value - d.apiCost;
-          const netColor = netVal >= 0 ? '#16a34a' : '#dc2626';
-          return `<tr style="border-bottom:1px solid var(--line);">
-            <td style="padding:10px 8px;font-weight:700;">${label}</td>
-            <td style="padding:10px 8px;color:#16a34a;font-weight:700;">+${d.new}</td>
-            <td style="padding:10px 8px;color:var(--muted);">${d.renewed}</td>
-            <td style="padding:10px 8px;color:#dc2626;">−${d.cancelled}</td>
-            <td style="padding:10px 8px;font-weight:700;">€${d.value.toFixed(2)}</td>
-            <td style="padding:10px 8px;color:#dc2626;">−€${d.apiCost.toFixed(2)}</td>
-            <td style="padding:10px 8px;font-weight:800;color:${netColor};">€${netVal.toFixed(2)}</td>
-          </tr>`;
-        }).join('');
-        document.getElementById('monthly-table-wrap').innerHTML = `
-          <table style="width:100%;border-collapse:collapse;font-size:13px;">
-            <thead><tr style="border-bottom:2px solid var(--line);">
-              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Месец</th>
-              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Нови</th>
-              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Подновени</th>
-              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Спрени</th>
-              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Приход</th>
-              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">API разход</th>
-              <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Нето</th>
-            </tr></thead>
-            <tbody>${rows}</tbody>
-          </table>`;
-      } else {
-        document.getElementById('monthly-table-wrap').innerHTML = '<p style="color:var(--muted);font-size:13px;">Все още няма данни. Данните се попълват автоматично при смяна на абонамент.</p>';
+    function buildMonthOptions() {
+      const sel = document.getElementById('fin-month-sel');
+      sel.innerHTML = '';
+      const now = new Date();
+      for (let i = 0; i < 13; i++) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const val = d.toISOString().slice(0,7);
+        const label = d.toLocaleDateString('bg-BG', { month: 'long', year: 'numeric' });
+        const opt = document.createElement('option');
+        opt.value = val; opt.textContent = label;
+        if (i === 0) opt.selected = true;
+        sel.appendChild(opt);
       }
+      selectedMonth = sel.value;
     }
 
-    async function loadApiUsage() {
+    async function initFinances() {
+      buildMonthOptions();
+
+      // Live USD→EUR rate from ECB via frankfurter.app
+      const rateEl = document.getElementById('fin-fx-rate');
+      try {
+        const fx = await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR');
+        const fxData = await fx.json();
+        usdToEur = fxData.rates.EUR;
+        if (rateEl) rateEl.textContent = `1 USD = ${usdToEur.toFixed(4)} EUR (ЕЦБ, ${fxData.date})`;
+      } catch {
+        if (rateEl) rateEl.textContent = `1 USD = ${usdToEur.toFixed(2)} EUR`;
+      }
+
+      // Load settings
+      const { data: settings } = await sb.from('settings').select('key, value')
+        .in('key', ['price_student', ...COST_KEYS]);
+      if (settings) finSettings = Object.fromEntries(settings.map(r => [r.key, parseFloat(r.value) || 0]));
+      COST_KEYS.forEach(k => {
+        const el = document.getElementById(k.replace('cost_','cost-'));
+        if (el && finSettings[k]) el.value = finSettings[k];
+      });
+      // Load all subscriptions
+      const { data: subs } = await sb.from('subscriptions')
+        .select('user_id, plan, price_eur, status, started_at, cancelled_at');
+      allSubs = subs || [];
+      // Load all API usage
       const { data: usage } = await sb.from('api_usage')
         .select('user_id, input_tokens, output_tokens, cost_usd, created_at');
+      allApiUsage = usage || [];
 
-      if (!usage || usage.length === 0) {
-        document.getElementById('fin-api-real').textContent = '$0.000';
-        document.getElementById('fin-api-queries').textContent = '0';
+      renderFinances();
+      renderApiUsageTable();
+    }
+
+    function renderFinances() {
+      const m = document.getElementById('fin-month-sel').value;
+      selectedMonth = m;
+
+      // Revenue for selected month: new subs started in month
+      const monthSubs = allSubs.filter(s => s.started_at?.slice(0,7) === m);
+      const grossRevenue = monthSubs.reduce((sum, s) => sum + (s.price_eur || 0), 0);
+      const newSubCount  = monthSubs.length;
+      // Stripe fees: 1.5% + €0.25 per transaction
+      const stripeFees   = grossRevenue * 0.015 + newSubCount * 0.25;
+      const netRevenue   = grossRevenue - stripeFees;
+
+      // Anthropic API cost for month (USD → EUR via live ECB rate)
+      const monthUsage = allApiUsage.filter(r => r.created_at?.slice(0,7) === m);
+      const apiCostUsd = monthUsage.reduce((sum, r) => sum + (r.cost_usd || 0), 0);
+      const apiCostEur = apiCostUsd * usdToEur;
+      const apiQueries = monthUsage.length;
+
+      // Fixed costs
+      const costHosting  = finSettings['cost_hosting']  || 0;
+      const costSupabase = finSettings['cost_supabase'] || 0;
+      const costTeachers = finSettings['cost_teachers'] || 0;
+      const costOther    = finSettings['cost_other']    || 0;
+      const totalFixed   = costHosting + costSupabase + costTeachers + costOther;
+      const totalCosts   = totalFixed + apiCostEur + stripeFees;
+      const profit       = netRevenue - totalFixed - apiCostEur;
+
+      // YTD revenue (for VAT check)
+      const year = m.slice(0,4);
+      const ytdRevenue = allSubs
+        .filter(s => s.started_at?.slice(0,4) === year)
+        .reduce((sum, s) => sum + (s.price_eur || 0), 0);
+
+      // KPI cards
+      document.getElementById('fin-mrr').textContent = `€${grossRevenue.toFixed(2)}`;
+      document.getElementById('fin-mrr-sub').textContent = `${newSubCount} нови абонамента`;
+      document.getElementById('fin-costs').textContent = `€${totalCosts.toFixed(2)}`;
+      document.getElementById('fin-profit').textContent = (profit >= 0 ? '+' : '') + `€${profit.toFixed(2)}`;
+      document.getElementById('fin-profit-sub').textContent = profit >= 0 ? 'над нулата ✓' : 'под нулата';
+      const pcard = document.getElementById('fin-profit-card');
+      pcard.classList.toggle('profit', profit >= 0);
+      pcard.classList.toggle('loss',   profit < 0);
+      document.getElementById('fin-api-real').textContent = `$${apiCostUsd.toFixed(4)} / €${apiCostEur.toFixed(2)}`;
+      document.getElementById('fin-api-real-sub').textContent = `${apiQueries} запитвания за месеца`;
+      document.getElementById('fin-stripe-fees').textContent = `€${stripeFees.toFixed(2)}`;
+      document.getElementById('fin-stripe-fees-sub').textContent = `${newSubCount} транз. × (1.5% + €0.25)`;
+
+      // P&L
+      const fmt = (n, prefix='€') => n === 0 ? `${prefix}0.00` : `${prefix}${Math.abs(n).toFixed(2)}`;
+      document.getElementById('pl-gross').textContent    = `+€${grossRevenue.toFixed(2)}`;
+      document.getElementById('pl-stripe').textContent   = `−€${stripeFees.toFixed(2)}`;
+      document.getElementById('pl-net').textContent      = `€${netRevenue.toFixed(2)}`;
+      document.getElementById('pl-api').textContent      = `−€${apiCostEur.toFixed(2)}`;
+      document.getElementById('pl-hosting').textContent  = costHosting  ? `−€${costHosting.toFixed(2)}`  : '€0.00';
+      document.getElementById('pl-supabase').textContent = costSupabase ? `−€${costSupabase.toFixed(2)}` : '€0.00';
+      document.getElementById('pl-teachers').textContent = costTeachers ? `−€${costTeachers.toFixed(2)}` : '€0.00';
+      document.getElementById('pl-other').textContent    = costOther    ? `−€${costOther.toFixed(2)}`    : '€0.00';
+      document.getElementById('pl-total-costs').textContent = `−€${totalCosts.toFixed(2)}`;
+      document.getElementById('pl-result').textContent   = (profit >= 0 ? '+' : '−') + `€${Math.abs(profit).toFixed(2)}`;
+      document.getElementById('pl-result').className     = 'pl-amt ' + (profit >= 0 ? 'green' : 'red');
+      document.getElementById('pl-result-label').textContent = profit >= 0 ? 'Оперативна печалба (преди ДДС)' : 'Оперативна загуба (преди ДДС)';
+      // VAT deduction rows in P&L
+      const vatAmount = grossRevenue * 0.20;
+      const profitAfterVat = profit - vatAmount;
+      document.getElementById('pl-vat-deduct').textContent = `−€${vatAmount.toFixed(2)}`;
+      document.getElementById('pl-result-after-vat').textContent = (profitAfterVat >= 0 ? '+' : '−') + `€${Math.abs(profitAfterVat).toFixed(2)}`;
+      document.getElementById('pl-result-after-vat').className = 'pl-amt ' + (profitAfterVat >= 0 ? 'green' : 'red');
+
+      // VAT
+      document.getElementById('vat-gross').textContent  = `€${grossRevenue.toFixed(2)}`;
+      document.getElementById('vat-amount').textContent = `€${vatAmount.toFixed(2)}`;
+      document.getElementById('vat-ytd').textContent    = `€${ytdRevenue.toFixed(2)} (${year})`;
+
+      // Monthly history table
+      const monthMap = {};
+      allSubs.forEach(s => {
+        const mm = s.started_at?.slice(0,7); if (!mm) return;
+        if (!monthMap[mm]) monthMap[mm] = { new:0, cancelled:0, gross:0, stripe:0 };
+        monthMap[mm].new++;
+        monthMap[mm].gross += s.price_eur || 0;
+        monthMap[mm].stripe += (s.price_eur||0)*0.015 + 0.25;
+        if (s.cancelled_at) {
+          const cm = s.cancelled_at.slice(0,7);
+          if (!monthMap[cm]) monthMap[cm] = { new:0, cancelled:0, gross:0, stripe:0 };
+          monthMap[cm].cancelled++;
+        }
+      });
+      const apiByMonth = {};
+      allApiUsage.forEach(r => {
+        const mm = r.created_at?.slice(0,7); if (!mm) return;
+        if (!apiByMonth[mm]) apiByMonth[mm] = 0;
+        apiByMonth[mm] += (r.cost_usd || 0) * usdToEur;
+      });
+      const histRows = Object.keys({...monthMap, ...apiByMonth})
+        .sort((a,b) => b.localeCompare(a))
+        .map(mm => {
+          const d = monthMap[mm] || { new:0, cancelled:0, gross:0, stripe:0 };
+          const api = apiByMonth[mm] || 0;
+          const net = d.gross - d.stripe - api - totalFixed;
+          const [y, mo] = mm.split('-');
+          const lbl = new Date(+y,+mo-1).toLocaleDateString('bg-BG',{month:'long',year:'numeric'});
+          const nc = net >= 0 ? '#16a34a' : '#dc2626';
+          const hl = mm === m ? 'background:#f0f4ff;' : '';
+          return `<tr>
+            <td class="r" style="font-weight:700;${hl}">${lbl}</td>
+            <td class="r" style="color:#16a34a;${hl}">+${d.new}</td>
+            <td class="r" style="color:#dc2626;${hl}">−${d.cancelled}</td>
+            <td class="r" style="${hl}">€${d.gross.toFixed(2)}</td>
+            <td class="r" style="color:#dc2626;${hl}">−€${d.stripe.toFixed(2)}</td>
+            <td class="r" style="color:#dc2626;${hl}">−€${api.toFixed(2)}</td>
+            <td class="r" style="font-weight:800;color:${nc};${hl}">${net>=0?'+':'−'}€${Math.abs(net).toFixed(2)}</td>
+          </tr>`;
+        }).join('');
+      document.getElementById('monthly-history').innerHTML = histRows ? `
+        <table class="hist-table">
+          <thead><tr>
+            <th class="r">Месец</th><th class="r">Нови</th><th class="r">Спрени</th>
+            <th class="r">Брутен приход</th><th class="r">Stripe такси</th>
+            <th class="r">API разход</th><th class="r">Нето*</th>
+          </tr></thead>
+          <tbody>${histRows}</tbody>
+        </table>
+        <p style="margin-top:8px;font-size:11px;color:var(--muted);">* Нето = Брутен − Stripe − API − фиксирани разходи (${fmt(totalFixed)})</p>`
+        : '<p style="color:var(--muted);font-size:13px;">Все още няма данни от абонаменти.</p>';
+    }
+
+    function renderApiUsageTable() {
+      if (!allApiUsage.length) {
         document.getElementById('api-usage-table').innerHTML =
           '<p style="color:var(--muted);font-size:13px;">Все още няма данни. Появяват се след първото запитване към Знайко.</p>';
         return;
       }
-
-      // Aggregate totals
-      const totalCost    = usage.reduce((s, r) => s + (r.cost_usd || 0), 0);
-      const totalQueries = usage.length;
-      document.getElementById('fin-api-real').textContent    = '$' + totalCost.toFixed(4);
-      document.getElementById('fin-api-real-sub').textContent = `${totalQueries} запитвания общо`;
-      document.getElementById('fin-api-queries').textContent  = totalQueries;
-      document.getElementById('fin-api-queries-sub').textContent =
-        'средно $' + (totalCost / totalQueries).toFixed(5) + ' / запитване';
-
-      // Group by user_id
+      const totalCost = allApiUsage.reduce((s,r) => s+(r.cost_usd||0), 0);
+      const avgCost   = totalCost / (allUsers.filter(u=>u.plan==='active').length || 1);
       const byUser = {};
-      usage.forEach(r => {
-        if (!byUser[r.user_id]) byUser[r.user_id] = { queries: 0, tokens: 0, cost: 0, last: r.created_at };
+      allApiUsage.forEach(r => {
+        if (!byUser[r.user_id]) byUser[r.user_id] = { queries:0, tokens:0, cost:0, last:r.created_at };
         byUser[r.user_id].queries++;
-        byUser[r.user_id].tokens  += (r.input_tokens || 0) + (r.output_tokens || 0);
-        byUser[r.user_id].cost    += (r.cost_usd || 0);
+        byUser[r.user_id].tokens += (r.input_tokens||0)+(r.output_tokens||0);
+        byUser[r.user_id].cost   += r.cost_usd||0;
         if (r.created_at > byUser[r.user_id].last) byUser[r.user_id].last = r.created_at;
       });
-
-      // Sort by cost desc
-      const sorted = Object.entries(byUser).sort((a, b) => b[1].cost - a[1].cost);
-
-      const avgCost = totalCost / (allUsers.filter(u => u.plan === 'active').length || 1);
-
-      const rows = sorted.map(([uid, d]) => {
-        const user   = allUsers.find(u => u.id === uid);
-        const name   = user ? (user.full_name || user.email) : uid.slice(0, 8) + '…';
-        const email  = user?.email || '';
-        const lastDt = new Date(d.last).toLocaleDateString('bg-BG', { day: 'numeric', month: 'short' });
-        const isHigh = d.cost > avgCost * 2.5 && totalQueries > 5;
-        const costColor = isHigh ? '#dc2626' : 'var(--text)';
-        const flag      = isHigh ? ' <span title="Висок разход" style="color:#dc2626;">⚠</span>' : '';
-        return `<tr style="border-bottom:1px solid var(--line);">
-          <td style="padding:10px 8px;">
-            <div style="font-weight:700;font-size:13px;">${name}${flag}</div>
-            <div style="font-size:11px;color:var(--muted);">${email}</div>
-          </td>
-          <td style="padding:10px 8px;font-size:13px;text-align:right;">${d.queries}</td>
-          <td style="padding:10px 8px;font-size:13px;text-align:right;">${d.tokens.toLocaleString()}</td>
-          <td style="padding:10px 8px;font-size:13px;font-weight:700;color:${costColor};text-align:right;">$${d.cost.toFixed(4)}</td>
-          <td style="padding:10px 8px;font-size:12px;color:var(--muted);text-align:right;">${lastDt}</td>
+      const rows = Object.entries(byUser).sort((a,b)=>b[1].cost-a[1].cost).map(([uid,d]) => {
+        const user = allUsers.find(u=>u.id===uid);
+        const name = user ? (user.full_name||user.email) : uid.slice(0,8)+'…';
+        const isHigh = d.cost > avgCost*2.5 && allApiUsage.length > 5;
+        const cc = isHigh ? '#dc2626' : 'var(--text)';
+        const last = new Date(d.last).toLocaleDateString('bg-BG',{day:'numeric',month:'short'});
+        return `<tr>
+          <td><div style="font-weight:700;font-size:13px;">${name}${isHigh?' <span style="color:#dc2626;">⚠</span>':''}</div>
+              <div style="font-size:11px;color:var(--muted);">${user?.email||''}</div></td>
+          <td class="r">${d.queries}</td>
+          <td class="r">${d.tokens.toLocaleString()}</td>
+          <td class="r" style="font-weight:700;color:${cc};">$${d.cost.toFixed(4)}</td>
+          <td class="r" style="font-size:12px;color:var(--muted);">${last}</td>
         </tr>`;
       }).join('');
-
       document.getElementById('api-usage-table').innerHTML = `
-        <table style="width:100%;border-collapse:collapse;font-size:13px;">
-          <thead><tr style="border-bottom:2px solid var(--line);">
-            <th style="text-align:left;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Потребител</th>
-            <th style="text-align:right;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Запитвания</th>
-            <th style="text-align:right;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Токени</th>
-            <th style="text-align:right;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Разход ($)</th>
-            <th style="text-align:right;padding:0 8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Последно</th>
-          </tr></thead>
-          <tbody>${rows}</tbody>
+        <table class="hist-table">
+          <thead><tr>
+            <th>Потребител</th><th class="r">Запитвания</th>
+            <th class="r">Токени</th><th class="r">Разход ($)</th><th class="r">Последно</th>
+          </tr></thead><tbody>${rows}</tbody>
         </table>
-        <p style="margin-top:10px;font-size:11px;color:var(--muted);">⚠ маркира потребители с разход над 2.5× средния.</p>`;
+        <p style="margin-top:8px;font-size:11px;color:var(--muted);">⚠ = над 2.5× средния разход. Общо: $${totalCost.toFixed(4)}</p>`;
     }
+
+    // Month change
+    document.getElementById('fin-month-sel').addEventListener('change', renderFinances);
+
+    // CSV export
+    document.getElementById('btn-export-csv').addEventListener('click', () => {
+      const m = selectedMonth;
+      const monthSubs = allSubs.filter(s => s.started_at?.slice(0,7) === m);
+      const gross = monthSubs.reduce((s,r)=>s+(r.price_eur||0),0);
+      const stripe = gross*0.015 + monthSubs.length*0.25;
+      const apiUsd = allApiUsage.filter(r=>r.created_at?.slice(0,7)===m).reduce((s,r)=>s+(r.cost_usd||0),0);
+      const apiEur = apiUsd*usdToEur;
+      const hosting  = finSettings['cost_hosting']||0;
+      const supabase = finSettings['cost_supabase']||0;
+      const teachers = finSettings['cost_teachers']||0;
+      const other    = finSettings['cost_other']||0;
+      const total    = stripe+apiEur+hosting+supabase+teachers+other;
+      const profit   = gross-total;
+      const lines = [
+        ['Период', m],
+        [''],
+        ['ПРИХОДИ',''],
+        ['Брутен приход (абонаменти)', gross.toFixed(2)+'€'],
+        ['Stripe такси (1.5%+€0.25/тр.)', '-'+stripe.toFixed(2)+'€'],
+        ['Нетен приход', (gross-stripe).toFixed(2)+'€'],
+        [''],
+        ['РАЗХОДИ',''],
+        ['Anthropic API', '-'+apiEur.toFixed(2)+'€ ($'+apiUsd.toFixed(4)+')'],
+        ['Хостинг (Render)', '-'+hosting.toFixed(2)+'€'],
+        ['Supabase', '-'+supabase.toFixed(2)+'€'],
+        ['Учители', '-'+teachers.toFixed(2)+'€'],
+        ['Друго', '-'+other.toFixed(2)+'€'],
+        ['Общо разходи', '-'+total.toFixed(2)+'€'],
+        [''],
+        ['ЧИСТА ПЕЧАЛБА / ЗАГУБА', (profit>=0?'+':'')+profit.toFixed(2)+'€'],
+        [''],
+        ['Нови абонаменти', monthSubs.length],
+        ['Генерирано', new Date().toLocaleString('bg-BG')],
+      ];
+      const csv = lines.map(r => r.map(v=>`"${v}"`).join(',')).join('\n');
+      const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `razberime-finances-${m}.csv`;
+      a.click();
+    });
 
     document.getElementById('btn-save-costs').addEventListener('click', async () => {
       const btn = document.getElementById('btn-save-costs');
@@ -1042,16 +1276,16 @@
       const { error } = await sb.from('settings').upsert(rows, { onConflict: 'key' });
       btn.disabled = false;
       if (error) { alert('Грешка: ' + error.message); return; }
+      COST_KEYS.forEach(k => { finSettings[k] = parseFloat(document.getElementById(k.replace('cost_','cost-')).value)||0; });
       const msg = document.getElementById('save-costs-msg');
       msg.style.display = 'inline';
       setTimeout(() => { msg.style.display = 'none'; }, 2500);
-      loadFinances();
+      renderFinances();
     });
 
     // Load finances when tab is opened
     document.querySelector('[data-tab="finances"]').addEventListener('click', () => {
-      loadFinances();
-      loadApiUsage();
+      initFinances();
     });
 
     // ── Prices ───────────────────────────────────────────────

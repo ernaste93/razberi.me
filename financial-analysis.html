@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="utf-8" />
+<title>Финансов анализ — Разбери.Ме</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px;
+    color: #1a1a2e;
+    background: #fff;
+    padding: 32px 40px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ─── Header ─── */
+  .cover {
+    border-bottom: 3px solid #4f46e5;
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+  }
+  .cover h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #4f46e5;
+    letter-spacing: -0.5px;
+  }
+  .cover .meta {
+    color: #6b7280;
+    font-size: 12px;
+    margin-top: 6px;
+  }
+  .cover .tagline {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  /* ─── Section titles ─── */
+  h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #4f46e5;
+    margin: 28px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e5e7eb;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 16px 0 6px;
+  }
+
+  /* ─── Tables ─── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 12.5px;
+  }
+  th {
+    background: #4f46e5;
+    color: #fff;
+    font-weight: 700;
+    padding: 7px 10px;
+    text-align: left;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  tr:nth-child(even) td { background: #f9fafb; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .bold { font-weight: 700; }
+  .green { color: #059669; font-weight: 700; }
+  .red   { color: #dc2626; font-weight: 700; }
+  .blue  { color: #4f46e5; font-weight: 700; }
+  .gray  { color: #6b7280; }
+  .row-total td { background: #eef2ff !important; font-weight: 700; border-top: 2px solid #c7d2fe; }
+  .row-warn  td { background: #fff7ed !important; }
+  .row-loss  td { background: #fef2f2 !important; }
+  .row-ok    td { background: #f0fdf4 !important; }
+
+  /* ─── Cards / callouts ─── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 10px; }
+  .card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: #fafafa;
+  }
+  .card.accent {
+    border-color: #c7d2fe;
+    background: #eef2ff;
+  }
+  .card.warn {
+    border-color: #fcd34d;
+    background: #fffbeb;
+  }
+  .card.success {
+    border-color: #6ee7b7;
+    background: #ecfdf5;
+  }
+  .card-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+    margin-bottom: 6px;
+  }
+  .card-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #4f46e5;
+    line-height: 1;
+  }
+  .card-sub {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+
+  /* ─── Plan cards ─── */
+  .plan-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
+  .plan {
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .plan.trial { border-color: #d1d5db; background: #f9fafb; }
+  .plan.a     { border-color: #3b82f6; background: #eff6ff; }
+  .plan.b     { border-color: #4f46e5; background: #eef2ff; }
+  .plan.c     { border-color: #7c3aed; background: #f5f3ff; }
+  .plan-name  { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; }
+  .plan-price { font-size: 26px; font-weight: 800; color: #1a1a2e; margin: 4px 0; }
+  .plan-price span { font-size: 13px; font-weight: 500; color: #6b7280; }
+  .plan-features { text-align: left; margin-top: 8px; font-size: 11px; line-height: 1.7; color: #374151; }
+  .plan-features li { list-style: none; }
+  .plan-features li::before { content: "✓ "; color: #059669; font-weight: 700; }
+  .plan-features li.no::before { content: "✗ "; color: #9ca3af; }
+
+  /* ─── Note / footnote ─── */
+  .note {
+    background: #f0f9ff;
+    border-left: 3px solid #0ea5e9;
+    padding: 8px 12px;
+    font-size: 11.5px;
+    color: #0369a1;
+    margin-top: 10px;
+    border-radius: 0 6px 6px 0;
+  }
+  .warn-note {
+    background: #fff7ed;
+    border-left: 3px solid #f59e0b;
+    padding: 8px 12px;
+    font-size: 11.5px;
+    color: #92400e;
+    margin-top: 10px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  p { margin-top: 8px; line-height: 1.6; color: #374151; font-size: 12.5px; }
+
+  /* ─── Print ─── */
+  @media print {
+    body { padding: 20px; font-size: 11.5px; }
+    h2 { page-break-before: auto; }
+    .no-break { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    .grid-2, .grid-3, .plan-grid { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<div class="cover">
+  <h1>Разбери.Ме — Финансов анализ</h1>
+  <div class="meta">Изготвен: юли 2026 · Поверително · Само за основателите</div>
+  <div class="tagline">Ценообразуване · Разходна структура · Рентабилност · Сценарии</div>
+</div>
+
+
+<!-- ══════════════ 1. РАЗХОДНА СТРУКТУРА ══════════════ -->
+<h2>1. Разходна структура</h2>
+
+<h3>1.1 Фиксирани месечни разходи (независими от броя потребители)</h3>
+<table class="no-break">
+  <thead>
+    <tr><th>Услуга</th><th>Роля</th><th class="num">€/месец</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Supabase (Pro план)</td><td>База данни, автентикация, storage</td><td class="num">€25</td></tr>
+    <tr><td>Render (уеб сървър)</td><td>Хостинг на Node.js backend (server.js)</td><td class="num">€7</td></tr>
+    <tr><td>Resend (имейл)</td><td>Транзакционни имейли (до 3 000/месец — безплатно)</td><td class="num">€0</td></tr>
+    <tr class="row-total"><td colspan="2">ОБЩО фиксирани разходи</td><td class="num">€32</td></tr>
+  </tbody>
+</table>
+
+<h3>1.2 Променливи разходи (на потребител / на заявка)</h3>
+<table class="no-break">
+  <thead>
+    <tr><th>Разход</th><th>Изчисление</th><th class="num">Цена</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="bold">Знайко въпрос (Haiku)</td>
+      <td>7 000 input токена × $0.001 + 300 output × $0.005 = $0.0085</td>
+      <td class="num">~€0.008</td>
+    </tr>
+    <tr>
+      <td class="bold">Съчинение — проверка (Sonnet)</td>
+      <td>3 000 input токена × $0.003 + 600 output × $0.015 = $0.018</td>
+      <td class="num">~€0.016</td>
+    </tr>
+    <tr>
+      <td class="bold">Stripe такса</td>
+      <td>1.5% от сумата + €0.25 фиксирана (EU карти)</td>
+      <td class="num">€0.70 при €30</td>
+    </tr>
+    <tr>
+      <td class="bold">Stripe такса</td>
+      <td>1.5% × €20 + €0.25</td>
+      <td class="num">€0.55 при €20</td>
+    </tr>
+    <tr>
+      <td class="bold">Stripe такса</td>
+      <td>1.5% × €45 + €0.25</td>
+      <td class="num">€0.93 при €45</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <strong>Защо Haiku за Знайко?</strong> claude-haiku-4-5 е 5× по-евтин от Sonnet при почти същото качество за обяснения. Sonnet се запазва само за проверка на съчинения, където фините нюанси имат значение.
+</div>
+<div class="note">
+  <strong>Защо 7 000 input токена?</strong> Всяка заявка до Знайко носи пълния текст на урока (~4 000-6 000 токена) + системен промпт + история на чата. Това е основният разход — не броят думи в въпроса.
+</div>
+
+
+<!-- ══════════════ 2. ПЛАНОВЕ ══════════════ -->
+<h2>2. Ценови планове</h2>
+
+<div class="plan-grid no-break">
+  <div class="plan trial">
+    <div class="plan-name">Пробен период</div>
+    <div class="plan-price">0 <span>€ / 7 дни</span></div>
+    <ul class="plan-features">
+      <li>2-3 урока по избор</li>
+      <li>20 Знайко въпроса</li>
+      <li>1 съчинение с проверка</li>
+      <li class="no">Всички предмети</li>
+      <li class="no">Допълнителни материали</li>
+    </ul>
+  </div>
+  <div class="plan a">
+    <div class="plan-name">План А — БЕЛ</div>
+    <div class="plan-price">20 <span>€ / месец</span></div>
+    <ul class="plan-features">
+      <li>Всички БЕЛ уроци (11 и 12 кл.)</li>
+      <li>Куизове по БЕЛ</li>
+      <li>Знайко за БЕЛ</li>
+      <li>Проверка на съчинения</li>
+      <li class="no">Математика, Биология, Химия</li>
+      <li class="no">Допълнителни материали</li>
+    </ul>
+  </div>
+  <div class="plan b">
+    <div class="plan-name">План Б — Всички предмети</div>
+    <div class="plan-price">30 <span>€ / месец</span></div>
+    <ul class="plan-features">
+      <li>Всички уроци (4 предмета)</li>
+      <li>Куизове и тестове</li>
+      <li>Знайко без лимит*</li>
+      <li>Проверка на съчинения</li>
+      <li>Дневник с напредък</li>
+      <li class="no">Допълнителни материали</li>
+    </ul>
+  </div>
+  <div class="plan c">
+    <div class="plan-name">План В — Пълен достъп</div>
+    <div class="plan-price">45 <span>€ / месец</span></div>
+    <ul class="plan-features">
+      <li>Всичко от план Б</li>
+      <li>Конспекти и речници</li>
+      <li>Сравнителен анализ</li>
+      <li>Устен изпит — подготовка</li>
+      <li>Приоритетни обновления</li>
+    </ul>
+  </div>
+</div>
+
+<div class="warn-note">
+  * „Без лимит" е безопасно при нормална употреба. Риск от злоупотреба при 200+ въпроса/ден — виж Раздел 4 (сценарии).
+</div>
+
+
+<!-- ══════════════ 3. РАЗХОД НА ПОТРЕБИТЕЛ ══════════════ -->
+<h2>3. API разход на потребител на месец</h2>
+
+<p>Основната неизвестна е колко въпроса ще задава едно дете. Реалната оценка: едно дете с 2 урока/ден × 15 учебни дни = 30 сесии → 5-10 въпроса/сесия = <strong>150-300 въпроса/месец</strong>.</p>
+
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Сценарий</th>
+      <th class="num">Въпроса/месец</th>
+      <th class="num">Съчинения/месец</th>
+      <th class="num">API разход (Знайко)</th>
+      <th class="num">API разход (Съч.)</th>
+      <th class="num">Общо API</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="row-ok">
+      <td class="bold">Леко ползване</td>
+      <td class="num">100</td>
+      <td class="num">2</td>
+      <td class="num">€0.80</td>
+      <td class="num">€0.03</td>
+      <td class="num blue">€0.83</td>
+    </tr>
+    <tr class="row-ok">
+      <td class="bold">Умерено ползване</td>
+      <td class="num">200</td>
+      <td class="num">4</td>
+      <td class="num">€1.60</td>
+      <td class="num">€0.06</td>
+      <td class="num blue">€1.66</td>
+    </tr>
+    <tr class="row-ok">
+      <td class="bold">Активно ползване</td>
+      <td class="num">300</td>
+      <td class="num">6</td>
+      <td class="num">€2.40</td>
+      <td class="num">€0.10</td>
+      <td class="num blue">€2.50</td>
+    </tr>
+    <tr class="row-warn">
+      <td class="bold">Интензивно ползване</td>
+      <td class="num">600</td>
+      <td class="num">10</td>
+      <td class="num">€4.80</td>
+      <td class="num">€0.16</td>
+      <td class="num blue">€4.96</td>
+    </tr>
+    <tr class="row-loss">
+      <td class="bold">Екстремно (200 въпр./ден)</td>
+      <td class="num">6 000</td>
+      <td class="num">15</td>
+      <td class="num">€48.00</td>
+      <td class="num">€0.24</td>
+      <td class="num red">€48.24</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="note">
+  При нормална употреба (200-300 въпроса/месец), API разходът е €1.66–€2.50 на потребител. Марж остава >85% дори при план Б (€30). Единственият риск е екстремна употреба над ~1 700 въпроса/месец при план Б.
+</div>
+
+
+<!-- ══════════════ 4. P&L ПО ПЛАН И БРОЙ ПОТРЕБИТЕЛИ ══════════════ -->
+<h2>4. P&L — Нетна печалба при различни мащаби</h2>
+
+<p>Приема се умерено ползване: 200 въпроса/месец + 4 съчинения. API разход €1.66/потр. Stripe такса по съответния план.</p>
+
+<h3>4.1 — Всички потребители на План Б (€30/месец)</h3>
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Потребители</th>
+      <th class="num">Брутен приход</th>
+      <th class="num">API разход</th>
+      <th class="num">Stripe такси</th>
+      <th class="num">Фиксирани</th>
+      <th class="num">Нетна печалба</th>
+      <th class="num">Марж</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>5</td><td class="num">€150</td><td class="num">€8</td><td class="num">€4</td><td class="num">€32</td><td class="num red bold">€106</td><td class="num red">71%</td></tr>
+    <tr><td>10</td><td class="num">€300</td><td class="num">€17</td><td class="num">€7</td><td class="num">€32</td><td class="num green bold">€244</td><td class="num green">81%</td></tr>
+    <tr><td>20</td><td class="num">€600</td><td class="num">€33</td><td class="num">€14</td><td class="num">€32</td><td class="num green bold">€521</td><td class="num green">87%</td></tr>
+    <tr><td>50</td><td class="num">€1 500</td><td class="num">€83</td><td class="num">€35</td><td class="num">€32</td><td class="num green bold">€1 350</td><td class="num green">90%</td></tr>
+    <tr><td>100</td><td class="num">€3 000</td><td class="num">€166</td><td class="num">€70</td><td class="num">€32</td><td class="num green bold">€2 732</td><td class="num green">91%</td></tr>
+    <tr><td>200</td><td class="num">€6 000</td><td class="num">€332</td><td class="num">€140</td><td class="num">€32</td><td class="num green bold">€5 496</td><td class="num green">92%</td></tr>
+    <tr class="row-total"><td><strong>500</strong></td><td class="num">€15 000</td><td class="num">€830</td><td class="num">€350</td><td class="num">€32</td><td class="num green bold">€13 788</td><td class="num green">92%</td></tr>
+  </tbody>
+</table>
+
+<h3>4.2 — Всички потребители на План А (€20/месец) — само БЕЛ</h3>
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Потребители</th>
+      <th class="num">Брутен приход</th>
+      <th class="num">API разход</th>
+      <th class="num">Stripe такси</th>
+      <th class="num">Фиксирани</th>
+      <th class="num">Нетна печалба</th>
+      <th class="num">Марж</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>10</td><td class="num">€200</td><td class="num">€17</td><td class="num">€6</td><td class="num">€32</td><td class="num green bold">€145</td><td class="num green">73%</td></tr>
+    <tr><td>20</td><td class="num">€400</td><td class="num">€33</td><td class="num">€11</td><td class="num">€32</td><td class="num green bold">€324</td><td class="num green">81%</td></tr>
+    <tr><td>50</td><td class="num">€1 000</td><td class="num">€83</td><td class="num">€28</td><td class="num">€32</td><td class="num green bold">€857</td><td class="num green">86%</td></tr>
+    <tr><td>100</td><td class="num">€2 000</td><td class="num">€166</td><td class="num">€55</td><td class="num">€32</td><td class="num green bold">€1 747</td><td class="num green">87%</td></tr>
+    <tr class="row-total"><td><strong>200</strong></td><td class="num">€4 000</td><td class="num">€332</td><td class="num">€110</td><td class="num">€32</td><td class="num green bold">€3 526</td><td class="num green">88%</td></tr>
+  </tbody>
+</table>
+
+<h3>4.3 — Смесен портфолио (реалистичен)</h3>
+<p>Приема се: 60% от потребителите са на план Б, 30% на план А, 10% на план В.</p>
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Общо потр.</th>
+      <th>30% Plan А</th>
+      <th>60% Plan Б</th>
+      <th>10% Plan В</th>
+      <th class="num">Брутен приход</th>
+      <th class="num">Общ разход</th>
+      <th class="num">Нетна печалба</th>
+      <th class="num">Марж</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>10</td><td>3</td><td>6</td><td>1</td><td class="num">€285</td><td class="num">€60</td><td class="num green bold">€225</td><td class="num green">79%</td></tr>
+    <tr><td>30</td><td>9</td><td>18</td><td>3</td><td class="num">€855</td><td class="num">€113</td><td class="num green bold">€742</td><td class="num green">87%</td></tr>
+    <tr><td>50</td><td>15</td><td>30</td><td>5</td><td class="num">€1 425</td><td class="num">€168</td><td class="num green bold">€1 257</td><td class="num green">88%</td></tr>
+    <tr><td>100</td><td>30</td><td>60</td><td>10</td><td class="num">€2 850</td><td class="num">€304</td><td class="num green bold">€2 546</td><td class="num green">89%</td></tr>
+    <tr class="row-total"><td><strong>200</strong></td><td>60</td><td>120</td><td>20</td><td class="num">€5 700</td><td class="num">€576</td><td class="num green bold">€5 124</td><td class="num green">90%</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════ 5. СЕНЗИТИВНОСТ ══════════════ -->
+<h2>5. Анализ на чувствителност — при какви условия губим пари</h2>
+
+<p>При план Б (€30), нетен приход след Stripe: ~€29.30. Кога API разходите изяждат марша?</p>
+
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Въпроса/ден</th>
+      <th class="num">Въпроса/месец</th>
+      <th class="num">API разход/потр.</th>
+      <th class="num">Оставащ марж</th>
+      <th>Статус</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="row-ok"><td>5</td><td class="num">150</td><td class="num">€1.20</td><td class="num">€28.10</td><td class="green">✓ Отличен марж</td></tr>
+    <tr class="row-ok"><td>10</td><td class="num">300</td><td class="num">€2.40</td><td class="num">€26.90</td><td class="green">✓ Много добър</td></tr>
+    <tr class="row-ok"><td>20</td><td class="num">600</td><td class="num">€4.80</td><td class="num">€24.50</td><td class="green">✓ Добър</td></tr>
+    <tr class="row-ok"><td>30</td><td class="num">900</td><td class="num">€7.20</td><td class="num">€22.10</td><td class="green">✓ Приемлив</td></tr>
+    <tr class="row-ok"><td>50</td><td class="num">1 500</td><td class="num">€12.00</td><td class="num">€17.30</td><td class="green">✓ Марж 59%</td></tr>
+    <tr class="row-warn"><td>100</td><td class="num">3 000</td><td class="num">€24.00</td><td class="num">€5.30</td><td style="color:#92400e;font-weight:700;">⚠ Марж 18%</td></tr>
+    <tr class="row-loss"><td><strong>120</strong></td><td class="num"><strong>3 600</strong></td><td class="num"><strong>€28.80</strong></td><td class="num red">€0.50</td><td class="red">✗ Почти break-even</td></tr>
+    <tr class="row-loss"><td><strong>150+</strong></td><td class="num"><strong>4 500+</strong></td><td class="num red">€36+</td><td class="num red">−€6+</td><td class="red">✗ НА ЗАГУБА</td></tr>
+  </tbody>
+</table>
+
+<div class="warn-note">
+  <strong>Граница на риск:</strong> ~120 въпроса/ден при план Б. Нормален ученик задава 5-20 въпроса/сесия в 1-2 сесии дневно = <strong>10-40 въпроса/ден</strong>. Рискът е реален само при злоупотреба или автоматизирани заявки.
+</div>
+<div class="note">
+  <strong>Препоръка:</strong> Добавете "soft limit" — известие при 50+ въпроса за един ден, без да блокирате. Това дава данни за реалното ползване преди въвеждане на твърди лимити.
+</div>
+
+
+<!-- ══════════════ 6. ЦЕЛЕВИ МАРЖ ══════════════ -->
+<h2>6. При какви условия достигаме целеви марж</h2>
+<p>Цел: 30% / 40% / 50% / 60% нетна печалба след всички разходи (API + Stripe + фиксирани). Умерено ползване.</p>
+
+<div class="grid-2 no-break">
+  <div>
+    <h3>При план Б (€30), смесен микс потребители</h3>
+    <table>
+      <thead><tr><th>Целеви марж</th><th class="num">Нужни потребители</th><th class="num">Нетна печалба/м</th></tr></thead>
+      <tbody>
+        <tr class="row-ok"><td>30%</td><td class="num">~3 потр.</td><td class="num green">€27/месец</td></tr>
+        <tr class="row-ok"><td>50%</td><td class="num">~4 потр.</td><td class="num green">€60/месец</td></tr>
+        <tr class="row-ok"><td>60%</td><td class="num">~6 потр.</td><td class="num green">€108/месец</td></tr>
+        <tr class="row-ok"><td>80%</td><td class="num">~20 потр.</td><td class="num green">€480/месец</td></tr>
+        <tr class="row-ok"><td>90%</td><td class="num">~50+ потр.</td><td class="num green">€1 350/месец</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h3>Кога достигаме €1 000 / €5 000 / €10 000 нетно?</h3>
+    <table>
+      <thead><tr><th>Цел (нетно/м)</th><th class="num">Потребители (смесен)</th><th class="num">Брутен приход</th></tr></thead>
+      <tbody>
+        <tr><td>€1 000</td><td class="num">~40 потр.</td><td class="num">~€1 140</td></tr>
+        <tr><td>€2 500</td><td class="num">~90 потр.</td><td class="num">~€2 565</td></tr>
+        <tr><td>€5 000</td><td class="num">~175 потр.</td><td class="num">~€4 988</td></tr>
+        <tr><td>€10 000</td><td class="num">~350 потр.</td><td class="num">~€9 975</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ══════════════ 7. TRIAL ══════════════ -->
+<h2>7. Trial стратегия</h2>
+
+<div class="grid-2 no-break">
+  <div class="card accent">
+    <div class="card-label">Избран вариант</div>
+    <div style="font-size:18px;font-weight:800;color:#4f46e5;margin:6px 0;">Вариант 2 — Ограничен достъп</div>
+    <div class="card-sub">7 дни · без кредитна карта · без авто-подновяване</div>
+    <ul style="margin-top:10px;padding-left:16px;font-size:12px;line-height:1.8;color:#374151;">
+      <li>2-3 урока по избор (не всички)</li>
+      <li>20 Знайко въпроса общо</li>
+      <li>1 съчинение с AI проверка</li>
+      <li style="color:#9ca3af;">✗ Останалите уроци</li>
+      <li style="color:#9ca3af;">✗ Допълнителни материали</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-label">Разход на trial потребител</div>
+    <div class="card-value" style="color:#059669;">~€0.20</div>
+    <div class="card-sub">20 въпроса × €0.008 + 1 съчинение × €0.016 = €0.176</div>
+    <div style="margin-top:10px;font-size:12px;color:#374151;">
+      При 1 000 trial потребители → разход: ~€200<br>
+      Ако 5% конвертират (50 потр. × €30) → €1 500 приход<br>
+      <strong style="color:#059669;">ROI на trial: 650%</strong>
+    </div>
+  </div>
+</div>
+
+<div class="note" style="margin-top:12px;">
+  <strong>Правна бележка (ЗЗП / EU Директива 2011/83):</strong> 14-дневното право на отказ от цифрови услуги може да бъде отречено с изрично писмено съгласие на потребителя при плащане. Препоръчителна формула: checkbox „Разбирам, че услугата е дигитална и се отказвам от правото си на 14-дневен период на отказ." Законово валидно в България.
+</div>
+
+
+<!-- ══════════════ 8. КЛЮЧОВИ РИСКОВЕ ══════════════ -->
+<h2>8. Рискове и митигация</h2>
+
+<table class="no-break">
+  <thead>
+    <tr><th>Риск</th><th>Вероятност</th><th>Влияние</th><th>Митигация</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ученик задава 150+ въпроса/ден</td>
+      <td style="color:#f59e0b;font-weight:700;">Ниска</td>
+      <td style="color:#dc2626;font-weight:700;">Висока</td>
+      <td>Soft limit + известие при >50 въпроса/ден</td>
+    </tr>
+    <tr>
+      <td>Anthropic вдига цените на Haiku 2×</td>
+      <td style="color:#f59e0b;font-weight:700;">Средна</td>
+      <td style="color:#f59e0b;font-weight:700;">Средна</td>
+      <td>Маржът позволява 2× поскъпване без загуба дори при план А</td>
+    </tr>
+    <tr>
+      <td>Stripe блокира акаунта (спорове)</td>
+      <td style="color:#059669;font-weight:700;">Ниска</td>
+      <td style="color:#dc2626;font-weight:700;">Висока</td>
+      <td>Ясна политика за refund, имейл потвърждение при плащане</td>
+    </tr>
+    <tr>
+      <td>Supabase вдига цената на Pro</td>
+      <td style="color:#059669;font-weight:700;">Ниска</td>
+      <td style="color:#059669;font-weight:700;">Ниска</td>
+      <td>€25 е малка фракция от разходите при 50+ потр.</td>
+    </tr>
+    <tr>
+      <td>Малко конверсии от trial</td>
+      <td style="color:#f59e0b;font-weight:700;">Средна</td>
+      <td style="color:#f59e0b;font-weight:700;">Средна</td>
+      <td>A/B тест на trial условията; founding member пре-продажба</td>
+    </tr>
+    <tr>
+      <td>Конкурент копира модела</td>
+      <td style="color:#f59e0b;font-weight:700;">Средна</td>
+      <td style="color:#059669;font-weight:700;">Ниска</td>
+      <td>Моат: съдържание (17+ теми БЕЛ), локализация, UX за ученик</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════════ 9. ОБОБЩЕНИЕ ══════════════ -->
+<h2>9. Обобщение</h2>
+
+<div class="grid-3 no-break">
+  <div class="card success">
+    <div class="card-label">Структурен марж</div>
+    <div class="card-value">88–92%</div>
+    <div class="card-sub">при умерено ползване и 50+ потребители</div>
+  </div>
+  <div class="card success">
+    <div class="card-label">Break-even</div>
+    <div class="card-value">~2 потр.</div>
+    <div class="card-sub">при план Б (€30); фиксираните €32 се покриват бързо</div>
+  </div>
+  <div class="card warn">
+    <div class="card-label">Риск граница</div>
+    <div class="card-value">120 въпр./ден</div>
+    <div class="card-sub">при план Б; при нормална употреба: 5-30 въпр./ден</div>
+  </div>
+</div>
+
+<table class="no-break" style="margin-top:16px;">
+  <thead>
+    <tr><th>Показател</th><th>Стойност</th><th>Бележка</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Средна цена на Знайко въпрос</td><td class="green">€0.008</td><td>Haiku модел; включва пълен текст на урока</td></tr>
+    <tr><td>Средна цена на съчинение (AI проверка)</td><td class="green">€0.016</td><td>Sonnet модел</td></tr>
+    <tr><td>Фиксирани разходи/месец</td><td>€32</td><td>Supabase + Render; scale-независими до ~500 потр.</td></tr>
+    <tr><td>Stripe за план Б (€30)</td><td>€0.70</td><td>1.5% + €0.25 за EU карти</td></tr>
+    <tr><td>Нетен приход при 100 потр., план Б</td><td class="green">~€2 730/м</td><td>Умерено ползване (200 въпр./потр./месец)</td></tr>
+    <tr><td>Нетен приход при 200 потр., смесен</td><td class="green">~€5 120/м</td><td>60% план Б, 30% А, 10% В</td></tr>
+    <tr><td>Trial разход на потребител</td><td class="green">~€0.18</td><td>20 въпр. + 1 съчинение</td></tr>
+  </tbody>
+</table>
+
+<div style="margin-top:24px;padding-top:16px;border-top:1px solid #e5e7eb;font-size:11px;color:#9ca3af;text-align:center;">
+  Разбери.Ме · Финансов анализ · Юли 2026 · Поверително<br>
+  Всички суми в EUR. Курс: 1 USD ≈ 0.92 EUR (ЕЦБ). API цени: Haiku $1/$5 per M tokens, Sonnet $3/$15 per M tokens (Anthropic, юни 2026).
+</div>
+
+</body>
+</html>

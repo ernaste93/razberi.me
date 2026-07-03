@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="utf-8" />
+<title>Маркетинг план — Разбери.Ме</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px;
+    color: #1a1a2e;
+    background: #fff;
+    padding: 32px 40px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .cover {
+    border-bottom: 3px solid #059669;
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+  }
+  .cover h1 { font-size: 26px; font-weight: 800; color: #059669; letter-spacing: -0.5px; }
+  .cover .meta { color: #6b7280; font-size: 12px; margin-top: 6px; }
+  .cover .tagline { margin-top: 10px; font-size: 14px; color: #374151; font-weight: 500; }
+
+  h2 {
+    font-size: 15px; font-weight: 700; color: #059669;
+    margin: 28px 0 10px; padding-bottom: 4px;
+    border-bottom: 1px solid #e5e7eb;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  h3 { font-size: 13px; font-weight: 700; color: #1f2937; margin: 16px 0 6px; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12.5px; }
+  th { background: #059669; color: #fff; font-weight: 700; padding: 7px 10px; text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.3px; }
+  td { padding: 6px 10px; border-bottom: 1px solid #f3f4f6; }
+  tr:nth-child(even) td { background: #f9fafb; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .bold { font-weight: 700; }
+  .green { color: #059669; font-weight: 700; }
+  .red   { color: #dc2626; font-weight: 700; }
+  .blue  { color: #4f46e5; font-weight: 700; }
+  .orange { color: #d97706; font-weight: 700; }
+  .gray  { color: #6b7280; }
+  .row-total td { background: #ecfdf5 !important; font-weight: 700; border-top: 2px solid #6ee7b7; }
+  .row-best  td { background: #f0fdf4 !important; }
+  .row-ok    td { background: #fffbeb !important; }
+  .row-low   td { background: #fef2f2 !important; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 10px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+
+  .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; background: #fafafa; }
+  .card.green-c { border-color: #6ee7b7; background: #ecfdf5; }
+  .card.yellow-c { border-color: #fcd34d; background: #fffbeb; }
+  .card.red-c { border-color: #fca5a5; background: #fef2f2; }
+  .card.blue-c { border-color: #c7d2fe; background: #eef2ff; }
+  .card-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 6px; }
+  .card-value { font-size: 22px; font-weight: 800; color: #059669; line-height: 1; }
+  .card-value.warn { color: #d97706; }
+  .card-value.bad  { color: #dc2626; }
+  .card-value.blue { color: #4f46e5; }
+  .card-sub { font-size: 11px; color: #6b7280; margin-top: 4px; }
+
+  .platform-card {
+    border: 2px solid #e5e7eb; border-radius: 10px; padding: 14px;
+  }
+  .platform-card.rec { border-color: #059669; background: #f0fdf4; }
+  .platform-card.ok  { border-color: #f59e0b; background: #fffbeb; }
+  .platform-card.low { border-color: #e5e7eb; background: #f9fafb; }
+  .platform-name { font-size: 14px; font-weight: 800; color: #1f2937; }
+  .platform-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 99px; margin-top: 4px; }
+  .tag-green { background: #dcfce7; color: #166534; }
+  .tag-yellow { background: #fef3c7; color: #92400e; }
+  .tag-gray { background: #f3f4f6; color: #6b7280; }
+  .platform-stat { margin-top: 8px; font-size: 11.5px; line-height: 1.8; color: #374151; }
+  .platform-stat strong { color: #1f2937; }
+
+  .note { background: #f0fdf4; border-left: 3px solid #059669; padding: 8px 12px; font-size: 11.5px; color: #166534; margin-top: 10px; border-radius: 0 6px 6px 0; }
+  .warn-note { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 8px 12px; font-size: 11.5px; color: #92400e; margin-top: 10px; border-radius: 0 6px 6px 0; }
+  .info-note { background: #eff6ff; border-left: 3px solid #3b82f6; padding: 8px 12px; font-size: 11.5px; color: #1e40af; margin-top: 10px; border-radius: 0 6px 6px 0; }
+
+  p { margin-top: 8px; line-height: 1.6; color: #374151; font-size: 12.5px; }
+
+  .funnel {
+    display: flex; gap: 0; margin-top: 12px;
+    border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;
+  }
+  .funnel-step {
+    flex: 1; padding: 12px 10px; text-align: center;
+    border-right: 1px solid #e5e7eb;
+  }
+  .funnel-step:last-child { border-right: none; }
+  .funnel-step:nth-child(1) { background: #ecfdf5; }
+  .funnel-step:nth-child(2) { background: #f0fdf4; }
+  .funnel-step:nth-child(3) { background: #fffbeb; }
+  .funnel-step:nth-child(4) { background: #fef3c7; }
+  .funnel-step:nth-child(5) { background: #fef9c3; }
+  .funnel-num { font-size: 20px; font-weight: 800; color: #059669; }
+  .funnel-label { font-size: 10.5px; color: #6b7280; margin-top: 2px; font-weight: 600; }
+  .funnel-rate { font-size: 11px; color: #374151; margin-top: 4px; }
+
+  .timeline { margin-top: 12px; }
+  .month { display: flex; gap: 16px; margin-bottom: 12px; }
+  .month-label { min-width: 70px; font-weight: 700; color: #059669; font-size: 12px; padding-top: 2px; }
+  .month-content { flex: 1; }
+  .month-title { font-weight: 700; font-size: 12.5px; color: #1f2937; }
+  .month-tasks { margin-top: 4px; font-size: 11.5px; color: #374151; line-height: 1.7; }
+  .month-tasks li { list-style: none; }
+  .month-tasks li::before { content: "→ "; color: #059669; font-weight: 700; }
+  .month-budget { margin-top: 4px; font-size: 11px; font-weight: 700; color: #4f46e5; }
+
+  @media print {
+    body { padding: 20px; font-size: 11.5px; }
+    .no-break { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="cover">
+  <h1>Разбери.Ме — Маркетинг план 2026</h1>
+  <div class="meta">Изготвен: юли 2026 · Поверително · Само за основателите</div>
+  <div class="tagline">Целева аудитория · Платформи · Разходи · Конверсии · CAC · LTV · Старт план</div>
+</div>
+
+
+<!-- ══════════ 1. ЦЕЛЕВА АУДИТОРИЯ ══════════ -->
+<h2>1. Целева аудитория</h2>
+<p>Имаме два различни потребителя: <strong>платецът</strong> (родител) и <strong>ползвателят</strong> (ученик). Трябва да достигнем и до двамата с различни послания.</p>
+
+<div class="grid-2 no-break" style="margin-top:12px;">
+  <div class="card blue-c">
+    <div class="card-label">Сегмент А — Родителят (платец)</div>
+    <div style="font-size:13px;font-weight:700;color:#4f46e5;margin:6px 0;">Майки/бащи на 11-12 клас</div>
+    <div style="font-size:12px;line-height:1.8;color:#374151;margin-top:8px;">
+      <strong>Възраст:</strong> 38–54 години<br>
+      <strong>Платформа:</strong> Facebook (основна), Instagram<br>
+      <strong>Болка:</strong> Детето ми не се подготвя, частните учители са скъпи<br>
+      <strong>Мотивация:</strong> Матура, университет, бъдещето на детето<br>
+      <strong>Послание:</strong> „Частен учител по всички предмети за €30/месец"
+    </div>
+  </div>
+  <div class="card green-c">
+    <div class="card-label">Сегмент Б — Ученикът (ползвател)</div>
+    <div style="font-size:13px;font-weight:700;color:#059669;margin:6px 0;">Ученици 10–12 клас</div>
+    <div style="font-size:12px;line-height:1.8;color:#374151;margin-top:8px;">
+      <strong>Възраст:</strong> 15–18 години<br>
+      <strong>Платформа:</strong> TikTok (основна), Instagram, YouTube<br>
+      <strong>Болка:</strong> Не разбирам урока, срамувам се да питам учителя<br>
+      <strong>Мотивация:</strong> Добра оценка, лесно учене<br>
+      <strong>Послание:</strong> „Питай колкото искаш — без осъждане"
+    </div>
+  </div>
+</div>
+
+<h3>Пазарен размер в България</h3>
+<table class="no-break">
+  <thead><tr><th>Сегмент</th><th class="num">Брой (прибл.)</th><th>Бележка</th></tr></thead>
+  <tbody>
+    <tr><td>Ученици в 11 и 12 клас в България</td><td class="num">~120 000</td><td>Данни НСИ 2024-25</td></tr>
+    <tr><td>Матуристи годишно</td><td class="num">~60 000</td><td>12-ти клас с матура</td></tr>
+    <tr><td>Семейства с достъп до интернет и смартфон</td><td class="num">~95%</td><td>Покритие в градовете</td></tr>
+    <tr><td>Потенциален адресируем пазар (TAM)</td><td class="num">~57 000 семейства</td><td>60 000 × 95%</td></tr>
+    <tr><td>Реалистично достижим (SAM) — онлайн, готови да платят</td><td class="num">~8 500</td><td>~15% от TAM</td></tr>
+    <tr class="row-total"><td><strong>Целева цел година 1</strong></td><td class="num"><strong>200–500 абоната</strong></td><td>2.3–5.9% от SAM</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════ 2. ПЛАТФОРМИ ══════════ -->
+<h2>2. Платформи — сравнение</h2>
+
+<div class="grid-2 no-break">
+  <div class="platform-card rec">
+    <div class="platform-name">📘 Facebook Ads</div>
+    <span class="platform-tag tag-green">★ Препоръчан — основен</span>
+    <div class="platform-stat">
+      <strong>Аудитория:</strong> родители 38-54 г., висока покупателна способност<br>
+      <strong>CPC (България):</strong> €0.20 – €0.45<br>
+      <strong>CPM:</strong> €1.50 – €3.50<br>
+      <strong>Конверсия към trial:</strong> 12–20%<br>
+      <strong>Таргетиране:</strong> „Родители на тийнейджъри", интереси „образование", „матура"<br>
+      <strong>Формат:</strong> Carousel (преди/след), Video testimonial, Lead Ads
+    </div>
+  </div>
+  <div class="platform-card rec">
+    <div class="platform-name">🎵 TikTok Ads / Органично</div>
+    <span class="platform-tag tag-green">★ Препоръчан — органично</span>
+    <div class="platform-stat">
+      <strong>Аудитория:</strong> ученици 14-20 г.<br>
+      <strong>CPC (платено):</strong> €0.15 – €0.35<br>
+      <strong>CPM:</strong> €1.00 – €2.50<br>
+      <strong>Органичен потенциал:</strong> много висок при образователно съдържание<br>
+      <strong>Формат:</strong> „Знаеш ли защо Вазов написа..." (hook) → обяснение 30 сек.<br>
+      <strong>Конверсия:</strong> ниска директно, висока чрез brand awareness
+    </div>
+  </div>
+  <div class="platform-card ok">
+    <div class="platform-name">🔍 Google Search Ads</div>
+    <span class="platform-tag tag-yellow">Добър при intent-based търсене</span>
+    <div class="platform-stat">
+      <strong>Аудитория:</strong> активно търсещи (родители + ученици)<br>
+      <strong>CPC:</strong> €0.40 – €1.20<br>
+      <strong>Ключови думи:</strong> „подготовка за матура", „частен учител БЕЛ", „как да разбера Вазов"<br>
+      <strong>Конверсия:</strong> 15–25% (висок intent)<br>
+      <strong>Недостатък:</strong> Малък обем търсения в България, скъп CPC
+    </div>
+  </div>
+  <div class="platform-card ok">
+    <div class="platform-name">📸 Instagram Ads</div>
+    <span class="platform-tag tag-yellow">Допълващ канал</span>
+    <div class="platform-stat">
+      <strong>Аудитория:</strong> ученици + млади родители<br>
+      <strong>CPC:</strong> €0.25 – €0.55<br>
+      <strong>Формат:</strong> Stories с swipe-up, Reels (образователни)<br>
+      <strong>Бележка:</strong> Управлява се от Facebook Ads Manager — лесна добавка към FB кампания<br>
+      <strong>Конверсия:</strong> 8–15%
+    </div>
+  </div>
+  <div class="platform-card low">
+    <div class="platform-name">▶️ YouTube Ads</div>
+    <span class="platform-tag tag-gray">Дългосрочно</span>
+    <div class="platform-stat">
+      <strong>Аудитория:</strong> ученици, широка<br>
+      <strong>CPV (цена на преглед):</strong> €0.01 – €0.04<br>
+      <strong>Недостатък:</strong> Скъпо за производство на видео, нужен канал с история<br>
+      <strong>Препоръка:</strong> Не за старт, добавяй след месец 4-6
+    </div>
+  </div>
+  <div class="platform-card low">
+    <div class="platform-name">👥 Facebook Групи (органично)</div>
+    <span class="platform-tag tag-green">Безплатно — задължително</span>
+    <div class="platform-stat">
+      <strong>Примери:</strong> „Матура 2026 България", „Помощ по БЕЛ", „ОМА родители"<br>
+      <strong>Разход:</strong> €0 — само време<br>
+      <strong>Подход:</strong> Помагай с въпроси, споменавай инструмента естествено<br>
+      <strong>Риск:</strong> Спам — пости добавена стойност, не реклама директно<br>
+      <strong>Конверсия:</strong> Висока при доверие (peer recommendation)
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ 3. КОНВЕРСИОННА ФУНИЯ ══════════ -->
+<h2>3. Конверсионна фуния</h2>
+
+<div class="funnel no-break">
+  <div class="funnel-step">
+    <div class="funnel-num">10 000</div>
+    <div class="funnel-label">Импресии</div>
+    <div class="funnel-rate">CPM €2.50 = €25</div>
+  </div>
+  <div class="funnel-step">
+    <div class="funnel-num">250</div>
+    <div class="funnel-label">Кликове</div>
+    <div class="funnel-rate">CTR 2.5% · CPC €0.30</div>
+  </div>
+  <div class="funnel-step">
+    <div class="funnel-num">40</div>
+    <div class="funnel-label">Trial регистрации</div>
+    <div class="funnel-rate">Конверсия 16%</div>
+  </div>
+  <div class="funnel-step">
+    <div class="funnel-num">6</div>
+    <div class="funnel-label">Платени абонати</div>
+    <div class="funnel-rate">Trial→Paid 15%</div>
+  </div>
+  <div class="funnel-step">
+    <div class="funnel-num">€180</div>
+    <div class="funnel-label">Приход (план Б)</div>
+    <div class="funnel-rate">6 × €30/месец</div>
+  </div>
+</div>
+
+<div class="note" style="margin-top:12px;">
+  При €75 реклама (10 000 импресии × 3) → 18 нови платени абоната → €540 месечен приход. Разходът за реклама: €75. <strong>ROI на рекламния разход: 620%.</strong>
+</div>
+
+<h3>Защо 15% trial → paid е реалистично?</h3>
+<table class="no-break">
+  <thead><tr><th>Продукт / Индустрия</th><th class="num">Avg Trial→Paid</th><th>Бележка</th></tr></thead>
+  <tbody>
+    <tr><td>SaaS B2C (образование)</td><td class="num">15–25%</td><td>Duolingo Plus, Khan Academy Plus</td></tr>
+    <tr><td>SaaS B2C (развлечение)</td><td class="num">20–40%</td><td>Spotify, Netflix</td></tr>
+    <tr><td>Нишови образователни платформи</td><td class="num">10–20%</td><td>Цел: матура = висока мотивация</td></tr>
+    <tr class="row-best"><td><strong>Разбери.Ме (очакване)</strong></td><td class="num"><strong>12–18%</strong></td><td>Висока мотивация (матура), родителят вижда дали детето ползва</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════ 4. CAC И LTV ══════════ -->
+<h2>4. CAC (цена за придобиване) и LTV (стойност на клиент)</h2>
+
+<div class="grid-3 no-break">
+  <div class="card green-c">
+    <div class="card-label">CAC — Facebook Ads</div>
+    <div class="card-value">€12–18</div>
+    <div class="card-sub">CPC €0.30 ÷ 3% click→paid = €10 + overhead ~€4</div>
+  </div>
+  <div class="card green-c">
+    <div class="card-label">LTV — средно (план Б)</div>
+    <div class="card-value">€90–120</div>
+    <div class="card-sub">€30 × 3–4 месеца (учебен сезон)</div>
+  </div>
+  <div class="card green-c">
+    <div class="card-label">LTV / CAC</div>
+    <div class="card-value">6–8×</div>
+    <div class="card-sub">>3× е добро; >5× е отлично. Ние сме в отличната зона.</div>
+  </div>
+</div>
+
+<h3>CAC при различни платформи</h3>
+<table class="no-break">
+  <thead>
+    <tr>
+      <th>Платформа</th>
+      <th class="num">CPC</th>
+      <th class="num">CTR</th>
+      <th class="num">Конв. trial</th>
+      <th class="num">Trial→paid</th>
+      <th class="num">CAC</th>
+      <th>Оценка</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="row-best"><td class="bold">Facebook Ads (родители)</td><td class="num">€0.30</td><td class="num">2.5%</td><td class="num">16%</td><td class="num">15%</td><td class="num green">€12.50</td><td class="green">✓ Най-добър</td></tr>
+    <tr class="row-best"><td class="bold">Instagram Ads (ученици)</td><td class="num">€0.35</td><td class="num">2.0%</td><td class="num">12%</td><td class="num">12%</td><td class="num green">€24.30</td><td class="green">✓ Добър</td></tr>
+    <tr class="row-ok"><td class="bold">Google Search</td><td class="num">€0.70</td><td class="num">4.0%</td><td class="num">22%</td><td class="num">15%</td><td class="num orange">€21.20</td><td class="orange">⚠ Приемлив</td></tr>
+    <tr class="row-ok"><td class="bold">TikTok Ads</td><td class="num">€0.20</td><td class="num">1.5%</td><td class="num">8%</td><td class="num">10%</td><td class="num orange">€25.00</td><td class="orange">⚠ Ниска конверсия</td></tr>
+    <tr class="row-best"><td class="bold">Facebook Групи (органично)</td><td class="num">€0</td><td class="num">—</td><td class="num">—</td><td class="num">25%</td><td class="num green">~€2 (само труд)</td><td class="green">✓ Най-ефективен</td></tr>
+    <tr class="row-best"><td class="bold">Word of mouth / Referral</td><td class="num">€0</td><td class="num">—</td><td class="num">—</td><td class="num">30%</td><td class="num green">~€0</td><td class="green">✓ Цел дългосрочно</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════ 5. БЮДЖЕТНИ СЦЕНАРИИ ══════════ -->
+<h2>5. Бюджетни сценарии — месечен рекламен разход</h2>
+
+<h3>Сценарий А — Нисък бюджет (€100/месец)</h3>
+<table class="no-break">
+  <thead><tr><th>Канал</th><th class="num">Бюджет</th><th class="num">Нови trial</th><th class="num">Нови платени</th><th class="num">Приход</th><th class="num">ROI</th></tr></thead>
+  <tbody>
+    <tr><td>Facebook Ads</td><td class="num">€70</td><td class="num">37</td><td class="num">6</td><td class="num">€180</td><td class="num green">157%</td></tr>
+    <tr><td>Instagram Ads</td><td class="num">€30</td><td class="num">10</td><td class="num">1</td><td class="num">€30</td><td class="num green">0%</td></tr>
+    <tr><td>Органично (групи, TikTok)</td><td class="num">€0</td><td class="num">10</td><td class="num">3</td><td class="num">€90</td><td class="num green">∞</td></tr>
+    <tr class="row-total"><td><strong>ОБЩО</strong></td><td class="num">€100</td><td class="num">57</td><td class="num">10</td><td class="num green"><strong>€300</strong></td><td class="num green"><strong>200%</strong></td></tr>
+  </tbody>
+</table>
+
+<h3>Сценарий Б — Среден бюджет (€300/месец)</h3>
+<table class="no-break">
+  <thead><tr><th>Канал</th><th class="num">Бюджет</th><th class="num">Нови trial</th><th class="num">Нови платени</th><th class="num">Приход</th><th class="num">ROI</th></tr></thead>
+  <tbody>
+    <tr><td>Facebook Ads</td><td class="num">€180</td><td class="num">96</td><td class="num">14</td><td class="num">€420</td><td class="num green">133%</td></tr>
+    <tr><td>Instagram Ads</td><td class="num">€70</td><td class="num">24</td><td class="num">3</td><td class="num">€90</td><td class="num green">29%</td></tr>
+    <tr><td>Google Search</td><td class="num">€50</td><td class="num">16</td><td class="num">2</td><td class="num">€60</td><td class="num green">20%</td></tr>
+    <tr><td>Органично</td><td class="num">€0</td><td class="num">20</td><td class="num">5</td><td class="num">€150</td><td class="num green">∞</td></tr>
+    <tr class="row-total"><td><strong>ОБЩО</strong></td><td class="num">€300</td><td class="num">156</td><td class="num">24</td><td class="num green"><strong>€720</strong></td><td class="num green"><strong>140%</strong></td></tr>
+  </tbody>
+</table>
+
+<h3>Сценарий В — Агресивен растеж (€800/месец)</h3>
+<table class="no-break">
+  <thead><tr><th>Канал</th><th class="num">Бюджет</th><th class="num">Нови trial</th><th class="num">Нови платени</th><th class="num">Приход</th><th class="num">ROI</th></tr></thead>
+  <tbody>
+    <tr><td>Facebook Ads</td><td class="num">€400</td><td class="num">213</td><td class="num">32</td><td class="num">€960</td><td class="num green">140%</td></tr>
+    <tr><td>Instagram Ads</td><td class="num">€150</td><td class="num">51</td><td class="num">6</td><td class="num">€180</td><td class="num green">20%</td></tr>
+    <tr><td>Google Search</td><td class="num">€150</td><td class="num">49</td><td class="num">7</td><td class="num">€210</td><td class="num green">40%</td></tr>
+    <tr><td>TikTok Ads</td><td class="num">€100</td><td class="num">40</td><td class="num">4</td><td class="num">€120</td><td class="num green">20%</td></tr>
+    <tr><td>Органично</td><td class="num">€0</td><td class="num">40</td><td class="num">10</td><td class="num">€300</td><td class="num green">∞</td></tr>
+    <tr class="row-total"><td><strong>ОБЩО</strong></td><td class="num">€800</td><td class="num">393</td><td class="num">59</td><td class="num green"><strong>€1 770</strong></td><td class="num green"><strong>121%</strong></td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  Всички сценарии показват положителен ROI дори в първия месец. Реалният ефект е по-голям, защото платените абонати остават 3-4 месеца (LTV €90-120), а тук е показан само приходът от месец 1.
+</div>
+<div class="warn-note">
+  Числата са прогнози, не гаранции. Реалните резултати зависят от качеството на рекламното послание, landing page конверсията и сезона. Март–юни е peak сезон (матура подготовка).
+</div>
+
+
+<!-- ══════════ 6. РЕКЛАМНИ ПОСЛАНИЯ ══════════ -->
+<h2>6. Рекламни послания — какво да казваме</h2>
+
+<div class="grid-2 no-break">
+  <div class="card blue-c">
+    <div class="card-label">За родители (Facebook)</div>
+    <div style="font-size:12.5px;line-height:1.8;color:#374151;margin-top:8px;">
+      <strong>Hook:</strong> „Детето ми не разбира Вазов. Намерих решение за €1 на ден."<br><br>
+      <strong>Вариант 2:</strong> „Частният учител по БЕЛ, Математика и Биология е вече достъпен за всяко дете — не само за тези с богати родители."<br><br>
+      <strong>Вариант 3:</strong> „Вашето дете може да пита колкото въпроса иска — без да се притеснява, без да го осъждат. 7 дни безплатно."<br><br>
+      <strong>CTA:</strong> Пробвай безплатно 7 дни →
+    </div>
+  </div>
+  <div class="card green-c">
+    <div class="card-label">За ученици (TikTok / Instagram)</div>
+    <div style="font-size:12.5px;line-height:1.8;color:#374151;margin-top:8px;">
+      <strong>Hook:</strong> „Не разбра урока? Питай пак. И пак. И пак — без осъждане."<br><br>
+      <strong>Вариант 2:</strong> „Знайко обяснява Вазов по-добре от учителя. Не ме вярвай — пробвай."<br><br>
+      <strong>Образователно (органично):</strong> 30-секунден TikTok „Защо Ботев написа тази строфа точно така?" — в края: „Разбери повече в Разбери.Ме"<br><br>
+      <strong>CTA:</strong> Влез в разбери.ме →
+    </div>
+  </div>
+</div>
+
+<h3>Ключови думи за Google Ads</h3>
+<table class="no-break">
+  <thead><tr><th>Ключова дума</th><th class="num">Прибл. CPC</th><th class="num">Месечно търсене (BG)</th><th>Намерение</th></tr></thead>
+  <tbody>
+    <tr class="row-best"><td>подготовка за матура онлайн</td><td class="num">€0.50</td><td class="num">200–500</td><td class="green">Висока готовност</td></tr>
+    <tr class="row-best"><td>частен учител бел онлайн</td><td class="num">€0.65</td><td class="num">100–300</td><td class="green">Висока готовност</td></tr>
+    <tr class="row-ok"><td>как да разбера вазов</td><td class="num">€0.30</td><td class="num">300–800</td><td class="orange">Информационно</td></tr>
+    <tr class="row-ok"><td>матура бел подготовка</td><td class="num">€0.45</td><td class="num">400–1000</td><td class="orange">Смесено</td></tr>
+    <tr class="row-ok"><td>онлайн урок математика 12 клас</td><td class="num">€0.40</td><td class="num">200–500</td><td class="orange">Информационно</td></tr>
+    <tr><td>ai учител ученик</td><td class="num">€0.25</td><td class="num">50–150</td><td class="gray">Ново търсене</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════ 7. СЕЗОННОСТ ══════════ -->
+<h2>7. Сезонност — кога да рекламираме повече</h2>
+
+<table class="no-break">
+  <thead><tr><th>Период</th><th>Активност</th><th class="num">Препоръчан бюджет</th><th>Причина</th></tr></thead>
+  <tbody>
+    <tr class="row-low"><td>Юли – Август</td><td class="gray">Много ниска</td><td class="num gray">€0–50</td><td>Ваканция, нулево намерение</td></tr>
+    <tr class="row-ok"><td><strong>Септември – Октомври</strong></td><td class="orange">Средна</td><td class="num orange">€150–200</td><td>Старт на учебната година — awareness</td></tr>
+    <tr class="row-ok"><td>Ноември – Декември</td><td class="orange">Средна</td><td class="num orange">€150–200</td><td>Първи срок, изпити</td></tr>
+    <tr class="row-ok"><td>Януари – Февруари</td><td class="orange">Нарастваща</td><td class="num orange">€200–300</td><td>Втори срок, тревожност около матура</td></tr>
+    <tr class="row-best"><td><strong>Март – Май</strong></td><td class="green bold">✓ PEAK</td><td class="num green"><strong>€400–800</strong></td><td>2-3 месеца преди матура — максимална мотивация</td></tr>
+    <tr class="row-best"><td><strong>Юни</strong></td><td class="green">Висока</td><td class="num green">€300–500</td><td>Матура месец — последни дни за подготовка</td></tr>
+  </tbody>
+</table>
+
+<div class="info-note">
+  <strong>Старт стратегия:</strong> Ако стартираме сега (юли 2026) — правим органично съдържание и изграждаме аудитория. Платена реклама стартира агресивно от <strong>1 септември</strong>. Основният push: <strong>март–май 2027</strong>.
+</div>
+
+
+<!-- ══════════ 8. СТАРТ ПЛАН ══════════ -->
+<h2>8. Старт план — Месец по месец</h2>
+
+<div class="timeline no-break">
+  <div class="month">
+    <div class="month-label">Юли 2026</div>
+    <div class="month-content">
+      <div class="month-title">Подготовка и органично съдържание</div>
+      <ul class="month-tasks">
+        <li>Създай TikTok профил @razberime и публикувай 3-5 образователни видеа (БЕЛ теми)</li>
+        <li>Влез в 5 Facebook групи за матура и родители — помагай с въпроси</li>
+        <li>Направи landing page с ясно value proposition и trial CTA</li>
+        <li>Събери 10 beta потребители чрез лично outreach (приятели, познати)</li>
+      </ul>
+      <div class="month-budget">Бюджет: €0–30 (само съдържание)</div>
+    </div>
+  </div>
+  <div class="month">
+    <div class="month-label">Август 2026</div>
+    <div class="month-content">
+      <div class="month-title">Финализиране на продукта и първи продажби</div>
+      <ul class="month-tasks">
+        <li>Завърши съдържанието (Биология 11, Химия 11)</li>
+        <li>Вземи 10 платени абоната лично — продай ги на ръка (Messenger, познати)</li>
+        <li>Вземи testimonials от beta потребителите — снимки, цитати</li>
+        <li>Подготви първата Facebook реклама с testimonial</li>
+      </ul>
+      <div class="month-budget">Бюджет: €0–50 (тест реклами)</div>
+    </div>
+  </div>
+  <div class="month">
+    <div class="month-label">Септември 2026</div>
+    <div class="month-content">
+      <div class="month-title">Старт на платена реклама</div>
+      <ul class="month-tasks">
+        <li>Пусни Facebook кампания с €5/ден бюджет — тествай 3 различни послания</li>
+        <li>Таргет: жени 38-50 г., с деца, интерес „образование", „матура"</li>
+        <li>Пусни Instagram паралелно (от същия Ads Manager)</li>
+        <li>Продължавай органичното в групите и TikTok</li>
+        <li>Цел: 20-30 нови платени абоната</li>
+      </ul>
+      <div class="month-budget">Бюджет: €150 (€5/ден × 30)</div>
+    </div>
+  </div>
+  <div class="month">
+    <div class="month-label">Окт–Дек 2026</div>
+    <div class="month-content">
+      <div class="month-title">Оптимизация и скалиране</div>
+      <ul class="month-tasks">
+        <li>Идентифицирай коя реклама работи — удвой бюджета за нея</li>
+        <li>Добави Google Search за ключови думи с висок intent</li>
+        <li>Старт на referral програма — 1 безплатен месец за препоръка</li>
+        <li>Цел: 80-100 активни абоната до края на декември</li>
+      </ul>
+      <div class="month-budget">Бюджет: €150–300/месец</div>
+    </div>
+  </div>
+  <div class="month">
+    <div class="month-label">Март–Юни 2027</div>
+    <div class="month-content">
+      <div class="month-title">★ Peak сезон — максимален push</div>
+      <ul class="month-tasks">
+        <li>Увеличи Facebook бюджет до €400–600/месец</li>
+        <li>Ретаргетинг на всички, посетили сайта но не купили</li>
+        <li>Специална оферта „Последните 60 дни преди матурата"</li>
+        <li>PR в образователни медии и блогъри</li>
+        <li>Цел: 200-300 активни абоната в пик</li>
+      </ul>
+      <div class="month-budget">Бюджет: €400–800/месец</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ 9. KPI ══════════ -->
+<h2>9. KPI — Метрики за успех</h2>
+
+<table class="no-break">
+  <thead>
+    <tr><th>Метрика</th><th class="num">Месец 1</th><th class="num">Месец 3</th><th class="num">Месец 6</th><th class="num">Месец 12</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Активни платени абоната</td><td class="num">10–15</td><td class="num">40–60</td><td class="num">80–120</td><td class="num blue bold">200–350</td></tr>
+    <tr><td>Месечен приход (MRR)</td><td class="num">€300–450</td><td class="num">€1 200–1 800</td><td class="num">€2 400–3 600</td><td class="num blue bold">€6 000–10 500</td></tr>
+    <tr><td>Trial регистрации/месец</td><td class="num">50–80</td><td class="num">150–200</td><td class="num">300–400</td><td class="num">500–700</td></tr>
+    <tr><td>Trial → Paid конверсия</td><td class="num">12%</td><td class="num">14%</td><td class="num">16%</td><td class="num green">18%+</td></tr>
+    <tr><td>CAC (среден)</td><td class="num">€18–25</td><td class="num">€14–20</td><td class="num">€12–16</td><td class="num green">€10–14</td></tr>
+    <tr><td>Churn (отписали се/месец)</td><td class="num">—</td><td class="num">&lt;15%</td><td class="num">&lt;12%</td><td class="num green">&lt;10%</td></tr>
+    <tr><td>Рекламен разход/месец</td><td class="num">€100–150</td><td class="num">€200–300</td><td class="num">€300–500</td><td class="num">€400–800</td></tr>
+    <tr class="row-total"><td><strong>Нетна печалба/месец</strong></td><td class="num">€150–280</td><td class="num">€900–1 400</td><td class="num">€1 900–2 900</td><td class="num green bold">€5 000–9 000</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ══════════ 10. ОБОБЩЕНИЕ ══════════ -->
+<h2>10. Обобщение — топ препоръки</h2>
+
+<table class="no-break">
+  <thead><tr><th>#</th><th>Действие</th><th>Приоритет</th><th>Разход</th><th>Очакван ефект</th></tr></thead>
+  <tbody>
+    <tr class="row-best"><td class="bold">1</td><td>Facebook Ads към родители с testimonial реклама</td><td class="green bold">★ Задължително</td><td>€100–150/м</td><td>8–15 нови абоната/м</td></tr>
+    <tr class="row-best"><td class="bold">2</td><td>Органично в Facebook групи за матура</td><td class="green bold">★ Задължително</td><td>€0</td><td>3–8 нови абоната/м</td></tr>
+    <tr class="row-best"><td class="bold">3</td><td>TikTok образователно съдържание (30 сек.)</td><td class="green bold">★ Задължително</td><td>€0 (само труд)</td><td>Brand awareness, вирален потенциал</td></tr>
+    <tr class="row-ok"><td class="bold">4</td><td>Google Search Ads за „матура" ключови думи</td><td class="orange">Добавяй от Месец 2</td><td>€50–100/м</td><td>3–6 нови абоната/м</td></tr>
+    <tr class="row-ok"><td class="bold">5</td><td>Referral програма (1 безплатен месец)</td><td class="orange">Добавяй от Месец 3</td><td>€30 стойност/реф.</td><td>Вирален коефицент &gt;1</td></tr>
+    <tr><td class="bold">6</td><td>Instagram Ads (от Ads Manager заедно с FB)</td><td class="gray">Лесна добавка</td><td>+€30–50/м</td><td>2–4 нови абоната/м</td></tr>
+    <tr><td class="bold">7</td><td>YouTube образователен канал</td><td class="gray">Дългосрочно</td><td>Труд + €0</td><td>Organic SEO след 6+ месеца</td></tr>
+  </tbody>
+</table>
+
+<div class="grid-3 no-break" style="margin-top:16px;">
+  <div class="card green-c">
+    <div class="card-label">Минимален старт бюджет</div>
+    <div class="card-value">€100/м</div>
+    <div class="card-sub">Facebook Ads + органично = положителен ROI от месец 1</div>
+  </div>
+  <div class="card green-c">
+    <div class="card-label">Оптимален бюджет (скалиране)</div>
+    <div class="card-value">€300/м</div>
+    <div class="card-sub">FB + IG + Google + органично = 20-25 нови абоната/месец</div>
+  </div>
+  <div class="card green-c">
+    <div class="card-label">Peak сезон (март–юни)</div>
+    <div class="card-value">€500–800/м</div>
+    <div class="card-sub">Максимален push преди матурата — най-висока конверсия в годината</div>
+  </div>
+</div>
+
+<div style="margin-top:24px;padding-top:16px;border-top:1px solid #e5e7eb;font-size:11px;color:#9ca3af;text-align:center;">
+  Разбери.Ме · Маркетинг план · Юли 2026 · Поверително<br>
+  CPC/CPM стойности: прибл. за България, Meta Ads Platform, Q2 2026. Конверсии: прогнози базирани на SaaS education benchmarks.
+</div>
+
+</body>
+</html>

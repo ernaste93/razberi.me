@@ -20,7 +20,7 @@
   }
 
   // ── Page transitions ─────────────────────────────────────
-  document.body.style.transition = 'opacity 0.22s ease';
+  document.body.style.transition = 'opacity 0.2s ease';
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a[href]');
     if (!a) return;
@@ -28,7 +28,7 @@
     if (!href || href.startsWith('#') || href.startsWith('mailto') || a.target === '_blank') return;
     e.preventDefault();
     document.body.style.opacity = '0';
-    setTimeout(function () { window.location.href = href; }, 300);
+    setTimeout(function () { window.location.href = href; }, 210);
   }, true);
 
   // ── Auth state ───────────────────────────────────────────
@@ -95,6 +95,15 @@
         if (av) av.textContent = initials;
         var fn = document.getElementById('user-fullname-label');
         if (fn) fn.textContent = fullName || email.split('@')[0];
+
+        // Admin bypass — no gating
+        if (ADMIN_EMAILS.includes(email)) {
+          window.__trialUserId = user.id;
+          window.__trialToken  = session.access_token;
+          window.__isTrial     = false;
+          window.__sbClient    = sb;
+          return;
+        }
 
         // Trial state
         var plan = r.data && r.data.plan;
@@ -201,4 +210,26 @@
       }
     });
   });
+  // ── Reading progress tracking (lesson pages only) ───────────────────────────
+  (function () {
+    var p = window.location.pathname;
+    if (!p.startsWith('/lessons/') || p.indexOf('-quiz') !== -1 || !p.endsWith('.html')) return;
+    var slug = p.replace('/lessons/', '').replace('.html', '');
+    var key  = 'lp_' + slug;
+    var data = JSON.parse(localStorage.getItem(key) || '{"p":0}');
+    // Mark opened (at least 3% so it counts as "started")
+    data.p = Math.max(data.p || 0, 3);
+    localStorage.setItem(key, JSON.stringify(data));
+    // Track max scroll position
+    window.addEventListener('scroll', function () {
+      var el  = document.documentElement;
+      var h   = el.scrollHeight - el.clientHeight;
+      if (h <= 0) return;
+      var pct = Math.round(el.scrollTop / h * 100);
+      if (pct > data.p) {
+        data.p = pct;
+        localStorage.setItem(key, JSON.stringify(data));
+      }
+    }, { passive: true });
+  })();
 })();

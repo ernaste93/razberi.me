@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Интерпретативно съчинение — Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #1e3a5f;
+      --accent2: #2d5a9e;
+      --soft: #f4f6fb;
+      --line: #e2e8f0;
+      --text: #1a2233;
+      --muted: #64748b;
+      --gold: #E8A020;
+      --green: #16a34a;
+      --red: #dc2626;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito Sans', sans-serif; background: var(--soft); color: var(--text); min-height: 100vh; }
+
+    /* ── Topbar ── */
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .topbar-back:hover { color: var(--accent); }
+    .topbar-title { font-size: 14px; font-weight: 800; color: var(--text); }
+    .topbar-sep { color: var(--line); }
+    .topbar-badge {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 99px;
+      background: #e8edf7;
+      color: var(--accent);
+    }
+
+    /* ── Timer bar (writing mode) ── */
+    #write-topbar {
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 24px;
+      display: none;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    #write-topbar.visible { display: flex; }
+    .wt-topic { font-size: 13px; font-weight: 700; color: var(--text); flex: 1; line-height: 1.4; }
+    .wt-stat { font-size: 12px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+    .wt-stat.ok { color: var(--green); }
+
+    /* ── Main container ── */
+    .main { max-width: 720px; margin: 0 auto; padding: 36px 20px 80px; }
+
+    /* ── Steps ── */
+    .step { display: none; }
+    .step.active { display: block; }
+
+    .step-title { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .step-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+
+    /* ── Topic cards ── */
+    .topic-card {
+      background: #fff;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      transition: border-color .15s, box-shadow .15s;
+      position: relative;
+    }
+    .topic-card:hover:not(.done) { border-color: var(--accent2); box-shadow: 0 4px 16px rgba(30,58,95,.08); }
+    .topic-card.selected { border-color: var(--accent); background: #f0f4ff; }
+    .topic-card.done { cursor: default; }
+
+    .topic-radio {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s;
+    }
+    .topic-card.selected .topic-radio { border-color: var(--accent); background: var(--accent); }
+    .topic-card.selected .topic-radio::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; display: block; }
+
+    .topic-text { font-size: 14px; line-height: 1.5; font-weight: 600; flex: 1; }
+    .topic-attempts {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 99px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      align-self: center;
+    }
+    .topic-attempts.has-score { background: #e8f0fe; color: var(--accent2); }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background .15s;
+    }
+    .btn-primary:hover { background: var(--accent2); }
+    .btn-primary:disabled { opacity: .4; cursor: default; }
+
+    .btn-pill {
+      padding: 11px 24px;
+      border-radius: 99px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: background .15s, transform .12s;
+    }
+    .btn-pill:hover { transform: scale(1.03); }
+    .btn-pill.accent { background: var(--accent); color: #fff; }
+    .btn-pill.accent:hover { background: var(--accent2); }
+    .btn-pill.soft { background: var(--soft); color: var(--text); border: 1.5px solid var(--line); }
+    .btn-pill.soft:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-pill:disabled { opacity: .4; cursor: default; transform: none; }
+
+    /* ── Textarea ── */
+    #essay-textarea {
+      width: 100%;
+      height: calc(100vh - 260px);
+      min-height: 480px;
+      padding: 22px;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--text);
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      resize: none;
+      outline: none;
+      transition: border-color .15s;
+    }
+    #essay-textarea:focus { border-color: var(--accent); }
+
+    /* ── Pause overlay ── */
+    #pause-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 20, 40, 0.82);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    #pause-overlay.visible { display: flex; }
+    .pause-box {
+      background: #fff;
+      border-radius: 24px;
+      padding: 40px 48px;
+      text-align: center;
+      max-width: 380px;
+      width: 90%;
+    }
+    .pause-icon { font-size: 48px; margin-bottom: 12px; }
+    .pause-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .pause-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+    .pause-countdown { font-size: 42px; font-weight: 800; color: var(--accent); margin-bottom: 24px; font-variant-numeric: tabular-nums; }
+    .pause-countdown.urgent { color: var(--red); }
+    .btn-resume {
+      display: inline-block;
+      padding: 13px 32px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-resume:hover { background: var(--accent2); }
+    .btn-pause {
+      padding: 8px 16px;
+      border-radius: 99px;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    .btn-pause:hover { border-color: var(--accent); color: var(--accent); }
+
+    .write-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .word-count { font-size: 13px; font-weight: 700; color: var(--muted); }
+    .word-count b { color: var(--accent); }
+    .word-count.enough b { color: var(--green); }
+
+    /* ── Grading spinner ── */
+    #step-grade { text-align: center; padding: 60px 20px; }
+    .grade-spinner { font-size: 48px; margin-bottom: 16px; animation: spin 2s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .grade-text { font-size: 16px; font-weight: 700; color: var(--muted); }
+
+    /* ── Results ── */
+    .result-ring {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      border: 7px solid;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .result-ring-num { font-size: 34px; font-weight: 800; line-height: 1; }
+    .result-ring-max { font-size: 12px; font-weight: 700; color: var(--muted); }
+    .result-title { text-align: center; font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+    .result-sub   { text-align: center; font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+    .criteria-wrap {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .criteria-row {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .criteria-row:last-child { border-bottom: none; }
+    .cr-key { font-size: 12px; font-weight: 800; color: var(--accent); padding-top: 2px; }
+    .cr-body {}
+    .cr-name { font-size: 15px; font-weight: 800; color: var(--text); }
+    .cr-feedback { font-size: 14px; color: var(--muted); margin-top: 5px; line-height: 1.65; }
+    .cr-score { font-size: 15px; font-weight: 800; white-space: nowrap; }
+
+    .summary-box {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 20px;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .summary-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 10px; }
+
+    .result-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ── Past attempts panel ── */
+    .attempts-panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+    }
+    .attempts-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 10px; }
+    .attempt-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+    .attempt-row:last-child { border-bottom: none; }
+    .attempt-num { font-weight: 700; color: var(--muted); min-width: 20px; }
+    .attempt-score { font-weight: 800; }
+    .attempt-date { color: var(--muted); margin-left: auto; font-size: 11px; }
+    .attempt-view { font-size: 11px; font-weight: 700; color: var(--accent); cursor: pointer; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<!-- ── Auth check ── -->
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+  const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) window.location.href = '/auth.html';
+  window.__supabaseToken = session?.access_token;
+  window.__isAdmin = session?.user?.email === 'kirilmodev@gmail.com';
+</script>
+
+<!-- ── Top bar ── -->
+<header class="topbar">
+  <a class="topbar-back" id="back-link" href="/urotsi.html">← Уроци</a>
+  <span class="topbar-sep">|</span>
+  <span class="topbar-title" id="topbar-lesson-title">Интерпретативно съчинение</span>
+  <span class="topbar-badge">ДЗИ формат</span>
+</header>
+
+<!-- ── Rules modal ── -->
+<div id="rules-modal" style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.7);z-index:480;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+  <div style="background:#fff;border-radius:24px;padding:36px 40px;max-width:460px;width:92%;max-height:90vh;overflow-y:auto;position:relative;">
+    <button id="btn-rules-close" style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;line-height:1;padding:4px;">✕</button>
+    <div style="font-size:40px;text-align:center;margin-bottom:10px;">📝</div>
+    <div style="font-size:20px;font-weight:800;color:var(--text);text-align:center;margin-bottom:6px;">Преди да започнеш</div>
+    <div style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:24px;">Прочети правилата — симулираме реален ДЗИ изпит.</div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:28px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <span style="font-size:22px;flex-shrink:0;">⏱️</span>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;">Таймерът тече от старта</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.55;">Времето се отчита от момента, в който натиснеш „Разбрах, започвам".</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <span style="font-size:22px;flex-shrink:0;">🚫</span>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;">Copy &amp; Paste е забранен</div>
+          <div id="rules-paste-text" style="font-size:13px;color:var(--muted);line-height:1.55;">Копирането и поставянето е блокирано — пиши ръчно, точно като на реален изпит. Минимум <strong>200 думи</strong> за да можеш да предадеш.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <span style="font-size:22px;flex-shrink:0;">⏸️</span>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;">Имаш 1 пауза от 3 минути</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.55;">Бутонът „Пауза" е горе вдясно. Натисни го при нужда — ще те пита за потвърждение. Паузата е максимум 3 минути, след което се връщаш автоматично.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <span style="font-size:22px;flex-shrink:0;">🤖</span>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;">Знайко оценява по ДЗИ критерии</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.55;">След предаване получаваш оценка по К1–К5 (макс. 24 точки) с конкретен коментар за всеки критерий. Можеш да пишеш неограничено пъти.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <span style="font-size:22px;flex-shrink:0;">🔍</span>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;">Сканиране за AI-генериран текст</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.55;">Съчинението се проверява автоматично за текст, написан от изкуствен интелект. При засичане съчинението е <strong>невалидно</strong> и не се оценява.</div>
+        </div>
+      </div>
+    </div>
+
+    <button id="btn-rules-start" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;transition:background .15s;"
+      onmouseover="this.style.background='#2d5a9e'" onmouseout="this.style.background='var(--accent)'">
+      Разбрах, започвам →
+    </button>
+  </div>
+</div>
+
+<!-- ── Pause confirm ── -->
+<div id="pause-confirm" style="display:none;position:fixed;inset:0;background:rgba(10,20,40,0.6);z-index:490;align-items:center;justify-content:center;backdrop-filter:blur(3px);">
+  <div style="background:#fff;border-radius:20px;padding:32px 36px;max-width:340px;width:90%;text-align:center;">
+    <div style="font-size:36px;margin-bottom:12px;">⏸️</div>
+    <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:10px;">Сигурен ли си?</div>
+    <div style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:24px;">Имаш право на <strong>3 минути</strong> пауза. След изтичането им ще се върнеш автоматично към съчинението.</div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button id="btn-confirm-cancel" style="padding:10px 22px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;color:var(--muted);">Отмени</button>
+      <button id="btn-confirm-pause" style="padding:10px 22px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;">Взимам почивка</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Pause overlay ── -->
+<div id="pause-overlay">
+  <div class="pause-box">
+    <div class="pause-icon">⏸️</div>
+    <div class="pause-title">Пауза</div>
+    <div class="pause-sub">Имаш максимум <strong>3 минути</strong> пауза. След това ще се върнеш автоматично към съчинението.</div>
+    <div class="pause-countdown" id="pause-countdown">3:00</div>
+    <button class="btn-resume" id="btn-resume">▶ Продължи</button>
+  </div>
+</div>
+
+<!-- ── Write top bar (timer + word count) ── -->
+<div id="write-topbar">
+  <span class="wt-topic" id="wt-topic-text"></span>
+  <span class="wt-stat" id="wt-timer">0:00</span>
+  <span class="wt-stat" id="wt-words">0 думи</span>
+  <button class="btn-pause" id="btn-pause">⏸ Пауза</button>
+</div>
+
+<main class="main">
+
+  <!-- STEP 1: Избор на тема -->
+  <div class="step active" id="step-select">
+    <div class="step-title">Избери тема</div>
+    <div class="step-sub" id="select-sub">Всяка тема може да се пише неограничено пъти. Опитай се да подобряваш оценката си при всеки опит.</div>
+    <div id="topics-list"></div>
+    <button class="btn-primary" id="btn-start" disabled>Започни с тази тема →</button>
+  </div>
+
+  <!-- STEP 2: Писане -->
+  <div class="step" id="step-write">
+    <div class="step-title" id="write-title">Пиши съчинението</div>
+    <div class="step-sub" id="write-sub">Paste е забранен — симулираме реален изпит. Минимум 200 думи за предаване.</div>
+
+    <div id="attempts-panel-write"></div>
+
+    <textarea id="essay-textarea"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+      placeholder="Започни да пишеш тук..."></textarea>
+
+    <div class="write-bottom">
+      <div class="word-count" id="word-count-el"><b>0</b> думи (мин. 200)</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn-pill soft" id="btn-back-to-select">← Смени тема</button>
+        <button class="btn-pill accent" id="btn-submit" disabled>Предай →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Оценяване -->
+  <div class="step" id="step-grade">
+    <div class="grade-spinner">👀</div>
+    <div class="grade-text">Знайко чете съчинението...</div>
+  </div>
+
+  <!-- STEP 4: Резултат -->
+  <div class="step" id="step-result">
+    <div class="result-ring" id="result-ring">
+      <div class="result-ring-num" id="result-num">—</div>
+      <div class="result-ring-max">от 24</div>
+    </div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-sub" id="result-sub"></div>
+
+    <div class="criteria-wrap" id="criteria-wrap"></div>
+
+    <div class="summary-box">
+      <div class="summary-label">Обща оценка от Знайко</div>
+      <div id="result-summary"></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn-pill accent" id="btn-retry">Пиши пак тази тема</button>
+      <button class="btn-pill soft" id="btn-other-topic">Избери друга тема</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ═══════════════════════════════════════════════
+//  ESSAY TOPICS CONFIG
+// ═══════════════════════════════════════════════
+const TOPICS = {
+  'bel12-debelyanov-lyubov': {
+    lessonTitle: 'Димчо Дебелянов — „Аз искам да те помня все така"',
+    topics: [
+      'Анализирайте образа на лирическия говорител като самотен мъж, търсещ убежище в спомена, в стихотворението „Аз искам да те помня все така" от Димчо Дебелянов.',
+      'Разкрийте функцията на спомена като художествен мотив в „Аз искам да те помня все така" от Димчо Дебелянов.',
+      'Как анафората „Аз искам да те помня все така" изгражда лирическото послание на творбата?',
+      'Интерпретирайте темата за любовта като идеализиран образ, а не като реално преживяване, в поезията на Димчо Дебелянов.',
+      'Разкрийте символиката на образа „звездоглед" в „Аз искам да те помня все така" от Димчо Дебелянов.',
+    ],
+  },
+  'bel12-fotev-lyubov': {
+    lessonTitle: 'Христо Фотев — „Колко си хубава!"',
+    topics: [
+      'Анализирайте образа на лирическия говорител в „Колко си хубава!" от Христо Фотев.',
+      'Как е представена темата за красотата и нейната преходност в „Колко си хубава!" от Христо Фотев?',
+      'Разкрийте ролята на повторението и музикалността в изграждането на „Колко си хубава!" от Христо Фотев.',
+      'Интерпретирайте образа на жената като природна стихия в „Колко си хубава!" от Христо Фотев.',
+      'Как Христо Фотев пресъздава мига като вечност в „Колко си хубава!"?',
+    ],
+  },
+  'bel12-dubarova-posveshenie': {
+    lessonTitle: 'Петя Дубарова — „Посвещение"',
+    topics: [
+      'Анализирайте образа на лирическия говорител — поетът пред края на живота си — в „Посвещение" от Петя Дубарова.',
+      'Как е представена темата за творчеството като смисъл и призвание в „Посвещение" от Петя Дубарова?',
+      'Разкрийте темата за любовта като вдъхновяваща сила в „Посвещение" от Петя Дубарова.',
+      'Как осъзнаването на смъртта оформя лирическото послание на „Посвещение" от Петя Дубарова?',
+      'Интерпретирайте отношението между поета и читателя в „Посвещение" от Петя Дубарова.',
+    ],
+  },
+  'bel12-vaptsarov-vyara': {
+    lessonTitle: 'Никола Вапцаров — „Вяра"',
+    topics: [
+      'Анализирайте образа на лирическия говорител като борец с непоколебима вяра в „Вяра" от Никола Вапцаров.',
+      'Как е представена темата за вярата като противовес на отчаянието в „Вяра" от Никола Вапцаров?',
+      'Разкрийте ролята на индустриалната образност (машини, завод) в „Вяра" от Никола Вапцаров.',
+      'Как Вапцаров противопоставя личното и колективното в „Вяра"?',
+      'Интерпретирайте темата за борбата и жертвата в „Вяра" от Никола Вапцаров.',
+    ],
+  },
+  'bel12-dalchev-molitva': {
+    lessonTitle: 'Атанас Далчев — „Молитва"',
+    topics: [
+      'Анализирайте образа на лирическия говорител — смиреният човек пред Бога — в „Молитва" от Атанас Далчев.',
+      'Как е представена темата за молитвата като диалог между човека и Бога в „Молитва" от Атанас Далчев?',
+      'Разкрийте ролята на предметността и конкретните образи в поетиката на Атанас Далчев.',
+      'Как смъртта и животът са противопоставени в „Молитва" от Атанас Далчев?',
+      'Интерпретирайте темата за смирението и приемането на съдбата в „Молитва" от Атанас Далчев.',
+    ],
+  },
+  'bel12-elin-pelin-spasova-mogila': {
+    lessonTitle: 'Елин Пелин — „Спасова могила"',
+    topics: [
+      'Анализирайте образа на главния герой в „Спасова могила" от Елин Пелин.',
+      'Как е представена темата за народната вяра и традицията в „Спасова могила" от Елин Пелин?',
+      'Разкрийте ролята на природата като художествен фон и символ в „Спасова могила".',
+      'Как Елин Пелин пресъздава духа на българското село в „Спасова могила"?',
+      'Интерпретирайте темата за човека и неговата обвързаност със земята в „Спасова могила".',
+    ],
+  },
+  'bel12-elin-pelin-vetrena-melnitsa': {
+    lessonTitle: 'Елин Пелин — „Ветрената мелница"',
+    topics: [
+      'Анализирайте образа на главния герой като неразбрана личност в „Ветрената мелница" от Елин Пелин.',
+      'Как е представена темата за мечтата и сблъсъкът й с реалността в „Ветрената мелница"?',
+      'Разкрийте символиката на мелницата в „Ветрената мелница" от Елин Пелин.',
+      'Как Елин Пелин изобразява трагизма на самотния мечтател в „Ветрената мелница"?',
+      'Интерпретирайте темата за неразбирането между личността и общността в „Ветрената мелница".',
+    ],
+  },
+  'bel12-yovkov-pesenta-na-koleletata': {
+    lessonTitle: 'Йордан Йовков — „Песента на колелетата"',
+    topics: [
+      'Анализирайте образа на Сали Яшар като носител на красотата в „Песента на колелетата" от Йордан Йовков.',
+      'Как е представена темата за красотата и нейната преобразяваща сила в „Песента на колелетата"?',
+      'Разкрийте символиката на песента в „Песента на колелетата" от Йордан Йовков.',
+      'Как Йовков противопоставя красотата на жестокостта и злото в „Песента на колелетата"?',
+      'Интерпретирайте темата за изкуството като морален компас в „Песента на колелетата".',
+    ],
+  },
+  'bel12-paskov-balada': {
+    lessonTitle: 'Виктор Пасков — „Балада за Георг Хених"',
+    topics: [
+      'Анализирайте образа на Георг Хених като „различния" в общността в „Балада за Георг Хених" от Виктор Пасков.',
+      'Как е представена темата за приятелството между децата в „Балада за Георг Хених"?',
+      'Разкрийте ролята на музиката като език отвъд думите в „Балада за Георг Хених".',
+      'Как Пасков изобразява сблъсъка между детския и възрастния свят в „Балада за Георг Хених"?',
+      'Интерпретирайте темата за другостта и нетолерантността в „Балада за Георг Хених".',
+    ],
+  },
+  'bel12-yavorov-dve-dushi': {
+    lessonTitle: 'Пейо Яворов — „Две души"',
+    topics: [
+      'Анализирайте образа на лирическия говорител, разкъсан между две противоположни начала, в „Две души" от Пейо Яворов.',
+      'Как е представена темата за вътрешния разлом на личността в „Две души" от Яворов?',
+      'Разкрийте символиката на „двете души" като художествен образ в творбата на Яворов.',
+      'Как Яворов изобразява борбата между доброто и злото в „Две души"?',
+      'Интерпретирайте темата за невъзможността за вътрешна хармония в „Две души" от Яворов.',
+    ],
+  },
+  'bel12-bagryana-potomka': {
+    lessonTitle: 'Елисавета Багряна — „Потомка"',
+    topics: [
+      'Анализирайте образа на лирическата героиня като жена бунтарка в „Потомка" от Елисавета Багряна.',
+      'Как е представена темата за свободата и жизнеността в „Потомка" от Елисавета Багряна?',
+      'Разкрийте ролята на родовата памет и наследствеността в „Потомка" от Багряна.',
+      'Как Багряна изгражда образа на жената в разрез с традицията в „Потомка"?',
+      'Интерпретирайте темата за природния инстинкт като освобождаваща сила в „Потомка".',
+    ],
+  },
+  'bel12-hristov-chesten-krast': {
+    lessonTitle: 'Борис Христов — „Честен кръст"',
+    topics: [
+      'Анализирайте образа на лирическия говорител в „Честен кръст" от Борис Христов.',
+      'Как е представена темата за войната и нейните жертви в „Честен кръст"?',
+      'Разкрийте символиката на кръста в „Честен кръст" от Борис Христов.',
+      'Как Борис Христов изобразява страданието на обикновения войник в „Честен кръст"?',
+      'Интерпретирайте антивоенния патос в „Честен кръст" от Борис Христов.',
+    ],
+  },
+};
+
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+const params   = new URLSearchParams(location.search);
+const lessonKey = params.get('key') || '';
+const cfg      = TOPICS[lessonKey];
+
+let selectedTopic = null;  // index 0-4
+let timerInterval = null;
+let timerSecs     = 0;
+let currentAttemptTopic = null;
+let pauseInterval = null;
+let pauseSecs = 0;
+const PAUSE_MAX = 180; // 3 minutes
+
+// LS key: essay_{lessonKey}_t{topicIdx} → array of {score, feedback, criteria, text, date}
+function lsKey(idx) { return `essay_${lessonKey}_t${idx}`; }
+function getAttempts(idx) {
+  try { return JSON.parse(localStorage.getItem(lsKey(idx)) || '[]'); } catch { return []; }
+}
+function saveAttempt(idx, data) {
+  const arr = getAttempts(idx);
+  arr.push(data);
+  localStorage.setItem(lsKey(idx), JSON.stringify(arr));
+}
+
+// ═══════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════
+if (!cfg) {
+  document.querySelector('.main').innerHTML = '<p style="color:var(--muted);padding:40px 0;">Невалиден урок.</p>';
+} else {
+  document.getElementById('topbar-lesson-title').textContent = cfg.lessonTitle;
+  document.title = `Съчинение — ${cfg.lessonTitle}`;
+
+  // Back link → lesson page
+  document.getElementById('back-link').href = `/lessons/${lessonKey}.html`;
+
+  renderTopics();
+}
+
+// ═══════════════════════════════════════════════
+//  TOPIC SELECTION
+// ═══════════════════════════════════════════════
+function renderTopics() {
+  const list = document.getElementById('topics-list');
+  list.innerHTML = '';
+
+  cfg.topics.forEach((topic, idx) => {
+    const attempts = getAttempts(idx);
+    const best = attempts.length
+      ? Math.max(...attempts.map(a => a.total))
+      : null;
+
+    const card = document.createElement('div');
+    card.className = 'topic-card' + (attempts.length ? ' has-attempts' : '');
+    card.dataset.idx = idx;
+    card.innerHTML = `
+      <div class="topic-radio"></div>
+      <div class="topic-text">${topic}</div>
+      ${best !== null
+        ? `<div class="topic-attempts has-score">Най-добро: ${best}/24</div>`
+        : `<div class="topic-attempts" style="color:var(--muted);">Нов</div>`
+      }`;
+
+    card.addEventListener('click', () => selectTopic(idx));
+    list.appendChild(card);
+  });
+}
+
+function selectTopic(idx) {
+  document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.topic-card')[idx].classList.add('selected');
+  selectedTopic = idx;
+  document.getElementById('btn-start').disabled = false;
+}
+
+document.getElementById('btn-start').addEventListener('click', () => {
+  if (selectedTopic === null) return;
+  document.getElementById('rules-modal').style.display = 'flex';
+});
+
+document.getElementById('btn-rules-start').addEventListener('click', () => {
+  document.getElementById('rules-modal').style.display = 'none';
+  startWriting(selectedTopic);
+});
+document.getElementById('btn-rules-close').addEventListener('click', () => {
+  document.getElementById('rules-modal').style.display = 'none';
+});
+
+// Admin: адаптира текста в rules modal
+if (window.__isAdmin) {
+  const el = document.getElementById('rules-paste-text');
+  if (el) el.innerHTML = 'Paste е <strong style="color:var(--gold);">разрешен (admin режим)</strong> — без минимален брой думи.';
+}
+
+// ═══════════════════════════════════════════════
+//  WRITING
+// ═══════════════════════════════════════════════
+function startWriting(idx) {
+  currentAttemptTopic = idx;
+  const topic = cfg.topics[idx];
+
+  // Write topbar
+  document.getElementById('wt-topic-text').textContent = topic;
+  document.getElementById('write-topbar').classList.add('visible');
+
+  // Show past attempts if any
+  const attempts = getAttempts(idx);
+  const panel = document.getElementById('attempts-panel-write');
+  if (attempts.length) {
+    panel.innerHTML = `
+      <div class="attempts-panel">
+        <div class="attempts-label">Предишни опити (${attempts.length})</div>
+        ${attempts.map((a, i) => `
+          <div class="attempt-row">
+            <span class="attempt-num">#${i+1}</span>
+            <span class="attempt-score" style="color:${scoreColor(a.total)}">${a.total}/24</span>
+            <span style="font-size:12px;color:var(--muted);">${gradeLabel(a.total)}</span>
+            <span class="attempt-date">${a.date}</span>
+          </div>`).join('')}
+      </div>`;
+  } else {
+    panel.innerHTML = '';
+  }
+
+  document.getElementById('write-title').textContent = `Тема ${idx + 1} от 5`;
+  document.getElementById('essay-textarea').value = '';
+  if (window.__isAdmin) {
+    document.getElementById('write-sub').innerHTML = 'Paste е забранен — симулираме реален изпит. Минимум 200 думи за предаване. <span style="color:var(--gold);font-weight:800;">★ Ти си в admin режим — paste и предаване без минимум са позволени.</span>';
+    document.getElementById('btn-submit').disabled = false;
+  }
+  updateWordCount();
+
+  showStep('step-write');
+  startTimer();
+  document.getElementById('essay-textarea').focus();
+}
+
+// Paste & drop block (bypassed for admin)
+const ta = document.getElementById('essay-textarea');
+const MIN_WORDS = 0; // реално се проверява в updateWordCount
+ta.addEventListener('paste', e => { if (!window.__isAdmin) e.preventDefault(); });
+ta.addEventListener('drop',  e => { if (!window.__isAdmin) e.preventDefault(); })
+ta.addEventListener('input', updateWordCount);
+
+function updateWordCount() {
+  const words = ta.value.trim().split(/\s+/).filter(Boolean).length;
+  const el = document.getElementById('word-count-el');
+  if (window.__isAdmin) {
+    el.innerHTML = `<b>${words}</b> думи <span style="color:var(--gold);font-size:11px;">★ admin</span>`;
+    el.className = 'word-count enough';
+  } else {
+    el.innerHTML = `<b>${words}</b> думи (мин. 200)`;
+    el.className = 'word-count' + (words >= 200 ? ' enough' : '');
+  }
+  document.getElementById('wt-words').textContent = `${words} думи`;
+  document.getElementById('btn-submit').disabled = !window.__isAdmin && words < 200;
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerSecs = 0;
+  timerInterval = setInterval(() => {
+    timerSecs++;
+    const m = Math.floor(timerSecs / 60);
+    const s = timerSecs % 60;
+    document.getElementById('wt-timer').textContent = `${m}:${String(s).padStart(2,'0')}`;
+  }, 1000);
+}
+
+// ── Pause / Resume ──────────────────────────────────────────────
+function openPause() {
+  clearInterval(timerInterval); // спира основния таймер
+  pauseSecs = PAUSE_MAX;
+  updatePauseCountdown();
+  document.getElementById('pause-overlay').classList.add('visible');
+  clearInterval(pauseInterval);
+  pauseInterval = setInterval(() => {
+    pauseSecs--;
+    updatePauseCountdown();
+    if (pauseSecs <= 0) closePause();
+  }, 1000);
+}
+
+function closePause() {
+  clearInterval(pauseInterval);
+  document.getElementById('pause-overlay').classList.remove('visible');
+  // продължава основния таймер от там, откъдето е спрял
+  timerInterval = setInterval(() => {
+    timerSecs++;
+    const m = Math.floor(timerSecs / 60);
+    const s = timerSecs % 60;
+    document.getElementById('wt-timer').textContent = `${m}:${String(s).padStart(2,'0')}`;
+  }, 1000);
+  document.getElementById('essay-textarea').focus();
+}
+
+function updatePauseCountdown() {
+  const m = Math.floor(pauseSecs / 60);
+  const s = pauseSecs % 60;
+  const el = document.getElementById('pause-countdown');
+  el.textContent = `${m}:${String(s).padStart(2, '0')}`;
+  el.classList.toggle('urgent', pauseSecs <= 30);
+}
+
+document.getElementById('btn-pause').addEventListener('click', () => {
+  document.getElementById('pause-confirm').style.display = 'flex';
+});
+document.getElementById('btn-confirm-cancel').addEventListener('click', () => {
+  document.getElementById('pause-confirm').style.display = 'none';
+});
+document.getElementById('btn-confirm-pause').addEventListener('click', () => {
+  document.getElementById('pause-confirm').style.display = 'none';
+  openPause();
+});
+document.getElementById('btn-resume').addEventListener('click', closePause);
+
+document.getElementById('btn-back-to-select').addEventListener('click', () => {
+  clearInterval(timerInterval);
+  clearInterval(pauseInterval);
+  document.getElementById('pause-overlay').classList.remove('visible');
+  document.getElementById('pause-confirm').style.display = 'none';
+  document.getElementById('write-topbar').classList.remove('visible');
+  showStep('step-select');
+});
+
+document.getElementById('btn-submit').addEventListener('click', submitEssay);
+
+// ═══════════════════════════════════════════════
+//  GRADING
+// ═══════════════════════════════════════════════
+async function submitEssay() {
+  clearInterval(timerInterval);
+  clearInterval(pauseInterval);
+  document.getElementById('pause-overlay').classList.remove('visible');
+  document.getElementById('write-topbar').classList.remove('visible');
+  showStep('step-grade');
+
+  const essayText = ta.value.trim();
+  const topicText = cfg.topics[currentAttemptTopic];
+
+  try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (window.__supabaseToken) headers['Authorization'] = 'Bearer ' + window.__supabaseToken;
+
+    const res = await fetch('/api/grade-essay', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        lessonTitle: cfg.lessonTitle,
+        topicText,
+        essayText,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Грешка');
+
+    const dateStr = new Date().toLocaleDateString('bg-BG', { day:'numeric', month:'short' });
+    saveAttempt(currentAttemptTopic, { total: data.total, date: dateStr, criteria: data.criteria, summary: data.summary });
+
+    showResults(data);
+  } catch (e) {
+    showStep('step-select');
+    alert('Грешка при оценяването: ' + e.message);
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  RESULTS
+// ═══════════════════════════════════════════════
+const CRITERIA_META = [
+  { key: 'k1', name: 'Теза',             max: 4 },
+  { key: 'k2', name: 'Аргументация',     max: 8 },
+  { key: 'k3', name: 'Композиция',       max: 4 },
+  { key: 'k4', name: 'Езикова грамотност', max: 4 },
+  { key: 'k5', name: 'Стил',             max: 4 },
+];
+
+function scoreColor(total) {
+  if (total >= 19) return '#16a34a';
+  if (total >= 13) return '#d97706';
+  return '#dc2626';
+}
+
+function gradeLabel(total) {
+  if (total >= 22) return 'Отличен (6)';
+  if (total >= 19) return 'Много добър (5)';
+  if (total >= 15) return 'Добър (4)';
+  if (total >= 13) return 'Среден (3)';
+  return 'Слаб (2)';
+}
+
+function showResults(data) {
+  const total = data.total;
+  const color = scoreColor(total);
+
+  const ring = document.getElementById('result-ring');
+  ring.style.borderColor = color;
+  ring.style.color = color;
+  document.getElementById('result-num').textContent = total;
+  document.getElementById('result-title').textContent = gradeLabel(total);
+  document.getElementById('result-title').style.color = color;
+  document.getElementById('result-sub').textContent =
+    total >= 13 ? 'Издържал — над минималния праг от 13 точки.' : 'Под минималния праг от 13 точки. Опитай пак!';
+
+  // Criteria rows
+  const wrap = document.getElementById('criteria-wrap');
+  wrap.innerHTML = CRITERIA_META.map(m => {
+    const c = data.criteria[m.key] || {};
+    const score = c.score ?? 0;
+    const crColor = score >= m.max * 0.75 ? '#16a34a' : score >= m.max * 0.5 ? '#d97706' : '#dc2626';
+    return `<div class="criteria-row">
+      <div class="cr-key">${m.key.toUpperCase()}</div>
+      <div class="cr-body">
+        <div class="cr-name">${m.name}</div>
+        <div class="cr-feedback">${c.feedback || ''}</div>
+      </div>
+      <div class="cr-score" style="color:${crColor}">${score}/${m.max}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('result-summary').textContent = data.summary || '';
+
+  showStep('step-result');
+
+  // Refresh topics list scores
+  renderTopics();
+}
+
+document.getElementById('btn-retry').addEventListener('click', () => {
+  startWriting(currentAttemptTopic);
+});
+
+document.getElementById('btn-other-topic').addEventListener('click', () => {
+  showStep('step-select');
+});
+
+// ═══════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════
+function showStep(id) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>

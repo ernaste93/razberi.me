@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="utf-8"/>
+<title>Правен наръчник — Онлайн образователен сайт с абонамент</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito Sans', Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #1a2233;
+    background: #fff;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 48px 60px;
+  }
+
+  /* Cover */
+  .cover {
+    text-align: center;
+    padding: 60px 0 48px;
+    border-bottom: 2px solid #1e3a5f;
+    margin-bottom: 40px;
+  }
+  .cover-tag {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 14px;
+  }
+  .cover-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1e3a5f;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .cover-sub {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 30px;
+  }
+  .cover-date {
+    font-size: 12px;
+    color: #94a3b8;
+  }
+  .disclaimer-box {
+    background: #fff8e6;
+    border: 1.5px solid #E8A020;
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 12px;
+    color: #7c5e10;
+    margin-top: 24px;
+    text-align: left;
+    line-height: 1.6;
+  }
+  .disclaimer-box strong { color: #5c4008; }
+
+  /* Sections */
+  h2 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1e3a5f;
+    margin: 36px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h3 {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1a2233;
+    margin: 18px 0 8px;
+  }
+  p { margin-bottom: 8px; }
+
+  /* Checklist */
+  .checklist { list-style: none; margin: 8px 0 16px; }
+  .checklist li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 6px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    width: 17px;
+    height: 17px;
+    border: 2px solid #1e3a5f;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .check-label { flex: 1; }
+  .check-note { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .check-required {
+    font-size: 10px;
+    font-weight: 800;
+    color: #dc2626;
+    background: #fee2e2;
+    padding: 1px 6px;
+    border-radius: 99px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .check-recommended {
+    font-size: 10px;
+    font-weight: 800;
+    color: #d97706;
+    background: #fef3c7;
+    padding: 1px 6px;
+    border-radius: 99px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  /* Risk table */
+  .risk-table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 12.5px; }
+  .risk-table th {
+    background: #1e3a5f;
+    color: #fff;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: .04em;
+  }
+  .risk-table th:first-child { border-radius: 8px 0 0 0; }
+  .risk-table th:last-child { border-radius: 0 8px 0 0; }
+  .risk-table td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  .risk-table tr:last-child td { border-bottom: none; }
+  .risk-table tr:nth-child(even) td { background: #f8fafc; }
+
+  .risk-high { color: #dc2626; font-weight: 700; }
+  .risk-med  { color: #d97706; font-weight: 700; }
+  .risk-low  { color: #16a34a; font-weight: 700; }
+
+  /* Timeline */
+  .timeline { margin: 12px 0 20px; }
+  .tl-item {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 20px;
+    position: relative;
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 32px;
+    bottom: 0;
+    width: 2px;
+    background: #e2e8f0;
+  }
+  .tl-item:last-child::before { display: none; }
+  .tl-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #1e3a5f;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .tl-body { flex: 1; padding-top: 8px; }
+  .tl-title { font-weight: 800; font-size: 13px; margin-bottom: 3px; }
+  .tl-desc { font-size: 12px; color: #475569; line-height: 1.6; }
+
+  /* Info boxes */
+  .info-box {
+    background: #eff6ff;
+    border-left: 4px solid #1e3a5f;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0 20px;
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  .warning-box {
+    background: #fff8e6;
+    border-left: 4px solid #E8A020;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0 20px;
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  .danger-box {
+    background: #fef2f2;
+    border-left: 4px solid #dc2626;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0 20px;
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+
+  /* Numbers */
+  .numbers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0 20px;
+  }
+  .number-card {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .number-val { font-size: 22px; font-weight: 800; color: #1e3a5f; }
+  .number-label { font-size: 11px; color: #64748b; margin-top: 4px; line-height: 1.4; }
+
+  /* Page break */
+  .page-break { page-break-before: always; }
+
+  /* Footer */
+  .footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 11px;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  @media print {
+    body { padding: 20px 32px 40px; font-size: 12px; }
+    .cover { padding: 40px 0 32px; }
+    h2 { page-break-after: avoid; }
+    .tl-item { page-break-inside: avoid; }
+    .risk-table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<div class="cover">
+  <div class="cover-tag">Правен наръчник</div>
+  <div class="cover-title">Онлайн образователен сайт<br>с абонаментни плащания</div>
+  <div class="cover-sub">Задължения, рискове и стъпки преди първото плащане</div>
+  <div class="cover-date">Юни 2026 · България</div>
+  <div class="disclaimer-box">
+    <strong>⚠️ Важно:</strong> Този документ е с информационна цел и не е правна консултация. Преди да предприемеш каквито и да е стъпки, консултирай се с лицензиран счетоводител и/или адвокат. Законодателството се променя — провери актуалните числа в НАП.
+  </div>
+</div>
+
+<!-- Section 1 -->
+<h2>📋 Задължителен чеклист преди първото плащане</h2>
+<p>Всичко по-долу трябва да е направено <strong>преди</strong> да получиш каквато и да е парична сума от потребители.</p>
+
+<h3>Правна регистрация</h3>
+<ul class="checklist">
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Регистрация в НАП като самоосигуряващо се лице</div>
+      <div class="check-note">Подаваш Декларация ОКд-5 в НАП в срок от 7 дни преди стартиране на дейността. Безплатно, онлайн с КЕП или на място.</div>
+    </div>
+    <div class="check-required">ЗАДЪЛ.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Избор на осигурителен доход</div>
+      <div class="check-note">Минималният е ~933 лв/месец (2025). Върху него плащаш осигуровки ~27-33% = ~250-300 лв/месец. Можеш да изберeш по-висок, ако искаш по-голяма пенсия.</div>
+    </div>
+    <div class="check-required">ЗАДЪЛ.</div>
+  </li>
+</ul>
+
+<h3>Документи на сайта</h3>
+<ul class="checklist">
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Политика за поверителност (Privacy Policy)</div>
+      <div class="check-note">Задължителна по GDPR. Описва какви данни събираш, как ги използваш, колко ги пазиш, на кого ги предаваш (Supabase, Stripe, Anthropic). Може да се генерира онлайн и да се адаптира.</div>
+    </div>
+    <div class="check-required">ЗАДЪЛ.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Общи условия за ползване (Terms of Service)</div>
+      <div class="check-note">Описват: какво предлагаш, цени, абонаментни условия, прекратяване, отговорности. Защитава те при спорове с потребители.</div>
+    </div>
+    <div class="check-required">ЗАДЪЛ.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Cookie Consent банер</div>
+      <div class="check-note">При първо посещение потребителят трябва да приеме/откаже бисквитки. Минимум: функционални са задължителни без съгласие, аналитичните (ако имаш) изискват съгласие.</div>
+    </div>
+    <div class="check-required">ЗАДЪЛ.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Право на отказ (14 дни) и отказ от него при дигитални услуги</div>
+      <div class="check-note">По закон потребителят има 14 дни да се откаже. За дигитални услуги: ако услугата е започнала по негово изрично желание, той може да се откаже от това право. Включи го в checkout-а — чекбокс с текст: "Съгласен съм услугата да започне незабавно и губя правото на отказ."</div>
+    </div>
+    <div class="check-required">ЗАДЪЛ.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Контактна информация на сайта</div>
+      <div class="check-note">Трябва да има имейл (минимум) за връзка. По закон за електронна търговия — задължително.</div>
+    </div>
+    <div class="check-required">ЗАДЪЛ.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Ясни цени без скрити такси</div>
+      <div class="check-note">Крайната цена трябва да е видима преди плащане. Без "цена X, а реално Y след активиране".</div>
+    </div>
+    <div class="check-required">ЗАДЪЛ.</div>
+  </li>
+</ul>
+
+<h3>Технически и финансови</h3>
+<ul class="checklist">
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Stripe акаунт верифициран (KYC)</div>
+      <div class="check-note">Stripe ще поиска лична карта, IBAN, данъчен номер. Направи го предварително — верификацията може да отнеме 1-3 дни.</div>
+    </div>
+    <div class="check-required">ЗАДЪЛ.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>SSL сертификат (HTTPS)</div>
+      <div class="check-note">Задължителен за всеки сайт, приемащ плащания. Render.com го дава автоматично.</div>
+    </div>
+    <div class="check-required">ЗАДЪЛ.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Консултация с счетоводител за регистрацията</div>
+      <div class="check-note">Не задължителна, но препоръчителна. Еднократна консултация за НАП регистрацията струва ~100-200 лв и спестява грешки.</div>
+    </div>
+    <div class="check-recommended">ПРЕПОР.</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Отделна банкова сметка за приходи от сайта</div>
+      <div class="check-note">Не е задължително, но силно препоръчително — улеснява много деклариренето и проследяването на приходи/разходи.</div>
+    </div>
+    <div class="check-recommended">ПРЕПОР.</div>
+  </li>
+</ul>
+
+<!-- Section 2 -->
+<h2 class="page-break">💰 Данъчни задължения и числа</h2>
+
+<div class="numbers-grid">
+  <div class="number-card">
+    <div class="number-val">10%</div>
+    <div class="number-label">Данък върху дохода (плосък данък)</div>
+  </div>
+  <div class="number-card">
+    <div class="number-val">~300 лв</div>
+    <div class="number-label">Мин. осигуровки/месец (при мин. осиг. доход)</div>
+  </div>
+  <div class="number-card">
+    <div class="number-val">100 000 лв</div>
+    <div class="number-label">Праг за задълж. ДДС регистрация</div>
+  </div>
+</div>
+
+<h3>Как работи на практика</h3>
+<div class="info-box">
+  <strong>Пример:</strong> Изкарваш 2 000 лв/месец от абонаменти = 24 000 лв/година.<br>
+  – Осигуровки: ~300 лв/месец × 12 = <strong>3 600 лв</strong><br>
+  – Данъчна основа: 24 000 – 3 600 = 20 400 лв<br>
+  – Данък 10%: <strong>2 040 лв</strong><br>
+  – Stripe такса (~1.5%): ~360 лв<br>
+  – <strong>Остава ти: ~18 000 лв/година (~1 500 лв/месец)</strong>
+</div>
+
+<h3>Кога и как се плаща</h3>
+<ul class="checklist">
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Осигуровки — до 25-то число на следващия месец</div>
+      <div class="check-note">Плащат се ежемесечно в НАП. Можеш онлайн с банков превод по сметка на НАП.</div>
+    </div>
+    <div class="check-required">МЕСЕЧНО</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Авансов данък — тримесечно (по желание или задължително при по-висок доход)</div>
+      <div class="check-note">При малки суми в началото — не е задължителен. Счетоводителят ще те насочи.</div>
+    </div>
+    <div class="check-recommended">ТРИМЕСЕЧНО</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Годишна данъчна декларация — до 30 април на следващата година</div>
+      <div class="check-note">Декларираш всички приходи за годината. Данъкът 10% се изчислява и плаща тогава.</div>
+    </div>
+    <div class="check-required">ГОДИШНО</div>
+  </li>
+</ul>
+
+<div class="warning-box">
+  <strong>⚠️ Важно за осигуровките:</strong> Те текат от деня на регистрация в НАП — независимо дали имаш приходи или не. Ако регистрираш дейността и нямаш приходи 3 месеца, пак дължиш ~900 лв осигуровки. Регистрирай се точно когато вече имаш плащащи потребители или си готов да приемаш плащания.
+</div>
+
+<!-- Section 3 -->
+<h2>⚖️ Правни рискове — таблица</h2>
+
+<table class="risk-table">
+  <thead>
+    <tr>
+      <th>Риск</th>
+      <th>Орган</th>
+      <th>Вероятност</th>
+      <th>Санкция</th>
+      <th>Как да се предпазиш</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>GDPR нарушение</strong><br><small>Липса на Privacy Policy, cookie consent или изтичане на данни</small></td>
+      <td>КЗД</td>
+      <td class="risk-med">Средна</td>
+      <td>Предупреждение → глоба до 4% от оборота или €20M (за малък сайт реално: €500-5000 при първо нарушение)</td>
+      <td>Privacy Policy + cookie banner + не съхранявай излишни данни</td>
+    </tr>
+    <tr>
+      <td><strong>Нарушение на потребителски права</strong><br><small>Скрити такси, трудно прекратяване на абонамент, липса на право на отказ</small></td>
+      <td>КЗП</td>
+      <td class="risk-low">Ниска</td>
+      <td>Глоба 500–5000 лв, публично порицание</td>
+      <td>Ясни Общи условия, лесен cancel бутон, checkout с отказ от право на връщане</td>
+    </tr>
+    <tr>
+      <td><strong>Недеклариран доход</strong><br><small>Не регистрираш дейността, не плащаш осигуровки</small></td>
+      <td>НАП</td>
+      <td class="risk-high">Висока (при мащабиране)</td>
+      <td>Глоба + лихви + наказателно преследване при умисъл</td>
+      <td>Регистрация преди първо плащане, редовни осигуровки</td>
+    </tr>
+    <tr>
+      <td><strong>Авторски права</strong><br><small>Използване на защитени текстове/материали</small></td>
+      <td>Съд</td>
+      <td class="risk-low">Много ниска</td>
+      <td>Иск за обезщетение</td>
+      <td>Само произведения в публично домейн или оригинално съдържание. Произведенията от учебната програма (Вапцаров, Дебелянов и др.) са в публично домейн.</td>
+    </tr>
+    <tr>
+      <td><strong>Изтичане на данни (data breach)</strong><br><small>Хакване, изтичане на имейли/пароли на потребители</small></td>
+      <td>КЗД</td>
+      <td class="risk-low">Ниска</td>
+      <td>Задължително уведомление в 72 часа. Глоба ако е по небрежност.</td>
+      <td>Supabase RLS, HTTPS, не съхранявай пароли директно (Supabase Auth се грижи)</td>
+    </tr>
+    <tr>
+      <td><strong>Нарушение на Закона за електронна търговия</strong><br><small>Липса на контактна информация, непрозрачни условия</small></td>
+      <td>КЗП / Съд</td>
+      <td class="risk-low">Ниска</td>
+      <td>Глоба 500–3000 лв</td>
+      <td>Имейл за контакт на сайта, ясни условия преди покупка</td>
+    </tr>
+    <tr>
+      <td><strong>Stripe акаунт замразен</strong><br><small>Fraud подозрения, неверифициран акаунт, chargeback-ове</small></td>
+      <td>Stripe (не държавен)</td>
+      <td class="risk-med">Средна ако не верифицираш навреме</td>
+      <td>Временно или постоянно спиране на плащания</td>
+      <td>Верифицирай акаунта предварително, отговаряй на всички Stripe запитвания</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Section 4 -->
+<h2 class="page-break">🗓️ Хронология — какво правиш кога</h2>
+
+<div class="timeline">
+  <div class="tl-item">
+    <div class="tl-dot">1</div>
+    <div class="tl-body">
+      <div class="tl-title">Преди да пуснеш сайта (~2-4 седмици преди)</div>
+      <div class="tl-desc">
+        Напиши Privacy Policy и Общи условия (може онлайн генератор + адаптация).<br>
+        Добави cookie banner на сайта.<br>
+        Добави чекбокс за отказ от право на връщане в checkout-а.<br>
+        Регистрирай Stripe акаунт и изчакай верификация (1-3 дни).
+      </div>
+    </div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-dot">2</div>
+    <div class="tl-body">
+      <div class="tl-title">Точно преди първото плащане</div>
+      <div class="tl-desc">
+        Регистрация в НАП като самоосигуряващо се лице (Декларация ОКд-5).<br>
+        Избери осигурителен доход (минималният е достатъчен за начало).<br>
+        Опционално: консултация с счетоводител за регистрацията (~100-200 лв).
+      </div>
+    </div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-dot">3</div>
+    <div class="tl-body">
+      <div class="tl-title">Всеки месец</div>
+      <div class="tl-desc">
+        Плащай осигуровките до 25-то число (банков превод към НАП).<br>
+        Записвай приходите (може в Excel) — имейл от Stripe + сума + дата.<br>
+        Пази фактури/разходи (Anthropic API, Render, Supabase) — намаляват данъчната основа.
+      </div>
+    </div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-dot">4</div>
+    <div class="tl-body">
+      <div class="tl-title">Януари–Април на следващата година</div>
+      <div class="tl-desc">
+        Подай годишна данъчна декларация (до 30 април).<br>
+        Данък 10% върху нетния доход се изчислява и плаща тогава.<br>
+        При по-голям оборот — помоли счетоводител да я направи (~150-300 лв).
+      </div>
+    </div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-dot">5</div>
+    <div class="tl-body">
+      <div class="tl-title">При достигане на 100 000 лв оборот</div>
+      <div class="tl-desc">
+        Задължителна ДДС регистрация — в момента на надвишаване, не след края на годината.<br>
+        Тогава е добър момент да помислиш за ЕООД.<br>
+        Вземи счетоводител на постоянен абонамент.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 5 -->
+<h2>❓ Трябва ли ти счетоводител или адвокат от ден 1?</h2>
+
+<div class="info-box">
+  <strong>Краткият отговор: Нужни са ти и двамата — но само за по 1-2 консултации, не на абонамент. Реалистичен бюджет: ~500-700 лв еднократно.</strong>
+</div>
+
+<h3>Счетоводител (~200-300 лв, 1-2 консултации)</h3>
+<ul style="margin: 8px 0 16px; padding-left: 20px;">
+  <li style="padding: 4px 0;">Регистрацията в НАП като самоосигуряващо се лице (Декларация ОКд-5)</li>
+  <li style="padding: 4px 0;">Избор на осигурителен доход и как да плащаш осигуровките</li>
+  <li style="padding: 4px 0;">Как да водиш записки за приходи/разходи за НАП</li>
+</ul>
+
+<h3>Адвокат по търговско/IT право (~200-400 лв, 1 консултация)</h3>
+<ul style="margin: 8px 0 16px; padding-left: 20px;">
+  <li style="padding: 4px 0;">Преглед на Privacy Policy и Общи условия</li>
+  <li style="padding: 4px 0;">Потвърждение на checkout flow-а (отказ от право на връщане)</li>
+  <li style="padding: 4px 0;"><strong>Важно:</strong> ако ученици под 16 години ще се регистрират — GDPR изисква съгласие от родител. Адвокатът да каже как точно да го имплементираш.</li>
+  <li style="padding: 4px 0;">Проверка за трейдмарк (виж секция по-долу) и евентуална регистрация на марка</li>
+</ul>
+
+<h3>Можеш сам да направиш (без специалист):</h3>
+<ul style="margin: 8px 0 16px; padding-left: 20px;">
+  <li style="padding: 4px 0;">Месечните осигуровки (банков превод по сметка на НАП)</li>
+  <li style="padding: 4px 0;">Воденето на прости записки за приходи/разходи</li>
+  <li style="padding: 4px 0;">Годишната данъчна декларация при прост доход (онлайн система на НАП)</li>
+</ul>
+
+<h3>Кога да вземеш счетоводител на абонамент:</h3>
+<ul style="margin: 8px 0 16px; padding-left: 20px;">
+  <li style="padding: 4px 0;">При оборот над ~2 000 лв/месец</li>
+  <li style="padding: 4px 0;">При ДДС регистрация — задължително</li>
+  <li style="padding: 4px 0;">При преминаване към ЕООД</li>
+</ul>
+
+<div class="danger-box">
+  <strong>🚫 Не чакай 1 година и след това да декларираш:</strong><br>
+  Осигуровките не се декларират — те се плащат месечно. Ако не ги платиш навреме, НАП начислява лихви автоматично. Данъкът (10%) наистина се декларира веднъж годишно (до 30 април), но осигуровките текат непрекъснато от деня на регистрацията.
+</div>
+
+<!-- Section 6 -->
+<h2>™️ Трейдмарк — razberi.me / разбери.ме</h2>
+
+<p>Преди да инвестираш в бранда, провери дали името не е вече регистрирано като марка от друг.</p>
+
+<h3>Провери сам (безплатно, ~5 минути)</h3>
+<ul class="checklist">
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>Патентно ведомство на България</div>
+      <div class="check-note">patent.bg → Търсене в регистрите → Марки. Търси: "razberi" и "разбери". Най-важно: Клас 41 (образование, обучение).</div>
+    </div>
+    <div class="check-recommended">ПРОВЕРИ</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>EUIPO — Европейски съюз</div>
+      <div class="check-note">euipo.europa.eu → eSearch plus. Търси: "razberi". Европейска марка покрива всички 27 държави членки.</div>
+    </div>
+    <div class="check-recommended">ПРОВЕРИ</div>
+  </li>
+  <li>
+    <div class="check-box"></div>
+    <div class="check-label">
+      <div>WIPO — международни марки</div>
+      <div class="check-note">branddb.wipo.int. За глобална защита.</div>
+    </div>
+    <div class="check-recommended">ПРОВЕРИ</div>
+  </li>
+</ul>
+
+<div class="info-box">
+  <strong>Добрата новина:</strong> "Разбери" е обикновена българска дума (императив от "разбирам"). Описателните думи трудно се регистрират като марки именно защото са общи. Вероятността да е заета е ниска — но провери преди да инвестираш в лого, маркетинг и домейн.
+</div>
+
+<h3>Ако искаш да регистрираш марката</h3>
+<ul style="margin: 8px 0 16px; padding-left: 20px;">
+  <li style="padding: 4px 0;"><strong>Клас 41</strong> (образование и обучение) — задължителен</li>
+  <li style="padding: 4px 0;"><strong>Клас 42</strong> (технологични услуги) — препоръчителен</li>
+  <li style="padding: 4px 0;">Процедура: адвокат по IP + такса към Патентното ведомство ~100 лв + адвокатски хонорар ~300-500 лв</li>
+  <li style="padding: 4px 0;">Срок: ~3-6 месеца за национална марка, ~5-7 месеца за EU марка</li>
+  <li style="padding: 4px 0;">Обсъди го с адвоката на същата консултация за Общите условия</li>
+</ul>
+
+<!-- Section 7 -->
+<h2>📝 Шаблони и ресурси</h2>
+
+<ul style="margin: 8px 0; padding-left: 20px; line-height: 2;">
+  <li><strong>Privacy Policy генератор:</strong> iubenda.com или termly.io (на английски, адаптирай)</li>
+  <li><strong>Регистрация в НАП:</strong> nap.bg → е-услуги → Декларация ОКд-5</li>
+  <li><strong>Калкулатор осигуровки:</strong> nap.bg → Калкулатори</li>
+  <li><strong>Закон за защита на потребителите:</strong> lex.bg</li>
+  <li><strong>GDPR наръчник на КЗД:</strong> cpdp.bg</li>
+  <li><strong>Stripe Bulgaria:</strong> stripe.com/bg → документация за регистрация</li>
+  <li><strong>Патентно ведомство — търсене на марки:</strong> patent.bg → Търсене в регистрите</li>
+  <li><strong>EUIPO — EU марки:</strong> euipo.europa.eu → eSearch plus</li>
+  <li><strong>WIPO — международни марки:</strong> branddb.wipo.int</li>
+</ul>
+
+<div class="footer">
+  Документът е с информационна цел. Не е правна или счетоводна консултация.<br>
+  Консултирай се с лицензиран специалист преди предприемане на действия.<br>
+  Генериран: Юни 2026
+</div>
+
+</body>
+</html>

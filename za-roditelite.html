@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>За родителите – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="logos/tab_transparent.png?v=2"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    :root {
+      --navy: #1a2f5a;
+      --orange: #E8A020;
+      --blue: #3b82f6;
+      --soft: #f0f4ff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito Sans', sans-serif; color: var(--text); }
+
+    /* ── Nav ── */
+    .pr-nav {
+      position: sticky; top: 0; z-index: 500;
+      background: #fff;
+      box-shadow: 0 2px 20px rgba(26,47,90,.09);
+      padding: 0 48px; height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pr-nav-logo img { height: 74px; width: auto; }
+    .pr-nav-right { display: flex; align-items: center; gap: 12px; }
+    .pr-nav-back {
+      font-size: 14px; font-weight: 700; color: var(--navy);
+      text-decoration: none; padding: 9px 20px; border-radius: 10px;
+      border: 1.5px solid var(--navy); transition: all .15s;
+    }
+    .pr-nav-back:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .pr-nav-cta {
+      font-size: 14px; font-weight: 800; color: #fff;
+      background: var(--orange); text-decoration: none;
+      padding: 10px 22px; border-radius: 10px; border: none;
+      transition: background .15s, transform .15s;
+    }
+    .pr-nav-cta:hover { background: #d4900e; transform: translateY(-1px); }
+
+    /* ── Page overlay ── */
+    .pr-page { background: transparent; }
+
+    /* ── Hero ── */
+    .pr-hero-wrap { padding: 32px 48px; }
+    .pr-hero {
+      background: rgba(255,255,255,0.82);
+      border-radius: 20px;
+      padding: 64px 56px;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 48px; max-width: 1100px; margin: 0 auto;
+    }
+    .pr-hero-text { max-width: 540px; padding-top: 12px; }
+    .pr-hero-tag {
+      display: inline-block; font-size: 12px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--orange); background: #fff7e6;
+      padding: 5px 14px; border-radius: 20px; margin-bottom: 20px;
+      border: 1px solid #fde4a0;
+    }
+    .pr-hero h1 {
+      font-size: clamp(32px, 4vw, 48px); font-weight: 900;
+      line-height: 1.1; color: var(--navy); margin-bottom: 20px;
+      text-wrap: balance;
+    }
+    .pr-hero h1 span { color: var(--orange); }
+    .pr-hero p {
+      font-size: 17px; line-height: 1.65; color: var(--muted);
+      margin-bottom: 32px;
+    }
+    .pr-hero-actions { display: flex; gap: 12px; }
+    .btn-primary, .btn-secondary {
+      font-size: 15px; font-weight: 800; text-decoration: none;
+      padding: 13px 0; border-radius: 12px;
+      width: 220px; text-align: center;
+      transition: background .15s, transform .15s, border-color .15s;
+    }
+    .btn-primary {
+      color: #fff; background: var(--navy); border: 1.5px solid var(--navy);
+    }
+    .btn-primary:hover { background: var(--orange); border-color: var(--orange); transform: translateY(-2px); }
+    .btn-secondary {
+      color: var(--navy); background: #fff; border: 1.5px solid #c8d4e8;
+    }
+    .btn-secondary:hover { border-color: var(--navy); transform: translateY(-2px); }
+
+    /* Hero visual */
+    .pr-hero-visual {
+      flex-shrink: 0; width: 380px;
+      background: var(--navy); border-radius: 20px;
+      padding: 22px; box-shadow: 0 24px 60px rgba(26,47,90,.2);
+    }
+    .pr-vis-bar {
+      background: rgba(255,255,255,.1); border-radius: 10px;
+      padding: 14px 16px; margin-bottom: 10px;
+    }
+    .pr-vis-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.5); margin-bottom: 6px; }
+    .pr-vis-row { display: flex; align-items: center; gap: 10px; }
+    .pr-vis-name { font-size: 13px; font-weight: 700; color: #fff; flex: 1; }
+    .pr-vis-pct { font-size: 13px; font-weight: 800; color: var(--orange); }
+    .pr-vis-track { flex: 1; height: 6px; background: rgba(255,255,255,.15); border-radius: 3px; overflow: hidden; }
+    .pr-vis-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--orange), #f59e0b); }
+    .pr-vis-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;
+    }
+    .pr-vis-stat {
+      background: rgba(255,255,255,.08); border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .pr-vis-stat-num { font-size: 22px; font-weight: 900; color: #fff; }
+    .pr-vis-stat-lbl { font-size: 11px; color: rgba(255,255,255,.5); font-weight: 600; margin-top: 2px; }
+    .pr-vis-stat-num.green { color: #4ade80; }
+    .pr-vis-badge {
+      display: inline-block; font-size: 10px; font-weight: 800;
+      padding: 3px 9px; border-radius: 20px; margin-top: 4px;
+    }
+    .pr-vis-badge.up { background: rgba(74,222,128,.15); color: #4ade80; }
+
+    /* ── Section base ── */
+    section { padding: 32px 48px; background: transparent; }
+    .section-inner {
+      max-width: 1100px; margin: 0 auto;
+      background: rgba(255,255,255,0.82);
+      border-radius: 20px;
+      padding: 48px;
+    }
+    .section-tag {
+      font-size: 12px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--orange); margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(26px, 3vw, 38px); font-weight: 900;
+      color: var(--navy); line-height: 1.15; margin-bottom: 14px;
+      text-wrap: balance;
+    }
+    .section-sub {
+      font-size: 16px; color: var(--muted); line-height: 1.6;
+      max-width: 560px; margin-bottom: 48px;
+    }
+
+    /* ── How it works ── */
+    .pr-how { background: transparent; }
+    .pr-how .section-inner { background: rgba(235,241,255,0.88); }
+    .pr-steps { display: flex; align-items: stretch; gap: 0; }
+    .pr-step {
+      background: #fff; border-radius: 16px;
+      padding: 28px 24px; border: 1.5px solid var(--line);
+      flex: 1; display: flex; flex-direction: column;
+    }
+    .pr-step p { flex: 1; }
+    .pr-step-arrow {
+      flex-shrink: 0; padding: 0 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #cbd5e1; font-size: 18px;
+    }
+    @media (max-width: 900px) {
+      .pr-steps { flex-direction: column; }
+      .pr-step-arrow { display: none; }
+    }
+    .pr-step-num {
+      font-size: 11px; font-weight: 900; color: var(--orange);
+      background: #fff7e6; border: 1px solid #fde4a0;
+      padding: 3px 10px; border-radius: 20px;
+      display: inline-block; margin-bottom: 16px;
+    }
+    .pr-step-icon { margin-bottom: 12px; color: var(--navy); }
+    .pr-step h3 { font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .pr-step p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* Highlight step 2 */
+    .pr-step-highlight { border-color: #bfdbfe; background: #f0f7ff; }
+    .pr-step-highlight h3 { color: #1d4ed8; }
+    .pr-ai-badge {
+      font-size: 10px; font-weight: 800; color: #1d4ed8;
+      background: #dbeafe; border: 1px solid #bfdbfe;
+      padding: 2px 9px; border-radius: 20px; white-space: nowrap;
+    }
+
+    /* Orange arrows */
+    .pr-step-arrow { color: var(--orange); }
+
+    /* Mini FAQ */
+    .pr-mini-faq {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 16px;
+      margin-top: 40px;
+      padding-top: 32px; border-top: 1px solid var(--line);
+    }
+    .pr-mini-faq-item { background: #fff; border-radius: 12px; padding: 18px 20px; border: 1px solid var(--line); }
+    .pr-mini-q { font-size: 13px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+    .pr-mini-a { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    @media (max-width: 900px) { .pr-mini-faq { grid-template-columns: 1fr; } }
+
+    /* ── What parents see ── */
+    .pr-see { background: transparent; }
+    .pr-see-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .pr-see-list { display: flex; flex-direction: column; gap: 20px; }
+    .pr-see-item { display: flex; gap: 14px; align-items: flex-start; }
+    .pr-see-dot {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--soft); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .pr-see-item h4 { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+    .pr-see-item p  { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    .pr-see-mock {
+      background: var(--navy); border-radius: 20px;
+      padding: 22px; box-shadow: 0 20px 50px rgba(26,47,90,.18);
+    }
+    .pr-mock-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.4); margin-bottom: 14px; }
+    .pr-mock-subject { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .pr-mock-s-name { font-size: 13px; font-weight: 700; color: #fff; flex: 1; }
+    .pr-mock-s-grade {
+      font-size: 13px; font-weight: 900; padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .pr-mock-s-grade.a { background: rgba(74,222,128,.2); color: #4ade80; }
+    .pr-mock-s-grade.b { background: rgba(251,191,36,.2); color: #fbbf24; }
+    .pr-mock-s-grade.c { background: rgba(248,113,113,.2); color: #f87171; }
+    .pr-mock-track { height: 5px; background: rgba(255,255,255,.1); border-radius: 3px; overflow: hidden; margin-top: 6px; }
+    .pr-mock-fill { height: 100%; border-radius: 3px; }
+    .pr-mock-fill.green { background: #4ade80; }
+    .pr-mock-fill.yellow { background: #fbbf24; }
+    .pr-mock-fill.red { background: #f87171; }
+    .pr-mock-divider { height: 1px; background: rgba(255,255,255,.08); margin: 14px 0; }
+    .pr-mock-activity { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px; }
+    .pr-mock-act-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+    .pr-mock-act-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .pr-mock-act-text { font-size: 12px; color: rgba(255,255,255,.7); font-weight: 600; flex: 1; }
+    .pr-mock-act-time { font-size: 11px; color: rgba(255,255,255,.3); }
+
+    /* ── Safety ── */
+    .pr-safety { background: transparent; }
+    .pr-safety-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .pr-safety-card {
+      background: #fff; border-radius: 16px;
+      padding: 24px; border: 1.5px solid var(--line);
+    }
+    .pr-safety-card .icon { margin-bottom: 12px; color: var(--navy); }
+    .pr-safety-card h4 { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+    .pr-safety-card p  { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* ── Trust bar ── */
+    .pr-trust-bar {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 8px 16px;
+      padding: 16px 48px;
+      background: #f8fafc; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      font-size: 13px; font-weight: 700; color: var(--muted);
+    }
+    .pr-trust-dot { color: var(--line); }
+    .pr-trust-bar strong { color: var(--navy); font-weight: 800; }
+
+    /* ── FAQ ── */
+    .pr-faq { background: transparent; }
+
+    .pr-faq .section-inner {
+      background: rgba(255,255,255,0.82);
+    }
+    .pr-faq-list { max-width: 860px; margin: 0 auto; }
+    .pr-faq-item {
+      border-bottom: 1px solid var(--line); padding: 20px 0;
+      cursor: pointer;
+    }
+    .pr-faq-item:first-child { border-top: 1px solid var(--line); }
+    .pr-faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 16px; font-weight: 700; color: var(--navy);
+      gap: 16px; user-select: none;
+    }
+    .pr-faq-chevron {
+      flex-shrink: 0; width: 22px; height: 22px;
+      border: 1.5px solid var(--line); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--muted); transition: transform .2s;
+    }
+    .pr-faq-item.open .pr-faq-chevron { transform: rotate(180deg); border-color: var(--orange); color: var(--orange); }
+    .pr-faq-a {
+      font-size: 14px; color: var(--muted); line-height: 1.7;
+      max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s ease;
+    }
+    .pr-faq-item.open .pr-faq-a { max-height: 200px; padding-top: 12px; }
+
+    /* Hero trust line */
+    .pr-hero-trust {
+      margin-top: 16px;
+      font-size: 13px; font-weight: 600; color: var(--muted);
+    }
+    .pr-hero-trust::before { content: ''; }
+
+    /* ── CTA ── */
+    .pr-cta {
+      background: var(--navy);
+      text-align: center; padding: 80px 48px;
+    }
+    .pr-cta h2 {
+      font-size: clamp(26px, 3vw, 40px); font-weight: 900;
+      color: #fff; margin-bottom: 14px; text-wrap: balance;
+    }
+    .pr-cta p { font-size: 16px; color: rgba(255,255,255,.65); margin-bottom: 36px; }
+    .pr-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-cta-main {
+      font-size: 15px; font-weight: 800; color: var(--navy);
+      background: var(--orange); text-decoration: none;
+      padding: 14px 32px; border-radius: 12px;
+      transition: background .15s, transform .15s;
+    }
+    .btn-cta-main:hover { background: #f5b033; transform: translateY(-2px); }
+    .btn-cta-sec {
+      font-size: 15px; font-weight: 700; color: #fff;
+      background: rgba(255,255,255,.12); text-decoration: none;
+      padding: 14px 32px; border-radius: 12px;
+      border: 1.5px solid rgba(255,255,255,.25);
+      transition: background .15s;
+    }
+    .btn-cta-sec:hover { background: rgba(255,255,255,.2); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .pr-hero { flex-direction: column; padding: 48px 24px; }
+      .pr-hero-visual { width: 100%; }
+      .pr-steps, .pr-safety-cards { grid-template-columns: 1fr; }
+      .pr-see-grid { grid-template-columns: 1fr; }
+      section { padding: 48px 24px; }
+      .pr-nav { padding: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="pr-page">
+<!-- Nav -->
+<nav class="pr-nav">
+  <div class="pr-nav-logo">
+    <a href="/"><img src="logos/transparent_logo.png" alt="Разбери.Ме"/></a>
+  </div>
+  <div class="pr-nav-right">
+    <a href="/" class="pr-nav-back">← Начало</a>
+    <a href="/auth.html#register" class="pr-nav-cta">Пробвай безплатно</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="pr-hero-wrap">
+  <div class="pr-hero">
+    <div class="pr-hero-text">
+      <div class="pr-hero-tag">За родителите</div>
+      <h1>Знайте какво учи<br>детето ви — <span>всеки ден.</span></h1>
+      <p>Разбери.Ме помага на детето да разбира уроците, да се упражнява с тестове и да показва напредък, който можете да проследите.</p>
+      <div class="pr-hero-actions">
+        <a href="/auth.html#register" class="btn-primary">Започни безплатно</a>
+        <a href="#how" class="btn-secondary">Виж как работи</a>
+      </div>
+      <div class="pr-hero-trust">7.–12. клас &nbsp;·&nbsp; БЕЛ, математика, биология и химия &nbsp;·&nbsp; 3 дни безплатно &nbsp;·&nbsp; Без кредитна карта</div>
+    </div>
+    <div class="pr-hero-visual">
+      <div class="pr-vis-bar">
+        <div class="pr-vis-label">Прогрес тази седмица</div>
+        <div class="pr-vis-row" style="margin-bottom:8px;">
+          <div class="pr-vis-name">БЕЛ</div>
+          <div class="pr-vis-track"><div class="pr-vis-fill" style="width:82%"></div></div>
+          <div class="pr-vis-pct">82%</div>
+        </div>
+        <div class="pr-vis-row" style="margin-bottom:8px;">
+          <div class="pr-vis-name">Математика</div>
+          <div class="pr-vis-track"><div class="pr-vis-fill" style="width:67%"></div></div>
+          <div class="pr-vis-pct">67%</div>
+        </div>
+        <div class="pr-vis-row">
+          <div class="pr-vis-name">Биология</div>
+          <div class="pr-vis-track"><div class="pr-vis-fill" style="width:91%"></div></div>
+          <div class="pr-vis-pct">91%</div>
+        </div>
+      </div>
+      <div class="pr-vis-stats">
+        <div class="pr-vis-stat">
+          <div class="pr-vis-stat-num green">+14%</div>
+          <div class="pr-vis-stat-lbl">спрямо миналата седмица</div>
+          <div class="pr-vis-badge up">↑ Напредък</div>
+        </div>
+        <div class="pr-vis-stat">
+          <div class="pr-vis-stat-num">12</div>
+          <div class="pr-vis-stat-lbl">теста завършени</div>
+        </div>
+        <div class="pr-vis-stat">
+          <div class="pr-vis-stat-num">4.8ч</div>
+          <div class="pr-vis-stat-lbl">учебно време</div>
+        </div>
+        <div class="pr-vis-stat">
+          <div class="pr-vis-stat-num green">3</div>
+          <div class="pr-vis-stat-lbl">урока за преговор</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- What parents see (moved up) -->
+<section class="pr-see">
+  <div class="section-inner">
+    <div class="pr-see-grid">
+      <div>
+        <div class="section-tag">За вас</div>
+        <h2 class="section-title">Виждате напредъка, не само обещанията.</h2>
+        <p class="section-sub" style="margin-bottom:32px;">Прогресът на детето е видим в реално време — без да го питате "учи ли".</p>
+        <div class="pr-see-list">
+          <div class="pr-see-item">
+            <div class="pr-see-dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a2f5a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+            <div>
+              <h4>Резултати по предмети</h4>
+              <p>Виждате средния резултат за всеки предмет и как се променя с времето.</p>
+            </div>
+          </div>
+          <div class="pr-see-item">
+            <div class="pr-see-dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a2f5a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div>
+              <h4>Активно учебно време</h4>
+              <p>Следите колко време детето учи — по предмети и по дни.</p>
+            </div>
+          </div>
+          <div class="pr-see-item">
+            <div class="pr-see-dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a2f5a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+            <div>
+              <h4>Слаби места</h4>
+              <p>Темите с нисък резултат се маркират за преговор.</p>
+            </div>
+          </div>
+          <div class="pr-see-item">
+            <div class="pr-see-dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a2f5a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div>
+              <h4>Седмичен отчет</h4>
+              <p>Получавате кратко обобщение на напредъка директно по имейл.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pr-see-mock">
+        <div class="pr-mock-title">Дашборд — тази седмица</div>
+        <div class="pr-mock-subject">
+          <div class="pr-mock-s-name">БЕЛ</div>
+          <div class="pr-mock-s-grade a">82%</div>
+        </div>
+        <div class="pr-mock-track"><div class="pr-mock-fill green" style="width:82%"></div></div>
+        <div class="pr-mock-subject" style="margin-top:12px;">
+          <div class="pr-mock-s-name">Математика</div>
+          <div class="pr-mock-s-grade b">67%</div>
+        </div>
+        <div class="pr-mock-track"><div class="pr-mock-fill yellow" style="width:67%"></div></div>
+        <div class="pr-mock-subject" style="margin-top:12px;">
+          <div class="pr-mock-s-name">Биология</div>
+          <div class="pr-mock-s-grade a">91%</div>
+        </div>
+        <div class="pr-mock-track"><div class="pr-mock-fill green" style="width:91%"></div></div>
+        <div class="pr-mock-divider"></div>
+        <div class="pr-mock-activity">Последна активност</div>
+        <div class="pr-mock-act-row">
+          <div class="pr-mock-act-dot" style="background:#4ade80"></div>
+          <div class="pr-mock-act-text">Тест: Димчо Дебелянов — 88%</div>
+          <div class="pr-mock-act-time">днес</div>
+        </div>
+        <div class="pr-mock-act-row">
+          <div class="pr-mock-act-dot" style="background:#fbbf24"></div>
+          <div class="pr-mock-act-text">Урок: Квадратна функция</div>
+          <div class="pr-mock-act-time">вчера</div>
+        </div>
+        <div class="pr-mock-act-row">
+          <div class="pr-mock-act-dot" style="background:#4ade80"></div>
+          <div class="pr-mock-act-text">Тест: ДНК и РНК — 94%</div>
+          <div class="pr-mock-act-time">вчера</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="pr-how" id="how">
+  <div class="section-inner">
+    <div class="section-tag">Как работи</div>
+    <h2 class="section-title">От труден урок до уверен отговор</h2>
+    <p class="section-sub">Четири стъпки, по които детето учи самостоятелно — и показва реален напредък.</p>
+    <div class="pr-steps">
+      <div class="pr-step">
+        <div class="pr-step-num">Учи</div>
+        <div class="pr-step-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <h3>Избира урок</h3>
+        <p>Детето избира предмет, клас и тема. Урокът е разделен на кратки части.</p>
+      </div>
+      <div class="pr-step-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      <div class="pr-step">
+        <div class="pr-step-num">Пита</div>
+        <div class="pr-step-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><path d="M8 15h.01M12 15h.01M16 15h.01"/></svg></div>
+        <h3>Пита, когато не разбира</h3>
+        <p>Знайко обяснява трудното с по-прости думи и примери.</p>
+      </div>
+      <div class="pr-step-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      <div class="pr-step">
+        <div class="pr-step-num">Проверява</div>
+        <div class="pr-step-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h3>Проверява знанията си</h3>
+        <p>След урока решава тестове на три нива.</p>
+      </div>
+      <div class="pr-step-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      <div class="pr-step">
+        <div class="pr-step-num">Повтаря</div>
+        <div class="pr-step-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+        <h3>Повтаря слабите места</h3>
+        <p>Платформата показва какво да преговори.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Safety -->
+<section class="pr-safety">
+  <div class="section-inner">
+    <div class="section-tag">Среда</div>
+    <h2 class="section-title">Само учене. Нищо друго.</h2>
+    <p class="section-sub">Без социални мрежи, без реклами, без разсейване. Платформата е проектирана с едно нещо на ум.</p>
+    <div class="pr-safety-cards">
+      <div class="pr-safety-card">
+        <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <h4>Без социални функции</h4>
+        <p>Няма профили, харесвания или коментари. Детето вижда само своя напредък — без сравнение с другите.</p>
+      </div>
+      <div class="pr-safety-card">
+        <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <h4>Само учебно съдържание</h4>
+        <p>Платформата показва единствено материали по учебната програма — без реклами, без препоръки, без странични линкове.</p>
+      </div>
+      <div class="pr-safety-card">
+        <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h4>Знайко с граници</h4>
+        <p>Знайко отговаря само на въпроси, свързани с урока, който детето учи в момента. Не може да се ползва за несвързани теми.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="pr-faq">
+  <div class="section-inner">
+    <div class="section-tag">Въпроси</div>
+    <h2 class="section-title">Често задавани въпроси</h2>
+    <div class="pr-faq-list">
+      <div class="pr-faq-item">
+        <div class="pr-faq-q">
+          Кой е Знайко?
+          <span class="pr-faq-chevron">▾</span>
+        </div>
+        <div class="pr-faq-a">Знайко е AI помощникът на Разбери.Ме — като личен репетитор, достъпен 24/7. Докато детето чете урока, може да маркира всеки текст, който не разбира, и да попита Знайко. Той обяснява точно онова, което е неясно — с примери, аналогии и на разбираем език. При грешен отговор на тест Знайко обяснява веднага защо отговорът е грешен и как се стига до правилния.</div>
+      </div>
+      <div class="pr-faq-item">
+        <div class="pr-faq-q">
+          За какви ученици е подходящо?
+          <span class="pr-faq-chevron">▾</span>
+        </div>
+        <div class="pr-faq-a">Платформата е проектирана за ученици от 7. до 12. клас по БЕЛ, математика, биология и химия. Особено полезна е за подготовка за НВО (7 клас) и матура (12 клас).</div>
+      </div>
+      <div class="pr-faq-item">
+        <div class="pr-faq-q">
+          Замества ли учителя или репетитора?
+          <span class="pr-faq-chevron">▾</span>
+        </div>
+        <div class="pr-faq-a">Не — допълва ги. Разбери.Ме е за самостоятелна работа: детето чете, решава тестове и получава обяснения в момента, в който се нуждае. Учителят остава незаменим за клас и социалното учене.</div>
+      </div>
+      <div class="pr-faq-item">
+        <div class="pr-faq-q">
+          Колко часа на ден трябва да работи детето?
+          <span class="pr-faq-chevron">▾</span>
+        </div>
+        <div class="pr-faq-a">Препоръчваме 20–40 минути на ден. Платформата е проектирана за редовна кратка работа, не за маратонски сесии. Дори 15 минути на ден правят разлика при редовност.</div>
+      </div>
+      <div class="pr-faq-item">
+        <div class="pr-faq-q">
+          Мога ли да следя напредъка без да питам детето?
+          <span class="pr-faq-chevron">▾</span>
+        </div>
+        <div class="pr-faq-a">Да. От дашборда виждате резултатите, активността и слабите места в реално време. Скоро добавяме и седмичен имейл репорт директно до вас.</div>
+      </div>
+      <div class="pr-faq-item">
+        <div class="pr-faq-q">
+          Има ли безплатна версия?
+          <span class="pr-faq-chevron">▾</span>
+        </div>
+        <div class="pr-faq-a">Да — 3-дневен пробен период с достъп до 3 урока и 3 теста без кредитна карта. След това може да изберете план, подходящ за нуждите на детето.</div>
+      </div>
+      <div class="pr-faq-item">
+        <div class="pr-faq-q">
+          Какво става след безплатния период?
+          <span class="pr-faq-chevron">▾</span>
+        </div>
+        <div class="pr-faq-a">Детето продължава да има достъп до платформата, но само до безплатните материали. Никакво автоматично начисляване — ако изберете платен план, го правите сами, съзнателно.</div>
+      </div>
+      <div class="pr-faq-item">
+        <div class="pr-faq-q">
+          Може ли детето да използва платформата само?
+          <span class="pr-faq-chevron">▾</span>
+        </div>
+        <div class="pr-faq-a">Да — платформата е проектирана точно за това. Уроците са самодостатъчни, Знайко е на разположение при въпроси, а тестовете дават незабавна обратна връзка. Повечето деца работят сами, без родителска намеса по съдържанието.</div>
+      </div>
+      <div class="pr-faq-item">
+        <div class="pr-faq-q">
+          Какво вижда родителят в дневника?
+          <span class="pr-faq-chevron">▾</span>
+        </div>
+        <div class="pr-faq-a">Виждате активност, резултати по предмети, завършени теми, слаби места и последни решени тестове. Всичко е на едно място — без да питате детето.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pr-cta">
+  <h2>Когато урокът е труден, детето не трябва да остава само.</h2>
+  <p>Пробвайте Разбери.Ме безплатно и вижте дали помага още тази седмица.</p>
+  <div class="pr-cta-btns">
+    <a href="/auth.html#register" class="btn-cta-main">Започни безплатно</a>
+    <a href="/#pricing" class="btn-cta-sec">Сравни плановете</a>
+  </div>
+</section>
+
+</div><!-- /.pr-page -->
+
+<script>
+  document.querySelectorAll('.pr-faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.pr-faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>

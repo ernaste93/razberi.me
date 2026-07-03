@@ -12,258 +12,245 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
   <style>
-    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
 
-    .dnevnik-page { max-width: 1100px; margin: 16px auto 80px; padding: 0 24px; }
 
-    .dnevnik-intro { margin-bottom: 24px; }
-    .dnevnik-intro h1 { font-size: 22px; font-weight: 800; color: var(--text); margin: 0 0 2px; }
-    .dnevnik-intro p  { font-size: 14px; color: var(--muted); margin: 0; }
+    .dash-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+    }
 
-    /* ── Summary cards ── */
-    .summary-row {
+    /* ── Page header ── */
+    .dash-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .dash-title { font-size: 30px; font-weight: 800; color: #0f172a; margin: 0 0 4px; }
+    .dash-sub   { font-size: 14px; color: #64748b; margin: 0; }
+
+    /* ── Trial banner ── */
+    .trial-banner {
+      background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+      border: 1.5px solid #E8A020;
+      border-radius: 16px;
+      padding: 14px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .trial-banner-left { display: flex; align-items: center; gap: 12px; }
+    .trial-banner-title { font-size: 14px; font-weight: 700; color: #1a2f5a; margin-bottom: 2px; }
+    .trial-banner-sub   { font-size: 12px; color: #8B6300; }
+    .trial-banner-cta {
+      background: #1a2f5a; color: #fff; text-decoration: none;
+      font-size: 13px; font-weight: 700; padding: 9px 18px;
+      border-radius: 10px; white-space: nowrap; flex-shrink: 0;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 2px 8px rgba(26,47,90,0.25);
+    }
+    .trial-banner-cta:hover {
+      background: #E8A020;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(232,160,32,0.35);
+    }
+    .trial-banner-cta:active { transform: translateY(0); }
+
+    /* ── Stat cards ── */
+    .stats-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 14px;
       margin-bottom: 20px;
     }
-    .summary-card {
-      background: rgba(255,255,255,0.95);
-      border: 1px solid var(--line);
+    .stat-card {
+      background: #fff;
       border-radius: 20px;
-      padding: 20px 22px;
-      box-shadow: 0 4px 16px rgba(16,24,40,0.07);
-    }
-    .summary-card-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .summary-card-value {
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .summary-card-sub {
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .grade-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      font-size: 26px;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-    .grade-6 { background: #16a34a; }
-    .grade-5 { background: var(--accent); }
-    .grade-4 { background: var(--gold); }
-    .grade-3 { background: #f97316; }
-    .grade-2 { background: #dc2626; }
-
-    /* ── Chart card ── */
-    .chart-card {
-      background: rgba(255,255,255,0.95);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 24px 28px;
-      box-shadow: 0 4px 16px rgba(16,24,40,0.07);
-      margin-bottom: 20px;
-    }
-    .chart-head {
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(15,23,42,0.06);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
+      gap: 16px;
     }
-    .chart-title { font-size: 15px; font-weight: 700; color: var(--text); }
-    .chart-filters { display: flex; gap: 6px; }
-    .filter-btn {
-      padding: 6px 14px;
+    .stat-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .stat-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px; }
+    .stat-value { font-size: 28px; font-weight: 800; color: #0f172a; line-height: 1; margin-bottom: 3px; }
+    .stat-sub   { font-size: 12px; font-weight: 600; }
+
+    /* ── 2-column main layout ── */
+    .dash-main {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+    }
+    .dash-left  { display: flex; flex-direction: column; gap: 20px; }
+    .dash-right { display: flex; flex-direction: column; gap: 20px; }
+
+    /* ── Base card ── */
+    .card {
+      background: #fff;
       border-radius: 20px;
-      border: 1.5px solid var(--line);
-      background: transparent;
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all .15s;
+      padding: 24px;
+      box-shadow: 0 2px 10px rgba(15,23,42,0.06);
+    }
+    .card-title { font-size: 15px; font-weight: 800; color: #0f172a; margin: 0 0 16px; }
+
+    /* ── Chart ── */
+    .chart-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .chart-filters {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 3px; gap: 2px;
+    }
+    .filter-btn {
+      padding: 6px 14px; border-radius: 7px; border: none;
+      background: transparent; font-family: inherit;
+      font-size: 13px; font-weight: 600; color: #64748b;
+      cursor: pointer; transition: all .15s;
     }
     .filter-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
+      background: #1e3a8a; color: #fff;
+      box-shadow: 0 2px 6px rgba(30,58,138,0.25);
     }
-    .chart-wrap { height: 180px; }
+    .chart-canvas-wrap { height: 200px; position: relative; }
+    .chart-empty-msg {
+      height: 200px; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: #94a3b8; text-align: center;
+    }
 
-    /* ── Subjects grid ── */
+    /* ── Subject grid ── */
     .subjects-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 16px;
     }
     .subject-card {
-      background: rgba(255,255,255,0.95);
-      border: 1px solid var(--line);
+      background: #fff;
       border-radius: 20px;
-      padding: 22px 24px;
-      box-shadow: 0 4px 16px rgba(16,24,40,0.07);
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(15,23,42,0.06);
     }
-    .subject-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
+    .subj-head {
+      display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px;
     }
-    .subject-name-row { display: flex; align-items: center; gap: 10px; }
-    .subject-icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
+    .subj-info { display: flex; align-items: center; gap: 11px; }
+    .subj-icon {
+      width: 40px; height: 40px; border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
+      font-size: 18px; flex-shrink: 0;
     }
-    .subject-name { font-size: 15px; font-weight: 800; color: var(--text); }
-    .subject-sub  { font-size: 12px; color: var(--muted); margin-top: 1px; }
+    .subj-name { font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .subj-pct  { font-size: 12px; color: #64748b; }
 
-    .subject-grade {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: 800;
-      color: #fff;
-      flex-shrink: 0;
+    /* Circular ring */
+    .ring-wrap { position: relative; width: 64px; height: 64px; flex-shrink: 0; }
+    .ring-svg  { transform: rotate(-90deg); }
+    .ring-track { fill: none; stroke: #e8edf5; stroke-width: 5; }
+    .ring-progress { fill: none; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset .6s ease; }
+    .ring-label {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800;
     }
 
-    /* Progress bar */
-    .prog-label-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 5px;
+    /* Thin progress bar */
+    .subj-bar-wrap {
+      height: 5px; background: #f1f5f9; border-radius: 99px; overflow: hidden; margin-bottom: 14px;
     }
-    .prog-bar-wrap {
-      height: 7px;
-      background: var(--soft);
-      border-radius: 99px;
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-    .prog-bar-fill {
-      height: 100%;
-      border-radius: 99px;
-      transition: width .4s ease;
-    }
+    .subj-bar-fill { height: 100%; border-radius: 99px; transition: width .5s; }
 
-    /* Topics list */
-    .topics-list { display: flex; flex-direction: column; gap: 6px; }
-    .topic-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 10px;
-      background: var(--soft);
-    }
-    .topic-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .topic-name { font-size: 13px; color: var(--text); font-weight: 600; flex: 1; }
-    .topic-pct  { font-size: 12px; font-weight: 700; color: var(--muted); }
-    .topic-flag { font-size: 11px; }
-
-    .show-more-btn {
-      margin-top: 10px;
-      width: 100%;
-      background: none;
-      border: none;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--accent);
-      cursor: pointer;
-      padding: 4px 0;
-      text-align: center;
-    }
-
-    /* Semester divider */
-    .semester-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .07em;
-      color: var(--muted);
-      margin: 12px 0 6px;
-    }
-
-    /* ── Time per subject (parent view) ── */
-    .parent-section {
-      margin-bottom: 20px;
-    }
-    .parent-section-label {
+    /* Topics */
+    .topics-heading {
       font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .08em; color: var(--muted);
+      letter-spacing: .07em; color: #94a3b8; margin-bottom: 8px;
+    }
+    .topic-row {
       display: flex; align-items: center; gap: 8px;
-      margin-bottom: 12px;
+      padding: 8px 0; border-bottom: 1px solid #f1f5f9;
+      text-decoration: none; color: inherit;
+      transition: background .12s;
     }
-    .parent-section-label::before {
-      content: '👨‍👩‍👧'; font-size: 13px;
+    .topic-row:last-child { border-bottom: none; }
+    .topic-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .topic-name { flex: 1; font-size: 13px; color: #334155; font-weight: 500; }
+    .topic-arrow { font-size: 15px; color: #cbd5e1; }
+    .topic-warn  { font-size: 12px; }
+    .subj-locked {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 6px; padding: 20px 0; color: #94a3b8; font-size: 13px; text-align: center;
     }
-    .time-card {
-      background: rgba(255,255,255,0.95);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 22px 24px;
-      box-shadow: 0 4px 16px rgba(16,24,40,0.07);
+    .subj-locked a { color: #3b82f6; font-size: 12px; font-weight: 600; text-decoration: none; }
+
+    /* ── Time tracker ── */
+    .time-row {
+      display: flex; flex-direction: column; gap: 5px;
+      padding: 10px 0; border-bottom: 1px solid #f8fafc;
     }
-    .time-card-title {
-      font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 18px;
+    .time-row:last-child { border-bottom: none; }
+    .time-row-top { display: flex; align-items: center; gap: 8px; }
+    .time-icon-wrap {
+      width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
     }
-    .time-subject-row {
-      display: flex; align-items: center; gap: 14px;
-      padding: 10px 0; border-bottom: 1px solid var(--line);
+    .time-short { font-size: 13px; font-weight: 700; color: #0f172a; }
+    .time-row-bar { display: flex; align-items: center; gap: 8px; }
+    .time-bar-bg { flex: 1; height: 6px; background: #f1f5f9; border-radius: 99px; overflow: hidden; }
+    .time-bar-fg { height: 100%; border-radius: 99px; }
+    .time-amount { font-size: 12px; font-weight: 700; color: #334155; width: 80px; text-align: right; flex-shrink: 0; }
+    .time-total-row {
+      display: flex; align-items: center; gap: 6px; margin-top: 12px;
+      font-size: 12px; color: #64748b; font-weight: 500;
     }
-    .time-subject-row:last-child { border-bottom: none; }
-    .time-subject-icon {
-      width: 34px; height: 34px; border-radius: 10px;
+
+    /* ── Recent activity ── */
+    .activity-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 0; border-bottom: 1px solid #f8fafc;
+    }
+    .activity-row:last-child { border-bottom: none; }
+    .activity-icon {
+      width: 32px; height: 32px; border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 17px; flex-shrink: 0;
+      font-size: 14px; flex-shrink: 0;
     }
-    .time-subject-name { font-size: 14px; font-weight: 700; color: var(--text); flex: 1; }
-    .time-bar-wrap { flex: 2; height: 7px; background: var(--soft); border-radius: 99px; overflow: hidden; }
-    .time-bar-fill { height: 100%; border-radius: 99px; background: var(--accent); transition: width .5s ease; }
-    .time-today { font-size: 12px; font-weight: 700; color: var(--accent); width: 60px; text-align: right; }
-    .time-total { font-size: 11px; color: var(--muted); width: 72px; text-align: right; }
-    .time-empty { font-size: 13px; color: var(--muted); text-align: center; padding: 16px 0; }
+    .activity-name { font-size: 13px; font-weight: 600; color: #0f172a; margin-bottom: 2px; }
+    .activity-time { font-size: 11px; color: #94a3b8; }
+    .activity-check { color: #22c55e; font-size: 14px; margin-left: auto; flex-shrink: 0; }
 
-    /* No data state */
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--muted);
-      font-size: 14px;
+    /* ── Recommendation ── */
+    .rec-card {
+      background: #fffbeb; border: 1.5px solid #fde68a;
+      border-radius: 16px; padding: 16px;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .rec-emoji { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .rec-title { font-size: 13px; font-weight: 800; color: #92400e; margin-bottom: 4px; }
+    .rec-body  { font-size: 12px; color: #78350f; line-height: 1.55; }
+
+    .empty-note {
+      font-size: 13px; color: #94a3b8; text-align: center; padding: 20px 12px; line-height: 1.6;
     }
 
-    @media (max-width: 800px) {
-      .summary-row { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 920px) {
+      .dash-main    { grid-template-columns: 1fr; }
+      .stats-row    { grid-template-columns: repeat(2, 1fr); }
+      .dash-right   { order: -1; }
+    }
+    @media (max-width: 520px) {
       .subjects-grid { grid-template-columns: 1fr; }
+      .stats-row     { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -275,7 +262,7 @@
         <a href="/" id="home-link"><img src="logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
       </div>
       <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
-        <a href="/dnevnik.html" class="nav-btn" style="font-weight:700;color:var(--accent);">Дневник</a>
+        <a href="/dnevnik-book.html" class="nav-btn">Оценки</a>
         <a href="/urotsi.html" class="nav-btn">Към уроците</a>
         <div class="user-menu" id="user-menu">
           <button class="user-chip" id="user-chip" aria-expanded="false">
@@ -289,7 +276,6 @@
               <div class="user-emailaddr" id="user-email-label"></div>
             </div>
             <a href="/settings.html">Настройки</a>
-            <a href="/settings.html?tab=children">Децата ми</a>
             <a href="/settings.html?tab=subscription">Абонамент</a>
             <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
             <div class="dropdown-divider"></div>
@@ -301,382 +287,616 @@
   </header>
 
   <main>
-    <div class="dnevnik-page">
+    <div class="dash-wrap">
 
-      <div class="dnevnik-intro">
-        <h1>Дневник</h1>
-        <p>Твоят напредък, оценки и активност на едно място.</p>
-      </div>
-
-      <!-- Summary -->
-      <div class="summary-row">
-        <div class="summary-card">
-          <div class="summary-card-label">Обща оценка</div>
-          <div class="grade-badge grade-5" id="overall-grade-badge">5</div>
-          <div class="summary-card-sub" id="overall-pct">72% успеваемост</div>
-        </div>
-        <div class="summary-card">
-          <div class="summary-card-label">Завършени теми</div>
-          <div class="summary-card-value" id="topics-done">14</div>
-          <div class="summary-card-sub" id="topics-total">от 38 теми за годината</div>
-        </div>
-        <div class="summary-card">
-          <div class="summary-card-label">Активни предмети</div>
-          <div class="summary-card-value">4</div>
-          <div class="summary-card-sub">БЕЛ, Мат, Био, Хим</div>
-        </div>
-        <div class="summary-card">
-          <div class="summary-card-label">Последна активност</div>
-          <div class="summary-card-value" style="font-size:20px;padding-top:6px;" id="last-active">Днес</div>
-          <div class="summary-card-sub" id="last-active-sub">3 урока тази седмица</div>
+      <div class="dash-header">
+        <div>
+          <h1 class="dash-title">Дневник</h1>
+          <p class="dash-sub">Твоят напредък, оценки и активност на едно място.</p>
         </div>
       </div>
 
-      <!-- Activity chart — скрита докато няма реални данни -->
-      <div class="chart-card" id="chart-card" style="display:none;">
-        <div class="chart-head">
-          <div class="chart-title">Активност и успеваемост</div>
-          <div class="chart-filters">
-            <button class="filter-btn" data-period="week">Седмичен</button>
-            <button class="filter-btn active" data-period="month">Месечен</button>
+      <!-- Trial banner — само за trial потребители -->
+      <div class="trial-banner" id="trial-banner" style="display:none;">
+        <div class="trial-banner-left">
+          <div style="width:34px;height:34px;border-radius:10px;background:#fde68a;color:#92400e;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 1 .586 1.414L12 12l4.414-4.414A2 2 0 0 1 17 6.172V2"/></svg>
+          </div>
+          <div>
+            <div class="trial-banner-title" id="trial-title">Безплатен пробен период</div>
+            <div class="trial-banner-sub" id="trial-sub"></div>
           </div>
         </div>
-        <div class="chart-wrap">
-          <canvas id="activity-chart"></canvas>
+        <a href="/index.html#pricing" class="trial-banner-cta">Виж плановете →</a>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon-wrap" style="background:#e8edf7;color:#1a2f5a;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div>
+            <div class="stat-label">Обща оценка</div>
+            <div class="stat-value" id="s-grade">—</div>
+            <div class="stat-sub" id="s-pct" style="color:#3b82f6;"></div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrap" style="background:#f0fdf4;color:#15803d;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div>
+            <div class="stat-label">Завършени теми</div>
+            <div class="stat-value" id="s-done">0</div>
+            <div class="stat-sub" id="s-total" style="color:#64748b;"></div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrap" style="background:#eff6ff;color:#1e3a5f;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div>
+            <div class="stat-label">Активни предмети</div>
+            <div class="stat-value" id="s-subj">4</div>
+            <div class="stat-sub" style="color:#64748b;line-height:1.5;">БЕЛ, Математика,<br>Биология, Химия</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrap" style="background:#fff7ed;color:#c2410c;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div>
+            <div class="stat-label">Последна активност</div>
+            <div class="stat-value" id="s-last" style="font-size:20px;padding-top:3px;">—</div>
+            <div class="stat-sub" id="s-last-sub" style="color:#64748b;"></div>
+          </div>
         </div>
       </div>
 
-      <!-- Parent: Active time per subject -->
-      <div class="parent-section">
-        <div class="parent-section-label">Изглед за родител — активно време по предмет</div>
-        <div class="time-card">
-          <div class="time-card-title">Активно време по предмет</div>
-          <div id="time-by-subject"></div>
+      <!-- Main 2-col layout -->
+      <div class="dash-main">
+
+        <!-- LEFT -->
+        <div class="dash-left">
+
+          <!-- Chart -->
+          <div class="card">
+            <div class="chart-head">
+              <div class="card-title" style="margin:0;">Прогрес през последните 30 дни</div>
+              <div class="chart-filters">
+                <button class="filter-btn" data-period="week">7 дни</button>
+                <button class="filter-btn active" data-period="month">30 дни</button>
+                <button class="filter-btn" data-period="year">Година</button>
+              </div>
+            </div>
+            <div class="chart-canvas-wrap" id="chart-wrap">
+              <canvas id="activity-chart"></canvas>
+            </div>
+            <div class="chart-empty-msg" id="chart-empty" style="display:none;">
+              Направи първия си тест, за да видиш прогреса си тук.
+            </div>
+          </div>
+
+          <!-- Subjects 2×2 -->
+          <div class="subjects-grid" id="subjects-grid"></div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="dash-right">
+
+          <!-- Active time per subject -->
+          <div class="card">
+            <div class="card-title">Активно време по предмет</div>
+            <div id="time-section"></div>
+          </div>
+
+          <!-- Recent activity -->
+          <div class="card">
+            <div class="card-title">Последна активност</div>
+            <div id="activity-section"></div>
+          </div>
+
+          <!-- Recommendation -->
+          <div class="rec-card" id="rec-card" style="display:none;">
+            <div style="width:36px;height:36px;border-radius:10px;background:#fde68a;color:#92400e;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>
+            <div>
+              <div class="rec-title">Препоръка за теб</div>
+              <div class="rec-body" id="rec-body"></div>
+            </div>
+          </div>
+
         </div>
       </div>
-
-      <!-- Subjects -->
-      <div class="subjects-grid" id="subjects-grid"></div>
 
     </div>
   </main>
 
+  <script src="/sidebar.js"></script>
   <script src="/nav.js"></script>
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const sb = createClient(
+      'https://wbcppvfgtvkrsfmclmjp.supabase.co',
+      'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l'
+    );
+
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { window.location.href = '/auth.html'; }
+    const uid = session.user.id;
 
-    // ── MOCK DATA (замени с реални Supabase данни когато имаме таблиците) ──
-    const subjects = [
-      {
-        name: 'Български език и литература',
-        short: 'БЕЛ',
-        icon: '📖',
-        color: '#1e3a5f',
-        pct: 76,
-        topicsDone: 5,
-        topicsTotal: 12,
-        topics: [
-          { name: 'Любовта (Дебелянов, Фотев, Дубарова)', pct: 0, semester: 1, done: false },
-          { name: 'Вярата и надеждата', pct: 0, semester: 1, done: false },
-          { name: 'Трудът и творчеството', pct: 0, semester: 1, done: false },
-          { name: 'Изборът и раздвоението', pct: 0, semester: 1, done: false },
-          { name: 'Правописна и пунктуационна норма', pct: 0, semester: 1, done: false },
-          { name: 'Граматична и лексикална норма', pct: 0, semester: 2, done: false },
-          { name: 'Интерпретативно съчинение', pct: 0, semester: 2, done: false },
-          { name: 'Есе на свободна тема', pct: 0, semester: 2, done: false },
-        ]
-      },
-      {
-        name: 'Математика',
-        short: 'Мат',
-        icon: '📐',
-        color: '#7c3aed',
-        pct: 0,
-        topicsDone: 0,
-        topicsTotal: 10,
-        topics: [
-          { name: 'Функции — преговор', pct: 0, semester: 1, done: false },
-          { name: 'Тригонометрични функции', pct: 0, semester: 1, done: false, flag: true },
-          { name: 'Производна и приложения', pct: 0, semester: 1, done: false, flag: true },
-          { name: 'Комбинаторика', pct: 0, semester: 1, done: false },
-          { name: 'Вероятности', pct: 0, semester: 2, done: false },
-          { name: 'Статистика', pct: 0, semester: 2, done: false },
-        ]
-      },
-      {
-        name: 'Биология и здравно образование',
-        short: 'Био',
-        icon: '🧬',
-        color: '#16a34a',
-        pct: 0,
-        topicsDone: 0,
-        topicsTotal: 8,
-        topics: [
-          { name: 'Молекулярна биология — ДНК и РНК', pct: 0, semester: 1, done: false },
-          { name: 'Репликация, транскрипция, транслация', pct: 0, semester: 1, done: false },
-          { name: 'Генетика — Менделови закони', pct: 0, semester: 1, done: false },
-          { name: 'Мутации и популационна генетика', pct: 0, semester: 1, done: false },
-          { name: 'Размножаване и развитие', pct: 0, semester: 2, done: false },
-          { name: 'Еволюция', pct: 0, semester: 2, done: false },
-        ]
-      },
-      {
-        name: 'Химия и опазване на околната среда',
-        short: 'Хим',
-        icon: '⚗️',
-        color: '#ea580c',
-        pct: 0,
-        topicsDone: 0,
-        topicsTotal: 8,
-        topics: [
-          { name: 'Органична химия — въглеводороди', pct: 0, semester: 1, done: false },
-          { name: 'Кислородни органични съединения', pct: 0, semester: 1, done: false, flag: true },
-          { name: 'Биохимия', pct: 0, semester: 1, done: false },
-          { name: 'Лекарства и горива', pct: 0, semester: 2, done: false },
-          { name: 'Полимери', pct: 0, semester: 2, done: false },
-          { name: 'Опазване на околната среда', pct: 0, semester: 2, done: false },
-        ]
-      }
-    ];
+    // ── Load all data in parallel ──
+    const [profileRes, quizRes, essayRes] = await Promise.all([
+      sb.from('profiles')
+        .select('plan, trial_started_at, trial_quizzes_done, trial_lessons_opened')
+        .eq('id', uid).maybeSingle(),
+      sb.from('quiz_results')
+        .select('*').eq('user_id', uid).order('created_at', { ascending: false }),
+      sb.from('essay_results')
+        .select('*').eq('user_id', uid).order('created_at', { ascending: false }),
+    ]);
 
-    // ── Зареди реални BEL данни от localStorage ──
+    const profile      = profileRes.data || {};
+    const quizResults  = quizRes.data  || [];
+    const essayResults = essayRes.data || [];
+
+    const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
+    const isAdmin     = ADMIN_EMAILS.includes(session.user.email);
+    const isTrial     = !isAdmin && (!profile.plan || profile.plan === 'trial' || profile.plan === 'free');
+    const trialStart  = profile.trial_started_at ? new Date(profile.trial_started_at) : null;
+    const trialExpired = isTrial && trialStart && (Date.now() - trialStart) / 86400000 > 3;
+
+    // ── Trial banner ──
+    if (isTrial && !trialExpired && trialStart) {
+      const daysLeft = Math.max(0, 3 - Math.floor((Date.now() - trialStart) / 86400000));
+      const dw = daysLeft === 1 ? 'ден' : 'дни';
+      const opened   = (profile.trial_lessons_opened || []).length;
+      const quizDone = (profile.trial_quizzes_done   || []).length;
+      document.getElementById('trial-banner').style.display = 'flex';
+      document.getElementById('trial-title').textContent = `Безплатен пробен период — остават ${daysLeft} ${dw}`;
+      document.getElementById('trial-sub').textContent   = `${opened}/3 урока · ${quizDone}/3 теста`;
+    }
+
+    // ── SVG icon helper ──
+    const SVG_WRAP = (paths, size=20) =>
+      `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+    const ICO = {
+      book:  SVG_WRAP(`<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>`),
+      tri:   SVG_WRAP(`<path d="M3 21L12 3l9 18H3z"/><line x1="6.5" y1="14" x2="17.5" y2="14"/>`),
+      bio:   SVG_WRAP(`<path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12c0-2.76 1.12-5.26 2.93-7.07"/><path d="M12 6v6l4 2"/>`),
+      flask: SVG_WRAP(`<path d="M9 3h6v11l3.5 6H5.5L9 14V3z"/><line x1="6" y1="8" x2="18" y2="8"/>`),
+      clock: SVG_WRAP(`<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>`),
+    };
+
+    // ── BEL topics ──
     const BEL_TOPICS = [
-      { name: 'Любовта (Дебелянов)', keys: ['bel12-debelyanov-lyubov'] },
-      { name: 'Любовта (Фотев)',     keys: ['bel12-fotev-lyubov'] },
-      { name: 'Любовта (Дубарова)', keys: ['bel12-dubarova-posveshenie'] },
-      { name: 'Вярата (Вапцаров)',   keys: ['bel12-vaptsarov-vyara'] },
-      { name: 'Трудът (Далчев)',     keys: ['bel12-dalchev-molitva'] },
-      { name: 'Спасова могила',      keys: ['bel12-elin-pelin-spasova-mogila'] },
-      { name: 'Ветрена мелница',     keys: ['bel12-elin-pelin-vetrena-melnitsa'] },
-      { name: 'Песента на колелетата', keys: ['bel12-yovkov-pesenta-na-koleletata'] },
-      { name: 'Балада за Георг Хених', keys: ['bel12-paskov-balada'] },
-      { name: 'Две души (Яворов)',   keys: ['bel12-yavorov-dve-dushi'] },
-      { name: 'Потомка (Багряна)',   keys: ['bel12-bagryana-potomka'] },
-      { name: 'Честен кръст (Христов)', keys: ['bel12-hristov-chesten-krast'] },
+      { name: 'Любовта (Дебелянов)',    slug: 'bel12-debelyanov-lyubov' },
+      { name: 'Любовта (Фотев)',        slug: 'bel12-fotev-lyubov' },
+      { name: 'Любовта (Дубарова)',     slug: 'bel12-dubarova-posveshenie' },
+      { name: 'Вярата (Вапцаров)',      slug: 'bel12-vaptsarov-vyara' },
+      { name: 'Трудът (Далчев)',        slug: 'bel12-dalchev-molitva' },
+      { name: 'Спасова могила',         slug: 'bel12-elin-pelin-spasova-mogila' },
+      { name: 'Ветрена мелница',        slug: 'bel12-elin-pelin-vetrena-melnitsa' },
+      { name: 'Песента на колелетата',  slug: 'bel12-yovkov-pesenta-na-koleletata' },
+      { name: 'Балада за Георг Хених',  slug: 'bel12-paskov-balada' },
+      { name: 'Две души (Яворов)',      slug: 'bel12-yavorov-dve-dushi' },
+      { name: 'Потомка (Багряна)',      slug: 'bel12-bagryana-potomka' },
+      { name: 'Честен кръст (Христов)', slug: 'bel12-hristov-chesten-krast' },
     ];
 
-    (function loadRealBelData() {
-      const topicResults = BEL_TOPICS.map(topic => {
-        const quizzes = [1,2,3].map(n => {
-          const raw = localStorage.getItem('quiz_' + topic.keys[0] + '-q' + n);
-          return raw ? JSON.parse(raw) : null;
-        }).filter(Boolean);
-        if (!quizzes.length) return { name: topic.name, pct: 0, done: false, semester: 1 };
-        const avgPct = Math.round(quizzes.reduce((s, q) => s + q.pct, 0) / quizzes.length);
-        const allPassed = quizzes.every(q => q.passed);
-        return { name: topic.name, pct: avgPct, done: true, semester: 1, flag: !allPassed && avgPct < 60 };
-      });
-
-      const donePcts = topicResults.filter(t => t.done).map(t => t.pct);
-      const realPct = donePcts.length ? Math.round(donePcts.reduce((a,b) => a+b, 0) / donePcts.length) : 0;
-      const realDone = topicResults.filter(t => t.done).length;
-
-      subjects[0].topics = topicResults;
-      subjects[0].pct = realPct || subjects[0].pct;
-      subjects[0].topicsDone = realDone;
-      subjects[0].topicsTotal = BEL_TOPICS.length;
-    })();
-
-    function gradeFromPct(pct) {
-      if (pct >= 85) return 6;
-      if (pct >= 70) return 5;
-      if (pct >= 50) return 4;
-      if (pct >= 30) return 3;
-      return 2;
+    // Get quiz result for a slug — Supabase first, localStorage fallback
+    function getTopicResult(slug) {
+      const sbRows = quizResults.filter(r => r.lesson_slug === slug);
+      if (sbRows.length > 0) {
+        const avg = Math.round(sbRows.reduce((s, r) => s + r.pct, 0) / sbRows.length);
+        return { pct: avg, done: true, flag: avg < 60 };
+      }
+      const lsRows = [1,2,3].map(n => {
+        try { return JSON.parse(localStorage.getItem('quiz_' + slug + '-q' + n)); } catch { return null; }
+      }).filter(Boolean);
+      if (lsRows.length > 0) {
+        const avg = Math.round(lsRows.reduce((s, r) => s + r.pct, 0) / lsRows.length);
+        return { pct: avg, done: true, flag: avg < 60 };
+      }
+      return { pct: 0, done: false, flag: false };
     }
 
-    function gradeClass(g) {
-      return 'grade-' + g;
+    const belTopics = BEL_TOPICS.map(t => ({ ...t, ...getTopicResult(t.slug) }));
+    const belDone = belTopics.filter(t => t.done);
+    const belQuizPct = belDone.length
+      ? Math.round(belDone.reduce((s, t) => s + t.pct, 0) / belDone.length) : 0;
+    const belEssays = essayResults.filter(e => e.lesson_slug && e.lesson_slug.startsWith('bel'));
+    const belEssayPct = belEssays.length
+      ? Math.round(belEssays.reduce((s, e) => s + (e.score || 0), 0) / belEssays.length) : 0;
+    const belTotalCount = belDone.length + belEssays.length;
+    const belPct = belTotalCount > 0
+      ? Math.round((belQuizPct * belDone.length + belEssayPct * belEssays.length) / belTotalCount)
+      : 0;
+
+    // ── Subject definitions ──
+    const SUBJECTS = [
+      {
+        id: 'bel', name: 'Български език и литература', short: 'БЕЛ',
+        icon: ICO.book, iconBg: '#e8edf7', color: '#1e3a5f',
+        pct: belPct, topicsDone: belDone.length, topicsTotal: BEL_TOPICS.length,
+        topics: belTopics, hasContent: true, locked: false,
+      },
+      {
+        id: 'mat', name: 'Математика', short: 'Мат',
+        icon: ICO.tri, iconBg: '#f3f0ff', color: '#5b21b6',
+        locked: isTrial && !trialExpired, hasContent: true,
+        ...(() => {
+          const topics = [
+            { name: 'Квадратна функция',            slug: 'math12-kvadratna-funkciya' },
+            { name: 'Квадратни неравенства',        slug: 'math12-kvadratni-neravenstva' },
+            { name: 'Показателна и логаритмична',   slug: 'math12-pokazatelna-logaritmichna' },
+            { name: 'Тригонометрия',                slug: 'math12-trigonometriya' },
+            { name: 'Прогресии',                    slug: 'math12-progresii' },
+            { name: 'Комбинаторика',                slug: 'math12-kombinatorika' },
+            { name: 'Вероятности',                  slug: 'math12-veroyatnosti' },
+            { name: 'Производна',                   slug: 'math12-proizvodna' },
+            { name: 'Геометрия',                    slug: 'math12-geometriya' },
+            { name: 'Квадратни неравенства (11)',   slug: 'math11-kvadratni-neravenstva' },
+            { name: 'Показателна (11)',              slug: 'math11-pokazatelna-logaritmichna' },
+            { name: 'Тригонометрия (11)',            slug: 'math11-trigonometriya' },
+            { name: 'Прогресии (11)',               slug: 'math11-progresii' },
+            { name: 'Планиметрия (11)',              slug: 'math11-planimeriya' },
+          ].map(t => ({ ...t, ...getTopicResult(t.slug) }));
+          const done = topics.filter(t => t.done);
+          return { topics, topicsDone: done.length, topicsTotal: topics.length, pct: done.length ? Math.round(done.reduce((s,t)=>s+t.pct,0)/done.length) : 0 };
+        })(),
+      },
+      {
+        id: 'bio', name: 'Биология', short: 'Био',
+        icon: ICO.bio, iconBg: '#f0fdf4', color: '#15803d',
+        locked: isTrial && !trialExpired, hasContent: true,
+        ...(() => {
+          const topics = [
+            { name: 'Клетката',                     slug: 'bio11-kletkata' },
+            { name: 'Фотосинтеза',                  slug: 'bio11-fotosinteza' },
+            { name: 'Клетъчно дишане',              slug: 'bio11-dishane' },
+            { name: 'Размножаване (11)',             slug: 'bio11-razmnozhavane' },
+            { name: 'Нервна система',               slug: 'bio11-nervna-sistema' },
+            { name: 'Ендокринна система',           slug: 'bio11-endokrinna-sistema' },
+            { name: 'Многоклетъчни организми',      slug: 'bio12-mnogokletchna' },
+            { name: 'Генетика — Мендел',            slug: 'bio12-genetika-mendel' },
+            { name: 'Мутации и генетика',           slug: 'bio12-mutatsii' },
+            { name: 'Размножаване (12)',             slug: 'bio12-razmnozhavane' },
+            { name: 'Еволюция',                     slug: 'bio12-evolyutsiya' },
+          ].map(t => ({ ...t, ...getTopicResult(t.slug) }));
+          const done = topics.filter(t => t.done);
+          return { topics, topicsDone: done.length, topicsTotal: topics.length, pct: done.length ? Math.round(done.reduce((s,t)=>s+t.pct,0)/done.length) : 0 };
+        })(),
+      },
+      {
+        id: 'him', name: 'Химия', short: 'Хим',
+        icon: ICO.flask, iconBg: '#fff7ed', color: '#c2410c',
+        locked: isTrial && !trialExpired, hasContent: true,
+        ...(() => {
+          const topics = [
+            { name: 'Строеж на атома',              slug: 'chem11-stroezh-atoma' },
+            { name: 'Химична връзка',               slug: 'chem11-himichna-vrazka' },
+            { name: 'Разтвори',                     slug: 'chem11-rastvori' },
+            { name: 'Окисление и редукция',         slug: 'chem11-okislenie-redukciya' },
+            { name: 'Скорост и равновесие',         slug: 'chem11-skorost-ravnovesie' },
+            { name: 'Неорганични съединения',       slug: 'chem11-neorganichni-saedinenia' },
+            { name: 'Въглеводороди',                slug: 'chem12-vaglevodorodi' },
+            { name: 'Кислородни съединения',        slug: 'chem12-kislorodmi-saedinenia' },
+            { name: 'Биохимия',                     slug: 'chem12-biohimiya' },
+            { name: 'Лекарства и горива',           slug: 'chem12-lekarstva-goriva' },
+            { name: 'Околна среда',                 slug: 'chem12-okolna-sreda' },
+            { name: 'Аналитична химия',             slug: 'chem12-analiz' },
+          ].map(t => ({ ...t, ...getTopicResult(t.slug) }));
+          const done = topics.filter(t => t.done);
+          return { topics, topicsDone: done.length, topicsTotal: topics.length, pct: done.length ? Math.round(done.reduce((s,t)=>s+t.pct,0)/done.length) : 0 };
+        })(),
+      },
+    ];
+
+    // ── Overall stats ──
+    const activeSubs = SUBJECTS.filter(s => s.topicsDone > 0);
+    const overallPct = activeSubs.length
+      ? Math.round(activeSubs.reduce((s, x) => s + x.pct, 0) / activeSubs.length) : 0;
+    const overallGrade = overallPct > 0
+      ? (2 + overallPct / 100 * 4).toFixed(2) : '—';
+    const totalDone = SUBJECTS.reduce((s, x) => s + x.topicsDone, 0);
+    const totalAll  = SUBJECTS.reduce((s, x) => s + x.topicsTotal, 0);
+
+    // ── All activities merged ──
+    const allActivities = [
+      ...quizResults.map(r  => ({ ...r,  kind: 'quiz',  date: new Date(r.created_at) })),
+      ...essayResults.map(r => ({ ...r,  kind: 'essay', date: new Date(r.created_at) })),
+    ].sort((a, b) => b.date - a.date);
+
+    const now       = new Date();
+    const yesterday = new Date(now); yesterday.setDate(now.getDate() - 1);
+    const weekAgo   = new Date(now); weekAgo.setDate(now.getDate() - 7);
+
+    function relDate(d) {
+      if (!d) return '—';
+      if (d.toDateString() === now.toDateString())       return 'Днес';
+      if (d.toDateString() === yesterday.toDateString()) return 'Вчера';
+      return d.toLocaleDateString('bg-BG', { day: 'numeric', month: 'long' });
     }
 
-    function dotColor(pct, done) {
-      if (!done) return '#d1d5db';
-      if (pct >= 70) return '#16a34a';
-      if (pct >= 50) return '#f59e0b';
-      return '#dc2626';
+    function relDateTime(d) {
+      const base = relDate(d);
+      const time = d.toLocaleTimeString('bg-BG', { hour: '2-digit', minute: '2-digit' });
+      return base + ', ' + time;
     }
 
-    // Render subjects
+    const lastDate     = allActivities.length ? allActivities[0].date : null;
+    const weekCount    = allActivities.filter(a => a.date >= weekAgo).length;
+
+    // ── Render stat cards ──
+    document.getElementById('s-grade').textContent = overallGrade;
+    document.getElementById('s-pct').textContent   = overallPct > 0 ? overallPct + '% успеваемост' : 'Няма данни';
+    document.getElementById('s-done').textContent  = totalDone;
+    document.getElementById('s-total').textContent = 'от ' + totalAll + ' теми за годината';
+    document.getElementById('s-last').textContent  = relDate(lastDate);
+    document.getElementById('s-last-sub').textContent = weekCount > 0
+      ? weekCount + (weekCount === 1 ? ' активност' : ' активности') + ' тази седмица'
+      : 'Няма активност тази седмица';
+
+    // ── Render subject cards ──
+    const CIRC = 2 * Math.PI * 26; // r=26
     const grid = document.getElementById('subjects-grid');
-    subjects.forEach(sub => {
-      const grade = gradeFromPct(sub.pct);
-      const donePct = Math.round(sub.topicsDone / sub.topicsTotal * 100);
 
-      const sem1 = sub.topics.filter(t => t.semester === 1);
-      const sem2 = sub.topics.filter(t => t.semester === 2);
+    SUBJECTS.forEach(sub => {
+      const pct    = sub.pct;
+      const offset = CIRC * (1 - pct / 100);
+      const donePct = sub.topicsTotal
+        ? Math.round(sub.topicsDone / sub.topicsTotal * 100) : 0;
 
-      function topicHTML(t) {
-        const dc = dotColor(t.pct, t.done);
-        return `<div class="topic-row">
-          <div class="topic-dot" style="background:${dc}"></div>
-          <div class="topic-name">${t.name}</div>
-          <div class="topic-pct">${t.done ? t.pct + '%' : '—'}</div>
-          ${t.flag ? '<div class="topic-flag" title="Затруднение">⚠️</div>' : ''}
+      let bodyHTML;
+      if (sub.locked) {
+        bodyHTML = `<div class="subj-locked">
+          <div style="font-size:24px;">🔒</div>
+          <div>Заключено в безплатния план</div>
+          <a href="/index.html#pricing">Отключи с абонамент →</a>
         </div>`;
+      } else if (!sub.hasContent) {
+        bodyHTML = `<div class="subj-locked">
+          <div style="font-size:22px;">🚧</div>
+          <div>Уроци — очаквайте скоро</div>
+        </div>`;
+      } else {
+        const pending = sub.topics.filter(t => !t.done).slice(0, 3);
+        const allDone = sub.topics.length > 0 && pending.length === 0;
+        bodyHTML = `
+          <div class="topics-heading">Предстоящи теми</div>
+          ${allDone
+            ? `<div class="empty-note">Всички теми завършени! 🎉</div>`
+            : pending.map(t => `
+              <a class="topic-row" href="/lessons/${t.slug}.html">
+                <div class="topic-dot" style="background:${sub.color}"></div>
+                <div class="topic-name">${t.name}</div>
+                ${t.flag ? '<span class="topic-warn">⚠️</span>' : ''}
+                <span class="topic-arrow">›</span>
+              </a>`).join('')
+          }`;
       }
 
       const card = document.createElement('div');
       card.className = 'subject-card';
       card.innerHTML = `
-        <div class="subject-head">
-          <div class="subject-name-row">
-            <div class="subject-icon" style="background:${sub.color}15;">${sub.icon}</div>
+        <div class="subj-head">
+          <div class="subj-info">
+            <div class="subj-icon" style="background:${sub.iconBg}">${sub.icon}</div>
             <div>
-              <div class="subject-name">${sub.name}</div>
-              <div class="subject-sub">${sub.topicsDone} от ${sub.topicsTotal} теми · ${sub.pct}% успеваемост</div>
+              <div class="subj-name">${sub.name}</div>
+              <div class="subj-pct">${pct > 0 ? pct + '% успеваемост' : 'Няма данни'}</div>
             </div>
           </div>
-          <div class="subject-grade ${gradeClass(grade)}">${grade}</div>
+          <div class="ring-wrap">
+            <svg class="ring-svg" width="64" height="64" viewBox="0 0 64 64">
+              <circle class="ring-track" cx="32" cy="32" r="26"/>
+              <circle class="ring-progress" cx="32" cy="32" r="26"
+                stroke="${sub.color}"
+                stroke-dasharray="${CIRC.toFixed(1)}"
+                stroke-dashoffset="${offset.toFixed(1)}"/>
+            </svg>
+            <div class="ring-label" style="color:${sub.color}">${pct > 0 ? pct + '%' : '—'}</div>
+          </div>
         </div>
-        <div class="prog-label-row">
-          <span>Напредък за годината</span>
-          <span>${donePct}%</span>
+        <div class="subj-bar-wrap">
+          <div class="subj-bar-fill" style="width:${donePct}%;background:${sub.color};"></div>
         </div>
-        <div class="prog-bar-wrap">
-          <div class="prog-bar-fill" style="width:${donePct}%;background:${sub.color};"></div>
-        </div>
-        <div class="topics-list">
-          <div class="semester-label">I срок</div>
-          ${sem1.map(topicHTML).join('')}
-          ${sem2.length ? `<div class="semester-label">II срок</div>${sem2.map(topicHTML).join('')}` : ''}
-        </div>`;
+        ${bodyHTML}`;
       grid.appendChild(card);
     });
 
-    // Overall stats
-    const overallPct = Math.round(subjects.reduce((s, x) => s + x.pct, 0) / subjects.length);
-    const overallGrade = gradeFromPct(overallPct);
-    const totalDone = subjects.reduce((s, x) => s + x.topicsDone, 0);
-    const totalAll  = subjects.reduce((s, x) => s + x.topicsTotal, 0);
-    const badge = document.getElementById('overall-grade-badge');
-    badge.textContent = overallGrade;
-    badge.className = 'grade-badge ' + gradeClass(overallGrade);
-    document.getElementById('overall-pct').textContent = overallPct + '% успеваемост';
-    document.getElementById('topics-done').textContent = totalDone;
-    document.getElementById('topics-total').textContent = 'от ' + totalAll + ' теми за годината';
+    // ── Chart ──
+    function buildChartData(period) {
+      const days = period === 'week' ? 7 : period === 'month' ? 30 : 365;
+      const labels = [], data = [];
 
-    // ── Chart — показва се само при реални данни ──
-    if (totalDone > 0) {
-      document.getElementById('chart-card').style.display = '';
+      if (period !== 'year') {
+        for (let i = days - 1; i >= 0; i--) {
+          const d = new Date(now); d.setDate(now.getDate() - i);
+          const ds = d.toISOString().slice(0, 10);
+          const rows = quizResults.filter(r => r.created_at.slice(0, 10) === ds);
+          labels.push(d.toLocaleDateString('bg-BG', { day: 'numeric', month: 'short' }));
+          data.push(rows.length > 0
+            ? Math.round(rows.reduce((s, r) => s + r.pct, 0) / rows.length) : null);
+        }
+      } else {
+        for (let i = 11; i >= 0; i--) {
+          const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+          const ms = d.toISOString().slice(0, 7);
+          const rows = quizResults.filter(r => r.created_at.slice(0, 7) === ms);
+          labels.push(d.toLocaleDateString('bg-BG', { month: 'short' }));
+          data.push(rows.length > 0
+            ? Math.round(rows.reduce((s, r) => s + r.pct, 0) / rows.length) : null);
+        }
+      }
+      return { labels, data };
     }
 
-    const weekLabels  = ['Пон', 'Вт', 'Ср', 'Чет', 'Пет', 'Съб', 'Нед'];
-    const weekData    = [0, 0, 0, 0, 0, 0, 0];
-    const monthLabels = [];
-    const monthData   = [];
-
     const ctx = document.getElementById('activity-chart').getContext('2d');
-    let chart = buildChart(monthLabels, monthData);
 
-    function buildChart(labels, data) {
-      if (window._chart) window._chart.destroy();
-      window._chart = new Chart(ctx, {
+    function renderChart(period) {
+      const { labels, data } = buildChartData(period);
+      const hasData = data.some(v => v !== null);
+      if (!hasData) {
+        document.getElementById('chart-wrap').style.display = 'none';
+        document.getElementById('chart-empty').style.display = 'flex';
+        return;
+      }
+      document.getElementById('chart-wrap').style.display = '';
+      document.getElementById('chart-empty').style.display = 'none';
+      if (window._dashChart) window._dashChart.destroy();
+      window._dashChart = new Chart(ctx, {
         type: 'line',
         data: {
           labels,
           datasets: [{
-            label: '% успеваемост',
             data,
-            borderColor: '#1e3a5f',
-            backgroundColor: 'rgba(30,58,95,0.08)',
+            borderColor: '#1e40af',
+            backgroundColor: 'rgba(30,64,175,0.07)',
             borderWidth: 2.5,
-            pointBackgroundColor: '#1e3a5f',
-            pointRadius: 5,
-            pointHoverRadius: 7,
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#1e40af',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6,
             fill: true,
-            tension: 0.4,
+            tension: 0.35,
+            spanGaps: true,
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: c => c.parsed.y !== null ? c.parsed.y + '% успеваемост' : '' } }
+          },
           scales: {
             y: {
               min: 0, max: 100,
-              ticks: {
-                callback: v => v + '%',
-                font: { family: 'Nunito Sans', size: 11 },
-                color: '#94a3b8',
-              },
-              grid: { color: 'rgba(0,0,0,0.05)' },
-              border: { display: false }
+              ticks: { callback: v => v + '%', font: { family: 'Nunito Sans', size: 11 }, color: '#94a3b8', stepSize: 25 },
+              grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false },
             },
             x: {
-              ticks: { font: { family: 'Nunito Sans', size: 11 }, color: '#94a3b8' },
-              grid: { display: false },
-              border: { display: false }
+              ticks: { font: { family: 'Nunito Sans', size: 11 }, color: '#94a3b8', maxTicksLimit: 8 },
+              grid: { display: false }, border: { display: false },
             }
           }
         }
       });
-      return window._chart;
     }
+
+    renderChart('month');
 
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        if (btn.dataset.period === 'week') buildChart(weekLabels, weekData);
-        else buildChart(monthLabels, monthData);
+        renderChart(btn.dataset.period);
       });
     });
-  </script>
 
-  <script>
-    // ── Active time per subject ──────────────────────────────
+    // ── Time tracker (localStorage) ──
     (function () {
       const STORE_KEY = 'razberi_time_v1';
-      const today     = new Date().toISOString().slice(0, 10);
-
-      const SUBJECT_META = {
-        'БЕЛ':        { icon: '📚', bg: '#f0f4ff' },
-        'Математика':  { icon: '📐', bg: '#f3f0ff' },
-        'Биология':    { icon: '🧬', bg: '#f0fdf4' },
-        'Химия':       { icon: '🧪', bg: '#fefce8' },
+      const META = {
+        'БЕЛ':        { icon: ICO.book,  bg: '#e8edf7', bar: '#1e3a5f' },
+        'Математика':  { icon: ICO.tri,   bg: '#f3f0ff', bar: '#5b21b6' },
+        'Биология':    { icon: ICO.bio,   bg: '#f0fdf4', bar: '#15803d' },
+        'Химия':       { icon: ICO.flask, bg: '#fff7ed', bar: '#c2410c' },
       };
+      const SHORT = { 'БЕЛ': 'БЕЛ', 'Математика': 'Математика', 'Биология': 'Биология', 'Химия': 'Химия' };
 
-      function fmt(secs) {
-        if (secs < 60)   return secs + ' сек';
-        const m = Math.floor(secs / 60);
-        const h = Math.floor(m / 60);
-        if (h > 0) return h + ' ч ' + (m % 60) + ' мин';
-        return m + ' мин';
+      function fmt(s) {
+        if (s < 60) return s + ' сек';
+        const m = Math.floor(s / 60), h = Math.floor(m / 60);
+        return h > 0 ? h + ' ч ' + (m % 60) + ' мин' : m + ' мин';
       }
 
-      let store;
-      try { store = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); }
-      catch { store = {}; }
-
-      const el = document.getElementById('time-by-subject');
+      // Нормализира стари ключове (ХИМИЯ→Химия, БИОЛОГИЯ→Биология и др.)
+      const NORMALIZE = { 'ХИМИЯ': 'Химия', 'БИОЛОГИЯ': 'Биология', 'МАТЕМАТИКА': 'Математика', 'ХИМ': 'Химия', 'БИО': 'Биология', 'МАТ': 'Математика' };
+      let store = {};
+      try {
+        const raw = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+        for (const [k, v] of Object.entries(raw)) {
+          const norm = NORMALIZE[k] || k;
+          if (store[norm]) { store[norm].total += v.total; store[norm].today = (store[norm].today || 0) + (v.today || 0); }
+          else store[norm] = { ...v };
+        }
+      } catch {}
       const entries = Object.entries(store).sort((a, b) => b[1].total - a[1].total);
+      const el = document.getElementById('time-section');
 
-      if (entries.length === 0) {
-        el.innerHTML = '<div class="time-empty">Няма записано активно време все още. Прочети урок и ще се появи тук.</div>';
+      if (!entries.length) {
+        el.innerHTML = '<div class="empty-note">Прочети урок и активното ти време ще се появи тук.</div>';
         return;
       }
 
       const maxTotal = Math.max(...entries.map(([, v]) => v.total), 1);
+      const totalAll = entries.reduce((s, [, v]) => s + v.total, 0);
 
-      el.innerHTML = entries.map(([subject, data]) => {
-        const meta    = SUBJECT_META[subject] || { icon: '📖', bg: '#f5f5f5' };
-        const todaySec = data.lastDate === today ? (data.today || 0) : 0;
-        const barPct  = Math.round(data.total / maxTotal * 100);
-        return `
-          <div class="time-subject-row">
-            <div class="time-subject-icon" style="background:${meta.bg}">${meta.icon}</div>
-            <div class="time-subject-name">${subject}</div>
-            <div class="time-bar-wrap">
-              <div class="time-bar-fill" style="width:${barPct}%"></div>
-            </div>
-            <div class="time-today">${todaySec > 0 ? fmt(todaySec) + ' днес' : '—'}</div>
-            <div class="time-total">${fmt(data.total)} общо</div>
-          </div>`;
-      }).join('');
+      el.innerHTML = entries.map(([subj, data]) => {
+        const m = META[subj] || { icon: ICO.book, bg: '#f5f5f5', bar: '#64748b' };
+        const barPct = Math.round(data.total / maxTotal * 100);
+        return `<div class="time-row">
+          <div class="time-row-top">
+            <div class="time-icon-wrap" style="background:${m.bg}">${m.icon}</div>
+            <div class="time-short">${SHORT[subj] || subj}</div>
+          </div>
+          <div class="time-row-bar">
+            <div class="time-bar-bg"><div class="time-bar-fg" style="width:${barPct}%;background:${m.bar};"></div></div>
+            <div class="time-amount">${fmt(data.total)}</div>
+          </div>
+        </div>`;
+      }).join('') + `<div class="time-total-row">${ICO.clock} Общо: <strong>${fmt(totalAll)}</strong></div>`;
     })();
+
+    // ── Recent activity ──
+    const SUBJ_META = {
+      bel: { short: 'БЕЛ', icon: ICO.book,  bg: '#e8edf7' },
+      mat: { short: 'Мат', icon: ICO.tri,   bg: '#f3f0ff' },
+      bio: { short: 'Био', icon: ICO.bio,   bg: '#f0fdf4' },
+      him: { short: 'Хим', icon: ICO.flask, bg: '#fff7ed' },
+    };
+    function subjMeta(slug) {
+      if (!slug) return SUBJ_META.bel;
+      if (slug.startsWith('mat')) return SUBJ_META.mat;
+      if (slug.startsWith('bio')) return SUBJ_META.bio;
+      if (slug.startsWith('him')) return SUBJ_META.him;
+      return SUBJ_META.bel;
+    }
+    function topicName(slug) {
+      if (!slug) return '—';
+      const found = BEL_TOPICS.find(t => t.slug === slug || slug.startsWith(t.slug));
+      return found ? found.name : slug.split('-').slice(-2).join(' ');
+    }
+
+    const actEl = document.getElementById('activity-section');
+    if (!allActivities.length) {
+      actEl.innerHTML = '<div class="empty-note">Направи първия си тест и ще се появи тук!</div>';
+    } else {
+      actEl.innerHTML = allActivities.slice(0, 5).map(a => {
+        const m    = subjMeta(a.lesson_slug);
+        const name = a.kind === 'essay'
+          ? m.short + ' – съчинение'
+          : topicName(a.lesson_slug) + (a.quiz_num ? ' – тест ' + a.quiz_num : '');
+        return `<div class="activity-row">
+          <div class="activity-icon" style="background:${m.bg}">${m.icon}</div>
+          <div style="flex:1;">
+            <div class="activity-name">${name}</div>
+            <div class="activity-time">${relDateTime(a.date)}</div>
+          </div>
+          <div class="activity-check">✓</div>
+        </div>`;
+      }).join('');
+    }
+
+    // ── Recommendation ──
+    const weakest = SUBJECTS.filter(s => s.pct > 0).sort((a, b) => a.pct - b.pct)[0];
+    if (weakest) {
+      document.getElementById('rec-card').style.display = 'flex';
+      document.getElementById('rec-body').textContent =
+        `Опитай да отделяш по 20 минути дневно за ${weakest.name}, за да подобриш резултата си.`;
+    } else if (totalDone === 0) {
+      document.getElementById('rec-card').style.display = 'flex';
+      document.getElementById('rec-body').textContent =
+        'Избери урок от БЕЛ и направи първия си тест — резултатите ще се появят тук.';
+    }
   </script>
+
 </body>
 </html>

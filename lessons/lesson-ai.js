@@ -1,3 +1,9 @@
+// Маркира урока като посетен — отключва Тест/Съчинение в urotsi.html
+(function () {
+  const key = location.pathname.split('/').pop().replace('.html', '');
+  if (key) localStorage.setItem('lesson_visited_' + key, '1');
+})();
+
 // Знайко AI assistant — shared across all lesson pages
 // Requires on the page:
 //   window.LESSON_TITLE = '...'
@@ -228,4 +234,32 @@
     askAI({ text: q, mode: 'chat' });
   });
 
+})();
+
+// ── Бутон за съчинение (само БЕЛ 12 уроци) ──
+(function () {
+  const essayLessons = new Set([
+    'bel12-debelyanov-lyubov', 'bel12-fotev-lyubov', 'bel12-dubarova-posveshenie',
+    'bel12-vaptsarov-vyara', 'bel12-dalchev-molitva', 'bel12-elin-pelin-spasova-mogila',
+    'bel12-elin-pelin-vetrena-melnitsa', 'bel12-yovkov-pesenta-na-koleletata', 'bel12-paskov-balada',
+    'bel12-yavorov-dve-dushi', 'bel12-bagryana-potomka', 'bel12-hristov-chesten-krast',
+  ]);
+  const key = location.pathname.split('/').pop().replace('.html', '');
+  if (!essayLessons.has(key)) return;
+
+  // Find quiz CTA panel and append essay section
+  const panels = document.querySelectorAll('.lesson-panel');
+  panels.forEach(panel => {
+    if (!panel.querySelector(':scope > div > a[href*="-quiz"]')) return;
+    const div = document.createElement('div');
+    div.style.cssText = 'margin-top:18px;padding-top:18px;border-top:1px solid var(--line);';
+    div.innerHTML = `
+      <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:4px;">Интерпретативно съчинение</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">5 теми · неограничени опити · оценяване по ДЗИ критерии</div>
+      <a href="/lessons/sachine.html?key=${key}" style="display:block;text-align:center;padding:12px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s;"
+        onmouseover="this.style.background='#2d5a9e'" onmouseout="this.style.background='var(--accent)'">
+        Напиши интерпретативно съчинение →
+      </a>`;
+    panel.appendChild(div);
+  });
 })();

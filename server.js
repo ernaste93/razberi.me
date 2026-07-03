@@ -654,7 +654,6 @@ const MAINTENANCE_HTML = `<!DOCTYPE html>
 <body>
   <div class="logo">razberi.me</div>
   <h1>Очаквайте скоро 🚀</h1>
-  <p>Платформата за матурна подготовка е в процес на изработка. Скоро ще бъде готова!</p>
   <form class="admin-form" method="POST" action="/admin-bypass">
     <input type="password" name="secret" placeholder="Admin парола" autocomplete="off">
     <button type="submit">Влез</button>

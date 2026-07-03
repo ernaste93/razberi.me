@@ -17,7 +17,7 @@
 
 
 * { box-sizing: border-box; }
-a, img { -webkit-user-drag: none; user-drag: none; }
+a, button, img { -webkit-user-drag: none; user-drag: none; user-select: none; }
 img { pointer-events: none; }
 a img { pointer-events: auto; }
 button, a, input, select, .nav-btn, .role-btn, .button {
@@ -25,11 +25,17 @@ button, a, input, select, .nav-btn, .role-btn, .button {
               opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 html { scroll-behavior: smooth; }
+@keyframes page-fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 body {
   margin: 0;
   font-family: "Nunito Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: var(--bg) url('/logos/background.png') center top / cover fixed;
   color: var(--text);
+  animation: page-fadein 0.28s ease both;
 }
 
 a { color: inherit; text-decoration: none; }

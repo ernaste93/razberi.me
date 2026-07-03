@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Оценки — Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:  #1a2f5a;
+      --ink:   #1e293b;
+      --muted: #64748b;
+      --border:#e2e8f0;
+      --bg:    #f8fafc;
+      --paper: #ffffff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    a, button, img { -webkit-user-drag: none; user-drag: none; user-select: none; }
+    body { font-family: 'Nunito Sans', sans-serif; background: var(--bg) url('/logos/background.png') center top / cover fixed; min-height: 100vh; color: var(--ink); }
+
+    /* ── Nav ── */
+    .topbar {
+      background: var(--navy);
+      height: 52px; display: flex; align-items: center;
+      padding: 0 24px; gap: 16px; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .topbar-back { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; font-weight: 700; transition: color .15s; }
+    .topbar-back:hover { color: #fff; }
+    .topbar-title { color: #fff; font-size: 16px; font-weight: 800; }
+
+    /* ── Page ── */
+    .page { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+
+    /* ── Student header ── */
+    .student-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px; gap: 16px; flex-wrap: wrap;
+    }
+    .student-name { font-size: 22px; font-weight: 800; color: var(--navy); }
+    .student-year { font-size: 12px; color: var(--muted); font-weight: 700; margin-top: 2px; }
+    .overall-chip {
+      display: flex; flex-direction: column; align-items: center;
+      background: var(--navy); color: #fff;
+      border-radius: 14px; padding: 10px 20px; min-width: 80px;
+    }
+    .overall-chip-lbl { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; opacity: .6; }
+    .overall-chip-val { font-size: 26px; font-weight: 900; line-height: 1; margin-top: 2px; letter-spacing: -.5px; }
+
+    /* ── Section tabs ── */
+    .tabs { display: flex; gap: 6px; margin-bottom: 24px; flex-wrap: wrap; }
+    .tab {
+      padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700;
+      border: 2px solid var(--border); background: var(--paper); color: var(--muted);
+      cursor: pointer; transition: all .15s;
+    }
+    .tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .tab:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
+
+    /* ── Subject card ── */
+    .subj-card {
+      background: var(--paper);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .subj-card-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .subj-color-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-right: 10px;
+    }
+    .subj-name { font-size: 15px; font-weight: 800; flex: 1; }
+    .subj-avg-wrap { display: flex; align-items: baseline; gap: 6px; }
+    .subj-avg { font-size: 28px; font-weight: 900; line-height: 1; letter-spacing: -.5px; }
+    .subj-avg-cat { font-size: 12px; font-weight: 800; margin-top: 2px; }
+    .subj-avg-lbl { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    .subj-pct { font-size: 12px; font-weight: 700; color: var(--muted); }
+
+    /* ── Tests table ── */
+    .tests-table { width: 100%; border-collapse: collapse; }
+    .tests-table th {
+      padding: 8px 16px; font-size: 10px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .07em; color: var(--muted);
+      text-align: left; background: #f8fafc; border-bottom: 1px solid var(--border);
+    }
+    .tests-table th:last-child { text-align: right; }
+    .tests-table td {
+      padding: 11px 16px; font-size: 13px; font-weight: 600;
+      border-bottom: 1px solid var(--border); color: var(--ink);
+    }
+    .tests-table tr:last-child td { border-bottom: none; }
+    .tests-table td.td-grade {
+      font-size: 13px; font-weight: 800;
+      text-align: right; padding-right: 20px;
+    }
+    .tests-table td.td-pct { text-align: right; }
+    .tests-table td.td-date { color: var(--muted); font-size: 12px; }
+    .badge {
+      display: inline-block; border-radius: 6px; padding: 2px 7px;
+      font-size: 11px; font-weight: 800;
+    }
+
+    /* ── Progress bar ── */
+    .subj-prog { padding: 0 20px 14px; }
+    .prog-bar { height: 5px; background: var(--border); border-radius: 5px; overflow: hidden; margin-top: 8px; }
+    .prog-fill { height: 100%; border-radius: 5px; }
+
+    /* ── Empty ── */
+    .empty-card {
+      background: var(--paper); border: 1.5px dashed var(--border);
+      border-radius: 16px; padding: 40px 20px; text-align: center;
+      color: var(--muted); font-size: 14px; margin-bottom: 20px;
+    }
+
+    /* ── Loading ── */
+    .loading { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 14px; }
+    .spinner {
+      width: 32px; height: 32px; border: 3px solid var(--border);
+      border-top-color: var(--navy); border-radius: 50%;
+      animation: spin .7s linear infinite; margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Hidden ── */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="topbar-back" href="/dnevnik.html" draggable="false">← Дашборд</a>
+  <div class="topbar-title">Оценки</div>
+</header>
+
+<div class="page">
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    Зареждане…
+  </div>
+
+  <div id="content" class="hidden">
+    <div class="student-hdr">
+      <div>
+        <div class="student-name" id="student-name">—</div>
+        <div class="student-year">Учебна година 2025 – 2026</div>
+      </div>
+      <div class="overall-chip" id="overall-chip" style="display:none">
+        <div class="overall-chip-lbl">Обща</div>
+        <div class="overall-chip-val" id="overall-val">—</div>
+      </div>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <div class="tab active" data-key="all">Всички</div>
+    </div>
+
+    <div id="cards"></div>
+  </div>
+</div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+(async () => {
+  const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+  const { data:{ session } } = await sb.auth.getSession();
+  if (!session) { window.location.href = '/auth.html'; return; }
+  const uid = session.user.id;
+
+  const [quizR, essayR, profR] = await Promise.all([
+    sb.from('quiz_results').select('*').eq('user_id',uid).order('created_at',{ascending:false}),
+    sb.from('essay_results').select('*').eq('user_id',uid).order('created_at',{ascending:false}),
+    sb.from('profiles').select('full_name,grade').eq('id',uid).maybeSingle(),
+  ]);
+  const quizAll  = quizR.data   || [];
+  const essayAll = essayR.data  || [];
+  const profile  = profR.data   || {};
+
+  // ── Config ──
+  const SUBJECTS = [
+    { key:'bel',  label:'Български език и литература', short:'БЕЛ',       color:'#1a2f5a', essay:true  },
+    { key:'math', label:'Математика',                   short:'Математика', color:'#5b21b6', essay:false },
+    { key:'bio',  label:'Биология',                     short:'Биология',   color:'#15803d', essay:false },
+    { key:'chem', label:'Химия',                        short:'Химия',      color:'#b45309', essay:false },
+  ];
+
+  // ── Helpers ──
+  function gradeNum(pct) { return pct>=92?6 : pct>=76?5 : pct>=56?4 : pct>=36?3 : 2; }
+  function gradeLabel(g) {
+    if (g >= 5.50) return 'Отличен';
+    if (g >= 4.50) return 'Много добър';
+    if (g >= 3.50) return 'Добър';
+    if (g >= 3.00) return 'Среден';
+    return 'Слаб';
+  }
+  function gradeColor(g) { return g>=5.5?'#15803d' : g>=4.5?'#65a30d' : g>=3.5?'#ca8a04' : g>=3?'#f97316' : '#dc2626'; }
+  function fmtGrade(g)   { return g.toFixed(2); }
+  const LESSON_TITLES = {
+    'bel12-debelyanov-lyubov':            'Дебелянов — „Аз искам да те помня все така"',
+    'bel12-fotev-lyubov':                 'Фотев — „Колко си хубава!"',
+    'bel12-dubarova-posveshenie':         'Дубарова — „Посвещение"',
+    'bel12-vaptsarov-vyara':              'Вапцаров — „Вяра"',
+    'bel12-dalchev-molitva':             'Далчев — „Молитва"',
+    'bel12-elin-pelin-spasova-mogila':    'Елин Пелин — „Спасова могила"',
+    'bel12-elin-pelin-vetrena-melnitsa':  'Елин Пелин — „Ветрената мелница"',
+    'bel12-yovkov-pesenta-na-koleletata': 'Йовков — „Песента на колелетата"',
+    'bel12-paskov-balada':                'Пасков — „Балада за Георг Хених"',
+    'bel12-yavorov-dve-dushi':            'Яворов — „Две души"',
+    'bel12-bagryana-potomka':             'Багряна — „Потомка"',
+    'bel12-hristov-chesten-krast':        'Христов — „Честен кръст"',
+    'bel11-vazov-pod-igoto':             'Вазов — „Под игото"',
+    'bel11-vazov-epopea':                'Вазов — „Епопея на забравените"',
+    'bel11-vazov-opalchentsite':         'Вазов — „Опълченците на Шипка"',
+    'bel11-vazov-paisiy':                'Вазов — „Паисий"',
+    'bel11-vazov-tih-byal-dunav':        'Вазов — „Тих бял Дунав"',
+    'bel11-botev-hadzhi-dimityr':        'Ботев — „Хаджи Димитър"',
+    'bel11-botev-obesa':                 'Ботев — „Обесването на Васил Левски"',
+    'bel11-yavorov-gradushka':           'Яворов — „Градушка"',
+    'bel11-slaveykov-cis-moll':          'П. П. Славейков — „Cis moll"',
+    'bel11-aleko-bay-ganyo':             'Алеко Константинов — „Бай Ганьо"',
+    'bel11-elin-pelin-andreshko':        'Елин Пелин — „Андрешко"',
+    'bel11-talev-zhelezniyat-svetilnik': 'Талев — „Железният светилник"',
+    'bel11-stanev-kradetsat':            'Станев — „Крадецът на праскови"',
+    'bel11-stratiev-sako':               'Стратиев — „Сако от велур"',
+    'bel11-smirnanski-yohan':            'Смирненски — „Йохан"',
+    'bel11-vaptsarov-istoriya':          'Вапцаров — „История"',
+    'bel11-radichkov-nezhnata-spirala':  'Радичков — „Нежната спирала"',
+    'bio11-kletkata':                    'Клетката — структура и органели',
+    'bio11-fotosinteza':                 'Фотосинтеза',
+    'bio11-dishane':                     'Клетъчно дишане',
+    'bio11-nervna-sistema':              'Нервна система',
+    'bio11-endokrinna-sistema':          'Ендокринна система',
+    'bio11-razmnozhavane':               'Размножаване',
+    'bio12-evolyutsiya':                 'Еволюция',
+    'bio12-razmnozhavane':               'Размножаване — 12 клас',
+    'bio12-mutatsii':                    'Мутации',
+    'bio12-mnogokletchna':               'Многоклетъчни организми',
+    'chem11-stroezh-atoma':             'Строеж на атома',
+    'chem11-himichna-vrazka':           'Химична връзка',
+    'chem11-rastvori':                  'Разтвори и рН',
+    'chem11-okislenie-redukciya':       'Окислително-редукционни реакции',
+    'chem11-neorganichni-saedinenia':   'Неорганични съединения',
+    'chem11-skorost-ravnovesie':        'Скорост и равновесие',
+    'chem12-analiz':                    'Качествен анализ',
+    'chem12-lekarstva-goriva':          'Лекарства и горива',
+    'math11-trigonometriya':            'Тригонометрия',
+    'math11-pokazatelna-logaritmichna': 'Показателна и логаритмична функция',
+    'math11-kvadratni-neravenstva':     'Квадратни неравенства',
+    'math11-progresii':                 'Прогресии',
+    'math11-planimeriya':               'Планиметрия',
+    'math12-trigonometriya':            'Тригонометрични функции',
+    'math12-kvadratna-funkciya':        'Квадратна функция',
+    'math12-kvadratni-neravenstva':     'Квадратни неравенства',
+    'math12-proizvodna':                'Производна',
+    'math12-geometriya':                'Геометрия',
+    'math12-kombinatorika':             'Комбинаторика',
+    'math12-veroyatnosti':              'Вероятности',
+    'math12-pokazatelna-logaritmichna': 'Показателна и логаритмична функция',
+    'math12-progresii':                 'Прогресии',
+    'bel12-pravopis':                   'Правопис',
+    'bel12-punktuatsiya':               'Пунктуация',
+    'bel12-gramatika':                  'Граматика',
+    'bel12-leksika':                    'Лексика',
+  };
+  function shortName(slug) {
+    if (!slug) return '—';
+    return LESSON_TITLES[slug] || slug.replace(/^(bel|math|bio|chem)\d*-/,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  }
+  function relDate(s) {
+    const d = new Date(s), diff = Math.floor((Date.now()-d)/86400000);
+    if (diff===0) return 'Днес'; if (diff===1) return 'Вчера';
+    if (diff<7) return `Пр. ${diff} дни`;
+    return d.toLocaleDateString('bg-BG',{day:'numeric',month:'short',year:'numeric'});
+  }
+
+  // ── Render student header ──
+  const name = profile.full_name || session.user.email?.split('@')[0] || '—';
+  document.getElementById('student-name').textContent = name;
+
+  // ── Compute per-subject data ──
+  const subjData = SUBJECTS.map(s => {
+    const qRows  = quizAll.filter(r => r.lesson_slug?.startsWith(s.key));
+    const eRows  = essayAll.filter(r => r.lesson_slug?.startsWith(s.key));
+    // Group by lesson slug, average per lesson (same algorithm as dashboard)
+    const bySlug = {};
+    qRows.forEach(r => {
+      if (!bySlug[r.lesson_slug]) bySlug[r.lesson_slug] = [];
+      bySlug[r.lesson_slug].push(r.pct);
+    });
+    const lessonAvgs = Object.values(bySlug).map(pcts => Math.round(pcts.reduce((a,p)=>a+p,0)/pcts.length));
+    const avgPct = lessonAvgs.length ? Math.round(lessonAvgs.reduce((a,p)=>a+p,0)/lessonAvgs.length) : null;
+    const avg    = avgPct !== null ? 2 + avgPct/100*4 : null;
+    return { ...s, qRows, eRows, avgPct, avg };
+  });
+
+  // ── Overall average ──
+  const withGrade = subjData.filter(s => s.avg !== null);
+  if (withGrade.length) {
+    const overall = withGrade.reduce((a,s)=>a+s.avg,0)/withGrade.length;
+    const chip = document.getElementById('overall-chip');
+    chip.style.display = 'flex';
+    chip.querySelector('#overall-val').textContent = fmtGrade(overall);
+  }
+
+  // ── Tabs ──
+  const tabsEl = document.getElementById('tabs');
+  SUBJECTS.forEach(s => {
+    const t = document.createElement('div');
+    t.className = 'tab'; t.dataset.key = s.key; t.textContent = s.short;
+    tabsEl.appendChild(t);
+  });
+
+  let activeKey = 'all';
+  tabsEl.addEventListener('click', e => {
+    const tab = e.target.closest('.tab');
+    if (!tab) return;
+    activeKey = tab.dataset.key;
+    tabsEl.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.key===activeKey));
+    renderCards();
+  });
+
+  // ── Render cards ──
+  function renderCards() {
+    const cardsEl = document.getElementById('cards');
+    cardsEl.innerHTML = '';
+    const toShow = activeKey==='all' ? subjData : subjData.filter(s=>s.key===activeKey);
+
+    toShow.forEach(s => {
+      const hasData = s.qRows.length > 0 || s.eRows.length > 0;
+      if (!hasData) {
+        cardsEl.insertAdjacentHTML('beforeend', `
+          <div class="empty-card">
+            <div style="font-size:28px;margin-bottom:8px;opacity:.4">📋</div>
+            <strong>${s.label}</strong><br>
+            Реши тест, за да се появят оценките.
+          </div>`);
+        return;
+      }
+
+      const avg   = s.avg;
+      const gNum  = avg !== null ? fmtGrade(avg) : '—';
+      const pct   = s.avgPct !== null ? Math.round(s.avgPct) : 0;
+
+      // Group quiz rows by base lesson
+      const byLesson = {};
+      s.qRows.forEach(r => {
+        const base = r.lesson_slug.replace(/-q\d+$/,'');
+        if (!byLesson[base]) byLesson[base] = [];
+        byLesson[base].push(r);
+      });
+
+      const testRows = Object.entries(byLesson).map(([slug, rows]) => {
+        const best   = rows.reduce((a,b) => a.pct>=b.pct ? a : b);
+        const gRaw   = 2 + best.pct/100*4;
+        const gc2    = gradeColor(gRaw);
+        const gDisp  = gradeNum(best.pct);
+        const gLbl   = gradeLabel(gRaw);
+        return `<tr>
+          <td>${shortName(slug)}</td>
+          <td class="td-date">${relDate(best.created_at)}</td>
+          <td class="td-pct"><span class="badge" style="background:${gc2}18;color:${gc2}">${best.pct}%</span></td>
+          <td class="td-grade" style="color:${gc2}">${gDisp} <span style="font-size:11px;font-weight:700">${gLbl}</span></td>
+        </tr>`;
+      }).join('');
+
+      const essayRows = s.essay && s.eRows.length ? s.eRows.slice(0,5).map(e => {
+        const g  = e.grade ?? '—';
+        const gc3 = typeof g==='number' ? gradeColor(g/6*100) : '#64748b';
+        return `<tr>
+          <td>${shortName(e.lesson_slug)} <span style="font-size:11px;color:var(--muted)">(съчинение)</span></td>
+          <td class="td-date">${relDate(e.created_at)}</td>
+          <td></td>
+          <td class="td-grade" style="color:${gc3}">${g}</td>
+        </tr>`;
+      }).join('') : '';
+
+      cardsEl.insertAdjacentHTML('beforeend', `
+        <div class="subj-card">
+          <div class="subj-card-hdr">
+            <div class="subj-color-dot" style="background:${s.color}"></div>
+            <div class="subj-name" style="color:${s.color}">${s.label}</div>
+            <div class="subj-avg-wrap">
+              ${avg !== null ? `
+                <div style="text-align:right">
+                  <div class="subj-avg" style="color:${gradeColor(avg)}">${gNum}</div>
+                  <div class="subj-avg-cat" style="color:${gradeColor(avg)}">${gradeLabel(avg)}</div>
+                </div>
+              ` : '<div class="subj-avg-lbl" style="color:var(--muted)">Няма данни</div>'}
+            </div>
+          </div>
+          ${avg !== null ? `
+            <div class="subj-prog">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px;">
+                <span style="font-size:11px;font-weight:700;color:var(--muted)">Успеваемост</span>
+                <span style="font-size:11px;font-weight:800;color:${gradeColor(avg)}">${pct}%</span>
+              </div>
+              <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${s.color}"></div></div>
+            </div>
+          ` : ''}
+          <table class="tests-table">
+            <thead><tr>
+              <th>Урок / Тема</th><th>Дата</th><th style="text-align:right">Резултат</th><th style="text-align:right">Оценка</th>
+            </tr></thead>
+            <tbody>${testRows}${essayRows}</tbody>
+          </table>
+        </div>`);
+    });
+  }
+
+  // ── Show ──
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('content').classList.remove('hidden');
+  renderCards();
+})();
+</script>
+</body>
+</html>
