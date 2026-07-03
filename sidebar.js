@@ -144,6 +144,7 @@
         .eq('id', session.user.id)
         .single();
       var profile = profileRes.data || {};
+      console.log('[sidebar] profile:', profile, 'meta:', session.user.user_metadata);
 
       // User row
       var initials = (function () {
