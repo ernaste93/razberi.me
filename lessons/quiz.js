@@ -182,17 +182,12 @@
     let btns = '';
     if (passed) {
       btns = `${backBtn}${nextBtn}`;
-    } else if (attemptNum === 1) {
-      btns = `
-        ${backBtn}
-        <a href="${cfg.lessonUrl}" class="btn-lesson">↺ Прочети урока</a>
-        <button class="btn-retry" id="btn-retry">↩ Опитай пак (остава 1 опит)</button>
-        ${cfg.nextQuizUrl ? nextBtn : ''}`;
     } else {
       btns = `
         ${backBtn}
         <a href="${cfg.lessonUrl}" class="btn-lesson">↺ Прочети урока</a>
-        ${nextBtn}`;
+        <button class="btn-retry" id="btn-retry">↩ Опитай пак</button>
+        ${cfg.nextQuizUrl ? nextBtn : ''}`;
     }
 
     const wrongTexts = qs
@@ -269,7 +264,7 @@
       <div class="results-btn-row" style="margin-top:20px;">${btns}</div>`;
 
     document.getElementById('btn-retry')?.addEventListener('click', () => {
-      attemptNum = 2;
+      attemptNum++;
       cur = 0;
       userAnswers.length = 0;
       questions = pickQuestions();
