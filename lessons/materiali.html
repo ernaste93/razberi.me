@@ -250,17 +250,48 @@
   .ks-tips-intro { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 0; }
   .konspekt-section a, .ks-essay-locked a { -webkit-user-drag: none; user-select: none; }
 
+    /* Search bar */
+    .picker-search-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .picker-search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      pointer-events: none;
+      display: flex;
+    }
+    .picker-search {
+      width: 100%;
+      padding: 11px 16px 11px 42px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .picker-search::placeholder { color: #94a3b8; font-weight: 600; }
+    .picker-search:focus { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(45,90,158,.1); }
+    .picker-no-results { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; font-weight: 600; }
+
     /* Picker filters */
     .picker-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
     .picker-filter {
-      padding: 7px 18px;
-      border-radius: 99px;
-      border: 1.5px solid var(--line);
+      padding: 9px 22px;
+      border-radius: 10px;
+      border: 1.5px solid #e2e8f0;
       background: #fff;
       font-family: inherit;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
-      color: var(--muted);
+      color: #475569;
       cursor: pointer;
       transition: border-color .15s, color .15s, background .15s;
     }
@@ -270,6 +301,42 @@
     /* Error */
     .error-wrap { text-align: center; padding: 40px 0; }
     .error-text { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+
+    /* ── Picker summary bar ── */
+    .picker-summary {
+      background: #fff; border: 1.5px solid #e8edf5; border-radius: 12px;
+      padding: 11px 18px; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap; min-height: 44px;
+    }
+    .ps-num  { font-size: 13px; font-weight: 800; color: #0f172a; }
+    .ps-lbl  { font-size: 13px; color: #475569; }
+    .ps-sep  { font-size: 13px; color: #cbd5e1; }
+    .ps-read { font-size: 13px; font-weight: 800; color: #16a34a; }
+
+    /* ── Picker cards (уроци style) ── */
+    .mat-picker-card {
+      background: #fff; border: 1.5px solid #e8edf5; border-radius: 14px;
+      padding: 16px 18px; text-decoration: none; display: block; color: inherit;
+      transition: box-shadow .2s, border-color .2s, transform .2s;
+    }
+    .mat-picker-card:hover { box-shadow: 0 8px 24px rgba(26,47,90,.11); border-color: #c7d2e8; transform: translateY(-2px); }
+    .mat-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 3px; }
+    .mat-card-title { font-size: 13px; font-weight: 800; color: #0f172a; line-height: 1.35; }
+    .mat-badge {
+      flex-shrink: 0; font-size: 10px; font-weight: 800; padding: 2px 8px;
+      border-radius: 20px; white-space: nowrap;
+    }
+    .mat-badge.done    { background: #dcfce7; color: #16a34a; }
+    .mat-badge.started { background: #dbeafe; color: #1d4ed8; }
+    .mat-card-time {
+      display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; color: #94a3b8; background: #f8fafc;
+      padding: 2px 7px; border-radius: 6px; margin: 6px 0 4px;
+    }
+    .mat-prog { margin-top: 6px; }
+    .mat-prog-bar { height: 3px; background: #f1f5f9; border-radius: 2px; overflow: hidden; margin-bottom: 3px; }
+    .mat-prog-fill { height: 100%; background: #1a2f5a; border-radius: 2px; transition: width .4s ease; }
+    .mat-prog-lbl { font-size: 10px; color: #94a3b8; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -302,6 +369,12 @@
 <div id="picker" style="display:none; max-width:900px; margin:32px auto; padding:0 24px;">
   <h2 style="font-size:20px;font-weight:800;color:#1e3a5f;margin-bottom:6px;">Избери урок</h2>
   <p style="font-size:14px;color:#64748b;margin-bottom:20px;">Избери урок, за да видиш конспект, речник, въпроси за устен изпит и още.</p>
+  <div class="picker-search-wrap">
+    <span class="picker-search-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </span>
+    <input class="picker-search" id="picker-search" type="text" placeholder="Търси урок..." autocomplete="off" spellcheck="false" />
+  </div>
   <div class="picker-filters" id="picker-filters">
     <button class="picker-filter active" data-filter="all">Всички</button>
     <button class="picker-filter" data-filter="bel12">БЕЛ — 12 клас</button>
@@ -311,6 +384,13 @@
     <button class="picker-filter" data-filter="chem">Химия</button>
     <button class="picker-filter" data-filter="math1">Математика 12/11</button>
     <button class="picker-filter" data-filter="math7">Математика — 7 клас</button>
+  </div>
+  <div class="picker-summary" id="picker-summary" style="display:none;">
+    <span class="ps-num" id="ps-count">0</span><span class="ps-lbl">урока</span>
+    <span class="ps-sep">·</span>
+    <span class="ps-num" id="ps-groups">0</span><span class="ps-lbl">групи материали</span>
+    <span class="ps-sep" id="ps-read-sep" style="display:none;">·</span>
+    <span class="ps-read" id="ps-read" style="display:none;"></span>
   </div>
   <div id="picker-content"></div>
 </div>
@@ -477,23 +557,83 @@ if (!lessonKey) {
     { label: 'Математика — 7 клас',  prefix: 'math7' },
   ];
 
+  const LESSON_MINS = {
+    bel12: 9, bel11: 9, bel7: 7, bio: 8, chem: 8, math1: 7, math7: 6
+  };
+  function lessonMins(slug) {
+    for (const [prefix, mins] of Object.entries(LESSON_MINS)) {
+      if (slug.startsWith(prefix)) return mins;
+    }
+    return 8;
+  }
+
   document.getElementById('picker-content').innerHTML = GROUPS.map(g => {
     const lessons = Object.entries(LESSON_TITLES).filter(([k]) => k.startsWith(g.prefix));
     if (!lessons.length) return '';
     return `
-      <div class="picker-group" data-prefix="${g.prefix}" style="margin-bottom:28px;">
-        <div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:10px;">${g.label}</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;">
+      <div class="picker-group" data-prefix="${g.prefix}" style="margin-bottom:32px;">
+        <div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:12px;display:flex;align-items:center;gap:10px;">${g.label}<span style="flex:1;height:1px;background:#e8edf5;display:inline-block;"></span></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;">
           ${lessons.map(([slug, name]) => `
-            <a href="/lessons/materiali.html?key=${slug}"
-               style="display:block;background:#fff;border:1.5px solid #e8edf5;border-radius:12px;padding:14px 16px;text-decoration:none;color:#1a2233;font-size:14px;font-weight:700;line-height:1.4;transition:border-color .15s,box-shadow .15s;"
-               onmouseover="this.style.borderColor='#E8A020';this.style.boxShadow='0 4px 14px rgba(0,0,0,0.07)'"
-               onmouseout="this.style.borderColor='#e8edf5';this.style.boxShadow='none'">
-              ${name}
+            <a class="mat-picker-card" href="/lessons/materiali.html?key=${slug}" data-slug="${slug}" data-name="${name.toLowerCase()}">
+              <div class="mat-card-top">
+                <div class="mat-card-title">${name}</div>
+                <span class="mat-badge" id="mbadge-${slug}"></span>
+              </div>
+              <div class="mat-card-time">~${lessonMins(slug)} МИН</div>
+              <div class="mat-prog" id="mprog-${slug}" style="display:none;">
+                <div class="mat-prog-bar"><div class="mat-prog-fill" id="mfill-${slug}"></div></div>
+                <div class="mat-prog-lbl" id="mlbl-${slug}"></div>
+              </div>
             </a>`).join('')}
         </div>
       </div>`;
   }).join('');
+
+  // Populate reading progress from localStorage
+  let readCount = 0;
+  Object.keys(LESSON_TITLES).forEach(slug => {
+    const raw = localStorage.getItem('lp_' + slug);
+    if (!raw) return;
+    let pct = 0;
+    try { pct = Math.round(JSON.parse(raw)?.p || 0); } catch(e) {}
+    if (!pct) return;
+    const badge = document.getElementById('mbadge-' + slug);
+    const prog  = document.getElementById('mprog-' + slug);
+    const fill  = document.getElementById('mfill-' + slug);
+    const lbl   = document.getElementById('mlbl-' + slug);
+    if (!badge) return;
+    if (pct >= 95) {
+      badge.textContent = '✓ Прочетен';
+      badge.className = 'mat-badge done';
+      readCount++;
+    } else if (pct >= 10) {
+      badge.textContent = 'Четен ' + pct + '%';
+      badge.className = 'mat-badge started';
+    }
+    if (pct >= 10 && prog) {
+      prog.style.display = '';
+      fill.style.width = pct + '%';
+      lbl.textContent = 'Прочетено: ' + pct + '%';
+    }
+  });
+
+  // Summary bar
+  const totalLessons = Object.keys(LESSON_TITLES).length;
+  const totalGroups  = GROUPS.filter(g => Object.keys(LESSON_TITLES).some(k => k.startsWith(g.prefix))).length;
+  document.getElementById('ps-count').textContent  = totalLessons;
+  document.getElementById('ps-groups').textContent = totalGroups;
+  if (readCount > 0) {
+    document.getElementById('ps-read-sep').style.display = '';
+    document.getElementById('ps-read').style.display = '';
+    document.getElementById('ps-read').textContent = readCount + ' прочетени';
+  }
+  document.getElementById('picker-summary').style.display = 'flex';
+
+  function updateSummary() {
+    const visible = document.querySelectorAll('.mat-picker-card:not([style*="display: none"]):not([style*="display:none"])').length;
+    document.getElementById('ps-count').textContent = visible;
+  }
 
   document.getElementById('picker-filters').addEventListener('click', e => {
     const btn = e.target.closest('.picker-filter');
@@ -501,9 +641,55 @@ if (!lessonKey) {
     document.querySelectorAll('.picker-filter').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const f = btn.dataset.filter;
+    const searchEl = document.getElementById('picker-search');
+    if (searchEl) searchEl.value = '';
     document.querySelectorAll('.picker-group').forEach(g => {
       g.style.display = (f === 'all' || g.dataset.prefix === f) ? '' : 'none';
     });
+    document.querySelectorAll('.mat-picker-card').forEach(a => a.style.display = '');
+    const noRes = document.getElementById('picker-no-results');
+    if (noRes) noRes.remove();
+    updateSummary();
+  });
+
+  // ── Search ──
+  document.getElementById('picker-search').addEventListener('input', function () {
+    const q = this.value.trim().toLowerCase();
+    const activeFilter = (document.querySelector('.picker-filter.active') || {}).dataset?.filter || 'all';
+    let totalVisible = 0;
+
+    document.querySelectorAll('.picker-group').forEach(group => {
+      const prefix = group.dataset.prefix;
+      const groupVisible = (activeFilter === 'all' || prefix === activeFilter);
+      if (!groupVisible) { group.style.display = 'none'; return; }
+
+      const cards = group.querySelectorAll('.mat-picker-card');
+      let groupCount = 0;
+      cards.forEach(card => {
+        const name = card.dataset.name || '';
+        const matches = !q || name.includes(q);
+        card.style.display = matches ? '' : 'none';
+        if (matches) groupCount++;
+      });
+      group.style.display = groupCount > 0 ? '' : 'none';
+      totalVisible += groupCount;
+    });
+
+    document.getElementById('ps-count').textContent = totalVisible;
+    let noRes = document.getElementById('picker-no-results');
+    if (totalVisible === 0 && q) {
+      if (!noRes) {
+        noRes = document.createElement('div');
+        noRes.id = 'picker-no-results';
+        noRes.className = 'picker-no-results';
+        noRes.textContent = 'Няма намерени уроци за „' + this.value.trim() + '"';
+        document.getElementById('picker-content').appendChild(noRes);
+      } else {
+        noRes.textContent = 'Няма намерени уроци за „' + this.value.trim() + '"';
+      }
+    } else if (noRes) {
+      noRes.remove();
+    }
   });
 }
 
@@ -3207,6 +3393,210 @@ const RECHNIK = {
     { term: 'Безкрайна геометрична редица', definition: 'При |q| < 1 безкрайната сума клони към S∞ = b₁/(1−q). При |q| ≥ 1 редицата дивергира (сумата не съществува).', example: '1 + 1/3 + 1/9 + ... (q=1/3): S∞ = 1/(1−1/3) = 3/2.' },
     { term: 'Средноаритметично на два члена', definition: 'aₙ = (aₙ₋₁ + aₙ₊₁)/2 — всеки вътрешен член е средно аритметично на двата съседни.', example: 'В АП 2, 5, 8: средният член 5 = (2+8)/2 = 5 ✓.' },
     { term: 'Средногеометрично на два члена', definition: 'bₙ = √(bₙ₋₁·bₙ₊₁) — всеки вътрешен член е средно геометрично на двата съседни (при положителни членове).', example: 'В ГП 2, 6, 18: b₂ = √(2·18) = √36 = 6 ✓.' }
+  ],
+
+  // ── БЕЛ 11 клас ──
+  'bel11-vazov-pod-igoto': [
+    { term: 'Роман', definition: 'Голям епически жанр с разгърната сюжетна линия, множество герои и широка картина на действителността.', example: '„Под игото" проследява живота на цяла общност в навечерието на Априлското въстание.' },
+    { term: 'Народопсихология', definition: 'Изображение на характерните черти, ценности и поведение на даден народ като колективен образ.', example: 'Вазов изгражда образа на българина — с героизъм, но и слабости, страх и предателство.' },
+    { term: 'Лирическо отстъпление', definition: 'Пряка авторска реч, прекъсваща действието, в която авторът изразява оценка, възхищение или скръб.', example: 'Авторовото слово в описанието на природата преди въстанието е изпълнено с патриотичен патос.' },
+    { term: 'Историзъм', definition: 'Принцип за изображение на събитията в тяхната историческа конкретност и обусловеност.', example: 'Романът е документален по дух — опира се на реални лица и факти от Априлското въстание.' },
+    { term: 'Героично и трагично', definition: 'Съчетаване на величието на жертвата с неизбежната обреченост на въстанието.', example: 'Загиналите са герои, но въстанието е потопено в кръв — трагизмът не заглушава героизма.' },
+    { term: 'Патриотичен патос', definition: 'Силно емоционално, възторжено отношение към родината, изразено чрез художествени средства.', example: 'Описанието на природата и народните сцени е пронизано от авторска любов към България.' }
+  ],
+  'bel11-vazov-epopea': [
+    { term: 'Ода', definition: 'Лирически жанр с тържествен, възвишен тон, посветен на прославяне на велики личности или събития.', example: 'Всяко стихотворение от „Епопея на забравените" е ода към конкретен национален герой.' },
+    { term: 'Цикъл', definition: 'Група от самостоятелни творби, обединени от обща тема, идея или герой.', example: '„Епопея на забравените" е цикъл от 12 оди, посветени на будителите на българския народ.' },
+    { term: 'Апотеоз', definition: 'Прославяне, обожествяване на герой или събитие — извисяване до свещено.', example: 'Всеки апостол е представен като светец и жертвоприносител за свободата.' },
+    { term: 'Анафора', definition: 'Повторение на една или повече думи в началото на последователни стихове или строфи.', example: '„Той е жив! Той е жив!" — повторението засилва страстта и убедеността.' },
+    { term: 'Риторично обръщение', definition: 'Обръщение към лице, понятие или явление, което не може да отговори — изразява силна емоция.', example: 'Обръщението към Паисий, Левски, Каравелов изразява преклонение и задължение.' },
+    { term: 'Забравеност и памет', definition: 'Централна опозиция в цикъла — героите са забравени от народа, но поетът им връща паметта.', example: 'Самото заглавие „Епопея на забравените" поставя темата за дълга към историята.' }
+  ],
+  'bel11-vazov-opalchentsite': [
+    { term: 'Сонет', definition: 'Лирически жанр от 14 стиха (2 катрена + 2 терцета) с точна рима и вътрешно развитие на идеята.', example: '„Опълченците на Шипка" е сонет — завършен, стегнат образ на героичната жертва.' },
+    { term: 'Антитеза', definition: 'Художествено противопоставяне на два образа, понятия или явления за усилване на изразителността.', example: 'Живите и мъртвите са противопоставени — падналите стават „безсмъртни".' },
+    { term: 'Хипербола', definition: 'Художествено преувеличение за засилване на емоционалното въздействие.', example: '„Костите им ще бъдат стъпала" — преувеличението извисява жертвата до вечност.' },
+    { term: 'Безсмъртие', definition: 'Идеята, че героичната смърт в името на родината е форма на вечен живот.', example: 'Загиналите опълченци не умират — те живеят в паметта на потомците.' },
+    { term: 'Патриотична лирика', definition: 'Поезия, чийто главен мотив е любовта към родината и прославянето на нейните защитници.', example: '„Опълченците на Шипка" е образец на патриотична лирика в класическата традиция.' },
+    { term: 'Катрен и терцет', definition: 'Строфи от сонета: катренът (4 стиха) развива образа, терцетът (3 стиха) извежда идеята/извода.', example: 'Катрените описват битката, терцетите — безсмъртната слава на падналите.' }
+  ],
+  'bel11-vazov-paisiy': [
+    { term: 'Будител', definition: 'Историческа личност, пробудила националното самосъзнание на народа чрез книжовна или просветна дейност.', example: 'Паисий Хилендарски е първият будител — неговата история събужда дремещия народ.' },
+    { term: 'Инвектива', definition: 'Художествено порицание, укор към тези, които изпадат в забрава и самоунижение.', example: 'Вазов упреква онези, „що своя народ са захвърлили" заради чуждото.' },
+    { term: 'Метафора', definition: 'Пренос на значение между два образа по сходство — скрито сравнение без „като".', example: '„Огненото слово" на Паисий — книгата е огън, запалил националното съзнание.' },
+    { term: 'Апостол', definition: 'В преносен смисъл — подвижник, посветил живота си на велика кауза, народна или духовна.', example: 'Паисий е представен като апостол на националното пробуждане.' },
+    { term: 'Исторически мотив', definition: 'Препратка към конкретни исторически събития или личности като основа на художествения текст.', example: 'Дейността на Паисий — написването на „История славянобългарска" — е историческата основа на одата.' },
+    { term: 'Призив', definition: 'Пряко обръщение с цел да подтикне слушателя/читателя към действие.', example: '„Помни, помни!" — рефренът е призив към народна памет и национална гордост.' }
+  ],
+  'bel11-vazov-tih-byal-dunav': [
+    { term: 'Елегия', definition: 'Лирически жанр с тъжна, скръбна интонация, посветен на загуба, смърт или преминало.', example: 'Стихотворението е елегия за загиналите, чиито тела носи Дунав.' },
+    { term: 'Символ', definition: 'Образ, носещ по-дълбоко значение отвъд буквалния смисъл.', example: 'Дунав е символ на пътя към свободата и на смъртта в името на родината.' },
+    { term: 'Персонификация', definition: 'Приписване на човешки качества и действия на природни явления или неодушевени предмети.', example: 'Дунав „носи" и „помни" — реката е жива свидетелка на жертвата.' },
+    { term: 'Скръб и прослава', definition: 'Двойствено отношение към смъртта — тъга по загиналите и едновременно прославяне на жертвата им.', example: 'Вазов плаче за мъртвите, но ги извисява до безсмъртни герои.' },
+    { term: 'Рефрен', definition: 'Повтарящ се стих или строфа в стихотворение, усилващ главната идея или настроение.', example: 'Повторението на образа на реката при всяка строфа е рефрен на скръбта и паметта.' },
+    { term: 'Природа и история', definition: 'Взаимодействие между природния пейзаж и историческата трагедия — природата свидетелства за историята.', example: 'Тихият Дунав е фон и участник в националната драма.' }
+  ],
+  'bel11-botev-hadzhi-dimityr': [
+    { term: 'Балада', definition: 'Лиро-епически жанр с напрегнат сюжет, свръхестествени елементи и героична или трагична развръзка.', example: '„Хаджи Димитър" съчетава реалното и митологичното — умиращият хайдутин е сред орли и вили.' },
+    { term: 'Апотеоз', definition: 'Обожествяване, прославяне на герой — извисяването му до свещен, митологичен статус.', example: 'Хаджи Димитър не умира — той е обграден от вили и продължава да живее в народната памет.' },
+    { term: 'Митологично и реално', definition: 'Съчетаване на исторически факт (смъртта на Димитър) с митологични образи (вили, орел).', example: 'Реалната агония на хайдутина е преобразена в митологичен акт на безсмъртие.' },
+    { term: 'Антитеза', definition: 'Противопоставяне на два образа за изразителен контраст.', example: 'Робският народ (спи, пие, пее) срещу умиращия герой — безразличие срещу жертва.' },
+    { term: 'Романтичен герой', definition: 'Изключителна личност, поставена в конфликт с обществото, готова на саможертва за идеал.', example: 'Хаджи Димитър е романтичен герой — сам, раненен, но непобеден духом.' },
+    { term: 'Народна митология', definition: 'Вярвания, образи и мотиви от народното творчество, включени в художествен текст.', example: 'Вилите от народната митология грижливо пазят тялото на хайдутина.' }
+  ],
+  'bel11-botev-obesa': [
+    { term: 'Сонет', definition: 'Лирически жанр от 14 стиха с точна структура и вътрешно смислово развитие.', example: '„Обесването на Васил Левски" е сонет — стегнатата форма усилва трагичния смисъл.' },
+    { term: 'Скръб и гняв', definition: 'Двете водещи емоции в творбата — плач по Левски и ярост срещу поробителя и безразличния народ.', example: 'Тъгата по „обесения" е съпроводена от гняв към „майката земя" и народа.' },
+    { term: 'Персонификация на природата', definition: 'Природните явления скърбят заедно с автора — оплакват Левски.', example: 'Зимата, бурята и мракът са символи на националната скръб.' },
+    { term: 'Левски като символ', definition: 'Образът на Левски надхвърля конкретната личност и се превръща в символ на жертвата за свобода.', example: '„Но ти кой си, бесило проклето?" — обесилото е символ на потисничеството.' },
+    { term: 'Народна вина', definition: 'Идеята, че народът е съвиновен за смъртта на героите, защото ги е изоставил.', example: 'Земята, небето и народът са вкупом в траур — но и в мълчаливо съучастие.' },
+    { term: 'Тропи на скръбта', definition: 'Художествени средства (метафора, персонификация, антитеза), изграждащи образа на националната загуба.', example: 'Зимата „плаче", вихрушката „вее" — природата е огледало на човешката болка.' }
+  ],
+  'bel11-yavorov-gradushka': [
+    { term: 'Социална лирика', definition: 'Поезия, насочена към страданията и несправедливостта, преживяни от обикновените хора.', example: '„Градушка" изобразява трагедията на селяните — унищожени надежди и мизерия.' },
+    { term: 'Символизъм', definition: 'Течение, изразяващо идеи и настроения чрез внушение, символ и музикалност — Яворов е ранен символист.', example: 'Градушката не е само природно явление — тя е символ на съдбата, унищожаваща надеждите.' },
+    { term: 'Звукопис', definition: 'Използване на звуковото звучене на думите за постигане на художествен ефект.', example: 'Звукът на градушката е предаден чрез специфична ритмика и алитерация.' },
+    { term: 'Трагична ирония', definition: 'Ситуация, в която очакваното и реалното са в мъчително противоречие.', example: 'Селяните са работили цяла година в надежда за реколта — градушката унищожава всичко за минути.' },
+    { term: 'Колективен образ', definition: 'Изображение на група хора (народ, селяни) като единен субект на преживяване.', example: 'Селяните са колективен образ на страдащия народ, жертва на природата и съдбата.' },
+    { term: 'Драматизъм', definition: 'Напрежение и конфликт в художествения текст, пораждащи силно емоционално въздействие.', example: 'Краткостта на бедствието и дълготрайността на страданието създават силен драматизъм.' }
+  ],
+  'bel11-slaveykov-cis-moll': [
+    { term: 'Сонет', definition: 'Лирически жанр от 14 стиха — Славейков избира сонетната форма за изповедта за любовта.', example: '„Cis moll" е сонет, посветен на Мина Тодорова — смъртта на идеалната любима.' },
+    { term: 'Синтез на изкуствата', definition: 'Съединяване на различни художествени форми (музика, поезия, живопис) в едно произведение.', example: 'Музикалното заглавие „Cis moll" (до диез минор) слива поезията и музиката.' },
+    { term: 'Интимна лирика', definition: 'Поезия за лично, дълбоко преживяване — любов, загуба, вътрешен свят.', example: 'Сонетът е изповед за конкретна загубена любов — Мина Тодорова.' },
+    { term: 'Минорна тоналност', definition: 'В музиката — тъжно, меланхолично звучене; в поезията — скръбен, потиснат тон.', example: 'Целият сонет е в „минорна тоналност" — скръб, копнеж, невъзможност.' },
+    { term: 'Идеална любима', definition: 'Образ на жена, извисен до съвършен идеал, обикновено недостижим или загубен.', example: 'Мина е идеалната любима — смъртта я е направила вечна и недостижима.' },
+    { term: 'Индивидуализъм', definition: 'Поставяне на личността и нейния вътрешен свят в центъра на художественото изображение.', example: 'Личното преживяване на загубата е главна тема — Славейков изповядва собствената си болка.' }
+  ],
+  'bel11-aleko-bay-ganyo': [
+    { term: 'Сатира', definition: 'Художествено осмиване и критика на пороците и слабостите на личност или общество.', example: 'Алеко Константинов осмива Бай Ганьо като олицетворение на националните пороци.' },
+    { term: 'Фейлетон', definition: 'Кратък, сатиричен публицистичен жанр, осмиващ конкретен недостатък с хумор.', example: 'Отделните главки за Бай Ганьо са оформени като фейлетонни скечове.' },
+    { term: 'Герой-тип', definition: 'Литературен образ, въплъщаващ не само индивид, а цял тип личности от дадено общество.', example: 'Бай Ганьо е тип на „полуевропееца" — между традицията и неусвоената цивилизация.' },
+    { term: 'Карикатура', definition: 'Преувеличено изображение на недостатъци с цел осмиване.', example: 'Портретът на Бай Ганьо е карикатурен — всяка негова черта е заострена до гротеска.' },
+    { term: 'Двойственост', definition: 'Характеристика на образ, съчетаващ противоречиви черти.', example: 'Бай Ганьо е едновременно смешен и страшен — пороците му са комични, но и опасни.' },
+    { term: 'Нравствена критика', definition: 'Художествено осъждане на морални пороци — алчност, лицемерие, грубост.', example: 'Алеко критикува безскрупулността, простащината и моралната деградация.' }
+  ],
+  'bel11-elin-pelin-andreshko': [
+    { term: 'Разказ', definition: 'Кратък епически жанр с ограничен брой герои, едно основно събитие и концентрирано действие.', example: '„Андрешко" е кратък разказ — само две лица, едно пространство, един момент на избор.' },
+    { term: 'Морален конфликт', definition: 'Вътрешно или външно противоборство, свързано с избор между добро и зло, дълг и желание.', example: 'Андрешко е изправен пред морален избор — да предаде Индже или да му помогне.' },
+    { term: 'Народна психология', definition: 'Колективните нагласи и ценности на народа, изразени чрез поведението на персонажа.', example: 'Андрешко въплъщава народното разбиране за справедливост — стражарят е инструмент на властта.' },
+    { term: 'Ирония', definition: 'Несъответствие между буквалния смисъл и действителното значение, обикновено с критична цел.', example: 'Стражарят е лесно измамен — Elin Пелин иронично показва слабостта на властта.' },
+    { term: 'Природна среда', definition: 'Пейзажът като активен елемент, участващ в действието и отразяващ настроението.', example: 'Блатото и мъглата са среда и символ на тайното, неизбистреното.' },
+    { term: 'Мълчание и действие', definition: 'Скрито противоборство между думи и постъпки — герят разказва малко, но действа.', example: 'Андрешко почти не говори — той действа, защитавайки беглеца с хитрост.' }
+  ],
+  'bel11-talev-zhelezniyat-svetilnik': [
+    { term: 'Роман-хроника', definition: 'Роман, проследяващ историята на семейство или общност през дълъг период от историята.', example: '„Железният светилник" е хроника на рода Глаущеви в Преспа в епохата на Възраждането.' },
+    { term: 'Родова памет', definition: 'Осъзнаването на принадлежността към род, история и традиция като основа на идентичността.', example: 'Родът Глаущеви е носител на националното пробуждане — историята на рода е история на народа.' },
+    { term: 'Светилник', definition: 'Символ на просветата, духовността и националното пробуждане в романа.', example: '„Железният светилник" в църквата е символ на непогасимата национална воля.' },
+    { term: 'Национално съзнание', definition: 'Осъзнаването на принадлежността към народ с обща история, език и съдба.', example: 'Героите постепенно осъзнават своята българска идентичност в противовес на чуждото влияние.' },
+    { term: 'Епично повествование', definition: 'Широко, подробно разказване, обхващащо много герои, години и пространства.', example: 'Романът е епично платно на цяла епоха от националната история.' },
+    { term: 'Женски образ', definition: 'Образът на жената като носителка на народната сила, вяра и упоритост.', example: 'Султана е силен женски образ — твърда, вярна, опора на рода.' }
+  ],
+  'bel11-stanev-kradetsat': [
+    { term: 'Психологически роман', definition: 'Роман, чийто фокус е вътрешният свят на героите, техните мотиви и морални конфликти.', example: '„Крадецът на праскови" изследва психологията на любовта, вината и смъртта.' },
+    { term: 'Любов и смърт', definition: 'Централна опозиция — любовта е съпроводена от трагично осъзнаване на смъртността.', example: 'Историята на Елиаза и Иренет е любов, обречена на гибел от самото начало.' },
+    { term: 'Митологизъм', definition: 'Въвеждане на митологични образи и структури в реалистичен контекст.', example: 'Образите на Елиаза и Иренет са митологизирани — те са повече от хора.' },
+    { term: 'Вина и изкупление', definition: 'Морален мотив — героят носи вина и търси освобождение чрез страдание или саможертва.', example: 'Генерал Маре е изправен пред вина, изкупима само с хуманен акт.' },
+    { term: 'Антивоенен пафос', definition: 'Художествено осъждане на войната като унищожителна сила, противна на хуманизма.', example: 'Войната е фон, но е враг на живота и любовта в повестта.' },
+    { term: 'Поетика на детайла', definition: 'Художествен похват, при който значещи дребни подробности разкриват характер или символика.', example: 'Прасковата е детайл, натоварен с дълбока символика — живот, любов, забранено.' }
+  ],
+  'bel11-stratiev-sako': [
+    { term: 'Абсурден театър', definition: 'Драматургично направление, изобразяващо безсмислието на човешкото съществуване чрез абсурдни ситуации.', example: '„Сако от велур" използва абсурдни ситуации, за да разкрие бюрократичния абсурд.'},
+    { term: 'Сатира', definition: 'Художествена критика на обществените пороци чрез осмиване.', example: 'Стратиев осмива бюрокрацията, безличността и моралното безразличие в социалистическото общество.' },
+    { term: 'Бюрокрация', definition: 'Система от правила и институции, изгубила смисъла си и превърнала се в самоцел.', example: 'Главният герой се бори с абсурдна институционална машина заради едно сако.' },
+    { term: 'Отчуждение', definition: 'Чувство на самота и безсилие на индивида срещу безличната система.', example: 'Героят е сам срещу системата — никой не го разбира и не му помага.' },
+    { term: 'Гротеска', definition: 'Художествено деформиране на реалността до абсурдно-смешното за критична цел.', example: 'Ситуацията около сакото е гротескна — дребен предмет задейства цяла абсурдна машина.' },
+    { term: 'Малкото и голямото', definition: 'Художествен похват: дребен проблем като огледало на огромен социален порок.', example: 'Сакото е дребен повод, но разкрива цяла система от лъжи и безразличие.' }
+  ],
+  'bel11-smirnanski-yohan': [
+    { term: 'Социална лирика', definition: 'Поезия, изобразяваща страданията на потиснатите и бедните класи.', example: 'Смирненски изобразява мизерията в зимния град и съдбата на децата на улицата.' },
+    { term: 'Образ-символ', definition: 'Образ, носещ значение, надхвърлящо конкретното — символ за по-широка идея.', example: 'Йохан е символ на изоставеното, унищожено детство от бедността.' },
+    { term: 'Урбанистична лирика', definition: 'Поезия, чиято тема е градът — неговата жестокост, студ и социално неравенство.', example: 'Градът при Смирненски е студен, безмилостен — противоположност на хуманното.' },
+    { term: 'Детето като жертва', definition: 'Образ на детето, унищожено от социалната несправедливост — мощен хуманистичен мотив.', example: 'Йохан е дете, изхвърлено на улицата — обвинение срещу обществото.' },
+    { term: 'Сантиментализъм и гняв', definition: 'Съчетаване на тъга по жертвата с ярост срещу виновната система.', example: 'Поетът плаче за Йохан, но мълчаливо обвинява бедността и безразличието.' },
+    { term: 'Цветова символика', definition: 'Използване на цветове като символи за определени идеи или настроения.', example: 'Студеното бяло на снега и мрачното сиво на града символизират смъртта и безнадеждността.' }
+  ],
+  'bel11-vaptsarov-istoriya': [
+    { term: 'Лирически герой', definition: 'Обобщен образ на говорещия в лирическото стихотворение — не е идентичен с автора.', example: 'Лирическият герой при Вапцаров е борецът за справедливост — свободен дух.' },
+    { term: 'Диалогична структура', definition: 'Стихотворение, изградено като разговор между два гласа или позиции.', example: '„История" е диалог между обвинителя и защитника на историческата памет.' },
+    { term: 'Историческа памет', definition: 'Осъзнаването на миналото като живо присъствие, формиращо идентичността.', example: 'За Вапцаров историята не е мъртъв факт — тя е горяща ценност и задължение.' },
+    { term: 'Пролетарска поезия', definition: 'Поезия, отразяваща борбата и съдбата на работническата класа.', example: 'Вапцаров пише за работниците — тяхното достойнство, борба и надежда.' },
+    { term: 'Вяра и борба', definition: 'Централна тема при Вапцаров — вярата в промяната чрез активна борба.', example: 'Дори пред смъртта лирическият герой не губи вяра в победата на справедливостта.' },
+    { term: 'Ирония и патос', definition: 'Съчетаване на горчива ирония по отношение на противниците с патос към идеала.', example: 'Вапцаров се смее на лъжата, но говори сериозно за истината.' }
+  ],
+  'bel11-radichkov-nezhnata-spirala': [
+    { term: 'Абсурд', definition: 'Художествен принцип, при който логиката е нарушена умишлено за разкриване на скрита истина.', example: 'Радичков конструира абсурдни ситуации, разкриващи дълбоката същност на битието.' },
+    { term: 'Притча', definition: 'Кратка история с алегоричен смисъл, носеща морален или философски урок.', example: '„Нежната спирала" е притча за времето, паметта и човешкото съществуване.' },
+    { term: 'Спирала', definition: 'В текста — метафора за движението на живота: повтарящо се, но неидентично — нагоре или надолу.', example: 'Спиралата е образ за нежното, неизбежно движение на времето.' },
+    { term: 'Нежност', definition: 'Качество, противопоставено на грубостта — авторът търси нежния поглед към света.', example: 'Нежността в заглавието е авторска позиция: светът трябва да се гледа с обич и разбиране.' },
+    { term: 'Народна мъдрост', definition: 'Включване на фолклорни елементи, поговорки и народни образи в художествен текст.', example: 'Радичков вгражда народна реч и мислене в своите текстове.' },
+    { term: 'Многозначност', definition: 'Свойство на художествения образ да носи едновременно няколко смисъла.', example: 'Спиралата е едновременно геометрична фигура, философска идея и образ за живота.' }
+  ],
+
+  // ── БЕЛ 7 клас ──
+  'bel7-narodno-tvorchestvo': [
+    { term: 'Фолклор', definition: 'Устното народно творчество — митове, приказки, легенди, песни, предания, предавани от уста на уста.', example: 'Митовете за боговете и приказките за юнаци са основни фолклорни жанрове.' },
+    { term: 'Мит', definition: 'Свещен разказ за произхода на света, боговете и хората, обясняващ устройството на вселената.', example: 'Митовете за сътворението обясняват как е възникнал светът и хората.' },
+    { term: 'Легенда', definition: 'Народен разказ за исторически лица или места, съчетаващ реалното с фантастичното.', example: 'Легендата за Крали Марко го представя като силен юнак, защитник на народа.' },
+    { term: 'Приказка', definition: 'Народен разказ с фантастични герои и събития, в който доброто побеждава злото.', example: 'В народните приказки умният и добрият герой винаги надхитрява злодея.' },
+    { term: 'Юнак', definition: 'Главен герой на народния епос — силен, смел, справедлив защитник на народа.', example: 'Крали Марко е юнак — бие се за слабите и наказва несправедливостта.' },
+    { term: 'Устна традиция', definition: 'Предаването на текстове и знания от поколение на поколение чрез говоримото слово, без писменост.', example: 'Народните песни се предават устно — всяко поколение ги пее и леко изменя.' }
+  ],
+  'bel7-vazov-opalchentsite': [
+    { term: 'Ода', definition: 'Тържествено лирическо стихотворение, прославящо герой, събитие или идеал.', example: '„Опълченците на Шипка" е ода на Вазов — прославя героите от Шипченската битка.' },
+    { term: 'Героизъм', definition: 'Готовността да се пожертва живот за висока цел — свобода, родина, народ.', example: 'Опълченците загиват, за да защитят Шипченския проход и свободата на България.' },
+    { term: 'Безсмъртие', definition: 'Идеята, че героичната смърт осигурява вечна памет и слава.', example: 'Загиналите опълченци „живеят" в паметта на потомците — смъртта им е безсмъртие.' },
+    { term: 'Патриотизъм', definition: 'Любов към родината и готовност за нейната защита.', example: 'Опълченците са дошли доброволно да се бият — патриотизмът ги е привлякъл.' },
+    { term: 'Антитеза', definition: 'Противопоставяне на два образа или идеи за по-силен художествен ефект.', example: 'Смъртта на телата срещу безсмъртието на духа — антитеза в сонета на Вазов.' },
+    { term: 'Сонет', definition: 'Стихотворение от 14 стиха с точна структура.', example: '„Опълченците на Шипка" е сонет — компактна форма за велика идея.' }
+  ],
+  'bel7-vazov-pod-igoto': [
+    { term: 'Роман', definition: 'Голям литературен жанр с разгърната история, много герои и широка картина на живота.', example: '„Под игото" е роман за живота на българите преди Освобождението.' },
+    { term: 'Иго', definition: 'Робство, потисничество — в контекста: турското владичество над България.', example: 'Заглавието „Под игото" означава под робството — хората живеят несвободно.' },
+    { term: 'Въстание', definition: 'Въоръжена борба на народ срещу потисника за постигане на свобода.', example: 'April въстанието 1876 г. е опит за освобождение от турско робство.' },
+    { term: 'Патриот', definition: 'Човек, обичащ родината си и готов да се жертва за нея.', example: 'Героите на романа са патриоти — готови да загинат за свободата на България.' },
+    { term: 'Народна общност', definition: 'Образ на цял народ или общност, а не само на отделен герой.', example: 'Вазов изобразява цяло българско градче — общността е истинският герой на романа.' },
+    { term: 'Епоха', definition: 'Исторически период с характерни за него събития и условия на живот.', example: 'Романът е свидетел на епохата на Възраждането — духовно и национално пробуждане.' }
+  ],
+  'bel7-botev-maytse-si': [
+    { term: 'Изповед', definition: 'Лирически жанр, при който говорителят разкрива интимни чувства и мисли.', example: 'Стихотворението е изповед на сина пред майката — обяснява защо избира борбата.' },
+    { term: 'Майката', definition: 'В литературата — символ на Родината, топлината, безусловната любов.', example: 'Майката при Ботев е и реалната майка, и олицетворение на Родината.' },
+    { term: 'Хайдутин', definition: 'Въоръжен борец срещу турската власт, живеещ в горите и нападащ потисниците.', example: 'Ботев избира хайдутството като форма на съпротива срещу робството.' },
+    { term: 'Бунт', definition: 'Открита съпротива срещу несправедливостта — духовна или въоръжена.', example: 'Лирическият аз не се примирява с робството — бунтът е негов морален дълг.' },
+    { term: 'Жертва', definition: 'Доброволно отдаване на нещо скъпо (живот, сигурност) в името на по-висша цел.', example: 'Синът жертва спокойствието и майчината обич заради свободата на народа.' },
+    { term: 'Противопоставяне', definition: 'Конфликт между два избора или ценности.', example: 'Личното щастие (с майката) срещу дълга към народа — основният конфликт в стихотворението.' }
+  ],
+  'bel7-botev-hadzhi-dimityr': [
+    { term: 'Балада', definition: 'Поетически жанр, съчетаващ лирика и епос с драматичен, понякога трагичен сюжет.', example: '„Хаджи Димитър" е балада — разказва за умиращия хайдутин с лирическо вълнение.' },
+    { term: 'Хайдутин', definition: 'Борец за свобода, живеещ и воюващ в горите срещу турците.', example: 'Хаджи Димитър е хайдутин — ранен в битка, но непобеден духом.' },
+    { term: 'Вила', definition: 'Фантастично женско същество от народната митология, грижещо се за болни или умиращи герои.', example: 'Вилите слизат при Хаджи Димитър и лекуват раните му — знак за неговото величие.' },
+    { term: 'Безсмъртие', definition: 'Вечен живот след смъртта чрез слава и памет.', example: 'Хаджи Димитър не умира напълно — остава жив в народната памет.' },
+    { term: 'Реалност и митология', definition: 'Съчетаване на исторически факт с митологични елементи.', example: 'Реалната смърт на Димитър е обградена с митологични образи — орел, вили, природа.' },
+    { term: 'Природа и герой', definition: 'Природата споделя и отразява съдбата на героя.', example: 'Орелът, слънцето и планината са свидетели и участници в агонията на хайдутина.' }
+  ],
+  'bel7-aleko-bay-ganyo': [
+    { term: 'Сатира', definition: 'Художествено осмиване на пороци и недостатъци.', example: 'Алеко Константинов осмива Бай Ганьо, за да покаже какво трябва да се промени в обществото.' },
+    { term: 'Герой-тип', definition: 'Образ, представляващ не само един човек, а цял тип хора.', example: 'Бай Ганьо е тип: олицетворение на невъзпитания „полуевропеец".' },
+    { term: 'Комичното', definition: 'Нещо, което предизвиква смях поради несъответствие, нелепост или преувеличение.', example: 'Поведението на Бай Ганьо в Европа е комично — той не разбира нормите.' },
+    { term: 'Порок', definition: 'Морален недостатък — алчност, грубост, лицемерие.', example: 'Алеко критикува пороците на Бай Ганьо: лакомия, неуважение, безсрамие.' },
+    { term: 'Самокритика', definition: 'Признаването и осмиването на собствените недостатъци.', example: 'Алеко се надсмива над типичния българин, за да го накара да се погледне в огледалото.' },
+    { term: 'Хумор', definition: 'Добродушна, незлобна смешност — за разлика от сатирата, не осъжда строго.', example: 'Някои сцени са хумористични — смешни, без дълбоко осъждане.' }
+  ],
+  'bel7-yovkov-indzhe': [
+    { term: 'Разказ', definition: 'Кратък епически жанр с едно основно събитие и малко герои.', example: '„Индже" е разказ за хайдутин, преминал от злодейство към покаяние.' },
+    { term: 'Метаморфоза', definition: 'Дълбока промяна в характера на герой под влияние на събитие или чувство.', example: 'Индже се превръща от жесток хайдутин в кающ се човек — метаморфоза чрез любовта.' },
+    { term: 'Покаяние', definition: 'Осъзнаване на вина и стремеж към изкупление.', example: 'Индже осъзнава злините си и се стреми да изкупи вината — покаянието е централна тема.' },
+    { term: 'Легендарност', definition: 'Свойство на образа да придобива митологична, надчовешка слава.', example: 'Индже е легендарен — народът го помни и разказва за него.' },
+    { term: 'Жестокост и нежност', definition: 'Противоположни черти, съжителстващи в един характер.', example: 'Индже е едновременно жесток хайдутин и нежен баща — сложен образ.' },
+    { term: 'Народна памет', definition: 'Начинът, по който народът помни и разказва за значими личности и събития.', example: 'Историята на Индже живее в народната памет — разказва се от уста на уста.' }
+  ],
+  'bel7-elin-pelin-zadusha': [
+    { term: 'Задушница', definition: 'Народен ден за помен на мъртвите — посещение на гробища с принасяне на храна и молитви.', example: 'На Задушница семействата отиват на гробищата, за да почетат починалите.' },
+    { term: 'Народен бит', definition: 'Ежедневният живот, обичаи и традиции на обикновените хора.', example: 'Разказът изобразява народния бит — Задушница, семейни отношения, селски живот.' },
+    { term: 'Хумор и лиризъм', definition: 'Съчетаване на усмивката с тъга и нежност — характерно за Елин Пелин.', example: 'Разказът е и смешен, и трогателен — смехът не заглушава тъгата по починалите.' },
+    { term: 'Народна традиция', definition: 'Обичай, предаван от поколение на поколение.', example: 'Задушницата е народна традиция — споменът за мъртвите е дълг към предците.' },
+    { term: 'Семейство', definition: 'Основна социална единица — в разказа е центърът на изображението.', example: 'Семейството заедно отива на гробищата — традицията се пази колективно.' },
+    { term: 'Ирония', definition: 'Лека насмешка, несъответствие между казаното и замисленото.', example: 'Елин Пелин иронично описва персонажите — смешни, но не злобно осъдени.' }
   ]
 };
 
@@ -3760,6 +4150,219 @@ const USTEN = {
     { q: 'Каква е сумата на всички естествени числа от 1 до 100?', a: 'АП с a₁=1, a₁₀₀=100, n=100. S₁₀₀ = 100·(1+100)/2 = 100·50.5 = 5050. (Прочутата формула на Гаус!)' },
     { q: 'ГП: b₁=3, b₄=81. Намерете q.', a: 'b₄ = b₁·q³ → 81 = 3·q³ → q³ = 27 → q = 3. Проверка: 3, 9, 27, 81 ✓.' },
     { q: 'Кога безкрайната геометрична редица има крайна сума?', a: 'Само при |q| < 1 (частното по абсолютна стойност е по-малко от 1). При |q| ≥ 1 членовете не клонят към 0 и сумата дивергира (не е крайна).' }
+  ],
+
+  // ── БЕЛ 11 клас — устен изпит ──
+  'bel11-vazov-pod-igoto': [
+    { q: 'Какъв жанр е „Под игото" и каква е темата му?', a: '„Под игото" е роман — голям епически жанр. Темата е животът на българите в навечерието на Априлското въстание (1876 г.) — героизмът, страхът и копнежът по свободата.' },
+    { q: 'Кои са главните герои и каква е тяхната роля?', a: 'Иван Краличевски (Бойчо Огнянов) — революционер, символ на будителя; Рада — олицетворение на чистотата; Чорбаджи Марко — образ на колебаещия се народ. Те олицетворяват различни народни типове.' },
+    { q: 'Каква е концепцията за героизъм в романа?', a: 'Героизмът е доброволна жертва в името на свободата. Той не е само на бойното поле — и будителят, и незабелязаното страдание са геройски. Вазов прославя колективния порив, не само личния акт.' },
+    { q: 'Каква е ролята на природата в романа?', a: 'Природата е фон и коментар — описанията на Балкана пресъздават националното пространство и символизират свободата. Лирическите отстъпления с природни картини изразяват авторския патриотизъм.' },
+    { q: 'Как Вазов изобразява народните слабости?', a: 'Романът не идеализира — показва страх, предателство, колебание. Чорбаджи Христо е предател; страхливостта е реален проблем. Но тези слабости не анулират народния порив към свобода.' },
+    { q: 'Каква е идеята за Bulgaria в романа?', a: 'България е любима земя, вечна и жива — природата, езикът, обичаите са неунищожими. Романът утвърждава националната идентичност: „такива хора живеят и такъв народ е жив".' },
+    { q: 'Защо „Под игото" е наречен „народна епопея"?', a: 'Романът е народна епопея, защото изобразява не отделен герой, а целия народ в ключов исторически момент — духовното пробуждане и готовността за жертва. Вазов е „певец на България".' }
+  ],
+  'bel11-vazov-epopea': [
+    { q: 'Какво е „Епопея на забравените" и кои са „забравените"?', a: '„Епопея на забравените" е цикъл от 12 оди на Иван Вазов. „Забравените" са духовните водачи на Възраждането — Паисий, Левски, Каравелов, Раковски и др. — чиято памет е застрашена от забрава.' },
+    { q: 'Каква е задачата на поета в цикъла?', a: 'Поетът е пазител на историческата памет — „певец и жрец". Задачата му е да възстанови паметта за забравените герои и да предаде тяхното дело на потомците.' },
+    { q: 'Какви художествени средства са характерни за одите?', a: 'Анафора, риторични обръщения, хипербола, антитеза. Тържественият тон е подкрепен от сонорна лексика и повторения — всяка ода е химн на героя.' },
+    { q: 'Каква е концепцията за безсмъртие в цикъла?', a: 'Героите са безсмъртни чрез паметта на народа. Смъртта им е жертва, а жертвата — залог за национално съществуване. Без тях не би имало свобода.' },
+    { q: 'Каква е структурата на цикъла?', a: 'Цикълът включва 12 оди, обединени от темата за националното пробуждане. Всяка е посветена на конкретен герой. Цялото е „епопея" — епическо слово за велики деяния.' },
+    { q: 'Каква е разликата между ода и епос?', a: 'Одата е лирически жанр — изразява чувства и прославя. Епосът е повествователен — разказва за деяния. „Епопея на забравените" съединява двете: разказва за героите (епически), но с лирическа страст.' },
+    { q: 'Кои исторически фигури са включени в цикъла и защо?', a: 'Паисий, Левски, Каравелов, Раковски, Ботев, Хаджи Димитър и др. Те са избрани защото всеки е допринесъл по различен начин — просвета, бунт, организация — за националното пробуждане.' }
+  ],
+  'bel11-vazov-opalchentsite': [
+    { q: 'Какъв жанр е „Опълченците на Шипка" и каква е темата?', a: 'Сонет — 14 стиха. Темата е героизмът и жертвата на опълченците при Шипченската битка (август 1877 г.) и тяхното безсмъртие в паметта на потомците.' },
+    { q: 'Как е изграден образът на героя?', a: 'Героят е колективен — опълченците. Те са безименни, но величавите им, защото жертвата им е доброволна и съзнателна. Смъртта не ги унищожава — тя ги извисява.' },
+    { q: 'Каква е антитезата в сонета?', a: 'Смъртта (тялото) срещу безсмъртието (духа и паметта). Падналите не умират — те живеят вечно в народната памет. Телата са „стъпала" за бъдните поколения.' },
+    { q: 'Каква е структурата на сонета?', a: 'Два катрена (4+4 стиха) — описват битката и жертвата. Два терцета (3+3 стиха) — извеждат идеята за безсмъртие. Класическа сонетна форма с рима.' },
+    { q: 'Защо сонетът е подходящ жанр за тази тема?', a: 'Стегнатата форма на сонета (14 стиха) дисциплинира патоса и го концентрира. Ограничеността на формата контрастира с безграничността на прославяното дело — ефект на монументалност в малко.' },
+    { q: 'Как се свързва „Опълченците на Шипка" с „Епопея на забравените"?', a: 'И двете творби са от цикъла „Епопея на забравените". Сонетът прославя опълченците — реалните защитници на Шипка, чийто спомен е застрашен от забрава.' },
+    { q: 'Каква е ролята на хиперболата в сонета?', a: 'Хиперболата извисява жертвата до космически мащаби: „костите им ще бъдат стъпала". Преувеличението изразява реалната величина на подвига — безсмъртен дълг към потомците.' }
+  ],
+  'bel11-vazov-paisiy': [
+    { q: 'На кого е посветена одата „Паисий" и защо е важен той?', a: 'Одата е посветена на Паисий Хилендарски — монах, написал „История славянобългарска" (1762 г.). Той е пръв будител — събуди националното съзнание на спящия народ с призива „О, неразумни и юроде!"' },
+    { q: 'Как Вазов изобразява делото на Паисий?', a: 'Делото е „огненото слово" — метафора за пламъкът на националното пробуждане. Паисий е „апостол" — Вазов го представя в религиозни термини, за да покаже свещения характер на мисията му.' },
+    { q: 'Каква е инвективата (укорът) в одата?', a: 'Вазов укорява онези, „що своя народ са захвърлили" — поели по пътя на чуждото и забравили корените си. Инвективата е обратна страна на прославата.' },
+    { q: 'Каква е структурата на одата?', a: 'Одата е изградена от прослава (апотеоз на Паисий), описание на делото (Историята) и обръщение — призив към паметта на народа. Риторичните въпроси и анафорите засилват тържествения тон.' },
+    { q: 'Как „Паисий" се вписва в цикъла „Епопея на забравените"?', a: 'Паисий е „първи" в цикъла — неговото дело поставя началото на Възраждането. Без него останалите герои нямат основа. Вазов го избира за откривател на цикъла умишлено.' },
+    { q: 'Каква е идеята за националната идентичност в одата?', a: 'Националната идентичност е в езика, историята и паметта. Паисий казва: не се срамувайте от народа си, от езика си. Идентичността е активен избор, не пасивна даденост.' },
+    { q: 'Какво е значението на „История славянобългарска" в контекста на одата?', a: '„Историята" е свещена книга — тя доказва, че българите имат история, достойна за гордост. За Вазов тя е равна на Библия в националния смисъл: дава живот и посока.' }
+  ],
+  'bel11-vazov-tih-byal-dunav': [
+    { q: 'Каква е темата на стихотворението „Тих бял Дунав"?', a: 'Темата е смъртта на революционерите, преминали Дунав, и тяхното оплакване. Реката носи телата им — символ на дълбоката скръб и на жертвата в името на свободата.' },
+    { q: 'Какъв е образът на Дунав в стихотворението?', a: 'Дунав е персонифициран — той „носи", „помни", „плаче". Реката е живо свидетелство на героичната жертва. Едновременно е пространство на смъртта и на безсмъртието.' },
+    { q: 'Каква е жанровата характеристика на творбата?', a: 'Стихотворението е елегия — лирически жанр за скръб и загуба. Тъгата по загиналите е интимна и национална едновременно. Тонът е мрачен, но с нотка на прослава.' },
+    { q: 'Как природата участва в скръбта?', a: 'Природата е съпричастна — небето, водата, брегът скърбят заедно с автора. Пейзажът е огледало на националната болка. Вазов използва класическата техника на „природата-свидетел".' },
+    { q: 'Какви художествени средства изграждат образа на скръбта?', a: 'Персонификация (Дунав плаче), символ (водата = смърт и забрава), рефрен (повтарящият се образ на реката), метафора. Звуковата организация засилва меланхоличния тон.' },
+    { q: 'Как „Тих бял Дунав" се свързва с историческата действителност?', a: 'Стихотворението е свързано с трагедията на хетата на Ботев (1876 г.) — преминаването на Дунав и гибелта на революционерите. Вазов оплаква реални исторически жертви.' },
+    { q: 'Каква е идеята за безсмъртие в творбата?', a: 'Загиналите не изчезват — те живеят в паметта на Дунав, природата и потомците. Реката „ще пее" за тях завинаги. Смъртта е пореден акт на национална жертва, а не край.' }
+  ],
+  'bel11-botev-hadzhi-dimityr': [
+    { q: 'Какъв жанр е „Хаджи Димитър" и каква е основната му идея?', a: 'Баладата съчетава лирическо чувство и епически разказ. Основната идея: героичната смърт е безсмъртие. Умиращият хайдутин не е победен — той е издигнат в мит.' },
+    { q: 'Как е изграден образът на Хаджи Димитър?', a: 'Димитър е романтичен герой — изключителен, самотен, обречен, но духом непобеден. Митологичните образи (вили, орел) го издигат от историческа личност до народен светец.' },
+    { q: 'Каква е ролята на вилите и природата?', a: 'Вилите от народната митология лекуват раните на Димитър и пазят тялото му. Природата (орелът, слънцето, Балканът) е съпричастна. Те символизират народното признание на героизма.' },
+    { q: 'Каква е антитезата народ/герой в баладата?', a: 'Народът спи, пие, пее — безразличен. Героят умира сам. Антитезата разкрива трагедията: великото дело се извършва в самота. Ботев осъжда народната инертност.' },
+    { q: 'Какво означава „Тоз, който падне в бой за свобода, той не умира"?', a: 'Максимата изразява Ботевата философия: смъртта в борбата е вечен живот. Жертвата за свобода не е загуба — тя е трансформация в безсмъртие чрез народната памет.' },
+    { q: 'Как романтизмът се проявява в баладата?', a: 'Романтизмът: изключителен герой в конфликт с обществото, свръхестествени елементи (вили), природата като пространство на свободата, патос и идеализация на жертвата.' },
+    { q: 'Каква е историческата основа на баладата?', a: 'Хаджи Димитър е реална историческа личност — хайдутин, загинал при Бузлуджа (1868 г.). Ботев митологизира реалния факт и го преобразява в символ на националната жертва.' }
+  ],
+  'bel11-botev-obesa': [
+    { q: 'На кого е посветен сонетът и какви са двете водещи емоции?', a: 'Посветен на Васил Левски, обесен от турците (1873 г.). Двете водещи емоции са скръб (плач за Левски) и гняв (към поробителя и към безразличния народ).' },
+    { q: 'Как природата участва в скръбта по Левски?', a: 'Природата скърби: зимата „плаче", бурята „вие", мракът обгръща. Персонификацията прави природата участник в националната трагедия — цялото мироздание оплаква загубата.' },
+    { q: 'Каква е „вината" на народа в сонета?', a: 'Народът мълчи — не се е вдигнал да спаси Левски. За Ботев мълчанието е съучастие. „Майката земя" и народът са виновни чрез бездействие — горчива критика.' },
+    { q: 'Как е изграден образът на Левски?', a: 'Левски е символ — не само историческа личност, а „апостол на свободата". Обесването му е национален грях. Образът е в традицията на сакралната жертва — Христов архетип.' },
+    { q: 'Каква е структурата на сонета?', a: 'Два катрена (природата скърби) + два терцета (гневът към народа и поробителя). Класическа сонетна форма. Движението е от скръб към обвинение.' },
+    { q: 'Как „Обесването" се различава от „Хаджи Димитър"?', a: '„Хаджи Димитър" е балада — прославя безсмъртието. „Обесването" е сонет — изпълнен е с по-тъмна скръб и гняв. Там има апотеоз, тук — траур и обвинение.' },
+    { q: 'Какво е значението на „бесило проклето" в сонета?', a: 'Бесилото е символ на тиранията — „проклето" е инвектива. Обръщението директно атакува символа на поробването. Ботев не описва — той атакува и обвинява.' }
+  ],
+  'bel11-yavorov-gradushka': [
+    { q: 'Каква е темата на „Градушка" и кой е лирическият обект?', a: 'Темата е трагедията на селяните, чиято реколта е унищожена от градушка. Лирическият обект е колективен — „те", селяните. Яворов е социален поет тук.' },
+    { q: 'Каква е функцията на градушката в стихотворението?', a: 'Градушката е реален природен феномен и символ на съдбата — безмилостна, неизбежна, унищожителна. Тя е образ на социалната несправедливост и на природната слепота.' },
+    { q: 'Как звукописът служи на темата?', a: 'Звуковата организация (ритъм, алитерация) имитира удара на градушката — бързи, чести срички предават механичното унищожение. Формата „бие" читателя заедно с нивата.' },
+    { q: 'Какво е отношението на автора към страданието?', a: 'Яворов не е безстрастен наблюдател — той е съпричастен и гневен. „Градушка" е и документ, и обвинение: природата унищожава бедните, а никой не им помага.' },
+    { q: 'Как „Градушка" се вписва в социалната лирика на Яворов?', a: 'Ранният Яворов е социален поет — описва мизерията на народа. „Градушка" е част от тази фаза преди символистичния период. Разликата: тук е колективна трагедия, не лична.' },
+    { q: 'Какви художествени средства изграждат драматизма?', a: 'Хипербола (тоталното унищожение), анафора (ритъмът на удара), динамичен глаголен ред (бие, удря, смила). Контрастът между надеждата на труда и мигновената гибел е основен художествен похват.' },
+    { q: 'Каква е идеята за работата и надеждата в стихотворението?', a: 'Работата е висша стойност — селяните са вложили всичко в нивата. Надеждата е разрушена за секунди. Трагизмът идва от несъответствието: огромен труд срещу нулев резултат.' }
+  ],
+  'bel11-slaveykov-cis-moll': [
+    { q: 'На кого е посветен „Cis moll" и какво е заглавието?', a: 'Посветен на Мина Тодорова — починалата любима на Пенчо Славейков. „Cis moll" (до диез минор) е музикална тоналност — тъжна, меланхолична. Заглавието слива поезията и музиката.' },
+    { q: 'Как е изградена интимната лирика в сонета?', a: 'Лирическият аз изповядва личното страдание — загубата на идеалната любима. Интимното е универсализирано: личната трагедия придобива всечовешко измерение.' },
+    { q: 'Каква е концепцията за идеалната любима?', a: 'Мина е идеализирана — смъртта я е направила вечна и недостижима. Идеалната любима е платонически образ: не реална жена, а духовна ценност, превърнала се в неугасим спомен.' },
+    { q: 'Как музикалният образ функционира в сонета?', a: 'Минорната тоналност задава тона на цялото стихотворение. Музиката е метафора за скръбта — Cis moll е тоналността на несретната любов. Звукът е по-точен от думата.' },
+    { q: 'Как „Cis moll" отразява индивидуализма на символизма?', a: 'Индивидуализмът: личното преживяване е главна тема. Не народът, не историята — само аз и изгубената любима. Символизмът поставя вътрешния свят в центъра.' },
+    { q: 'Каква е ролята на смъртта в сонета?', a: 'Смъртта не унищожава — тя е и трагедия, и освещаване. Мъртвата любима е по-присъстваща от живата. Смъртта е граница, отвъд която любовта е вечна.' },
+    { q: 'Как сонетната форма служи на идеята?', a: 'Сонетната стегнатост „затваря" скръбта — не я разпилява. 14 стиха задължават автора да концентрира болката. Формата е траурна рамка на интимното преживяване.' }
+  ],
+  'bel11-aleko-bay-ganyo': [
+    { q: 'Кой е Бай Ганьо и какво олицетворява той?', a: 'Бай Ганьо Балкански е главният герой на „Бай Ганьо" на Алеко Константинов. Той е „полуевропееца" — между традицията и неусвоената цивилизация. Олицетворява националните пороци, видени критично.' },
+    { q: 'Каква е структурата на книгата?', a: 'Книгата е сборник от фейлетонни разкази — скечове за Бай Ганьо в Европа и в България. Единството е в образа на героя, не в сюжета. Алеко избира фрагментарната форма умишлено.' },
+    { q: 'Какви са пороците на Бай Ганьо?', a: 'Алчност, простащина, лицемерие, неуважение към другите, безскрупулност. В политическата част — демагогия и корупция. Пороците са смешни, но и опасни.' },
+    { q: 'Каква е сатиричната стратегия на Алеко?', a: 'Алеко не осъжда директно — оставя Бай Ганьо да се разкрие сам. Разказвачите са „свидетели", а не съдии. Иронията е мека, но убийствена. Смехът е оръжие на критиката.' },
+    { q: 'Как Бай Ганьо е образ на своето общество?', a: 'Бай Ганьо не е изключение — той е правило. Алеко го прави тип, за да покаже, че пороците са масови. Самокритиката е имплицита: авторът включва и себе си в осъдената общност.' },
+    { q: 'Каква е разликата между хумора и сатирата в книгата?', a: 'Хуморът е добродушна усмивка — смях без осъждане. Сатирата е критична — разкрива и осъжда пороците. В „Бай Ганьо" двете съжителстват: смехът е и забавен, и обвинителен.' },
+    { q: 'Защо „Бай Ганьо" е актуален и днес?', a: 'Типът на „Бай Ганьо" е жив: алчността, лицемерието и демагогията не са изчезнали. Алеко описва не конкретни хора, а вечни човешки слабости, усилени от исторически обстоятелства.' }
+  ],
+  'bel11-elin-pelin-andreshko': [
+    { q: 'Каква е фабулата на „Андрешко" и кои са действащите лица?', a: 'Андрешко превозва с каруца полицай, търсещ беглец. Андрешко знае, че бегълецът е скрит под сламата. Успява да го спаси, без полицаят да разбере. Двата героя са антитезни типове.' },
+    { q: 'Какво символизира Андрешко?', a: 'Андрешко символизира народната хитрост, справедливостта и естественото чувство за правда — без книжно образование. Той е защитник на слабия срещу властта, действащ с ум, не с сила.' },
+    { q: 'Каква е темата на разказа?', a: 'Темата е конфликтът между народната справедливост и официалната власт. Андрешко не нарушава закона открито — той работи вътре в системата, за да я надхитри.' },
+    { q: 'Каква е ролята на диалога в разказа?', a: 'Диалогът е главното средство за изграждане на характерите. Андрешко говори малко, но точно — всяка реплика е изчислена. Контрастът с многоговорящия полицай разкрива ума срещу властта.' },
+    { q: 'Как природата участва в действието?', a: 'Блатото, мъглата и нощта са конспиративни — те крият бегълеца. Природата е съучастник на народната справедливост. Пейзажът е функционален, не декоративен.' },
+    { q: 'Какви са слабостите на полицаят и как ги използва Андрешко?', a: 'Полицаят е доверчив, ограничен, горд от властта си. Андрешко се представя за послушен — „ама аз само изпълнявам". Хитростта му е ненасилствена съпротива.' },
+    { q: 'Как Елин Пелин изгражда Андрешко като „народен герой"?', a: 'Не с грандиозни жестове, а с тихо, смислено действие. Андрешко е народен герой без пафос — помага с ума и морала, а не с оръжие. Скромността е форма на величие.' }
+  ],
+  'bel11-talev-zhelezniyat-svetilnik': [
+    { q: 'Какво е жанрът на „Железният светилник" и каква е темата?', a: 'Роман-хроника — проследява историята на рода Глаущеви в Преспа от края на XVIII до началото на XX в. Темата е националното пробуждане и запазването на българската идентичност.' },
+    { q: 'Какво символизира „железният светилник"?', a: 'Железният светилник в черквата е символ на непогасимата воля — духовна, национална, родова. Той гори независимо от историческите бури. Железото — здравина, издръжливост; светлинат — просвета и вяра.' },
+    { q: 'Каква е ролята на Султана в романа?', a: 'Султана е главна женска фигура — твърда, волева, пазителка на рода и традицията. Тя е „железна" като светилника: не отстъпва пред нищо. Женският образ е носител на националната сила.' },
+    { q: 'Как Талев изобразява националното пробуждане?', a: 'Пробуждането е бавен, болезнен процес — поколения борба за езика, книгата, черквата. Не е миг на озарение, а постепенна кристализация на идентичността под заплаха от асимилация.' },
+    { q: 'Каква е структурата на романа-хроника?', a: 'Хрониката обхваща няколко поколения и десетки години. Всяко поколение е ново звено. Приемствеността е тема: дядото поставя основата, внукът я развива. Родовата памет е историческа памет.' },
+    { q: 'Как романът изобразява отношенията между народите?', a: 'Романът показва напрежения между българи, гърци и турци в Македония. Конфликтът е за идентичност — кой е „истинският" стопанин на тази земя. Талев е на страната на потиснатите.' },
+    { q: 'Каква е идеята за рода в романа?', a: 'Родът е микрокосмос на народа — неговите победи и поражения са националните победи и поражения. Опазването на рода = опазването на народа. Националното начало е родово начало.' }
+  ],
+  'bel11-stanev-kradetsat': [
+    { q: 'Каква е темата на „Крадецът на праскови" и в какво историческо пространство се развива действието?', a: 'Темата е любовта и смъртта — в условията на Първата световна война. Действието се развива в лагер за военнопленници в България. Войната е фон и заплаха за любовта.' },
+    { q: 'Кои са Елиаза и Иренет и каква е тяхната любов?', a: 'Елиаза е млад пленник, Иренет — прекрасна жена на офицер. Любовта им е невъзможна — разделена от война, плен и социален ред. Тя е чиста, но обречена.' },
+    { q: 'Какъв е образът на генерал Маре?', a: 'Маре е командир на лагера — носи вина за жестокостта на войната. В края извършва хуманен акт, изкупвайки вина. Той е морално сложна фигура: не злодей, но участник в злото.' },
+    { q: 'Какво символизира прасковата?', a: 'Прасковата е символ на живота, желанието и забраненото. „Кражбата" е акт на любов — живата красота срещу студената воинска дисциплина. Детайлът носи цялото значение на повестта.' },
+    { q: 'Как „Крадецът на праскови" изразява антивоенна идея?', a: 'Войната убива любовта — това е основното антивоенно послание. Не чрез декларации, а чрез конкретната история на Елиаза и Иренет. Личната трагедия е обвинение срещу войната.' },
+    { q: 'Как психологизмът се проявява в повестта?', a: 'Вниманието е насочено към вътрешните мотиви — защо Маре действа хуманно, защо Елиаза рискува живота си. Стане обяснява действията чрез психологическа дълбочина, не само чрез сюжет.' },
+    { q: 'Каква е ролята на природата в повестта?', a: 'Природата (градината, прасковите) е символ на живота и красотата, противопоставена на лагера — символ на смъртта и плена. Контрастът природа/лагер e основна художествена ос.' }
+  ],
+  'bel11-stratiev-sako': [
+    { q: 'Каква е темата на пиесата „Сако от велур"?', a: 'Темата е абсурдът на бюрократичната система в социалистическото общество. Главният герой трябва да получи обратно сакото си, но попада в лабиринт от безсмислени процедури.' },
+    { q: 'Каква е сатиричната цел на Стратиев?', a: 'Стратиев осмива: безличността на институциите, круговата порука, „нито аз, нито ти" логиката на бюрокрацията, моралното безразличие на „системата". Смехът е оръжие на критиката.' },
+    { q: 'Как абсурдът функционира в пиесата?', a: 'Абсурдът е художествен принцип: ситуациите са нереалистично нелепи, но разкриват реална истина. Дребен предмет (сако) задейства огромна безсмислена машина — метафора за системата.' },
+    { q: 'Как е изграден образът на главния герой?', a: 'Героят е обикновен човек срещу системата — без власт, без връзки. Отчуждението му нараства с всяка безплодна среща. Той е жертва и свидетел едновременно.' },
+    { q: 'Каква е разликата между сатира и абсурд в пиесата?', a: 'Сатирата критикува конкретни пороци. Абсурдът разкрива безсмислието като принцип. Стратиев съединява двете: смеш се с конкретни ситуации, но внушава по-дълбока безнадеждност.' },
+    { q: 'Как „Сако от велур" отразява времето, в което е написана?', a: 'Пиесата е написана в условията на соц. цензура. Стратиев избира формата на абсурда, защото прякото политическо осъждане е невъзможно. Абсурдът е завоалирана критика.' },
+    { q: 'Каква е идеята за достойнството в пиесата?', a: 'Героят се бори за сакото не защото е скъпо, а защото е негово — въпрос на достойнство. Системата отрича личното достойнство. Борбата е за правото да притежаваш нещо свое.' }
+  ],
+  'bel11-smirnanski-yohan': [
+    { q: 'Кой е Йохан и каква е неговата история?', a: 'Йохан е малко бездомно дете — жертва на бедността и безразличието на обществото. Умира от студ на улицата. Образът е обвинение срещу социалната несправедливост.' },
+    { q: 'Каква е темата и идеята на стихотворението?', a: 'Тема: съдбата на детето на улицата — жертва на бедността. Идея: обществото е виновно за смъртта на Йохан. Детето не е виновно — виновна е системата, позволяваща такава мизерия.' },
+    { q: 'Как е изграден образът на града?', a: 'Градът е студен, безличен, жесток — противоположност на хуманното. Той не забелязва умиращото дете. Урбанистичният образ е образ на социалното безразличие.' },
+    { q: 'Каква е ролята на цветовата символика?', a: 'Белият сняг = студ, смърт, безпощадност. Сивото = мрак, безнадеждност. Черното = смъртта. Цветовете са не декоративни, а символно заредени — изграждат визията на смъртта.' },
+    { q: 'Как се проявява социалната позиция на Смирненски?', a: 'Смирненски е революционен поет — за него изкуството трябва да обвинява и будит. „Йохан" е документ и обвинение едновременно. Поетическата сила е оръжие на социалната справедливост.' },
+    { q: 'Как детето като образ функционира в социалната лирика?', a: 'Детето е чиста жертва — то не е виновно. Смъртта на детето е максимален морален аргумент: ако системата убива деца, тя е нечовешка. Емоционалното въздействие е максимизирано.' },
+    { q: 'Как „Йохан" се вписва в традицията на социалната лирика?', a: 'Традиция: Яворов (Градушка), Смирненски (Йохан) — поезия за страданието на народа. Социалната лирика е лирика на ангажираността. Разликата при Смирненски: по-директна революционна позиция.' }
+  ],
+  'bel11-vaptsarov-istoriya': [
+    { q: 'Какъв е жанрът и темата на „История"?', a: '„История" е лирическо стихотворение с диалогична структура. Темата: историческата памет и правото да се помни истината за бореца — срещу официалната „история" на потисниците.' },
+    { q: 'Каква е диалогичната структура на стихотворението?', a: 'Два гласа: обвинителят (осъжда лирическия аз) и защитникът (лирическият аз). Диалогът е и вътрешен монолог — двете позиции са в един ум. Формата изразява конфликта между официалното и истинното.' },
+    { q: 'Каква е Вапцаровата концепция за историята?', a: 'Историята не е сухи факти — тя е жива, горяща ценност. Официалната история лъже; истинската история е на борците и жертвите. За Вапцаров да помниш истината е форма на съпротива.' },
+    { q: 'Как вярата в борбата се проявява в стихотворението?', a: 'Дори пред смъртта лирическият аз не капитулира. Вярата е не религиозна, а политическа: победата на справедливостта е неизбежна. Тази вяра е и личен избор, и колективен проект.' },
+    { q: 'Как иронията функционира в стихотворението?', a: 'Вапцаров иронизира официалната история и нейните носители. Иронията е интелигентна агресия — разкрива лъжата без директно да я назовава. Патосът и иронията се редуват.' },
+    { q: 'Каква е Вапцаровата представа за „правилния" живот?', a: 'Правилен е животът в служба на каузата — борбата за справедливост. Личното щастие е второстепенно пред колективния идеал. Поетът е не само творец, но и борец.' },
+    { q: 'Как „История" се свързва с биографията на Вапцаров?', a: 'Вапцаров е осъден и екзекутиран (1942 г.). Стихотворението е писано в очакване на смъртта. Биографичният факт превръща текста в завещание — последна декларация на борческата вяра.' }
+  ],
+  'bel11-radichkov-nezhnata-spirala': [
+    { q: 'Каква е темата на „Нежната спирала"?', a: 'Темата е времето, паметта и природата на човешкото съществуване. Радичков изследва как се движи животът — по спирала: повтарящо се, но никога идентично.' },
+    { q: 'Какво символизира „нежната спирала"?', a: 'Спиралата е метафора за живота — движение нагоре/надолу, повторение с разлика. „Нежността" е авторска позиция: светът трябва да се гледа с обич и разбиране, не с грубост и ужас.' },
+    { q: 'Как абсурдът функционира в текста?', a: 'Абсурдните ситуации разкриват скрита логика — не са безсмислени, а многосмислени. Радичков използва абсурда като инструмент за постигане на по-дълбока истина за битието.' },
+    { q: 'Каква е ролята на народната реч в стила на Радичков?', a: 'Народната реч е материал и художествен принцип — жива, образна, конкретна. Тя свързва текста с живата традиция. Радичков „мисли" с народни образи, не с абстракции.' },
+    { q: 'Как се проявява притчовото начало в текста?', a: 'Притчата не обяснява директно — оставя читателя да открие смисъла. „Нежната спирала" е притча: конкретен образ с универсален смисъл. Поучението е скрито в историята.' },
+    { q: 'Каква е авторската позиция в текста?', a: 'Радичков е едновременно участник и наблюдател. Позицията му е нежна (заглавието) — не осъжда, не поучава директно. Приема сложността на живота с хумор и разбиране.' },
+    { q: 'Как многозначността е художествен принцип при Радичков?', a: 'Образите носят едновременно конкретен и метафоричен смисъл. Спиралата е геометрия, движение, философия и живот едновременно. Многозначността е антидогматична — срещу единственото значение.' }
+  ],
+
+  // ── БЕЛ 7 клас — устен изпит ──
+  'bel7-narodno-tvorchestvo': [
+    { q: 'Какво е фолклор и как се различава от авторската литература?', a: 'Фолклорът е устното народно творчество — предавано от уста на уста, без известен автор. Авторската литература е написана от конкретен автор. Фолклорът се изменя при предаването — авторската творба остава непроменена.' },
+    { q: 'Какви са основните видове народно творчество?', a: 'Митове (за боговете и сътворението), легенди (за исторически лица с фантастични елементи), приказки (с добро и зло, щастлива развръзка), народни песни и епически предания.' },
+    { q: 'Какво е мит и каква е неговата функция?', a: 'Митът е свещен разказ за произхода на света, боговете и хората. Функцията му е да обясни устройството на вселената и нормите на обществото. Митовете са основа на религията и културата.' },
+    { q: 'Кой е юнакът в народния епос и какви са неговите черти?', a: 'Юнакът е изключително силен и смел герой — защитник на народа, наказващ несправедливостта. Пример: Крали Марко. Чертите му: сила, смелост, справедливост, вярност към народа.' },
+    { q: 'Как народната приказка изгражда конфликта добро-зло?', a: 'В народните приказки доброто и злото са ясно разграничени. Добрият герой е скромен, справедлив, помагащ. Злият е алчен, хитър, потиснически. В края доброто задължително побеждава.' }
+  ],
+  'bel7-vazov-opalchentsite': [
+    { q: 'За какво събитие разказва стихотворението „Опълченците на Шипка"?', a: 'За битката при Шипченския проход (август 1877 г.) по време на Руско-турската освободителна война. Опълченците — доброволци — защитиха прохода с цената на живота си.' },
+    { q: 'Какво е опълчение и кои бяха опълченците?', a: 'Опълчението е доброволна военна формация. Опълченците при Шипка бяха български доброволци, воювали заедно с руските войски срещу турците за освобождението на България.' },
+    { q: 'Каква е идеята за безсмъртие в стихотворението?', a: 'Загиналите опълченци не умират — те живеят в паметта на потомците. „Те биха, паднаха, бяха велики" — смъртта е вход в безсмъртието на историческата памет.' },
+    { q: 'Защо Вазов написва тази ода?', a: 'За да запази паметта за героите — да не бъдат забравени. Вазов е „певец" на националните герои. Одата е дълг към жертвоприносителите.' },
+    { q: 'Какво означава патриотизмът в стихотворението?', a: 'Патриотизмът е готовността да се пожертва животът за свободата на родината. Опълченците са дошли доброволно — никой не ги е принуждавал. Патриотизмът е любов, изразена чрез действие.' }
+  ],
+  'bel7-vazov-pod-igoto': [
+    { q: 'Какво означава „под игото" и за кой период разказва романът?', a: '„Под игото" означава под робството — под турската власт. Романът разказва за живота на българите преди Освобождението (1876 г.) — в навечерието на Априлското въстание.' },
+    { q: 'Кои са главните герои и какво символизират?', a: 'Иван Краличевски (Огнянов) — революционер, символ на борбата; Рада — символ на чистотата; Маринкович — символ на страха. Различни герои представят различни реакции на робството.' },
+    { q: 'Какво е Априлското въстание и как е показано в романа?', a: 'Априлското въстание (1876 г.) е опит за освобождение от турско робство. Романът проследява подготовката, избухването и потушаването на въстанието — трагично, но heroично.' },
+    { q: 'Каква е ролята на общността в романа?', a: 'Общността (цялото градче Бяла Черква) е главният герой — не само отделни лица. Колективното решение за въстание, колективното страдание и колективният героизъм са в центъра.' },
+    { q: 'Защо романът е важен за националната идентичност?', a: 'Романът запазва и утвърждава националната памет. Той казва: „ние имахме герои, имахме борби, имахме достойнство дори под робство". Историческата памет гради националната идентичност.' }
+  ],
+  'bel7-botev-maytse-si': [
+    { q: 'Към кого е насочено стихотворението и какво обяснява синът?', a: 'Синът се обръща към майка си и обяснява защо избира хайдутството — борбата срещу турците — пред спокойния живот у дома. Той иска тя да разбере и приеме избора му.' },
+    { q: 'Каква е разликата между личното щастие и дълга към народа?', a: 'Личното щастие е спокоен живот с майка си. Дългът към народа е борбата за свобода. Синът жертва личното за общественото — поставя народа над себе си.' },
+    { q: 'Какво е хайдутство и защо синът го избира?', a: 'Хайдутството е въоръжена съпротива срещу турците в горите. Синът го избира, защото не може да гледа робството и несправедливостта. За него мирният живот под игото е морално невъзможен.' },
+    { q: 'Каква е майката в стихотворението — реална или символична?', a: 'Майката е и реална (конкретна личност), и символична (образ на Родината). Синът говори на майка си, но всъщност обяснява на Родината защо я обича и защо се бори за нея.' },
+    { q: 'Как стихотворението изразява Ботевата философия?', a: 'Ботевата философия: за свободата си струва да умреш. Робството е по-лошо от смъртта. Борбата е морален дълг, не само избор. Синът не се колебае — изборът е направен.' }
+  ],
+  'bel7-botev-hadzhi-dimityr': [
+    { q: 'Кой е Хаджи Димитър и защо е важна тази личност?', a: 'Хаджи Димитър е реален хайдутин, загинал при Бузлуджа (1868 г.) в борбата срещу турците. Ботев го прославя като символ на героичната жертва за свободата на народа.' },
+    { q: 'Какво правят вилите в баладата?', a: 'Вилите — митологични женски същества от народната вяра — слизат при умиращия хайдутин и лекуват раните му. Те са знак, че природата и мистичните сили признават неговото величие.' },
+    { q: 'Каква е антитезата народ/герой и какво изразява?', a: 'Народът спи, пие и пее — безразличен. Героят умира сам. Ботев осъжда народната пасивност чрез тази антитеза. Героят е сам, защото народът го е изоставил.' },
+    { q: 'Какво означава „Тоз, който падне в бой за свобода, той не умира"?', a: 'Героичната смърт в борбата за свобода е вечен живот — в паметта на народа, в историята. Смъртта не е край, а трансформация в безсмъртие. Това е централната идея на баладата.' },
+    { q: 'Защо баладата смесва реалното с митологичното?', a: 'Реалната смърт на Димитър е повишена до мит чрез вилите и орела. Митологизирането е начин да се каже: тази личност е толкова велика, че надхвърля обичайното. Тя принадлежи на легендата.' }
+  ],
+  'bel7-aleko-bay-ganyo': [
+    { q: 'Кой е Бай Ганьо и защо Алеко го е създал?', a: 'Бай Ганьо Балкански е измислен персонаж — тип на „полуевропееца". Алеко го е създал, за да осмее пороците: грубостта, алчността, простащината. Целта е да помогне на обществото да се погледне критично.' },
+    { q: 'Какво е сатира и как се прилага в книгата?', a: 'Сатирата е художествено осмиване на пороци. В „Бай Ганьо" Алеко показва недостатъците чрез смешни ситуации. Бай Ганьо не знае, че се е осмял — читателят вижда какво героят не вижда за себе си.' },
+    { q: 'Какви пороци критикува Алеко чрез Бай Ганьо?', a: 'Алчност (прибира всичко без да дава), простащина (не спазва норми на поведение), лицемерие (казва едно, прави друго), безскрупулност (не го е грижа за другите). Пороците са комични, но реални.' },
+    { q: 'Защо книгата е важна за българската литература?', a: 'Книгата е огледало на обществото — Алеко казва: „вижте се какви сте". Тя е важна, защото насърчава самокритиката — необходима стъпка към промяна. Смехът е оръжие на промяната.' },
+    { q: 'Как Бай Ганьо се държи в Европа и какво разкрива поведението му?', a: 'В Европа Бай Ганьо не спазва норми — прибира кърпи от хотела, не разбира защо хората се смеят, иска всичко „безплатно". Поведението разкрива: не усвоеното е по-смешно от неусвоеното.' }
+  ],
+  'bel7-yovkov-indzhe': [
+    { q: 'Кой е Индже и каква е историята му?', a: 'Индже е хайдутин — страшен и жесток. Среща жена, влюбва се и се променя. В края на разказа осъзнава злото, което е вършил, и копнее по изкуплението.' },
+    { q: 'Каква е метаморфозата на Индже?', a: 'Индже се превръща от жесток разбойник в кающ се човек под влиянието на любовта. Метаморфозата е вътрешна — не действия, а осъзнаване. Любовта е силата, събудила съвестта му.' },
+    { q: 'Каква е темата на разказа?', a: 'Темата е покаянието — осъзнаването на вина и стремежът към изкупление. Дори и жестокият човек може да се промени. Йовков вярва в способността на човека за духовно прераждане.' },
+    { q: 'Как Йовков изгражда легендарния образ на Индже?', a: 'Индже е легендарен — народът го помни и разказва за него. Йовков се опира на народни предания. Легендарността означава: тази история е важна за колективната памет на народа.' },
+    { q: 'Каква е ролята на любовта в разказа?', a: 'Любовта е катализатор на промяната — без нея Индже не би се изменил. Тя е художествен символ: в срещата с красотата и добротата дори злото може да бъде пробудено за добро.' }
+  ],
+  'bel7-elin-pelin-zadusha': [
+    { q: 'Какво е Задушница и каква е темата на разказа?', a: 'Задушницата е народен ден за помен на мъртвите — посещение на гробища, молитви, принасяне на храна. Темата на разказа е народният бит и хумористично-лирическото изображение на тази традиция.' },
+    { q: 'Как Елин Пелин съчетава хумора с лиризма?', a: 'Хуморът е в комичните ситуации и персонажи. Лиризмът е в нежното отношение към традицията и към хората. Двете не се изключват — Елин Пелин се усмихва, но обича своите герои.' },
+    { q: 'Какво разкрива разказът за народната традиция?', a: 'Задушницата е важна за народния живот — тя свързва живите с мъртвите, поколенията едно с друго. Традицията е форма на памет и принадлежност към общността.' },
+    { q: 'Как Елин Пелин използва иронията?', a: 'Иронията е лека — не злобна. Той описва персонажи с присмех, но без презрение. Иронията разкрива смешните страни на традицията, без да я отрича.' },
+    { q: 'Каква е картината на народния живот в разказа?', a: 'Народният живот е показан с обич — хората са живи, разнообразни, смешни и трогателни. Семейството, традицията, общуването — всичко е реалистично и топло изобразено.' }
   ]
 };
 

@@ -877,7 +877,7 @@ async function submitEssay() {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Грешка');
 
-    const dateStr = new Date().toLocaleDateString('bg-BG', { day:'numeric', month:'short' });
+    const dateStr = new Date().toLocaleDateString('bg-BG', { day:'numeric', month:'long' }).replace(/\s*г\.?$/, '');
     saveAttempt(currentAttemptTopic, { total: data.total, date: dateStr, criteria: data.criteria, summary: data.summary });
 
     showResults(data);

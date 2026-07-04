@@ -551,7 +551,7 @@ function applyFilters() {
       const isReview  = card.dataset.review === 'true';
 
       let show = true;
-      if (q && !title.includes(q) && !meta.includes(q)) show = false;
+      if (q && !title.includes(q)) show = false;
       const readPct   = parseInt(card.dataset.readPct || '0');
       const readDone  = readPct >= 100;
       if (currentStatus === 'unseen'  && (completed > 0 || readPct >= 3))                                               show = false;
@@ -570,7 +570,9 @@ function applyFilters() {
     });
 
     const empty = document.getElementById(`empty-${currentTab}-${g}`);
-    if (empty) empty.style.display = visible === 0 ? 'block' : 'none';
+    if (empty) empty.style.display = 'none';
+    // Скрий цялата секция ако няма видими уроци (при активно търсене или филтър)
+    section.style.display = visible === 0 ? 'none' : '';
   });
 }
 

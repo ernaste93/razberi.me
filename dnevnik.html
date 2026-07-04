@@ -243,14 +243,54 @@
       font-size: 13px; color: #94a3b8; text-align: center; padding: 20px 12px; line-height: 1.6;
     }
 
+    /* ── Engagement overview card ── */
+    .engage-card {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-bottom: 20px;
+      padding: 0;
+      overflow: hidden;
+    }
+    .engage-item {
+      padding: 18px 22px 16px;
+      border-right: 1px solid #f1f5f9;
+      display: flex; flex-direction: column; gap: 7px;
+    }
+    .engage-item:last-child { border-right: none; }
+    .engage-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: #94a3b8; }
+    .engage-value { font-size: 26px; font-weight: 900; color: #0f172a; line-height: 1; }
+    .engage-value span { font-size: 13px; font-weight: 600; color: #64748b; }
+    .engage-bar-bg { height: 5px; background: #f1f5f9; border-radius: 99px; overflow: hidden; }
+    .engage-bar-fg { height: 100%; border-radius: 99px; transition: width .6s ease; }
+    .engage-sub { font-size: 11px; font-weight: 600; color: #94a3b8; }
+
+    /* ── Weak topics card ── */
+    .weak-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 0; border-bottom: 1px solid #f8fafc;
+    }
+    .weak-row:last-child { border-bottom: none; }
+    .weak-pct-badge {
+      flex-shrink: 0; min-width: 42px; text-align: center;
+      font-size: 12px; font-weight: 800; border-radius: 8px; padding: 3px 7px;
+    }
+    .weak-name { flex: 1; font-size: 12px; font-weight: 600; color: #334155; }
+    .weak-link { font-size: 11px; color: #3b82f6; text-decoration: none; font-weight: 700; flex-shrink: 0; }
+    .weak-link:hover { text-decoration: underline; }
+
     @media (max-width: 920px) {
       .dash-main    { grid-template-columns: 1fr; }
       .stats-row    { grid-template-columns: repeat(2, 1fr); }
       .dash-right   { order: -1; }
+      .engage-card  { grid-template-columns: repeat(2, 1fr); }
+      .engage-item:nth-child(2) { border-right: none; }
+      .engage-item:nth-child(3) { border-top: 1px solid #f1f5f9; }
+      .engage-item:nth-child(4) { border-top: 1px solid #f1f5f9; }
     }
     @media (max-width: 520px) {
       .subjects-grid { grid-template-columns: 1fr; }
       .stats-row     { grid-template-columns: 1fr 1fr; }
+      .engage-card   { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -346,6 +386,33 @@
         </div>
       </div>
 
+      <!-- Engagement overview -->
+      <div class="card engage-card">
+        <div class="engage-item">
+          <div class="engage-label">🔥 Серия</div>
+          <div class="engage-value" id="eng-streak">—</div>
+          <div class="engage-sub" id="eng-streak-sub">дни подред</div>
+        </div>
+        <div class="engage-item">
+          <div class="engage-label">📅 Активни дни</div>
+          <div class="engage-value" id="eng-days">— <span>/ 30</span></div>
+          <div class="engage-bar-bg"><div class="engage-bar-fg" id="eng-days-bar" style="background:#1e40af;width:0%"></div></div>
+          <div class="engage-sub">от последните 30 дни</div>
+        </div>
+        <div class="engage-item">
+          <div class="engage-label">📖 Прочетени уроци</div>
+          <div class="engage-value" id="eng-read">—</div>
+          <div class="engage-bar-bg"><div class="engage-bar-fg" id="eng-read-bar" style="background:#15803d;width:0%"></div></div>
+          <div class="engage-sub" id="eng-read-sub">урока</div>
+        </div>
+        <div class="engage-item">
+          <div class="engage-label">💬 Знайко (днес)</div>
+          <div class="engage-value" id="eng-znayko">—</div>
+          <div class="engage-bar-bg"><div class="engage-bar-fg" id="eng-znayko-bar" style="background:#7c3aed;width:0%"></div></div>
+          <div class="engage-sub" id="eng-znayko-sub">въпроса</div>
+        </div>
+      </div>
+
       <!-- Main 2-col layout -->
       <div class="dash-main">
 
@@ -390,6 +457,12 @@
             <div id="activity-section"></div>
           </div>
 
+          <!-- Weak topics -->
+          <div class="card" id="weak-card" style="display:none;">
+            <div class="card-title">⚠️ Теми за внимание</div>
+            <div id="weak-section"></div>
+          </div>
+
           <!-- Recommendation -->
           <div class="rec-card" id="rec-card" style="display:none;">
             <div style="width:36px;height:36px;border-radius:10px;background:#fde68a;color:#92400e;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>
@@ -421,7 +494,7 @@
     // ── Load all data in parallel ──
     const [profileRes, quizRes, essayRes] = await Promise.all([
       sb.from('profiles')
-        .select('plan, trial_started_at, trial_quizzes_done, trial_lessons_opened')
+        .select('plan, trial_started_at, trial_quizzes_done, trial_lessons_opened, znayko_count_today, znayko_reset_date')
         .eq('id', uid).maybeSingle(),
       sb.from('quiz_results')
         .select('*').eq('user_id', uid).order('created_at', { ascending: false }),
@@ -598,10 +671,55 @@
     const activeSubs = SUBJECTS.filter(s => s.topicsDone > 0);
     const overallPct = activeSubs.length
       ? Math.round(activeSubs.reduce((s, x) => s + x.pct, 0) / activeSubs.length) : 0;
-    const overallGrade = overallPct > 0
-      ? (2 + overallPct / 100 * 4).toFixed(2) : '—';
     const totalDone = SUBJECTS.reduce((s, x) => s + x.topicsDone, 0);
     const totalAll  = SUBJECTS.reduce((s, x) => s + x.topicsTotal, 0);
+
+    // Overall grade — same algorithm as бележника:
+    // group quiz results by lesson_slug → avg per lesson → avg across lessons → 2-6 scale
+    // BEL also includes essay grades from localStorage + Supabase
+    function _pctToGrade(p) { return 2 + (p / 100) * 4; }
+    function _essayTotalToGrade(t) {
+      if (t >= 22) return 6; if (t >= 19) return 5;
+      if (t >= 15) return 4; if (t >= 13) return 3; return 2;
+    }
+    const _subjGrades = ['bel', 'math', 'bio', 'chem'].map(prefix => {
+      const rows = quizResults.filter(r => r.lesson_slug?.startsWith(prefix));
+      if (!rows.length) return null;
+      const bySlug = {};
+      rows.forEach(r => {
+        if (!bySlug[r.lesson_slug]) bySlug[r.lesson_slug] = [];
+        bySlug[r.lesson_slug].push(r.pct);
+      });
+      const slugAvgs = Object.values(bySlug).map(pcts => pcts.reduce((a,p)=>a+p,0)/pcts.length);
+      const avgPct = slugAvgs.reduce((a,p)=>a+p,0) / slugAvgs.length;
+      let grade = _pctToGrade(avgPct);
+      if (prefix === 'bel') {
+        const essayGrades = [];
+        for (const k of Object.keys(localStorage)) {
+          if (!k.startsWith('essay_bel')) continue;
+          const m = k.match(/^essay_(bel[^_]+)_t(\d+)$/);
+          if (!m) continue;
+          try {
+            const arr = JSON.parse(localStorage.getItem(k) || '[]');
+            const best = arr.reduce((b,a) => (!b || a.total > b.total) ? a : b, null);
+            if (best) essayGrades.push(_essayTotalToGrade(best.total ?? 0));
+          } catch(e) {}
+        }
+        essayResults.filter(e => e.lesson_slug?.startsWith('bel')).forEach(e => {
+          const g = e.grade ?? e.score ?? null;
+          if (g !== null) essayGrades.push(g);
+        });
+        if (essayGrades.length) {
+          const essayAvg = essayGrades.reduce((a,g)=>a+g,0) / essayGrades.length;
+          const qCount = slugAvgs.length;
+          const eCount = essayGrades.length;
+          grade = (_pctToGrade(avgPct) * qCount + essayAvg * eCount) / (qCount + eCount);
+        }
+      }
+      return grade;
+    }).filter(g => g !== null);
+    const overallGrade = _subjGrades.length
+      ? (_subjGrades.reduce((a,g)=>a+g,0) / _subjGrades.length).toFixed(2) : '—';
 
     // ── All activities merged ──
     const allActivities = [
@@ -867,10 +985,106 @@
       if (slug.startsWith('him')) return SUBJ_META.him;
       return SUBJ_META.bel;
     }
+    const ALL_LESSON_NAMES = {
+      'bel12-debelyanov-lyubov':            'Дебелянов — „Аз искам да те помня все така"',
+      'bel12-fotev-lyubov':                 'Фотев — „Колко си хубава!"',
+      'bel12-dubarova-posveshenie':         'Дубарова — „Посвещение"',
+      'bel12-vaptsarov-vyara':              'Вапцаров — „Вяра"',
+      'bel12-dalchev-molitva':              'Далчев — „Молитва"',
+      'bel12-elin-pelin-spasova-mogila':    'Елин Пелин — „Спасова могила"',
+      'bel12-elin-pelin-vetrena-melnitsa':  'Елин Пелин — „Ветрена мелница"',
+      'bel12-yovkov-pesenta-na-koleletata': 'Йовков — „Песента на колелетата"',
+      'bel12-paskov-balada':                'Пасков — „Балада за Георг Хених"',
+      'bel12-yavorov-dve-dushi':            'Яворов — „Две души"',
+      'bel12-bagryana-potomka':             'Багряна — „Потомка"',
+      'bel12-hristov-chesten-krast':        'Христов — „Честен кръст"',
+      'bel12-pravopis':                     'Правопис',
+      'bel12-punktuatsiya':                 'Пунктуация',
+      'bel12-gramatika':                    'Граматика',
+      'bel12-leksika':                      'Лексика',
+      'bel11-vazov-pod-igoto':              'Вазов — „Под игото"',
+      'bel11-vazov-epopea':                 'Вазов — „Епопея на забравените"',
+      'bel11-vazov-opalchentsite':          'Вазов — „Опълченците на Шипка"',
+      'bel11-vazov-paisiy':                 'Вазов — „Паисий"',
+      'bel11-vazov-tih-byal-dunav':         'Вазов — „Тих бял Дунав"',
+      'bel11-botev-hadzhi-dimityr':         'Ботев — „Хаджи Димитър"',
+      'bel11-botev-obesa':                  'Ботев — „Обесването на Васил Левски"',
+      'bel11-yavorov-gradushka':            'Яворов — „Градушка"',
+      'bel11-slaveykov-cis-moll':           'Славейков — „Cis moll"',
+      'bel11-aleko-bay-ganyo':              'Алеко Константинов — „Бай Ганьо"',
+      'bel11-elin-pelin-andreshko':         'Елин Пелин — „Андрешко"',
+      'bel11-talev-zhelezniyat-svetilnik':  'Талев — „Железният светилник"',
+      'bel11-stanev-kradetsat':             'Станев — „Крадецът на праскови"',
+      'bel11-stratiev-sako':                'Стратиев — „Сако от велур"',
+      'bel11-smirnanski-yohan':             'Смирненски — „Йохан"',
+      'bel11-vaptsarov-istoriya':           'Вапцаров — „История"',
+      'bel11-radichkov-nezhnata-spirala':   'Радичков — „Нежната спирала"',
+      'bel7-aleko-bay-ganyo':               'Алеко Константинов — „Бай Ганьо"',
+      'bel7-botev-hadzhi-dimityr':          'Ботев — „Хаджи Димитър"',
+      'bel7-botev-maytse-si':               'Ботев — „Майце си"',
+      'bel7-elin-pelin-zadusha':            'Елин Пелин — „Задушница"',
+      'bel7-morfologia':                    'Морфология',
+      'bel7-narodno-tvorchestvo':           'Народно творчество',
+      'bel7-pravopis':                      'Правопис — 7 клас',
+      'bel7-sintaksis':                     'Синтаксис',
+      'bel7-vazov-opalchentsite':           'Вазов — „Опълченците на Шипка"',
+      'bel7-vazov-pod-igoto':               'Вазов — „Под игото"',
+      'bel7-yovkov-indzhe':                 'Йовков — „Инджето"',
+      'bio11-kletkata':                     'Клетката — структура и органели',
+      'bio11-fotosinteza':                  'Фотосинтеза',
+      'bio11-dishane':                      'Клетъчно дишане',
+      'bio11-nervna-sistema':               'Нервна система',
+      'bio11-endokrinna-sistema':           'Ендокринна система',
+      'bio11-razmnozhavane':                'Размножаване',
+      'bio12-evolyutsiya':                  'Еволюция',
+      'bio12-razmnozhavane':                'Размножаване — 12 клас',
+      'bio12-mutatsii':                     'Мутации',
+      'bio12-mnogokletchna':                'Многоклетъчни организми',
+      'bio12-dnk-rnk':                      'ДНК и РНК',
+      'bio12-genetika-mendel':              'Генетика — закони на Мендел',
+      'chem11-stroezh-atoma':               'Строеж на атома',
+      'chem11-himichna-vrazka':             'Химична връзка',
+      'chem11-rastvori':                    'Разтвори и рН',
+      'chem11-okislenie-redukciya':         'Окислително-редукционни реакции',
+      'chem11-neorganichni-saedinenia':     'Неорганични съединения',
+      'chem11-skorost-ravnovesie':          'Скорост и равновесие',
+      'chem12-analiz':                      'Качествен анализ',
+      'chem12-lekarstva-goriva':            'Лекарства и горива',
+      'chem12-biohimiya':                   'Биохимия',
+      'chem12-vaglevodorodi':               'Въглеводороди',
+      'chem12-kislorodmi-saedinenia':       'Кислородни органични съединения',
+      'chem12-okolna-sreda':                'Химия и околна среда',
+      'math11-trigonometriya':              'Тригонометрия',
+      'math11-pokazatelna-logaritmichna':   'Показателна и логаритмична функция',
+      'math11-kvadratni-neravenstva':       'Квадратни неравенства',
+      'math11-progresii':                   'Прогресии',
+      'math11-planimeriya':                 'Планиметрия',
+      'math12-trigonometriya':              'Тригонометрични функции',
+      'math12-kvadratna-funkciya':          'Квадратна функция',
+      'math12-kvadratni-neravenstva':       'Квадратни неравенства',
+      'math12-proizvodna':                  'Производна',
+      'math12-geometriya':                  'Геометрия',
+      'math12-kombinatorika':               'Комбинаторика',
+      'math12-veroyatnosti':                'Вероятности',
+      'math12-pokazatelna-logaritmichna':   'Показателна и логаритмична функция',
+      'math12-progresii':                   'Прогресии',
+      'math7-ratsionalni-chisla':           'Рационални числа',
+      'math7-linearni-uravnenia':           'Линейни уравнения',
+      'math7-sistemi-uravnenia':            'Системи уравнения',
+      'math7-lineyna-funkciya':             'Линейна функция',
+      'math7-stepeni':                      'Степени с естествен показател',
+      'math7-triagalnik':                   'Триъгълник',
+      'math7-pitagorova-teorema':           'Питагорова теорема',
+      'math7-chetiriagalnitsi':             'Четириъгълници',
+      'math7-okrazhnost':                   'Окръжност и кръг',
+      'math7-statistika':                   'Статистика',
+    };
+
     function topicName(slug) {
       if (!slug) return '—';
+      if (ALL_LESSON_NAMES[slug]) return ALL_LESSON_NAMES[slug];
       const found = BEL_TOPICS.find(t => t.slug === slug || slug.startsWith(t.slug));
-      return found ? found.name : slug.split('-').slice(-2).join(' ');
+      return found ? found.name : slug.replace(/^(bel|math|bio|chem)\d*-/, '').replace(/-/g, ' ');
     }
 
     const actEl = document.getElementById('activity-section');
@@ -904,6 +1118,174 @@
       document.getElementById('rec-body').textContent =
         'Избери урок от БЕЛ и направи първия си тест — резултатите ще се появят тук.';
     }
+
+    // ── Engagement overview ──
+    (function () {
+      // 1. Streak — consecutive active days going backward from today
+      const activeDateStrings = new Set(
+        allActivities.map(a => a.date.toDateString())
+      );
+      function calcStreak() {
+        let streak = 0;
+        const check = new Date(now);
+        // If nothing today, start from yesterday
+        if (!activeDateStrings.has(check.toDateString())) {
+          check.setDate(check.getDate() - 1);
+        }
+        while (activeDateStrings.has(check.toDateString())) {
+          streak++;
+          check.setDate(check.getDate() - 1);
+        }
+        return streak;
+      }
+      const streak = calcStreak();
+
+      // 2. Active days in last 30 days
+      const month30Ago = new Date(now); month30Ago.setDate(now.getDate() - 30);
+      const activeDays30 = new Set(
+        allActivities.filter(a => a.date >= month30Ago).map(a => a.date.toDateString())
+      ).size;
+
+      // 3. Read lessons from localStorage (lp_* with p >= 10)
+      let readCount = 0;
+      const TOTAL_LESSONS_APPROX = 65;
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (!k || !k.startsWith('lp_')) continue;
+        try {
+          const d = JSON.parse(localStorage.getItem(k));
+          if (d && (d.p || 0) >= 10) readCount++;
+        } catch {}
+      }
+
+      // 4. Знайко today
+      const todayStr = now.toISOString().slice(0, 10);
+      const znaykoToday = profile.znayko_reset_date === todayStr
+        ? (profile.znayko_count_today || 0) : 0;
+      const ZNAYKO_DAILY_LIMIT = 30;
+
+      // Render
+      const streakEl = document.getElementById('eng-streak');
+      streakEl.innerHTML = streak > 0
+        ? `${streak} <span>${streak === 1 ? 'ден' : 'дни'}</span>`
+        : `<span style="color:#94a3b8;font-size:18px;">Няма</span>`;
+      document.getElementById('eng-streak-sub').textContent =
+        streak >= 7 ? '🔥 Страхотна серия!' :
+        streak >= 3 ? 'Продължавай така!' :
+        streak === 1 ? 'Добро начало!' : 'Учи днес за серия';
+
+      document.getElementById('eng-days').innerHTML =
+        `${activeDays30} <span>/ 30</span>`;
+      document.getElementById('eng-days-bar').style.width = Math.round(activeDays30 / 30 * 100) + '%';
+
+      document.getElementById('eng-read').innerHTML =
+        `${readCount} <span>${readCount === 1 ? 'урок' : 'урока'}</span>`;
+      document.getElementById('eng-read-bar').style.width =
+        Math.min(100, Math.round(readCount / TOTAL_LESSONS_APPROX * 100)) + '%';
+      document.getElementById('eng-read-sub').textContent =
+        readCount >= TOTAL_LESSONS_APPROX ? 'Всички уроци прочетени!' :
+        readCount > 0 ? `${TOTAL_LESSONS_APPROX - readCount} урока остават` : 'Нито един урок прочетен';
+
+      document.getElementById('eng-znayko').innerHTML =
+        znaykoToday > 0
+          ? `${znaykoToday} <span>/ ${ZNAYKO_DAILY_LIMIT}</span>`
+          : `<span style="color:#94a3b8;font-size:18px;">0</span>`;
+      document.getElementById('eng-znayko-bar').style.width =
+        Math.min(100, Math.round(znaykoToday / ZNAYKO_DAILY_LIMIT * 100)) + '%';
+      document.getElementById('eng-znayko-sub').textContent =
+        znaykoToday >= ZNAYKO_DAILY_LIMIT ? 'Дневен лимит достигнат' :
+        znaykoToday > 0 ? `въпроса зададени днес` : 'Попитай Знайко нещо!';
+    })();
+
+    // ── Weak topics ──
+    (function () {
+      if (!quizResults.length) return;
+
+      // Group all results by lesson_slug, find average pct per lesson
+      const bySlug = {};
+      quizResults.forEach(r => {
+        if (!bySlug[r.lesson_slug]) bySlug[r.lesson_slug] = [];
+        bySlug[r.lesson_slug].push(r.pct);
+      });
+
+      const LESSON_NAMES = {
+        'bel12-debelyanov-lyubov': 'Дебелянов — „Аз искам да те помня все така"',
+        'bel12-fotev-lyubov': 'Фотев — „Колко си хубава!"',
+        'bel12-dubarova-posveshenie': 'Дубарова — „Посвещение"',
+        'bel12-vaptsarov-vyara': 'Вапцаров — „Вяра"',
+        'bel12-dalchev-molitva': 'Далчев — „Молитва"',
+        'bel12-elin-pelin-spasova-mogila': 'Елин Пелин — „Спасова могила"',
+        'bel12-elin-pelin-vetrena-melnitsa': 'Елин Пелин — „Ветрена мелница"',
+        'bel12-yovkov-pesenta-na-koleletata': 'Йовков — „Песента на колелетата"',
+        'bel12-paskov-balada': 'Пасков — „Балада за Георг Хених"',
+        'bel12-yavorov-dve-dushi': 'Яворов — „Две души"',
+        'bel12-bagryana-potomka': 'Багряна — „Потомка"',
+        'bel12-hristov-chesten-krast': 'Христов — „Честен кръст"',
+        'bel11-vazov-pod-igoto': 'Вазов — „Под игото"',
+        'bel11-botev-hadzhi-dimityr': 'Ботев — „Хаджи Димитър"',
+        'bel11-yavorov-gradushka': 'Яворов — „Градушка"',
+        'bel11-aleko-bay-ganyo': 'Алеко Константинов — „Бай Ганьо"',
+        'bio11-kletkata': 'Клетката',
+        'bio11-fotosinteza': 'Фотосинтеза',
+        'bio11-dishane': 'Клетъчно дишане',
+        'bio11-nervna-sistema': 'Нервна система',
+        'bio11-endokrinna-sistema': 'Ендокринна система',
+        'bio12-evolyutsiya': 'Еволюция',
+        'bio12-mutatsii': 'Мутации',
+        'bio12-genetika-mendel': 'Генетика (Мендел)',
+        'chem11-stroezh-atoma': 'Строеж на атома',
+        'chem11-himichna-vrazka': 'Химична връзка',
+        'chem11-rastvori': 'Разтвори и рН',
+        'chem11-okislenie-redukciya': 'Окисл.-редукц. реакции',
+        'chem11-neorganichni-saedinenia': 'Неорг. съединения',
+        'chem12-analiz': 'Качествен анализ',
+        'chem12-vaglevodorodi': 'Въглеводороди',
+        'math11-trigonometriya': 'Тригонометрия',
+        'math11-pokazatelna-logaritmichna': 'Показ. и логарит. функция',
+        'math11-kvadratni-neravenstva': 'Квадратни неравенства',
+        'math11-progresii': 'Прогресии',
+        'math12-kvadratna-funkciya': 'Квадратна функция',
+        'math12-proizvodna': 'Производна',
+        'math12-kombinatorika': 'Комбинаторика',
+        'math12-veroyatnosti': 'Вероятности',
+        'math7-linearni-uravnenia': 'Линейни уравнения',
+        'math7-pitagorova-teorema': 'Питагорова теорема',
+        'bel7-sintaksis': 'Синтаксис',
+        'bel7-pravopis': 'Правопис',
+        'bel7-morfologia': 'Морфология',
+      };
+
+      const SUBJ_COLOR = {
+        bel: '#1a2f5a', math: '#5b21b6', bio: '#15803d', chem: '#b45309',
+      };
+      function slugSubj(slug) {
+        for (const k of ['bel', 'math', 'bio', 'chem']) if (slug.startsWith(k)) return k;
+        return 'bel';
+      }
+
+      const lessonAvgs = Object.entries(bySlug).map(([slug, pcts]) => ({
+        slug,
+        avg: Math.round(pcts.reduce((a, p) => a + p, 0) / pcts.length),
+        subj: slugSubj(slug),
+      })).filter(l => l.avg < 70); // only show if below 70%
+
+      if (!lessonAvgs.length) return;
+
+      const worst = lessonAvgs.sort((a, b) => a.avg - b.avg).slice(0, 4);
+      const el = document.getElementById('weak-card');
+      const sec = document.getElementById('weak-section');
+      el.style.display = 'block';
+
+      sec.innerHTML = worst.map(l => {
+        const color = l.avg < 40 ? '#dc2626' : l.avg < 60 ? '#f97316' : '#ca8a04';
+        const name = LESSON_NAMES[l.slug] || l.slug.replace(/^(bel|math|bio|chem)\d*-/, '').replace(/-/g, ' ');
+        return `<div class="weak-row">
+          <span class="weak-pct-badge" style="background:${color}18;color:${color}">${l.avg}%</span>
+          <span class="weak-name">${name}</span>
+          <a class="weak-link" href="/lessons/${l.slug}.html">Повтори →</a>
+        </div>`;
+      }).join('');
+    })();
   </script>
 
 </body>

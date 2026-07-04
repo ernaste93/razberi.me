@@ -97,6 +97,25 @@
     }
     .stat-pill strong { color: var(--ink); }
 
+    /* ── Table summary row ── */
+    .tbl-summary-row td { background: #e8edf5; border-top: 1.5px solid #c7d2e8 !important; border-bottom: 1.5px solid #c7d2e8 !important; padding-top: 10px !important; padding-bottom: 10px !important; }
+
+    /* ── BEL grade breakdown ── */
+    .bel-breakdown { margin: 0 20px 12px; border-radius: 10px; border: 1.5px solid var(--border); overflow: hidden; }
+    .bel-breakdown-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 14px; font-size: 13px;
+    }
+    .bel-breakdown-row + .bel-breakdown-row { border-top: 1px solid var(--border); }
+    .bel-breakdown-lbl { font-weight: 600; color: var(--muted); }
+    .bel-breakdown-val { font-weight: 800; }
+    .bel-breakdown-total {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 14px; font-size: 13px;
+      background: var(--bg); border-top: 1.5px solid var(--border);
+    }
+    .bel-breakdown-total .bel-breakdown-lbl { color: var(--ink); font-weight: 700; }
+
     /* ── Progress bar ── */
     .subj-prog { padding: 10px 20px 14px; border-bottom: 1.5px solid var(--border); }
     .prog-bar { height: 5px; background: var(--border); border-radius: 5px; overflow: hidden; margin-top: 6px; }
@@ -226,6 +245,14 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
   function gradeColor(g) { return g>=5.5?'#15803d' : g>=4.5?'#65a30d' : g>=3.5?'#ca8a04' : g>=3?'#f97316' : '#dc2626'; }
   function fmtGrade(g)   { return g.toFixed(2); }
   function pctToGrade(pct) { return 2 + pct / 100 * 4; }
+  const BG_MONTHS = ['','януари','февруари','март','април','май','юни','юли','август','септември','октомври','ноември','декември'];
+  function fixDate(s) {
+    if (!s || s === '—') return s;
+    const m = s.match(/^(\d{1,2})\.(\d{1,2})\.?$/);
+    if (m) return `${parseInt(m[1])} ${BG_MONTHS[parseInt(m[2])] || m[2]}`;
+    return s;
+  }
+
   function essayTotalToGrade(total) {
     if (total >= 22) return 6;
     if (total >= 19) return 5;
@@ -334,10 +361,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     return LESSON_TITLES[slug] || slug.replace(/^(bel|math|bio|chem)\d*-/,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
   }
   function relDate(s) {
-    const d = new Date(s), diff = Math.floor((Date.now()-d)/86400000);
-    if (diff===0) return 'Днес'; if (diff===1) return 'Вчера';
-    if (diff<7) return `Пр. ${diff} дни`;
-    return d.toLocaleDateString('bg-BG',{day:'numeric',month:'short'});
+    const d = new Date(s);
+    return d.toLocaleDateString('bg-BG',{day:'numeric',month:'long'}).replace(/\s*г\.?$/, '');
   }
 
   // ── Read lessons from localStorage ──
@@ -413,33 +438,34 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
       }
     });
 
-    // Per-lesson average pct (across all quiz_nums done for that lesson)
+    // Per-lesson average pct (across all quiz_nums done for that lesson) — no rounding, keeps precision
     const lessonAvgs = Object.values(byLesson).map(qnMap => {
       const pcts = Object.values(qnMap).map(v => v.pct);
-      return Math.round(pcts.reduce((a, p) => a + p, 0) / pcts.length);
+      return pcts.reduce((a, p) => a + p, 0) / pcts.length;
     });
-    const avgPct = lessonAvgs.length ? Math.round(lessonAvgs.reduce((a, p) => a + p, 0) / lessonAvgs.length) : null;
+    const avgPct = lessonAvgs.length ? lessonAvgs.reduce((a, p) => a + p, 0) / lessonAvgs.length : null;
     const quizGrade = avgPct !== null ? pctToGrade(avgPct) : null;
 
     // Essay grade
     let essayGradeAvg = null;
+    let essayGradesList = [];
     if (s.essay) {
-      // From Supabase essay_results (if populated)
-      let essayGrades = eRows.map(e => e.grade ?? e.score ?? null).filter(g => g !== null);
-      // From localStorage (sachine.html)
+      essayGradesList = eRows.map(e => e.grade ?? e.score ?? null).filter(g => g !== null);
       const lsData = s.key === 'bel' ? belEssayLS : {};
       Object.values(lsData).forEach(topics => {
-        topics.forEach(t => essayGrades.push(essayTotalToGrade(t.total)));
+        topics.forEach(t => essayGradesList.push(essayTotalToGrade(t.total)));
       });
-      if (essayGrades.length) {
-        essayGradeAvg = essayGrades.reduce((a, g) => a + g, 0) / essayGrades.length;
+      if (essayGradesList.length) {
+        essayGradeAvg = essayGradesList.reduce((a, g) => a + g, 0) / essayGradesList.length;
       }
     }
 
-    // Combined grade for БЕЛ
+    // Combined grade — weighted by count (quiz lessons + essay items каунтват поравно)
     let avg = null;
+    const qCount = lessonAvgs.length;
+    const eCount = essayGradesList.length;
     if (quizGrade !== null && essayGradeAvg !== null) {
-      avg = (quizGrade + essayGradeAvg) / 2;
+      avg = (quizGrade * qCount + essayGradeAvg * eCount) / (qCount + eCount);
     } else if (quizGrade !== null) {
       avg = quizGrade;
     } else if (essayGradeAvg !== null) {
@@ -508,9 +534,6 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
       // Grade label breakdown (for BEL show quiz + essay separately if both)
       let avgSubLabel = '';
-      if (s.essay && s.quizGrade !== null && s.essayGradeAvg !== null) {
-        avgSubLabel = `<div style="font-size:10px;color:var(--muted);font-weight:700;text-align:right;margin-top:2px;">Тест ${fmtGrade(s.quizGrade)} + Съч. ${fmtGrade(s.essayGradeAvg)}</div>`;
-      }
 
       // Stats pills
       const statPills = [
@@ -526,7 +549,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
         return qnsSorted.map(([qn, v], idx) => {
           const gRaw  = pctToGrade(v.pct);
           const gc    = gradeColor(gRaw);
-          const gInt  = Math.round(gRaw);
+          const gInt  = gRaw.toFixed(2);
           const gLbl  = gradeLabel(gRaw);
           const delta = idx > 0 ? v.pct - pcts[idx - 1] : null;
           const deltaHtml = delta !== null
@@ -542,7 +565,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
             <td class="td-date">${relDate(v.created_at)}</td>
             <td class="td-r"><span class="badge" style="background:${gc}18;color:${gc}">${v.pct}%</span></td>
             <td class="td-delta">${deltaHtml}</td>
-            <td class="td-grade" style="color:${gc}">${gInt} <span style="font-size:11px;font-weight:700">${gLbl}</span></td>
+            <td class="td-grade" style="color:${gc}">${gLbl} <span style="font-size:11px;font-weight:700">${gInt}</span></td>
           </tr>`;
         }).join('');
       }).join('');
@@ -557,7 +580,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
           <td class="td-date">${relDate(e.created_at)}</td>
           <td></td>
           <td></td>
-          <td class="td-grade" style="color:${gc}">${typeof g === 'number' ? g.toFixed(2) : g}</td>
+          <td class="td-grade" style="color:${gc}">${typeof g === 'number' ? `${gradeLabel(g)} <span style="font-size:11px;font-weight:700">${g.toFixed(2)}</span>` : g}</td>
         </tr>`;
       }).join('') : '';
 
@@ -569,16 +592,33 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
           return `<tr>
             <td>${shortName(slug)}</td>
             <td class="td-attempt" style="color:#7c3aed">Съчинение</td>
-            <td class="td-date">${t.date || '—'}</td>
+            <td class="td-date">${fixDate(t.date) || '—'}</td>
             <td><span class="badge" style="background:#7c3aed18;color:#7c3aed">${t.total}/24</span></td>
             <td></td>
-            <td class="td-grade" style="color:${gc}">${g} <span style="font-size:11px;font-weight:700">${gradeLabel(g)}</span></td>
+            <td class="td-grade" style="color:${gc}">${gradeLabel(g)} <span style="font-size:11px;font-weight:700">${g.toFixed(2)}</span></td>
           </tr>`;
         }).join('')
       ).join('') : '';
 
       const hasQuizRows = s.qRows.length > 0;
       const hasEssayRows = supabaseEssayRows || lsEssayRows;
+
+      // Summary rows at bottom of each section
+      const quizSummaryRow = hasQuizRows && s.quizGrade !== null ? (() => {
+        const gc = gradeColor(s.quizGrade);
+        return `<tr class="tbl-summary-row">
+          <td colspan="5" style="color:var(--muted);font-weight:700;font-size:12px;">Обща оценка от тестове</td>
+          <td class="td-grade" style="color:${gc}">${gradeLabel(s.quizGrade)} <span style="font-size:11px;font-weight:700">${fmtGrade(s.quizGrade)}</span></td>
+        </tr>`;
+      })() : '';
+
+      const essaySummaryRow = hasEssayRows && s.essayGradeAvg !== null ? (() => {
+        const gc = gradeColor(s.essayGradeAvg);
+        return `<tr class="tbl-summary-row">
+          <td colspan="5" style="color:var(--muted);font-weight:700;font-size:12px;">Обща оценка от съчинения</td>
+          <td class="td-grade" style="color:${gc}">${gradeLabel(s.essayGradeAvg)} <span style="font-size:11px;font-weight:700">${fmtGrade(s.essayGradeAvg)}</span></td>
+        </tr>`;
+      })() : '';
 
       const sectionDivider = hasQuizRows && hasEssayRows
         ? `<tr class="tbl-section-hdr"><td colspan="6">Съчинения</td></tr>` : '';
@@ -617,7 +657,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
               <th class="th-r">Промяна</th>
               <th class="th-r">Оценка</th>
             </tr></thead>
-            <tbody>${quizRows}${sectionDivider}${supabaseEssayRows}${lsEssayRows}</tbody>
+            <tbody>${quizRows}${quizSummaryRow}${sectionDivider}${supabaseEssayRows}${lsEssayRows}${essaySummaryRow}</tbody>
           </table>
         </div>`);
     });
