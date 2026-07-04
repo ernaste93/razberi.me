@@ -166,7 +166,7 @@
       var user = userRes.data?.user || session.user;
 
       var profileRes = await sb.from('profiles')
-        .select('full_name,plan,trial_started_at,subscription_renews_at')
+        .select('full_name,plan,trial_started_at')
         .eq('id', user.id)
         .single();
       var profile = profileRes.data || {};
