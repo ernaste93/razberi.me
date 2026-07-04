@@ -238,7 +238,7 @@
         fetch('/api/notify-completion', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-          body: JSON.stringify({ type: 'quiz', lessonTitle: cfg.lessonTitle || baseSlug, score: correct, total: qs.length })
+          body: JSON.stringify({ type: 'quiz', lessonTitle: cfg.lessonTitle || baseSlug, lessonSlug: baseSlug, score: correct, total: qs.length })
         }).catch(function(){});
       }
 

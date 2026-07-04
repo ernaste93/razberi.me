@@ -624,8 +624,71 @@ async function handleGenerateKonspekt(req, res) {
   }
 }
 
+const LESSON_TITLES = {
+  'bel12-yavorov-dve-dushi':               'Пейо Яворов — „Две души"',
+  'bel12-yovkov-pesenta-na-koleletata':    'Йордан Йовков — „Песента на колелетата"',
+  'bel12-paskov-balada':                   'Виктор Пасков — „Балада за Георг Хених"',
+  'bel12-bagryana-potomka':                'Елисавета Багряна — „Потомка"',
+  'bel12-vaptsarov-vyara':                 'Никола Вапцаров — „Вяра"',
+  'bel12-debelyanov-lyubov':               'Димчо Дебелянов — „Аз искам да те помня все така"',
+  'bel12-dalchev-molitva':                 'Атанас Далчев — „Молитва"',
+  'bel12-dubarova-posveshenie':            'Петя Дубарова — „Посвещение"',
+  'bel12-fotev-lyubov':                    'Христо Фотев — „Колко си хубава!"',
+  'bel12-elin-pelin-spasova-mogila':       'Елин Пелин — „Спасова могила"',
+  'bel12-elin-pelin-vetrena-melnitsa':     'Елин Пелин — „Ветрената мелница"',
+  'bel12-hristov-chesten-krast':           'Борис Христов — „Честен кръст"',
+  'bel12-gramatika':                       'Граматична норма',
+  'bel12-leksika':                         'Лексикална норма',
+  'bel12-pravopis':                        'Правописна норма',
+  'bel12-punktuatsiya':                    'Пунктуационна норма',
+  'bel11-vaptsarov-istoriya':              'Никола Вапцаров — „История"',
+  'bel11-vazov-opalchentsite':             'Иван Вазов — „Опълченците на Шипка"',
+  'bel11-vazov-paisiy':                    'Иван Вазов — „Паисий"',
+  'bel11-vazov-epopea':                    'Иван Вазов — „Епопея на забравените"',
+  'bel11-vazov-pod-igoto':                 'Иван Вазов — „Под игото"',
+  'bel11-vazov-tih-byal-dunav':            'Иван Вазов — „Тих бял Дунав"',
+  'bel11-botev-hadzhi-dimityr':            'Христо Ботев — „Хаджи Димитър"',
+  'bel11-botev-obesa':                     'Христо Ботев — „Обесването на Васил Левски"',
+  'bel11-aleko-bay-ganyo':                 'Алеко Константинов — „Бай Ганьо"',
+  'bel11-elin-pelin-andreshko':            'Елин Пелин — „Андрешко"',
+  'bel11-slaveykov-cis-moll':              'Пенчо Славейков — „Cis moll"',
+  'bel11-smirnanski-yohan':               'Христо Смирненски — „Йохан"',
+  'bel11-stanev-kradetsat':               'Емилиян Станев — „Крадецът на праскови"',
+  'bel11-stratiev-sako':                  'Станислав Стратиев — „Сако от велур"',
+  'bel11-talev-zhelezniyat-svetilnik':    'Димитър Талев — „Железният светилник"',
+  'bel11-radichkov-nezhnata-spirala':     'Йордан Радичков — „Нежната спирала"',
+  'bel11-yavorov-gradushka':              'Пейо Яворов — „Градушка"',
+  'bel7-vazov-pod-igoto':                 'Иван Вазов — „Под игото"',
+  'bel7-vazov-opalchentsite':             'Иван Вазов — „Опълченците на Шипка"',
+  'bel7-yovkov-indzhe':                   'Йордан Йовков — „Индже"',
+  'bel7-botev-hadzhi-dimityr':            'Христо Ботев — „Хаджи Димитър"',
+  'bel7-botev-maytse-si':                 'Христо Ботев — „Майце си"',
+  'bel7-elin-pelin-zadusha':              'Елин Пелин — „Задушница"',
+  'bel7-aleko-bay-ganyo':                 'Алеко Константинов — „Бай Ганьо"',
+  'bel7-morfologia':                      'Морфология — части на речта',
+  'bel7-sintaksis':                       'Синтаксис — изречения и видове',
+  'bel7-pravopis':                        'Правопис и пунктуация за НВО',
+  'bel7-narodno-tvorchestvo':             'Народно творчество',
+  'bio12-dnk-rnk':                        'ДНК, РНК и биосинтеза на белтъци',
+  'bio12-genetika-mendel':                'Генетика — Менделови закони',
+  'bio12-evolyutsiya':                    'Еволюция',
+  'bio12-mutatsii':                       'Мутации и популационна генетика',
+  'bio12-mnogokletchna':                  'Многоклетъчна организация',
+  'bio12-razmnozhavane':                  'Размножаване, растеж и развитие',
+  'bio11-kletkata':                       'Строеж и функции на клетката',
+  'bio11-fotosinteza':                    'Фотосинтеза',
+  'bio11-dishane':                        'Клетъчно дишане',
+  'bio11-razmnozhavane':                  'Размножаване',
+  'bio11-nervna-sistema':                 'Нервна система',
+  'bio11-endokrinna-sistema':             'Ендокринна система',
+  'chem12-kislorodmi-saedinenia':         'Кислородни съединения',
+  'chem12-biohimiya':                     'Биохимия',
+  'chem12-analiz':                        'Анализ на веществата',
+  'chem12-lekarstva-goriva':              'Лекарства, горива и полимери',
+};
+
 async function handleNotifyCompletion(req, res) {
-  if (!resend) return sendJson(res, 200, { ok: true }); // silently skip if no key
+  if (!resend) return sendJson(res, 200, { ok: true });
 
   const authHeader = req.headers['authorization'] || '';
   const userToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
@@ -638,7 +701,11 @@ async function handleNotifyCompletion(req, res) {
   try { payload = JSON.parse(await readBody(req)); }
   catch { return sendJson(res, 400, { error: 'Invalid JSON' }); }
 
-  const { type, lessonTitle, score, total } = payload;
+  const { type, lessonTitle: rawTitle, lessonSlug, score, total } = payload;
+
+  // Resolve human-readable title
+  const baseSlug = (lessonSlug || rawTitle || '').replace(/-q\d+$/, '');
+  const lessonTitle = LESSON_TITLES[baseSlug] || rawTitle || baseSlug;
 
   // Get user email from profiles
   const profRes = await fetch(
@@ -651,73 +718,129 @@ async function handleNotifyCompletion(req, res) {
   const firstName = (prof.full_name || '').split(' ')[0] || 'Ученику';
   const typeLabel = type === 'essay' ? 'Съчинение' : 'Тест';
   const percent = total > 0 ? Math.round((score / total) * 100) : 0;
-  const passed = type === 'essay' ? score >= 13 : percent >= 50;
-  const resultLabel = passed ? '✅ Издържан' : '❌ Неиздържан';
-  const resultColor = passed ? '#22c55e' : '#ef4444';
+
+  // Status tiers — no "failed", education-friendly language
+  let statusLabel, statusColor, statusBg, messageLine, ctaText, ctaHref;
+  if (type === 'essay') {
+    if (score >= 19)      { statusLabel = 'Отличен резултат';    statusColor = '#15803d'; statusBg = '#f0fdf4'; }
+    else if (score >= 13) { statusLabel = 'Издържано';           statusColor = '#b45309'; statusBg = '#fffbeb'; }
+    else                  { statusLabel = 'За преговор';         statusColor = '#c2410c'; statusBg = '#fff7ed'; }
+    messageLine = score >= 13
+      ? 'Добра работа! Прегледай обратната връзка и виж как да се подобриш още.'
+      : 'Този резултат не е крайна оценка — той показва откъде да започнеш преговора.';
+    ctaText = 'Пиши ново съчинение →';
+    ctaHref = 'https://www.razberi.me/lessons/sachine.html';
+  } else {
+    if (percent >= 90)      { statusLabel = 'Отлично';         statusColor = '#15803d'; statusBg = '#f0fdf4'; }
+    else if (percent >= 70) { statusLabel = 'Добър резултат';  statusColor = '#15803d'; statusBg = '#f0fdf4'; }
+    else if (percent >= 50) { statusLabel = 'Има напредък';    statusColor = '#1d4ed8'; statusBg = '#eff6ff'; }
+    else if (percent >= 30) { statusLabel = 'За преговор';     statusColor = '#c2410c'; statusBg = '#fff7ed'; }
+    else                    { statusLabel = 'За преговор';     statusColor = '#c2410c'; statusBg = '#fff7ed'; }
+    messageLine = percent >= 70
+      ? 'Отлично представяне! Продължавай така.'
+      : percent >= 50
+        ? 'Добър старт — още малко преговор и ще го вземеш уверено.'
+        : 'Този резултат не е крайна оценка — той показва откъде да започнеш преговора.';
+    const lessonUrl = 'https://www.razberi.me/lessons/' + baseSlug + '.html';
+    ctaText = 'Прегледай урока →';
+    ctaHref = lessonUrl;
+  }
+
+  const progressBarWidth = Math.max(4, percent);
+  const progressColor = percent >= 70 ? '#22c55e' : percent >= 50 ? '#3b82f6' : '#f97316';
+
+  const nextSteps = type === 'essay'
+    ? ['Прочети обратната връзка за всеки критерий', 'Попитай Знайко за неясните части', 'Напиши ново съчинение след преговор']
+    : ['Прегледай урока за ' + lessonTitle, 'Виж сгрешените въпроси', 'Попитай Знайко за неясните части', 'Реши теста отново'];
 
   const html = `<!DOCTYPE html>
 <html lang="bg">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#f4f6f9;font-family:'Helvetica Neue',Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f9;padding:32px 0;">
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:'Helvetica Neue',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:32px 16px;">
     <tr><td align="center">
-      <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);max-width:560px;">
+
         <!-- Header -->
         <tr>
-          <td style="background:linear-gradient(135deg,#1e293b 0%,#334155 100%);padding:28px 32px;text-align:center;">
-            <div style="font-size:28px;font-weight:800;color:#f97316;letter-spacing:-0.5px;">Разбери.ме</div>
-            <div style="font-size:13px;color:#94a3b8;margin-top:4px;">Твоята учебна платформа</div>
+          <td style="background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);padding:32px;text-align:center;">
+            <div style="font-size:26px;font-weight:800;color:#f97316;letter-spacing:-0.5px;">Разбери.ме</div>
+            <div style="font-size:12px;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:1px;">Твоята учебна платформа</div>
           </td>
         </tr>
+
         <!-- Body -->
         <tr>
-          <td style="padding:32px;">
-            <p style="margin:0 0 8px;font-size:17px;color:#1e293b;">Здравей, <strong>${firstName}</strong>!</p>
-            <p style="margin:0 0 24px;font-size:15px;color:#64748b;line-height:1.6;">
-              Завърши ${typeLabel.toLowerCase()} по <strong>${lessonTitle}</strong>.
+          <td style="padding:32px 32px 24px;">
+            <p style="margin:0 0 6px;font-size:18px;font-weight:700;color:#0f172a;">Здравей, ${firstName}!</p>
+            <p style="margin:0 0 28px;font-size:14px;color:#64748b;line-height:1.6;">
+              Завърши ${typeLabel.toLowerCase()} по <strong style="color:#0f172a;">${lessonTitle}</strong>.
             </p>
+
             <!-- Result card -->
-            <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin-bottom:24px;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;margin-bottom:24px;">
               <tr>
-                <td style="padding:20px 24px;">
-                  <div style="font-size:13px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">${typeLabel}</div>
-                  <div style="font-size:15px;font-weight:700;color:#1e293b;margin-bottom:12px;">${lessonTitle}</div>
-                  <table cellpadding="0" cellspacing="0">
+                <td style="padding:20px 24px 16px;">
+                  <div style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">${typeLabel}</div>
+                  <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:16px;">${lessonTitle}</div>
+
+                  <!-- Stats row -->
+                  <table cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
                     <tr>
-                      <td style="padding-right:24px;">
-                        <div style="font-size:13px;color:#64748b;">Резултат</div>
-                        <div style="font-size:24px;font-weight:800;color:#1e293b;">${score}<span style="font-size:15px;color:#94a3b8;">/${total}</span></div>
+                      <td style="padding-right:28px;">
+                        <div style="font-size:12px;color:#94a3b8;margin-bottom:2px;">Резултат</div>
+                        <div style="font-size:26px;font-weight:800;color:#0f172a;line-height:1;">${score}<span style="font-size:14px;font-weight:500;color:#94a3b8;">/${total}</span></div>
                       </td>
-                      <td style="padding-right:24px;">
-                        <div style="font-size:13px;color:#64748b;">Процент</div>
-                        <div style="font-size:24px;font-weight:800;color:#1e293b;">${percent}%</div>
+                      <td style="padding-right:28px;">
+                        <div style="font-size:12px;color:#94a3b8;margin-bottom:2px;">Успеваемост</div>
+                        <div style="font-size:26px;font-weight:800;color:#0f172a;line-height:1;">${percent}%</div>
                       </td>
                       <td>
-                        <div style="font-size:13px;color:#64748b;">Статус</div>
-                        <div style="font-size:15px;font-weight:700;color:${resultColor};">${resultLabel}</div>
+                        <div style="font-size:12px;color:#94a3b8;margin-bottom:4px;">Статус</div>
+                        <div style="display:inline-block;background:${statusBg};color:${statusColor};font-size:13px;font-weight:700;padding:4px 10px;border-radius:20px;">${statusLabel}</div>
                       </td>
                     </tr>
                   </table>
+
+                  <!-- Progress bar -->
+                  <div style="background:#e2e8f0;border-radius:99px;height:6px;overflow:hidden;">
+                    <div style="background:${progressColor};width:${progressBarWidth}%;height:6px;border-radius:99px;"></div>
+                  </div>
                 </td>
               </tr>
             </table>
-            <p style="margin:0 0 24px;font-size:14px;color:#64748b;line-height:1.6;">
-              Продължи да учиш — всяка стъпка те доближава до целта!
+
+            <!-- Message -->
+            <p style="margin:0 0 20px;font-size:14px;color:#475569;line-height:1.7;background:#f8fafc;border-left:3px solid #f97316;padding:12px 16px;border-radius:0 8px 8px 0;">
+              ${messageLine}
             </p>
-            <a href="https://www.razberi.me/dnevnik.html" style="display:inline-block;background:#f97316;color:#ffffff;font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;">
-              Виж дневника →
-            </a>
+
+            <!-- Next steps -->
+            <div style="margin-bottom:28px;">
+              <div style="font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Какво да направиш сега</div>
+              ${nextSteps.map((s, i) => `<div style="display:flex;align-items:flex-start;margin-bottom:8px;"><span style="background:#f97316;color:white;font-size:11px;font-weight:700;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-right:10px;flex-shrink:0;line-height:20px;text-align:center;">${i + 1}</span><span style="font-size:14px;color:#334155;line-height:1.5;">${s}</span></div>`).join('')}
+            </div>
+
+            <!-- Primary CTA -->
+            <a href="${ctaHref}" style="display:inline-block;background:#f97316;color:#ffffff;font-size:15px;font-weight:700;padding:13px 28px;border-radius:12px;text-decoration:none;margin-bottom:14px;">${ctaText}</a>
+
+            <!-- Secondary link -->
+            <div>
+              <a href="https://www.razberi.me/dnevnik.html" style="font-size:13px;color:#64748b;text-decoration:underline;text-underline-offset:3px;">Виж всички резултати в дневника</a>
+            </div>
           </td>
         </tr>
+
         <!-- Footer -->
         <tr>
           <td style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:16px 32px;text-align:center;">
-            <p style="margin:0;font-size:12px;color:#94a3b8;">
-              Получаваш това известие, защото имаш активирани уведомления в Разбери.ме.<br>
+            <p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.6;">
+              Получаваш този имейл, защото известията за резултати са включени.<br>
               <a href="https://www.razberi.me/settings.html?tab=notifications" style="color:#f97316;text-decoration:none;">Управлявай известията</a>
             </p>
           </td>
         </tr>
+
       </table>
     </td></tr>
   </table>
@@ -728,13 +851,13 @@ async function handleNotifyCompletion(req, res) {
     await resend.emails.send({
       from: 'Разбери.ме <noreply@razberi.me>',
       to: prof.email,
-      subject: `${typeLabel} завършен: ${lessonTitle} — ${score}/${total}`,
+      subject: `${typeLabel}: ${lessonTitle} — ${score}/${total} (${percent}%)`,
       html,
     });
     return sendJson(res, 200, { ok: true });
   } catch (e) {
     console.error('[notify] email error:', e.message);
-    return sendJson(res, 200, { ok: true }); // don't fail the user flow
+    return sendJson(res, 200, { ok: true });
   }
 }
 
