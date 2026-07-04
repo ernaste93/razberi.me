@@ -706,7 +706,7 @@
     (async () => {
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { window.location.href = '/auth.html'; return; }
-    if (!['kirilmodev@gmail.com'].includes(session.user.email)) { window.location.href = '/'; return; }
+    if (!['kirilmodev@gmail.com', 'help.razberi.me@gmail.com'].includes(session.user.email)) { window.location.href = '/'; return; }
 
     // ── Helpers ──────────────────────────────────────────────
     function monthsAgo(dateStr) {
