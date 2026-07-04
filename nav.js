@@ -2,7 +2,7 @@
 (function () {
   const SUPABASE_URL = 'https://wbcppvfgtvkrsfmclmjp.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l';
-  const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
+  const ADMIN_EMAILS = ['kirilmodev@gmail.com', 'help.razberi.me@gmail.com'];
 
   // ── Dropdown toggle (synchronous, always works) ──────────
   var chip = document.getElementById('user-chip');

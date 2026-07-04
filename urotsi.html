@@ -737,20 +737,28 @@ loadProgress();
   const { data: { session } } = await sb.auth.getSession();
   if (!session) { window.location.href = '/auth.html'; }
 
-  const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
+  const ADMIN_EMAILS = ['kirilmodev@gmail.com', 'help.razberi.me@gmail.com'];
   if (ADMIN_EMAILS.includes(session.user.email)) document.getElementById('btn-admin').style.display = '';
   if (!ADMIN_EMAILS.includes(session.user.email)) {
     const { data: rows } = await sb.from('profiles')
       .select('plan, trial_started_at, trial_quizzes_done, trial_lessons_opened')
       .eq('id', session.user.id).limit(1);
-    const profile     = rows?.[0];
-    const isTrial     = !profile || profile.plan === 'trial' || profile.plan === 'free';
+    let profile     = rows?.[0];
+    const PAID_PLANS_FE = new Set(['active', 'focus', 'podgotovka', 'otlichnik']);
+    const isExpired   = profile?.plan === 'expired';
+    const isTrial     = !profile || (!PAID_PLANS_FE.has(profile.plan) && !isExpired);
+    // Backfill: old users without trial_started_at get it set now
+    if (isTrial && profile && !profile.trial_started_at) {
+      const now = new Date().toISOString();
+      await sb.from('profiles').update({ trial_started_at: now, plan: 'trial' }).eq('id', session.user.id);
+      profile = { ...profile, trial_started_at: now, plan: 'trial' };
+    }
     const trialExpired = isTrial && profile?.trial_started_at &&
-      (Date.now() - new Date(profile.trial_started_at)) / 86400000 > 3;
+      (Date.now() - new Date(profile.trial_started_at)) / 86400000 > TRIAL_DAYS;
 
     if (isTrial && !trialExpired && profile?.trial_started_at) {
       document.getElementById('trial-banner').style.display = 'block';
-      const daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(profile.trial_started_at)) / 86400000));
+      const daysLeft = Math.max(0, TRIAL_DAYS - Math.floor((Date.now() - new Date(profile.trial_started_at)) / 86400000));
       const trialLessons = profile?.trial_lessons_opened || [];
       const quizDone = (profile?.trial_quizzes_done || []).length;
       document.getElementById('trial-banner-text').innerHTML =
@@ -770,7 +778,14 @@ loadProgress();
       }
     }
 
-    if (isTrial || trialExpired) {
+    if (isExpired) {
+      document.querySelectorAll('.ur-card').forEach(card => lockCard(card));
+      document.getElementById('trial-banner').style.display = 'block';
+      document.getElementById('trial-banner-text').innerHTML =
+        `Абонаментът ти е изтекъл. <a href="/index.html#pricing" style="color:#fde68a;font-weight:700;text-decoration:underline;">Поднови плана →</a>`;
+    }
+
+    if (!isExpired && (isTrial || trialExpired)) {
       // Hide 11 клас grade section
       document.querySelectorAll('.ur-grade[data-grade="11"]').forEach(el => el.style.display = 'none');
 

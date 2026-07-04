@@ -677,7 +677,7 @@
             <button onclick="startCheckout('otlichnik')" class="nav-btn nav-btn-primary price-btn">Избери план</button>
           </div>
         </div>
-        <p class="teacher-note" style="text-align:center;margin-top:24px;">7 дни безплатно пробване. Без кредитна карта при регистрация.</p>
+        <p class="teacher-note" style="text-align:center;margin-top:24px;">3 дни безплатно пробване. Без кредитна карта при регистрация.</p>
         <div style="max-width:560px;margin:20px auto 0;display:flex;align-items:flex-start;gap:10px;">
           <input type="checkbox" id="recurring-consent" style="margin-top:3px;flex-shrink:0;width:16px;height:16px;cursor:pointer;accent-color:#1a2f5a;">
           <label for="recurring-consent" style="font-size:13px;color:#64748b;line-height:1.55;cursor:pointer;">
@@ -696,7 +696,7 @@
       </div>
       <div class="lp-final-right">
         <a href="/probvai.html" class="lp-btn-primary" style="font-size:15px;padding:15px 30px;">Започни безплатно →</a>
-        <div class="lp-final-note">🛡️ 7 дни безплатно · без карта</div>
+        <div class="lp-final-note">🛡️ 3 дни безплатно · без карта</div>
       </div>
     </section>
 
@@ -724,7 +724,6 @@
         <h4>За родители</h4>
         <a href="/#how">Ползи за родителя</a>
         <a href="/#pricing">Проследяване на напредъка</a>
-        <a href="/#pricing">Планове с учител</a>
       </div>
 
       <div class="footer-col">
@@ -848,7 +847,7 @@
         document.getElementById('user-fullname-label').textContent = name || email.split('@')[0];
         localStorage.setItem('userInitials', initials);
 
-        const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
+        const ADMIN_EMAILS = ['kirilmodev@gmail.com', 'help.razberi.me@gmail.com'];
         btnLogin.style.display = 'none';
         btnTry.style.display = 'none';
         userMenu.style.display = 'block';

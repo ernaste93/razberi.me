@@ -85,11 +85,25 @@
     '.sb-logout{background:none;border:none;cursor:pointer;color:#94a3b8;padding:2px;display:flex;align-items:center;flex-shrink:0;transition:color .15s;}',
     '.sb-logout:hover{color:#e53e3e;}',
     /* Plan card */
-    '.sb-plan-card{background:#fffbf0;border:1px solid #fde68a;border-radius:12px;padding:12px 14px;}',
+    '.sb-plan-card{border-radius:12px;padding:12px 14px;}',
+    '.sb-plan-card.plan-active{background:#f0fdf4;border:1px solid #86efac;}',
+    '.sb-plan-card.plan-trial{background:#fffbf0;border:1px solid #fde68a;}',
+    '.sb-plan-card.plan-expired{background:#fff1f2;border:1px solid #fca5a5;}',
     '.sb-plan-top{display:flex;align-items:center;gap:7px;margin-bottom:2px;}',
+    '.sb-plan-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}',
+    '.sb-plan-dot.dot-active{background:#22c55e;}',
+    '.sb-plan-dot.dot-trial{background:#f59e0b;}',
+    '.sb-plan-dot.dot-expired{background:#ef4444;}',
     '.sb-plan-name{font-size:13px;font-weight:800;color:#1a2f5a;}',
+    '.sb-plan-status{font-size:11px;margin-bottom:5px;font-weight:600;}',
+    '.sb-plan-status.st-active{color:#16a34a;}',
+    '.sb-plan-status.st-trial{color:#d97706;}',
+    '.sb-plan-status.st-expired{color:#dc2626;}',
     '.sb-plan-until{font-size:11px;color:#94a3b8;margin-bottom:5px;}',
-    '.sb-plan-link{font-size:12px;font-weight:700;color:#E8A020;text-decoration:none;}',
+    '.sb-plan-link{font-size:12px;font-weight:700;text-decoration:none;}',
+    '.sb-plan-link.lnk-active{color:#16a34a;}',
+    '.sb-plan-link.lnk-trial{color:#E8A020;}',
+    '.sb-plan-link.lnk-expired{color:#dc2626;}',
     '.sb-plan-link:hover{text-decoration:underline;}',
     /* Body offset + hide existing topbar */
     'body.has-sidebar .topbar{display:none!important;}',
@@ -112,6 +126,10 @@
     + '</div>'
     + '<div class="sb-bottom">'
     + '<div class="sb-divider" style="margin:0 0 6px;"></div>'
+    + '<a href="/admin.html" class="sb-item" id="sb-admin-link" style="display:none;margin-bottom:2px;">'
+    + '<span class="sb-ico">' + svg('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>') + '</span>'
+    + '<span class="sb-lbl">Админ панел</span>'
+    + '</a>'
     + '<a href="/settings.html" class="sb-item' + (path === '/settings.html' ? ' sb-active' : '') + '" style="margin-bottom:4px;">'
     + '<span class="sb-ico">' + settingsIcon + '</span>'
     + '<span class="sb-lbl">Настройки</span>'
@@ -122,9 +140,10 @@
     + '<button class="sb-logout" id="sb-logout" title="Изход">' + logoutSvg + '</button>'
     + '</div>'
     + '<div class="sb-plan-card" id="sb-plan-card" style="display:none;">'
-    + '<div class="sb-plan-top"><span>👑</span><span class="sb-plan-name" id="sb-plan-name">Активен план</span></div>'
+    + '<div class="sb-plan-top"><div class="sb-plan-dot" id="sb-plan-dot"></div><span class="sb-plan-name" id="sb-plan-name"></span></div>'
+    + '<div class="sb-plan-status" id="sb-plan-status"></div>'
     + '<div class="sb-plan-until" id="sb-plan-until"></div>'
-    + '<a href="/settings.html" class="sb-plan-link">Управление на плана</a>'
+    + '<a href="/settings.html?tab=subscription" class="sb-plan-link" id="sb-plan-link"></a>'
     + '</div>'
     + '</div>';
 
@@ -147,11 +166,53 @@
       var user = userRes.data?.user || session.user;
 
       var profileRes = await sb.from('profiles')
-        .select('full_name,plan')
+        .select('full_name,plan,trial_started_at,subscription_renews_at')
         .eq('id', user.id)
         .single();
       var profile = profileRes.data || {};
-      console.log('[sidebar] profile:', profile, 'error:', profileRes.error);
+
+      // ── Access gate ──
+      var PAID_PLANS_SB = ['active', 'focus', 'podgotovka', 'otlichnik'];
+      var OPEN_PATHS = ['/settings.html', '/auth.html', '/', '/index.html', '/terms.html', '/privacy.html'];
+      var currentPath = window.location.pathname;
+      var isOpenPath = OPEN_PATHS.indexOf(currentPath) !== -1 || currentPath.startsWith('/admin');
+
+      if (!isOpenPath) {
+        var plan = profile.plan;
+        var isPaidNow = PAID_PLANS_SB.indexOf(plan) !== -1;
+        var isExpiredPlan = plan === 'expired';
+        var trialMs = profile.trial_started_at ? (Date.now() - new Date(profile.trial_started_at)) / 86400000 : 0;
+        var isTrialExpired = !isPaidNow && !isExpiredPlan && profile.trial_started_at && trialMs > 3;
+
+        if (isExpiredPlan || isTrialExpired) {
+          // Greyout page content
+          var style = document.createElement('style');
+          style.textContent = 'body.access-locked main, body.access-locked .lesson-page, body.access-locked .ur-wrap { filter: blur(3px) grayscale(0.4); pointer-events: none; user-select: none; }';
+          document.head.appendChild(style);
+          document.body.classList.add('access-locked');
+
+          // Overlay
+          var msg = isExpiredPlan
+            ? 'Абонаментът ти е изтекъл.'
+            : 'Пробният ти период е изтекъл.';
+          var overlay = document.createElement('div');
+          overlay.style.cssText = [
+            'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;',
+            'background:rgba(15,23,42,0.55);backdrop-filter:blur(2px);'
+          ].join('');
+          overlay.innerHTML = [
+            '<div style="background:#fff;border-radius:24px;padding:44px 48px;max-width:420px;width:90%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,0.22);">',
+            '<div style="margin-bottom:20px;color:#0f172a;">' + svg('<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>').replace('width="20" height="20"', 'width="52" height="52"').replace('stroke-width="1.6"', 'stroke-width="1.4"') + '</div>',
+            '<div style="font-size:20px;font-weight:800;color:#0f172a;margin-bottom:8px;">' + msg + '</div>',
+            '<div style="font-size:14px;color:#64748b;margin-bottom:28px;line-height:1.6;">За да продължиш да учиш, поднови абонамента си.</div>',
+            '<a href="/settings.html?tab=subscription" style="display:inline-block;background:#E8A020;color:#fff;font-weight:800;font-size:15px;padding:14px 32px;border-radius:12px;text-decoration:none;">Поднови плана →</a>',
+            '<div style="margin-top:16px;"><a href="/" style="font-size:13px;color:#94a3b8;text-decoration:none;">Към началната страница</a></div>',
+            '</div>'
+          ].join('');
+          document.body.appendChild(overlay);
+          return;
+        }
+      }
 
       // User row
       var initials = (function () {
@@ -178,6 +239,12 @@
       document.getElementById('sb-user-name').textContent = displayName;
       document.getElementById('sb-user').style.display = 'flex';
 
+      // Admin link
+      var ADMIN_EMAILS = ['kirilmodev@gmail.com', 'help.razberi.me@gmail.com'];
+      if (ADMIN_EMAILS.indexOf(user.email) !== -1) {
+        document.getElementById('sb-admin-link').style.display = 'flex';
+      }
+
       // Logout
       document.getElementById('sb-logout').addEventListener('click', async function () {
         await sb.auth.signOut();
@@ -186,10 +253,53 @@
 
       // Plan card
       var plan = profile.plan;
-      if (plan && plan !== 'free' && plan !== 'trial') {
-        var names = { focus: 'Фокус план', podgotovka: 'Подготовка', otlichnik: 'Отличник' };
-        document.getElementById('sb-plan-name').textContent = names[plan] || 'Активен план';
-        document.getElementById('sb-plan-card').style.display = 'block';
+      if (plan && plan !== 'free') {
+        var card = document.getElementById('sb-plan-card');
+        var dot = document.getElementById('sb-plan-dot');
+        var nameEl = document.getElementById('sb-plan-name');
+        var statusEl = document.getElementById('sb-plan-status');
+        var untilEl = document.getElementById('sb-plan-until');
+        var linkEl = document.getElementById('sb-plan-link');
+        var PLAN_NAMES = { focus: 'Фокус план', podgotovka: 'Подготовка', otlichnik: 'Отличник', active: 'Активен план', trial: 'Пробен период', expired: 'Абонамент' };
+
+        if (plan === 'expired') {
+          card.className = 'sb-plan-card plan-expired';
+          dot.className = 'sb-plan-dot dot-expired';
+          nameEl.textContent = 'Абонаментът е изтекъл';
+          statusEl.className = 'sb-plan-status st-expired';
+          statusEl.textContent = 'Неактивен';
+          untilEl.textContent = '';
+          linkEl.className = 'sb-plan-link lnk-expired';
+          linkEl.textContent = 'Поднови плана →';
+        } else if (plan === 'trial') {
+          var trialDays = profile.trial_started_at ? (Date.now() - new Date(profile.trial_started_at)) / 86400000 : 0;
+          var TRIAL_DAYS_SB = 3;
+          var daysLeft = Math.max(0, Math.ceil(TRIAL_DAYS_SB - trialDays));
+          card.className = 'sb-plan-card plan-trial';
+          dot.className = 'sb-plan-dot dot-trial';
+          nameEl.textContent = 'Пробен период';
+          statusEl.className = 'sb-plan-status st-trial';
+          statusEl.textContent = daysLeft > 0 ? ('Остават ' + daysLeft + (daysLeft === 1 ? ' ден' : ' дни')) : 'Изтекъл';
+          untilEl.textContent = '';
+          linkEl.className = 'sb-plan-link lnk-trial';
+          linkEl.textContent = 'Виж плановете →';
+        } else {
+          card.className = 'sb-plan-card plan-active';
+          dot.className = 'sb-plan-dot dot-active';
+          nameEl.textContent = PLAN_NAMES[plan] || 'Активен план';
+          statusEl.className = 'sb-plan-status st-active';
+          statusEl.textContent = 'Активен';
+          var renewsAt = profile.subscription_renews_at;
+          if (renewsAt) {
+            var d = new Date(renewsAt);
+            untilEl.textContent = 'Подновяване: ' + d.toLocaleDateString('bg-BG', { day: 'numeric', month: 'long' });
+          } else {
+            untilEl.textContent = '';
+          }
+          linkEl.className = 'sb-plan-link lnk-active';
+          linkEl.textContent = 'Управление на плана';
+        }
+        card.style.display = 'block';
       }
     } catch (e) {}
   }

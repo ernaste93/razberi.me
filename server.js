@@ -79,6 +79,10 @@ function isPaid(profile) {
   return profile && PAID_PLANS.has(profile.plan);
 }
 
+function isExpiredPlan(profile) {
+  return profile?.plan === 'expired';
+}
+
 function trialExpired(profile) {
   if (!profile?.trial_started_at) return false;
   return (Date.now() - new Date(profile.trial_started_at)) / 86400000 > TRIAL_DAYS;
@@ -86,6 +90,8 @@ function trialExpired(profile) {
 
 async function checkZnayko(userId, token, profile) {
   if (isPaid(profile)) return null;
+  if (isExpiredPlan(profile))
+    return { error: 'Абонаментът ти е изтекъл. Избери план, за да продължиш.', code: 'subscription_expired' };
   if (trialExpired(profile))
     return { error: 'Пробният период е изтекъл. Избери план, за да продължиш.', code: 'trial_expired' };
 
@@ -100,6 +106,8 @@ async function checkZnayko(userId, token, profile) {
 
 async function checkEssay(userId, token, profile) {
   if (isPaid(profile)) return null;
+  if (isExpiredPlan(profile))
+    return { error: 'Абонаментът ти е изтекъл. Избери план, за да продължиш.', code: 'subscription_expired' };
   if (trialExpired(profile))
     return { error: 'Пробният период е изтекъл. Избери план, за да продължиш.', code: 'trial_expired' };
 
@@ -674,6 +682,16 @@ async function handleWebhook(req, res) {
     const userId = meta.user_id;
     const plan = meta.plan;
     if (userId && plan) {
+      // subscription_renews_at: for invoice.paid use current_period_end; for checkout use subscription period
+      let renewsAt = null;
+      if (obj.current_period_end) {
+        renewsAt = new Date(obj.current_period_end * 1000).toISOString();
+      } else if (obj.subscription) {
+        try {
+          const sub = await stripe.subscriptions.retrieve(obj.subscription);
+          if (sub.current_period_end) renewsAt = new Date(sub.current_period_end * 1000).toISOString();
+        } catch (_) {}
+      }
       await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
@@ -682,7 +700,7 @@ async function handleWebhook(req, res) {
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal',
         },
-        body: JSON.stringify({ plan, trial_started_at: null }),
+        body: JSON.stringify({ plan, trial_started_at: null, subscription_renews_at: renewsAt }),
       });
     }
   }

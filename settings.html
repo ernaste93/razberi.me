@@ -665,8 +665,21 @@
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { window.location.href = '/auth.html'; }
     const user = session.user;
-    const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
+    const ADMIN_EMAILS = ['kirilmodev@gmail.com', 'help.razberi.me@gmail.com'];
     if (ADMIN_EMAILS.includes(user.email)) document.getElementById('btn-admin').style.display = '';
+
+    // Покажи банер ако е редиректнат заради изтекъл план
+    const reason = new URLSearchParams(window.location.search).get('reason');
+    if (reason === 'expired' || reason === 'trial_expired') {
+      const banner = document.createElement('div');
+      banner.style.cssText = 'background:#fee2e2;border:1px solid #fca5a5;border-radius:14px;padding:16px 20px;margin-bottom:20px;font-weight:600;color:#b91c1c;text-align:center;font-size:15px;';
+      banner.textContent = reason === 'expired'
+        ? 'Абонаментът ти е изтекъл. Поднови плана, за да продължиш.'
+        : 'Пробният период е изтекъл. Избери план, за да продължиш.';
+      document.querySelector('.settings-page')?.prepend(banner);
+      // Auto-отвори таба Абонамент
+      document.querySelector('[data-panel="subscription"]')?.click();
+    }
     window._sb = sb;
     window._userId = user.id;
 

@@ -502,20 +502,28 @@
         .select('*').eq('user_id', uid).order('created_at', { ascending: false }),
     ]);
 
-    const profile      = profileRes.data || {};
+    let profile        = profileRes.data || {};
     const quizResults  = quizRes.data  || [];
     const essayResults = essayRes.data || [];
 
-    const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
+    const ADMIN_EMAILS  = ['kirilmodev@gmail.com', 'help.razberi.me@gmail.com'];
+    const PAID_PLANS_FE = new Set(['active', 'focus', 'podgotovka', 'otlichnik']);
     const isAdmin     = ADMIN_EMAILS.includes(session.user.email);
     if (isAdmin) document.getElementById('btn-admin').style.display = '';
-    const isTrial     = !isAdmin && (!profile.plan || profile.plan === 'trial' || profile.plan === 'free');
+    const TRIAL_DAYS  = 3; // keep in sync with server.js
+    const isTrial     = !isAdmin && !PAID_PLANS_FE.has(profile.plan);
+    // Backfill: стари потребители без trial_started_at
+    if (isTrial && !profile.trial_started_at) {
+      const now = new Date().toISOString();
+      await sb.from('profiles').update({ trial_started_at: now, plan: 'trial' }).eq('id', uid);
+      profile = { ...profile, trial_started_at: now, plan: 'trial' };
+    }
     const trialStart  = profile.trial_started_at ? new Date(profile.trial_started_at) : null;
-    const trialExpired = isTrial && trialStart && (Date.now() - trialStart) / 86400000 > 3;
+    const trialExpired = isTrial && trialStart && (Date.now() - trialStart) / 86400000 > TRIAL_DAYS;
 
     // ── Trial banner ──
     if (isTrial && !trialExpired && trialStart) {
-      const daysLeft = Math.max(0, 3 - Math.floor((Date.now() - trialStart) / 86400000));
+      const daysLeft = Math.max(0, TRIAL_DAYS - Math.floor((Date.now() - trialStart) / 86400000));
       const dw = daysLeft === 1 ? 'ден' : 'дни';
       const opened   = (profile.trial_lessons_opened || []).length;
       const quizDone = (profile.trial_quizzes_done   || []).length;

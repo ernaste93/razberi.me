@@ -279,6 +279,8 @@
           full_name: name,
           grade,
           goal,
+          plan: 'trial',
+          trial_started_at: new Date().toISOString(),
         }, { onConflict: 'id' });
       }
 
