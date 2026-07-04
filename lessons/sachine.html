@@ -880,6 +880,15 @@ async function submitEssay() {
     const dateStr = new Date().toLocaleDateString('bg-BG', { day:'numeric', month:'long' }).replace(/\s*г\.?$/, '');
     saveAttempt(currentAttemptTopic, { total: data.total, date: dateStr, criteria: data.criteria, summary: data.summary });
 
+    // Notify completion email
+    if (window.__supabaseToken) {
+      fetch('/api/notify-completion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + window.__supabaseToken },
+        body: JSON.stringify({ type: 'essay', lessonTitle: cfg.lessonTitle, score: data.total, total: 24 })
+      }).catch(() => {});
+    }
+
     showResults(data);
   } catch (e) {
     showStep('step-select');

@@ -9,6 +9,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.52.0",
     "@supabase/supabase-js": "^2.108.1",
+    "resend": "^4.0.0",
     "stripe": "^22.3.0"
   },
   "license": "UNLICENSED",

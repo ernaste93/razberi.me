@@ -233,6 +233,15 @@
         if (!r.ok) r.text().then(function(t) { console.warn('[quiz] quiz_results insert failed:', r.status, t); });
       }).catch(function(e) { console.warn('[quiz] quiz_results save error:', e); });
 
+      // Notify completion email
+      if (token) {
+        fetch('/api/notify-completion', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ type: 'quiz', lessonTitle: cfg.lessonTitle || baseSlug, score: correct, total: qs.length })
+        }).catch(function(){});
+      }
+
       // Trial: запиши в profiles.trial_quizzes_done
       if (window.__isTrial && window.__sbClient) {
         var done = window.__trialQuizzesDone || [];

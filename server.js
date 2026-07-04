@@ -37,6 +37,9 @@ const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || SUPABASE_KEY;
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+const { Resend } = require('resend');
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
 const STRIPE_PRICES = {
   focus:       process.env.STRIPE_PRICE_FOCUS,
   podgotovka:  process.env.STRIPE_PRICE_PODGOTOVKA,
@@ -621,6 +624,120 @@ async function handleGenerateKonspekt(req, res) {
   }
 }
 
+async function handleNotifyCompletion(req, res) {
+  if (!resend) return sendJson(res, 200, { ok: true }); // silently skip if no key
+
+  const authHeader = req.headers['authorization'] || '';
+  const userToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+  if (!userToken) return sendJson(res, 401, { error: 'Unauthorized' });
+
+  const userId = getUserIdFromJwt(userToken);
+  if (!userId) return sendJson(res, 401, { error: 'Unauthorized' });
+
+  let payload;
+  try { payload = JSON.parse(await readBody(req)); }
+  catch { return sendJson(res, 400, { error: 'Invalid JSON' }); }
+
+  const { type, lessonTitle, score, total } = payload;
+
+  // Get user email from profiles
+  const profRes = await fetch(
+    `${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}&select=email,full_name`,
+    { headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` } }
+  );
+  const [prof] = await profRes.json();
+  if (!prof?.email) return sendJson(res, 200, { ok: true });
+
+  const firstName = (prof.full_name || '').split(' ')[0] || 'Ученику';
+  const typeLabel = type === 'essay' ? 'Съчинение' : 'Тест';
+  const percent = total > 0 ? Math.round((score / total) * 100) : 0;
+  const passed = type === 'essay' ? score >= 13 : percent >= 50;
+  const resultLabel = passed ? '✅ Издържан' : '❌ Неиздържан';
+  const resultColor = passed ? '#22c55e' : '#ef4444';
+
+  const html = `<!DOCTYPE html>
+<html lang="bg">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f4f6f9;font-family:'Helvetica Neue',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f9;padding:32px 0;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
+        <!-- Header -->
+        <tr>
+          <td style="background:linear-gradient(135deg,#1e293b 0%,#334155 100%);padding:28px 32px;text-align:center;">
+            <div style="font-size:28px;font-weight:800;color:#f97316;letter-spacing:-0.5px;">Разбери.ме</div>
+            <div style="font-size:13px;color:#94a3b8;margin-top:4px;">Твоята учебна платформа</div>
+          </td>
+        </tr>
+        <!-- Body -->
+        <tr>
+          <td style="padding:32px;">
+            <p style="margin:0 0 8px;font-size:17px;color:#1e293b;">Здравей, <strong>${firstName}</strong>!</p>
+            <p style="margin:0 0 24px;font-size:15px;color:#64748b;line-height:1.6;">
+              Завърши ${typeLabel.toLowerCase()} по <strong>${lessonTitle}</strong>.
+            </p>
+            <!-- Result card -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;margin-bottom:24px;">
+              <tr>
+                <td style="padding:20px 24px;">
+                  <div style="font-size:13px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">${typeLabel}</div>
+                  <div style="font-size:15px;font-weight:700;color:#1e293b;margin-bottom:12px;">${lessonTitle}</div>
+                  <table cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td style="padding-right:24px;">
+                        <div style="font-size:13px;color:#64748b;">Резултат</div>
+                        <div style="font-size:24px;font-weight:800;color:#1e293b;">${score}<span style="font-size:15px;color:#94a3b8;">/${total}</span></div>
+                      </td>
+                      <td style="padding-right:24px;">
+                        <div style="font-size:13px;color:#64748b;">Процент</div>
+                        <div style="font-size:24px;font-weight:800;color:#1e293b;">${percent}%</div>
+                      </td>
+                      <td>
+                        <div style="font-size:13px;color:#64748b;">Статус</div>
+                        <div style="font-size:15px;font-weight:700;color:${resultColor};">${resultLabel}</div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:0 0 24px;font-size:14px;color:#64748b;line-height:1.6;">
+              Продължи да учиш — всяка стъпка те доближава до целта!
+            </p>
+            <a href="https://www.razberi.me/dnevnik.html" style="display:inline-block;background:#f97316;color:#ffffff;font-size:15px;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;">
+              Виж дневника →
+            </a>
+          </td>
+        </tr>
+        <!-- Footer -->
+        <tr>
+          <td style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:16px 32px;text-align:center;">
+            <p style="margin:0;font-size:12px;color:#94a3b8;">
+              Получаваш това известие, защото имаш активирани уведомления в Разбери.ме.<br>
+              <a href="https://www.razberi.me/settings.html?tab=notifications" style="color:#f97316;text-decoration:none;">Управлявай известията</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
+  try {
+    await resend.emails.send({
+      from: 'Разбери.ме <noreply@razberi.me>',
+      to: prof.email,
+      subject: `${typeLabel} завършен: ${lessonTitle} — ${score}/${total}`,
+      html,
+    });
+    return sendJson(res, 200, { ok: true });
+  } catch (e) {
+    console.error('[notify] email error:', e.message);
+    return sendJson(res, 200, { ok: true }); // don't fail the user flow
+  }
+}
+
 async function handlePaymentHistory(req, res) {
   const authHeader = req.headers['authorization'] || '';
   const userToken = authHeader.replace('Bearer ', '').trim();
@@ -897,6 +1014,9 @@ const server = http.createServer((req, res) => {
   }
   if (req.method === 'GET' && req.url === '/api/payment-history') {
     return handlePaymentHistory(req, res);
+  }
+  if (req.method === 'POST' && req.url === '/api/notify-completion') {
+    return handleNotifyCompletion(req, res);
   }
   if (req.method === 'GET') {
     return serveStatic(req, res);
