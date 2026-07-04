@@ -639,16 +639,16 @@
         <div class="prices-card">
           <h2>Цени</h2>
           <div class="price-row">
-            <label>Ученик</label>
-            <input type="text" class="price-input" id="pi-student" placeholder="€30" />
+            <label>Фокус</label>
+            <input type="text" class="price-input" id="pi-student" placeholder="€20" />
           </div>
           <div class="price-row">
-            <label>Ученик + Родител</label>
-            <input type="text" class="price-input" id="pi-family" placeholder="€50" />
+            <label>Подготовка</label>
+            <input type="text" class="price-input" id="pi-family" placeholder="€30" />
           </div>
           <div class="price-row">
-            <label>С Учител</label>
-            <input type="text" class="price-input" id="pi-teacher" placeholder="от €99" />
+            <label>Отличник</label>
+            <input type="text" class="price-input" id="pi-teacher" placeholder="€45" />
           </div>
           <div style="margin-bottom:4px;">
             <label style="font-size:13px;font-weight:700;color:var(--muted);">Бележка под цените</label>
@@ -744,8 +744,9 @@
       renderTable();
     }
 
+    const PAID_PLANS_A = ['active', 'focus', 'podgotovka', 'otlichnik'];
     function updateStats() {
-      const paid = allUsers.filter(u => u.plan === 'active').length;
+      const paid = allUsers.filter(u => PAID_PLANS_A.includes(u.plan)).length;
       document.getElementById('stat-total').textContent = allUsers.length;
       document.getElementById('stat-paid').textContent  = paid;
       document.getElementById('stat-free').textContent  = allUsers.length - paid;
@@ -789,7 +790,11 @@
         const initials = getInitials(u.full_name, u.email);
         const date     = new Date(u.created_at).toLocaleDateString('bg-BG', { day:'numeric', month:'short', year:'numeric' });
         const months   = monthsAgo(u.created_at);
-        const isPaid   = u.plan === 'active';
+        const isPaid   = PAID_PLANS_A.includes(u.plan);
+        const planLabels = { focus: 'Фокус', podgotovka: 'Подготовка', otlichnik: 'Отличник', active: 'Активен', trial: 'Trial', expired: 'Изтекъл', free: 'Безплатен' };
+        const planColors = { focus: '#16a34a', podgotovka: '#16a34a', otlichnik: '#16a34a', active: '#16a34a', trial: '#d97706', expired: '#dc2626', free: '#64748b' };
+        const planLabel  = planLabels[u.plan] || u.plan || 'Безплатен';
+        const planColor  = planColors[u.plan] || '#64748b';
         return `
           <tr class="clickable-row" onclick="openUserDetail('${u.id}')">
             <td>
@@ -806,14 +811,7 @@
             <td style="color:var(--muted);font-size:13px;">${date}</td>
             <td style="font-size:13px;color:var(--muted);">${months} м.</td>
             <td>
-              <div class="plan-toggle">
-                <button class="plan-btn ${!isPaid ? 'active-free' : ''}"
-                  onclick="setPlan('${u.id}', 'free', this)"
-                  ${!isPaid ? 'disabled' : ''}>Безплатен</button>
-                <button class="plan-btn ${isPaid ? 'active-paid' : ''}"
-                  onclick="setPlan('${u.id}', 'active', this)"
-                  ${isPaid ? 'disabled' : ''}>Активен</button>
-              </div>
+              <span style="font-size:13px;font-weight:700;color:${planColor};">${planLabel}</span>
             </td>
             <td>
               ${!u.is_admin ? `<button class="btn-delete-user" onclick="event.stopPropagation();deleteUser('${u.id}', '${u.email}')">Изтрий</button>` : ''}
