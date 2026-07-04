@@ -511,7 +511,7 @@
                   <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Фокус</div>
                   <div style="font-size:26px;font-weight:800;color:var(--text);">€20<span style="font-size:13px;font-weight:500;color:var(--muted);">/мес.</span></div>
                   <div style="font-size:12px;color:var(--muted);line-height:1.5;margin:4px 0 10px;">Уроци, тестове и Знайко за 1 предмет</div>
-                  <button class="btn btn-ghost" style="font-size:13px;padding:9px 0;width:100%;justify-content:center;">Избери →</button>
+                  <button class="btn btn-ghost" onclick="startCheckout('focus')" style="font-size:13px;padding:9px 0;width:100%;justify-content:center;">Избери →</button>
                 </div>
 
                 <div style="border:2px solid #E8A020;border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:6px;background:#fffbf0;position:relative;">
@@ -519,14 +519,14 @@
                   <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Подготовка</div>
                   <div style="font-size:26px;font-weight:800;color:var(--text);">€30<span style="font-size:13px;font-weight:500;color:var(--muted);">/мес.</span></div>
                   <div style="font-size:12px;color:var(--muted);line-height:1.5;margin:4px 0 10px;">Всички предмети + съчинения + материали</div>
-                  <button class="btn btn-gold" style="font-size:13px;padding:9px 0;width:100%;justify-content:center;">Избери →</button>
+                  <button class="btn btn-gold" onclick="startCheckout('podgotovka')" style="font-size:13px;padding:9px 0;width:100%;justify-content:center;">Избери →</button>
                 </div>
 
                 <div style="border:1.5px solid var(--line);border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor='#E8A020'" onmouseleave="this.style.borderColor='var(--line)'">
                   <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Отличник</div>
                   <div style="font-size:26px;font-weight:800;color:var(--text);">€45<span style="font-size:13px;font-weight:500;color:var(--muted);">/мес.</span></div>
                   <div style="font-size:12px;color:var(--muted);line-height:1.5;margin:4px 0 10px;">Всичко в Подготовка + неограничен Знайко + допълнителни учебни помагала</div>
-                  <button class="btn btn-ghost" style="font-size:13px;padding:9px 0;width:100%;justify-content:center;">Избери →</button>
+                  <button class="btn btn-ghost" onclick="startCheckout('otlichnik')" style="font-size:13px;padding:9px 0;width:100%;justify-content:center;">Избери →</button>
                 </div>
 
               </div>
@@ -1189,6 +1189,19 @@
       btn.disabled = false; btn.textContent = 'Смени паролата';
       if (!error) { document.getElementById('new-password').value = ''; document.getElementById('confirm-password').value = ''; }
       msg('msg-pw', error ? error.message : 'Паролата е сменена успешно.', !!error);
+    };
+
+    window.startCheckout = async function(plan) {
+      const { data: { session } } = await sb.auth.getSession();
+      const token = session?.access_token;
+      if (!token) { window.location.href = '/auth.html'; return; }
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ plan })
+      });
+      const json = await res.json();
+      if (json.url) window.location.href = json.url;
     };
 
     let _paymentHistoryLoaded = false;
