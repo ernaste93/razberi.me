@@ -175,7 +175,7 @@
       var PAID_PLANS_SB = ['active', 'focus', 'podgotovka', 'otlichnik'];
       var OPEN_PATHS = ['/settings.html', '/auth.html', '/', '/index.html', '/terms.html', '/privacy.html', '/dnevnik.html', '/istoriya.html', '/dnevnik-book.html'];
       var currentPath = window.location.pathname;
-      var isOpenPath = OPEN_PATHS.indexOf(currentPath) !== -1 || currentPath.startsWith('/admin');
+      var isOpenPath = OPEN_PATHS.indexOf(currentPath) !== -1 || currentPath === '/admin.html' || currentPath.startsWith('/admin/');
 
       if (!isOpenPath) {
         var plan = profile.plan;
