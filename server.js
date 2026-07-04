@@ -818,7 +818,7 @@ async function handleNotifyCompletion(req, res) {
             <!-- Next steps -->
             <div style="margin-bottom:28px;">
               <div style="font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Какво да направиш сега</div>
-              ${nextSteps.map((s, i) => `<div style="display:flex;align-items:flex-start;margin-bottom:8px;"><span style="background:#f97316;color:white;font-size:11px;font-weight:700;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-right:10px;flex-shrink:0;line-height:20px;text-align:center;">${i + 1}</span><span style="font-size:14px;color:#334155;line-height:1.5;">${s}</span></div>`).join('')}
+              ${nextSteps.map((s, i) => `<table cellpadding="0" cellspacing="0" style="margin-bottom:8px;"><tr><td style="width:24px;vertical-align:top;padding-right:10px;padding-top:1px;"><table cellpadding="0" cellspacing="0"><tr><td style="background:#f97316;color:white;font-size:11px;font-weight:700;width:22px;height:22px;border-radius:11px;text-align:center;vertical-align:middle;">${i + 1}</td></tr></table></td><td style="font-size:14px;color:#334155;line-height:1.5;">${s}</td></tr></table>`).join('')}
             </div>
 
             <!-- Primary CTA -->
