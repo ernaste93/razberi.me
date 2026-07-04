@@ -73,13 +73,19 @@ async function patchProfile(userId, token, updates) {
   } catch { /* non-blocking */ }
 }
 
+const PAID_PLANS = new Set(['active', 'focus', 'podgotovka', 'otlichnik']);
+
+function isPaid(profile) {
+  return profile && PAID_PLANS.has(profile.plan);
+}
+
 function trialExpired(profile) {
   if (!profile?.trial_started_at) return false;
   return (Date.now() - new Date(profile.trial_started_at)) / 86400000 > TRIAL_DAYS;
 }
 
 async function checkZnayko(userId, token, profile) {
-  if (!profile || profile.plan === 'active') return null;
+  if (isPaid(profile)) return null;
   if (trialExpired(profile))
     return { error: 'Пробният период е изтекъл. Избери план, за да продължиш.', code: 'trial_expired' };
 
@@ -93,7 +99,7 @@ async function checkZnayko(userId, token, profile) {
 }
 
 async function checkEssay(userId, token, profile) {
-  if (!profile || profile.plan === 'active') return null;
+  if (isPaid(profile)) return null;
   if (trialExpired(profile))
     return { error: 'Пробният период е изтекъл. Избери план, за да продължиш.', code: 'trial_expired' };
 
