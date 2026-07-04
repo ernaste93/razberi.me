@@ -665,6 +665,8 @@
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { window.location.href = '/auth.html'; }
     const user = session.user;
+    const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
+    if (ADMIN_EMAILS.includes(user.email)) document.getElementById('btn-admin').style.display = '';
     window._sb = sb;
     window._userId = user.id;
 

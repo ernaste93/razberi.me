@@ -738,6 +738,7 @@ loadProgress();
   if (!session) { window.location.href = '/auth.html'; }
 
   const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
+  if (ADMIN_EMAILS.includes(session.user.email)) document.getElementById('btn-admin').style.display = '';
   if (!ADMIN_EMAILS.includes(session.user.email)) {
     const { data: rows } = await sb.from('profiles')
       .select('plan, trial_started_at, trial_quizzes_done, trial_lessons_opened')

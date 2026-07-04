@@ -508,6 +508,7 @@
 
     const ADMIN_EMAILS = ['kirilmodev@gmail.com'];
     const isAdmin     = ADMIN_EMAILS.includes(session.user.email);
+    if (isAdmin) document.getElementById('btn-admin').style.display = '';
     const isTrial     = !isAdmin && (!profile.plan || profile.plan === 'trial' || profile.plan === 'free');
     const trialStart  = profile.trial_started_at ? new Date(profile.trial_started_at) : null;
     const trialExpired = isTrial && trialStart && (Date.now() - trialStart) / 86400000 > 3;
