@@ -126,6 +126,12 @@
     + '</div>'
     + '<div class="sb-bottom">'
     + '<div class="sb-divider" style="margin:0 0 6px;"></div>'
+    + '<div class="sb-plan-card" id="sb-plan-card" style="display:none;">'
+    + '<div class="sb-plan-top"><div class="sb-plan-dot" id="sb-plan-dot"></div><span class="sb-plan-name" id="sb-plan-name"></span></div>'
+    + '<div class="sb-plan-status" id="sb-plan-status"></div>'
+    + '<div class="sb-plan-until" id="sb-plan-until"></div>'
+    + '<a href="/settings.html?tab=subscription" class="sb-plan-link" id="sb-plan-link"></a>'
+    + '</div>'
     + '<a href="/admin.html" class="sb-item" id="sb-admin-link" style="display:none;margin-bottom:2px;">'
     + '<span class="sb-ico">' + svg('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>') + '</span>'
     + '<span class="sb-lbl">Админ панел</span>'
@@ -138,12 +144,6 @@
     + '<div class="sb-avatar" id="sb-avatar">?</div>'
     + '<div class="sb-user-name" id="sb-user-name"></div>'
     + '<button class="sb-logout" id="sb-logout" title="Изход">' + logoutSvg + '</button>'
-    + '</div>'
-    + '<div class="sb-plan-card" id="sb-plan-card" style="display:none;">'
-    + '<div class="sb-plan-top"><div class="sb-plan-dot" id="sb-plan-dot"></div><span class="sb-plan-name" id="sb-plan-name"></span></div>'
-    + '<div class="sb-plan-status" id="sb-plan-status"></div>'
-    + '<div class="sb-plan-until" id="sb-plan-until"></div>'
-    + '<a href="/settings.html?tab=subscription" class="sb-plan-link" id="sb-plan-link"></a>'
     + '</div>'
     + '</div>';
 
@@ -235,7 +235,15 @@
         return user.email.split('@')[0];
       })();
 
-      document.getElementById('sb-avatar').textContent = initials;
+      var savedAvatar = localStorage.getItem('userAvatar');
+      var avatarEl = document.getElementById('sb-avatar');
+      if (savedAvatar) {
+        avatarEl.textContent = savedAvatar;
+        avatarEl.style.fontSize = '18px';
+      } else {
+        avatarEl.textContent = initials;
+        avatarEl.style.fontSize = '';
+      }
       document.getElementById('sb-user-name').textContent = displayName;
       document.getElementById('sb-user').style.display = 'flex';
 

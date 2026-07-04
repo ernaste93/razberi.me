@@ -620,6 +620,42 @@ async function handleGenerateKonspekt(req, res) {
   }
 }
 
+async function handlePaymentHistory(req, res) {
+  const authHeader = req.headers['authorization'] || '';
+  const userToken = authHeader.replace('Bearer ', '').trim();
+  if (!userToken) return sendJson(res, 401, { error: 'Unauthorized' });
+
+  const userId = getUserIdFromJwt(userToken);
+  if (!userId) return sendJson(res, 401, { error: 'Unauthorized' });
+
+  // Get stripe_customer_id from profiles
+  const profRes = await fetch(
+    `${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}&select=stripe_customer_id`,
+    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+  );
+  const [prof] = await profRes.json();
+  if (!prof?.stripe_customer_id) return sendJson(res, 200, { invoices: [] });
+
+  try {
+    const invoiceList = await stripe.invoices.list({
+      customer: prof.stripe_customer_id,
+      limit: 24,
+    });
+    const invoices = invoiceList.data.map(inv => ({
+      id: inv.id,
+      date: inv.created,
+      amount: inv.amount_paid,
+      currency: inv.currency,
+      status: inv.status,
+      pdf: inv.invoice_pdf,
+      description: inv.lines?.data?.[0]?.description || '',
+    }));
+    return sendJson(res, 200, { invoices });
+  } catch (e) {
+    return sendJson(res, 500, { error: e.message });
+  }
+}
+
 async function handleCheckout(req, res) {
   const authHeader = req.headers['authorization'] || '';
   const userToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
@@ -700,7 +736,12 @@ async function handleWebhook(req, res) {
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal',
         },
-        body: JSON.stringify({ plan, trial_started_at: null, subscription_renews_at: renewsAt }),
+        body: JSON.stringify({
+          plan,
+          trial_started_at: null,
+          subscription_renews_at: renewsAt,
+          stripe_customer_id: obj.customer || null,
+        }),
       });
     }
   }
@@ -849,6 +890,9 @@ const server = http.createServer((req, res) => {
   }
   if (req.method === 'POST' && req.url === '/api/webhook') {
     return handleWebhook(req, res);
+  }
+  if (req.method === 'GET' && req.url === '/api/payment-history') {
+    return handlePaymentHistory(req, res);
   }
   if (req.method === 'GET') {
     return serveStatic(req, res);

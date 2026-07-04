@@ -35,7 +35,8 @@
       box-shadow: 0 12px 40px rgba(16,24,40,0.18);
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 0;
+      cursor: pointer;
     }
     [data-theme="dark"] .settings-sidebar { background: #0f1e3d; box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
 
@@ -62,7 +63,8 @@
       color: rgba(255,255,255,0.65);
       cursor: pointer;
       text-align: left;
-      transition: background .15s, color .15s;
+      transition: background .05s, color .05s;
+      margin-bottom: -1px;
     }
     .sb-item svg { width: 18px; height: 18px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
     .sb-item:hover  { background: rgba(255,255,255,0.1); color: #fff; }
@@ -258,6 +260,15 @@
     }
     .confirm-btn-row { display: flex; gap: 10px; }
     .confirm-btn-row .btn { flex: 1; justify-content: center; }
+    /* ── Avatar picker ── */
+    .avatar-picker { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 24px; }
+    .av-tile { background: var(--bg); border: 2px solid var(--line); border-radius: 14px; padding: 12px 8px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; transition: border-color .12s, transform .12s; }
+    .av-tile:hover { border-color: #94a3b8; transform: translateY(-2px); }
+    .av-tile.av-selected { border-color: #1a2f5a; background: #f0f4ff; }
+    .av-circle { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; line-height: 1; }
+    .av-name { font-size: 11px; font-weight: 600; color: var(--muted); text-align: center; }
+    .av-clear { font-size: 13px; color: var(--muted); cursor: pointer; text-decoration: underline; display: inline-block; margin-bottom: 18px; }
+    .av-clear:hover { color: var(--text); }
     /* ── Child cards ── */
     .child-card {
       background: var(--bg);
@@ -324,7 +335,7 @@
         <div class="user-menu" id="user-menu">
           <button class="user-chip" id="user-chip" aria-expanded="false">
             <span class="user-avatar" id="user-avatar">?</span>
-            <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})();</script>
+            <script>(function(){var av=localStorage.getItem('userAvatar');var el=document.getElementById('user-avatar');if(av){el.textContent=av;el.style.fontSize='22px';}else{var i=localStorage.getItem('userInitials');if(i)el.textContent=i;}})();</script>
             <span class="user-chevron">▾</span>
           </button>
           <div class="user-dropdown" id="user-dropdown">
@@ -333,7 +344,7 @@
               <div class="user-emailaddr" id="user-email-label"></div>
             </div>
             <a href="/settings.html" style="font-weight:700;color:var(--accent);">Моят профил</a>
-            <a href="/settings.html?tab=children">Децата ми</a>
+            <a href="/settings.html?tab=children">Моите деца</a>
             <a href="/settings.html?tab=subscription">Абонамент</a>
             <a href="/settings.html?tab=notifications">Известия</a>
             <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
@@ -361,7 +372,7 @@
 
           <button class="sb-item active" data-panel="children">
             <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            Децата ми
+            Моите деца
           </button>
           <button class="sb-item" data-panel="subscription">
             <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
@@ -385,21 +396,17 @@
           </button>
           <button class="sb-item" data-panel="security">
             <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Сигурност
-          </button>
-          <button class="sb-item" data-panel="accounts">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></svg>
-            Управление на акаунти
+            Сигурност и акаунти
           </button>
         </aside>
 
         <!-- ── WHITE PANELS ── -->
         <div>
 
-          <!-- Децата ми -->
+          <!-- Моите деца -->
           <div class="settings-panel active" id="panel-children">
             <div class="panel-head">
-              <h2>Децата ми</h2>
+              <h2>Моите деца</h2>
               <p>Управлявай профилите на децата и следи напредъка им.</p>
             </div>
             <div id="children-list">
@@ -474,88 +481,29 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-gold" id="btn-add-child">+ Добави дете</button>
-
-            <!-- Известия за деца -->
-            <div class="controls-section">
-              <div class="controls-title">Известия</div>
-              <div class="notif-card" style="margin-bottom:18px;background:var(--soft);">
-                <div class="notif-card-body" style="flex:1;">
-                  <div class="notif-title">Имейл за известия</div>
-                  <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
-                    <span id="notif-email-display" style="font-size:14px;color:var(--muted);font-weight:500;">Не е зададен имейл</span>
-                    <input type="email" id="notif-email-input" style="display:none;font-size:14px;padding:6px 10px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;background:var(--bg);color:var(--text);outline:none;flex:1;max-width:280px;" placeholder="your@email.com" />
-                  </div>
-                </div>
-                <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
-                  <button id="notif-email-save" style="display:none;font-size:13px;font-weight:700;padding:7px 14px;border-radius:9px;border:none;background:#1a2f5a;color:#fff;cursor:pointer;">Запази</button>
-                  <button id="notif-email-edit" onclick="
-                    var d=document.getElementById('notif-email-display'),
-                        i=document.getElementById('notif-email-input'),
-                        s=document.getElementById('notif-email-save'),
-                        b=document.getElementById('notif-email-edit');
-                    i.value=d.textContent.trim();
-                    d.style.display='none'; i.style.display=''; s.style.display=''; b.style.display='none'; i.focus();
-                  " style="background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:var(--muted);display:flex;align-items:center;" title="Промени имейл">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                  </button>
-                </div>
-              </div>
-              <script>
-                document.getElementById('notif-email-save').addEventListener('click', function() {
-                  var val = document.getElementById('notif-email-input').value.trim();
-                  if (!val || !val.includes('@')) return;
-                  document.getElementById('notif-email-display').textContent = val;
-                  document.getElementById('notif-email-display').style.display = '';
-                  document.getElementById('notif-email-input').style.display = 'none';
-                  this.style.display = 'none';
-                  document.getElementById('notif-email-edit').style.display = '';
-                });
-              </script>
-              <div class="notif-card">
-                <div class="notif-card-body">
-                  <div class="notif-title">Седмичен отчет</div>
-                  <div class="notif-desc">Получавай имейл всяка неделя с обобщение на активността и резултатите.</div>
-                </div>
-                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0;">
-                  <input type="checkbox" checked style="width:18px;height:18px;accent-color:#E8A020;cursor:pointer;" />
-                </label>
-              </div>
-              <div class="notif-card">
-                <div class="notif-card-body">
-                  <div class="notif-title">Известие при неактивност</div>
-                  <div class="notif-desc">Известие ако детето не е учило повече от
-                    <input type="number" value="3" min="1" max="14" style="width:40px;padding:2px 6px;border:1.5px solid var(--line);border-radius:7px;font-size:13px;font-weight:700;text-align:center;font-family:inherit;background:var(--bg);color:var(--text);display:inline;" />
-                    дни.</div>
-                </div>
-                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0;">
-                  <input type="checkbox" checked style="width:18px;height:18px;accent-color:#E8A020;cursor:pointer;" />
-                </label>
-              </div>
-              <div class="notif-card">
-                <div class="notif-card-body">
-                  <div class="notif-title">Завършен тест</div>
-                  <div class="notif-desc">Получавай имейл при всеки завършен тест с резултата.</div>
-                </div>
-                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0;">
-                  <input type="checkbox" style="width:18px;height:18px;accent-color:#E8A020;cursor:pointer;" />
-                </label>
-              </div>
-            </div>
           </div>
 
           <!-- Абонамент -->
           <div class="settings-panel" id="panel-subscription">
-            <div class="panel-head">
-              <h2>Абонамент</h2>
-              <p>Виж текущия план, плащанията и възможностите за промяна.</p>
+            <div class="panel-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;">
+              <div>
+                <h2>Абонамент</h2>
+                <p>Виж текущия план и възможностите за промяна.</p>
+              </div>
+              <button class="btn btn-ghost" id="btn-payment-history" style="font-size:13px;padding:8px 16px;white-space:nowrap;flex-shrink:0;">История на плащанията</button>
+            </div>
+
+            <!-- История на плащанията (скрита по подразбиране) -->
+            <div id="payment-history-section" style="display:none;margin-bottom:24px;">
+              <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:12px;">История на плащанията</div>
+              <div id="payment-history-list"></div>
             </div>
 
             <!-- Статус карта -->
             <div id="sub-status-card" class="plan-box" style="margin-bottom:24px;"></div>
 
             <!-- Планове (показват се при expired/trial) -->
-            <div id="sub-plans-section" style="display:none;margin-bottom:24px;">
+            <div id="sub-plans-section" style="display:none;margin-bottom:8px;">
               <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;">Избери план</div>
               <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
 
@@ -577,10 +525,14 @@
                 <div style="border:1.5px solid var(--line);border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor='#E8A020'" onmouseleave="this.style.borderColor='var(--line)'">
                   <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Отличник</div>
                   <div style="font-size:26px;font-weight:800;color:var(--text);">€45<span style="font-size:13px;font-weight:500;color:var(--muted);">/мес.</span></div>
-                  <div style="font-size:12px;color:var(--muted);line-height:1.5;margin:4px 0 10px;">Всичко + родителски дашборд + приоритетна поддръжка</div>
+                  <div style="font-size:12px;color:var(--muted);line-height:1.5;margin:4px 0 10px;">Всичко в Подготовка + неограничен Знайко + допълнителни учебни помагала</div>
                   <button class="btn btn-ghost" style="font-size:13px;padding:9px 0;width:100%;justify-content:center;">Избери →</button>
                 </div>
 
+              </div>
+              <!-- Гаранция -->
+              <div style="text-align:center;margin-top:16px;font-size:12px;color:var(--muted);line-height:1.6;">
+                Можеш да смениш или прекратиш плана по всяко време. Напредъкът ти остава запазен.
               </div>
             </div>
 
@@ -607,9 +559,6 @@
               </div>
             </div>
 
-            <div class="btn-row" style="margin-top:0;">
-              <button class="btn btn-ghost" id="btn-payment-history">История на плащанията</button>
-            </div>
           </div>
 
           <!-- Профил -->
@@ -618,6 +567,22 @@
               <h2>Профил</h2>
               <p>Име, имейл адрес и основни данни за акаунта.</p>
             </div>
+
+            <div style="margin-bottom:6px;font-size:13px;font-weight:700;color:var(--text);">Аватар</div>
+            <div class="avatar-picker" id="avatar-picker">
+              <div class="av-tile" data-emoji="👦" data-bg="#DBEAFE" tabindex="0"><div class="av-circle" style="background:#DBEAFE">👦</div><span class="av-name">Момче</span></div>
+              <div class="av-tile" data-emoji="👧" data-bg="#FCE7F3" tabindex="0"><div class="av-circle" style="background:#FCE7F3">👧</div><span class="av-name">Момиче</span></div>
+              <div class="av-tile" data-emoji="🦊" data-bg="#FFEDD5" tabindex="0"><div class="av-circle" style="background:#FFEDD5">🦊</div><span class="av-name">Лисица</span></div>
+              <div class="av-tile" data-emoji="🐻" data-bg="#FEF3C7" tabindex="0"><div class="av-circle" style="background:#FEF3C7">🐻</div><span class="av-name">Мечка</span></div>
+              <div class="av-tile" data-emoji="🦁" data-bg="#FEF9C3" tabindex="0"><div class="av-circle" style="background:#FEF9C3">🦁</div><span class="av-name">Лъв</span></div>
+              <div class="av-tile" data-emoji="🐧" data-bg="#E0E7FF" tabindex="0"><div class="av-circle" style="background:#E0E7FF">🐧</div><span class="av-name">Пингвин</span></div>
+              <div class="av-tile" data-emoji="🐸" data-bg="#DCFCE7" tabindex="0"><div class="av-circle" style="background:#DCFCE7">🐸</div><span class="av-name">Жаба</span></div>
+              <div class="av-tile" data-emoji="🦉" data-bg="#EDE9FE" tabindex="0"><div class="av-circle" style="background:#EDE9FE">🦉</div><span class="av-name">Бухал</span></div>
+              <div class="av-tile" data-emoji="🐯" data-bg="#FEE2E2" tabindex="0"><div class="av-circle" style="background:#FEE2E2">🐯</div><span class="av-name">Тигър</span></div>
+              <div class="av-tile" data-emoji="🦋" data-bg="#FDF2F8" tabindex="0"><div class="av-circle" style="background:#FDF2F8">🦋</div><span class="av-name">Пеперуда</span></div>
+            </div>
+            <span class="av-clear" id="av-clear" style="display:none;">Изчисти аватара</span>
+
             <div class="field-stack">
               <div class="field">
                 <label>Пълно име</label>
@@ -641,27 +606,79 @@
               <h2>Известия</h2>
               <p>Избери кога да получаваш имейли за напредък, трудни теми и напомняния.</p>
             </div>
+
+            <!-- Имейл за известия -->
+            <div class="notif-card" style="margin-bottom:20px;background:var(--soft);">
+              <div class="notif-card-body" style="flex:1;">
+                <div class="notif-title">Имейл за известия</div>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+                  <span id="notif-email-display" style="font-size:14px;color:var(--muted);font-weight:500;">Не е зададен имейл</span>
+                  <input type="email" id="notif-email-input" style="display:none;font-size:14px;padding:6px 10px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;background:var(--bg);color:var(--text);outline:none;flex:1;max-width:280px;" placeholder="your@email.com" />
+                </div>
+              </div>
+              <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+                <button id="notif-email-save" style="display:none;font-size:13px;font-weight:700;padding:7px 14px;border-radius:9px;border:none;background:#1a2f5a;color:#fff;cursor:pointer;">Запази</button>
+                <button id="notif-email-edit" onclick="
+                  var d=document.getElementById('notif-email-display'),
+                      i=document.getElementById('notif-email-input'),
+                      s=document.getElementById('notif-email-save'),
+                      b=document.getElementById('notif-email-edit');
+                  i.value=d.textContent.trim();
+                  d.style.display='none'; i.style.display=''; s.style.display=''; b.style.display='none'; i.focus();
+                " style="background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:var(--muted);display:flex;align-items:center;" title="Промени имейл">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+              </div>
+            </div>
+            <script>
+              document.getElementById('notif-email-save').addEventListener('click', function() {
+                var val = document.getElementById('notif-email-input').value.trim();
+                if (!val || !val.includes('@')) return;
+                document.getElementById('notif-email-display').textContent = val;
+                document.getElementById('notif-email-display').style.display = '';
+                document.getElementById('notif-email-input').style.display = 'none';
+                this.style.display = 'none';
+                document.getElementById('notif-email-edit').style.display = '';
+              });
+            </script>
+
             <div class="tog-list">
               <div class="tog-row">
                 <div>
-                  <div class="tog-lbl">Обобщение за седмицата</div>
-                  <div class="tog-desc">Кратък отчет за активността и напредъка на детето.</div>
+                  <div class="tog-lbl">Седмичен отчет</div>
+                  <div class="tog-desc">Получавай имейл всяка неделя с обобщение на активността и резултатите.</div>
                 </div>
-                <label class="tog"><input type="checkbox" id="notif-weekly" checked /><span class="tog-sl"></span></label>
+                <label class="tog"><input type="checkbox" id="cn-weekly" checked /><span class="tog-sl"></span></label>
+              </div>
+              <div class="tog-row">
+                <div>
+                  <div class="tog-lbl">Известие при неактивност</div>
+                  <div class="tog-desc">Известие ако детето не е учило повече от
+                    <input type="number" value="3" min="1" max="14" style="width:40px;padding:2px 6px;border:1.5px solid var(--line);border-radius:7px;font-size:13px;font-weight:700;text-align:center;font-family:inherit;background:var(--bg);color:var(--text);display:inline;" />
+                    дни.</div>
+                </div>
+                <label class="tog"><input type="checkbox" id="cn-inactive" checked /><span class="tog-sl"></span></label>
+              </div>
+              <div class="tog-row">
+                <div>
+                  <div class="tog-lbl">Завършена задача</div>
+                  <div class="tog-desc">Получавай имейл при завършен тест или съчинение с резултата.</div>
+                </div>
+                <label class="tog"><input type="checkbox" id="cn-quiz" checked /><span class="tog-sl"></span></label>
               </div>
               <div class="tog-row">
                 <div>
                   <div class="tog-lbl">Напомняния за учене</div>
                   <div class="tog-desc">Напомняния при пропуснати дни.</div>
                 </div>
-                <label class="tog"><input type="checkbox" id="notif-remind" /><span class="tog-sl"></span></label>
+                <label class="tog"><input type="checkbox" id="notif-remind" checked /><span class="tog-sl"></span></label>
               </div>
               <div class="tog-row">
                 <div>
                   <div class="tog-lbl">Новини и обновления</div>
                   <div class="tog-desc">Нови предмети, функции и промоции.</div>
                 </div>
-                <label class="tog"><input type="checkbox" id="notif-news" /><span class="tog-sl"></span></label>
+                <label class="tog"><input type="checkbox" id="notif-news" checked /><span class="tog-sl"></span></label>
               </div>
             </div>
             <div class="btn-row">
@@ -684,7 +701,14 @@
                   <div class="tog-lbl">Аналитични бисквитки</div>
                   <div class="tog-desc">Помагат ни да подобряваме платформата анонимно.</div>
                 </div>
-                <label class="tog"><input type="checkbox" id="priv-analytics" /><span class="tog-sl"></span></label>
+                <label class="tog"><input type="checkbox" id="priv-analytics" checked /><span class="tog-sl"></span></label>
+              </div>
+              <div class="tog-row">
+                <div>
+                  <div class="tog-lbl">Персонализирани препоръки</div>
+                  <div class="tog-desc">Използваме резултатите от тестовете, за да предлагаме теми за преговор.</div>
+                </div>
+                <label class="tog"><input type="checkbox" id="priv-recommendations" checked /><span class="tog-sl"></span></label>
               </div>
             </div>
 
@@ -695,12 +719,69 @@
 
           </div>
 
-          <!-- Управление на акаунти -->
-          <div class="settings-panel" id="panel-accounts">
+          <!-- Сигурност и акаунти -->
+          <div class="settings-panel" id="panel-security">
             <div class="panel-head">
-              <h2>Управление на акаунти</h2>
-              <p>Изтрий главния профил или профил на ученик.</p>
+              <h2>Сигурност и акаунти</h2>
+              <p>Парола, защита и управление на профила.</p>
             </div>
+            <div class="field-stack">
+              <div class="field">
+                <label>Имейл адрес</label>
+                <div style="display:flex;gap:10px;align-items:center;">
+                  <input type="email" id="sec-email" disabled style="flex:1;" />
+                  <button class="btn btn-ghost" id="btn-show-change-email" style="white-space:nowrap;flex-shrink:0;">Смени имейл</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Смяна на имейл — разгъва се -->
+            <div id="change-email-section" style="display:none;margin-top:4px;margin-bottom:8px;">
+              <div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:14px;padding:16px 18px;margin-bottom:16px;">
+                <div style="font-size:13px;font-weight:800;color:#92400e;margin-bottom:8px;">Преди да смениш имейла — прочети това:</div>
+                <ul style="font-size:13px;color:#78350f;line-height:1.7;margin:0;padding-left:18px;">
+                  <li>Ще получиш потвърждение на <strong>новия имейл</strong> — смяната влиза в сила след клик на линка.</li>
+                  <li>С новия имейл ще влизаш в профила си.</li>
+                  <li>Абонаментът остава активен и се обвързва с новия имейл.</li>
+                  <li>Всички разписки и фактури ще отиват на новия имейл.</li>
+                  <li>Цялата история, тестове и съчинения остават непокътнати.</li>
+                </ul>
+              </div>
+              <div class="field" style="margin-bottom:12px;">
+                <label>Нов имейл адрес</label>
+                <input type="email" id="new-email-input" placeholder="нов@имейл.com" />
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button class="btn btn-primary" id="btn-confirm-change-email">Потвърди смяната</button>
+                <button class="btn btn-ghost" id="btn-cancel-change-email">Отказ</button>
+              </div>
+              <div class="fmsg" id="msg-change-email"></div>
+            </div>
+
+            <div class="panel-divider"></div>
+            <h3 style="font-size:16px;font-weight:700;color:var(--text);margin:0 0 6px;">Смяна на парола</h3>
+
+            <div style="background:#fff8f0;border:1.5px solid #fed7aa;border-radius:12px;padding:14px 16px;margin-bottom:18px;">
+              <div style="font-size:13px;color:#7c3d12;line-height:1.65;">
+                <strong>Важно:</strong> Паролите са криптирани и razberi.me няма достъп до тях. Ако забравиш паролата си, единственият начин за възстановяване е чрез имейл линк. <strong>Razberi.me не носи отговорност за загубени или забравени пароли.</strong> Запази паролата на сигурно място.
+              </div>
+            </div>
+
+            <div class="field-stack" style="margin-bottom:16px;">
+              <div class="field">
+                <label>Нова парола</label>
+                <input type="password" id="new-password" placeholder="Минимум 8 символа" autocomplete="new-password" />
+              </div>
+              <div class="field">
+                <label>Потвърди новата парола</label>
+                <input type="password" id="confirm-password" placeholder="Повтори паролата" autocomplete="new-password" />
+              </div>
+            </div>
+            <button class="btn btn-primary" id="btn-reset-pw">Смени паролата</button>
+            <div class="fmsg" id="msg-pw"></div>
+            <div class="panel-divider" style="margin-top:28px;"></div>
+            <h3 style="font-size:16px;font-weight:700;color:var(--text);margin:0 0 6px;">Изтриване на акаунт</h3>
+            <p style="font-size:14px;color:var(--muted);margin:0 0 16px;">Изтриването е необратимо — всички данни се премахват за постоянно.</p>
             <div style="display:flex;flex-direction:column;gap:10px;">
               <div class="danger-box">
                 <div class="danger-box-row">
@@ -721,25 +802,6 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- Сигурност -->
-          <div class="settings-panel" id="panel-security">
-            <div class="panel-head">
-              <h2>Сигурност</h2>
-              <p>Парола и защита на акаунта.</p>
-            </div>
-            <div class="field-stack">
-              <div class="field">
-                <label>Имейл адрес</label>
-                <input type="email" id="sec-email" disabled />
-              </div>
-            </div>
-            <div class="panel-divider"></div>
-            <h3 style="font-size:16px;font-weight:700;color:var(--text);margin:0 0 6px;">Смяна на парола</h3>
-            <p style="font-size:14px;color:var(--muted);margin:0 0 20px;">Ще изпратим линк за нулиране на паролата на вашия имейл.</p>
-            <button class="btn btn-ghost" id="btn-reset-pw">✉ Изпрати линк за нулиране</button>
-            <div class="fmsg" id="msg-pw"></div>
           </div>
 
         </div><!-- /panels -->
@@ -887,19 +949,30 @@
       return email ? email.slice(0,2).toUpperCase() : '??';
     }
 
-    // Показваме инициалите от имейла веднага
-    document.getElementById('user-avatar').textContent = getInitials('', user.email);
+    // Показваме инициалите от имейла веднага (освен ако е избран аватар)
+    const _earlyAv = localStorage.getItem('userAvatar');
+    const _avEl = document.getElementById('user-avatar');
+    if (!_earlyAv) { _avEl.textContent = getInitials('', user.email); _avEl.style.fontSize = ''; }
     document.getElementById('user-email-label').textContent  = user.email;
     document.getElementById('s-email').value   = user.email;
     document.getElementById('sec-email').value = user.email;
+    // Попълваме имейла за известия с акаунт имейла (може да се промени от потребителя)
+    const _notifEmailEl = document.getElementById('notif-email-display');
+    if (_notifEmailEl && _notifEmailEl.textContent.trim() === 'Не е зададен имейл') {
+      _notifEmailEl.textContent = user.email;
+      _notifEmailEl.style.color = 'var(--text)';
+    }
 
     const { data: prof } = await sb.from('profiles').select('*').eq('id', user.id).single();
     const fullName = prof?.full_name || '';
     document.getElementById('user-fullname-label').textContent = fullName || user.email.split('@')[0];
-    // Обновяваме с истинското име и кешираме
+    // Обновяваме с истинското име и кешираме (освен ако е избран аватар)
     const initials = getInitials(fullName, user.email);
-    document.getElementById('user-avatar').textContent = initials;
-    localStorage.setItem('userInitials', initials);
+    if (!localStorage.getItem('userAvatar')) {
+      _avEl.textContent = initials;
+      _avEl.style.fontSize = '';
+      localStorage.setItem('userInitials', initials);
+    }
     if (prof) {
       document.getElementById('s-name').value = fullName;
       const PAID_PLANS_S = ['active', 'focus', 'podgotovka', 'otlichnik'];
@@ -909,12 +982,15 @@
 
       if (p === 'expired') {
         statusCard.innerHTML = `
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
             <div style="width:10px;height:10px;border-radius:50%;background:#ef4444;flex-shrink:0;"></div>
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Твоят план</div>
           </div>
-          <div style="font-size:24px;font-weight:800;color:#dc2626;margin-bottom:4px;">Изтекъл</div>
-          <div style="font-size:13px;color:var(--muted);">Абонаментът ти е изтекъл. Избери план по-долу за да продължиш.</div>`;
+          <div style="font-size:22px;font-weight:800;color:#1a2f5a;margin-bottom:6px;">Абонаментът не е активен</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Избери план, за да продължиш с уроците, тестовете и напредъка си.</div>
+          <div style="display:flex;align-items:flex-start;gap:8px;background:#fffbf0;border:1px solid #fde68a;border-radius:10px;padding:10px 14px;">
+<div style="font-size:12px;color:#92400e;line-height:1.55;"><strong>Напредъкът ти е запазен.</strong> Дневникът, бележникът, всички оценки, тестове и съчинения можеш да видиш в секция „История". Можеш да продължиш с подготовката като подновиш своя план.</div>
+          </div>`;
         document.getElementById('sub-plans-section').style.display = 'block';
       } else if (PAID_PLANS_S.includes(p)) {
         const renewsAt = prof.subscription_renews_at ? new Date(prof.subscription_renews_at).toLocaleDateString('bg-BG', { day:'numeric', month:'long', year:'numeric' }) : null;
@@ -969,18 +1045,195 @@
       btn.textContent = 'Запази промените';
 
       if (!error) {
-        const initials = getInitials(name, user.email);
-        document.getElementById('user-avatar').textContent = initials;
-        localStorage.setItem('userInitials', initials);
+        const saved = localStorage.getItem('userAvatar');
+        if (saved) {
+          document.getElementById('user-avatar').textContent = saved;
+          document.getElementById('user-avatar').style.fontSize = '22px';
+        } else {
+          const initials = getInitials(name, user.email);
+          document.getElementById('user-avatar').textContent = initials;
+          document.getElementById('user-avatar').style.fontSize = '';
+          localStorage.setItem('userInitials', initials);
+        }
         const label = document.getElementById('user-fullname-label');
         if (label) label.textContent = name || user.email.split('@')[0];
       }
       msg('msg-profile', error ? error.message : 'Запазено успешно!', !!error);
     };
 
+    // Avatar picker
+    (function() {
+      const tiles = document.querySelectorAll('.av-tile');
+      const clearBtn = document.getElementById('av-clear');
+      const sidebarAv = document.getElementById('user-avatar');
+
+      function applyAvatar(emoji) {
+        localStorage.setItem('userAvatar', emoji);
+        if (sidebarAv) { sidebarAv.textContent = emoji; sidebarAv.style.fontSize = '22px'; }
+        clearBtn.style.display = 'inline-block';
+      }
+
+      function clearAvatar() {
+        localStorage.removeItem('userAvatar');
+        tiles.forEach(t => t.classList.remove('av-selected'));
+        clearBtn.style.display = 'none';
+        if (sidebarAv) {
+          const initials = getInitials(document.getElementById('s-name').value.trim(), user.email);
+          sidebarAv.textContent = initials;
+          sidebarAv.style.fontSize = '';
+          localStorage.setItem('userInitials', initials);
+        }
+      }
+
+      tiles.forEach(tile => {
+        function pick() {
+          tiles.forEach(t => t.classList.remove('av-selected'));
+          tile.classList.add('av-selected');
+          applyAvatar(tile.dataset.emoji);
+        }
+        tile.addEventListener('click', pick);
+        tile.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+      });
+
+      clearBtn.addEventListener('click', clearAvatar);
+
+      // Restore saved avatar on page load
+      const saved = localStorage.getItem('userAvatar');
+      if (saved) {
+        clearBtn.style.display = 'inline-block';
+        tiles.forEach(t => { if (t.dataset.emoji === saved) t.classList.add('av-selected'); });
+      }
+    })();
+
+    document.getElementById('save-notif').onclick = () => {
+      const btn = document.getElementById('save-notif');
+      btn.textContent = 'Запазено ✓';
+      btn.style.background = '#15803d';
+      setTimeout(() => { btn.textContent = 'Запази'; btn.style.background = ''; }, 2500);
+    };
+
+    document.getElementById('btn-show-change-email').onclick = () => {
+      document.getElementById('change-email-section').style.display = 'block';
+      document.getElementById('btn-show-change-email').style.display = 'none';
+      document.getElementById('new-email-input').focus();
+    };
+
+    document.getElementById('btn-cancel-change-email').onclick = () => {
+      document.getElementById('change-email-section').style.display = 'none';
+      document.getElementById('btn-show-change-email').style.display = '';
+      document.getElementById('new-email-input').value = '';
+      document.getElementById('msg-change-email').textContent = '';
+    };
+
+    let _emailChangeConfirmed = false;
+
+    document.getElementById('btn-confirm-change-email').onclick = async () => {
+      const newEmail = document.getElementById('new-email-input').value.trim();
+      const btn = document.getElementById('btn-confirm-change-email');
+      if (!newEmail || !newEmail.includes('@')) {
+        msg('msg-change-email', 'Въведи валиден имейл адрес.', true);
+        return;
+      }
+
+      if (!_emailChangeConfirmed) {
+        // Показваме потвърждение
+        _emailChangeConfirmed = true;
+        btn.textContent = 'Да, смени имейла';
+        btn.style.background = '#dc2626';
+        btn.style.borderColor = '#dc2626';
+        btn.style.color = '#fff';
+        msg('msg-change-email', 'Сигурен ли си? Новият имейл ще бъде: ' + newEmail, true);
+        return;
+      }
+
+      // Второ цъкане — изпълняваме
+      _emailChangeConfirmed = false;
+      btn.disabled = true;
+      btn.textContent = 'Изпращане...';
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+      const { error } = await sb.auth.updateUser({ email: newEmail });
+      btn.disabled = false;
+      btn.textContent = 'Потвърди смяната';
+      if (error) {
+        msg('msg-change-email', error.message, true);
+      } else {
+        msg('msg-change-email', 'Изпратихме потвърждение на ' + newEmail + '. Смяната влиза в сила след като кликнеш линка в имейла.', false);
+        document.getElementById('new-email-input').value = '';
+      }
+    };
+
+    // Ако потребителят промени имейла докато чака потвърждение — нулираме
+    document.getElementById('new-email-input').addEventListener('input', () => {
+      const btn = document.getElementById('btn-confirm-change-email');
+      _emailChangeConfirmed = false;
+      btn.textContent = 'Потвърди смяната';
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    });
+
     document.getElementById('btn-reset-pw').onclick = async () => {
-      const { error } = await sb.auth.resetPasswordForEmail(user.email);
-      msg('msg-pw', error ? error.message : 'Линкът е изпратен на ' + user.email, !!error);
+      const newPw  = document.getElementById('new-password').value;
+      const confPw = document.getElementById('confirm-password').value;
+      if (!newPw || newPw.length < 8) {
+        msg('msg-pw', 'Паролата трябва да е поне 8 символа.', true); return;
+      }
+      if (newPw !== confPw) {
+        msg('msg-pw', 'Паролите не съвпадат.', true); return;
+      }
+      const btn = document.getElementById('btn-reset-pw');
+      btn.disabled = true; btn.textContent = 'Запазване...';
+      const { error } = await sb.auth.updateUser({ password: newPw });
+      btn.disabled = false; btn.textContent = 'Смени паролата';
+      if (!error) { document.getElementById('new-password').value = ''; document.getElementById('confirm-password').value = ''; }
+      msg('msg-pw', error ? error.message : 'Паролата е сменена успешно.', !!error);
+    };
+
+    let _paymentHistoryLoaded = false;
+    document.getElementById('btn-payment-history').onclick = async () => {
+      const section = document.getElementById('payment-history-section');
+      const btn = document.getElementById('btn-payment-history');
+      if (section.style.display !== 'none') {
+        section.style.display = 'none';
+        btn.textContent = 'История на плащанията';
+        return;
+      }
+      btn.textContent = 'Зареждане...';
+      btn.disabled = true;
+      if (!_paymentHistoryLoaded) {
+        const { data: { session } } = await sb.auth.getSession();
+        const token = session?.access_token;
+        const res = await fetch('/api/payment-history', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const json = await res.json();
+        const list = document.getElementById('payment-history-list');
+        if (!json.invoices || json.invoices.length === 0) {
+          list.innerHTML = '<div style="font-size:14px;color:var(--muted);padding:12px 0;">Няма намерени плащания.</div>';
+        } else {
+          const MONTHS = ['яну','фев','мар','апр','май','юни','юли','авг','сеп','окт','ное','дек'];
+          list.innerHTML = json.invoices.map(inv => {
+            const d = new Date(inv.date * 1000);
+            const dateStr = d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+            const amount = (inv.amount / 100).toFixed(2) + ' ' + inv.currency.toUpperCase();
+            const statusLabel = inv.status === 'paid' ? '<span style="color:#15803d;font-weight:700;">Платено</span>' : inv.status;
+            const pdfLink = inv.pdf ? `<a href="${inv.pdf}" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;">PDF ↗</a>` : '';
+            return `<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);">
+              <div style="font-size:14px;color:var(--muted);">${dateStr}</div>
+              <div style="font-size:14px;font-weight:700;color:var(--text);flex:1;padding:0 12px;">${inv.description || 'Абонамент'}</div>
+              <div style="font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;">${amount}</div>
+              <div style="min-width:70px;text-align:right;">${statusLabel}</div>
+              <div style="min-width:36px;text-align:right;">${pdfLink}</div>
+            </div>`;
+          }).join('');
+        }
+        _paymentHistoryLoaded = true;
+      }
+      section.style.display = 'block';
+      btn.textContent = 'Скрий историята';
+      btn.disabled = false;
     };
 
     document.getElementById('btn-logout').onclick = async () => {

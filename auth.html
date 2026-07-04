@@ -156,7 +156,24 @@
         <label>Парола</label>
         <input type="password" id="login-password" placeholder="••••••••" required />
         <button type="submit" class="auth-submit">Влез</button>
+        <div style="text-align:center;margin-top:10px;">
+          <button type="button" onclick="showForgotPassword()" style="background:none;border:none;font-size:13px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:inherit;">Забравена парола?</button>
+        </div>
       </form>
+
+      <!-- Забравена парола форма -->
+      <div id="form-forgot" class="auth-form" style="display:none;">
+        <div style="text-align:center;margin-bottom:16px;">
+          <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;">Забравена парола</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.55;">Въведи имейла си и ще ти изпратим линк за нулиране на паролата.</div>
+        </div>
+        <label>Имейл адрес</label>
+        <input type="email" id="forgot-email" placeholder="email@example.com" />
+        <button type="button" class="auth-submit" onclick="handleForgotPassword()">Изпрати линк</button>
+        <div style="text-align:center;margin-top:10px;">
+          <button type="button" onclick="showLogin()" style="background:none;border:none;font-size:13px;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:inherit;">← Обратно към вход</button>
+        </div>
+      </div>
 
       <!-- Register form -->
       <form class="auth-form" id="form-register" onsubmit="handleRegister(event)">
@@ -212,6 +229,42 @@
         }, 20);
       }, 300);
     }
+
+    window.showForgotPassword = function() {
+      const loginForm = document.getElementById('form-login');
+      const forgotForm = document.getElementById('form-forgot');
+      loginForm.style.display = 'none';
+      forgotForm.style.display = 'block';
+      document.getElementById('tab-login').classList.remove('active');
+      document.getElementById('tab-register').classList.remove('active');
+      hideMsg();
+    };
+
+    window.showLogin = function() {
+      const loginForm = document.getElementById('form-login');
+      const forgotForm = document.getElementById('form-forgot');
+      forgotForm.style.display = 'none';
+      loginForm.style.display = '';
+      loginForm.classList.add('active');
+      document.getElementById('tab-login').classList.add('active');
+      hideMsg();
+    };
+
+    window.handleForgotPassword = async function() {
+      const email = document.getElementById('forgot-email').value.trim();
+      if (!email || !email.includes('@')) {
+        showMsg('Въведи валиден имейл адрес.', 'error'); return;
+      }
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/settings.html?tab=security'
+      });
+      if (error) {
+        showMsg(error.message, 'error');
+      } else {
+        showMsg('Линкът е изпратен на ' + email + '. Провери входящата си поща.', 'success');
+        document.getElementById('forgot-email').value = '';
+      }
+    };
 
     window.switchTab = function(tab) {
       const outEl = document.getElementById(tab === 'login' ? 'form-register' : 'form-login');
