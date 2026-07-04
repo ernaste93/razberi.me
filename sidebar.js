@@ -206,7 +206,7 @@
             '<div style="font-size:20px;font-weight:800;color:#0f172a;margin-bottom:8px;">' + msg + '</div>',
             '<div style="font-size:14px;color:#64748b;margin-bottom:28px;line-height:1.6;">За да продължиш да учиш, поднови абонамента си.</div>',
             '<a href="/settings.html?tab=subscription" style="display:inline-block;background:#E8A020;color:#fff;font-weight:800;font-size:15px;padding:14px 32px;border-radius:12px;text-decoration:none;">Поднови плана →</a>',
-            '<div style="margin-top:16px;"><a href="/" style="font-size:13px;color:#94a3b8;text-decoration:none;">Към началната страница</a></div>',
+            '<div style="margin-top:16px;"><a href="/dnevnik.html" style="font-size:13px;color:#64748b;text-decoration:none;">Обратно към дневника</a></div>',
             '</div>'
           ].join('');
           document.body.appendChild(overlay);
