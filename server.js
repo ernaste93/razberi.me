@@ -33,6 +33,7 @@ const anthropicClient = API_KEY ? new Anthropic({ apiKey: API_KEY }) : null;
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://wbcppvfgtvkrsfmclmjp.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l';
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || SUPABASE_KEY;
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -731,8 +732,8 @@ async function handleWebhook(req, res) {
       const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'apikey': SUPABASE_SERVICE_KEY,
+          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal',
         },
@@ -756,8 +757,8 @@ async function handleWebhook(req, res) {
       await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'apikey': SUPABASE_SERVICE_KEY,
+          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal',
         },
