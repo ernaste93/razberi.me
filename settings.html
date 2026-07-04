@@ -406,7 +406,7 @@
               <p>Виж текущия план, плащанията и възможностите за промяна.</p>
             </div>
             <div class="plan-box">
-              <div class="plan-box-lbl">Активен план</div>
+              <div class="plan-box-lbl">Твоят план</div>
               <div class="plan-box-name" id="current-plan">—</div>
               <div class="plan-box-sub"  id="plan-sub">Зареждане...</div>
             </div>
@@ -706,9 +706,29 @@
     localStorage.setItem('userInitials', initials);
     if (prof) {
       document.getElementById('s-name').value = fullName;
-      const planMap = { student: 'Ученик', student_parent: 'Ученик + Родител', teacher: 'С Учител' };
-      document.getElementById('current-plan').textContent = planMap[prof.plan] || 'Безплатен';
-      document.getElementById('plan-sub').textContent = planMap[prof.plan] ? 'Активен абонамент.' : 'Нямате активен абонамент.';
+      const PAID_PLANS_S = ['active', 'focus', 'podgotovka', 'otlichnik'];
+      const planNames = { focus: 'Фокус', podgotovka: 'Подготовка', otlichnik: 'Отличник', active: 'Активен', trial: 'Пробен период', expired: 'Изтекъл', free: 'Безплатен' };
+      const planEl = document.getElementById('current-plan');
+      const subEl = document.getElementById('plan-sub');
+      const p = prof.plan;
+      if (p === 'expired') {
+        planEl.textContent = 'Изтекъл';
+        planEl.style.color = '#dc2626';
+        subEl.textContent = 'Абонаментът ти е изтекъл.';
+      } else if (PAID_PLANS_S.includes(p)) {
+        planEl.textContent = planNames[p] || 'Активен';
+        planEl.style.color = '#16a34a';
+        subEl.textContent = 'Активен абонамент.';
+      } else if (p === 'trial') {
+        const trialDays = prof.trial_started_at ? (Date.now() - new Date(prof.trial_started_at)) / 86400000 : 0;
+        const daysLeft = Math.max(0, Math.ceil(3 - trialDays));
+        planEl.textContent = 'Пробен период';
+        planEl.style.color = '#d97706';
+        subEl.textContent = daysLeft > 0 ? ('Остават ' + daysLeft + (daysLeft === 1 ? ' ден' : ' дни')) : 'Пробният период е изтекъл.';
+      } else {
+        planEl.textContent = 'Безплатен';
+        subEl.textContent = 'Нямате активен абонамент.';
+      }
     } else {
       document.getElementById('current-plan').textContent = 'Безплатен';
       document.getElementById('plan-sub').textContent = 'Нямате активен абонамент.';
