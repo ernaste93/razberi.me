@@ -33,6 +33,9 @@
       position: sticky;
       top: 24px;
       box-shadow: 0 12px 40px rgba(16,24,40,0.18);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
     [data-theme="dark"] .settings-sidebar { background: #0f1e3d; box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
 
@@ -360,10 +363,6 @@
             <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             Децата ми
           </button>
-          <button class="sb-item" data-panel="progress">
-            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Напредък
-          </button>
           <button class="sb-item" data-panel="subscription">
             <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
             Абонамент
@@ -551,14 +550,65 @@
               <h2>Абонамент</h2>
               <p>Виж текущия план, плащанията и възможностите за промяна.</p>
             </div>
-            <div class="plan-box">
-              <div class="plan-box-lbl">Твоят план</div>
-              <div class="plan-box-name" id="current-plan">—</div>
-              <div class="plan-box-sub"  id="plan-sub">Зареждане...</div>
+
+            <!-- Статус карта -->
+            <div id="sub-status-card" class="plan-box" style="margin-bottom:24px;"></div>
+
+            <!-- Планове (показват се при expired/trial) -->
+            <div id="sub-plans-section" style="display:none;margin-bottom:24px;">
+              <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;">Избери план</div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+
+                <div style="border:1.5px solid var(--line);border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor='#E8A020'" onmouseleave="this.style.borderColor='var(--line)'">
+                  <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Фокус</div>
+                  <div style="font-size:26px;font-weight:800;color:var(--text);">€20<span style="font-size:13px;font-weight:500;color:var(--muted);">/мес.</span></div>
+                  <div style="font-size:12px;color:var(--muted);line-height:1.5;margin:4px 0 10px;">Уроци, тестове и Знайко за 1 предмет</div>
+                  <button class="btn btn-ghost" style="font-size:13px;padding:9px 0;width:100%;justify-content:center;">Избери →</button>
+                </div>
+
+                <div style="border:2px solid #E8A020;border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:6px;background:#fffbf0;position:relative;">
+                  <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#E8A020;color:#fff;font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;white-space:nowrap;">НАЙ-ПОПУЛЯРЕН</div>
+                  <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Подготовка</div>
+                  <div style="font-size:26px;font-weight:800;color:var(--text);">€30<span style="font-size:13px;font-weight:500;color:var(--muted);">/мес.</span></div>
+                  <div style="font-size:12px;color:var(--muted);line-height:1.5;margin:4px 0 10px;">Всички предмети + съчинения + материали</div>
+                  <button class="btn btn-gold" style="font-size:13px;padding:9px 0;width:100%;justify-content:center;">Избери →</button>
+                </div>
+
+                <div style="border:1.5px solid var(--line);border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:border-color .15s;" onmouseenter="this.style.borderColor='#E8A020'" onmouseleave="this.style.borderColor='var(--line)'">
+                  <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;">Отличник</div>
+                  <div style="font-size:26px;font-weight:800;color:var(--text);">€45<span style="font-size:13px;font-weight:500;color:var(--muted);">/мес.</span></div>
+                  <div style="font-size:12px;color:var(--muted);line-height:1.5;margin:4px 0 10px;">Всичко + родителски дашборд + приоритетна поддръжка</div>
+                  <button class="btn btn-ghost" style="font-size:13px;padding:9px 0;width:100%;justify-content:center;">Избери →</button>
+                </div>
+
+              </div>
             </div>
-            <div class="btn-row">
-              <button class="btn btn-primary">Промени план</button>
-              <button class="btn btn-ghost">История на плащанията</button>
+
+            <!-- Употреба (показва се при активен план) -->
+            <div id="sub-usage-section" style="display:none;margin-bottom:24px;">
+              <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;">Употреба този месец</div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+                <div style="background:var(--soft);border-radius:12px;padding:14px 16px;text-align:center;">
+                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-lessons">—</div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:3px;">Урока</div>
+                </div>
+                <div style="background:var(--soft);border-radius:12px;padding:14px 16px;text-align:center;">
+                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-quizzes">—</div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:3px;">Теста</div>
+                </div>
+                <div style="background:var(--soft);border-radius:12px;padding:14px 16px;text-align:center;">
+                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-znayko">—</div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:3px;">Знайко</div>
+                </div>
+                <div style="background:var(--soft);border-radius:12px;padding:14px 16px;text-align:center;">
+                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-essays">—</div>
+                  <div style="font-size:12px;color:var(--muted);margin-top:3px;">Съчинения</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-row" style="margin-top:0;">
+              <button class="btn btn-ghost" id="btn-payment-history">История на плащанията</button>
             </div>
           </div>
 
@@ -854,30 +904,57 @@
       document.getElementById('s-name').value = fullName;
       const PAID_PLANS_S = ['active', 'focus', 'podgotovka', 'otlichnik'];
       const planNames = { focus: 'Фокус', podgotovka: 'Подготовка', otlichnik: 'Отличник', active: 'Активен', trial: 'Пробен период', expired: 'Изтекъл', free: 'Безплатен' };
-      const planEl = document.getElementById('current-plan');
-      const subEl = document.getElementById('plan-sub');
       const p = prof.plan;
+      const statusCard = document.getElementById('sub-status-card');
+
       if (p === 'expired') {
-        planEl.textContent = 'Изтекъл';
-        planEl.style.color = '#dc2626';
-        subEl.textContent = 'Абонаментът ти е изтекъл.';
+        statusCard.innerHTML = `
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <div style="width:10px;height:10px;border-radius:50%;background:#ef4444;flex-shrink:0;"></div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Твоят план</div>
+          </div>
+          <div style="font-size:24px;font-weight:800;color:#dc2626;margin-bottom:4px;">Изтекъл</div>
+          <div style="font-size:13px;color:var(--muted);">Абонаментът ти е изтекъл. Избери план по-долу за да продължиш.</div>`;
+        document.getElementById('sub-plans-section').style.display = 'block';
       } else if (PAID_PLANS_S.includes(p)) {
-        planEl.textContent = planNames[p] || 'Активен';
-        planEl.style.color = '#16a34a';
-        subEl.textContent = 'Активен абонамент.';
+        const renewsAt = prof.subscription_renews_at ? new Date(prof.subscription_renews_at).toLocaleDateString('bg-BG', { day:'numeric', month:'long', year:'numeric' }) : null;
+        statusCard.innerHTML = `
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <div style="width:10px;height:10px;border-radius:50%;background:#22c55e;flex-shrink:0;"></div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Твоят план</div>
+          </div>
+          <div style="font-size:24px;font-weight:800;color:#16a34a;margin-bottom:4px;">${planNames[p]}</div>
+          <div style="font-size:13px;color:var(--muted);">${renewsAt ? 'Следващо подновяване: ' + renewsAt : 'Активен абонамент.'}</div>`;
+        document.getElementById('sub-usage-section').style.display = 'block';
+        document.getElementById('usage-lessons').textContent = (prof.trial_lessons_opened || []).length;
+        document.getElementById('usage-quizzes').textContent = (prof.trial_quizzes_done || []).length;
+        document.getElementById('usage-znayko').textContent = prof.znayko_count_today || 0;
+        document.getElementById('usage-essays').textContent = prof.essay_count || 0;
       } else if (p === 'trial') {
         const trialDays = prof.trial_started_at ? (Date.now() - new Date(prof.trial_started_at)) / 86400000 : 0;
         const daysLeft = Math.max(0, Math.ceil(3 - trialDays));
-        planEl.textContent = 'Пробен период';
-        planEl.style.color = '#d97706';
-        subEl.textContent = daysLeft > 0 ? ('Остават ' + daysLeft + (daysLeft === 1 ? ' ден' : ' дни')) : 'Пробният период е изтекъл.';
+        const expired = daysLeft === 0;
+        statusCard.innerHTML = `
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <div style="width:10px;height:10px;border-radius:50%;background:${expired ? '#ef4444' : '#f59e0b'};flex-shrink:0;"></div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);">Твоят план</div>
+          </div>
+          <div style="font-size:24px;font-weight:800;color:${expired ? '#dc2626' : '#d97706'};margin-bottom:4px;">Пробен период</div>
+          <div style="font-size:13px;color:var(--muted);">${expired ? 'Пробният период е изтекъл.' : 'Остават ' + daysLeft + (daysLeft === 1 ? ' ден' : ' дни') + ' от пробния период.'}</div>`;
+        document.getElementById('sub-plans-section').style.display = 'block';
       } else {
-        planEl.textContent = 'Безплатен';
-        subEl.textContent = 'Нямате активен абонамент.';
+        statusCard.innerHTML = `
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px;">Твоят план</div>
+          <div style="font-size:24px;font-weight:800;color:var(--text);margin-bottom:4px;">Безплатен</div>
+          <div style="font-size:13px;color:var(--muted);">Нямате активен абонамент.</div>`;
+        document.getElementById('sub-plans-section').style.display = 'block';
       }
     } else {
-      document.getElementById('current-plan').textContent = 'Безплатен';
-      document.getElementById('plan-sub').textContent = 'Нямате активен абонамент.';
+      document.getElementById('sub-status-card').innerHTML = `
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px;">Твоят план</div>
+        <div style="font-size:24px;font-weight:800;color:var(--text);margin-bottom:4px;">Безплатен</div>
+        <div style="font-size:13px;color:var(--muted);">Нямате активен абонамент.</div>`;
+      document.getElementById('sub-plans-section').style.display = 'block';
     }
 
     document.getElementById('save-profile').onclick = async () => {
