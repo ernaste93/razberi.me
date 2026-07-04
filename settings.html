@@ -255,19 +255,47 @@
     }
     .confirm-btn-row { display: flex; gap: 10px; }
     .confirm-btn-row .btn { flex: 1; justify-content: center; }
+    /* ── Child cards ── */
     .child-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: var(--soft);
+      background: var(--bg);
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 14px 18px;
-      margin-bottom: 12px;
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin-bottom: 14px;
     }
-    .child-card-info .child-name { font-size: 15px; font-weight: 700; color: var(--text); }
-    .child-card-info .child-grade { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .child-card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .child-avatar { width: 44px; height: 44px; border-radius: 50%; background: #1a2f5a; color: #fff; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .child-card-name { font-size: 16px; font-weight: 800; color: var(--text); }
+    .child-card-meta { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .child-last-active { font-size: 12px; color: var(--muted); margin-left: auto; }
+    .child-stats { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    .child-stat { background: var(--soft); border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; align-items: center; min-width: 64px; flex: 1; }
+    .child-stat-val { font-size: 18px; font-weight: 800; color: var(--text); }
+    .child-stat-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; text-align: center; }
+    .child-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .child-btn { font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 10px; border: none; cursor: pointer; transition: background .15s; }
+    .child-btn-primary { background: #1a2f5a; color: #fff; }
+    .child-btn-primary:hover { background: #0f1f3d; }
+    .child-btn-ghost { background: var(--soft); color: var(--text); border: 1px solid var(--line); }
+    .child-btn-ghost:hover { background: var(--line); }
+    .child-btn-danger { background: #fff0f0; color: #dc2626; border: 1px solid #fca5a5; margin-left: auto; }
+    .child-btn-danger:hover { background: #fee2e2; }
+    /* ── Controls section ── */
+    .controls-section { margin-top: 28px; }
+    .controls-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 14px; text-transform: uppercase; letter-spacing: .05em; }
+    .control-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .control-row:last-child { border-bottom: none; }
+    .control-label { font-size: 14px; font-weight: 700; color: var(--text); }
+    .control-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .control-input { display: flex; align-items: center; gap: 8px; }
+    .control-num { width: 64px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 10px; font-size: 14px; font-weight: 700; text-align: center; font-family: inherit; background: var(--bg); color: var(--text); }
+    .subjects-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+    .subject-chip { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; border: 1.5px solid var(--line); background: var(--soft); color: var(--muted); transition: all .15s; }
+    .subject-chip.on { background: #e8f5e9; border-color: #86efac; color: #16a34a; }
+    /* ── Notif cards ── */
+    .notif-card { background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-bottom: 10px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+    .notif-card-body .notif-title { font-size: 14px; font-weight: 700; color: var(--text); }
+    .notif-card-body .notif-desc { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
     .btn-remove { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 18px; padding: 4px; border-radius: 8px; transition: color .15s, background .15s; }
     .btn-remove:hover { color: #dc2626; background: #fff0f0; }
 
@@ -373,10 +401,73 @@
           <div class="settings-panel active" id="panel-children">
             <div class="panel-head">
               <h2>Децата ми</h2>
-              <p>Добави профил на детето, за да изберете клас, предмети и да следите напредъка му.</p>
+              <p>Управлявай профилите на децата и следи напредъка им.</p>
             </div>
             <div id="children-list">
-              <div style="display:flex;align-items:center;gap:24px;background:var(--soft);border:1px dashed var(--line);border-radius:16px;padding:24px 28px;margin-bottom:24px;">
+              <!-- Child card (mock) -->
+              <div class="child-card">
+                <div class="child-card-top">
+                  <div class="child-avatar">АИ</div>
+                  <div>
+                    <div class="child-card-name">Александър Иванов</div>
+                    <div class="child-card-meta">10. клас · alex@example.com</div>
+                  </div>
+                  <div class="child-last-active">Последна активност: днес</div>
+                </div>
+                <div class="child-stats">
+                  <div class="child-stat"><span class="child-stat-val">12</span><span class="child-stat-lbl">Урока</span></div>
+                  <div class="child-stat"><span class="child-stat-val">7</span><span class="child-stat-lbl">Теста</span></div>
+                  <div class="child-stat"><span class="child-stat-val">34</span><span class="child-stat-lbl">Знайко</span></div>
+                  <div class="child-stat"><span class="child-stat-val">2</span><span class="child-stat-lbl">Съчинения</span></div>
+                </div>
+                <div class="child-actions">
+                  <button class="child-btn child-btn-primary">Виж дневника</button>
+                  <button class="child-btn child-btn-ghost" onclick="document.getElementById('controls-ai').style.display = document.getElementById('controls-ai').style.display==='none'?'block':'none'">Родителски контроли</button>
+                  <button class="child-btn child-btn-danger">Премахни</button>
+                </div>
+                <!-- Родителски контроли (разгъваеми) -->
+                <div id="controls-ai" style="display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--line);">
+                  <div class="controls-title">Родителски контроли</div>
+                  <div class="control-row">
+                    <div>
+                      <div class="control-label">Дневен лимит Знайко</div>
+                      <div class="control-desc">Максимален брой въпроси към Знайко на ден</div>
+                    </div>
+                    <div class="control-input">
+                      <input type="number" class="control-num" value="30" min="5" max="100" />
+                      <span style="font-size:13px;color:var(--muted);">въпроса</span>
+                    </div>
+                  </div>
+                  <div class="control-row">
+                    <div>
+                      <div class="control-label">Учебна цел</div>
+                      <div class="control-desc">Минимален брой уроци седмично</div>
+                    </div>
+                    <div class="control-input">
+                      <input type="number" class="control-num" value="3" min="1" max="14" />
+                      <span style="font-size:13px;color:var(--muted);">урока/седм.</span>
+                    </div>
+                  </div>
+                  <div class="control-row">
+                    <div>
+                      <div class="control-label">Активни предмети</div>
+                      <div class="control-desc">Предметите, до които детето има достъп</div>
+                    </div>
+                  </div>
+                  <div class="subjects-grid" style="margin-top:10px;">
+                    <span class="subject-chip on" onclick="this.classList.toggle('on')">БЕЛ</span>
+                    <span class="subject-chip on" onclick="this.classList.toggle('on')">Математика</span>
+                    <span class="subject-chip on" onclick="this.classList.toggle('on')">Биология</span>
+                    <span class="subject-chip on" onclick="this.classList.toggle('on')">Химия</span>
+                    <span class="subject-chip" onclick="this.classList.toggle('on')">История</span>
+                  </div>
+                  <div style="margin-top:16px;">
+                    <button class="btn btn-primary" style="font-size:13px;padding:10px 20px;">Запази контролите</button>
+                  </div>
+                </div>
+              </div>
+              <!-- Empty state (скрито когато има деца) -->
+              <div id="children-empty" style="display:none;align-items:center;gap:24px;background:var(--soft);border:1px dashed var(--line);border-radius:16px;padding:24px 28px;margin-bottom:24px;">
                 <svg style="width:48px;height:48px;flex-shrink:0;stroke:var(--muted);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 <div>
                   <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;">Все още няма добавено дете</div>
@@ -385,17 +476,39 @@
               </div>
             </div>
             <button class="btn btn-gold" id="btn-add-child">+ Добави дете</button>
-          </div>
 
-          <!-- Напредък -->
-          <div class="settings-panel" id="panel-progress">
-            <div class="panel-head">
-              <h2>Напредък</h2>
-              <p>Преглед на активността и постиженията на детето ти.</p>
-            </div>
-            <div class="progress-placeholder">
-              <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              <p>Напредъкът ще се появи след като детето ви започне да ползва платформата.</p>
+            <!-- Известия за деца -->
+            <div class="controls-section">
+              <div class="controls-title">Известия</div>
+              <div class="notif-card">
+                <div class="notif-card-body">
+                  <div class="notif-title">Седмичен отчет</div>
+                  <div class="notif-desc">Получавай имейл всяка неделя с обобщение на активността и резултатите.</div>
+                </div>
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0;">
+                  <input type="checkbox" checked style="width:18px;height:18px;accent-color:#E8A020;cursor:pointer;" />
+                </label>
+              </div>
+              <div class="notif-card">
+                <div class="notif-card-body">
+                  <div class="notif-title">Известие при неактивност</div>
+                  <div class="notif-desc">Известие ако детето не е учило повече от
+                    <input type="number" value="3" min="1" max="14" style="width:40px;padding:2px 6px;border:1.5px solid var(--line);border-radius:7px;font-size:13px;font-weight:700;text-align:center;font-family:inherit;background:var(--bg);color:var(--text);display:inline;" />
+                    дни.</div>
+                </div>
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0;">
+                  <input type="checkbox" checked style="width:18px;height:18px;accent-color:#E8A020;cursor:pointer;" />
+                </label>
+              </div>
+              <div class="notif-card">
+                <div class="notif-card-body">
+                  <div class="notif-title">Завършен тест</div>
+                  <div class="notif-desc">Получавай имейл при всеки завършен тест с резултата.</div>
+                </div>
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0;">
+                  <input type="checkbox" style="width:18px;height:18px;accent-color:#E8A020;cursor:pointer;" />
+                </label>
+              </div>
             </div>
           </div>
 
