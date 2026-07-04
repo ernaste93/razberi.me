@@ -480,6 +480,39 @@
             <!-- Известия за деца -->
             <div class="controls-section">
               <div class="controls-title">Известия</div>
+              <div class="notif-card" style="margin-bottom:18px;background:var(--soft);">
+                <div class="notif-card-body" style="flex:1;">
+                  <div class="notif-title">Имейл за известия</div>
+                  <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+                    <span id="notif-email-display" style="font-size:14px;color:var(--text);font-weight:600;">kiril@example.com</span>
+                    <input type="email" id="notif-email-input" style="display:none;font-size:14px;padding:6px 10px;border:1.5px solid var(--line);border-radius:9px;font-family:inherit;background:var(--bg);color:var(--text);outline:none;flex:1;max-width:280px;" placeholder="your@email.com" />
+                  </div>
+                </div>
+                <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+                  <button id="notif-email-save" style="display:none;font-size:13px;font-weight:700;padding:7px 14px;border-radius:9px;border:none;background:#1a2f5a;color:#fff;cursor:pointer;">Запази</button>
+                  <button id="notif-email-edit" onclick="
+                    var d=document.getElementById('notif-email-display'),
+                        i=document.getElementById('notif-email-input'),
+                        s=document.getElementById('notif-email-save'),
+                        b=document.getElementById('notif-email-edit');
+                    i.value=d.textContent.trim();
+                    d.style.display='none'; i.style.display=''; s.style.display=''; b.style.display='none'; i.focus();
+                  " style="background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:var(--muted);display:flex;align-items:center;" title="Промени имейл">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <script>
+                document.getElementById('notif-email-save').addEventListener('click', function() {
+                  var val = document.getElementById('notif-email-input').value.trim();
+                  if (!val || !val.includes('@')) return;
+                  document.getElementById('notif-email-display').textContent = val;
+                  document.getElementById('notif-email-display').style.display = '';
+                  document.getElementById('notif-email-input').style.display = 'none';
+                  this.style.display = 'none';
+                  document.getElementById('notif-email-edit').style.display = '';
+                });
+              </script>
               <div class="notif-card">
                 <div class="notif-card-body">
                   <div class="notif-title">Седмичен отчет</div>
