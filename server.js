@@ -629,10 +629,10 @@ async function handlePaymentHistory(req, res) {
   const userId = getUserIdFromJwt(userToken);
   if (!userId) return sendJson(res, 401, { error: 'Unauthorized' });
 
-  // Get stripe_customer_id from profiles
+  // Get stripe_customer_id from profiles (service key to bypass RLS)
   const profRes = await fetch(
     `${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}&select=stripe_customer_id`,
-    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+    { headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` } }
   );
   const [prof] = await profRes.json();
   if (!prof?.stripe_customer_id) return sendJson(res, 200, { invoices: [] });
