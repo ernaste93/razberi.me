@@ -717,8 +717,8 @@ async function handleWebhook(req, res) {
     const meta = obj.metadata || obj.subscription_details?.metadata || {};
     const userId = meta.user_id;
     const plan = meta.plan;
+    console.log('[webhook] event:', event.type, '| userId:', userId, '| plan:', plan, '| customer:', obj.customer);
     if (userId && plan) {
-      // subscription_renews_at: for invoice.paid use current_period_end; for checkout use subscription period
       let renewsAt = null;
       if (obj.current_period_end) {
         renewsAt = new Date(obj.current_period_end * 1000).toISOString();
@@ -728,7 +728,7 @@ async function handleWebhook(req, res) {
           if (sub.current_period_end) renewsAt = new Date(sub.current_period_end * 1000).toISOString();
         } catch (_) {}
       }
-      await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}`, {
+      const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
           'apikey': SUPABASE_KEY,
@@ -743,6 +743,9 @@ async function handleWebhook(req, res) {
           stripe_customer_id: obj.customer || null,
         }),
       });
+      console.log('[webhook] Supabase PATCH status:', patchRes.status);
+    } else {
+      console.log('[webhook] SKIP — userId або plan липсват в metadata');
     }
   }
 
