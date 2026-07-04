@@ -744,7 +744,11 @@ function serveStatic(req, res) {
       return res.end('Not found');
     }
     const ext = path.extname(absolutePath).toLowerCase();
-    res.writeHead(200, { 'Content-Type': MIME_TYPES[ext] || 'application/octet-stream' });
+    const NO_CACHE_FILES = ['/sidebar.js', '/nav.js'];
+    const cacheHeader = NO_CACHE_FILES.includes(filePath)
+      ? { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+      : {};
+    res.writeHead(200, { 'Content-Type': MIME_TYPES[ext] || 'application/octet-stream', ...cacheHeader });
     res.end(content);
   });
 }
