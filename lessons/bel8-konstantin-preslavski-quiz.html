@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 – Константин Преславски – Азбучна молитва · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-konstantin-preslavski-q1',
+    quizNum:1,
+    nextQuizUrl:"/lessons/bel8-konstantin-preslavski-quiz-2.html",
+    lessonUrl:'/lessons/bel8-konstantin-preslavski.html',
+    lessonName:"Константин Преславски – Азбучна молитва",
+    eyebrow:"БЕЛ · 8 клас · Средновековие",
+    title:"Тест 1 – Константин Преславски – Азбучна молитва",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какво е акростих?",
+    "options": [
+      "Стихотворение, в което първите букви образуват дума или азбука",
+      "Вид молитва без рима",
+      "Историческа хроника",
+      "Превод от гръцки"
+    ],
+    "correct": 0,
+    "explanation": "В Азбучна молитва всеки стих започва с поредна буква на кирилицата."
+  },
+  {
+    "q": "Кой е Константин Преславски?",
+    "options": [
+      "Епископ и книжовник от Преславска школа, ученик на Методий",
+      "Цар на България",
+      "Автор на О писменех",
+      "Ученик на Паисий"
+    ],
+    "correct": 0,
+    "explanation": "Константин Преславски е епископ Преславски, водещ книжовник на Симеоновата епоха."
+  },
+  {
+    "q": "Каква е двойната функция на Азбучна молитва?",
+    "options": [
+      "Практическа (учи азбуката) и духовна (молитва)",
+      "Само молитва",
+      "Само граматика",
+      "Само история"
+    ],
+    "correct": 0,
+    "explanation": "Акростихът учи азбуката, а съдържанието е молитва – две функции в едно."
+  },
+  {
+    "q": "Коя е книжовната школа на Константин Преславски?",
+    "options": [
+      "Преславска",
+      "Охридска",
+      "Атонска",
+      "Търновска"
+    ],
+    "correct": 0,
+    "explanation": "Преслав е столицата на Симеон, центърът на Преславската школа."
+  },
+  {
+    "q": "По чие управление се развива Преславската школа?",
+    "options": [
+      "Симеон Велики",
+      "Борис I",
+      "Иван Асен",
+      "Климент Охридски"
+    ],
+    "correct": 0,
+    "explanation": "Симеон (893–927) прави Преслав велик книжовен център."
+  },
+  {
+    "q": "Какъв е жанрът на Азбучна молитва?",
+    "options": [
+      "Акростих-молитва",
+      "Епически епос",
+      "Биография",
+      "Хроника"
+    ],
+    "correct": 0,
+    "explanation": "Акростих-молитвата е специфичен жанр, съединяващ поезия и религия."
+  },
+  {
+    "q": "Кой е основал Охридската школа?",
+    "options": [
+      "Климент Охридски",
+      "Константин Преславски",
+      "Черноризец Храбър",
+      "Йоан Екзарх"
+    ],
+    "correct": 0,
+    "explanation": "Климент Охридски (840–916) е водач на Охридската школа."
+  },
+  {
+    "q": "Каква е темата на Азбучна молитва?",
+    "options": [
+      "Молитва за просветление чрез буквата и книжнината",
+      "История на войните",
+      "Описание на природата",
+      "Животът на Симеон"
+    ],
+    "correct": 0,
+    "explanation": "Текстът слива религиозно и просветно – буквата е пътят към Бога."
+  },
+  {
+    "q": "Какъв период е Симеоновият Златен век?",
+    "options": [
+      "893–927 г. – разцвет на старобългарската литература",
+      "681–701 г.",
+      "1018–1187 г.",
+      "1762–1878 г."
+    ],
+    "correct": 0,
+    "explanation": "Симеоновата епоха е пиков момент на старобългарската книжнина."
+  },
+  {
+    "q": "Каква е разликата Преславска/Охридска школа?",
+    "options": [
+      "Преславска – по-близо до гръцки образци; Охридска – по-близо до народния език",
+      "Преславска е по-стара с 200 г.",
+      "Охридска е в Преслав",
+      "Няма разлика"
+    ],
+    "correct": 0,
+    "explanation": "Климент работи с народния език; Преслав превежда гръцки текстове."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

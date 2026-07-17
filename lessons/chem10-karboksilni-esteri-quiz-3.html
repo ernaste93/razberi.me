@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Карбоксилни киселини и естери – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem10-karboksilni-esteri-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem10-karboksilni-esteri.html',
+      lessonName:  'Карбоксилни киселини и естери',
+      eyebrow:     'ХИМИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Карбоксилни киселини и естери – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "RCOOH vs RCHO – разлика?",
+                "options": [
+                        "–COOH = C=O+OH (кисела); –CHO = C=O+H (редуцираща)",
+                        "Нямат разлика",
+                        "Алдехидът е по-кисел",
+                        "Карбоксилна е редуцираща"
+                ],
+                "correct": 0,
+                "explanation": "Различна реактивност: к-на → соли/естери; алдехид → окисление/адиция."
+        },
+        {
+                "q": "Как се измества равновесието при естерификация вдясно?",
+                "options": [
+                        "Охлаждане",
+                        "Отнемане на H₂O или естер",
+                        "Добавяне на вода",
+                        "Намаляване на к-на"
+                ],
+                "correct": 1,
+                "explanation": "Принцип Льо Шателие: отнемане на продукт → вдясно."
+        },
+        {
+                "q": "Транс-мазнини се образуват при?",
+                "options": [
+                        "Осапунване",
+                        "Непълно хидрогениране",
+                        "Естерификация",
+                        "Дестилация"
+                ],
+                "correct": 1,
+                "explanation": "Непълно хидрогениране може да изомеризира cis→trans. Транс-мазнините са свързани с ССЗ."
+        },
+        {
+                "q": "Мицела на сапун?",
+                "options": [
+                        "Хидрофобните опашки навън",
+                        "Хидрофобните навътре, полярните глави навън (вода)",
+                        "Само йонна",
+                        "Разтворима"
+                ],
+                "correct": 1,
+                "explanation": "Хидрофобните С-вериги навътре (мазнина), RCOO⁻ навън (вода) → измиват мазното."
+        },
+        {
+                "q": "НЕВЯРНО за карбоксилни к-ни?",
+                "options": [
+                        "Слаби к-ни",
+                        "Реагират с основи",
+                        "Силни окислители",
+                        "Образуват естери"
+                ],
+                "correct": 2,
+                "explanation": "НЕ са силни окислители. Слаби к-ни, реагират с основи, метали, алкохоли."
+        },
+        {
+                "q": "Олеинова к-на при хидрогениране → ?",
+                "options": [
+                        "Стеаринова к-на",
+                        "По-ненаситена",
+                        "Глицерол",
+                        "Сапун"
+                ],
+                "correct": 0,
+                "explanation": "Олеинова (1 C=C)+H₂ → стеаринова (без C=C)."
+        },
+        {
+                "q": "Сапунът не работи в твърда вода. Защо?",
+                "options": [
+                        "Не е разтворим",
+                        "Образува неразтворими соли с Ca²⁺/Mg²⁺",
+                        "Не е амфифилен",
+                        "Реагира с Cl⁻"
+                ],
+                "correct": 1,
+                "explanation": "(RCOO)₂Ca↓ утайка → сапунът се изразходва."
+        },
+        {
+                "q": "Функционална група на естер?",
+                "options": [
+                        "–OH",
+                        "–COOH",
+                        "–COO– (естерна)",
+                        "–CHO"
+                ],
+                "correct": 2,
+                "explanation": "Естер: RCOOR'. Група –COO–."
+        },
+        {
+                "q": "C₂H₅COOH+CH₃OH → ?",
+                "options": [
+                        "C₂H₅–COO–CH₃+H₂O",
+                        "C₂H₅COOH",
+                        "C₂H₅OH+CH₃OH",
+                        "CH₃COOH"
+                ],
+                "correct": 0,
+                "explanation": "Естерификация: пропанова к-на+метанол → метилпропаноат+H₂O."
+        },
+        {
+                "q": "Глицеролът в козметика?",
+                "options": [
+                        "Дезинфектант",
+                        "Хидратиращ (H-връзки с кожата)",
+                        "Разтворител",
+                        "Консервант"
+                ],
+                "correct": 1,
+                "explanation": "3 OH-групи → H-връзки с вода в кожата → хидратация."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

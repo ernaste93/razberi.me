@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Паисий Хилендарски – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel9-paisiy-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel9-paisiy-quiz-2.html',
+      lessonUrl:   '/lessons/bel9-paisiy.html',
+      lessonName:  'Паисий Хилендарски',
+      eyebrow:     'БЕЛ · 9 клас · Просвещение',
+      title:       'Куиз – Паисий Хилендарски – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "В коя година е написана \"История славянобългарска\"?",
+                "options": [
+                        "1762",
+                        "1802",
+                        "1844",
+                        "1878"
+                ],
+                "correct": 0,
+                "explanation": "Паисий я пише в 1762 г. в Зографския монастир."
+        },
+        {
+                "q": "Какво е главното послание на Паисий?",
+                "options": [
+                        "Да се уважава историята и народността",
+                        "Да се учи гръцки",
+                        "Да се приемат турските обичаи",
+                        "Да се мълчи за минало"
+                ],
+                "correct": 0,
+                "explanation": "Паисий призовава да не се срамуват от своя народ."
+        },
+        {
+                "q": "Кой е Паисий Хилендарски?",
+                "options": [
+                        "Монах от Хилендарски монастир",
+                        "Търговец от Котел",
+                        "Учител от Трявна",
+                        "Войвода от Балкана"
+                ],
+                "correct": 0,
+                "explanation": "Паисий е монах – живял и писал в Света гора."
+        },
+        {
+                "q": "Как е разпространявана \"История славянобългарска\" след написването?",
+                "options": [
+                        "Преписвана на ръка",
+                        "Печатана веднага",
+                        "Пратена по пощата",
+                        "Преведена на турски"
+                ],
+                "correct": 0,
+                "explanation": "До 1844 г. се разпространява само чрез ръкописни преписи."
+        },
+        {
+                "q": "Каква е целта на творбата?",
+                "options": [
+                        "Да събуди националното самосъзнание",
+                        "Да опише природата",
+                        "Да разказва приказки",
+                        "Да учи религия"
+                ],
+                "correct": 0,
+                "explanation": "Целта е пробуждане на националния дух у поробения народ."
+        },
+        {
+                "q": "Какъв тон използва Паисий в писането?",
+                "options": [
+                        "Патетичен и риторичен",
+                        "Спокоен и научен",
+                        "Хумористичен",
+                        "Безличен"
+                ],
+                "correct": 0,
+                "explanation": "Стилът е емоционален, страстен, с директни обръщения."
+        },
+        {
+                "q": "\"О, неразумний и юроде!\" е насочено към:",
+                "options": [
+                        "Ония, дето се срамят от народността си",
+                        "Турците",
+                        "Гърците",
+                        "Духовниците"
+                ],
+                "correct": 0,
+                "explanation": "Паисий укорява българи, отричащи своя произход."
+        },
+        {
+                "q": "В кой монастир пише Паисий?",
+                "options": [
+                        "Зографски",
+                        "Рилски",
+                        "Бачковски",
+                        "Троянски"
+                ],
+                "correct": 0,
+                "explanation": "Пише в Зографски монастир, Света гора, завършва в Хилендар."
+        },
+        {
+                "q": "Кога е отпечатана за пръв път \"История славянобългарска\"?",
+                "options": [
+                        "1844",
+                        "1762",
+                        "1878",
+                        "1902"
+                ],
+                "correct": 0,
+                "explanation": "Печатното издание излиза едва през 1844 г. в Будапеща."
+        },
+        {
+                "q": "Кой период е описван в \"История славянобългарска\"?",
+                "options": [
+                        "Старобългарска история от ранното средновековие",
+                        "Съвременни 18 в. събития",
+                        "Само религиозни истории",
+                        "Само за Свети Кирил и Методий"
+                ],
+                "correct": 0,
+                "explanation": "Паисий описва историята на българите от древни времена."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

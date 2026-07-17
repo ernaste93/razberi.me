@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 – Софокъл – Антигона · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-sofokul-antigona-q3',
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:'/lessons/bel8-sofokul-antigona.html',
+    lessonName:"Софокъл – Антигона",
+    eyebrow:"БЕЛ · 8 клас · Антична литература",
+    title:"Тест 3 – Софокъл – Антигона",
+    passScore:8,
+    questions:[
+  {
+    "q": "Кой от двамата е прав – Антигона или Креон?",
+    "options": [
+      "И двамата са прави по различен начин – това е трагедията",
+      "Само Антигона",
+      "Само Креон",
+      "Никой"
+    ],
+    "correct": 0,
+    "explanation": "Хегел описва Антигона като сблъсък на две легитимни истини."
+  },
+  {
+    "q": "Каква е разликата Антигона/Изместе?",
+    "options": [
+      "Антигона действа, Изместе се подчинява",
+      "Изместе е по-смела",
+      "Антигона чака",
+      "Изместе умира"
+    ],
+    "correct": 0,
+    "explanation": "Изместе олицетворява практичния компромис; Антигона – нравствената непреклонност."
+  },
+  {
+    "q": "Какво символизира Антигона в световната литература?",
+    "options": [
+      "Нравствената съвест срещу несправедливата власт",
+      "Сляпата любов",
+      "Отмъщението",
+      "Страха"
+    ],
+    "correct": 0,
+    "explanation": "Антигона е архетип на моралния бунт срещу произвола на властта."
+  },
+  {
+    "q": "Каква е поуката от краха на Креон?",
+    "options": [
+      "Гордостта унищожава онова, което обичаш",
+      "Законът винаги побеждава",
+      "Децата са по-умни",
+      "Войната е неизбежна"
+    ],
+    "correct": 0,
+    "explanation": "Хибрисът на Креон води до немезис – загуба на всичко скъпо."
+  },
+  {
+    "q": "Как реагира Тирезий на Креон?",
+    "options": [
+      "Предупреждава го, че ще загуби всичко",
+      "Одобрява решението",
+      "Моли за помилване",
+      "Бяга от Тива"
+    ],
+    "correct": 0,
+    "explanation": "Тирезий предрича катастрофата, Креон го обвинява в подкуп."
+  },
+  {
+    "q": "Какво е антична трагедия?",
+    "options": [
+      "Драматичен жанр с трагичен финал, хор, маски и катарзис",
+      "Комично произведение",
+      "Епическа поема",
+      "Лирика"
+    ],
+    "correct": 0,
+    "explanation": "Трагедията включва хор, маски и завършва с несполука на героя."
+  },
+  {
+    "q": "Защо Антигона е актуална днес?",
+    "options": [
+      "Конфликтът закон/съвест е вечен",
+      "Тиванският мит е верен",
+      "Гръцкият е международен",
+      "Пиесата е забавна"
+    ],
+    "correct": 0,
+    "explanation": "Всяко общество поставя въпроса: кога е позволено да не спазиш несправедлив закон?"
+  },
+  {
+    "q": "Кога е поставена Антигона?",
+    "options": [
+      "441 пр. Хр.",
+      "500 пр. Хр.",
+      "100 пр. Хр.",
+      "776 пр. Хр."
+    ],
+    "correct": 0,
+    "explanation": "Антигона е поставена около 441 г. пр. Хр. в Атина."
+  },
+  {
+    "q": "Как хорът коментира действието?",
+    "options": [
+      "Изразява универсални истини без да взима страна",
+      "Осъжда Антигона",
+      "Защитава Креон",
+      "Организира бунта"
+    ],
+    "correct": 0,
+    "explanation": "Хорът е гласът на колективната мъдрост и обществото."
+  },
+  {
+    "q": "Кое е верното за хамартията?",
+    "options": [
+      "Трагична грешка, водеща до падението на героя",
+      "Героичен подвиг",
+      "Щастлив обрат",
+      "Вид маска"
+    ],
+    "correct": 0,
+    "explanation": "Хамартия е аристотеловият термин за трагичната грешка."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

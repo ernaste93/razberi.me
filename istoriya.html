@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>История на активността | Разбери</title>
+<script src="/sidebar.js" defer></script>
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --surface: #fff;
+    --border: #e5e2db;
+    --text: #1a1917;
+    --muted: #6b6860;
+    --accent: #2563eb;
+    --pass: #16a34a;
+    --fail: #dc2626;
+    --znayko: #7c3aed;
+    --essay: #b45309;
+    --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111110;
+      --surface: #1c1b1a;
+      --border: #2e2d2b;
+      --text: #e8e6e1;
+      --muted: #8c8a84;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  .layout { display: flex; min-height: 100vh; }
+  .main { flex: 1; padding: 32px 24px; max-width: 780px; margin: 0 auto; width: 100%; }
+  h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 6px; }
+  .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+  .day-group { margin-bottom: 36px; }
+  .day-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .events { display: flex; flex-direction: column; gap: 10px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .card-header:hover { background: var(--bg); }
+  .type-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-quiz   { background: var(--accent); }
+  .dot-essay  { background: var(--essay); }
+  .dot-znayko { background: var(--znayko); }
+
+  .card-title { flex: 1; font-size: 0.92rem; font-weight: 500; }
+  .card-time  { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+  .score-badge {
+    font-size: 0.78rem; font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .badge-pass { background: #dcfce7; color: var(--pass); }
+  .badge-fail { background: #fee2e2; color: var(--fail); }
+  .badge-essay { background: #fef3c7; color: var(--essay); }
+  .badge-znayko { background: #ede9fe; color: var(--znayko); }
+  @media (prefers-color-scheme: dark) {
+    .badge-pass  { background: #14532d; color: #86efac; }
+    .badge-fail  { background: #7f1d1d; color: #fca5a5; }
+    .badge-essay { background: #78350f; color: #fde68a; }
+    .badge-znayko{ background: #4c1d95; color: #c4b5fd; }
+  }
+
+  .chevron { font-size: 0.75rem; color: var(--muted); transition: transform 0.2s; }
+  .card.open .chevron { transform: rotate(90deg); }
+
+  .card-body {
+    display: none;
+    border-top: 1px solid var(--border);
+    padding: 14px 16px;
+    font-size: 0.88rem;
+  }
+  .card.open .card-body { display: block; }
+
+  /* Quiz details */
+  .quiz-questions { display: flex; flex-direction: column; gap: 8px; }
+  .q-row { display: flex; gap: 8px; align-items: flex-start; }
+  .q-icon { font-size: 0.9rem; flex-shrink: 0; line-height: 1.4; }
+  .q-text { flex: 1; line-height: 1.5; }
+  .q-sub { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+  .q-correct { color: var(--pass); font-size: 0.8rem; }
+  .q-chosen  { color: var(--fail); font-size: 0.8rem; }
+
+  /* Essay details */
+  .criteria-grid { display: flex; flex-direction: column; gap: 6px; }
+  .crit-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .crit-name { flex: 1; }
+  .crit-score { font-weight: 600; white-space: nowrap; }
+  .essay-summary { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); color: var(--muted); font-style: italic; line-height: 1.6; }
+
+  /* Знайко chat */
+  .chat-messages { display: flex; flex-direction: column; gap: 8px; }
+  .msg { padding: 8px 12px; border-radius: 8px; line-height: 1.5; max-width: 90%; }
+  .msg-user { background: var(--border); align-self: flex-end; }
+  .msg-assistant { background: #ede9fe; align-self: flex-start; }
+  @media (prefers-color-scheme: dark) {
+    .msg-assistant { background: #3b1f6e; }
+  }
+
+  .empty-state { text-align: center; padding: 64px 20px; color: var(--muted); }
+  .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
+
+  .loading { text-align: center; padding: 48px; color: var(--muted); }
+  .error-msg { background: #fee2e2; color: var(--fail); border-radius: var(--radius); padding: 14px 18px; font-size: 0.9rem; }
+
+  .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .filter-btn {
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .filter-btn.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+</style>
+</head>
+<body>
+<div class="layout" id="sidebarLayout">
+  <main class="main" id="mainContent">
+    <h1>История</h1>
+    <p class="subtitle">Всички твои тестове, съчинения и разговори със Знайко</p>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">Всичко</button>
+      <button class="filter-btn" data-filter="quiz">Тестове</button>
+      <button class="filter-btn" data-filter="essay">Съчинения</button>
+      <button class="filter-btn" data-filter="znayko">Знайко</button>
+    </div>
+
+    <div id="historyContainer"><div class="loading">Зарежда се…</div></div>
+  </main>
+</div>
+
+<script>
+const SUPA_URL = 'https://wbcppvfgtvkrsfmclmjp.supabase.co';
+const SUPA_KEY = 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l';
+
+function getToken() {
+  try {
+    return JSON.parse(localStorage.getItem('sb-wbcppvfgtvkrsfmclmjp-auth-token'))?.access_token || null;
+  } catch { return null; }
+}
+
+function getUserId() {
+  try {
+    return JSON.parse(localStorage.getItem('sb-wbcppvfgtvkrsfmclmjp-auth-token'))?.user?.id || null;
+  } catch { return null; }
+}
+
+async function apiFetch(path) {
+  const token = getToken();
+  const res = await fetch(SUPA_URL + path, {
+    headers: {
+      apikey: SUPA_KEY,
+      Authorization: 'Bearer ' + (token || SUPA_KEY),
+    }
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+function fmtTime(iso) {
+  return new Date(iso).toLocaleTimeString('bg-BG', { hour: '2-digit', minute: '2-digit' });
+}
+
+function fmtDay(iso) {
+  const d = new Date(iso);
+  const today = new Date();
+  const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1);
+  const fmt = (dt) => dt.toISOString().slice(0, 10);
+  if (fmt(d) === fmt(today)) return 'Днес';
+  if (fmt(d) === fmt(yesterday)) return 'Вчера';
+  return d.toLocaleDateString('bg-BG', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function slugToTitle(slug) {
+  if (!slug) return '—';
+  return slug.replace(/^(bel|bio|him|mat|ist)\d+[-_]?/, '').replace(/-/g, ' ');
+}
+
+function renderQuizBody(r) {
+  if (!r.details || !r.details.length) return '<p style="color:var(--muted)">Няма детайли.</p>';
+  const rows = r.details.map(q => {
+    const icon = q.is_correct ? '✅' : '❌';
+    let sub = '';
+    if (!q.is_correct) {
+      sub = `<div class="q-sub"><span class="q-correct">✓ ${q.correct_answer}</span>${q.chosen_answer ? ` &nbsp;·&nbsp; <span class="q-chosen">✗ ${q.chosen_answer}</span>` : ''}</div>`;
+    }
+    return `<div class="q-row"><span class="q-icon">${icon}</span><div class="q-text">${q.question || ''}${sub}</div></div>`;
+  });
+  return `<div class="quiz-questions">${rows.join('')}</div>`;
+}
+
+function renderEssayBody(r) {
+  if (!r.details) return '<p style="color:var(--muted)">Няма детайли.</p>';
+  const criteria = r.details.criteria || [];
+  const summary = r.details.summary || '';
+  const rows = criteria.map(c => `
+    <div class="crit-row">
+      <span class="crit-name">${c.name || c.criterion || ''}</span>
+      <span class="crit-score">${c.score ?? ''} / ${c.max ?? ''}</span>
+    </div>`).join('');
+  return `
+    <div class="criteria-grid">${rows}</div>
+    ${summary ? `<div class="essay-summary">${summary}</div>` : ''}
+  `;
+}
+
+function renderZnaykoBody(messages) {
+  if (!messages || !messages.length) return '<p style="color:var(--muted)">Няма съобщения.</p>';
+  const msgs = messages.map(m =>
+    `<div class="msg msg-${m.role}">${m.content.replace(/</g,'&lt;')}</div>`
+  ).join('');
+  return `<div class="chat-messages">${msgs}</div>`;
+}
+
+function buildCard(type, title, time, badgeHtml, bodyHtml) {
+  const dotClass = { quiz: 'dot-quiz', essay: 'dot-essay', znayko: 'dot-znayko' }[type];
+  return `
+    <div class="card" data-type="${type}">
+      <div class="card-header" onclick="this.closest('.card').classList.toggle('open')">
+        <span class="type-dot ${dotClass}"></span>
+        <span class="card-title">${title}</span>
+        ${badgeHtml}
+        <span class="card-time">${time}</span>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="card-body">${bodyHtml}</div>
+    </div>`;
+}
+
+let allEvents = [];
+let activeFilter = 'all';
+
+function groupByDay(events) {
+  const groups = {};
+  events.forEach(e => {
+    const day = new Date(e._ts).toISOString().slice(0, 10);
+    if (!groups[day]) groups[day] = [];
+    groups[day].push(e);
+  });
+  return groups;
+}
+
+function render() {
+  const container = document.getElementById('historyContainer');
+  const filtered = activeFilter === 'all' ? allEvents : allEvents.filter(e => e._type === activeFilter);
+
+  if (!filtered.length) {
+    container.innerHTML = `<div class="empty-state"><div class="icon">📭</div><p>Няма записи${activeFilter !== 'all' ? ' от този тип' : ''}.</p></div>`;
+    return;
+  }
+
+  const groups = groupByDay(filtered);
+  const sortedDays = Object.keys(groups).sort((a, b) => b.localeCompare(a));
+
+  container.innerHTML = sortedDays.map(day => {
+    const dayEvents = groups[day].sort((a, b) => new Date(b._ts) - new Date(a._ts));
+    const cards = dayEvents.map(e => e._html).join('');
+    return `<div class="day-group"><div class="day-label">${fmtDay(day + 'T12:00:00')}</div><div class="events">${cards}</div></div>`;
+  }).join('');
+}
+
+async function loadAll() {
+  const userId = getUserId();
+  if (!userId) {
+    document.getElementById('historyContainer').innerHTML =
+      '<div class="error-msg">Не си влязъл в профила си. <a href="/auth.html">Вход</a></div>';
+    return;
+  }
+
+  try {
+    const [quizResults, essayResults, znaykoSessions] = await Promise.all([
+      apiFetch(`/rest/v1/quiz_results?user_id=eq.${userId}&order=created_at.desc&limit=200`),
+      apiFetch(`/rest/v1/essay_results?user_id=eq.${userId}&order=created_at.desc&limit=100`),
+      apiFetch(`/rest/v1/znayko_sessions?user_id=eq.${userId}&order=started_at.desc&limit=100`),
+    ]);
+
+    // Load znayko messages for all sessions
+    const sessionIds = znaykoSessions.map(s => s.id);
+    let allMessages = [];
+    if (sessionIds.length) {
+      const msgData = await apiFetch(`/rest/v1/znayko_messages?session_id=in.(${sessionIds.join(',')})&order=created_at.asc&limit=2000`);
+      allMessages = msgData;
+    }
+    const msgsBySession = {};
+    allMessages.forEach(m => {
+      if (!msgsBySession[m.session_id]) msgsBySession[m.session_id] = [];
+      msgsBySession[m.session_id].push(m);
+    });
+
+    allEvents = [];
+
+    // Quiz events
+    quizResults.forEach(r => {
+      const pct = r.pct ?? 0;
+      const passed = r.passed;
+      const badge = `<span class="score-badge ${passed ? 'badge-pass' : 'badge-fail'}">${pct}%</span>`;
+      const lessonName = slugToTitle(r.lesson_slug);
+      const quizLabel = r.quiz_num ? ` (Тест ${r.quiz_num})` : '';
+      const html = buildCard('quiz', `${lessonName}${quizLabel}`, fmtTime(r.created_at), badge, renderQuizBody(r));
+      allEvents.push({ _type: 'quiz', _ts: r.created_at, _html: html });
+    });
+
+    // Essay events
+    essayResults.forEach(r => {
+      const badge = `<span class="score-badge badge-essay">${r.total ?? '?'} т.</span>`;
+      const topic = r.topic ? `<em>${r.topic.slice(0, 60)}${r.topic.length > 60 ? '…' : ''}</em>` : slugToTitle(r.lesson_slug);
+      const html = buildCard('essay', `Съчинение · ${topic}`, fmtTime(r.created_at), badge, renderEssayBody(r));
+      allEvents.push({ _type: 'essay', _ts: r.created_at, _html: html });
+    });
+
+    // Знайко events
+    znaykoSessions.forEach(s => {
+      const msgs = msgsBySession[s.id] || [];
+      const badge = `<span class="score-badge badge-znayko">${msgs.length} съобщ.</span>`;
+      const lessonName = slugToTitle(s.lesson_slug);
+      const html = buildCard('znayko', `Знайко · ${lessonName}`, fmtTime(s.started_at), badge, renderZnaykoBody(msgs));
+      allEvents.push({ _type: 'znayko', _ts: s.started_at, _html: html });
+    });
+
+    allEvents.sort((a, b) => new Date(b._ts) - new Date(a._ts));
+    render();
+  } catch (err) {
+    document.getElementById('historyContainer').innerHTML =
+      `<div class="error-msg">Грешка при зареждане: ${err.message}</div>`;
+  }
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+loadAll();
+</script>
+</body>
+</html>

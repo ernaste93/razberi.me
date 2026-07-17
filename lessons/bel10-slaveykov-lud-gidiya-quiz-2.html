@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – П. П. Славейков – „Луд гидия" – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-slaveykov-lud-gidiya-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel10-slaveykov-lud-gidiya-quiz-3.html',
+      lessonUrl:   '/lessons/bel10-slaveykov-lud-gidiya.html',
+      lessonName:  'П. П. Славейков – „Луд гидия"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – П. П. Славейков – „Луд гидия" – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Лирическата поема се отличава с?",
+                "options": [
+                        "Много герои и сюжет",
+                        "Лирическо изживяване, емоции, образи",
+                        "Документални факти",
+                        "Диалогична форма"
+                ],
+                "correct": 1,
+                "explanation": "Лирическата поема = лирическо съдържание в поетична форма, с емоции и образи."
+        },
+        {
+                "q": "Кой е д-р Кръстев спрямо кръга?",
+                "options": [
+                        "Поет",
+                        "Теоретик и организатор на кръга",
+                        "Художник",
+                        "Актьор"
+                ],
+                "correct": 1,
+                "explanation": "Д-р Кръстев е критик и теоретик – идеологът на кръга „Мисъл\"."
+        },
+        {
+                "q": "Мотивът за самотата на артиста означава?",
+                "options": [
+                        "Слабост",
+                        "Цената на таланта и свободата",
+                        "Лошо отношение",
+                        "Случайност"
+                ],
+                "correct": 1,
+                "explanation": "Самотата = цената, която плаща артистът за свободата и страстта."
+        },
+        {
+                "q": "Музиката в поемата е символ на?",
+                "options": [
+                        "Разрушението",
+                        "Душата и смисъла на живота",
+                        "Лудостта",
+                        "Парите"
+                ],
+                "correct": 1,
+                "explanation": "Музиката = душата, смисълът, животът – по-важно от материалното."
+        },
+        {
+                "q": "„Луд гидия\" принадлежи към период?",
+                "options": [
+                        "Просвещение",
+                        "Символизъм/индивидуализъм (кр. XIX – нач. XX в.)",
+                        "Реализъм",
+                        "Модернизъм 30-те г."
+                ],
+                "correct": 1,
+                "explanation": "Кр. XIX – нач. XX в. – период на символизъм и индивидуализъм в БЕЛ."
+        },
+        {
+                "q": "Отношението на тълпата към гидията е?",
+                "options": [
+                        "Разбиране и подкрепа",
+                        "Неразбиране, отчуждение",
+                        "Обожание",
+                        "Безразличие"
+                ],
+                "correct": 1,
+                "explanation": "Тълпата не разбира артиста – типична за романтизма и символизма конфликтна ситуация."
+        },
+        {
+                "q": "Бедността на гидията е символ на?",
+                "options": [
+                        "Провала",
+                        "Независимостта от материалното",
+                        "Мързел",
+                        "Болест"
+                ],
+                "correct": 1,
+                "explanation": "Бедността подчертава, че изкуството е духовно – не материална ценност."
+        },
+        {
+                "q": "Каква е разликата между „луд\" в заглавието и „болен\"?",
+                "options": [
+                        "Без разлика",
+                        "„Луд\" е метафора за страстта – не буквална болест",
+                        "Луд = по-болен",
+                        "Луд = умен"
+                ],
+                "correct": 1,
+                "explanation": "„Луд\" е метафора – обсебен от страстта, нестандартен, не буквално болен."
+        },
+        {
+                "q": "Темата за изкуството и живота в поемата казва?",
+                "options": [
+                        "Изкуството е второстепенно",
+                        "Изкуството е смисълът на живота",
+                        "Изкуството е вредно",
+                        "Изкуството = пари"
+                ],
+                "correct": 1,
+                "explanation": "Поемата утвърждава: изкуството не е украса – то е самият живот."
+        },
+        {
+                "q": "П. П. Славейков завършва живота си?",
+                "options": [
+                        "В България",
+                        "В чужбина (Италия) – умира на 46 г.",
+                        "В Русия",
+                        "В Германия"
+                ],
+                "correct": 1,
+                "explanation": "Славейков умира в Монте Кателло, Италия, 1912 г., на 46 години."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Кръв и кръвообращение – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-krv-krvoobrashtenie-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio10-krv-krvoobrashtenie-quiz-2.html',
+      lessonUrl:   '/lessons/bio10-krv-krvoobrashtenie.html',
+      lessonName:  'Кръв и кръвообращение',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Кръв и кръвообращение – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Еритроцитите съдържат?",
+                "options": [
+                        "Митохондрии",
+                        "Хемоглобин + без ядро при зрелите",
+                        "Хлоропласти",
+                        "Само вода"
+                ],
+                "correct": 1,
+                "explanation": "Зрелите еритроцити нямат ядро (максимум пространство за Hb). Съдържат хемоглобин за пренос на O₂."
+        },
+        {
+                "q": "Плазмата е ~55% от кръвта и съдържа?",
+                "options": [
+                        "Само вода",
+                        "Вода + протеини (фибриноген, албумин) + йони + хранителни в-ва",
+                        "Само клетки",
+                        "Само O₂"
+                ],
+                "correct": 1,
+                "explanation": "Плазма = течната фракция. Фибриногенът е ключов за съсирването; албуминът поддържа онкотичното налягане."
+        },
+        {
+                "q": "Универсален донор в ABO системата?",
+                "options": [
+                        "A",
+                        "B",
+                        "AB",
+                        "0 (нула)"
+                ],
+                "correct": 3,
+                "explanation": "Група 0 (нула): без антигени A и B → еритроцитите не се отхвърлят от реципиента независимо от групата."
+        },
+        {
+                "q": "Универсален реципиент?",
+                "options": [
+                        "A",
+                        "B",
+                        "AB",
+                        "0"
+                ],
+                "correct": 2,
+                "explanation": "Група AB: без антитела → не отхвърля донорски еритроцити с A, B или нито едно."
+        },
+        {
+                "q": "Хемоглобинът съдържа?",
+                "options": [
+                        "Мед",
+                        "Желязо (Fe²⁺) в хема",
+                        "Цинк",
+                        "Калций"
+                ],
+                "correct": 1,
+                "explanation": "Хемоглобин: 4 полипептидни вериги + 4 хемни групи. Всяка хемна група съдържа Fe²⁺ → свързва O₂."
+        },
+        {
+                "q": "Голямото кръгообращение?",
+                "options": [
+                        "Дясно сърце → бели дробове",
+                        "Ляво сърце → аорта → тяло → вени → дясно сърце",
+                        "Само бели дробове",
+                        "Само тяло"
+                ],
+                "correct": 1,
+                "explanation": "Ляво сърце изпомпва оксигенирана кръв в аортата → органи → деоксигенирана кръв → дясно сърце."
+        },
+        {
+                "q": "Левкоцитите функционират за?",
+                "options": [
+                        "Пренос на O₂",
+                        "Имунна защита",
+                        "Съсирване",
+                        "Пренос на хранителни в-ва"
+                ],
+                "correct": 1,
+                "explanation": "Левкоцитите: гранулоцити (фагоцитоза), лимфоцити (B и T клетки), моноцити → имунитет."
+        },
+        {
+                "q": "Rh- майка и Rh+ плод?",
+                "options": [
+                        "Няма проблем",
+                        "При 2-ра бременност: риск от хемолитична болест на новороденото",
+                        "Само при AB кръв",
+                        "Само при O кръв"
+                ],
+                "correct": 1,
+                "explanation": "При 1-ва бременност майката се сенсибилизира (анти-D антитела). При 2-ра → антителата преминават плацентата → хемолиза."
+        },
+        {
+                "q": "Нормалното артериално налягане е?",
+                "options": [
+                        "80/40",
+                        "100/60",
+                        "120/80 mmHg",
+                        "160/100"
+                ],
+                "correct": 2,
+                "explanation": "Норма ~120/80 mmHg (систолно/диастолно). >140/90 = хипертония; <90/60 = хипотония."
+        },
+        {
+                "q": "Тромбоцитите участват в?",
+                "options": [
+                        "Пренос на O₂",
+                        "Съсирване на кръвта",
+                        "Имунен отговор",
+                        "Синтез на хормони"
+                ],
+                "correct": 1,
+                "explanation": "При увреда на съд тромбоцитите се агрегират и стартират каскадата на съсирване → фибринов тромб."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

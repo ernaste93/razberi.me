@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Квадратни уравнения – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math9-kvadratni-uravnenia-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/math9-kvadratni-uravnenia-quiz-3.html',
+      lessonUrl:   '/lessons/math9-kvadratni-uravnenia.html',
+      lessonName:  'Квадратни уравнения',
+      eyebrow:     'Математика · 9 клас · Алгебра',
+      title:       'Куиз – Квадратни уравнения – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Намерете D за 2x² + 3x − 2 = 0",
+                "options": [
+                        "D = 25",
+                        "D = 9",
+                        "D = −7",
+                        "D = 16"
+                ],
+                "correct": 0,
+                "explanation": "D = 9 + 16 = 25."
+        },
+        {
+                "q": "Корените на 2x² + 3x − 2 = 0 са:",
+                "options": [
+                        "x₁ = 0.5, x₂ = −2",
+                        "x₁ = 2, x₂ = −0.5",
+                        "x₁ = 1, x₂ = −1",
+                        "x₁ = 3, x₂ = −1"
+                ],
+                "correct": 0,
+                "explanation": "x = (−3 ± 5)/4 → 0.5 и −2."
+        },
+        {
+                "q": "Ако x₁ + x₂ = 7 и x₁ · x₂ = 12, кое е уравнението?",
+                "options": [
+                        "x² − 7x + 12 = 0",
+                        "x² + 7x + 12 = 0",
+                        "x² − 7x − 12 = 0",
+                        "x² + 7x − 12 = 0"
+                ],
+                "correct": 0,
+                "explanation": "b = −(x₁+x₂) = −7, c = x₁·x₂ = 12."
+        },
+        {
+                "q": "За x² + px + 9 = 0 да има двоен корен, p трябва да е:",
+                "options": [
+                        "p = ±6",
+                        "p = ±3",
+                        "p = ±9",
+                        "p = ±18"
+                ],
+                "correct": 0,
+                "explanation": "D = p² − 36 = 0 → p = ±6."
+        },
+        {
+                "q": "Намерете корените на x² − x − 6 = 0",
+                "options": [
+                        "x₁ = 3, x₂ = −2",
+                        "x₁ = 2, x₂ = −3",
+                        "x₁ = 6, x₂ = −1",
+                        "x₁ = −3, x₂ 2"
+                ],
+                "correct": 0,
+                "explanation": "D = 1 + 24 = 25; x = (1 ± 5)/2 → 3 и −2."
+        },
+        {
+                "q": "Кога e непълно квадратно уравнение?",
+                "options": [
+                        "Когато b=0 или c=0 (или и двете)",
+                        "Когато a=0",
+                        "Когато D < 0",
+                        "Когато има само едно решение"
+                ],
+                "correct": 0,
+                "explanation": "Непълни са тези без член bx или c."
+        },
+        {
+                "q": "Решете: x² − 9 = 0",
+                "options": [
+                        "x = ±3",
+                        "x = 3",
+                        "x = −3",
+                        "x = 9"
+                ],
+                "correct": 0,
+                "explanation": "x² = 9 → x = ±3. Непълно уравнение."
+        },
+        {
+                "q": "Решете: 3x² − 12x = 0",
+                "options": [
+                        "x = 0 или x = 4",
+                        "x = 0 или x = −4",
+                        "x = 4",
+                        "x = −4"
+                ],
+                "correct": 0,
+                "explanation": "3x(x − 4) = 0 → x = 0 или x = 4."
+        },
+        {
+                "q": "Ако един корен е x₁ = 3 и x₁·x₂ = −6, намери x₂",
+                "options": [
+                        "x₂ = −2",
+                        "x₂ = 2",
+                        "x₂ = −3",
+                        "x₂ = 6"
+                ],
+                "correct": 0,
+                "explanation": "x₂ = −6/3 = −2."
+        },
+        {
+                "q": "Уравнението x² + 1 = 0 има:",
+                "options": [
+                        "Няма реални корени",
+                        "Един корен",
+                        "Два корена",
+                        "Три корена"
+                ],
+                "correct": 0,
+                "explanation": "D = −4 < 0."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

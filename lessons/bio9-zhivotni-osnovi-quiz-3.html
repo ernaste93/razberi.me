@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Животни – основи – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio9-zhivotni-osnovi-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bio9-zhivotni-osnovi.html',
+      lessonName:  'Животни – основи',
+      eyebrow:     'Биология · 9 клас · Зоология',
+      title:       'Куиз – Животни – основи – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Защо гръбначните са успешни в еволюционен план?",
+                "options": [
+                        "Гъвкав гръбначен стълб, сложна нервна система, разнообразни адаптации",
+                        "Защото са най-многобройни по вид",
+                        "Защото нямат конкуренция",
+                        "Само заради размера"
+                ],
+                "correct": 0,
+                "explanation": "Комбинацията от адаптивни белези позволява огромно разнообразие."
+        },
+        {
+                "q": "Какво е коагулация на кръвта и защо е важна?",
+                "options": [
+                        "Образуване на съсирек при нараняване – предотвратява кръвозагуба",
+                        "Пренос на O₂",
+                        "Синтез на антитела",
+                        "Клетъчно делене"
+                ],
+                "correct": 0,
+                "explanation": "Коагулацията е защитен механизъм срещу кървене."
+        },
+        {
+                "q": "Каква е функцията на имунната система?",
+                "options": [
+                        "Защита срещу патогени (вируси, бактерии) чрез антитела и клетки",
+                        "Храносмилане",
+                        "Дишане",
+                        "Размножаване"
+                ],
+                "correct": 0,
+                "explanation": "Имунната система разпознава и неутрализира чужди агенти."
+        },
+        {
+                "q": "Как насекомите дишат?",
+                "options": [
+                        "Чрез трахеи – директен транспорт на O₂ до тъканите",
+                        "С хриле",
+                        "С бели дробове",
+                        "С кожата"
+                ],
+                "correct": 0,
+                "explanation": "Трахеалната система е уникална за насекомите."
+        },
+        {
+                "q": "Какво е полиморфизъм при животните?",
+                "options": [
+                        "Съществуване на различни форми в рамките на един вид",
+                        "Мутация",
+                        "Хибридизация",
+                        "Изчезване на вид"
+                ],
+                "correct": 0,
+                "explanation": "Напр. касти при мравки – работнички, войници, майка."
+        },
+        {
+                "q": "Каква е разликата между хищник и детритофаг?",
+                "options": [
+                        "Хищникът яде живи организми; детритофагите – мъртва органична материя",
+                        "Нямат разлика",
+                        "Детритофагите са хищници",
+                        "Хищниците ядат само растения"
+                ],
+                "correct": 0,
+                "explanation": "Детритофагите (червеи, стоногери) разграждат мъртва материя."
+        },
+        {
+                "q": "Какво е биолуминесценция?",
+                "options": [
+                        "Производство на светлина от живи организми чрез химична реакция",
+                        "Рефлексия на светлина",
+                        "Фотосинтеза",
+                        "Флуоресценция"
+                ],
+                "correct": 0,
+                "explanation": "Светулките и дълбоководни риби произвеждат собствена светлина."
+        },
+        {
+                "q": "Как птиците поддържат висок метаболизъм?",
+                "options": [
+                        "Ефективна дихателна система (въздушни торбички), висока консумация на храна",
+                        "Бавен метаболизъм",
+                        "Хибернация",
+                        "Само заради перата"
+                ],
+                "correct": 0,
+                "explanation": "Птиците имат едностранно дишане – максимална ефективност."
+        },
+        {
+                "q": "Какво е плацента?",
+                "options": [
+                        "Орган за обмен на хранителни вещества и O₂ между майката и плода при бозайници",
+                        "Вид яйце",
+                        "Орган за дишане",
+                        "Хормонална жлеза"
+                ],
+                "correct": 0,
+                "explanation": "Плацентата е ключова еволюционна иновация на Placantalia."
+        },
+        {
+                "q": "Кои са основните групи гръбначни?",
+                "options": [
+                        "Риби, земноводни, влечуги, птици, бозайници",
+                        "Насекоми, паяци, ракообразни",
+                        "Червеи, мекотели, иглокожи",
+                        "Само бозайници и птици"
+                ],
+                "correct": 0,
+                "explanation": "Петте основни класа на гръбначните (Vertebrata)."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

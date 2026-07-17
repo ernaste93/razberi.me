@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Аренови съединения – бензол – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem10-aromatni-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem10-aromatni.html',
+      lessonName:  'Аренови съединения – бензол',
+      eyebrow:     'ХИМИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Аренови съединения – бензол – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Ароматен ли е циклохексанът?",
+                "options": [
+                        "Да",
+                        "Не – наситен алкан",
+                        "Частично",
+                        "Само при нагряване"
+                ],
+                "correct": 1,
+                "explanation": "Циклохексан C₆H₁₂ е наситен – нямa π-система."
+        },
+        {
+                "q": "Анилин от нитробензол чрез?",
+                "options": [
+                        "Окисление",
+                        "Редукция",
+                        "Адиция",
+                        "Нитриране"
+                ],
+                "correct": 1,
+                "explanation": "C₆H₅NO₂+3H₂ → C₆H₅NH₂+2H₂O."
+        },
+        {
+                "q": "Толуол по-реактивен от бензол при SE. Защо?",
+                "options": [
+                        "CH₃ е електронен донор – активира пръстена",
+                        "По-голям",
+                        "По-висока темп.",
+                        "По-евтин"
+                ],
+                "correct": 0,
+                "explanation": "CH₃ дава e⁻ чрез хиперконюгация → повишена e⁻ плътност → по-лесна SE."
+        },
+        {
+                "q": "Сулфониране, нитриране, халогениране – общото?",
+                "options": [
+                        "Редукции",
+                        "SE реакции",
+                        "Изискват UV",
+                        "Дават полимери"
+                ],
+                "correct": 1,
+                "explanation": "И трите са SE – H се замества, π-системата се запазва."
+        },
+        {
+                "q": "Стиренът полимеризира до?",
+                "options": [
+                        "Каучук",
+                        "PS",
+                        "PVC",
+                        "PP"
+                ],
+                "correct": 1,
+                "explanation": "n(C₆H₅CH=CH₂) → PS."
+        },
+        {
+                "q": "Кое НЕ е производно на бензол?",
+                "options": [
+                        "Толуол",
+                        "Анилин",
+                        "Хексан",
+                        "Нитробензол"
+                ],
+                "correct": 2,
+                "explanation": "Хексан C₆H₁₄ е алкан – без пръстен."
+        },
+        {
+                "q": "Алкилиране C₆H₆+CH₃Cl/AlCl₃ → ?",
+                "options": [
+                        "Нитробензол",
+                        "Хлоробензол",
+                        "Толуол",
+                        "Ксилол"
+                ],
+                "correct": 2,
+                "explanation": "Реакция на Фридел-Крафтс → C₆H₅CH₃ (толуол)."
+        },
+        {
+                "q": "Ксилолът е?",
+                "options": [
+                        "Мононитробензол",
+                        "Диметилбензол",
+                        "Монохлоробензол",
+                        "Анилин"
+                ],
+                "correct": 1,
+                "explanation": "Ксилоли = диметилбензоли (о-, м-, п-ксилол)."
+        },
+        {
+                "q": "Пълно горене на бензол?",
+                "options": [
+                        "CO+H₂O",
+                        "CO₂+H₂O",
+                        "Само сажди",
+                        "C+H₂O"
+                ],
+                "correct": 1,
+                "explanation": "2C₆H₆+15O₂→12CO₂+6H₂O."
+        },
+        {
+                "q": "C₆H₆+Cl₂→C₆H₅Cl+HCl изисква?",
+                "options": [
+                        "UV",
+                        "FeCl₃",
+                        "NaOH",
+                        "H₂O"
+                ],
+                "correct": 1,
+                "explanation": "FeCl₃ → SE. UV е за SR (алкани)."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

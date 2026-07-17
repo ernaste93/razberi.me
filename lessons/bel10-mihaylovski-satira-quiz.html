@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Стоян Михайловски – Сатирите – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-mihaylovski-satira-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel10-mihaylovski-satira-quiz-2.html',
+      lessonUrl:   '/lessons/bel10-mihaylovski-satira.html',
+      lessonName:  'Стоян Михайловски – Сатирите',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Стоян Михайловски – Сатирите – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Стоян Михайловски е известен с?",
+                "options": [
+                        "Лирическа поезия",
+                        "Сатирична поезия и обществена критика",
+                        "Исторически разкази",
+                        "Пътеписи"
+                ],
+                "correct": 1,
+                "explanation": "Михайловски е известен сатирик – критикува обществото остро и без пощада."
+        },
+        {
+                "q": "Основните мишени на сатирата му са?",
+                "options": [
+                        "Природата",
+                        "Политици, чиновници, лицемери, некомпетентни",
+                        "Само бедните",
+                        "Само богатите"
+                ],
+                "correct": 1,
+                "explanation": "Всички социални слоеве са мишена – Михайловски не щади никого."
+        },
+        {
+                "q": "Песимизмът на Михайловски означава?",
+                "options": [
+                        "Оптимизъм за бъдещето",
+                        "Неверие в подобрение – критиката е мрачна",
+                        "Религиозен нихилизъм",
+                        "Лично несъгласие"
+                ],
+                "correct": 1,
+                "explanation": "Михайловски не вярва, че обществото ще се поправи – сатирата е безнадеждна."
+        },
+        {
+                "q": "„Книга за българския народ\" е?",
+                "options": [
+                        "Исторически труд",
+                        "Сборник сатирична поезия",
+                        "Пътепис",
+                        "Роман"
+                ],
+                "correct": 1,
+                "explanation": "Сборник сатирични стихотворения за пороците на обществото (1897)."
+        },
+        {
+                "q": "Сатирата като жанр?",
+                "options": [
+                        "Прославя",
+                        "Изобличава пороците чрез хумор и ирония",
+                        "Неутрално описва",
+                        "Оплаква"
+                ],
+                "correct": 1,
+                "explanation": "Сатирата = критика на пороци чрез смях, ирония и преувеличение."
+        },
+        {
+                "q": "Хиперболата в сатирата се използва за?",
+                "options": [
+                        "Описание",
+                        "Преувеличение за комичен/критичен ефект",
+                        "Сравнение",
+                        "Метафора само"
+                ],
+                "correct": 1,
+                "explanation": "Хиперболата преувеличава пороците → засилва критичния ефект."
+        },
+        {
+                "q": "Михайловски е роден?",
+                "options": [
+                        "1863",
+                        "1856",
+                        "1878",
+                        "1850"
+                ],
+                "correct": 1,
+                "explanation": "Стоян Михайловски е роден 1856 г."
+        },
+        {
+                "q": "Инвективата е?",
+                "options": [
+                        "Похвала",
+                        "Директно обвинение/нападение срещу конкретна личност или явление",
+                        "Метафора",
+                        "Сравнение"
+                ],
+                "correct": 1,
+                "explanation": "Инвектива = директна словесна атака срещу порок или личност."
+        },
+        {
+                "q": "Михайловски критикува „народния живот\" как?",
+                "options": [
+                        "С идеализация",
+                        "Без идеализация – реалистично и мрачно",
+                        "С хумор само",
+                        "С уважение"
+                ],
+                "correct": 1,
+                "explanation": "Без идеализация – реалистичен и безмилостен поглед към пороците."
+        },
+        {
+                "q": "Корупцията в сатирата на Михайловски е?",
+                "options": [
+                        "Приемлива",
+                        "Основен обект на критика – символ на деградацията",
+                        "Малко засегната",
+                        "Само исторически факт"
+                ],
+                "correct": 1,
+                "explanation": "Корупцията е водещ мотив – символ на моралната деградация."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

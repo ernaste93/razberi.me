@@ -216,7 +216,7 @@
       outEl.style.opacity = '0';
 
       setTimeout(() => {
-        // Всичко е невидимо — смени формите (height се сменя тихо)
+        // Всичко е невидимо – смени формите (height се сменя тихо)
         outEl.classList.remove('active');
         outEl.style.opacity = '';
         inEl.classList.add('active');
@@ -307,7 +307,8 @@
       const password = document.getElementById('login-password').value;
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) return showMsg(error.message, 'error');
-      window.location.href = '/dnevnik.html';
+      const dest = localStorage.getItem('onboardingDone') ? '/dnevnik.html' : '/onboarding.html';
+      window.location.href = dest;
     };
 
     window.handleRegister = async function(e) {

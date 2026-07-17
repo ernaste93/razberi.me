@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Тригонометрични уравнения – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math10-trigonometriya-uravnenia-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/math10-trigonometriya-uravnenia-quiz-3.html',
+      lessonUrl:   '/lessons/math10-trigonometriya-uravnenia.html',
+      lessonName:  'Тригонометрични уравнения',
+      eyebrow:     'МАТЕМАТИКА · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Тригонометрични уравнения – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "tan x = 1 → x = ?",
+                "options": [
+                        "π/6 + πk",
+                        "π/4 + πk",
+                        "π/3 + πk",
+                        "π/2 + πk"
+                ],
+                "correct": 1,
+                "explanation": "tan π/4 = 1 → x = π/4 + πk."
+        },
+        {
+                "q": "sin x = −√3/2. Решения в [0, 2π]?",
+                "options": [
+                        "π/3 и 2π/3",
+                        "π/3 и 4π/3",
+                        "4π/3 и 5π/3",
+                        "π/6 и 5π/6"
+                ],
+                "correct": 2,
+                "explanation": "sin = −√3/2 → III и IV квадрант. arcsin(√3/2) = π/3. x = π + π/3 = 4π/3 и x = 2π − π/3 = 5π/3."
+        },
+        {
+                "q": "cos x = cos α → x = ?",
+                "options": [
+                        "x = α + 2πk",
+                        "x = ±α + 2πk",
+                        "x = π − α + 2πk",
+                        "x = α + πk"
+                ],
+                "correct": 1,
+                "explanation": "cos x = cos α → x = α + 2πk или x = −α + 2πk, т.е. x = ±α + 2πk."
+        },
+        {
+                "q": "sin x = sin α → x = ?",
+                "options": [
+                        "x = ±α + 2πk",
+                        "x = α + 2πk или x = π − α + 2πk",
+                        "x = α + πk",
+                        "x = π + α + 2πk"
+                ],
+                "correct": 1,
+                "explanation": "sin x = sin α → x = α + 2πk или x = π − α + 2πk."
+        },
+        {
+                "q": "Уравнение 2sin x − 1 = 0 → sin x = ?",
+                "options": [
+                        "sin x = 2",
+                        "sin x = 1/2",
+                        "sin x = −1/2",
+                        "sin x = 1"
+                ],
+                "correct": 1,
+                "explanation": "2sin x = 1 → sin x = 1/2."
+        },
+        {
+                "q": "Решение на 2cos x + √3 = 0?",
+                "options": [
+                        "cos x = −√3/2 → x = ±5π/6 + 2πk",
+                        "cos x = √3/2",
+                        "cos x = 2/√3",
+                        "Без решения"
+                ],
+                "correct": 0,
+                "explanation": "2cos x = −√3 → cos x = −√3/2. arccos(√3/2) = π/6. x = π − π/6 = 5π/6 → x = ±5π/6 + 2πk."
+        },
+        {
+                "q": "arctan(√3) = ?",
+                "options": [
+                        "π/6",
+                        "π/4",
+                        "π/3",
+                        "π/2"
+                ],
+                "correct": 2,
+                "explanation": "arctan(√3) = π/3 = 60°, тъй като tan 60° = √3."
+        },
+        {
+                "q": "Колко решения в [0, 2π] има sin x = 0.5?",
+                "options": [
+                        "1",
+                        "2",
+                        "3",
+                        "4"
+                ],
+                "correct": 1,
+                "explanation": "sin x = 0.5 > 0 → I и II квадрант: x = π/6 и x = 5π/6. Точно 2 решения в [0, 2π]."
+        },
+        {
+                "q": "tan x = 0 → x = ?",
+                "options": [
+                        "x = π/2 + πk",
+                        "x = πk",
+                        "x = 2πk",
+                        "x = π/4 + πk"
+                ],
+                "correct": 1,
+                "explanation": "tan x = 0 при sin x = 0, т.е. x = πk."
+        },
+        {
+                "q": "Решение на cos²x = 1/2?",
+                "options": [
+                        "x = π/4 + πk/2",
+                        "cos x = ±√2/2 → x = ±π/4 + πk",
+                        "x = ±π/3 + 2πk",
+                        "x = π/6 + πk"
+                ],
+                "correct": 1,
+                "explanation": "cos²x = 1/2 → cos x = ±√2/2. Всяко от тях дава x = ±π/4 + 2πk → обединено: x = π/4·k, но точно x = ±π/4 + πk."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

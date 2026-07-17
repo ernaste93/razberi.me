@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Пейо Яворов – „Заточеници" – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-yavorov-zatochtsi-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel10-yavorov-zatochtsi-quiz-3.html',
+      lessonUrl:   '/lessons/bel10-yavorov-zatochtsi.html',
+      lessonName:  'Пейо Яворов – „Заточеници"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Пейо Яворов – „Заточеници" – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Разликата между ранния и символистичния Яворов?",
+                "options": [
+                        "Без разлика",
+                        "Ранен: гражданска тема; Символистичен: лично страдание и любов",
+                        "Ранен е по-добър",
+                        "Само темповете са различни"
+                ],
+                "correct": 1,
+                "explanation": "Ранен: социално-политически теми; Символистичен: интимно преживяване, екзистенциална болка."
+        },
+        {
+                "q": "Анафората е?",
+                "options": [
+                        "Вид рима",
+                        "Повторение на дума/израз в началото на редовете",
+                        "Метафора",
+                        "Сравнение"
+                ],
+                "correct": 1,
+                "explanation": "Анафора = повторение в началото на редовете – засилва емоционалността."
+        },
+        {
+                "q": "„Заточеници\" е политическа лирика – значи?",
+                "options": [
+                        "Написано за политик",
+                        "Изразява политически идеи (свобода, борба, несправедливост)",
+                        "Без образи",
+                        "Документален текст"
+                ],
+                "correct": 1,
+                "explanation": "Политическа лирика = поезия с обществено-политически теми (свобода, потисничество)."
+        },
+        {
+                "q": "Яворов е участвал в?",
+                "options": [
+                        "Априлското въстание",
+                        "Македонската борба – ВМРО, Илинденско въстание",
+                        "Балканската война само",
+                        "Само в литературата"
+                ],
+                "correct": 1,
+                "explanation": "Яворов е активист на ВМРО и участва в Илинденско-Преображенско въстание (1903)."
+        },
+        {
+                "q": "Гражданската лирика изразява?",
+                "options": [
+                        "Само лични чувства",
+                        "Обществени идеи: свобода, справедливост, родина",
+                        "Само природата",
+                        "Само любовта"
+                ],
+                "correct": 1,
+                "explanation": "Гражданска лирика = обществено-политически идеи и ценности."
+        },
+        {
+                "q": "Риторичният въпрос е?",
+                "options": [
+                        "Въпрос без отговор",
+                        "Въпрос, на който отговорът е очевиден – за емоционален ефект",
+                        "Истински въпрос",
+                        "Въпрос към читателя"
+                ],
+                "correct": 1,
+                "explanation": "Риторичен въпрос: отговорът е подразбиращ се, целта е емоционално въздействие."
+        },
+        {
+                "q": "Macedonia в контекста на стихотворението е?",
+                "options": [
+                        "Регион без значение",
+                        "Символ на потиснатата свобода, за която се жертват бойците",
+                        "Само географска",
+                        "Чужда страна"
+                ],
+                "correct": 1,
+                "explanation": "Македония = символ на несправедливо поробена родина, за която борците страдат."
+        },
+        {
+                "q": "Стихотворението е писано преди или след Илинденско въстание (1903)?",
+                "options": [
+                        "След",
+                        "Преди – около 1901–1902",
+                        "По времето на",
+                        "Много по-рано"
+                ],
+                "correct": 1,
+                "explanation": "„Заточеници\" е от 1901–1902 – преди Илинденско-Преображенско въстание."
+        },
+        {
+                "q": "Директното обръщение в стихотворението е към?",
+                "options": [
+                        "Читателя абстрактно",
+                        "Самите заточеници – „вие, заточеници\"",
+                        "Природата",
+                        "Тираните"
+                ],
+                "correct": 1,
+                "explanation": "Лирическото „аз\" се обръща директно към заточениците – интензивна лична връзка."
+        },
+        {
+                "q": "Структурата на стихотворението е?",
+                "options": [
+                        "Без структура",
+                        "Строфична – с емоционално нарастване",
+                        "Само 1 строфа",
+                        "Прозаична"
+                ],
+                "correct": 1,
+                "explanation": "Строфична структура с нарастваща емоционална интензивност."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

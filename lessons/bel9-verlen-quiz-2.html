@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 - Верлен – Есенна песен · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-verlen-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bel9-verlen-quiz-3.html",
+    lessonUrl:"/lessons/bel9-verlen.html",
+    lessonName:"Верлен – Есенна песен",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 2 - Верлен – Есенна песен",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е функцията на цигулките в стихотворението?",
+    "options": [
+      "Музикален образ: звукът им = вътрешна болка на лирическия аз",
+      "Реалистично описание на концерт",
+      "Само звук без смисъл",
+      "Без функция"
+    ],
+    "correct": 0,
+    "explanation": "Цигулките са свързващото звено между природа и вътрешен свят."
+  },
+  {
+    "q": "Как е организирано стихотворението?",
+    "options": [
+      "Три кратки строфи с бърз ритъм – музикална пулсация",
+      "Дълга поема",
+      "Сонет от 14 стиха",
+      "Без строфи"
+    ],
+    "correct": 0,
+    "explanation": "Краткостта и ритъмът засилват музикалния ефект."
+  },
+  {
+    "q": "Каква е темата за преходността?",
+    "options": [
+      "Животът минава като листа – времето е неспиращо и необратимо",
+      "Времето спира в щастливи моменти",
+      "Животът е вечен",
+      "Без тема"
+    ],
+    "correct": 0,
+    "explanation": "Преходността е централна тема на символизма."
+  },
+  {
+    "q": "Каква е разликата символизъм/романтизъм?",
+    "options": [
+      "Символизмът: намек, музика, трансцендентно; романтизмът: чувство, природа, бунт",
+      "Те са напълно еднакви",
+      "Символизмът е по-стар",
+      "Романтизмът е по-тъмен"
+    ],
+    "correct": 0,
+    "explanation": "Символизмът е следствие и преодоляване на романтизма."
+  },
+  {
+    "q": "Как Верлен постига меланхолия?",
+    "options": [
+      "Чрез музикален ритъм, звукови повторения и символни образи",
+      "Чрез директни думи на скръб",
+      "Чрез описателен разказ",
+      "Без художествени средства"
+    ],
+    "correct": 0,
+    "explanation": "Символизмът предизвиква настроение, не разказва."
+  },
+  {
+    "q": "Каква е разликата символизъм/реализъм?",
+    "options": [
+      "Символизмът: алюзия и настроение; реализмът: точно описание",
+      "Те са напълно еднакви",
+      "Символизмът е по-реален",
+      "Реализмът е по-неясен"
+    ],
+    "correct": 0,
+    "explanation": "Двете течения са антиподи в литературата."
+  },
+  {
+    "q": "Как есента се различава от буквалното си значение в стихотворението?",
+    "options": [
+      "Есента е символ – вътрешно настроение, не просто сезон",
+      "Буквален сезон",
+      "Само фон",
+      "Реалистично описание"
+    ],
+    "correct": 0,
+    "explanation": "Символизмът трансформира природните образи в душевни състояния."
+  },
+  {
+    "q": "Каква е ролята на вятъра?",
+    "options": [
+      "Носи листа/лирическия аз – символ на безпомощността пред живота",
+      "Само метеорологичен елемент",
+      "Без роля",
+      "Положителен, освежаващ образ"
+    ],
+    "correct": 0,
+    "explanation": "Вятърът е класически символ на неконтролируемото."
+  },
+  {
+    "q": "Как Верлен е свързан с Рембо?",
+    "options": [
+      "Бурно приятелство и взаимно влияние – двамата са символисти-новатори",
+      "Без никаква връзка",
+      "Само стилово влияние",
+      "Бяха врагове"
+    ],
+    "correct": 0,
+    "explanation": "Верлен-Рембо е едно от най-известните литературни приятелства."
+  },
+  {
+    "q": "Каква е темата за самотата в стихотворението?",
+    "options": [
+      "Лирическият аз е сам, носен от вятъра – без дом, без посока",
+      "Самотата е приятна",
+      "Без тема за самотата",
+      "Самотата е временна"
+    ],
+    "correct": 0,
+    "explanation": "Самотата е основна символистична екзистенциална тема."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

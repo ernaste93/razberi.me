@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Иван Вазов – „Родина" – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel9-vazov-rodina-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel9-vazov-rodina-quiz-3.html',
+      lessonUrl:   '/lessons/bel9-vazov-rodina.html',
+      lessonName:  'Иван Вазов – „Родина"',
+      eyebrow:     'БЕЛ · 9 клас · Следосвобожденска лирика',
+      title:       'Куиз – Иван Вазов – „Родина" – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Кои са \"забравените\" в заглавието на цикъла?",
+                "options": [
+                        "Безименни герои на Освобождението",
+                        "Само известните хайдути",
+                        "Само историците",
+                        "Само поетите"
+                ],
+                "correct": 0,
+                "explanation": "Вазов иска да спаси от забравата незнайните борци."
+        },
+        {
+                "q": "Как е изграден образът на родината у Вазов?",
+                "options": [
+                        "Чрез конкретни пейзажни образи, символизиращи нацията",
+                        "Само чрез история",
+                        "Само чрез герои",
+                        "Само чрез абстрактни идеи"
+                ],
+                "correct": 0,
+                "explanation": "Пейзажите са носители на националното чувство."
+        },
+        {
+                "q": "Какъв ритъм и форма има \"Родина\"?",
+                "options": [
+                        "Балансирана строфична форма с тържествен ритъм",
+                        "Свободен стих",
+                        "Без рима",
+                        "Само прозаична"
+                ],
+                "correct": 0,
+                "explanation": "Одата изисква тържествен, балансиран ритъм."
+        },
+        {
+                "q": "Каква е темата на \"Родина\" спрямо националната идея?",
+                "options": [
+                        "Любовта към родната земя като основна ценност",
+                        "Революционният бунт",
+                        "Религиозното смирение",
+                        "Природата без хора"
+                ],
+                "correct": 0,
+                "explanation": "Патриотизмът е основна идея."
+        },
+        {
+                "q": "Как се разкрива националното чувство у Вазов?",
+                "options": [
+                        "Чрез прослава и благодарност",
+                        "Чрез гняв",
+                        "Чрез тъга",
+                        "Чрез революционен призив"
+                ],
+                "correct": 0,
+                "explanation": "Тонът е на благодарна прослава след постигнатото."
+        },
+        {
+                "q": "Кое е главното произведение на Вазов в проза?",
+                "options": [
+                        "\"Под игото\"",
+                        "\"Хаджи Ничо\"",
+                        "\"История славянобългарска\"",
+                        "\"Отечество\""
+                ],
+                "correct": 0,
+                "explanation": "\"Под игото\" е романът за Априлското въстание."
+        },
+        {
+                "q": "Каква е функцията на природата в одите на Вазов?",
+                "options": [
+                        "Символ на националната идентичност",
+                        "Само естетическа",
+                        "Само описателна",
+                        "Противопоставена на нацията"
+                ],
+                "correct": 0,
+                "explanation": "Природата е носител на националната символика."
+        },
+        {
+                "q": "Как е свързан цикълът с историческата памет?",
+                "options": [
+                        "Съхранява паметта за Освобождението и неговите герои",
+                        "Замъглява историята",
+                        "Не е исторически",
+                        "Само приказен"
+                ],
+                "correct": 0,
+                "explanation": "Поетичната история е форма на колективна памет."
+        },
+        {
+                "q": "Кое НЕ е тема в \"Родина\"?",
+                "options": [
+                        "Алчността на търговците",
+                        "Красотата на природата",
+                        "Любовта към родината",
+                        "Националната гордост"
+                ],
+                "correct": 0,
+                "explanation": "Социалната критика на буржоазията не е тема у Вазов тук."
+        },
+        {
+                "q": "В кой период Вазов живее в емиграция?",
+                "options": [
+                        "1886–1889 – в Одеса",
+                        "1878",
+                        "1860",
+                        "1900"
+                ],
+                "correct": 0,
+                "explanation": "Вазов бяга в Русия след Преврата от 1886."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

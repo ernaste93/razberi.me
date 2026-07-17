@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Захари Стоянов – „Записки по българските въстания" – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-zahari-zapiski-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bel10-zahari-zapiski.html',
+      lessonName:  'Захари Стоянов – „Записки по българските въстания"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Захари Стоянов – „Записки по българските въстания" – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Мемоарната проза се отличава с?",
+                "options": [
+                        "Изцяло измислено",
+                        "Лично преживяно, субективна гледна точка",
+                        "Обективна история",
+                        "Поетичен метър"
+                ],
+                "correct": 1,
+                "explanation": "Мемоарите = лично преживяно + субективна оценъчна позиция."
+        },
+        {
+                "q": "Международното значение на „Записки\" е?",
+                "options": [
+                        "Без международно значение",
+                        "Предизвиква осъждане на турските зверства в Европа",
+                        "Само в България",
+                        "Само в Русия"
+                ],
+                "correct": 1,
+                "explanation": "Описанията на Баташкото клане достигат до европейски журналисти и правят международно впечатление."
+        },
+        {
+                "q": "Кочо Чистименец е учител – какво символизира?",
+                "options": [
+                        "Невежеството",
+                        "Интелигенцията, която се жертва за свободата",
+                        "Властта",
+                        "Религията"
+                ],
+                "correct": 1,
+                "explanation": "Учителят-войвода: интелигенцията в служба на народното освобождение."
+        },
+        {
+                "q": "Документалната проза е различна от чистата художествена с?",
+                "options": [
+                        "По-лоши образи",
+                        "Съчетаване на реални факти с художествено слово",
+                        "Без образи",
+                        "Без авторска позиция"
+                ],
+                "correct": 1,
+                "explanation": "Документалната проза = реални факти + художествена форма."
+        },
+        {
+                "q": "Захари Стоянов умира на?",
+                "options": [
+                        "70 г.",
+                        "39 г. (1889)",
+                        "50 г.",
+                        "60 г."
+                ],
+                "correct": 1,
+                "explanation": "Захари Стоянов умира на 39 години (1850–1889) – рано, но оставя богато наследство."
+        },
+        {
+                "q": "Основната ценност, утвърждавана в „Записки\" е?",
+                "options": [
+                        "Покорство",
+                        "Свободата и достойното умиране за родината",
+                        "Религиозна вяра",
+                        "Лично богатство"
+                ],
+                "correct": 1,
+                "explanation": "Свободата, героизмът и саможертвата за родината са централни ценности."
+        },
+        {
+                "q": "Как Захари Стоянов структурира разказа?",
+                "options": [
+                        "Хронологично по предмет",
+                        "Хронологично + тематично (подготовка, въстание, последствия)",
+                        "Само по места",
+                        "Азбучно"
+                ],
+                "correct": 1,
+                "explanation": "Структурата следва хронологията на събитията: подготовка → въстание → поражение → последствия."
+        },
+        {
+                "q": "„Записки\" влияе на следващи поколения как?",
+                "options": [
+                        "Само на историците",
+                        "Формира националната историческа памет и самосъзнание",
+                        "Само на литературния свят",
+                        "Без влияние"
+                ],
+                "correct": 1,
+                "explanation": "Произведението е основополагащо за националната историческа памет."
+        },
+        {
+                "q": "Темата „документ срещу забрава\" означава?",
+                "options": [
+                        "Забравяне на миналото",
+                        "Записването като акт на историческо запомняне",
+                        "Отричане на историята",
+                        "Промяна на историята"
+                ],
+                "correct": 1,
+                "explanation": "Захари Стоянов пише, за да не се забравят жертвите и събитията."
+        },
+        {
+                "q": "Връзката между личното и историческото в „Записки\" е?",
+                "options": [
+                        "Без връзка",
+                        "Личното преживяно се превръща в историческо свидетелство",
+                        "Само лично",
+                        "Само историческо"
+                ],
+                "correct": 1,
+                "explanation": "Личната биография е вплетена в националната история – характерно за мемоарния жанр."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

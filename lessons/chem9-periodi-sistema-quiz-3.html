@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Периодична система – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem9-periodi-sistema-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem9-periodi-sistema.html',
+      lessonName:  'Периодична система',
+      eyebrow:     'Химия · 9 клас · Обща химия',
+      title:       'Куиз – Периодична система – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Как се изчислява масата на атома в единици u?",
+                "options": [
+                        "A (масово число) ≈ маса в u (1 u ≈ 1.66×10⁻²⁷ kg)",
+                        "Z × 2",
+                        "N × 1.5",
+                        "По електроотрицателност"
+                ],
+                "correct": 0,
+                "explanation": "Масовото число приблизително равно на атомната маса в u."
+        },
+        {
+                "q": "Защо неметалите са по-електроотрицателни?",
+                "options": [
+                        "По-малък атомен радиус → ядрото по-силно привлича е⁻",
+                        "По-голям радиус",
+                        "Повече неутрони",
+                        "Повече слоеве"
+                ],
+                "correct": 0,
+                "explanation": "Малкият размер означава по-близо ядрото до валентните е⁻."
+        },
+        {
+                "q": "Как са наредени лантанидите и актинидите?",
+                "options": [
+                        "В отделни редове под основната таблица (f-блок)",
+                        "В главните групи",
+                        "Нямат място",
+                        "В d-блока"
+                ],
+                "correct": 0,
+                "explanation": "f-елементите са в отделните серии – лантаниди и актиниди."
+        },
+        {
+                "q": "Какво е диагонално подобие?",
+                "options": [
+                        "Съседни по диагонал елементи имат сходни свойства (Li/Mg, Be/Al)",
+                        "Само за метали",
+                        "Само за период 2",
+                        "Не съществува"
+                ],
+                "correct": 0,
+                "explanation": "Диагоналното подобие е свойство на малките s-p елементи."
+        },
+        {
+                "q": "Защо Z = 18 (Ar) е в 3-ти период?",
+                "options": [
+                        "3-ти период е от Z = 11 до Z = 18; Ar запълва 3-то ниво",
+                        "Защото е метал",
+                        "Защото е газ",
+                        "Случайно"
+                ],
+                "correct": 0,
+                "explanation": "3-ти период: 8 елемента (Na до Ar) – запълват 3s и 3p орбитали."
+        },
+        {
+                "q": "Как периодичният закон е открит?",
+                "options": [
+                        "Менделеев (1869) наредил елементи по маса и открил периодично повторение",
+                        "Дарвин",
+                        "Дьо Бройл",
+                        "Резерфорд"
+                ],
+                "correct": 0,
+                "explanation": "Менделеев дори предсказал незнайни елементи."
+        },
+        {
+                "q": "Каква е разликата между главна и страничната (b) група?",
+                "options": [
+                        "Главна (а) – s и p елементи; странична (б) – d преходни метали",
+                        "Нямат разлика",
+                        "Б е по-реактивна",
+                        "Само именна разлика"
+                ],
+                "correct": 0,
+                "explanation": "Тази класификация е традиционна в европейските системи."
+        },
+        {
+                "q": "Защо атомният радиус нараства надолу в група?",
+                "options": [
+                        "Добавят се нови електронни слоеве",
+                        "Повече протони",
+                        "Повече неутрони",
+                        "Намалена електроотрицателност"
+                ],
+                "correct": 0,
+                "explanation": "Всеки нов период добавя слой → по-голям атом."
+        },
+        {
+                "q": "Кой е най-реактивният метал?",
+                "options": [
+                        "Цезий (Cs) или Франций (Fr) – дъното на гр. 1",
+                        "Натрий",
+                        "Желязо",
+                        "Злато"
+                ],
+                "correct": 0,
+                "explanation": "Колкото по-долу в група 1, толкова по-лесно дава е⁻."
+        },
+        {
+                "q": "Кой е най-реактивният неметал?",
+                "options": [
+                        "Флуор (F)",
+                        "Хлор",
+                        "Кислород",
+                        "Азот"
+                ],
+                "correct": 0,
+                "explanation": "F е с най-висока електроотрицателност и реактивност."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

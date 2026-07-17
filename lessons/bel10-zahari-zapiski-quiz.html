@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Захари Стоянов – „Записки по българските въстания" – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-zahari-zapiski-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel10-zahari-zapiski-quiz-2.html',
+      lessonUrl:   '/lessons/bel10-zahari-zapiski.html',
+      lessonName:  'Захари Стоянов – „Записки по българските въстания"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Захари Стоянов – „Записки по българските въстания" – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Захари Стоянов участва в?",
+                "options": [
+                        "Руско-турската война",
+                        "Априлското въстание 1876 г.",
+                        "Съединението 1885 г.",
+                        "Балканската война"
+                ],
+                "correct": 1,
+                "explanation": "Захари Стоянов участва в Априлското въстание 1876 г. и го описва в „Записки по българските въстания\"."
+        },
+        {
+                "q": "Жанрът на „Записки\" е?",
+                "options": [
+                        "Роман",
+                        "Документална/мемоарна проза",
+                        "Поезия",
+                        "Драма"
+                ],
+                "correct": 1,
+                "explanation": "Документална/мемоарна проза – съчетава исторически факти с художествено слово."
+        },
+        {
+                "q": "Кой е Кочо Чистименец?",
+                "options": [
+                        "Турски командир",
+                        "Учител и войвода, защитник на Батак",
+                        "Руски офицер",
+                        "Свещеник"
+                ],
+                "correct": 1,
+                "explanation": "Кочо Чистименец е учителят-войвода на Батак – символ на героизма и саможертвата."
+        },
+        {
+                "q": "„Записки по българските въстания\" е написана:",
+                "options": [
+                        "Преди въстанието",
+                        "По времето на въстанието",
+                        "След въстанието (1884–1892)",
+                        "В емиграция"
+                ],
+                "correct": 2,
+                "explanation": "Произведението е публикувано 1884–1892, след Освобождението."
+        },
+        {
+                "q": "Централното събитие в „Записки\" е?",
+                "options": [
+                        "Руско-турската война",
+                        "Априлското въстание и Баташкото клане",
+                        "Съединението",
+                        "Освобождението"
+                ],
+                "correct": 1,
+                "explanation": "Априлското въстание 1876 г. и неговите последствия, включително Баташкото клане."
+        },
+        {
+                "q": "Разказвачът в „Записки\" е?",
+                "options": [
+                        "Всезнаещ разказвач",
+                        "Личен очевидец (аз-разказвач)",
+                        "Безличен наблюдател",
+                        "Измислен герой"
+                ],
+                "correct": 1,
+                "explanation": "Захари Стоянов е личен участник → „аз\" разказвач с конкретни преживявания."
+        },
+        {
+                "q": "Каква е целта на натурализма в описанието на клането?",
+                "options": [
+                        "Литературна красота",
+                        "Свидетелство пред историята и предизвикване на международно внимание",
+                        "Забавление",
+                        "Религиозна цел"
+                ],
+                "correct": 1,
+                "explanation": "Документирането на жестокостите трябвало да събуди Европа и да сложи в историческата памет."
+        },
+        {
+                "q": "Кой е Захари Стоянов по занятие?",
+                "options": [
+                        "Военен офицер",
+                        "Публицист и историк, революционер",
+                        "Свещеник",
+                        "Търговец"
+                ],
+                "correct": 1,
+                "explanation": "Захари Стоянов е публицист, историк и активен революционер."
+        },
+        {
+                "q": "Важна характеристика на документалната проза е?",
+                "options": [
+                        "Измислени герои",
+                        "Основава се на реални факти и свидетелства",
+                        "Пише се в стихове",
+                        "Без авторска позиция"
+                ],
+                "correct": 1,
+                "explanation": "Документалната проза съчетава реални факти, свидетелства и художествено слово."
+        },
+        {
+                "q": "„Записки\" е важно като?",
+                "options": [
+                        "Само литературен текст",
+                        "Исторически документ и художествено свидетелство за Освобождението",
+                        "Само учебник",
+                        "Фолклорен текст"
+                ],
+                "correct": 1,
+                "explanation": "И двете: художествена стойност + безценен исторически документ от очевидец."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Квадратни неравенства – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math9-kvadratni-neravenstva-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/math9-kvadratni-neravenstva.html',
+      lessonName:  'Квадратни неравенства',
+      eyebrow:     'Математика · 9 клас · Алгебра',
+      title:       'Куиз – Квадратни неравенства – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Намерете параметъра m: x² − 2mx + m² − 1 < 0 да има решения",
+                "options": [
+                        "Всяко m",
+                        "Само m > 0",
+                        "m > 1",
+                        "m < −1"
+                ],
+                "correct": 0,
+                "explanation": "D = 4m² − 4(m²−1) = 4 > 0 → винаги има решения."
+        },
+        {
+                "q": "Реши системата: x² − x − 6 > 0 и x < 4",
+                "options": [
+                        "(−∞,−2) и (3,4)",
+                        "(−2,3)",
+                        "(3,4)",
+                        "(−∞,4)"
+                ],
+                "correct": 0,
+                "explanation": "Пресечение: x < −2 (✓) или 3 < x < 4 (✓)."
+        },
+        {
+                "q": "За кои a параболата f(x) = ax² − 2x + a е изцяло над Ox?",
+                "options": [
+                        "a > 1",
+                        "a < 1",
+                        "a = 1",
+                        "a > 0"
+                ],
+                "correct": 0,
+                "explanation": "D = 4 − 4a² < 0 и a > 0 → a > 1."
+        },
+        {
+                "q": "Решете |x² − 4| < 5",
+                "options": [
+                        "−3 < x < 3",
+                        "x < −3 или x > 3",
+                        "−√9 < x < √9",
+                        "Всички x"
+                ],
+                "correct": 0,
+                "explanation": "−5 < x² − 4 < 5 → x² < 9 → |x| < 3."
+        },
+        {
+                "q": "Решете x² − 3x + 2 ≥ 0",
+                "options": [
+                        "x ≤ 1 или x ≥ 2",
+                        "1 ≤ x ≤ 2",
+                        "x ≤ 2",
+                        "x ≥ 1"
+                ],
+                "correct": 0,
+                "explanation": "Нули 1 и 2; a > 0 → ≥ 0 извън тях (включително)."
+        },
+        {
+                "q": "Задача: При кои x е скоростта v(t) = −t² + 4t − 3 > 0?",
+                "options": [
+                        "1 < t < 3",
+                        "t > 3",
+                        "t < 1",
+                        "t > 1"
+                ],
+                "correct": 0,
+                "explanation": "Нули t = 1 и t = 3; a < 0 → > 0 между тях."
+        },
+        {
+                "q": "Квадратното неравенство ax² + bx + c < 0 при D < 0, a > 0 е:",
+                "options": [
+                        "Без решения",
+                        "Решено за всички x",
+                        "Решено за x ≠ x₀",
+                        "Решено за x = x₀"
+                ],
+                "correct": 0,
+                "explanation": "При a > 0, D < 0 функцията е винаги > 0."
+        },
+        {
+                "q": "Реши: x² + 4x > 0",
+                "options": [
+                        "x < −4 или x > 0",
+                        "−4 < x < 0",
+                        "x > 0",
+                        "x < −4"
+                ],
+                "correct": 0,
+                "explanation": "x(x+4) > 0; нули 0 и −4 → > 0 извън тях."
+        },
+        {
+                "q": "Решете 6x − x² > 0",
+                "options": [
+                        "0 < x < 6",
+                        "x < 0 или x > 6",
+                        "x > 0",
+                        "x < 6"
+                ],
+                "correct": 0,
+                "explanation": "x(6 − x) > 0 → 0 < x < 6."
+        },
+        {
+                "q": "Намерете всички x за |x| < 3",
+                "options": [
+                        "−3 < x < 3",
+                        "x > 3",
+                        "x < 3",
+                        "x < −3 или x > 3"
+                ],
+                "correct": 0,
+                "explanation": "Модулното неравенство: −3 < x < 3."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

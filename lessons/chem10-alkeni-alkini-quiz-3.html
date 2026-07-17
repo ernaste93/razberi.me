@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Алкени и алкини – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem10-alkeni-alkini-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem10-alkeni-alkini.html',
+      lessonName:  'Алкени и алкини',
+      eyebrow:     'ХИМИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Алкени и алкини – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Формула на алкините?",
+                "options": [
+                        "CₙH₂ₙ",
+                        "CₙH₂ₙ₊₂",
+                        "CₙH₂ₙ₋₂",
+                        "CₙH₂ₙ₋₄"
+                ],
+                "correct": 2,
+                "explanation": "CₙH₂ₙ₋₂ – 2 π-връзки. n=2: C₂H₂."
+        },
+        {
+                "q": "Полипропиленът е полимер на?",
+                "options": [
+                        "CH₂=CH₂",
+                        "CH₂=CHCH₃",
+                        "CH≡CH",
+                        "C₆H₆"
+                ],
+                "correct": 1,
+                "explanation": "PP от пропилен (CH₂=CHCH₃)."
+        },
+        {
+                "q": "Т. на ацетилен/O₂ пламъка?",
+                "options": [
+                        "~1000°C",
+                        "~1500°C",
+                        "~2000°C",
+                        ">3000°C"
+                ],
+                "correct": 3,
+                "explanation": ">3000°C. Заваряване."
+        },
+        {
+                "q": "Геометрия около C=C?",
+                "options": [
+                        "Линейна 180°",
+                        "Тетраедрична 109.5°",
+                        "Планарна 120°",
+                        "Пирамидална"
+                ],
+                "correct": 2,
+                "explanation": "sp²: 4 заместителя в равнина, 120°."
+        },
+        {
+                "q": "Цис-2-бутен и транс-2-бутен са?",
+                "options": [
+                        "Структурни изомери",
+                        "Геометрични изомери",
+                        "Конформери",
+                        "Едно вещество"
+                ],
+                "correct": 1,
+                "explanation": "Геометрични изомери – еднакво свързани, различно ориентирани около C=C."
+        },
+        {
+                "q": "Хибридизация в алкените?",
+                "options": [
+                        "sp³",
+                        "sp²",
+                        "sp",
+                        "dsp²"
+                ],
+                "correct": 1,
+                "explanation": "sp² – 3σ (120°) + 1π."
+        },
+        {
+                "q": "Мономер на полистирен?",
+                "options": [
+                        "Бензол",
+                        "Стирен C₆H₅CH=CH₂",
+                        "Пропилен",
+                        "Ацетилен"
+                ],
+                "correct": 1,
+                "explanation": "PS от стирен (C₆H₅CH=CH₂)."
+        },
+        {
+                "q": "Марковников при?",
+                "options": [
+                        "Симетрично присъединяване",
+                        "HX → несиметричен алкен",
+                        "Полимеризация",
+                        "Толенс"
+                ],
+                "correct": 1,
+                "explanation": "При HX → несиметричен алкен: H⁺ → C с повече H."
+        },
+        {
+                "q": "Формула на пропина?",
+                "options": [
+                        "C₂H₂",
+                        "C₃H₄",
+                        "C₃H₆",
+                        "C₄H₆"
+                ],
+                "correct": 1,
+                "explanation": "CₙH₂ₙ₋₂, n=3 → C₃H₄. CH₃–C≡CH."
+        },
+        {
+                "q": "Диените имат формула?",
+                "options": [
+                        "CₙH₂ₙ₊₂",
+                        "CₙH₂ₙ",
+                        "CₙH₂ₙ₋₂",
+                        "CₙH₂ₙ₋₄"
+                ],
+                "correct": 2,
+                "explanation": "CₙH₂ₙ₋₂ (2 двойни C=C). Бутадиен: C₄H₆."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

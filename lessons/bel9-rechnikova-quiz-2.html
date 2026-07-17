@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Речникова работа и тропи – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel9-rechnikova-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel9-rechnikova-quiz-3.html',
+      lessonUrl:   '/lessons/bel9-rechnikova.html',
+      lessonName:  'Речникова работа и тропи',
+      eyebrow:     'БЕЛ · 9 клас · Езикознание',
+      title:       'Куиз – Речникова работа и тропи – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Каква е разликата между метафора и сравнение?",
+                "options": [
+                        "Метафора е имплицитна, сравнението е с \"като/сякаш\"",
+                        "Нямат разлика",
+                        "Сравнението е имплицитно",
+                        "Метафора е с \"като\""
+                ],
+                "correct": 0,
+                "explanation": "Сравнението използва съюз, метафората – не."
+        },
+        {
+                "q": "Каква е функцията на синонимите в текста?",
+                "options": [
+                        "Избягват повторение и обогатяват стила",
+                        "Само за информация",
+                        "Нямат стилистична роля",
+                        "Заменят антонимите"
+                ],
+                "correct": 0,
+                "explanation": "Синонимното разнообразие прави текста по-богат."
+        },
+        {
+                "q": "Кой е примерът за синекдоха?",
+                "options": [
+                        "\"Сто глави добитък\" (глава вместо животно)",
+                        "Синьо небе",
+                        "Лъвско сърце",
+                        "Бял като сняг"
+                ],
+                "correct": 0,
+                "explanation": "Синекдохата заменя целото с неговата част."
+        },
+        {
+                "q": "Какво са диалектните думи?",
+                "options": [
+                        "Думи, употребявани само в определен регион",
+                        "Жаргонни думи",
+                        "Архаизми",
+                        "Неологизми"
+                ],
+                "correct": 0,
+                "explanation": "Диалектизмите са регионални варианти на думи."
+        },
+        {
+                "q": "Каква е функцията на тропите в художествения текст?",
+                "options": [
+                        "Правят образите по-живи и въздействащи",
+                        "Само декоративни",
+                        "Заместват граматиката",
+                        "Пречат на разбирането"
+                ],
+                "correct": 0,
+                "explanation": "Тропите са инструменти за художествена изразност."
+        },
+        {
+                "q": "Какво е жаргон?",
+                "options": [
+                        "Лексика на определена социална група",
+                        "Регионален говор",
+                        "Остаряла лексика",
+                        "Чужда лексика"
+                ],
+                "correct": 0,
+                "explanation": "Жаргонът е групова лексика (ученически, военен и др.)."
+        },
+        {
+                "q": "Кое е пример за метафора?",
+                "options": [
+                        "\"Море от хора\"",
+                        "\"Бял като сняг\"",
+                        "\"Чете Ботев\"",
+                        "\"Сто ръце\""
+                ],
+                "correct": 0,
+                "explanation": "\"Море от хора\" е имплицитно сравнение – метафора."
+        },
+        {
+                "q": "Кое е пример за сравнение?",
+                "options": [
+                        "\"Бял като сняг\"",
+                        "\"Море от хора\"",
+                        "\"Лъвско сърце\"",
+                        "\"Вятърът пее\""
+                ],
+                "correct": 0,
+                "explanation": "Сравнението използва \"като\"."
+        },
+        {
+                "q": "Каква е ролята на антонимите в художествения текст?",
+                "options": [
+                        "Създават контраст и антитеза",
+                        "Само информативна",
+                        "Нямат роля",
+                        "Заместват синоними"
+                ],
+                "correct": 0,
+                "explanation": "Антонимите са основата на антитезата."
+        },
+        {
+                "q": "Какво е заемка в езика?",
+                "options": [
+                        "Дума, приета от чужд език",
+                        "Остаряла дума",
+                        "Нова дума",
+                        "Диалектна дума"
+                ],
+                "correct": 0,
+                "explanation": "Заемките обогатяват лексиката от контакт с чужди езици."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

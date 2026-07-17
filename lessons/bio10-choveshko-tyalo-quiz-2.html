@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Организъм на човека – органи и системи – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-choveshko-tyalo-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio10-choveshko-tyalo-quiz-3.html',
+      lessonUrl:   '/lessons/bio10-choveshko-tyalo.html',
+      lessonName:  'Организъм на човека – органи и системи',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Организъм на човека – органи и системи – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Синапс е?",
+                "options": [
+                        "Тъкан",
+                        "Функционална връзка между два неврона",
+                        "Хормон",
+                        "Ензим"
+                ],
+                "correct": 1,
+                "explanation": "Синапсът е функционалния контакт между два неврона (или неврон-мускул). Предаването е чрез невротрансмитери."
+        },
+        {
+                "q": "Артерии vs вени?",
+                "options": [
+                        "Еднакви",
+                        "Артерии → от сърцето; вени → към сърцето",
+                        "Вени → от сърцето",
+                        "Само в белите дробове"
+                ],
+                "correct": 1,
+                "explanation": "Артерии: кръв от сърцето (оксигенирана в голямото кръгообращение). Вени: към сърцето."
+        },
+        {
+                "q": "Бъбреците филтрират?",
+                "options": [
+                        "Само кръвни клетки",
+                        "Кръвта → образуват урина (филтрация, реабсорбция, секреция)",
+                        "Само вода",
+                        "Само соли"
+                ],
+                "correct": 1,
+                "explanation": "Бъбречен нефрон: гломерулна филтрация → тубулна реабсорбция → секреция → урина. Регулират pH, обем кръв."
+        },
+        {
+                "q": "Скелетната мускулна тъкан е?",
+                "options": [
+                        "Неволева",
+                        "Напречно набраздена, доброволна",
+                        "Гладка",
+                        "Само в сърцето"
+                ],
+                "correct": 1,
+                "explanation": "Скелетна (соматична) мускулатура: напречно набраздена, доброволна (под контрол на соматична нервна система)."
+        },
+        {
+                "q": "Адреналинът се секретира от?",
+                "options": [
+                        "Панкреас",
+                        "Надбъбречна медула",
+                        "Тироид",
+                        "Хипофиза"
+                ],
+                "correct": 1,
+                "explanation": "Надбъбречна медула (хромафинни клетки) → адреналин (епинефрин) при стрес. „Бий или бягай\"."
+        },
+        {
+                "q": "Лимфната система?",
+                "options": [
+                        "Само имунна",
+                        "Транспорт на лимфа + имунна функция (лимфоцити, антитела)",
+                        "Само храносмилане",
+                        "Само костен мозък"
+                ],
+                "correct": 1,
+                "explanation": "Лимфата се събира от тъканите и се връща в кръвта. Лимфните възли филтрират и имунизират."
+        },
+        {
+                "q": "Функция на тромбоцитите?",
+                "options": [
+                        "Пренасят O₂",
+                        "Съсирване на кръвта (хемостаза)",
+                        "Имунен отговор",
+                        "Синтез на хормони"
+                ],
+                "correct": 1,
+                "explanation": "Тромбоцитите (platelets) участват в образуването на фибринов съсирек при увреда на съд."
+        },
+        {
+                "q": "Диабет тип 1 е?",
+                "options": [
+                        "Инсулинова резистентност",
+                        "Автоимунно – β-клетките на панкреаса са унищожени",
+                        "Само затлъстяване",
+                        "Хормонален дефицит"
+                ],
+                "correct": 1,
+                "explanation": "Диабет тип 1: имунната система унищожава β-клетките → инсулинов дефицит → трябва инжекционен инсулин."
+        },
+        {
+                "q": "Ролята на вилозностите в тънкото черво?",
+                "options": [
+                        "Защита",
+                        "Увеличават повърхността за усвояване",
+                        "Само ензими",
+                        "Само движение"
+                ],
+                "correct": 1,
+                "explanation": "Ворсинките (вили) и микровилите увеличават абсорбционната повърхност ~600 пъти."
+        },
+        {
+                "q": "Кожата е орган на коя система?",
+                "options": [
+                        "Нервна",
+                        "Интегументарна (покровна)",
+                        "Мускулна",
+                        "Лимфна"
+                ],
+                "correct": 1,
+                "explanation": "Интегументарна система = кожа + производни (коса, нокти, жлези). Защита, терморегулация, сетивност."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

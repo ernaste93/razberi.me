@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 – Обмяна на веществата · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bio8-obmen-veshtestva-q1",
+    quizNum:1,
+    nextQuizUrl:"/lessons/bio8-obmen-veshtestva-quiz-2.html",
+    lessonUrl:"/lessons/bio8-obmen-veshtestva.html",
+    lessonName:"Обмяна на веществата",
+    eyebrow:"Биология · 8 клас · Анатомия",
+    title:"Тест 1 – Обмяна на веществата",
+    passScore:8,
+    questions:[
+  {
+    "q": "Кои три системи изграждат обмяната на вещества?",
+    "options": [
+      "Храносмилателна, дихателна, кръвоносна",
+      "Нервна, ендокринна, репродуктивна",
+      "Опорна, мускулна, кожна",
+      "Отделителна, имунна, лимфна"
+    ],
+    "correct": 0,
+    "explanation": "Трите системи работят заедно за снабдяване на клетките."
+  },
+  {
+    "q": "Кой орган усвоява хранителните вещества?",
+    "options": [
+      "Тънкото черво",
+      "Стомахът",
+      "Дебелото черво",
+      "Черният дроб"
+    ],
+    "correct": 0,
+    "explanation": "Тънкото черво е основното място за усвояване на хранителни вещества."
+  },
+  {
+    "q": "Какво е ензим?",
+    "options": [
+      "Биологичен катализатор",
+      "Вид хормон",
+      "Тип клетка",
+      "Орган"
+    ],
+    "correct": 0,
+    "explanation": "Ензимите ускоряват биохимичните реакции в тялото."
+  },
+  {
+    "q": "Какво се случва в алвеолите?",
+    "options": [
+      "Газообмен – O₂ влиза в кръвта, CO₂ излиза",
+      "Само вдишване",
+      "Само издишване",
+      "Производство на слуз"
+    ],
+    "correct": 0,
+    "explanation": "Алвеолите са малки торбички в белите дробове с тънки стени за газообмен."
+  },
+  {
+    "q": "Колко камери има сърцето?",
+    "options": [
+      "4",
+      "2",
+      "3",
+      "6"
+    ],
+    "correct": 0,
+    "explanation": "Две предсърдия и две камери – четири общо."
+  },
+  {
+    "q": "Какъв ензим се отделя в устата?",
+    "options": [
+      "Амилаза – разгражда нишесте",
+      "Пепсин",
+      "Липаза",
+      "Трипсин"
+    ],
+    "correct": 0,
+    "explanation": "Слюнчената амилаза започва разграждането на въглехидратите."
+  },
+  {
+    "q": "Каква е функцията на червените кръвни клетки?",
+    "options": [
+      "Пренасят кислород чрез хемоглобин",
+      "Осигуряват имунитет",
+      "Съсирват кръвта",
+      "Произвеждат антитела"
+    ],
+    "correct": 0,
+    "explanation": "Еритроцитите съдържат хемоглобин, свързващ O₂."
+  },
+  {
+    "q": "Кое е правилното за малкия кръг на кръвообращението?",
+    "options": [
+      "Между сърцето и белите дробове",
+      "Между сърцето и тялото",
+      "Само в черния дроб",
+      "Само в мозъка"
+    ],
+    "correct": 0,
+    "explanation": "Малкият кръг насища кръвта с кислород в белите дробове."
+  },
+  {
+    "q": "Какво произвежда стомахът за храносмилането?",
+    "options": [
+      "Солна киселина и пепсин",
+      "Само амилаза",
+      "Само жлъчка",
+      "Само вода"
+    ],
+    "correct": 0,
+    "explanation": "Солната киселина убива бактерии; пепсинът разгражда протеини."
+  },
+  {
+    "q": "Каква е функцията на дебелото черво?",
+    "options": [
+      "Усвоява вода и формира изпражнения",
+      "Разгражда протеини",
+      "Произвежда жлъчка",
+      "Усвоява хранителни вещества"
+    ],
+    "correct": 0,
+    "explanation": "Дебелото черво връща водата в тялото."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Захари Стоянов – „Записки по българските въстания" – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-zahari-zapiski-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel10-zahari-zapiski-quiz-3.html',
+      lessonUrl:   '/lessons/bel10-zahari-zapiski.html',
+      lessonName:  'Захари Стоянов – „Записки по българските въстания"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Захари Стоянов – „Записки по българските въстания" – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Баташкото клане е описано като?",
+                "options": [
+                        "Победа",
+                        "Символ на варварството и мъченичеството",
+                        "Случаен инцидент",
+                        "Неважно събитие"
+                ],
+                "correct": 1,
+                "explanation": "Баташкото клане – символ на турската жестокост; описанието му предизвиква международно осъждане."
+        },
+        {
+                "q": "Кочо Чистименец умира с?",
+                "options": [
+                        "Страх и молба",
+                        "Достойнство и чест",
+                        "Предателство",
+                        "Бягство"
+                ],
+                "correct": 1,
+                "explanation": "Кочо Чистименец е символ на героичната смърт с достойнство."
+        },
+        {
+                "q": "Историческото значение на „Записки\" е?",
+                "options": [
+                        "Нямат историческо значение",
+                        "Запазват паметта за въстанието за поколенията",
+                        "Само пропаганда",
+                        "Недостоверни"
+                ],
+                "correct": 1,
+                "explanation": "„Записки\" е най-важният художествено-документален паметник за Априлското въстание."
+        },
+        {
+                "q": "Образът на децата и жените символизира?",
+                "options": [
+                        "Войната",
+                        "Невинните жертви на насилието",
+                        "Свободата",
+                        "Победата"
+                ],
+                "correct": 1,
+                "explanation": "Децата и жените са символ на невинността и безмерната жертва."
+        },
+        {
+                "q": "Методът на разказване в „Записки\" е?",
+                "options": [
+                        "Абстрактен и символичен",
+                        "Конкретен, натуралистичен, с подробности",
+                        "Алегоричен",
+                        "Лирически"
+                ],
+                "correct": 1,
+                "explanation": "Натурализмът и конкретните подробности са характерни за документалния стил."
+        },
+        {
+                "q": "„Записки\" влияе на?",
+                "options": [
+                        "Само на ученици",
+                        "Международно мнение за Балканите и историческата самосъзнание на българите",
+                        "Само на литератори",
+                        "Само на политици"
+                ],
+                "correct": 1,
+                "explanation": "Произведението формира историческото самосъзнание и привлича вниманието на Европа."
+        },
+        {
+                "q": "Захари Стоянов събира материали как?",
+                "options": [
+                        "От архиви само",
+                        "От лични преживявания и свидетелства на участници",
+                        "От турски източници",
+                        "От руски офицери"
+                ],
+                "correct": 1,
+                "explanation": "Лично преживяно + интервюта/свидетелства на оцелели участници."
+        },
+        {
+                "q": "Мотивът „жертва и героизъм\" се изразява чрез?",
+                "options": [
+                        "Описание на природата",
+                        "Образите на Кочо и загиналите бунтовници",
+                        "Диалози с турците",
+                        "Само в предговора"
+                ],
+                "correct": 1,
+                "explanation": "Кочо и загиналите въстаници са носители на жертвата и героизма."
+        },
+        {
+                "q": "Априлското въстание е от?",
+                "options": [
+                        "1878",
+                        "1876",
+                        "1885",
+                        "1862"
+                ],
+                "correct": 1,
+                "explanation": "Априлското въстание е от 1876 г."
+        },
+        {
+                "q": "Стилистично „Записки\" се отличава с?",
+                "options": [
+                        "Сух академичен стил",
+                        "Емоционален, живописен стил с лично ангажиран разказвач",
+                        "Неутрален журналистически стил",
+                        "Стихотворна форма"
+                ],
+                "correct": 1,
+                "explanation": "Емоционален и ангажиран стил – авторът не е безстрастен свидетел, а участник."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

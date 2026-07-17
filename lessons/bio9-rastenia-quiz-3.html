@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Растения – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio9-rastenia-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bio9-rastenia.html',
+      lessonName:  'Растения',
+      eyebrow:     'Биология · 9 клас · Ботаника',
+      title:       'Куиз – Растения – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Как се адаптират растенията в суха среда?",
+                "options": [
+                        "Восъчни кутикули, малки листа, задебелени стебла (суккуленти)",
+                        "Повече устица",
+                        "По-дебела клетъчна стена",
+                        "По-голям корен"
+                ],
+                "correct": 0,
+                "explanation": "Ксерофитните адаптации намаляват транспирацията."
+        },
+        {
+                "q": "Какво е алелопатия?",
+                "options": [
+                        "Отделяне на химикали от растения, влияещи на съседни организми",
+                        "Симбиоза с бактерии",
+                        "Паразитизъм",
+                        "Камуфлаж"
+                ],
+                "correct": 0,
+                "explanation": "Алелопатията е химическо взаимодействие между растения."
+        },
+        {
+                "q": "Как ендоспермът помага на покълнването?",
+                "options": [
+                        "Осигурява хранителни вещества за зародиша преди покълнването",
+                        "Произвежда хормони",
+                        "Предпазва от болести",
+                        "Привлича вода"
+                ],
+                "correct": 0,
+                "explanation": "Ендоспермът е хранителна тъкан вътре в семето."
+        },
+        {
+                "q": "Какво е микориза?",
+                "options": [
+                        "Симбиоза между гъби и корени на растения – увеличава усвояването",
+                        "Болест на корените",
+                        "Вид корен",
+                        "Паразит"
+                ],
+                "correct": 0,
+                "explanation": "Микоризата подобрява усвояването на вода и хранителни вещества."
+        },
+        {
+                "q": "Кои условия са необходими за фотосинтеза?",
+                "options": [
+                        "Светлина, вода, CO₂, хлорофил",
+                        "Само светлина",
+                        "Само CO₂",
+                        "Светлина и O₂"
+                ],
+                "correct": 0,
+                "explanation": "Всичките четири са задължителни за процеса."
+        },
+        {
+                "q": "Как растенията реагират на фотопериода (дължина на деня)?",
+                "options": [
+                        "Регулират цъфтежа чрез фитохром",
+                        "Не реагират",
+                        "Увеличават фотосинтезата",
+                        "Затварят устицата"
+                ],
+                "correct": 0,
+                "explanation": "Кратко-/дългоденни растения са чувствителни към фотопериода."
+        },
+        {
+                "q": "Какво е партенокарпия?",
+                "options": [
+                        "Образуване на плод без оплождане (без семена)",
+                        "Вегетативно размножаване",
+                        "Опрашване от вятъра",
+                        "Безполово делене"
+                ],
+                "correct": 0,
+                "explanation": "Бананите са пример за партенокарпен плод."
+        },
+        {
+                "q": "Как папратите се размножават без семена?",
+                "options": [
+                        "Чрез спори",
+                        "Чрез цветове",
+                        "Чрез клубени",
+                        "Чрез пъпкуване"
+                ],
+                "correct": 0,
+                "explanation": "Папратите отделят спори от спорангиите."
+        },
+        {
+                "q": "Каква е ролята на абсцизовата киселина (ABA)?",
+                "options": [
+                        "Инхибира растежа, затваря устицата при сухо",
+                        "Стимулира растежа",
+                        "Отговаря за цъфтежа",
+                        "Действа като ауксин"
+                ],
+                "correct": 0,
+                "explanation": "ABA е хормонът на \"стреса\" – реакция при засушаване."
+        },
+        {
+                "q": "Кои органи на растението съхраняват хранителни вещества?",
+                "options": [
+                        "Клубени, луковици, кореноплоди",
+                        "Само листата",
+                        "Само семената",
+                        "Само стъблото"
+                ],
+                "correct": 0,
+                "explanation": "Специализирани органи акумулират нишесте и захари."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 - Байрон – Как искам пак да съм дете · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-bairon-don-juan-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bel9-bairon-don-juan.html",
+    lessonName:"Байрон – Как искам пак да съм дете",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 3 - Байрон – Как искам пак да съм дете",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е разликата между елегия и ода?",
+    "options": [
+      "Елегия: тъжно, носталгично; ода: тържествено, хвалебно",
+      "Те са еднакви",
+      "Одата е по-кратка",
+      "Елегията е радостна"
+    ],
+    "correct": 0,
+    "explanation": "Двата жанра са лирически, но с различно настроение."
+  },
+  {
+    "q": "Как Байрон изразява бунта в стихотворението?",
+    "options": [
+      "Чрез невъзможния копнеж по невъзможното завръщане",
+      "С директен политически призив",
+      "Без бунт",
+      "С ирония"
+    ],
+    "correct": 0,
+    "explanation": "Бунтът срещу необратимото е по-дълбок от политическия бунт."
+  },
+  {
+    "q": "Каква е ролята на паметта?",
+    "options": [
+      "Паметта съхранява детството – едновременно утеха и мъчение",
+      "Паметта е безполезна",
+      "Без роля",
+      "Паметта лъже"
+    ],
+    "correct": 0,
+    "explanation": "Романтизмът открива паметта като художествена тема."
+  },
+  {
+    "q": "Как Байрон е повлиял на руската поезия?",
+    "options": [
+      "Чрез Пушкин – байроническият герой и лирическата изповед",
+      "Без влияние",
+      "Само на Лермонтов",
+      "Само стилово"
+    ],
+    "correct": 0,
+    "explanation": "Пушкин е директно повлиян от Байрон."
+  },
+  {
+    "q": "Каква е темата за невинността?",
+    "options": [
+      "Детството е невинно; зрялостта я разрушава необратимо",
+      "Невинността е слабост",
+      "Без тема",
+      "Само религиозна"
+    ],
+    "correct": 0,
+    "explanation": "Загубата на невинността е вечна романтична тема."
+  },
+  {
+    "q": "Как природата функционира в романтизма?",
+    "options": [
+      "Огледало на вътрешния свят и убежище от обществото",
+      "Само пейзаж",
+      "Научен обект",
+      "Без функция"
+    ],
+    "correct": 0,
+    "explanation": "Романтиците обожествяват природата като алтернатива на цивилизацията."
+  },
+  {
+    "q": "Каква е разликата лирика/епос?",
+    "options": [
+      "Лириката изразява чувства; епосът разказва събития",
+      "Те са еднакви",
+      "Лириката е по-дълга",
+      "Епосът е по-лиричен"
+    ],
+    "correct": 0,
+    "explanation": "Стихотворението е лирика – директна емоционална изповед."
+  },
+  {
+    "q": "Как стихотворението е типично за Байрон?",
+    "options": [
+      "Интензивна меланхолия, лирическа изповед, копнеж по невъзможното",
+      "Не е типично",
+      "Хумористично",
+      "Описателно"
+    ],
+    "correct": 0,
+    "explanation": "Всички тези черти са байронически."
+  },
+  {
+    "q": "Каква е универсалната стойност на стихотворението?",
+    "options": [
+      "Всеки човек познава носталгията по детството – общочовешка тема",
+      "Само за Байрон",
+      "Само за 19 в.",
+      "Само за англичани"
+    ],
+    "correct": 0,
+    "explanation": "Универсалността е причина творбата да е в програмата."
+  },
+  {
+    "q": "Как стихотворението се вписва в романтичния идеал?",
+    "options": [
+      "Идеалът (детство/невинност) е недостижим – романтична трагика",
+      "Идеалът е постижим",
+      "Без идеал",
+      "Реалистично"
+    ],
+    "correct": 0,
+    "explanation": "Непостижимият идеал е дефиниращ за романтизма."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

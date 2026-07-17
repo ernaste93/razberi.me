@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Паисий Хилендарски – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel9-paisiy-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel9-paisiy-quiz-3.html',
+      lessonUrl:   '/lessons/bel9-paisiy.html',
+      lessonName:  'Паисий Хилендарски',
+      eyebrow:     'БЕЛ · 9 клас · Просвещение',
+      title:       'Куиз – Паисий Хилендарски – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Каква е езиковата особеност на творбата?",
+                "options": [
+                        "Смесица от старобългарски и народен език",
+                        "Чист старобългарски",
+                        "Само руски",
+                        "Турски с превод"
+                ],
+                "correct": 0,
+                "explanation": "Езикът е хибриден – достъпен за широка аудитория."
+        },
+        {
+                "q": "С какво начало е прочута \"История славянобългарска\"?",
+                "options": [
+                        "С обръщение „О, неразумний и юроде\"",
+                        "С молитва",
+                        "С биография на Паисий",
+                        "С описание на природата"
+                ],
+                "correct": 0,
+                "explanation": "Знаменитото обръщение е в предговора."
+        },
+        {
+                "q": "Какво е Националното Възраждане в България?",
+                "options": [
+                        "Период на национално пробуждане през 18-19 в.",
+                        "Средновековното царство",
+                        "Освобождението от 1878",
+                        "Войните от 20 в."
+                ],
+                "correct": 0,
+                "explanation": "Възраждането е движение за просвета и национална идентичност."
+        },
+        {
+                "q": "Какъв литературен жанр е \"История славянобългарска\"?",
+                "options": [
+                        "Историческо-публицистично есе",
+                        "Роман",
+                        "Поема",
+                        "Лирическо стихотворение"
+                ],
+                "correct": 0,
+                "explanation": "Творбата е историческа хроника с публицистичен патос."
+        },
+        {
+                "q": "С кого сравнява Паисий великите български царе?",
+                "options": [
+                        "С велики европейски монарси",
+                        "С турски паши",
+                        "С гръцки светци",
+                        "С руски цари"
+                ],
+                "correct": 0,
+                "explanation": "Паисий дава примери от европейски и световна история, за да покаже величието на българите."
+        },
+        {
+                "q": "Какво чувство иска да предизвика Паисий у читателя?",
+                "options": [
+                        "Национална гордост",
+                        "Страх",
+                        "Тъга",
+                        "Смирение"
+                ],
+                "correct": 0,
+                "explanation": "Целта е гордост и пробуждане, не потиснатост."
+        },
+        {
+                "q": "Коя е главната опозиция в текста?",
+                "options": [
+                        "Народностна гордост срещу срам",
+                        "Добро срещу зло",
+                        "Природа срещу цивилизация",
+                        "Старо срещу ново"
+                ],
+                "correct": 0,
+                "explanation": "Паисий противопоставя достойнството и срама от народността."
+        },
+        {
+                "q": "Кой разпространява \"Историята\" след Паисий?",
+                "options": [
+                        "Софроний Врачански",
+                        "Иван Вазов",
+                        "Христо Ботев",
+                        "Захари Стоянов"
+                ],
+                "correct": 0,
+                "explanation": "Ранен преписвач и разпространител е Софроний Врачански."
+        },
+        {
+                "q": "Какъв е хронологичният обхват на описаната история?",
+                "options": [
+                        "От кан Аспарух до 18 в.",
+                        "Само Второто българско царство",
+                        "Само светите братя Кирил и Методий",
+                        "Само турското робство"
+                ],
+                "correct": 0,
+                "explanation": "Паисий обхваща дълъг период от българска история."
+        },
+        {
+                "q": "Каква е функцията на директното обръщение в текста?",
+                "options": [
+                        "Да ангажира читателя лично",
+                        "Да разказва история обективно",
+                        "Да описва природа",
+                        "Да информира за дати"
+                ],
+                "correct": 0,
+                "explanation": "Директното обръщение създава близост и емоционален заряд."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

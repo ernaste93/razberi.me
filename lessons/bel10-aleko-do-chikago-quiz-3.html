@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Алеко Константинов – „До Чикаго и назад" – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-aleko-do-chikago-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bel10-aleko-do-chikago.html',
+      lessonName:  'Алеко Константинов – „До Чикаго и назад"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Алеко Константинов – „До Чикаго и назад" – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Основната идея на пътеписа е?",
+                "options": [
+                        "Прославяне на Запада",
+                        "Призив за цивилизоване на България – критика чрез хумор и любов",
+                        "Омраза към Запада",
+                        "Просто пътеписни описания"
+                ],
+                "correct": 1,
+                "explanation": "Призив: България трябва да се цивилизова – критиката е мотивирана от любов."
+        },
+        {
+                "q": "Иронията в образа на Бай Ганьо е насочена към?",
+                "options": [
+                        "Конкретен човек",
+                        "Манталитета на некултурния, нецивилизован тип",
+                        "Само политиците",
+                        "Само богатите"
+                ],
+                "correct": 1,
+                "explanation": "Бай Ганьо = социален тип, не конкретна личност."
+        },
+        {
+                "q": "Алеко пътува до Чикаго като?",
+                "options": [
+                        "Дипломат",
+                        "Журналист и обществен деец",
+                        "Туст само",
+                        "Търговец"
+                ],
+                "correct": 1,
+                "explanation": "Алеко пътува като журналист – изпраща репортажи до български вестници."
+        },
+        {
+                "q": "Духът на Просвещението в творбата е?",
+                "options": [
+                        "Религиозен дух",
+                        "Вяра в образованието и разума като пътища за прогрес",
+                        "Националистически",
+                        "Военен"
+                ],
+                "correct": 1,
+                "explanation": "Просвещенски дух: образованието и разумът преобразяват обществото."
+        },
+        {
+                "q": "Описанието на Чикаго в пътеписа е?",
+                "options": [
+                        "Критично",
+                        "Възхитено – Алеко е впечатлен от прогреса",
+                        "Безразлично",
+                        "Иронично"
+                ],
+                "correct": 1,
+                "explanation": "Алеко е искрено възхитен от американската организираност и прогрес."
+        },
+        {
+                "q": "Кога е построено Световното изложение в Чикаго?",
+                "options": [
+                        "1880",
+                        "1893",
+                        "1900",
+                        "1876"
+                ],
+                "correct": 1,
+                "explanation": "World's Columbian Exposition – Чикаго 1893."
+        },
+        {
+                "q": "Алеко е убит при?",
+                "options": [
+                        "Дуел",
+                        "Политическо убийство по пътя за Пещера",
+                        "Война",
+                        "Нападение в Sofia"
+                ],
+                "correct": 1,
+                "explanation": "Алеко е убит 1897 г. на пътя за Пещера по неизяснени обстоятелства."
+        },
+        {
+                "q": "Посланието на пътеписа към съвременниците е?",
+                "options": [
+                        "България е добра каквато е",
+                        "Трябва ни цивилизация, образование, гражданска отговорност",
+                        "Запад е по-лош",
+                        "Без послание"
+                ],
+                "correct": 1,
+                "explanation": "Просветленско послание: учете се от Запада, цивилизовайте се."
+        },
+        {
+                "q": "Жанровата специфика на пътеписа позволява?",
+                "options": [
+                        "Само описание",
+                        "Лично мнение, оценки, хумор, лирически отклонения",
+                        "Само факти",
+                        "Само герои"
+                ],
+                "correct": 1,
+                "explanation": "Пътеписът е гъвкав жанр – позволява личен глас, оценки, хумор."
+        },
+        {
+                "q": "Алеко Константинов е известен и с псевдонима?",
+                "options": [
+                        "„Стрелец\"",
+                        "„Щастливеца\"",
+                        "„Борец\"",
+                        "„Смешника\""
+                ],
+                "correct": 1,
+                "explanation": "Алеко е известен с прозвището „Щастливеца\" – ирония, предвид трагичната му смърт."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

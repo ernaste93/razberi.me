@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 - Библия – Евангелие от Матей · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel8-bibliya-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bel8-bibliya.html",
+    lessonName:"Библия – Евангелие от Матей",
+    eyebrow:"БЕЛ · 8 клас · Средновековна литература",
+    title:"Тест 3 - Библия – Евангелие от Матей",
+    passScore:8,
+    questions:[
+  {
+    "q": "Как Нагорната проповед обръща традиционните ценности?",
+    "options": [
+      "Блажени не силните, а кротките; не богатите, а бедните духом",
+      "Потвърждава традиционните ценности",
+      "Говори за война",
+      "Без обрат"
+    ],
+    "correct": 0,
+    "explanation": "Блаженствата са революция на ценностите в античния свят."
+  },
+  {
+    "q": "Каква е ролята на самарянина в притчата?",
+    "options": [
+      "Парадоксален герой: чужденецът е по-милосърден от свещеника",
+      "Само злодей",
+      "Случаен минувач",
+      "Без роля"
+    ],
+    "correct": 0,
+    "explanation": "Самарянинът е презиран от евреите – но именно той помага."
+  },
+  {
+    "q": "Как Библията е повлияла на изобразителното изкуство?",
+    "options": [
+      "Огромно – 80% от западното изкуство до 18 в. е на библейски теми",
+      "Без влияние",
+      "Само архитектура",
+      "Само музика"
+    ],
+    "correct": 0,
+    "explanation": "Без Библията западното изкуство е непонятно."
+  },
+  {
+    "q": "Каква е разликата поучение/притча?",
+    "options": [
+      "Поучението е директно; притчата е иносказателна история",
+      "Те са еднакви",
+      "Притчата е директна",
+      "Поучението е по-кратко"
+    ],
+    "correct": 0,
+    "explanation": "Исус предпочита притчата – конкретното преди абстрактното."
+  },
+  {
+    "q": "Как Библията е свързана с Черноризец Храбър и Константин Преславски?",
+    "options": [
+      "Библията е преведена на старобългарски – основа на цялата книжнина",
+      "Без връзка",
+      "Само тематично",
+      "Само по-късно"
+    ],
+    "correct": 0,
+    "explanation": "Кирил и Методий превеждат Библията – раждането на старобългарската книжнина."
+  },
+  {
+    "q": "Каква е темата за любовта в евангелията?",
+    "options": [
+      "Агапе – безусловна, всеобхватна любов – дори към враговете",
+      "Само романтична",
+      "Само семейна",
+      "Само към Бог"
+    ],
+    "correct": 0,
+    "explanation": "Агапе е различно от еротичната (ерос) или приятелска (филия) любов."
+  },
+  {
+    "q": "Кое е значението на Библията за Средновековието?",
+    "options": [
+      "Основна книга – религия, наука, изкуство, право са библейски",
+      "Само религиозна",
+      "Минимална роля",
+      "Само за монасите"
+    ],
+    "correct": 0,
+    "explanation": "В Средновековието Библията определя всички аспекти на живота."
+  },
+  {
+    "q": "Как притчите са различни от баснята?",
+    "options": [
+      "Притчата е за хора и духовни ценности; баснята е за животни и практически уроци",
+      "Те са еднакви",
+      "Баснята е по-духовна",
+      "Притчата е за животни"
+    ],
+    "correct": 0,
+    "explanation": "И двете са иносказателни, но с различен обект и функция."
+  },
+  {
+    "q": "Каква е темата за покаянието?",
+    "options": [
+      "Покаянието открива пътя към прошка и нов живот",
+      "Покаянието е слабост",
+      "Без тема",
+      "Само в Стария завет"
+    ],
+    "correct": 0,
+    "explanation": "Метанойя – промяна на ума и сърцето – е ключова за евангелията."
+  },
+  {
+    "q": "Защо Библията е в програмата за 8 клас?",
+    "options": [
+      "Основополагащ текст на западната цивилизация, литература и морал",
+      "Случайно",
+      "Само религиозни теми",
+      "Само исторически"
+    ],
+    "correct": 0,
+    "explanation": "Без Библията западната литература е непонятна."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

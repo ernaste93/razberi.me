@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 - Бокачо – Декамерон · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel8-bokachо-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bel8-bokachо-quiz-3.html",
+    lessonUrl:"/lessons/bel8-bokachо.html",
+    lessonName:"Бокачо – Декамерон",
+    eyebrow:"БЕЛ · 8 клас · Ренесансова литература",
+    title:"Тест 2 - Бокачо – Декамерон",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е рамковата конструкция на Декамерон?",
+    "options": [
+      "10 разказвачи разказват истории в продължение на 10 дни",
+      "Един разказвач",
+      "Случайно наредени",
+      "Без рамка"
+    ],
+    "correct": 0,
+    "explanation": "Рамковата конструкция (cornice) е новаторска."
+  },
+  {
+    "q": "Как Бокачо е повлиян от Данте?",
+    "options": [
+      "Данте е негов учител и идол – Бокачо го нарича Комедия (Данте)",
+      "Без влияние",
+      "Критикува Данте",
+      "Само стилово"
+    ],
+    "correct": 0,
+    "explanation": "Бокачо пише биография на Данте и популяризира Божествена комедия."
+  },
+  {
+    "q": "Каква е религиозната позиция на Бокачо?",
+    "options": [
+      "Толерантна и хуманистична – не отрича религиите, но ги релативизира",
+      "Фанатично вярващ",
+      "Атеист",
+      "Само католик"
+    ],
+    "correct": 0,
+    "explanation": "Притчата за трите пръстена е революционна за 14 в."
+  },
+  {
+    "q": "Как чумата влияе на Декамерон?",
+    "options": [
+      "Катализатор – хората бягат и разказват истории; темата за живота и смъртта",
+      "Без влияние",
+      "Само фон",
+      "Само в началото"
+    ],
+    "correct": 0,
+    "explanation": "Чумата е рамков контекст – смъртта кара хората да цялна живота."
+  },
+  {
+    "q": "Какъв е характерът на новелите в Декамерон?",
+    "options": [
+      "Разнообразни – любовни, комични, трагични, религиозни, поучителни",
+      "Само религиозни",
+      "Само любовни",
+      "Само трагични"
+    ],
+    "correct": 0,
+    "explanation": "100 новели покриват цялото разнообразие на човешкия живот."
+  },
+  {
+    "q": "Кои трима братя участват в притчата?",
+    "options": [
+      "Три богати братя спорят за религията – Мелхиседек е помолен да отсъди",
+      "Евреи",
+      "Мюсюлмани",
+      "Християни"
+    ],
+    "correct": 0,
+    "explanation": "Точните им имена не са важни – символиката е ключова."
+  },
+  {
+    "q": "Как притчата е свързана с Лесинг?",
+    "options": [
+      "Лесинг пренаписва притчата в Натан Мъдрецът (1779) – Просвещение",
+      "Без връзка",
+      "Само съвпадение",
+      "Лесинг е по-ранен"
+    ],
+    "correct": 0,
+    "explanation": "Притчата за пръстена е жива идея в западната литература."
+  },
+  {
+    "q": "Каква е функцията на хумора в Декамерон?",
+    "options": [
+      "Освобождение от страх, утвърждаване на земния живот срещу средновековната мрачност",
+      "Само развлечение",
+      "Без функция",
+      "Само критика"
+    ],
+    "correct": 0,
+    "explanation": "Хуморът е ренесансово оръжие срещу средновековния аскетизъм."
+  },
+  {
+    "q": "Как е изградена притчата за трите пръстена?",
+    "options": [
+      "Бащата прави три еднакви пръстена – синовете не знаят кой е истинският",
+      "Три различни пръстена",
+      "Само един пръстен",
+      "Пръстените са от различни метали"
+    ],
+    "correct": 0,
+    "explanation": "Идентичността на пръстените е ключова за алегорията."
+  },
+  {
+    "q": "Каква е разликата Средновековие/Ренесанс?",
+    "options": [
+      "Средновековие: Бог в центъра; Ренесанс: човекът в центъра (хуманизъм)",
+      "Те са еднакви",
+      "Ренесансът е по-религиозен",
+      "Средновековието е по-светско"
+    ],
+    "correct": 0,
+    "explanation": "Ренесансовият хуманизъм е основна тема в програмата."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

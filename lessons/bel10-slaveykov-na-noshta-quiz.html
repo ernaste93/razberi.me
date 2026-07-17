@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – П. П. Славейков – „На острова на блажените" – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-slaveykov-na-noshta-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel10-slaveykov-na-noshta-quiz-2.html',
+      lessonUrl:   '/lessons/bel10-slaveykov-na-noshta.html',
+      lessonName:  'П. П. Славейков – „На острова на блажените"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – П. П. Славейков – „На острова на блажените" – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "„На острова на блажените\" е?",
+                "options": [
+                        "Роман",
+                        "Стихосбирка с философски монолози",
+                        "Разказ",
+                        "Поема"
+                ],
+                "correct": 1,
+                "explanation": "Стихосбирка (1910) с монолози на измислени и исторически поети."
+        },
+        {
+                "q": "Оригиналният похват в стихосбирката е?",
+                "options": [
+                        "Народни мотиви",
+                        "Монолози от лицето на измислени поети",
+                        "Документални данни",
+                        "Диалогична форма"
+                ],
+                "correct": 1,
+                "explanation": "Slaveykov измисля поети и говори от тяхно лице – уникален за БЕЛ похват."
+        },
+        {
+                "q": "Основната идея на стихосбирката е?",
+                "options": [
+                        "Войната е добра",
+                        "Смисълът е в любовта, творчеството и духовния идеал",
+                        "Материалното е важно",
+                        "Смъртта е страшна"
+                ],
+                "correct": 1,
+                "explanation": "Смисъл = любов + творчество + духовно усъвършенстване."
+        },
+        {
+                "q": "„Островът на блажените\" символизира?",
+                "options": [
+                        "Реален остров",
+                        "Духовния идеал, рая на творческия дух",
+                        "Гърция",
+                        "Смъртта"
+                ],
+                "correct": 1,
+                "explanation": "Символ: духовният рай – пространство на блажените творци."
+        },
+        {
+                "q": "Любовта в стихосбирката е?",
+                "options": [
+                        "Физическа, плътска",
+                        "Духовна, обединяваща двамата",
+                        "Невъзможна",
+                        "Нещастна"
+                ],
+                "correct": 1,
+                "explanation": "Духовна любов – единение на двете личности в по-висше цяло."
+        },
+        {
+                "q": "Смъртта в стихосбирката е представена като?",
+                "options": [
+                        "Трагедия",
+                        "Освобождение и преход на духа",
+                        "Случайност",
+                        "Наказание"
+                ],
+                "correct": 1,
+                "explanation": "Смъртта = освобождение – характерна за идеализма и романтизма идея."
+        },
+        {
+                "q": "Стилът на стихосбирката е?",
+                "options": [
+                        "Народен, прост",
+                        "Философски, дълбок, символистичен",
+                        "Документален",
+                        "Хумористичен"
+                ],
+                "correct": 1,
+                "explanation": "Философска лирика с символистична образност и дълбоки идеи."
+        },
+        {
+                "q": "Известното стихотворение „Cis moll\" е за?",
+                "options": [
+                        "Война",
+                        "Любовта и музиката",
+                        "Природата",
+                        "Историята"
+                ],
+                "correct": 1,
+                "explanation": "„Cis moll\" – любов и музика са неразривни; музикалният тон изразява любовното чувство."
+        },
+        {
+                "q": "Влиянието на Шилер и Ницше в стихосбирката е?",
+                "options": [
+                        "Без влияние",
+                        "Философски идеализъм, индивидуализъм, духовното превъзходство",
+                        "Реализъм",
+                        "Натурализъм"
+                ],
+                "correct": 1,
+                "explanation": "Немският идеализъм и ницшеанският индивидуализъм са видими в идеите на стихосбирката."
+        },
+        {
+                "q": "„De profundis\" (от дълбините) е стихотворение за?",
+                "options": [
+                        "Радост",
+                        "Болката и изкуството като изход от нея",
+                        "Любовта",
+                        "Природата"
+                ],
+                "correct": 1,
+                "explanation": "„De profundis\" = от дълбините – болката и страданието, преодолявани чрез изкуството."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

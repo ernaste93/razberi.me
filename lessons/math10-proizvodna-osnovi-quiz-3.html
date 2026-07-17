@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Производна – основи – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math10-proizvodna-osnovi-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/math10-proizvodna-osnovi.html',
+      lessonName:  'Производна – основи',
+      eyebrow:     'МАТЕМАТИКА · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Производна – основи – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Второта производна f''(x) > 0 означава?",
+                "options": [
+                        "Функцията расте",
+                        "Функцията е изпъкнала нагоре (concave up)",
+                        "Функцията намалява",
+                        "Инфлексна точка"
+                ],
+                "correct": 1,
+                "explanation": "f'' > 0 → графиката е изпъкнала нагоре (като чаша). Това е и условие за локален минимум."
+        },
+        {
+                "q": "(cos(3x))' = ?",
+                "options": [
+                        "3cos(3x)",
+                        "sin(3x)",
+                        "−3sin(3x)",
+                        "−sin(3x)"
+                ],
+                "correct": 2,
+                "explanation": "Верижно: f=cos u, u=3x. f' = −sin(3x)·3 = −3sin(3x)."
+        },
+        {
+                "q": "f(x)=x³−3x. Намери критичните точки?",
+                "options": [
+                        "x=0",
+                        "x=±1 (f'=3x²−3=0)",
+                        "x=3",
+                        "x=±3"
+                ],
+                "correct": 1,
+                "explanation": "f'(x) = 3x²−3 = 0 → x²=1 → x=±1."
+        },
+        {
+                "q": "При x=1 f(x)=x³−3x: f''(1)=?",
+                "options": [
+                        "0",
+                        "3",
+                        "6",
+                        "−6"
+                ],
+                "correct": 2,
+                "explanation": "f'(x)=3x²−3. f''(x)=6x. f''(1)=6>0 → x=1 е локален минимум."
+        },
+        {
+                "q": "При x=−1 f(x)=x³−3x: f''(−1)=?",
+                "options": [
+                        "6",
+                        "−6",
+                        "0",
+                        "3"
+                ],
+                "correct": 1,
+                "explanation": "f''(−1)=6·(−1)=−6<0 → x=−1 е локален максимум."
+        },
+        {
+                "q": "(e^(2x))' = ?",
+                "options": [
+                        "e^(2x)",
+                        "2e^(2x)",
+                        "2xe^(2x)",
+                        "e^(2x)/2"
+                ],
+                "correct": 1,
+                "explanation": "Верижно: f=eᵘ, u=2x. f' = eᵘ·2 = 2e^(2x)."
+        },
+        {
+                "q": "Производната измерва физически?",
+                "options": [
+                        "Площ",
+                        "Скорост на промяна (мигновена)",
+                        "Максимум",
+                        "Интеграл"
+                ],
+                "correct": 1,
+                "explanation": "f'(t) = скорост на промяна на f в момент t. Ако f=разстояние → f'=скорост. Ако f=скорост → f'=ускорение."
+        },
+        {
+                "q": "Закона за произведение: (x·sin x)' = ?",
+                "options": [
+                        "sin x",
+                        "x cos x",
+                        "sin x + x cos x",
+                        "x sin x"
+                ],
+                "correct": 2,
+                "explanation": "(u·v)' = u'v+uv' = 1·sin x + x·cos x = sin x + x cos x."
+        },
+        {
+                "q": "f(x) = ln(sin x), f'(x) = ?",
+                "options": [
+                        "1/sin x",
+                        "cos x/sin x = cot x",
+                        "sin x/cos x",
+                        "−1/sin x"
+                ],
+                "correct": 1,
+                "explanation": "Верижно: f=ln u, u=sin x. f' = (1/u)·cos x = cos x/sin x = cot x."
+        },
+        {
+                "q": "Монотонен ли е f(x)=x³ за всяко x?",
+                "options": [
+                        "Не",
+                        "Да – f'(x)=3x²≥0 (=0 само при x=0) → строго растяща",
+                        "Само за x>0",
+                        "Само за x<0"
+                ],
+                "correct": 1,
+                "explanation": "f'(x)=3x²≥0, равно на 0 само при x=0 (но не сменя знак) → функцията е строго растяща за всяко x∈ℝ."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

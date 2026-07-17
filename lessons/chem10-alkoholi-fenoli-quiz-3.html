@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Алкохоли и феноли – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem10-alkoholi-fenoli-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem10-alkoholi-fenoli.html',
+      lessonName:  'Алкохоли и феноли',
+      eyebrow:     'ХИМИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Алкохоли и феноли – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Стерилизиращ гел съдържа?",
+                "options": [
+                        "Метанол",
+                        "Изопропанол или етанол",
+                        "Глицерол",
+                        "Бутанол"
+                ],
+                "correct": 1,
+                "explanation": "60–70% изопропанол или 70% етанол. Метанолът е забранен."
+        },
+        {
+                "q": "Алдехид от метанол?",
+                "options": [
+                        "Ацеталдехид",
+                        "Формалдехид (HCHO)",
+                        "Ацетон",
+                        "Бензалдехид"
+                ],
+                "correct": 1,
+                "explanation": "CH₃OH → HCHO при окисление."
+        },
+        {
+                "q": "Третичните алкохоли при опит за окисление?",
+                "options": [
+                        "Алдехид",
+                        "Кетон",
+                        "Не се окисляват лесно",
+                        "Карбоксилна к-на"
+                ],
+                "correct": 2,
+                "explanation": "3° алкохол: C без H → не може директно да се окисли."
+        },
+        {
+                "q": "Диетилов естер от?",
+                "options": [
+                        "C₂H₅OH при 170°C",
+                        "2×C₂H₅OH при 140°C",
+                        "CH₃COOH+C₂H₅OH",
+                        "C₂H₄+H₂O"
+                ],
+                "correct": 1,
+                "explanation": "2×C₂H₅OH → C₂H₅–O–C₂H₅+H₂O при 140°C."
+        },
+        {
+                "q": "Метанолът навлиза в организма чрез?",
+                "options": [
+                        "Само кожа",
+                        "Инхалация, поглъщане, кожа",
+                        "Само поглъщане",
+                        "Само инхалация"
+                ],
+                "correct": 1,
+                "explanation": "Летлив → всички пътища на резорбция."
+        },
+        {
+                "q": "По-дълга С-верига в алкохол → ?",
+                "options": [
+                        "По-разтворим",
+                        "По-слабо разтворим в H₂O",
+                        "Не реагира",
+                        "По-летлив"
+                ],
+                "correct": 1,
+                "explanation": "Нараства хидрофобната С-верига → намалява разтворимостта."
+        },
+        {
+                "q": "Кетони от?",
+                "options": [
+                        "1° алкохоли",
+                        "2° алкохоли",
+                        "3° алкохоли",
+                        "Феноли"
+                ],
+                "correct": 1,
+                "explanation": "R–CHOH–R → кетон R–CO–R."
+        },
+        {
+                "q": "Бакелитът е?",
+                "options": [
+                        "Алкохол",
+                        "Феноло-формалдехидна смола",
+                        "Разтворител",
+                        "Алкан"
+                ],
+                "correct": 1,
+                "explanation": "Бакелит = феноло-формалдехидна смола (Baekeland, 1907). Първата синтетична пластмаса."
+        },
+        {
+                "q": "H-връзки в алкохоли?",
+                "options": [
+                        "C–H··· C",
+                        "О–Н···О между молекулите",
+                        "По-силни от ковалентни",
+                        "Само течни"
+                ],
+                "correct": 1,
+                "explanation": "О–Н···О H-връзки между алкохолните молекули."
+        },
+        {
+                "q": "Изопропанол от пропилен?",
+                "options": [
+                        "Дехидратация",
+                        "Хидратация (H₂O+кат.) по Марковников",
+                        "Нитриране",
+                        "Хидрогениране"
+                ],
+                "correct": 1,
+                "explanation": "CH₂=CHCH₃+H₂O → (CH₃)₂CHOH по правилото на Марковников."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

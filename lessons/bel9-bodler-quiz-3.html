@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 - Шарл Бодлер – Цветя на злото · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-bodler-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bel9-bodler.html",
+    lessonName:"Шарл Бодлер – Цветя на злото",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 3 - Шарл Бодлер – Цветя на злото",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е структурата на стихосбирката?",
+    "options": [
+      "6 цикъла: Spleen и Idéal, Парижки картини, Виното, Цветя на злото, Бунт, Смъртта",
+      "Без структура",
+      "Случайно наредени",
+      "Три части"
+    ],
+    "correct": 0,
+    "explanation": "Структурата е обмислена - духовно пътешествие."
+  },
+  {
+    "q": "Каква е темата за изкуството у Бодлер?",
+    "options": [
+      "Изкуството е единственото спасение от spleen - красотата спасява",
+      "Изкуството е безполезно",
+      "Без тема",
+      "Само занаят"
+    ],
+    "correct": 0,
+    "explanation": "L art pour l art (изкуство заради изкуството) е близка идея."
+  },
+  {
+    "q": "Как Бодлер разбира модерността?",
+    "options": [
+      "Модерността е противоречива - красота и грозота, fleeting и eternal",
+      "Модерността е прекрасна",
+      "Само отрицателна",
+      "Без позиция"
+    ],
+    "correct": 0,
+    "explanation": "Бодлер дефинира понятието modernity в есе за живописта."
+  },
+  {
+    "q": "Каква е ролята на музиката?",
+    "options": [
+      "Символистичната поезия се стреми към музикалност - звукови ефекти",
+      "Само метафора",
+      "Без роля",
+      "Само описание"
+    ],
+    "correct": 0,
+    "explanation": "Верлен ще каже: de la musique avant tout chose."
+  },
+  {
+    "q": "Каква е темата за греха?",
+    "options": [
+      "Грехът е присъщ на човека - не осъждане, а изследване",
+      "Грехът е добър",
+      "Без тема",
+      "Само религиозна"
+    ],
+    "correct": 0,
+    "explanation": "Бодлер е дълбоко религиозен и дълбоко грешен - трагично противоречие."
+  },
+  {
+    "q": "Какво е декаданс?",
+    "options": [
+      "Литературно течение - красота в разрушението, болката, края",
+      "Вид романтизъм",
+      "Просвещенско течение",
+      "Реализъм"
+    ],
+    "correct": 0,
+    "explanation": "Декадансът е продължение на символизма в края на 19 в."
+  },
+  {
+    "q": "Каква е разликата Бодлер/Верлен?",
+    "options": [
+      "Бодлер: тъмен и парадоксален; Верлен: музикален и меланхоличен",
+      "Те са еднакви",
+      "Верлен е по-тъмен",
+      "Бодлер е по-музикален"
+    ],
+    "correct": 0,
+    "explanation": "И двамата са символисти, но с различен глас."
+  },
+  {
+    "q": "Как Бодлер разбира красотата?",
+    "options": [
+      "Красотата е странна, болезнена, меланхолична - не класическа хармония",
+      "Класическа хармония",
+      "Само природна",
+      "Само женска"
+    ],
+    "correct": 0,
+    "explanation": "Бодлеровата естетика е антикласическа."
+  },
+  {
+    "q": "Каква е темата за скуката?",
+    "options": [
+      "Скуката (ennui) е по-лоша от злото - духовна смърт",
+      "Скуката е нормална",
+      "Без тема",
+      "Само личен проблем"
+    ],
+    "correct": 0,
+    "explanation": "Ennui е братя-близнак на spleen - основна модернистична тема."
+  },
+  {
+    "q": "Защо Цветя на злото е новаторска?",
+    "options": [
+      "Открива поезията на грозотата, града, греха - разширява темите на поезията",
+      "Само заради скандала",
+      "Само заради стила",
+      "Не е новаторска"
+    ],
+    "correct": 0,
+    "explanation": "Бодлер отваря врата, през която влиза цялата модерна поезия."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 – Константин Преславски – Азбучна молитва · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-konstantin-preslavski-q3',
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:'/lessons/bel8-konstantin-preslavski.html',
+    lessonName:"Константин Преславски – Азбучна молитва",
+    eyebrow:"БЕЛ · 8 клас · Средновековие",
+    title:"Тест 3 – Константин Преславски – Азбучна молитва",
+    passScore:8,
+    questions:[
+  {
+    "q": "Защо Азбучна молитва е в програмата на 8 клас?",
+    "options": [
+      "Като пример за средновековна старобългарска литература",
+      "Написана е от Черноризец Храбър",
+      "Е комична",
+      "Е народно творчество"
+    ],
+    "correct": 0,
+    "explanation": "Азбучна молитва е в МОН програмата за 8 клас заедно с О писменех."
+  },
+  {
+    "q": "Каква е духовната идея зад акростиха?",
+    "options": [
+      "Буквата е свещена – учи се с молитва, за да влезе в сърцето",
+      "Просто игра с думи",
+      "Математически похват",
+      "Мнемоника без духовен смисъл"
+    ],
+    "correct": 0,
+    "explanation": "За средновековния книжовник четенето и писането са духовен акт."
+  },
+  {
+    "q": "Кое НЕ е характеристика на Преславската школа?",
+    "options": [
+      "Пише на народен разговорен език",
+      "Превежда гръцки текстове",
+      "Развива се при Симеон",
+      "Включва Константин Преславски"
+    ],
+    "correct": 0,
+    "explanation": "Народният разговорен език е белег на Охридската, не Преславската школа."
+  },
+  {
+    "q": "Как се определя дали текст е акростих?",
+    "options": [
+      "Четем първите букви на всеки стих",
+      "Гледаме за рима",
+      "Броим срички",
+      "Четем последните букви"
+    ],
+    "correct": 0,
+    "explanation": "Акростих = начало на стих."
+  },
+  {
+    "q": "Каква е ролята на Кирил и Методий?",
+    "options": [
+      "Дали азбука и богослужение, основали книжовна традиция",
+      "Само превели Библията",
+      "Организирали политически съюз",
+      "Написали Азбучна молитва"
+    ],
+    "correct": 0,
+    "explanation": "Кирило-Методиевото дело е основата, върху която стоят всички книжовници от 8 клас."
+  },
+  {
+    "q": "Каква е разликата между молитва и химн?",
+    "options": [
+      "Молитвата е лично обръщение; химнът е прослава за тържество",
+      "Химнът е по-кратък",
+      "Молитвата е само в църквата",
+      "Те са едно и само"
+    ],
+    "correct": 0,
+    "explanation": "В литературната теория молитвата и химнът са сродни, но различни жанрове."
+  },
+  {
+    "q": "Какво е инвокация?",
+    "options": [
+      "Обръщение към Бога или музата в началото на творбата",
+      "Финалът на молитвата",
+      "Речта на епископа",
+      "Описание на природата"
+    ],
+    "correct": 0,
+    "explanation": "Инвокацията е традиционен начален похват – и в епоса, и в молитвата."
+  },
+  {
+    "q": "Каква е разликата між апология и молитва?",
+    "options": [
+      "Апологията защитава; молитвата се обръща към Бога",
+      "Молитвата е по-дълга",
+      "Апологията е поетична",
+      "Те са едно и само"
+    ],
+    "correct": 0,
+    "explanation": "Двата текста от 8 клас са различни жанрове."
+  },
+  {
+    "q": "Кое е правилното за Симеоновата епоха?",
+    "options": [
+      "Производство на оригинални творби и преводи от гръцки",
+      "Само превод от латински",
+      "Отказ от гръцки влияния",
+      "Край на книжнината"
+    ],
+    "correct": 0,
+    "explanation": "Симеон лично участва в книжовния живот и покровителства широко производство."
+  },
+  {
+    "q": "С кой термин можем да опишем Азбучна молитва?",
+    "options": [
+      "Образователна поезия с религиозна функция",
+      "Светска лирика",
+      "Дидактична проза",
+      "Исторически роман"
+    ],
+    "correct": 0,
+    "explanation": "Азбучна молитва е образователна поезия с религиозно съдържание."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

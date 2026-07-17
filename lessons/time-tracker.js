@@ -1,8 +1,8 @@
-// Active time tracker — reads window.LESSON_SUBJECT
+// Active time tracker – reads window.LESSON_SUBJECT
 // Three signals combined:
-//   1. Interaction (mousemove, click, keydown, touchstart) — resets 3-min idle timer
-//   2. Scroll progress — checked every 20s; if position changed, counts as reading
-//   3. Tab visibility — pauses immediately when tab is hidden
+//   1. Interaction (mousemove, click, keydown, touchstart) – resets 3-min idle timer
+//   2. Scroll progress – checked every 20s; if position changed, counts as reading
+//   3. Tab visibility – pauses immediately when tab is hidden
 // Saves per-subject seconds to localStorage key 'razberi_time_v1'
 
 (function () {
@@ -65,7 +65,7 @@
     document.addEventListener(ev, markActive, { passive: true })
   );
 
-  // Signal 2: scroll progress — if scrollY changed since last check → reading
+  // Signal 2: scroll progress – if scrollY changed since last check → reading
   setInterval(() => {
     if (document.hidden) return;
     const currentY = window.scrollY;

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Алдехиди и кетони – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem10-aldehidi-ketoni-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem10-aldehidi-ketoni.html',
+      lessonName:  'Алдехиди и кетони',
+      eyebrow:     'ХИМИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Алдехиди и кетони – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Ацетон полярен, но не образува H-връзки помежду си. Защо?",
+                "options": [
+                        "Не е алкохол",
+                        "Няма О–Н → не може да е H-донор",
+                        "Кетон",
+                        "По-голям"
+                ],
+                "correct": 1,
+                "explanation": "Ацетонът е H-акцептор (C=O), но не е H-донор (няма О–Н) → без H-H връзки."
+        },
+        {
+                "q": "HCHO + C₆H₅OH → (при нагряване) ?",
+                "options": [
+                        "PVC",
+                        "Феноло-формалдехидна смола (бакелит)",
+                        "PE",
+                        "PMMA"
+                ],
+                "correct": 1,
+                "explanation": "Поликондензация → бакелит (термореактивна смола)."
+        },
+        {
+                "q": "Кетони от?",
+                "options": [
+                        "Алдехиди",
+                        "2° алкохоли",
+                        "3° алкохоли",
+                        "Алкани"
+                ],
+                "correct": 1,
+                "explanation": "Вторичен алкохол → кетон при окисление."
+        },
+        {
+                "q": "Cu(OH)₂ + алдехид тест?",
+                "options": [
+                        "Синтез на алкохол",
+                        "Качествен тест за алдехиди",
+                        "Синтез на ацетон",
+                        "Горене"
+                ],
+                "correct": 1,
+                "explanation": "Cu₂O (червена утайка) – класически тест за редуциращи захари/алдехиди."
+        },
+        {
+                "q": "Алдехиди → окисление → ?",
+                "options": [
+                        "Кетони",
+                        "Алкохоли",
+                        "Карбоксилни к-ни",
+                        "Алкани"
+                ],
+                "correct": 2,
+                "explanation": "RCHO+[O]→RCOOH."
+        },
+        {
+                "q": "Уникалното при HCHO?",
+                "options": [
+                        "По-голяма молекула",
+                        "H–CHO – само 1C, R=H",
+                        "Не реагира с Толенс",
+                        "Твърдо"
+                ],
+                "correct": 1,
+                "explanation": "Формалдехид: H–CHO. Единственият алдехид без въглеводороден R."
+        },
+        {
+                "q": "Ацетонът е добър разтворител. Защо?",
+                "options": [
+                        "Неполярен",
+                        "Полярен (C=O) + летлив + смесима с H₂O",
+                        "Реагира с всичко",
+                        "Вискозен"
+                ],
+                "correct": 1,
+                "explanation": "Полярен (разтваря полярни) + смесима с H₂O + т.к. 56°C (бързо изпарява)."
+        },
+        {
+                "q": "Метанал = ?",
+                "options": [
+                        "Метанол",
+                        "Формалдехид HCHO",
+                        "Мравчена к-на",
+                        "Метан"
+                ],
+                "correct": 1,
+                "explanation": "Метанал = IUPAC за формалдехид. -ал суфикс = алдехид."
+        },
+        {
+                "q": "CH₃CHO+HCN → ?",
+                "options": [
+                        "CH₃CH₂OH",
+                        "CH₃CH(OH)CN (цианохидрин)",
+                        "CH₃COOH",
+                        "CH₃CHO₂"
+                ],
+                "correct": 1,
+                "explanation": "HCN е нуклеофил → нуклеофилна адиция към C=O → лактонитрил."
+        },
+        {
+                "q": "Ацеталдехидът мирише на?",
+                "options": [
+                        "Бадеми",
+                        "Остра, дразнеща плодова миризма",
+                        "Без",
+                        "Мравчена к-на"
+                ],
+                "correct": 1,
+                "explanation": "CH₃CHO – остра, дразнеща миризма. Образува се при разграждане на етанол."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

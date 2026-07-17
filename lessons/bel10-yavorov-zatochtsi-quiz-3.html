@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Пейо Яворов – „Заточеници" – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-yavorov-zatochtsi-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bel10-yavorov-zatochtsi.html',
+      lessonName:  'Пейо Яворов – „Заточеници"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Пейо Яворов – „Заточеници" – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Яворов умира?",
+                "options": [
+                        "В битка",
+                        "Самоубийство (1914)",
+                        "От болест",
+                        "В емиграция"
+                ],
+                "correct": 1,
+                "explanation": "Яворов се самоубива 1914 г., след трагедията с Лора Каравелова."
+        },
+        {
+                "q": "„Хайдути\" е от?",
+                "options": [
+                        "Символистичния период",
+                        "Ранния граждански период",
+                        "Последния период",
+                        "Детството"
+                ],
+                "correct": 1,
+                "explanation": "„Хайдути\" е от ранния граждански период – социални и освободителни теми."
+        },
+        {
+                "q": "Идейната основа на „Заточеници\" е?",
+                "options": [
+                        "Смирение",
+                        "Борбата за свобода е смисълът на живота",
+                        "Приемането на съдбата",
+                        "Религиозното спасение"
+                ],
+                "correct": 1,
+                "explanation": "Борбата за свобода е върховна ценност – заточеникът е герой, не жертва."
+        },
+        {
+                "q": "Как лирическият герой се отнася към заточениците?",
+                "options": [
+                        "Съжаление",
+                        "С дълбоко уважение и солидарност",
+                        "Безразличие",
+                        "Критика"
+                ],
+                "correct": 1,
+                "explanation": "Лирическото „аз\" изразява солидарност, уважение и болка заедно с тях."
+        },
+        {
+                "q": "Мотивът „вериги\" се среща и в?",
+                "options": [
+                        "„Луд гидия\"",
+                        "Много революционни стихотворения в БЕЛ – символ на робството",
+                        "„Записки\"",
+                        "Само тук"
+                ],
+                "correct": 1,
+                "explanation": "Веригите = робство и потисничество – повтарящ се символ в революционната лирика."
+        },
+        {
+                "q": "Каква е разликата между заточеника и затворника?",
+                "options": [
+                        "Без разлика",
+                        "Заточеникът е политически затворник – борец за идея",
+                        "Затворникът е по-свободен",
+                        "Само терминологична"
+                ],
+                "correct": 1,
+                "explanation": "Заточеник = политически затворник, страдащ за идея – героична конотация."
+        },
+        {
+                "q": "Стихотворението изразява ли лична или колективна болка?",
+                "options": [
+                        "Само лична",
+                        "Колективна – болката на народа и борците",
+                        "Само на автора",
+                        "Без болка"
+                ],
+                "correct": 1,
+                "explanation": "Колективна болка – говорителят изразява чувствата на целия народ."
+        },
+        {
+                "q": "Яворов е член на кръга?",
+                "options": [
+                        "Само сам",
+                        "„Мисъл\"",
+                        "Символистите",
+                        "ВМРО само"
+                ],
+                "correct": 1,
+                "explanation": "Яворов е ключов член на кръга „Мисъл\" заедно с П. П. Славейков."
+        },
+        {
+                "q": "„Заточеници\" може да се определи и като?",
+                "options": [
+                        "Елегия само",
+                        "Ода/химн за борците – прославя тяхното страдание",
+                        "Сатира",
+                        "Баlade"
+                ],
+                "correct": 1,
+                "explanation": "Химн/ода за борците – прославя, не само оплаква."
+        },
+        {
+                "q": "Образният свят на стихотворението е изграден чрез?",
+                "options": [
+                        "Само абстрактни понятия",
+                        "Конкретни символи (вериги, гора, зора, нощ)",
+                        "Само числа",
+                        "Документални данни"
+                ],
+                "correct": 1,
+                "explanation": "Конкретни символи изграждат емоционалния и смисловия свят."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

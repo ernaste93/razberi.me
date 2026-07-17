@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 – Обмяна на веществата · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bio8-obmen-veshtestva-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bio8-obmen-veshtestva.html",
+    lessonName:"Обмяна на веществата",
+    eyebrow:"Биология · 8 клас · Анатомия",
+    title:"Тест 3 – Обмяна на веществата",
+    passScore:8,
+    questions:[
+  {
+    "q": "Защо трите системи са взаимосвързани?",
+    "options": [
+      "Всяка зависи от другите – нарушение в едната засяга всички",
+      "Работят независимо",
+      "Само кръвоносната зависи от останалите",
+      "Само дихателната е свързана"
+    ],
+    "correct": 0,
+    "explanation": "Клетките получават O₂ и хранителни вещества само ако и трите работят."
+  },
+  {
+    "q": "Какво се случва при анемия?",
+    "options": [
+      "Намален брой еритроцити или хемоглобин – по-малко O₂ за клетките",
+      "Твърде много еритроцити",
+      "Проблем с тромбоцитите",
+      "Проблем с ензимите"
+    ],
+    "correct": 0,
+    "explanation": "Анемията е дефицит на кислороден транспорт."
+  },
+  {
+    "q": "Каква е ролята на диафрагмата?",
+    "options": [
+      "Основен дихателен мускул – движи се надолу при вдишване",
+      "Произвежда кръвни клетки",
+      "Регулира сърдечния ритъм",
+      "Произвежда ензими"
+    ],
+    "correct": 0,
+    "explanation": "Диафрагмата е куполообразен мускул под белите дробове."
+  },
+  {
+    "q": "Какво е кръвно налягане?",
+    "options": [
+      "Налягането, упражнявано от кръвта върху стените на съдовете",
+      "Количество кръв",
+      "Скорост на сърцебиене",
+      "Ниво на O₂ в кръвта"
+    ],
+    "correct": 0,
+    "explanation": "Нормалното кръвно налягане е около 120/80 mmHg."
+  },
+  {
+    "q": "Защо алвеолите имат тънки стени и много капиляри?",
+    "options": [
+      "За бързо и ефективно дифундиране на газове",
+      "За по-голяма здравина",
+      "За по-голям обем",
+      "За производство на слуз"
+    ],
+    "correct": 0,
+    "explanation": "Тънките стени и гъстата мрежа от капиляри максимизират газообмена."
+  },
+  {
+    "q": "Какво е рефлуксът?",
+    "options": [
+      "Връщане на стомашна киселина в хранопровода",
+      "Вид ензим",
+      "Тип храносмилане",
+      "Нормално явление"
+    ],
+    "correct": 0,
+    "explanation": "Рефлуксът е симптом на слаб клапан между стомах и хранопровод."
+  },
+  {
+    "q": "Каква е ролята на солната киселина в стомаха?",
+    "options": [
+      "Убива бактерии и активира пепсина",
+      "Само разгражда протеини",
+      "Само убива бактерии",
+      "Усвоява хранителни вещества"
+    ],
+    "correct": 0,
+    "explanation": "Солната киселина (pH 1-2) е агресивна среда за патогени."
+  },
+  {
+    "q": "Какво е сърдечна честота?",
+    "options": [
+      "Брой удари на сърцето в минута",
+      "Кръвно налягане",
+      "Обем на кръвта",
+      "Ниво на O₂"
+    ],
+    "correct": 0,
+    "explanation": "Нормалната сърдечна честота е 60–100 удара/мин."
+  },
+  {
+    "q": "Какво е катаболизъм?",
+    "options": [
+      "Разграждане на молекули с освобождаване на енергия",
+      "Изграждане на молекули",
+      "Вид ензим",
+      "Тип тъкан"
+    ],
+    "correct": 0,
+    "explanation": "Катаболизмът е деструктивната страна на обмяната на вещества."
+  },
+  {
+    "q": "Какво е анаболизъм?",
+    "options": [
+      "Изграждане на сложни молекули с разход на енергия",
+      "Разграждане на молекули",
+      "Вид хормон",
+      "Тип клетка"
+    ],
+    "correct": 0,
+    "explanation": "Анаболизмът е конструктивната страна на метаболизма."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

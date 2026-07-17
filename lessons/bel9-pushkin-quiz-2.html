@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 - Александър Пушкин – Евгений Онегин · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-pushkin-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bel9-pushkin-quiz-3.html",
+    lessonUrl:"/lessons/bel9-pushkin.html",
+    lessonName:"Александър Пушкин – Евгений Онегин",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 2 - Александър Пушкин – Евгений Онегин",
+    passScore:8,
+    questions:[
+  {
+    "q": "Как Пушкин разбира байроническия герой?",
+    "options": [
+      "Адаптира го за руска среда, но го пародира и критикува",
+      "Идеализира го",
+      "Отхвърля го изцяло",
+      "Копира Байрон"
+    ],
+    "correct": 0,
+    "explanation": "Пушкин е под влияние на Байрон, но е критичен."
+  },
+  {
+    "q": "Какво е значението на писмото на Татяна?",
+    "options": [
+      "Символ на чистата любов и руската душа",
+      "Просто любовно писмо",
+      "Провал",
+      "Заплаха"
+    ],
+    "correct": 0,
+    "explanation": "Писмото е кулминация на романтичния лиризъм."
+  },
+  {
+    "q": "Каква е ролята на природата в романа?",
+    "options": [
+      "Огледало на чувствата – зима = студенина на Онегин; пролет = любов на Татяна",
+      "Само фон",
+      "Без функция",
+      "Реалистично описание"
+    ],
+    "correct": 0,
+    "explanation": "Природата е романтичен лайтмотив."
+  },
+  {
+    "q": "Кой е Зарецки?",
+    "options": [
+      "Секундантът, организирал дуела – символ на суетата на обществото",
+      "Любовникът на Татяна",
+      "Бащата на Ленски",
+      "Слуга"
+    ],
+    "correct": 0,
+    "explanation": "Зарецки е символ на светската суета, причинила дуела."
+  },
+  {
+    "q": "Каква е разликата Онегин/Ленски?",
+    "options": [
+      "Онегин: циник; Ленски: романтичен идеалист",
+      "Те са еднакви",
+      "Ленски е по-стар",
+      "Онегин е по-добър"
+    ],
+    "correct": 0,
+    "explanation": "Тяхната антитеза е основен конфликт в романа."
+  },
+  {
+    "q": "Как Пушкин присъства в текста?",
+    "options": [
+      "Като лиричен разказвач, коментиращ сатирично",
+      "Не присъства",
+      "Само в пролога",
+      "Анонимно"
+    ],
+    "correct": 0,
+    "explanation": "Авторовото присъствие е форма на романтична ирония."
+  },
+  {
+    "q": "Какъв е финалният ефект върху читателя?",
+    "options": [
+      "Съчувствие към Татяна и съмнение в Онегин",
+      "Симпатия към Онегин",
+      "Безразличие",
+      "Ненавист към Татяна"
+    ],
+    "correct": 0,
+    "explanation": "Симпатиите на читателя са на страната на Татяна."
+  },
+  {
+    "q": "Какво е значението на дуела?",
+    "options": [
+      "Безсмислена трагедия, причинена от конформизъм",
+      "Героичен акт",
+      "Справедливо наказание",
+      "Без значение"
+    ],
+    "correct": 0,
+    "explanation": "Дуелът е осъждане на аристократическата суетност."
+  },
+  {
+    "q": "Каква е темата за времето в романа?",
+    "options": [
+      "Времето минава – Онегин не се е променил, светът – да",
+      "Времето спира",
+      "Само в края",
+      "Без тема за времето"
+    ],
+    "correct": 0,
+    "explanation": "Финалната среща показва, че Онегин е останал същия."
+  },
+  {
+    "q": "Как романът е свързан с реализма?",
+    "options": [
+      "Точно социално описание на руския живот и психология",
+      "Изцяло романтичен",
+      "Без реализъм",
+      "Само фантастика"
+    ],
+    "correct": 0,
+    "explanation": "Пушкин е преход от романтизъм към критически реализъм."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

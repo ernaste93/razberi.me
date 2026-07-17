@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Софроний Врачански – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel9-sofroniy-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel9-sofroniy-quiz-2.html',
+      lessonUrl:   '/lessons/bel9-sofroniy.html',
+      lessonName:  'Софроний Врачански',
+      eyebrow:     'БЕЛ · 9 клас · Просвещение',
+      title:       'Куиз – Софроний Врачански – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Каква е \"Житие и страдание грешного Софрония\"?",
+                "options": [
+                        "Автобиография",
+                        "Роман",
+                        "Поема",
+                        "Историческа хроника"
+                ],
+                "correct": 0,
+                "explanation": "Текстът е автобиографичен – Софроний разказва за собствения си живот."
+        },
+        {
+                "q": "Кога е написано \"Житие\"?",
+                "options": [
+                        "1804",
+                        "1762",
+                        "1878",
+                        "1832"
+                ],
+                "correct": 0,
+                "explanation": "Написано е в Букурещ около 1804 г."
+        },
+        {
+                "q": "Кой е Софроний Врачански?",
+                "options": [
+                        "Епископ и последовател на Паисий",
+                        "Войвода",
+                        "Търговец",
+                        "Поет-романтик"
+                ],
+                "correct": 0,
+                "explanation": "Софроний е православен духовник и книжовник."
+        },
+        {
+                "q": "Кое е уникалното в езика на Софроний?",
+                "options": [
+                        "Използва разговорен новобългарски",
+                        "Пише на старобългарски",
+                        "Пише на гръцки",
+                        "Пише на руски"
+                ],
+                "correct": 0,
+                "explanation": "Езикът е близък до народния говор – достъпен за широка аудитория."
+        },
+        {
+                "q": "Коя беше ролята на Софроний за Паисий?",
+                "options": [
+                        "Преписал \"История\" при самия Паисий",
+                        "Издал книгата",
+                        "Превел я на гръцки",
+                        "Критикувал я"
+                ],
+                "correct": 0,
+                "explanation": "Той е един от ранните преписвачи на \"Историята\"."
+        },
+        {
+                "q": "Каква е темата на \"Житие\"?",
+                "options": [
+                        "Личните страдания и вярата в Бога",
+                        "Историята на България",
+                        "Природата на Балкана",
+                        "Революционната борба"
+                ],
+                "correct": 0,
+                "explanation": "Текстът описва физическите и духовни изпитания на Софроний."
+        },
+        {
+                "q": "Къде умира Софроний Врачански?",
+                "options": [
+                        "В Букурещ",
+                        "Враца",
+                        "Атон",
+                        "Цариград"
+                ],
+                "correct": 0,
+                "explanation": "Прекарва последните си години като емигрант в Букурещ."
+        },
+        {
+                "q": "Какво е значението на \"Житие\" за новобългарската литература?",
+                "options": [
+                        "Първа оригинална автобиография на новобългарски",
+                        "Първата поема",
+                        "Първият роман",
+                        "Първата история"
+                ],
+                "correct": 0,
+                "explanation": "\"Житие\" слага началото на автобиографичния жанр у нас."
+        },
+        {
+                "q": "Какъв жанр е \"Житие\" спрямо световната традиция?",
+                "options": [
+                        "Духовна автобиография",
+                        "Епос",
+                        "Ода",
+                        "Новела"
+                ],
+                "correct": 0,
+                "explanation": "Традицията на духовна автобиография идва от Августин."
+        },
+        {
+                "q": "Какво преживява Софроний по времето на турски преследвания?",
+                "options": [
+                        "Лишения, бягство, физически страдания",
+                        "Спокоен живот",
+                        "Слава и почести",
+                        "Богатство"
+                ],
+                "correct": 0,
+                "explanation": "\"Житие\" е изпълнено с описания на гонения и нещастия."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

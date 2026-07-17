@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Паисий Хилендарски – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel9-paisiy-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bel9-paisiy.html',
+      lessonName:  'Паисий Хилендарски',
+      eyebrow:     'БЕЛ · 9 клас · Просвещение',
+      title:       'Куиз – Паисий Хилендарски – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Кой е основният апел в \"История славянобългарска\"?",
+                "options": [
+                        "Познай историята си и се гордей с народа си",
+                        "Уважавай турската власт",
+                        "Учи чужди езици",
+                        "Не се интересувай от миналото"
+                ],
+                "correct": 0,
+                "explanation": "Паисий иска всеки да познава и обича своя народ."
+        },
+        {
+                "q": "Какво е Хилендарският монастир?",
+                "options": [
+                        "Български православен монастир на Атон",
+                        "Турска джамия",
+                        "Гръцка църква",
+                        "Руско светилище"
+                ],
+                "correct": 0,
+                "explanation": "Хилендар е известен средновековен монастир на Атонския полуостров."
+        },
+        {
+                "q": "Как характеризира Паисий гърците в текста?",
+                "options": [
+                        "Като завиждащи на славата на България",
+                        "Като приятели",
+                        "Като учители",
+                        "Като безопасни съседи"
+                ],
+                "correct": 0,
+                "explanation": "Паисий е критичен към гречеещи българи и гърци, присвояващи историята."
+        },
+        {
+                "q": "Какво означава \"юроде\" в текста на Паисий?",
+                "options": [
+                        "Глупав, безразсъден",
+                        "Мъдрец",
+                        "Свещеник",
+                        "Войн"
+                ],
+                "correct": 0,
+                "explanation": "\"Юроде\" на старобългарски означава безумен, глупав."
+        },
+        {
+                "q": "Чия история преди Паисий е описвана на Балканите?",
+                "options": [
+                        "Предимно гръцката и сръбската",
+                        "Предимно българската",
+                        "Само турската",
+                        "Само руската"
+                ],
+                "correct": 0,
+                "explanation": "В условията на Фанариотската власт гръцката история доминирала."
+        },
+        {
+                "q": "Какъв е жанрът на \"История славянобългарска\" спрямо епохата?",
+                "options": [
+                        "Ранен просветителски текст",
+                        "Романтична поема",
+                        "Реалистичен роман",
+                        "Натуралистично есе"
+                ],
+                "correct": 0,
+                "explanation": "Текстът е Просвещенски по дух – вярва в силата на знанието."
+        },
+        {
+                "q": "Кое НЕ е характерно за стила на Паисий?",
+                "options": [
+                        "Безстрастна обективност",
+                        "Директни обръщения",
+                        "Патетика",
+                        "Риторични въпроси"
+                ],
+                "correct": 0,
+                "explanation": "Паисий е изключително емоционален и страстен, не безстрастен."
+        },
+        {
+                "q": "Кой е адресатът на произведението?",
+                "options": [
+                        "Всеки българин, особено грамотни и търговци",
+                        "Само духовниците",
+                        "Само турските власти",
+                        "Само децата"
+                ],
+                "correct": 0,
+                "explanation": "Паисий пише за всички, но особено за тези, способни да я разпространяват."
+        },
+        {
+                "q": "Какъв е приносът на Паисий за националната идентичност?",
+                "options": [
+                        "Слага началото на движение за самосъзнание",
+                        "Основава първото училище",
+                        "Освобождава България",
+                        "Пише конституция"
+                ],
+                "correct": 0,
+                "explanation": "Историческото му значение е в пробуждането на националното самосъзнание."
+        },
+        {
+                "q": "Какво е отношението на Паисий към религията?",
+                "options": [
+                        "Слива религиозното с националното",
+                        "Отделя напълно религия от народ",
+                        "Е против религията",
+                        "Проповядва ислям"
+                ],
+                "correct": 0,
+                "explanation": "За Паисий православието и народността са неделими."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

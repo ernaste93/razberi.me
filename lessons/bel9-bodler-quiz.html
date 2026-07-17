@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 - Шарл Бодлер – Цветя на злото · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-bodler-q1",
+    quizNum:1,
+    nextQuizUrl:"/lessons/bel9-bodler-quiz-2.html",
+    lessonUrl:"/lessons/bel9-bodler.html",
+    lessonName:"Шарл Бодлер – Цветя на злото",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 1 - Шарл Бодлер – Цветя на злото",
+    passScore:8,
+    questions:[
+  {
+    "q": "Кой е Шарл Бодлер?",
+    "options": [
+      "Французки поет, основоположник на символизма и модерната поезия",
+      "Романист",
+      "Английски поет",
+      "Немски философ"
+    ],
+    "correct": 0,
+    "explanation": "Бодлер е повратна точка в историята на европейската поезия."
+  },
+  {
+    "q": "Кога е публикувана Цветя на злото?",
+    "options": [
+      "1857",
+      "1830",
+      "1870",
+      "1845"
+    ],
+    "correct": 0,
+    "explanation": "Стихосбирката предизвиква скандал и съдебен процес."
+  },
+  {
+    "q": "Какво е spleen у Бодлер?",
+    "options": [
+      "Меланхолия, скука, духовно задушаване - основно настроение",
+      "Вид болест",
+      "Романтична любов",
+      "Без значение"
+    ],
+    "correct": 0,
+    "explanation": "Spleen е ключово понятие за модерната чувствителност."
+  },
+  {
+    "q": "Какво са correspondances?",
+    "options": [
+      "Съответствия между сетивата - синестезия; звук, цвят, аромат си отговарят",
+      "Буквени съответствия",
+      "Рими",
+      "Метафори"
+    ],
+    "correct": 0,
+    "explanation": "Correspondances е ключово стихотворение и поетична програма."
+  },
+  {
+    "q": "Каква е символиката на заглавието Цветя на злото?",
+    "options": [
+      "Парадокс - красотата може да се открие в злото, болката, греха",
+      "Само метафора",
+      "Без символика",
+      "Романтичен образ"
+    ],
+    "correct": 0,
+    "explanation": "Заглавието е програмата на цялата стихосбирка."
+  },
+  {
+    "q": "За какво е осъден Бодлер след публикуването?",
+    "options": [
+      "Неморалност - шест стихотворения са наредени да бъдат изтрити",
+      "Политика",
+      "Религия",
+      "Плагиатство"
+    ],
+    "correct": 0,
+    "explanation": "Процесът е показателен за нетърпимостта на 19 в."
+  },
+  {
+    "q": "Каква е темата за Париж?",
+    "options": [
+      "Модерният град като ад - тълпата, грозотата, прозаичното стават поетична тема",
+      "Париж е красив",
+      "Без тема",
+      "Само фон"
+    ],
+    "correct": 0,
+    "explanation": "Бодлер открива урбанистичната поезия."
+  },
+  {
+    "q": "Каква е разликата между idéal и spleen?",
+    "options": [
+      "Idéal: търсене на красота и трансцендентно; spleen: мрак и скука",
+      "Те са едни и същи",
+      "Idéal е по-тъмен",
+      "Spleen е по-светъл"
+    ],
+    "correct": 0,
+    "explanation": "Диалогът между idéal и spleen е основното напрежение."
+  },
+  {
+    "q": "Кой е Бодлер по националност?",
+    "options": [
+      "Французки",
+      "Английски",
+      "Руски",
+      "Немски"
+    ],
+    "correct": 0,
+    "explanation": "Бодлер е роден в Париж."
+  },
+  {
+    "q": "Какво е синестезия?",
+    "options": [
+      "Смесване на сетива - мирис, звук, цвят се преплитат",
+      "Вид рима",
+      "Строфа",
+      "Метафора"
+    ],
+    "correct": 0,
+    "explanation": "Синестезията е основен поетичен похват на символизма."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

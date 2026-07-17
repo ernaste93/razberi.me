@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Алеко Константинов – „До Чикаго и назад" – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-aleko-do-chikago-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel10-aleko-do-chikago-quiz-2.html',
+      lessonUrl:   '/lessons/bel10-aleko-do-chikago.html',
+      lessonName:  'Алеко Константинов – „До Чикаго и назад"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Алеко Константинов – „До Чикаго и назад" – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "„До Чикаго и назад\" е?",
+                "options": [
+                        "Роман",
+                        "Пътепис",
+                        "Поема",
+                        "Разказ"
+                ],
+                "correct": 1,
+                "explanation": "Пътепис – жанрово определение. Алеко описва пътуване до Чикаго (1893)."
+        },
+        {
+                "q": "Поводът за пътуването е?",
+                "options": [
+                        "Лично пътуване",
+                        "Световното изложение в Чикаго (1893)",
+                        "Дипломатическа мисия",
+                        "Лечение"
+                ],
+                "correct": 1,
+                "explanation": "Алеко посещава Световното изложение в Чикаго 1893 г."
+        },
+        {
+                "q": "Основният контраст в творбата е?",
+                "options": [
+                        "Зима и лято",
+                        "Цивилизован Запад срещу изостанала България",
+                        "Богати и бедни",
+                        "Мъже и жени"
+                ],
+                "correct": 1,
+                "explanation": "Западната цивилизация е образец, с който България се сравнява неизгодно."
+        },
+        {
+                "q": "Образът на Бай Ганьо е?",
+                "options": [
+                        "Герой",
+                        "Тип на манталитета, несъвместим с модерната цивилизация",
+                        "Идеален гражданин",
+                        "Борец за свобода"
+                ],
+                "correct": 1,
+                "explanation": "Бай Ганьо = тип (не конкретна личност) на некултурния, нецивилизования манталитет."
+        },
+        {
+                "q": "Алеко критикува България?",
+                "options": [
+                        "От омраза",
+                        "От любов и желание за промяна",
+                        "Без причина",
+                        "За чужденци"
+                ],
+                "correct": 1,
+                "explanation": "Критиката е от любов – Алеко иска България да се развие и цивилизова."
+        },
+        {
+                "q": "Основните стилистични похвати са?",
+                "options": [
+                        "Пафос и патетика",
+                        "Хумор и ирония",
+                        "Документализъм",
+                        "Символизъм"
+                ],
+                "correct": 1,
+                "explanation": "Хумор и ирония са типичното оръжие на Алеко."
+        },
+        {
+                "q": "Алеко Константинов умира?",
+                "options": [
+                        "По старост",
+                        "Убит (1897) – вероятно политически мотив",
+                        "В болест",
+                        "В чужбина"
+                ],
+                "correct": 1,
+                "explanation": "Алеко е убит на 34 г. (1897) при неизяснени обстоятелства – предполага се политически мотив."
+        },
+        {
+                "q": "Ценностите, на които Алеко се възхищава на Запад са?",
+                "options": [
+                        "Военна сила",
+                        "Образование, ред, гражданска отговорност",
+                        "Богатство",
+                        "Мода"
+                ],
+                "correct": 1,
+                "explanation": "Западните ценности в пътеписа: образованост, организираност, гражданска отговорност."
+        },
+        {
+                "q": "Жанрът пътепис се характеризира с?",
+                "options": [
+                        "Измислени герои",
+                        "Лично наблюдение, субективна оценка, описание на пътуването",
+                        "Исторически данни",
+                        "Поетична форма"
+                ],
+                "correct": 1,
+                "explanation": "Пътепис: реално пътуване, личен поглед, субективни наблюдения и оценки."
+        },
+        {
+                "q": "„До Чикаго\" предшества „Бай Ганьо\" с?",
+                "options": [
+                        "1 год.",
+                        "1–2 г. (1893 → 1894–95)",
+                        "5 г.",
+                        "10 г."
+                ],
+                "correct": 1,
+                "explanation": "„До Чикаго\" 1893, „Бай Ганьо\" 1894–95."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

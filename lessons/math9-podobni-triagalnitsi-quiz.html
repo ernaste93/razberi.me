@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Подобни триъгълници – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math9-podobni-triagalnitsi-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/math9-podobni-triagalnitsi-quiz-2.html',
+      lessonUrl:   '/lessons/math9-podobni-triagalnitsi.html',
+      lessonName:  'Подобни триъгълници',
+      eyebrow:     'Математика · 9 клас · Геометрия',
+      title:       'Куиз – Подобни триъгълници – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Какво означава два триъгълника да са подобни?",
+                "options": [
+                        "Ъглите им са равни и страните пропорционални",
+                        "Страните им са равни",
+                        "Лицата им са равни",
+                        "Периметрите им са равни"
+                ],
+                "correct": 0,
+                "explanation": "Подобието е по ъгли И пропорционалност на страни."
+        },
+        {
+                "q": "Какъв е признакът АА?",
+                "options": [
+                        "Два равни ъгъла → подобни",
+                        "Три равни ъгъла",
+                        "Само по страни",
+                        "По лице"
+                ],
+                "correct": 0,
+                "explanation": "Ако два ъгъла са равни, третият също е (сумата = 180°)."
+        },
+        {
+                "q": "Ако k = 3, отношението на лицата е:",
+                "options": [
+                        "9",
+                        "3",
+                        "6",
+                        "27"
+                ],
+                "correct": 0,
+                "explanation": "Лицата са в отношение k² = 9."
+        },
+        {
+                "q": "Кой признак използва съотношение на страни и включен ъгъл?",
+                "options": [
+                        "СЪС",
+                        "АА",
+                        "ССС",
+                        "АСА"
+                ],
+                "correct": 0,
+                "explanation": "СЪС: Страна-Ъгъл-Страна."
+        },
+        {
+                "q": "При подобие k = 2, страна на малкия = 5. Страната на голям е:",
+                "options": [
+                        "10",
+                        "7",
+                        "2.5",
+                        "15"
+                ],
+                "correct": 0,
+                "explanation": "5 · 2 = 10."
+        },
+        {
+                "q": "Питагоровата теорема: c е:",
+                "options": [
+                        "Хипотенузата (срещу правия ъгъл)",
+                        "Малкия катет",
+                        "Средната страна",
+                        "Всяка страна"
+                ],
+                "correct": 0,
+                "explanation": "c е хипотенузата."
+        },
+        {
+                "q": "При правоъгълен триъгълник с катети 3 и 4, хипотенузата е:",
+                "options": [
+                        "5",
+                        "7",
+                        "√7",
+                        "6"
+                ],
+                "correct": 0,
+                "explanation": "3² + 4² = 9 + 16 = 25 → c = 5."
+        },
+        {
+                "q": "Ако триъгълниците са подобни с k, медианите са в отношение:",
+                "options": [
+                        "k",
+                        "k²",
+                        "k³",
+                        "1/k"
+                ],
+                "correct": 0,
+                "explanation": "Линейните елементи (медиани, ъглополовящи) са в отношение k."
+        },
+        {
+                "q": "ССС признак означава:",
+                "options": [
+                        "Трите двойки страни пропорционални",
+                        "Три равни ъгъла",
+                        "Три равни страни",
+                        "Две страни и ъгъл"
+                ],
+                "correct": 0,
+                "explanation": "ССС: пропорционалност на всичките три страни."
+        },
+        {
+                "q": "Ако лицата на подобни триъгълници са 16 и 4, k е:",
+                "options": [
+                        "2",
+                        "4",
+                        "8",
+                        "16"
+                ],
+                "correct": 0,
+                "explanation": "k² = 16/4 = 4 → k = 2."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

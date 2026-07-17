@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Клетката – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio9-kletkata-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bio9-kletkata.html',
+      lessonName:  'Клетката',
+      eyebrow:     'Биология · 9 клас · Цитология',
+      title:       'Куиз – Клетката – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Защо митохондриите се смятат за символ на симбиотичен произход?",
+                "options": [
+                        "Имат собствена ДНК и приличат на бактерии",
+                        "Защото се делят като вируси",
+                        "Нямат мембрана",
+                        "Произхождат от ядрото"
+                ],
+                "correct": 0,
+                "explanation": "Теорията за ендосимбиозата – митохондриите са бивши бактерии."
+        },
+        {
+                "q": "Кой клетъчен компонент пропуска само определени молекули?",
+                "options": [
+                        "Полупропускливата мембрана",
+                        "Клетъчната стена",
+                        "Вакуолата",
+                        "Ядрото"
+                ],
+                "correct": 0,
+                "explanation": "Мембраната е избирателно пропусклива."
+        },
+        {
+                "q": "Какво е диференциация на клетките?",
+                "options": [
+                        "Процесът, при който клетките придобиват специализирани функции",
+                        "Делене",
+                        "Смъртта на клетките",
+                        "Транспорт на молекули"
+                ],
+                "correct": 0,
+                "explanation": "От единна зигота се развиват различни клетъчни типове."
+        },
+        {
+                "q": "Как ДНК се опакова в ядрото?",
+                "options": [
+                        "Навита около хистони в нуклеозоми, след това хроматин/хромозоми",
+                        "Плаваща свободно",
+                        "В линейна верига",
+                        "В митохондриите"
+                ],
+                "correct": 0,
+                "explanation": "Нуклеозомите са \"кабиновките\" на ДНК."
+        },
+        {
+                "q": "Какво се случва в интерфаза (между деленията)?",
+                "options": [
+                        "ДНК се репликира; клетката расте",
+                        "Клетката се дели",
+                        "Хромозомите се видимят",
+                        "Ядрото изчезва"
+                ],
+                "correct": 0,
+                "explanation": "Интерфазата е подготовка за следващото делене."
+        },
+        {
+                "q": "Каква е ролята на центрозомата при митозата?",
+                "options": [
+                        "Образува делителното вретено",
+                        "Синтезира АТФ",
+                        "Разгражда белтъци",
+                        "Произвежда рибозоми"
+                ],
+                "correct": 0,
+                "explanation": "Центрозомата организира микротубулите на делителното вретено."
+        },
+        {
+                "q": "Какво е апоптоза?",
+                "options": [
+                        "Програмирана клетъчна смърт",
+                        "Патологична некроза",
+                        "Клетъчно делене",
+                        "Мутация"
+                ],
+                "correct": 0,
+                "explanation": "Апоптозата е контролиран, нормален процес за елиминиране на клетки."
+        },
+        {
+                "q": "Каква е разликата между клетъчно дишане и фотосинтеза по посока?",
+                "options": [
+                        "Дишане: глюкоза → CO₂ + H₂O + АТФ; Фотосинтеза: обратното",
+                        "Нямат разлика",
+                        "Фотосинтеза отделя АТФ навън",
+                        "Дишане е в хлоропласти"
+                ],
+                "correct": 0,
+                "explanation": "Двата процеса са противоположни по посока."
+        },
+        {
+                "q": "Какво е цитоскелет?",
+                "options": [
+                        "Мрежа от белтъчни нишки, поддържащи формата и движенията на клетката",
+                        "Клетъчна стена",
+                        "Ядрена обвивка",
+                        "Тип мембрана"
+                ],
+                "correct": 0,
+                "explanation": "Цитоскелетът включва микрофиламенти, микротубули и интерм. нишки."
+        },
+        {
+                "q": "Защо растителните клетки имат клетъчна стена?",
+                "options": [
+                        "За механична опора и защита при промени в осмотичното налягане",
+                        "За да произвеждат АТФ",
+                        "За да правят фотосинтеза",
+                        "Защото нямат мембрана"
+                ],
+                "correct": 0,
+                "explanation": "Стената предпазва от разкъсване при поглъщане на вода."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

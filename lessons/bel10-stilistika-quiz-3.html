@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Стилистика и езикови средства – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-stilistika-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bel10-stilistika.html',
+      lessonName:  'Стилистика и езикови средства',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Стилистика и езикови средства – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "„Луната се смее\" е?",
+                "options": [
+                        "Метонимия",
+                        "Персонификация",
+                        "Хипербола",
+                        "Антитеза"
+                ],
+                "correct": 1,
+                "explanation": "Луната = неодушевена, „смее се\" = човешко действие → персонификация."
+        },
+        {
+                "q": "„Чаках цяла вечност\" е?",
+                "options": [
+                        "Метафора",
+                        "Хипербола",
+                        "Сравнение",
+                        "Метонимия"
+                ],
+                "correct": 1,
+                "explanation": "Хипербола: преувеличение – не буквална вечност."
+        },
+        {
+                "q": "„Бял като сняг\" е?",
+                "options": [
+                        "Метафора",
+                        "Сравнение",
+                        "Персонификация",
+                        "Хипербола"
+                ],
+                "correct": 1,
+                "explanation": "Сравнение: с „като\"."
+        },
+        {
+                "q": "„Той прочете целия Вазов\" е?",
+                "options": [
+                        "Метафора",
+                        "Метонимия (Вазов = книгите на Вазов)",
+                        "Ирония",
+                        "Синекдоха"
+                ],
+                "correct": 1,
+                "explanation": "Метонимия: „Вазов\" стои вместо „книгите на Вазов\"."
+        },
+        {
+                "q": "„Светло-тъмно, живот-смърт\" в един текст е?",
+                "options": [
+                        "Синекдоха",
+                        "Антитеза",
+                        "Метафора",
+                        "Анафора"
+                ],
+                "correct": 1,
+                "explanation": "Антитеза = противопоставяне на противоположности."
+        },
+        {
+                "q": "„Тя не е лоша готвачка\" (= добра) е?",
+                "options": [
+                        "Ирония",
+                        "Литота (умаляване на похвалата)",
+                        "Хипербола",
+                        "Сравнение"
+                ],
+                "correct": 1,
+                "explanation": "Литота = обратна хипербола – умаляване на положителното."
+        },
+        {
+                "q": "„Шум шумеше, лист шумолеше\" е?",
+                "options": [
+                        "Анафора",
+                        "Алитерация (повторение на „ш\")",
+                        "Асонанс",
+                        "Метафора"
+                ],
+                "correct": 1,
+                "explanation": "Алитерация: повтарящите се „ш\" звукове."
+        },
+        {
+                "q": "„Не съм виновен – другият; аз – чист\" е?",
+                "options": [
+                        "Анафора",
+                        "Елипсис (пропуснато „е\" / „съм\")",
+                        "Инверсия",
+                        "Антитеза"
+                ],
+                "correct": 1,
+                "explanation": "Елипсис: пропускане на граматичен елемент – „аз – чист\" = „аз съм чист\"."
+        },
+        {
+                "q": "„Стотици мечове, стотици войни\" е?",
+                "options": [
+                        "Анафора само",
+                        "Анафора + хипербола",
+                        "Метафора",
+                        "Синекдоха"
+                ],
+                "correct": 1,
+                "explanation": "Анафора („стотици\") + евентуална хипербола – зависи от контекста."
+        },
+        {
+                "q": "Разграничаване: метафора vs метонимия?",
+                "options": [
+                        "Без разлика",
+                        "Метафора: подобие (прехвърляш); Метонимия: смежност/асоциация",
+                        "Метонимия е по-красива",
+                        "Метафора е по-широко понятие"
+                ],
+                "correct": 1,
+                "explanation": "Метафора: „ти си слънце\" (= сияеш). Метонимия: „пий бутилката\" (= съдържанието)."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

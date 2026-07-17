@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Еволюция – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio9-evolyutsiya-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio9-evolyutsiya-quiz-2.html',
+      lessonUrl:   '/lessons/bio9-evolyutsiya.html',
+      lessonName:  'Еволюция',
+      eyebrow:     'Биология · 9 клас · Еволюционна биология',
+      title:       'Куиз – Еволюция – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Кой формулира теорията за естествения отбор?",
+                "options": [
+                        "Чарлз Дарвин",
+                        "Грегор Мендел",
+                        "Луи Пастьор",
+                        "Карл Линей"
+                ],
+                "correct": 0,
+                "explanation": "Дарвин публикува \"On the Origin of Species\" (1859)."
+        },
+        {
+                "q": "Какво е естествен отбор?",
+                "options": [
+                        "Индивидите с изгодни черти оцеляват и се размножават по-успешно",
+                        "Случаен процес",
+                        "Само за животни",
+                        "Само за растения"
+                ],
+                "correct": 0,
+                "explanation": "Естественият отбор е механизмът на адаптивна еволюция."
+        },
+        {
+                "q": "Какво е мутация?",
+                "options": [
+                        "Случайна промяна в ДНК последователността",
+                        "Наследствена черта",
+                        "Вид размножаване",
+                        "Клетъчно делене"
+                ],
+                "correct": 0,
+                "explanation": "Мутациите са основен източник на нова генетична изменчивост."
+        },
+        {
+                "q": "Какво е адаптация?",
+                "options": [
+                        "Черта, увеличаваща приспособеността на организма в средата",
+                        "Промяна при живота",
+                        "Вид видообразуване",
+                        "Генетичен дрейф"
+                ],
+                "correct": 0,
+                "explanation": "Адаптациите са резултат от естествения отбор."
+        },
+        {
+                "q": "Каква е функцията на фосилите като доказателство за еволюция?",
+                "options": [
+                        "Показват исторически записи на организми и промените с времето",
+                        "Нямат значение",
+                        "Само за датиране на скали",
+                        "Само за идентификация"
+                ],
+                "correct": 0,
+                "explanation": "Палеонтологията предоставя преки данни за еволюционните промени."
+        },
+        {
+                "q": "Какво е генетичен дрейф?",
+                "options": [
+                        "Случайна промяна на честотите на алелите",
+                        "Естествен отбор",
+                        "Мутация",
+                        "Миграция"
+                ],
+                "correct": 0,
+                "explanation": "Дрейфът е незакономерен – особено силен при малки популации."
+        },
+        {
+                "q": "Кои са хомоложни органи?",
+                "options": [
+                        "Органи с обща еволюционна история, но различни функции (ръка, крило, перка)",
+                        "Органи с еднаква функция, но различен произход",
+                        "Органи само при бозайници",
+                        "Само рудиментарни органи"
+                ],
+                "correct": 0,
+                "explanation": "Хомологиите показват обща предковост."
+        },
+        {
+                "q": "Какво е видообразуване?",
+                "options": [
+                        "Процесът на формиране на нов вид от съществуващ",
+                        "Изчезване на вид",
+                        "Мутация",
+                        "Хибридизация"
+                ],
+                "correct": 0,
+                "explanation": "Специацията е ключово събитие в еволюцията."
+        },
+        {
+                "q": "Каква е разликата между алопатрично и симпатрично видообразуване?",
+                "options": [
+                        "Алопатрично – с географска бариера; симпатрично – без",
+                        "Нямат разлика",
+                        "Симпатрично – с бариера",
+                        "Алопатрично – само при растения"
+                ],
+                "correct": 0,
+                "explanation": "Географската изолация е основата на алопатричното."
+        },
+        {
+                "q": "Кой е принципът \"оцеляване на по-приспособените\"?",
+                "options": [
+                        "Дарвинов естествен отбор – по-добре адаптираните оставят повече потомство",
+                        "Само силата определя оцеляването",
+                        "Еволюцията е насочена",
+                        "Случаен процес"
+                ],
+                "correct": 0,
+                "explanation": "Приспособеността (fitness) е репродуктивният успех."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

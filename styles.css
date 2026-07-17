@@ -13,6 +13,7 @@
   --success: #15803d;
   --warning: #b45309;
   --shadow: 0 20px 60px rgba(16, 24, 40, 0.08);
+  --gutter: clamp(12px, 4vw, 28px);
 }
 
 
@@ -1237,6 +1238,73 @@ body.menu-open .mobile-drawer {
   .solution-steps { grid-template-columns: 1fr 1fr; }
 }
 
+/* ── Знайко панел на мобилен — bottom sheet ── */
+@keyframes ai-slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+@keyframes ai-slide-down {
+  from { transform: translateY(0);   opacity: 1; }
+  to   { transform: translateY(100%); opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .demo-layout {
+    flex-direction: column;
+  }
+
+  .ai-panel {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 70vh !important;
+    border-radius: 24px 24px 0 0;
+    z-index: 8000;
+    padding: 0 !important;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.18);
+    overflow: hidden;
+  }
+
+  .ai-panel.visible {
+    width: 100% !important;
+    padding: 0 !important;
+    animation: ai-slide-up 0.34s cubic-bezier(0.25, 0.46, 0.45, 0.94) both !important;
+  }
+
+  /* Header на панела да покрива закръглените ъгли */
+  .ai-header {
+    border-radius: 24px 24px 0 0;
+    margin: 0 0 16px 0;
+    padding: 14px 16px;
+  }
+
+  /* Grab handle над панела */
+  .ai-header::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 99px;
+    margin: 0 auto 10px;
+  }
+
+  #ai-output {
+    padding: 0 16px;
+    max-height: calc(70vh - 160px);
+    overflow-y: auto;
+  }
+
+  #ai-free-form,
+  #feedback-row {
+    padding: 0 16px 16px;
+  }
+}
+
 /* Cookie banner */
 #cookie-banner {
   position: fixed;
@@ -1311,7 +1379,8 @@ body.menu-open .mobile-drawer {
 .cookie-toggle input:checked + span::before { transform: translateX(20px); }
 
 /* ── Quiz pages ──────────────────────────────────────────── */
-.quiz-page { max-width: 680px; margin: 0 auto; padding: 12px 24px 80px; }
+.lesson-page { padding-left: var(--gutter) !important; padding-right: var(--gutter) !important; }
+.quiz-page { max-width: 680px; margin: 0 auto; padding: 12px var(--gutter) 80px; }
 
 .quiz-wrap {
   background: rgba(255,255,255,0.97); border: 1px solid var(--line);

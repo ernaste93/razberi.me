@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Христо Ботев – „На прощаване" – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel9-botev-na-proshchavane-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel9-botev-na-proshchavane-quiz-2.html',
+      lessonUrl:   '/lessons/bel9-botev-na-proshchavane.html',
+      lessonName:  'Христо Ботев – „На прощаване"',
+      eyebrow:     'БЕЛ · 9 клас · Романтизъм',
+      title:       'Куиз – Христо Ботев – „На прощаване" – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Кога е написано \"На прощаване\"?",
+                "options": [
+                        "1868",
+                        "1876",
+                        "1871",
+                        "1862"
+                ],
+                "correct": 0,
+                "explanation": "Написано е в Одеса, когато Ботев е около 20-годишен."
+        },
+        {
+                "q": "На кого се сбогува лирическият герой в \"На прощаване\"?",
+                "options": [
+                        "На майка си",
+                        "На приятеля си",
+                        "На учителя си",
+                        "На бащата"
+                ],
+                "correct": 0,
+                "explanation": "Стихотворението е писмо-сбогуване до майката."
+        },
+        {
+                "q": "Какъв конфликт стои в центъра на \"На прощаване\"?",
+                "options": [
+                        "Лично (майчина обич) срещу гражданско (борба)",
+                        "Любовен триъгълник",
+                        "Религиозни съмнения",
+                        "Бедност срещу богатство"
+                ],
+                "correct": 0,
+                "explanation": "Синът разкъсан между обичта към майка и дълга към родината."
+        },
+        {
+                "q": "Какво символизира майката в стихотворението?",
+                "options": [
+                        "Родината и топлото минало",
+                        "Само биологичен образ",
+                        "Смъртта",
+                        "Природата"
+                ],
+                "correct": 0,
+                "explanation": "Майката е архетипен образ – обич, корени, родина."
+        },
+        {
+                "q": "Какъв е рефренът в \"На прощаване\"?",
+                "options": [
+                        "Призив към майката да разбере и да пусне",
+                        "Описание на природа",
+                        "Военен зов",
+                        "Молитва"
+                ],
+                "correct": 0,
+                "explanation": "Рефренът е умолителен – синът иска прошка и разбиране."
+        },
+        {
+                "q": "Какво символизира Балканът?",
+                "options": [
+                        "Борбата за свобода",
+                        "Туристически пейзаж",
+                        "Зло",
+                        "Смъртта само"
+                ],
+                "correct": 0,
+                "explanation": "Балканът е пространствен символ на националната борба."
+        },
+        {
+                "q": "Кое е пророческото изречение в \"На прощаване\"?",
+                "options": [
+                        "\"Падна ли, паднал за свободата\"",
+                        "\"Майко, мила майко\"",
+                        "\"Хайде, мила, прости\"",
+                        "\"Балканът плаче\""
+                ],
+                "correct": 0,
+                "explanation": "Пророчеството за собствената смърт е самосбъднало се."
+        },
+        {
+                "q": "В кой град пише Ботев \"На прощаване\"?",
+                "options": [
+                        "Одеса",
+                        "Букурещ",
+                        "Пловдив",
+                        "Калофер"
+                ],
+                "correct": 0,
+                "explanation": "Пише го като студент в Одеса, Русия."
+        },
+        {
+                "q": "Каква е музикалността на стихотворението?",
+                "options": [
+                        "Рефрен и балансирана строфика",
+                        "Само рими",
+                        "Само ритъм без смисъл",
+                        "Не е музикално"
+                ],
+                "correct": 0,
+                "explanation": "Повторенията и рефренът придават лирическа музикалност."
+        },
+        {
+                "q": "Каква е идеологическата идея на \"На прощаване\"?",
+                "options": [
+                        "Свободата е по-ценна от личното щастие",
+                        "Майката е по-важна от родината",
+                        "Борбата е безсмислена",
+                        "Трябва да се живее тихо"
+                ],
+                "correct": 0,
+                "explanation": "Гражданският дълг надделява над личното."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

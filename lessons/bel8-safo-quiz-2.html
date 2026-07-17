@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 - Сафо – Любов · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel8-safo-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bel8-safo-quiz-3.html",
+    lessonUrl:"/lessons/bel8-safo.html",
+    lessonName:"Сафо – Любов",
+    eyebrow:"БЕЛ · 8 клас · Антична литература",
+    title:"Тест 2 - Сафо – Любов",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какво означава \"лирика\"?",
+    "options": [
+      "Поезия, придружена от лира – лична, субективна, музикална",
+      "Епическа поема",
+      "Трагедия",
+      "Комедия"
+    ],
+    "correct": 0,
+    "explanation": "Лириката е наречена така заради инструмента лира."
+  },
+  {
+    "q": "Каква е разликата лирика/епос?",
+    "options": [
+      "Лириката изразява лично чувство; епосът разказва героични деяния",
+      "Те са еднакви",
+      "Лириката е по-стара",
+      "Епосът е по-личен"
+    ],
+    "correct": 0,
+    "explanation": "Омир е епос; Сафо е лирика – двата полюса на античната поезия."
+  },
+  {
+    "q": "Кои са симптомите на влюбеността при Сафо?",
+    "options": [
+      "Треперене, изгаряне, потъмняване на зрението, замайване",
+      "Само радост",
+      "Само тъга",
+      "Само мечти"
+    ],
+    "correct": 0,
+    "explanation": "Физическото описание е невиждано в поезията преди Сафо."
+  },
+  {
+    "q": "Защо Сафо е важна като жена-поет в Античността?",
+    "options": [
+      "Единствената жена в канона – революция в патриархалния свят",
+      "Не е важно",
+      "Имало е много жени поети",
+      "Само заради стила"
+    ],
+    "correct": 0,
+    "explanation": "Сафо е изключение в патриархалния свят на Античността."
+  },
+  {
+    "q": "Каква е функцията на конкретните физически детайли?",
+    "options": [
+      "Правят любовта универсална – всеки е преживявал тези симптоми",
+      "Само реализъм",
+      "Само медицинско описание",
+      "Без функция"
+    ],
+    "correct": 0,
+    "explanation": "Конкретността осигурява универсалност."
+  },
+  {
+    "q": "Какво е архаичният период в гръцката литература?",
+    "options": [
+      "8–5 в. пр.н.е. – Омир, Хезиод, Сафо, Пиндар",
+      "Само Омир",
+      "5–3 в. пр.н.е.",
+      "Следалександровият период"
+    ],
+    "correct": 0,
+    "explanation": "Архаичният период полага основите на цялата западна литература."
+  },
+  {
+    "q": "Каква е темата за ревността в стихотворението?",
+    "options": [
+      "Лирическият аз ревнува човека, до когото седи обичаният – причина за симптомите",
+      "Без ревност",
+      "Само любов без ревност",
+      "Ревността е положителна"
+    ],
+    "correct": 0,
+    "explanation": "Ситуацията: обичаният разговаря с друг – ревност и болка."
+  },
+  {
+    "q": "Как Катул използва Сафо?",
+    "options": [
+      "Превежда и адаптира стихотворението за любимата си Лесбия",
+      "Без връзка",
+      "Само споменава Сафо",
+      "Критикува я"
+    ],
+    "correct": 0,
+    "explanation": "Catullus 51 е директна адаптация на Сафо."
+  },
+  {
+    "q": "Какво означава \"субективна лирика\"?",
+    "options": [
+      "Поезия, изразяваща личните чувства и преживявания на автора",
+      "Обективна поезия",
+      "Описание на света",
+      "Без авторско аз"
+    ],
+    "correct": 0,
+    "explanation": "Субективността е дефиниращ белег на лириката."
+  },
+  {
+    "q": "Каква е ролята на природата в стихотворението на Сафо?",
+    "options": [
+      "Минимална – в центъра е вътрешното преживяване",
+      "Централна роля",
+      "Само фон",
+      "Символична"
+    ],
+    "correct": 0,
+    "explanation": "За разлика от романтиците, при Сафо природата не е ключов образ."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

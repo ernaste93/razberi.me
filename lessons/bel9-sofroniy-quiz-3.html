@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Софроний Врачански – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel9-sofroniy-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bel9-sofroniy.html',
+      lessonName:  'Софроний Врачански',
+      eyebrow:     'БЕЛ · 9 клас · Просвещение',
+      title:       'Куиз – Софроний Врачански – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Кое е ключовото значение на Софроний за националното пробуждане?",
+                "options": [
+                        "Продължава делото на Паисий и просветява народа",
+                        "Организира въстание",
+                        "Обявява независимост",
+                        "Пише конституция"
+                ],
+                "correct": 0,
+                "explanation": "Той е звено от Паисий към по-нататъшното Възраждане."
+        },
+        {
+                "q": "С кого е сравняван Софроний в европейски контекст?",
+                "options": [
+                        "С Августин и православни духовни автори",
+                        "С Шекспир",
+                        "С Молиер",
+                        "С Дефо"
+                ],
+                "correct": 0,
+                "explanation": "Жанрът на духовната изповед е с дълга европейска традиция."
+        },
+        {
+                "q": "Какъв е приносът на \"Житие\" за жанровото развитие?",
+                "options": [
+                        "Открива автобиографичния жанр в нов. лит.",
+                        "Развива романа",
+                        "Създава трагедията",
+                        "Въвежда баладата"
+                ],
+                "correct": 0,
+                "explanation": "Пряк живот-разказ на личност е новост за времето."
+        },
+        {
+                "q": "Каква е идейната връзка между Паисий и Софроний?",
+                "options": [
+                        "Двамата работят за народностно пробуждане",
+                        "Те спорят за езика",
+                        "Нямат допирни точки",
+                        "Едният критикува другия"
+                ],
+                "correct": 0,
+                "explanation": "Споделят идеите за просвета и национална идентичност."
+        },
+        {
+                "q": "Кое слово е символ на смирение в заглавието?",
+                "options": [
+                        "грешного",
+                        "страдание",
+                        "житие",
+                        "Софрония"
+                ],
+                "correct": 0,
+                "explanation": "\"Грешного\" показва православно смирение пред Бога."
+        },
+        {
+                "q": "Каква е геополитическата ситуация при Софроний?",
+                "options": [
+                        "България под Османска власт, реформи на Танзимат тепърва",
+                        "Независима България",
+                        "Под руска власт",
+                        "В съюз с Австрия"
+                ],
+                "correct": 0,
+                "explanation": "18 в. е дълбоко в робството преди Танзимат."
+        },
+        {
+                "q": "Защо Софроний ценен за историята на книжовния език?",
+                "options": [
+                        "Пише на народно разбираем език",
+                        "Кодифицира граматика",
+                        "Въвежда латиница",
+                        "Никакво значение"
+                ],
+                "correct": 0,
+                "explanation": "Простият му език е крачка към модерния книжовен стандарт."
+        },
+        {
+                "q": "Как завършва животът на Софроний?",
+                "options": [
+                        "Умира в емиграция в Букурещ",
+                        "Освобождава Враца",
+                        "Убит при въстание",
+                        "Монах в Хилендар"
+                ],
+                "correct": 0,
+                "explanation": "Прекарва последните години в Влахия."
+        },
+        {
+                "q": "Каква е разликата между Паисий и Софроний като автори?",
+                "options": [
+                        "Паисий пише история, Софроний – автобиография",
+                        "Нямат разлика",
+                        "Софроний пише история, Паисий – автобиография",
+                        "Само Паисий пише на народен език"
+                ],
+                "correct": 0,
+                "explanation": "Жанровете им са различни, но целите – близки."
+        },
+        {
+                "q": "Как се отразяват страданията в \"Житие\"?",
+                "options": [
+                        "Като Божие изпитание и укрепване на вярата",
+                        "Като вина на Бога",
+                        "Като политически протест",
+                        "Не се разглеждат"
+                ],
+                "correct": 0,
+                "explanation": "Страданието е тълкувано теологично – пречистване и изпит."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

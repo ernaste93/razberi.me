@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Метали – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem9-metali-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/chem9-metali-quiz-3.html',
+      lessonUrl:   '/lessons/chem9-metali.html',
+      lessonName:  'Метали',
+      eyebrow:     'Химия · 9 клас · Неорганична химия',
+      title:       'Куиз – Метали – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Каква е точката на топене на желязото?",
+                "options": [
+                        "~1538°C",
+                        "100°C",
+                        "660°C",
+                        "327°C"
+                ],
+                "correct": 0,
+                "explanation": "Fe се топи при ~1538°C – много по-висока от Al."
+        },
+        {
+                "q": "Как се добива алуминий?",
+                "options": [
+                        "Електролиза на разтопен Al₂O₃ (бокситова руда) по Hall-Héroult процес",
+                        "Топене на боксит",
+                        "Редукция с въглерод",
+                        "Кристализация"
+                ],
+                "correct": 0,
+                "explanation": "Al не може да се редуцира с C – нужна е електролиза."
+        },
+        {
+                "q": "Как Cu реагира с AgNO₃?",
+                "options": [
+                        "Cu + 2AgNO₃ → Cu(NO₃)₂ + 2Ag↓ (изместване)",
+                        "Нямат реакция",
+                        "Cu + AgNO₃ → CuAg + NO₃",
+                        "Cu се разтваря само"
+                ],
+                "correct": 0,
+                "explanation": "Cu е по-активен от Ag → измества Ag от разтвора."
+        },
+        {
+                "q": "Каква е разликата между Fe²⁺ и Fe³⁺?",
+                "options": [
+                        "Fe²⁺ = FeO; Fe³⁺ = Fe₂O₃; двете степени на окисление на Fe",
+                        "Нямат разлика",
+                        "Fe²⁺ = Fe₂O₃",
+                        "Fe³⁺ = FeO"
+                ],
+                "correct": 0,
+                "explanation": "Желязото образува два вида йони."
+        },
+        {
+                "q": "Какво е амфотерен оксид?",
+                "options": [
+                        "Реагира и с киселини, и с основи (Al₂O₃, ZnO)",
+                        "Само с киселини",
+                        "Само с основи",
+                        "Инертен"
+                ],
+                "correct": 0,
+                "explanation": "Al₂O₃ + NaOH → NaAlO₂ + H₂O (реагира с основа)."
+        },
+        {
+                "q": "Каква е ролята на хрома в неръждаемата стомана?",
+                "options": [
+                        "Cr образува пасивиращ Cr₂O₃ слой → стоманата не ръждясва",
+                        "Повишава ковкостта",
+                        "Намалява проводимостта",
+                        "Без роля"
+                ],
+                "correct": 0,
+                "explanation": "Неръждаема стомана съдържа ≥10.5% Cr."
+        },
+        {
+                "q": "Как Gold (Au) реагира с HCl?",
+                "options": [
+                        "Не реагира (благороден метал)",
+                        "Бурно реагира",
+                        "Образува AuCl",
+                        "Разтваря се"
+                ],
+                "correct": 0,
+                "explanation": "Au реагира само с царска водка (HCl + HNO₃)."
+        },
+        {
+                "q": "Какво е галванична клетка?",
+                "options": [
+                        "Устройство, генериращо ток от химична реакция (батерия)",
+                        "Електролиза",
+                        "Корозия",
+                        "Запоен метал"
+                ],
+                "correct": 0,
+                "explanation": "Принципът е: анод (окисление) + катод (редукция)."
+        },
+        {
+                "q": "Как се предпазва стоманата от корозия?",
+                "options": [
+                        "Поцинковане (Zn покритие), боядисване, неръждаема сплав",
+                        "Само боядисване",
+                        "Само хромиране",
+                        "Нямат начин"
+                ],
+                "correct": 0,
+                "explanation": "Цинкът служи като жертвен анод – корозира вместо Fe."
+        },
+        {
+                "q": "Каква е плътността на алуминия спрямо желязото?",
+                "options": [
+                        "Al ~ 2.7 g/cm³; Fe ~ 7.9 g/cm³ – Al е много по-лек",
+                        "Еднакви",
+                        "Al е по-тежък",
+                        "Fe е по-лек"
+                ],
+                "correct": 0,
+                "explanation": "Алуминият е 3 пъти по-лек от желязото."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

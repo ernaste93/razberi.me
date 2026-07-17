@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 – Черноризец Храбър – О писменех · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-chernorizec-q3',
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:'/lessons/bel8-chernorizec.html',
+    lessonName:"Черноризец Храбър – О писменех",
+    eyebrow:"БЕЛ · 8 клас · Средновековие",
+    title:"Тест 3 – Черноризец Храбър – О писменех",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е структурата на О писменех?",
+    "options": [
+      "Въпрос, отговор, исторически аргумент, заключение",
+      "Описание, история, молитва",
+      "Разказ с герои и морал",
+      "Само молитва"
+    ],
+    "correct": 0,
+    "explanation": "Риторичната въпрос-отговор структура е основата на апологетиката."
+  },
+  {
+    "q": "Каква е разликата глаголица/кирилица?",
+    "options": [
+      "Глаголицата е създадена от Кирил; кирилицата е направена по-късно по гръцки образец",
+      "Глаголицата е руска",
+      "Кирилицата е по-стара",
+      "Те са едно и също"
+    ],
+    "correct": 0,
+    "explanation": "Кирил създава глаголицата; кирилицата е адаптация приписвана на Климент."
+  },
+  {
+    "q": "Кой е Йоан Екзарх?",
+    "options": [
+      "Книжовник от Преславската школа, автор на Шестоднев",
+      "Цар на България",
+      "Ученик на Климент",
+      "Гръцки патриарх"
+    ],
+    "correct": 0,
+    "explanation": "Йоан Екзарх пише Шестоднев – важен текст от Преславската школа."
+  },
+  {
+    "q": "Каква е просветната роля на О писменех?",
+    "options": [
+      "Доказва правото на народа на образование на родния му език",
+      "Само религиозна роля",
+      "Само политическа роля",
+      "Историческа хроника"
+    ],
+    "correct": 0,
+    "explanation": "Писмеността на роден език е основа на просвещението."
+  },
+  {
+    "q": "Какво е Шестоднев на Йоан Екзарх?",
+    "options": [
+      "Произведение за шестте дни на Сътворението по Библията",
+      "Молитвеник",
+      "Хроника",
+      "Граматика"
+    ],
+    "correct": 0,
+    "explanation": "Шестоднев тълкува Битие – Сътворението в шест дни."
+  },
+  {
+    "q": "Каква е функцията на риторичния въпрос в О писменех?",
+    "options": [
+      "Ангажира читателя и го кара сам да стигне до верния отговор",
+      "Само декорация",
+      "Изразява съмнение",
+      "Показва незнание"
+    ],
+    "correct": 0,
+    "explanation": "Риторичните въпроси са основен убеждаващ похват на Храбър."
+  },
+  {
+    "q": "Каква е духовната идея на О писменех?",
+    "options": [
+      "Писмеността е пътят към Бога и духовната идентичност на народа",
+      "Само граматика",
+      "Само политика",
+      "Само превод"
+    ],
+    "correct": 0,
+    "explanation": "За средновековния книжовник четенето и писането са духовен акт."
+  },
+  {
+    "q": "Кое НЕ е аргумент на Храбър?",
+    "options": [
+      "Кирилицата е по-красива от гръцката",
+      "Кирилицата е дело на светци",
+      "Гръцката е дело на езичници",
+      "Кирилицата има точен брой букви за славянската реч"
+    ],
+    "correct": 0,
+    "explanation": "Храбър не говори за красота – аргументите му са исторически и религиозни."
+  },
+  {
+    "q": "Какво е апологетика?",
+    "options": [
+      "Богословска дисциплина за защита на вярата чрез аргументи",
+      "Вид молитва",
+      "Историческа наука",
+      "Литературен жанр"
+    ],
+    "correct": 0,
+    "explanation": "Апологетиката е системна защита – О писменех е конкретна апология."
+  },
+  {
+    "q": "Защо О писменех е в програмата на 8 клас?",
+    "options": [
+      "Като пример за средновековна старобългарска литература",
+      "Защото е написано от грък",
+      "Защото е комично",
+      "Защото е народно творчество"
+    ],
+    "correct": 0,
+    "explanation": "О писменех е в МОН програмата за 8 клас като представителен средновековен текст."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

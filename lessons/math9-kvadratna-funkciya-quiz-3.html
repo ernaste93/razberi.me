@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Квадратна функция – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math9-kvadratna-funkciya-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/math9-kvadratna-funkciya.html',
+      lessonName:  'Квадратна функция',
+      eyebrow:     'Математика · 9 клас · Алгебра',
+      title:       'Куиз – Квадратна функция – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Задача: Намерете коя стойност на k прави x₀ = 3 връх на f(x) = x² + kx + 1",
+                "options": [
+                        "k = −6",
+                        "k = 6",
+                        "k = −3",
+                        "k = 3"
+                ],
+                "correct": 0,
+                "explanation": "x₀ = −k/2 = 3 → k = −6."
+        },
+        {
+                "q": "Сравнете f(1) и f(3) за f(x) = x² − 4x + 5",
+                "options": [
+                        "f(1) = f(3) (симетрия)",
+                        "f(1) > f(3)",
+                        "f(3) > f(1)",
+                        "Не може да се сравни"
+                ],
+                "correct": 0,
+                "explanation": "x₀ = 2; 1 и 3 са симетрични → f(1) = f(3) = 2."
+        },
+        {
+                "q": "Параболата f(x) = ax² + bx + c има корени 1 и 5 и a = 2. Намерете b.",
+                "options": [
+                        "b = −12",
+                        "b = 12",
+                        "b = −6",
+                        "b = 10"
+                ],
+                "correct": 0,
+                "explanation": "x₁+x₂ = −b/a = 6 → b = −12."
+        },
+        {
+                "q": "Намерете c за f(x) = 2x² − 12x + c ако D = 0.",
+                "options": [
+                        "c = 18",
+                        "c = −18",
+                        "c = 12",
+                        "c = 6"
+                ],
+                "correct": 0,
+                "explanation": "D = 144 − 8c = 0 → c = 18."
+        },
+        {
+                "q": "Каква е координатата на пресичането на параболата с Oy?",
+                "options": [
+                        "(0, c)",
+                        "(0, b)",
+                        "(0, a)",
+                        "(0, D)"
+                ],
+                "correct": 0,
+                "explanation": "f(0) = c → пресечна точка с Oy е (0, c)."
+        },
+        {
+                "q": "Задача: Ограда с 40 м тел за правоъгълна площадка с максимална лице",
+                "options": [
+                        "Квадрат 10×10 = 100 м²",
+                        "8×12 = 96 м²",
+                        "5×15 = 75 м²",
+                        "9×11 = 99 м²"
+                ],
+                "correct": 0,
+                "explanation": "При 2(x + y) = 40, S = x(20−x) – максимум при x = 10."
+        },
+        {
+                "q": "Кога квадратната функция е монотонно намаляваща за x > x₀?",
+                "options": [
+                        "Когато a < 0",
+                        "Когато a > 0",
+                        "Когато D = 0",
+                        "Когато c = 0"
+                ],
+                "correct": 0,
+                "explanation": "При a < 0 параболата е надолу – намалява след върха."
+        },
+        {
+                "q": "Кой метод се ползва за намиране знака на квадратния тричлен?",
+                "options": [
+                        "Анализ на корените и знака на a",
+                        "Заместване в произволна точка",
+                        "Диференциране",
+                        "Интегриране"
+                ],
+                "correct": 0,
+                "explanation": "Знаковата схема зависи от корените и a."
+        },
+        {
+                "q": "Намерете x₀ за f(x) = −3x² + 6x − 1",
+                "options": [
+                        "x₀ = 1",
+                        "x₀ = −1",
+                        "x₀ = 2",
+                        "x₀ = 3"
+                ],
+                "correct": 0,
+                "explanation": "x₀ = −6/(2·(−3)) = 1."
+        },
+        {
+                "q": "При a > 0, намалява ли функцията за x < x₀?",
+                "options": [
+                        "Да, намалява",
+                        "Не, нараства",
+                        "Нито едно",
+                        "Зависи от c"
+                ],
+                "correct": 0,
+                "explanation": "При a > 0 функцията намалява до върха и нараства след него."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

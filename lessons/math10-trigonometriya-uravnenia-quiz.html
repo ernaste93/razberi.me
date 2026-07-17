@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Тригонометрични уравнения – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math10-trigonometriya-uravnenia-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/math10-trigonometriya-uravnenia-quiz-2.html',
+      lessonUrl:   '/lessons/math10-trigonometriya-uravnenia.html',
+      lessonName:  'Тригонометрични уравнения',
+      eyebrow:     'МАТЕМАТИКА · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Тригонометрични уравнения – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Общото решение на sin x = a е?",
+                "options": [
+                        "x = arcsin a + πk",
+                        "x = arcsin a + 2πk или x = π − arcsin a + 2πk",
+                        "x = arccos a + 2πk",
+                        "x = ±arcsin a + 2πk"
+                ],
+                "correct": 1,
+                "explanation": "sin x = a има 2 серии решения в [0, 2π]: arcsin a и π − arcsin a. Добавят се всички периоди: +2πk."
+        },
+        {
+                "q": "Решение на cos x = a?",
+                "options": [
+                        "x = arccos a + πk",
+                        "x = arccos a + 2πk",
+                        "x = ±arccos a + 2πk",
+                        "x = arcsin a + 2πk"
+                ],
+                "correct": 2,
+                "explanation": "cos е четна функция → симетрична около 0. Решения: x = arccos a + 2πk и x = −arccos a + 2πk, т.е. x = ±arccos a + 2πk."
+        },
+        {
+                "q": "Общото решение на tan x = a?",
+                "options": [
+                        "x = arctan a + 2πk",
+                        "x = arctan a + πk",
+                        "x = ±arctan a + πk",
+                        "x = arctan a"
+                ],
+                "correct": 1,
+                "explanation": "tan е с период π → tan x = a: x = arctan a + πk, k ∈ ℤ."
+        },
+        {
+                "q": "Решение на sin x = 1?",
+                "options": [
+                        "x = 0 + 2πk",
+                        "x = π/2 + 2πk",
+                        "x = π + 2πk",
+                        "x = 3π/2 + 2πk"
+                ],
+                "correct": 1,
+                "explanation": "sin достига 1 само при x = π/2. Общо: x = π/2 + 2πk."
+        },
+        {
+                "q": "Решение на cos x = 0?",
+                "options": [
+                        "x = πk",
+                        "x = π/2 + πk",
+                        "x = π/2 + 2πk",
+                        "x = 2πk"
+                ],
+                "correct": 1,
+                "explanation": "cos = 0 при π/2 и 3π/2 (т.е. ±π/2). Общо: x = π/2 + πk."
+        },
+        {
+                "q": "arcsin(1/2) = ?",
+                "options": [
+                        "π/6",
+                        "π/3",
+                        "π/4",
+                        "π/2"
+                ],
+                "correct": 0,
+                "explanation": "arcsin(1/2) = π/6 = 30°, тъй като sin 30° = 1/2. Областта на arcsin е [−π/2, π/2]."
+        },
+        {
+                "q": "arccos(0) = ?",
+                "options": [
+                        "0",
+                        "π/4",
+                        "π/2",
+                        "π"
+                ],
+                "correct": 2,
+                "explanation": "arccos(0) = π/2 = 90°, тъй като cos 90° = 0. Областта на arccos е [0, π]."
+        },
+        {
+                "q": "Решения на sin x = √2/2 в [0, 2π]?",
+                "options": [
+                        "x = π/4 само",
+                        "x = π/4 и x = 3π/4",
+                        "x = π/4 и x = 5π/4",
+                        "x = 3π/4 и x = 5π/4"
+                ],
+                "correct": 1,
+                "explanation": "sin x = √2/2 = sin 45°. В [0, 2π]: x = π/4 (I кв.) и x = π − π/4 = 3π/4 (II кв.)."
+        },
+        {
+                "q": "cos x = −1/2. Решения в [0, 2π]?",
+                "options": [
+                        "x = π/3 и x = 5π/3",
+                        "x = 2π/3 и x = 4π/3",
+                        "x = π/4 и x = 3π/4",
+                        "x = π/6 и x = 5π/6"
+                ],
+                "correct": 1,
+                "explanation": "arccos(1/2) = π/3. cos е отрицателен в II и III → x = π − π/3 = 2π/3 и x = π + π/3 = 4π/3."
+        },
+        {
+                "q": "Уравнението sin x = 2 има?",
+                "options": [
+                        "Решение x = 2πk",
+                        "Решение x = π + 2πk",
+                        "Безброй решения",
+                        "Няма решения (|a| > 1)"
+                ],
+                "correct": 3,
+                "explanation": "sin x ∈ [−1, 1] за всяко x → sin x = 2 е невъзможно → без решения."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

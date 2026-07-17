@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Интерпретативно съчинение — Разбери.Ме</title>
+  <title>Интерпретативно съчинение – Разбери.Ме</title>
   <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -350,7 +350,7 @@
     <button id="btn-rules-close" style="position:absolute;top:16px;right:18px;background:none;border:none;font-size:20px;color:var(--muted);cursor:pointer;line-height:1;padding:4px;">✕</button>
     <div style="font-size:40px;text-align:center;margin-bottom:10px;">📝</div>
     <div style="font-size:20px;font-weight:800;color:var(--text);text-align:center;margin-bottom:6px;">Преди да започнеш</div>
-    <div style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:24px;">Прочети правилата — симулираме реален ДЗИ изпит.</div>
+    <div style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:24px;">Прочети правилата – симулираме реален ДЗИ изпит.</div>
 
     <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:28px;">
       <div style="display:flex;gap:14px;align-items:flex-start;">
@@ -364,14 +364,14 @@
         <span style="font-size:22px;flex-shrink:0;">🚫</span>
         <div>
           <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;">Copy &amp; Paste е забранен</div>
-          <div id="rules-paste-text" style="font-size:13px;color:var(--muted);line-height:1.55;">Копирането и поставянето е блокирано — пиши ръчно, точно като на реален изпит. Минимум <strong>200 думи</strong> за да можеш да предадеш.</div>
+          <div id="rules-paste-text" style="font-size:13px;color:var(--muted);line-height:1.55;">Копирането и поставянето е блокирано – пиши ръчно, точно като на реален изпит. Минимум <strong>200 думи</strong> за да можеш да предадеш.</div>
         </div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start;">
         <span style="font-size:22px;flex-shrink:0;">⏸️</span>
         <div>
           <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px;">Имаш 1 пауза от 3 минути</div>
-          <div style="font-size:13px;color:var(--muted);line-height:1.55;">Бутонът „Пауза" е горе вдясно. Натисни го при нужда — ще те пита за потвърждение. Паузата е максимум 3 минути, след което се връщаш автоматично.</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.55;">Бутонът „Пауза" е горе вдясно. Натисни го при нужда – ще те пита за потвърждение. Паузата е максимум 3 минути, след което се връщаш автоматично.</div>
         </div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start;">
@@ -442,7 +442,7 @@
   <!-- STEP 2: Писане -->
   <div class="step" id="step-write">
     <div class="step-title" id="write-title">Пиши съчинението</div>
-    <div class="step-sub" id="write-sub">Paste е забранен — симулираме реален изпит. Минимум 200 думи за предаване.</div>
+    <div class="step-sub" id="write-sub">Paste е забранен – симулираме реален изпит. Минимум 200 думи за предаване.</div>
 
     <div id="attempts-panel-write"></div>
 
@@ -471,7 +471,7 @@
   <!-- STEP 4: Резултат -->
   <div class="step" id="step-result">
     <div class="result-ring" id="result-ring">
-      <div class="result-ring-num" id="result-num">—</div>
+      <div class="result-ring-num" id="result-num">–</div>
       <div class="result-ring-max">от 24</div>
     </div>
     <div class="result-title" id="result-title"></div>
@@ -498,7 +498,7 @@
 // ═══════════════════════════════════════════════
 const TOPICS = {
   'bel12-debelyanov-lyubov': {
-    lessonTitle: 'Димчо Дебелянов — „Аз искам да те помня все така"',
+    lessonTitle: 'Димчо Дебелянов – „Аз искам да те помня все така"',
     topics: [
       'Анализирайте образа на лирическия говорител като самотен мъж, търсещ убежище в спомена, в стихотворението „Аз искам да те помня все така" от Димчо Дебелянов.',
       'Разкрийте функцията на спомена като художествен мотив в „Аз искам да те помня все така" от Димчо Дебелянов.',
@@ -508,7 +508,7 @@ const TOPICS = {
     ],
   },
   'bel12-fotev-lyubov': {
-    lessonTitle: 'Христо Фотев — „Колко си хубава!"',
+    lessonTitle: 'Христо Фотев – „Колко си хубава!"',
     topics: [
       'Анализирайте образа на лирическия говорител в „Колко си хубава!" от Христо Фотев.',
       'Как е представена темата за красотата и нейната преходност в „Колко си хубава!" от Христо Фотев?',
@@ -518,9 +518,9 @@ const TOPICS = {
     ],
   },
   'bel12-dubarova-posveshenie': {
-    lessonTitle: 'Петя Дубарова — „Посвещение"',
+    lessonTitle: 'Петя Дубарова – „Посвещение"',
     topics: [
-      'Анализирайте образа на лирическия говорител — поетът пред края на живота си — в „Посвещение" от Петя Дубарова.',
+      'Анализирайте образа на лирическия говорител – поетът пред края на живота си – в „Посвещение" от Петя Дубарова.',
       'Как е представена темата за творчеството като смисъл и призвание в „Посвещение" от Петя Дубарова?',
       'Разкрийте темата за любовта като вдъхновяваща сила в „Посвещение" от Петя Дубарова.',
       'Как осъзнаването на смъртта оформя лирическото послание на „Посвещение" от Петя Дубарова?',
@@ -528,7 +528,7 @@ const TOPICS = {
     ],
   },
   'bel12-vaptsarov-vyara': {
-    lessonTitle: 'Никола Вапцаров — „Вяра"',
+    lessonTitle: 'Никола Вапцаров – „Вяра"',
     topics: [
       'Анализирайте образа на лирическия говорител като борец с непоколебима вяра в „Вяра" от Никола Вапцаров.',
       'Как е представена темата за вярата като противовес на отчаянието в „Вяра" от Никола Вапцаров?',
@@ -538,9 +538,9 @@ const TOPICS = {
     ],
   },
   'bel12-dalchev-molitva': {
-    lessonTitle: 'Атанас Далчев — „Молитва"',
+    lessonTitle: 'Атанас Далчев – „Молитва"',
     topics: [
-      'Анализирайте образа на лирическия говорител — смиреният човек пред Бога — в „Молитва" от Атанас Далчев.',
+      'Анализирайте образа на лирическия говорител – смиреният човек пред Бога – в „Молитва" от Атанас Далчев.',
       'Как е представена темата за молитвата като диалог между човека и Бога в „Молитва" от Атанас Далчев?',
       'Разкрийте ролята на предметността и конкретните образи в поетиката на Атанас Далчев.',
       'Как смъртта и животът са противопоставени в „Молитва" от Атанас Далчев?',
@@ -548,7 +548,7 @@ const TOPICS = {
     ],
   },
   'bel12-elin-pelin-spasova-mogila': {
-    lessonTitle: 'Елин Пелин — „Спасова могила"',
+    lessonTitle: 'Елин Пелин – „Спасова могила"',
     topics: [
       'Анализирайте образа на главния герой в „Спасова могила" от Елин Пелин.',
       'Как е представена темата за народната вяра и традицията в „Спасова могила" от Елин Пелин?',
@@ -558,7 +558,7 @@ const TOPICS = {
     ],
   },
   'bel12-elin-pelin-vetrena-melnitsa': {
-    lessonTitle: 'Елин Пелин — „Ветрената мелница"',
+    lessonTitle: 'Елин Пелин – „Ветрената мелница"',
     topics: [
       'Анализирайте образа на главния герой като неразбрана личност в „Ветрената мелница" от Елин Пелин.',
       'Как е представена темата за мечтата и сблъсъкът й с реалността в „Ветрената мелница"?',
@@ -568,7 +568,7 @@ const TOPICS = {
     ],
   },
   'bel12-yovkov-pesenta-na-koleletata': {
-    lessonTitle: 'Йордан Йовков — „Песента на колелетата"',
+    lessonTitle: 'Йордан Йовков – „Песента на колелетата"',
     topics: [
       'Анализирайте образа на Сали Яшар като носител на красотата в „Песента на колелетата" от Йордан Йовков.',
       'Как е представена темата за красотата и нейната преобразяваща сила в „Песента на колелетата"?',
@@ -578,7 +578,7 @@ const TOPICS = {
     ],
   },
   'bel12-paskov-balada': {
-    lessonTitle: 'Виктор Пасков — „Балада за Георг Хених"',
+    lessonTitle: 'Виктор Пасков – „Балада за Георг Хених"',
     topics: [
       'Анализирайте образа на Георг Хених като „различния" в общността в „Балада за Георг Хених" от Виктор Пасков.',
       'Как е представена темата за приятелството между децата в „Балада за Георг Хених"?',
@@ -588,7 +588,7 @@ const TOPICS = {
     ],
   },
   'bel12-yavorov-dve-dushi': {
-    lessonTitle: 'Пейо Яворов — „Две души"',
+    lessonTitle: 'Пейо Яворов – „Две души"',
     topics: [
       'Анализирайте образа на лирическия говорител, разкъсан между две противоположни начала, в „Две души" от Пейо Яворов.',
       'Как е представена темата за вътрешния разлом на личността в „Две души" от Яворов?',
@@ -598,7 +598,7 @@ const TOPICS = {
     ],
   },
   'bel12-bagryana-potomka': {
-    lessonTitle: 'Елисавета Багряна — „Потомка"',
+    lessonTitle: 'Елисавета Багряна – „Потомка"',
     topics: [
       'Анализирайте образа на лирическата героиня като жена бунтарка в „Потомка" от Елисавета Багряна.',
       'Как е представена темата за свободата и жизнеността в „Потомка" от Елисавета Багряна?',
@@ -608,7 +608,7 @@ const TOPICS = {
     ],
   },
   'bel12-hristov-chesten-krast': {
-    lessonTitle: 'Борис Христов — „Честен кръст"',
+    lessonTitle: 'Борис Христов – „Честен кръст"',
     topics: [
       'Анализирайте образа на лирическия говорител в „Честен кръст" от Борис Христов.',
       'Как е представена темата за войната и нейните жертви в „Честен кръст"?',
@@ -652,7 +652,7 @@ if (!cfg) {
   document.querySelector('.main').innerHTML = '<p style="color:var(--muted);padding:40px 0;">Невалиден урок.</p>';
 } else {
   document.getElementById('topbar-lesson-title').textContent = cfg.lessonTitle;
-  document.title = `Съчинение — ${cfg.lessonTitle}`;
+  document.title = `Съчинение – ${cfg.lessonTitle}`;
 
   // Back link → lesson page
   document.getElementById('back-link').href = `/lessons/${lessonKey}.html`;
@@ -712,7 +712,7 @@ document.getElementById('btn-rules-close').addEventListener('click', () => {
 // Admin: адаптира текста в rules modal
 if (window.__isAdmin) {
   const el = document.getElementById('rules-paste-text');
-  if (el) el.innerHTML = 'Paste е <strong style="color:var(--gold);">разрешен (admin режим)</strong> — без минимален брой думи.';
+  if (el) el.innerHTML = 'Paste е <strong style="color:var(--gold);">разрешен (admin режим)</strong> – без минимален брой думи.';
 }
 
 // ═══════════════════════════════════════════════
@@ -748,7 +748,7 @@ function startWriting(idx) {
   document.getElementById('write-title').textContent = `Тема ${idx + 1} от 5`;
   document.getElementById('essay-textarea').value = '';
   if (window.__isAdmin) {
-    document.getElementById('write-sub').innerHTML = 'Paste е забранен — симулираме реален изпит. Минимум 200 думи за предаване. <span style="color:var(--gold);font-weight:800;">★ Ти си в admin режим — paste и предаване без минимум са позволени.</span>';
+    document.getElementById('write-sub').innerHTML = 'Paste е забранен – симулираме реален изпит. Минимум 200 думи за предаване. <span style="color:var(--gold);font-weight:800;">★ Ти си в admin режим – paste и предаване без минимум са позволени.</span>';
     document.getElementById('btn-submit').disabled = false;
   }
   updateWordCount();
@@ -880,8 +880,32 @@ async function submitEssay() {
     const dateStr = new Date().toLocaleDateString('bg-BG', { day:'numeric', month:'long' }).replace(/\s*г\.?$/, '');
     saveAttempt(currentAttemptTopic, { total: data.total, date: dateStr, criteria: data.criteria, summary: data.summary });
 
-    // Notify completion email
+    // Запиши в Supabase essay_results
     if (window.__supabaseToken) {
+      const lessonSlug = window.location.pathname.includes('?')
+        ? new URLSearchParams(window.location.search).get('slug') || cfg.lessonKey || ''
+        : cfg.lessonKey || '';
+      let userId = null;
+      try { userId = JSON.parse(localStorage.getItem('sb-wbcppvfgtvkrsfmclmjp-auth-token'))?.user?.id; } catch(e) {}
+      if (userId) {
+        fetch('https://wbcppvfgtvkrsfmclmjp.supabase.co/rest/v1/essay_results', {
+          method: 'POST',
+          headers: {
+            'apikey': 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l',
+            'Authorization': 'Bearer ' + window.__supabaseToken,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal',
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            lesson_slug: lessonSlug,
+            topic: topicText,
+            total: data.total,
+            details: { criteria: data.criteria, summary: data.summary },
+          }),
+        }).catch(() => {});
+      }
+
       fetch('/api/notify-completion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + window.__supabaseToken },
@@ -932,7 +956,7 @@ function showResults(data) {
   document.getElementById('result-title').textContent = gradeLabel(total);
   document.getElementById('result-title').style.color = color;
   document.getElementById('result-sub').textContent =
-    total >= 13 ? 'Издържал — над минималния праг от 13 точки.' : 'Под минималния праг от 13 точки. Опитай пак!';
+    total >= 13 ? 'Издържал – над минималния праг от 13 точки.' : 'Под минималния праг от 13 точки. Опитай пак!';
 
   // Criteria rows
   const wrap = document.getElementById('criteria-wrap');

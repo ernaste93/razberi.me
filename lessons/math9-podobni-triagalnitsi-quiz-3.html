@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Подобни триъгълници – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math9-podobni-triagalnitsi-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/math9-podobni-triagalnitsi.html',
+      lessonName:  'Подобни триъгълници',
+      eyebrow:     'Математика · 9 клас · Геометрия',
+      title:       'Куиз – Подобни триъгълници – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Мащабен коефициент на карта е 1:50000. Разстояние на картата 4 см = реално:",
+                "options": [
+                        "2 км",
+                        "4 км",
+                        "200 м",
+                        "400 м"
+                ],
+                "correct": 0,
+                "explanation": "4 · 50000 = 200000 см = 2 км."
+        },
+        {
+                "q": "Доказателство за отношение медиани: ако k = AB/A'B', медианата m_c:m'_c =?",
+                "options": [
+                        "k",
+                        "k²",
+                        "1/k",
+                        "k/2"
+                ],
+                "correct": 0,
+                "explanation": "Всички линейни елементи (медиани, ъглополовящи) са в отношение k."
+        },
+        {
+                "q": "Намерете x: триъгълниците подобни, страни 3,4,5 и 6,x,10",
+                "options": [
+                        "8",
+                        "4",
+                        "6",
+                        "5"
+                ],
+                "correct": 0,
+                "explanation": "k = 6/3 = 2 → x = 4·2 = 8."
+        },
+        {
+                "q": "В △ABC: DE || BC, AD = 3, DB = 2. Отношението △ADE / △ABC = ?",
+                "options": [
+                        "9/25",
+                        "3/5",
+                        "9/5",
+                        "3/25"
+                ],
+                "correct": 0,
+                "explanation": "k = 3/5 → k² = 9/25."
+        },
+        {
+                "q": "Правоъгълен △ с хипотенуза 10 и ъгъл 30°. Малкият катет е:",
+                "options": [
+                        "5",
+                        "5√3",
+                        "10",
+                        "5√2"
+                ],
+                "correct": 0,
+                "explanation": "Малкият катет = 10 · sin30° = 5."
+        },
+        {
+                "q": "Тригонометрия в правоъгълен △: sin α = ?",
+                "options": [
+                        "Противолежащ катет / хипотенуза",
+                        "Прилежащ катет / хипотенуза",
+                        "Противолежащ / прилежащ",
+                        "Хипотенуза / катет"
+                ],
+                "correct": 0,
+                "explanation": "sin α = противолежащ катет / хипотенуза."
+        },
+        {
+                "q": "Ако два правилни многоъгълника имат еднакъв брой страни, те са:",
+                "options": [
+                        "Подобни",
+                        "Конгруентни",
+                        "Нито едно",
+                        "Само при еднакъв периметър"
+                ],
+                "correct": 0,
+                "explanation": "Два правилни n-ъгълника са подобни (всички ъгли равни)."
+        },
+        {
+                "q": "Приложение: Перспектива – защо по-далечните обекти изглеждат по-малки?",
+                "options": [
+                        "Образуват подобни триъгълници с наблюдателя",
+                        "Ъглите им се променят",
+                        "Светлината ги изкривява",
+                        "Само оптична илюзия"
+                ],
+                "correct": 0,
+                "explanation": "Геометрията на перспективата е директно приложение на подобието."
+        },
+        {
+                "q": "Средна пропорционална: b² = a · c означава:",
+                "options": [
+                        "b е средна пропорционална между a и c",
+                        "b = (a+c)/2",
+                        "b = a + c",
+                        "b = a · c"
+                ],
+                "correct": 0,
+                "explanation": "b е средна геометрична между a и c."
+        },
+        {
+                "q": "В подобни триъгълници ъглополовящите са в отношение:",
+                "options": [
+                        "k (коефициент на подобие)",
+                        "k²",
+                        "1/k",
+                        "2k"
+                ],
+                "correct": 0,
+                "explanation": "Всички линейни елементи са в отношение k."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

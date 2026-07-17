@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 – Константин Преславски – Азбучна молитва · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-konstantin-preslavski-q2',
+    quizNum:2,
+    nextQuizUrl:"/lessons/bel8-konstantin-preslavski-quiz-3.html",
+    lessonUrl:'/lessons/bel8-konstantin-preslavski.html',
+    lessonName:"Константин Преславски – Азбучна молитва",
+    eyebrow:"БЕЛ · 8 клас · Средновековие",
+    title:"Тест 2 – Константин Преславски – Азбучна молитва",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какво означава акростих на гръцки?",
+    "options": [
+      "Краен стих – akros (краен) + stichos (стих)",
+      "Свещена молитва",
+      "Езикова игра",
+      "Вид химн"
+    ],
+    "correct": 0,
+    "explanation": "Акростихът е вид литературна игра с буквите."
+  },
+  {
+    "q": "Каква е функцията на буквата в Азбучна молитва?",
+    "options": [
+      "Мост между човека и Бога – духовен символ",
+      "Просто звук",
+      "Граматически знак",
+      "Украса"
+    ],
+    "correct": 0,
+    "explanation": "За Константин буквата е духовен феномен, не само практичен."
+  },
+  {
+    "q": "Какъв е стилът на Азбучна молитва?",
+    "options": [
+      "Тържествен, религиозен, с химничен тон",
+      "Разговорен и прост",
+      "Иронично-хумористичен",
+      "Описателен"
+    ],
+    "correct": 0,
+    "explanation": "Стилът е висок книжен, химничен – типичен за Преславската традиция."
+  },
+  {
+    "q": "Каква е разликата акростих/рима?",
+    "options": [
+      "Акростихът е в началото на стиховете; римата – в края",
+      "Акростихът е в края",
+      "Римата е в началото",
+      "Те са едно и само"
+    ],
+    "correct": 0,
+    "explanation": "Акростих = начало на стих; рима = край."
+  },
+  {
+    "q": "Каква е просветната роля на Азбучна молитва?",
+    "options": [
+      "Учи азбуката по забавен начин – мнемонично устройство",
+      "Само религиозна роля",
+      "Само политическа роля",
+      "Историческа хроника"
+    ],
+    "correct": 0,
+    "explanation": "Акростихът помага за заучаване на буквите."
+  },
+  {
+    "q": "Кой период е свързан с Преслав?",
+    "options": [
+      "Първото българско царство – IX–X в.",
+      "Второто царство – XII–XIV в.",
+      "Възраждането – XVIII–XIX в.",
+      "Освобождението – 1878 г."
+    ],
+    "correct": 0,
+    "explanation": "Преслав е столица на Симеон в рамките на Първото царство."
+  },
+  {
+    "q": "Каква е разликата молитва/апология?",
+    "options": [
+      "Молитвата е обръщение към Бога; апологията защитава идея",
+      "Молитвата е по-дълга",
+      "Апологията е поетична",
+      "Те са едно и само"
+    ],
+    "correct": 0,
+    "explanation": "О писменех е апология; Азбучна молитва е молитва – различни жанрове."
+  },
+  {
+    "q": "Какво е анафора?",
+    "options": [
+      "Повтаряне на дума в началото на последователни стихове",
+      "Рима в края",
+      "Сравнение с природата",
+      "Метафора"
+    ],
+    "correct": 0,
+    "explanation": "Анафората е честа в молитвите и химните."
+  },
+  {
+    "q": "Какво е Шестоднев на Йоан Екзарх?",
+    "options": [
+      "Произведение за шестте дни на Сътворението",
+      "Молитвеник",
+      "Хроника",
+      "Граматика"
+    ],
+    "correct": 0,
+    "explanation": "Шестоднев тълкува Битие – Сътворението в шест дни."
+  },
+  {
+    "q": "Как акростихът доказва майсторство?",
+    "options": [
+      "Спазва азбучния ред, като текстът остава смислен и красив",
+      "Просто е по-лесно",
+      "Няма изисквания",
+      "Всеки може да го напише"
+    ],
+    "correct": 0,
+    "explanation": "Ограничението е най-голямото предизвикателство."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

@@ -1,13 +1,13 @@
-// Shared quiz engine — reads window.QUIZ_CONFIG set by each quiz page.
+// Shared quiz engine – reads window.QUIZ_CONFIG set by each quiz page.
 // Required config keys:
-//   lessonKey   — localStorage key suffix, e.g. 'bel12-debelyanov-lyubov'
-//   lessonUrl   — URL of the lesson page, e.g. '/lessons/bel12-debelyanov-lyubov.html'
-//   lessonName  — breadcrumb display name, e.g. 'Дебелянов — Любовта'
-//   eyebrow     — top label, e.g. 'БЕЛ · 12 КЛАС · ТЕМА 1'
-//   title       — quiz title, e.g. 'Куиз — Димчо Дебелянов'
-//   sub         — subtitle, e.g. '10 въпроса · Избери верния отговор'
-//   passScore   — minimum correct answers to pass (default 8)
-//   questions   — array of { q, opts: [str×4], correct: 0-3, explanation }
+//   lessonKey   – localStorage key suffix, e.g. 'bel12-debelyanov-lyubov'
+//   lessonUrl   – URL of the lesson page, e.g. '/lessons/bel12-debelyanov-lyubov.html'
+//   lessonName  – breadcrumb display name, e.g. 'Дебелянов – Любовта'
+//   eyebrow     – top label, e.g. 'БЕЛ · 12 КЛАС · ТЕМА 1'
+//   title       – quiz title, e.g. 'Куиз – Димчо Дебелянов'
+//   sub         – subtitle, e.g. '10 въпроса · Избери верния отговор'
+//   passScore   – minimum correct answers to pass (default 8)
+//   questions   – array of { q, opts: [str×4], correct: 0-3, explanation }
 
 (function () {
   const cfg = window.QUIZ_CONFIG;
@@ -127,7 +127,7 @@
     const msgs = {
       6: 'Отлично! Владееш материала.',
       5: 'Много добре!',
-      4: 'Добре — има какво да затвърдиш.',
+      4: 'Добре – има какво да затвърдиш.',
       3: 'Препоръчваме да прочетеш урока отново.',
       2: 'Трябва да повториш материала.'
     };
@@ -135,7 +135,7 @@
     const wrongItems = [], correctItems = [];
     qs.forEach((q, i) => {
       const ok      = userAnswers[i] === q.correct;
-      const yourOpt = q.opts[userAnswers[i]] ?? '—';
+      const yourOpt = q.opts[userAnswers[i]] ?? '–';
       if (!ok) {
         wrongItems.push(`
           <div class="result-wrong">
@@ -199,7 +199,7 @@
       wrong: wrongTexts
     }));
 
-    // Запиши в Supabase quiz_results — директно REST API (без зависимост от nav.js timing)
+    // Запиши в Supabase quiz_results – директно REST API (без зависимост от nav.js timing)
     (function saveQuizResult() {
       var SUPABASE_URL = 'https://wbcppvfgtvkrsfmclmjp.supabase.co';
       var SUPABASE_KEY = 'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l';
@@ -223,7 +223,21 @@
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal'
         },
-        body: JSON.stringify({ user_id: userId, lesson_slug: baseSlug, quiz_num: quizNum, pct: pct, passed: passed })
+        body: JSON.stringify({
+          user_id: userId,
+          lesson_slug: baseSlug,
+          quiz_num: quizNum,
+          pct: pct,
+          passed: passed,
+          details: qs.map(function(q, i) {
+            return {
+              question: q.q,
+              correct_answer: q.opts[q.correct],
+              chosen_answer: userAnswers[i] !== undefined ? q.opts[userAnswers[i]] : null,
+              is_correct: userAnswers[i] === q.correct,
+            };
+          }),
+        })
       }).then(function(r) {
         if (!r.ok) r.text().then(function(t) { console.warn('[quiz] quiz_results insert failed:', r.status, t); });
       }).catch(function(e) { console.warn('[quiz] quiz_results save error:', e); });
@@ -461,7 +475,7 @@
     setFeedback('disabled');
     addBubble('Обясни пак', true);
     znaykoHistory.push({ role: 'user', content: 'Не разбрах. Обясни по различен начин.' });
-    setTimeout(() => askZnayko(`Ученикът не разбра. Обясни "${lastSelForQuiz}" по напълно различен начин — друга аналогия, друг пример.`, 'chat'), 300);
+    setTimeout(() => askZnayko(`Ученикът не разбра. Обясни "${lastSelForQuiz}" по напълно различен начин – друга аналогия, друг пример.`, 'chat'), 300);
   });
 
   document.getElementById('quiz-explain-form').addEventListener('submit', e => {

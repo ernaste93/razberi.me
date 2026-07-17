@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 - Александър Пушкин – Евгений Онегин · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-pushkin-q1",
+    quizNum:1,
+    nextQuizUrl:"/lessons/bel9-pushkin-quiz-2.html",
+    lessonUrl:"/lessons/bel9-pushkin.html",
+    lessonName:"Александър Пушкин – Евгений Онегин",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 1 - Александър Пушкин – Евгений Онегин",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какво е Евгений Онегин по жанр?",
+    "options": [
+      "Роман в стихове",
+      "Поема",
+      "Роман в проза",
+      "Разказ"
+    ],
+    "correct": 0,
+    "explanation": "Жанрът е новаторски – Пушкин съчетава епическо и лирическо."
+  },
+  {
+    "q": "Какво е хандрос?",
+    "options": [
+      "Руски термин за скука и разочарование от живота",
+      "Вид дуел",
+      "Романтична любов",
+      "Руска болест"
+    ],
+    "correct": 0,
+    "explanation": "Хандросът е руският байронически сплин."
+  },
+  {
+    "q": "Какво прави Онегин в деревнята?",
+    "options": [
+      "Скучае; убива Ленски на дуел и отхвърля Татяна",
+      "Влюбва се щастливо",
+      "Работи",
+      "Пише поезия"
+    ],
+    "correct": 0,
+    "explanation": "Деревнята не лекува скуката на Онегин."
+  },
+  {
+    "q": "Кой е Ленски?",
+    "options": [
+      "Приятел на Онегин – млад поет, убит на дуел",
+      "Братът на Татяна",
+      "Злодеят",
+      "Бащата на Татяна"
+    ],
+    "correct": 0,
+    "explanation": "Ленски е романтичен идеалист – контраст с циничния Онегин."
+  },
+  {
+    "q": "Кой е Пушкин по националност?",
+    "options": [
+      "Руски",
+      "Немски",
+      "Английски",
+      "Французки"
+    ],
+    "correct": 0,
+    "explanation": "Пушкин е основоположникът на руската литература."
+  },
+  {
+    "q": "Какво прави Татяна в края?",
+    "options": [
+      "Омъжена за принц, отхвърля Онегин",
+      "Се жени за Онегин",
+      "Умира",
+      "Бяга с Ленски"
+    ],
+    "correct": 0,
+    "explanation": "Татяна е вярна на дълга – нравствен идеал."
+  },
+  {
+    "q": "Кога е написан Евгений Онегин?",
+    "options": [
+      "1823–1831",
+      "1800–1810",
+      "1840–1850",
+      "1815–1820"
+    ],
+    "correct": 0,
+    "explanation": "Пушкин работи осем години върху романа."
+  },
+  {
+    "q": "Защо Онегин убива Ленски?",
+    "options": [
+      "Заради глупава суета и страх от обществения осъдителен поглед",
+      "От ревност",
+      "По заповед",
+      "Случайно"
+    ],
+    "correct": 0,
+    "explanation": "Трагедията е резултат от конформизъм, не от истинска злоба."
+  },
+  {
+    "q": "Каква е функцията на образа на Татяна?",
+    "options": [
+      "Нравствен идеал и символ на руския дух",
+      "Просто любовна героиня",
+      "Без функция",
+      "Злодейка"
+    ],
+    "correct": 0,
+    "explanation": "Белински нарича Татяна руска душа."
+  },
+  {
+    "q": "Каква е основната ирония в развръзката?",
+    "options": [
+      "Онегин вече обича Татяна, но тя го отхвърля – симетрия на ситуацията",
+      "Татяна умира",
+      "Онегин се жени",
+      "Ленски оживява"
+    ],
+    "correct": 0,
+    "explanation": "Пушкин обръща ролите – Татяна сега е тази, която отхвърля."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

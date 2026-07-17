@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – П. П. Славейков – „На острова на блажените" – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-slaveykov-na-noshta-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel10-slaveykov-na-noshta-quiz-3.html',
+      lessonUrl:   '/lessons/bel10-slaveykov-na-noshta.html',
+      lessonName:  'П. П. Славейков – „На острова на блажените"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – П. П. Славейков – „На острова на блажените" – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Мотивът „смърт като освобождение\" е характерен за?",
+                "options": [
+                        "Реализма",
+                        "Романтизма и идеализма",
+                        "Просвещението",
+                        "Народната поезия"
+                ],
+                "correct": 1,
+                "explanation": "Романтизъм и идеализъм: смъртта не е край, а преход към по-висше съществуване."
+        },
+        {
+                "q": "Духовното усъвършенстване в стихосбирката означава?",
+                "options": [
+                        "Лично богатство",
+                        "Стремеж към идеала – любов, красота, истина",
+                        "Религиозен живот",
+                        "Физическа сила"
+                ],
+                "correct": 1,
+                "explanation": "Духовното усъвършенстване = стремеж към красотата, истината, любовта."
+        },
+        {
+                "q": "Техниката „монолог от лицето на друг поет\" служи за?",
+                "options": [
+                        "Да крие авторството",
+                        "Да изрази идеи чрез различни гласове и перспективи",
+                        "Да имитира чужди автори",
+                        "Да избегне цензурата"
+                ],
+                "correct": 1,
+                "explanation": "Различните гласове позволяват на Slaveykov да изследва идеите от множество ъгли."
+        },
+        {
+                "q": "„Химн на смъртта\" утвърждава?",
+                "options": [
+                        "Страха от смъртта",
+                        "Смъртта като естествен и освобождаващ край",
+                        "Отричане на смъртта",
+                        "Безсмъртието"
+                ],
+                "correct": 1,
+                "explanation": "Смъртта е освобождение и достойно завършване на духовния живот."
+        },
+        {
+                "q": "Стихосбирката е издадена?",
+                "options": [
+                        "1884",
+                        "1910",
+                        "1876",
+                        "1920"
+                ],
+                "correct": 1,
+                "explanation": "„На острова на блажените\" – 1910 г."
+        },
+        {
+                "q": "Разликата между любовта в тази стихосбирка и романтичната любов е?",
+                "options": [
+                        "Без разлика",
+                        "Тук е духовна, не само емоционална или физическа",
+                        "По-силна болка",
+                        "По-малко значима"
+                ],
+                "correct": 1,
+                "explanation": "Духовната любов е по-висша от романтичната – тя е единение на духовете."
+        },
+        {
+                "q": "Музиката като мотив в стихосбирката?",
+                "options": [
+                        "Не присъства",
+                        "Свързва любовта и духовното – „Cis moll\"",
+                        "Само в заглавието",
+                        "Символ на войната"
+                ],
+                "correct": 1,
+                "explanation": "Музиката = духовна хармония и любов – вж. „Cis moll\"."
+        },
+        {
+                "q": "Пенчо Славейков е номиниран за?",
+                "options": [
+                        "Пулицър",
+                        "Нобелова награда за литература",
+                        "Оскар",
+                        "Европейска награда"
+                ],
+                "correct": 1,
+                "explanation": "Пенчо Славейков е посмъртно номиниран за Нобелова награда за литература."
+        },
+        {
+                "q": "Кого Slaveykov измисля като „автори\" на монолозите?",
+                "options": [
+                        "Реални народни певци",
+                        "Измислени поети с конструирани биографии",
+                        "Исторически личности само",
+                        "Свои приятели"
+                ],
+                "correct": 1,
+                "explanation": "Slaveykov конструира измислени поети с имена, биографии и стихове – оригинален похват."
+        },
+        {
+                "q": "Философията в стихосбирката е близка до?",
+                "options": [
+                        "Марксизма",
+                        "Немския идеализъм (Хегел, Шилер, Ницше)",
+                        "Прагматизма",
+                        "Позитивизма"
+                ],
+                "correct": 1,
+                "explanation": "Немският идеализъм и ницшеанството са основните философски влияния."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

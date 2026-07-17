@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Неметали – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem9-nemetali-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/chem9-nemetali-quiz-3.html',
+      lessonUrl:   '/lessons/chem9-nemetali.html',
+      lessonName:  'Неметали',
+      eyebrow:     'Химия · 9 клас · Неорганична химия',
+      title:       'Куиз – Неметали – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Каква е функцията на озона (O₃)?",
+                "options": [
+                        "Абсорбира UV радиация в стратосферата",
+                        "Дишане",
+                        "Горене",
+                        "Замърсяване"
+                ],
+                "correct": 0,
+                "explanation": "Озоновият слой предпазва Земята от вредна UV."
+        },
+        {
+                "q": "Как се произвежда амоняк (NH₃)?",
+                "options": [
+                        "Синтез на Хабер: N₂ + 3H₂ → 2NH₃ (катализатор, висока t)",
+                        "Горене на азот",
+                        "Разтваряне на NaCl",
+                        "Окисляване на водород"
+                ],
+                "correct": 0,
+                "explanation": "Процесът на Хабер е важен индустриален процес."
+        },
+        {
+                "q": "Какво е алотропия?",
+                "options": [
+                        "Съществуването на елемент в различни форми (напр. диамант/графит при C)",
+                        "Изотопия",
+                        "Изомерия",
+                        "Видоизменение на молекула"
+                ],
+                "correct": 0,
+                "explanation": "Въглеродните алотропи: диамант, графит, фулерени."
+        },
+        {
+                "q": "Каква е реакцията на HCl с NaOH?",
+                "options": [
+                        "HCl + NaOH → NaCl + H₂O (неутрализация)",
+                        "HCl + NaOH → Na + Cl₂ + H₂",
+                        "Нямат реакция",
+                        "Образуват кислород"
+                ],
+                "correct": 0,
+                "explanation": "Неутрализацията дава сол и вода."
+        },
+        {
+                "q": "Какво е отровен газ, образуван при горене на въглища?",
+                "options": [
+                        "CO (въглероден оксид)",
+                        "CO₂",
+                        "SO₂",
+                        "NO₂"
+                ],
+                "correct": 0,
+                "explanation": "CO е незабележим, без мирис, смъртоносен."
+        },
+        {
+                "q": "Каква е електронната конфигурация на хлора (Z=17)?",
+                "options": [
+                        "2,8,7 (3 слоя, 7 валентни е⁻)",
+                        "2,8,8",
+                        "2,7",
+                        "2,8,8,1"
+                ],
+                "correct": 0,
+                "explanation": "Cl: 2 е⁻ в 1 слой, 8 в 2-ри, 7 в 3-ти."
+        },
+        {
+                "q": "Защо водородните връзки са важни за водата?",
+                "options": [
+                        "Дават на водата необичайно висока точка на кипене и повърхностно напрежение",
+                        "Без значение",
+                        "Само в лед",
+                        "Само за разтворимост"
+                ],
+                "correct": 0,
+                "explanation": "Водородните връзки правят водата уникален разтворител."
+        },
+        {
+                "q": "Какво е редукционен агент?",
+                "options": [
+                        "Вещество, което отдава е⁻ (само то се окислява)",
+                        "Вещество, приемащо е⁻",
+                        "Катализатор",
+                        "Инертно вещество"
+                ],
+                "correct": 0,
+                "explanation": "В OVR: редуктор се окислява; окислител – редуцира."
+        },
+        {
+                "q": "Каква е реакцията между Cl₂ и Fe?",
+                "options": [
+                        "2Fe + 3Cl₂ → 2FeCl₃",
+                        "Fe + Cl₂ → FeCl₂",
+                        "Fe + 2Cl₂ → FeCl₄",
+                        "Нямат реакция"
+                ],
+                "correct": 0,
+                "explanation": "Хлорът окислява желязото до Fe³⁺ (FeCl₃)."
+        },
+        {
+                "q": "Каква е температурата на кипене на вода при стандартно налягане?",
+                "options": [
+                        "100°C",
+                        "0°C",
+                        "−100°C",
+                        "200°C"
+                ],
+                "correct": 0,
+                "explanation": "H₂O кипи при 100°C при 1 atm."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

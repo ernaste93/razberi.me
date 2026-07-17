@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 - Верлен – Есенна песен · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-verlen-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bel9-verlen.html",
+    lessonName:"Верлен – Есенна песен",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 3 - Верлен – Есенна песен",
+    passScore:8,
+    questions:[
+  {
+    "q": "Как стихотворението е повлияло на музиката?",
+    "options": [
+      "Форе и Дебюси слагат музика към текста – перфектен синтез",
+      "Без влияние на музиката",
+      "Само литературно",
+      "Верлен сам го е наложил"
+    ],
+    "correct": 0,
+    "explanation": "Есенна песен е сред най-музикализираните стихове."
+  },
+  {
+    "q": "Каква е разликата импресионизъм/символизъм?",
+    "options": [
+      "Импресионизмът: моментно впечатление; символизмът: намек към трансцендентното",
+      "Те са напълно еднакви",
+      "Импресионизмът е по-дълбок",
+      "Символизмът е по-повърхностен"
+    ],
+    "correct": 0,
+    "explanation": "Верлен съчетава двете – импресионистична музикалност + символна дълбочина."
+  },
+  {
+    "q": "Каква е екзистенциалната тема?",
+    "options": [
+      "Безпомощността пред времето – ние сме като листа, носени от вятъра",
+      "Само природна тема",
+      "Без екзистенциализъм",
+      "Само религиозна"
+    ],
+    "correct": 0,
+    "explanation": "Символизмът е рано модернистичен – усеща загубата на смисъла."
+  },
+  {
+    "q": "Как символизмът е свързан с модернизма?",
+    "options": [
+      "Символизмът е предтеча на модернизма – субективност, музикалност, фрагментарност",
+      "Без никаква връзка",
+      "Символизмът е идентичен с модернизма",
+      "Те са противоположни"
+    ],
+    "correct": 0,
+    "explanation": "Символизмът пролага пътя към 20-ото столетие."
+  },
+  {
+    "q": "Каква е функцията на краткостта на стихотворението?",
+    "options": [
+      "Краткото стихотворение постига максимален ефект – концентрация на смисъла",
+      "Краткостта е слабост",
+      "Без функция",
+      "Случайна дължина"
+    ],
+    "correct": 0,
+    "explanation": "Символистичната поезия избягва многословието."
+  },
+  {
+    "q": "Как Верлен разбира красотата?",
+    "options": [
+      "Красотата е музикална – чувствена, звукова, а не рационална",
+      "Класическа зрителна хармония",
+      "Само визуална красота",
+      "Само природна красота"
+    ],
+    "correct": 0,
+    "explanation": "За Верлен красотата е звук и настроение преди всичко."
+  },
+  {
+    "q": "Каква е темата за болката в стихотворението?",
+    "options": [
+      "Болката е неизразимо вътрешно преживяване – само музиката я изразява",
+      "Физическа болка",
+      "Без тема за болката",
+      "Болката се описва директно"
+    ],
+    "correct": 0,
+    "explanation": "Символизмът изразява неизразимото чрез музикалност."
+  },
+  {
+    "q": "Как стихотворението трябва да се чете?",
+    "options": [
+      "На глас, музикално – ритъмът и звуковите повторения носят значение",
+      "Като проза",
+      "Бавно и монотонно",
+      "Бързо и радостно"
+    ],
+    "correct": 0,
+    "explanation": "Верлен трябва да се чете на глас за пълен ефект."
+  },
+  {
+    "q": "Каква е връзката Верлен-Бодлер-символизъм?",
+    "options": [
+      "Бодлер е основател; Верлен е негов последовател и разпространител",
+      "Без връзка",
+      "Верлен е основателят",
+      "Те са от различни течения"
+    ],
+    "correct": 0,
+    "explanation": "Символизмът е движение с Бодлер начело и Верлен-Рембо-Маларме продължители."
+  },
+  {
+    "q": "Защо Есенна песен е в програмата?",
+    "options": [
+      "Образцов символизъм – музикалност, синестезия, трансцендентен смисъл",
+      "Случайно",
+      "Само заради красотата",
+      "Само заради Верлен"
+    ],
+    "correct": 0,
+    "explanation": "Творбата е учебников пример за символистичния метод."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

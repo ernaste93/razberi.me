@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 – Движение и опора – скелет и мускули · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bio8-dvijenie-opora-q1",
+    quizNum:1,
+    nextQuizUrl:"/lessons/bio8-dvijenie-opora-quiz-2.html",
+    lessonUrl:"/lessons/bio8-dvijenie-opora.html",
+    lessonName:"Движение и опора – скелет и мускули",
+    eyebrow:"Биология · 8 клас · Анатомия",
+    title:"Тест 1 – Движение и опора – скелет и мускули",
+    passScore:8,
+    questions:[
+  {
+    "q": "Колко кости има в човешкия скелет?",
+    "options": [
+      "206",
+      "150",
+      "250",
+      "306"
+    ],
+    "correct": 0,
+    "explanation": "Скелетът на възрастен човек се състои от 206 кости."
+  },
+  {
+    "q": "Каква е функцията на червения костен мозък?",
+    "options": [
+      "Производство на кръвни клетки",
+      "Съхранение на мазнини",
+      "Произвежда хормони",
+      "Пренася кислород"
+    ],
+    "correct": 0,
+    "explanation": "Червеният костен мозък произвежда еритроцити, левкоцити и тромбоцити."
+  },
+  {
+    "q": "Кои са трите вида мускулна тъкан?",
+    "options": [
+      "Напречно набраздена, гладка, сърдечна",
+      "Доброволна, недоброволна, автоматична",
+      "Бяла, червена, смесена",
+      "Бърза, бавна, смесена"
+    ],
+    "correct": 0,
+    "explanation": "Трите вида мускулна тъкан с различни функции и свойства."
+  },
+  {
+    "q": "Какво са антагонистични мускули?",
+    "options": [
+      "Двойка мускули, свиващи се в противоположни посоки",
+      "Два еднакви мускула",
+      "Мускули без функция",
+      "Болни мускули"
+    ],
+    "correct": 0,
+    "explanation": "Бицепс/трицепс е класическият пример – единият огъва, другият изпъва."
+  },
+  {
+    "q": "Кои кости са дълги?",
+    "options": [
+      "Бедрена, раменна, лакътна",
+      "Прешленни, карпални",
+      "Черепни",
+      "Ребра"
+    ],
+    "correct": 0,
+    "explanation": "Дългите кости имат централна диафиза и два епифиза."
+  },
+  {
+    "q": "Каква става е раменната?",
+    "options": [
+      "Подвижна – многоосна",
+      "Полуподвижна",
+      "Неподвижна",
+      "Хрущялна"
+    ],
+    "correct": 0,
+    "explanation": "Раменната става е топочна – движи се в много посоки."
+  },
+  {
+    "q": "Каква е функцията на скелета освен опора?",
+    "options": [
+      "Защита на органи и производство на кръвни клетки",
+      "Само опора",
+      "Само движение",
+      "Само защита"
+    ],
+    "correct": 0,
+    "explanation": "Скелетът има три основни функции: опора, защита, хемопоеза."
+  },
+  {
+    "q": "Какво се случва при свиване на мускул?",
+    "options": [
+      "Нервен импулс → Ca²⁺ → актин-миозин взаимодействие",
+      "Мускулът се разтяга",
+      "Костта се движи без мускул",
+      "Ставата се заключва"
+    ],
+    "correct": 0,
+    "explanation": "Свиването е електрохимичен процес."
+  },
+  {
+    "q": "Какво са сухожилията?",
+    "options": [
+      "Съединителна тъкан, свързваща мускул с кост",
+      "Свързват кост с кост",
+      "Вид мускул",
+      "Тип хрущял"
+    ],
+    "correct": 0,
+    "explanation": "Сухожилията предават силата на мускула към костта."
+  },
+  {
+    "q": "Какво са връзките (лигаменти)?",
+    "options": [
+      "Съединителна тъкан, свързваща кост с кост",
+      "Свързват мускул с кост",
+      "Вид хрущял",
+      "Тип кост"
+    ],
+    "correct": 0,
+    "explanation": "Лигаментите стабилизират ставите."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

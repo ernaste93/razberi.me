@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="styles.css" />
   <style>
     /* ── page title ── */
-    .settings-page { max-width: 1100px; margin: 16px auto 80px; padding: 0 24px; }
+    .settings-page { max-width: 1100px; margin: 16px auto 80px; padding: 0 var(--gutter); }
 
     .settings-intro { margin-bottom: 16px; }
     .settings-intro h1 { font-size: 22px; font-weight: 800; color: var(--text); margin: 0 0 2px; }
@@ -541,19 +541,19 @@
               <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:14px;">Употреба този месец</div>
               <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
                 <div style="background:var(--soft);border-radius:12px;padding:14px 16px;text-align:center;">
-                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-lessons">—</div>
+                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-lessons">–</div>
                   <div style="font-size:12px;color:var(--muted);margin-top:3px;">Урока</div>
                 </div>
                 <div style="background:var(--soft);border-radius:12px;padding:14px 16px;text-align:center;">
-                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-quizzes">—</div>
+                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-quizzes">–</div>
                   <div style="font-size:12px;color:var(--muted);margin-top:3px;">Теста</div>
                 </div>
                 <div style="background:var(--soft);border-radius:12px;padding:14px 16px;text-align:center;">
-                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-znayko">—</div>
+                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-znayko">–</div>
                   <div style="font-size:12px;color:var(--muted);margin-top:3px;">Знайко</div>
                 </div>
                 <div style="background:var(--soft);border-radius:12px;padding:14px 16px;text-align:center;">
-                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-essays">—</div>
+                  <div style="font-size:22px;font-weight:800;color:var(--text);" id="usage-essays">–</div>
                   <div style="font-size:12px;color:var(--muted);margin-top:3px;">Съчинения</div>
                 </div>
               </div>
@@ -666,13 +666,7 @@
                 </div>
                 <label class="tog"><input type="checkbox" id="cn-quiz" checked /><span class="tog-sl"></span></label>
               </div>
-              <div class="tog-row">
-                <div>
-                  <div class="tog-lbl">Напомняния за учене</div>
-                  <div class="tog-desc">Напомняния при пропуснати дни.</div>
-                </div>
-                <label class="tog"><input type="checkbox" id="notif-remind" checked /><span class="tog-sl"></span></label>
-              </div>
+
               <div class="tog-row">
                 <div>
                   <div class="tog-lbl">Новини и обновления</div>
@@ -735,12 +729,12 @@
               </div>
             </div>
 
-            <!-- Смяна на имейл — разгъва се -->
+            <!-- Смяна на имейл – разгъва се -->
             <div id="change-email-section" style="display:none;margin-top:4px;margin-bottom:8px;">
               <div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:14px;padding:16px 18px;margin-bottom:16px;">
-                <div style="font-size:13px;font-weight:800;color:#92400e;margin-bottom:8px;">Преди да смениш имейла — прочети това:</div>
+                <div style="font-size:13px;font-weight:800;color:#92400e;margin-bottom:8px;">Преди да смениш имейла – прочети това:</div>
                 <ul style="font-size:13px;color:#78350f;line-height:1.7;margin:0;padding-left:18px;">
-                  <li>Ще получиш потвърждение на <strong>новия имейл</strong> — смяната влиза в сила след клик на линка.</li>
+                  <li>Ще получиш потвърждение на <strong>новия имейл</strong> – смяната влиза в сила след клик на линка.</li>
                   <li>С новия имейл ще влизаш в профила си.</li>
                   <li>Абонаментът остава активен и се обвързва с новия имейл.</li>
                   <li>Всички разписки и фактури ще отиват на новия имейл.</li>
@@ -781,7 +775,7 @@
             <div class="fmsg" id="msg-pw"></div>
             <div class="panel-divider" style="margin-top:28px;"></div>
             <h3 style="font-size:16px;font-weight:700;color:var(--text);margin:0 0 6px;">Изтриване на акаунт</h3>
-            <p style="font-size:14px;color:var(--muted);margin:0 0 16px;">Изтриването е необратимо — всички данни се премахват за постоянно.</p>
+            <p style="font-size:14px;color:var(--muted);margin:0 0 16px;">Изтриването е необратимо – всички данни се премахват за постоянно.</p>
             <div style="display:flex;flex-direction:column;gap:10px;">
               <div class="danger-box">
                 <div class="danger-box-row">
@@ -816,7 +810,7 @@
         <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
       </div>
       <h3>Изтриване на акаунт</h3>
-      <p>Всички данни — профил, напредък, история — ще бъдат изтрити без възможност за възстановяване.</p>
+      <p>Всички данни – профил, напредък, история – ще бъдат изтрити без възможност за възстановяване.</p>
       <div class="confirm-warning">
         ⚠️ Ще бъдат изтрити:<br>
         · Профилът ви и данните на децата<br>
@@ -1146,7 +1140,7 @@
         return;
       }
 
-      // Второ цъкане — изпълняваме
+      // Второ цъкане – изпълняваме
       _emailChangeConfirmed = false;
       btn.disabled = true;
       btn.textContent = 'Изпращане...';
@@ -1164,7 +1158,7 @@
       }
     };
 
-    // Ако потребителят промени имейла докато чака потвърждение — нулираме
+    // Ако потребителят промени имейла докато чака потвърждение – нулираме
     document.getElementById('new-email-input').addEventListener('input', () => {
       const btn = document.getElementById('btn-confirm-change-email');
       _emailChangeConfirmed = false;

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Химични реакции – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem9-himichni-reakcii-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem9-himichni-reakcii.html',
+      lessonName:  'Химични реакции',
+      eyebrow:     'Химия · 9 клас · Обща химия',
+      title:       'Куиз – Химични реакции – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Задача: Колко г O₂ трябват за изгаряне на 32 г CH₄? (CH₄ + 2O₂ → CO₂ + 2H₂O)",
+                "options": [
+                        "128 г",
+                        "32 г",
+                        "64 г",
+                        "16 г"
+                ],
+                "correct": 0,
+                "explanation": "32 г CH₄ = 2 mol; нужни 2·2 = 4 mol O₂ = 4·32 = 128 г."
+        },
+        {
+                "q": "Какво е степен на конверсия?",
+                "options": [
+                        "Процент реагенти, превърнати в продукти при дадени условия",
+                        "Скоростта",
+                        "Равновесната константа",
+                        "Активационна енергия"
+                ],
+                "correct": 0,
+                "explanation": "Конверсията показва ефективността на реакцията."
+        },
+        {
+                "q": "Какво е инхибитор?",
+                "options": [
+                        "Вещество, забавящо реакцията",
+                        "Катализатор",
+                        "Продукт",
+                        "Окислител"
+                ],
+                "correct": 0,
+                "explanation": "Инхибиторите са обратното на катализаторите."
+        },
+        {
+                "q": "Как фотохимичните реакции се различават от термичните?",
+                "options": [
+                        "Активирани от светлина, а не от топлина",
+                        "Само при горене",
+                        "Не зависят от температура",
+                        "По-бавни"
+                ],
+                "correct": 0,
+                "explanation": "Фотосинтезата е фотохимична; промишлените реакции – термични."
+        },
+        {
+                "q": "Каква е равновесната константа Kc?",
+                "options": [
+                        "Kc = [продукти]/[реагенти] при равновесие (всяко в степен на коефициента)",
+                        "Kc = скорост",
+                        "Kc = температура",
+                        "Kc = налягане"
+                ],
+                "correct": 0,
+                "explanation": "За N₂+3H₂⇌2NH₃: Kc = [NH₃]²/([N₂][H₂]³)."
+        },
+        {
+                "q": "При висок Kc (>>1), реакцията е:",
+                "options": [
+                        "Силно изместена към продукти",
+                        "Изместена към реагенти",
+                        "Равномерно разпределена",
+                        "Блокирана"
+                ],
+                "correct": 0,
+                "explanation": "Голям Kc = предимно продукти при равновесие."
+        },
+        {
+                "q": "Как ензимите функционират като катализатори?",
+                "options": [
+                        "Снижават активационна енергия чрез специфично свързване в активното място",
+                        "Увеличават температура",
+                        "Добавят протони",
+                        "Само разграждат"
+                ],
+                "correct": 0,
+                "explanation": "Ензим-субстратният комплекс е ключът към ефективността."
+        },
+        {
+                "q": "Балансирайте: KMnO₄ + HCl → KCl + MnCl₂ + Cl₂ + H₂O",
+                "options": [
+                        "2KMnO₄ + 16HCl → 2KCl + 2MnCl₂ + 5Cl₂ + 8H₂O",
+                        "KMnO₄ + HCl → KCl + Cl₂",
+                        "2KMnO₄ + 10HCl → 2KCl + 2MnCl₂ + 5Cl₂",
+                        "Не може да се балансира"
+                ],
+                "correct": 0,
+                "explanation": "OVR: KMnO₄ е силен окислител; Cl⁻ се окислява до Cl₂."
+        },
+        {
+                "q": "Каква е разликата между хомогенна и хетерогенна реакция?",
+                "options": [
+                        "Хомогенна – всички реагенти в 1 фаза; хетерогенна – в различни фази",
+                        "Нямат разлика",
+                        "Хетерогенна е по-бавна",
+                        "Хомогенна е само за газове"
+                ],
+                "correct": 0,
+                "explanation": "Реакциите между твърдо и течност са хетерогенни."
+        },
+        {
+                "q": "Какво е ядрена реакция?",
+                "options": [
+                        "Реакция, засягаща ядрото (делене или синтез на ядра)",
+                        "Обичайна химична",
+                        "Само за H",
+                        "Без промяна на елементи"
+                ],
+                "correct": 0,
+                "explanation": "Ядрените реакции освобождават огромно количество енергия."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

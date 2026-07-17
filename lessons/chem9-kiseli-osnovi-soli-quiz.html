@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Киселини, основи и соли – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem9-kiseli-osnovi-soli-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem9-kiseli-osnovi-soli-quiz-2.html',
+      lessonUrl:   '/lessons/chem9-kiseli-osnovi-soli.html',
+      lessonName:  'Киселини, основи и соли',
+      eyebrow:     'Химия · 9 клас · Неорганична химия',
+      title:       'Куиз – Киселини, основи и соли – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Какво е киселина по Арениус?",
+                "options": [
+                        "Отдава H⁺ в разтвор",
+                        "Приема H⁺",
+                        "Отдава OH⁻",
+                        "Приема OH⁻"
+                ],
+                "correct": 0,
+                "explanation": "HCl → H⁺ + Cl⁻ в разтвор – дава H⁺."
+        },
+        {
+                "q": "Какво е основа по Арениус?",
+                "options": [
+                        "Отдава OH⁻ в разтвор",
+                        "Отдава H⁺",
+                        "Приема H⁺",
+                        "Без OH⁻"
+                ],
+                "correct": 0,
+                "explanation": "NaOH → Na⁺ + OH⁻ – дава OH⁻."
+        },
+        {
+                "q": "Каква е реакцията на неутрализация?",
+                "options": [
+                        "Киселина + Основа → Сол + Вода",
+                        "Метал + Киселина → Сол + H₂",
+                        "Сол + Вода → К + О",
+                        "Оксид + Вода → К"
+                ],
+                "correct": 0,
+                "explanation": "Неутрализацията е основна реакция в химията."
+        },
+        {
+                "q": "Каква е pH на чиста вода при 25°C?",
+                "options": [
+                        "7 (неутрална)",
+                        "0",
+                        "14",
+                        "5"
+                ],
+                "correct": 0,
+                "explanation": "H₂O дисоциира равномерно; [H⁺] = [OH⁻] = 10⁻⁷."
+        },
+        {
+                "q": "Ако pH = 2, средата е:",
+                "options": [
+                        "Кисела",
+                        "Основна",
+                        "Неутрална",
+                        "Буферна"
+                ],
+                "correct": 0,
+                "explanation": "pH < 7 → кисела среда."
+        },
+        {
+                "q": "Ако pH = 11, средата е:",
+                "options": [
+                        "Основна",
+                        "Кисела",
+                        "Неутрална",
+                        "Наситена"
+                ],
+                "correct": 0,
+                "explanation": "pH > 7 → основна среда."
+        },
+        {
+                "q": "Кои са силни киселини?",
+                "options": [
+                        "HCl, H₂SO₄, HNO₃",
+                        "CH₃COOH, H₂CO₃",
+                        "H₃PO₄, HF",
+                        "HCN, H₂S"
+                ],
+                "correct": 0,
+                "explanation": "Силните киселини се дисоциират напълно в разтвор."
+        },
+        {
+                "q": "Какъв цвят приема лакмусът в кисела среда?",
+                "options": [
+                        "Червен",
+                        "Син",
+                        "Жълт",
+                        "Безцветен"
+                ],
+                "correct": 0,
+                "explanation": "Кисела → лакмусът почервенява."
+        },
+        {
+                "q": "Какво е сол?",
+                "options": [
+                        "Йонно съединение от метален катион и кисел анион",
+                        "Молекулно съединение",
+                        "Само NaCl",
+                        "Само разтворими съединения"
+                ],
+                "correct": 0,
+                "explanation": "Солите са продукт на неутрализация."
+        },
+        {
+                "q": "Кои са слаби киселини?",
+                "options": [
+                        "CH₃COOH (оцетна), H₂CO₃ (въглена), HF",
+                        "HCl, HNO₃",
+                        "H₂SO₄, HBr",
+                        "Нямат слаби"
+                ],
+                "correct": 0,
+                "explanation": "Слабите киселини се дисоциират частично."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

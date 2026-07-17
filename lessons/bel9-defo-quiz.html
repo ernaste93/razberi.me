@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 - Дефо – Робинзон Крузо · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-defo-q1",
+    quizNum:1,
+    nextQuizUrl:"/lessons/bel9-defo-quiz-2.html",
+    lessonUrl:"/lessons/bel9-defo.html",
+    lessonName:"Дефо – Робинзон Крузо",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 1 - Дефо – Робинзон Крузо",
+    passScore:8,
+    questions:[
+  {
+    "q": "Кой е Даниел Дефо?",
+    "options": [
+      "Английски писател от Просвещението, автор на първия голям английски роман",
+      "Руски поет",
+      "Французки реалист",
+      "Немски философ"
+    ],
+    "correct": 0,
+    "explanation": "Дефо е основоположник на английския роман."
+  },
+  {
+    "q": "Кога е публикуван Робинзон Крузо?",
+    "options": [
+      "1719",
+      "1750",
+      "1800",
+      "1680"
+    ],
+    "correct": 0,
+    "explanation": "1719 г. е дата на едно от най-четените произведения в историята."
+  },
+  {
+    "q": "Колко години прекарва Робинзон на острова?",
+    "options": [
+      "28 години",
+      "10 години",
+      "5 години",
+      "50 години"
+    ],
+    "correct": 0,
+    "explanation": "28 години самота и оцеляване."
+  },
+  {
+    "q": "Каква е основната просвещенска идея в романа?",
+    "options": [
+      "Разумът и трудът изграждат цивилизацията",
+      "Бог спасява без труд",
+      "Природата е непобедима",
+      "Обществото е всичко"
+    ],
+    "correct": 0,
+    "explanation": "Просвещението вярва в силата на разума и труда."
+  },
+  {
+    "q": "Кой е Петък?",
+    "options": [
+      "Местен жител, спасен от Робинзон, станал негов приятел",
+      "Робинзоновият брат",
+      "Капитанът на кораба",
+      "Враг"
+    ],
+    "correct": 0,
+    "explanation": "Петък е наречен така, защото е спасен в петък."
+  },
+  {
+    "q": "Какво прави Робинзон на острова?",
+    "options": [
+      "Строи дом, отглежда храна, опитомява животни – пресъздава цивилизацията",
+      "Само чака спасение",
+      "Само ловува",
+      "Спи"
+    ],
+    "correct": 0,
+    "explanation": "Робинзон е символ на активния, разумен човек."
+  },
+  {
+    "q": "Каква е функцията на дневника на Робинзон?",
+    "options": [
+      "Самонаблюдение, ред и рационалност – документира оцеляването",
+      "Само за четене",
+      "Без функция",
+      "Романтичен похват"
+    ],
+    "correct": 0,
+    "explanation": "Дневникът е просвещенски инструмент на разума."
+  },
+  {
+    "q": "Какъв е жанрът на творбата?",
+    "options": [
+      "Приключенски роман с философски подтекст",
+      "Поема",
+      "Пиеса",
+      "Разказ"
+    ],
+    "correct": 0,
+    "explanation": "Дефо изнамира реалистичния приключенски роман."
+  },
+  {
+    "q": "Каква е религиозната нотка в романа?",
+    "options": [
+      "Протестантска – Робинзон вижда оцеляването като Божествено провидение",
+      "Католическа",
+      "Атеистична",
+      "Без религия"
+    ],
+    "correct": 0,
+    "explanation": "Дефо е пуританин – трудът и Бог са свързани."
+  },
+  {
+    "q": "Какво означава homo faber?",
+    "options": [
+      "Човекът-творец – изгражда света чрез труд",
+      "Учен мъж",
+      "Богаташ",
+      "Пътешественик"
+    ],
+    "correct": 0,
+    "explanation": "Робинзон е идеалният homo faber на Просвещението."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

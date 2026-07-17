@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Христо Ботев – „Борба" – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel9-botev-borba-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel9-botev-borba-quiz-2.html',
+      lessonUrl:   '/lessons/bel9-botev-borba.html',
+      lessonName:  'Христо Ботев – „Борба"',
+      eyebrow:     'БЕЛ · 9 клас · Романтизъм',
+      title:       'Куиз – Христо Ботев – „Борба" – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Кога е написано стихотворението \"Борба\"?",
+                "options": [
+                        "1871",
+                        "1876",
+                        "1862",
+                        "1855"
+                ],
+                "correct": 0,
+                "explanation": "Публикувано е в Букурещ около 1871 г."
+        },
+        {
+                "q": "Какво е основното чувство в \"Борба\"?",
+                "options": [
+                        "Бунт и решимост",
+                        "Тихо смирение",
+                        "Религиозна преданост",
+                        "Природна радост"
+                ],
+                "correct": 0,
+                "explanation": "\"Борба\" е изпълнена с революционен патос."
+        },
+        {
+                "q": "Кой е Христо Ботев?",
+                "options": [
+                        "Поет и революционер",
+                        "Монах",
+                        "Търговец",
+                        "Летописец"
+                ],
+                "correct": 0,
+                "explanation": "Ботев съчетава поезия и революционна борба."
+        },
+        {
+                "q": "Кое е жанрът на \"Борба\"?",
+                "options": [
+                        "Гражданска лирика",
+                        "Балада",
+                        "Ода за природата",
+                        "Елегия"
+                ],
+                "correct": 0,
+                "explanation": "Стихотворението е гражданска, революционна лирика."
+        },
+        {
+                "q": "Каква е основната антитеза в \"Борба\"?",
+                "options": [
+                        "Робство срещу свобода",
+                        "Любов срещу омраза",
+                        "Природа срещу град",
+                        "Детство срещу старост"
+                ],
+                "correct": 0,
+                "explanation": "Контрастът робство/свобода е структурна ос на текста."
+        },
+        {
+                "q": "В коя страна е публикувана \"Борба\"?",
+                "options": [
+                        "Румъния (Букурещ)",
+                        "България (Пловдив)",
+                        "Сърбия (Белград)",
+                        "Русия (Москва)"
+                ],
+                "correct": 0,
+                "explanation": "Ботев издава поезията си в емиграция в Букурещ."
+        },
+        {
+                "q": "На колко години загива Ботев?",
+                "options": [
+                        "28",
+                        "35",
+                        "20",
+                        "40"
+                ],
+                "correct": 0,
+                "explanation": "Загива на 28 г. при преминаването на четата."
+        },
+        {
+                "q": "Какво символизира смъртта в поезията на Ботев?",
+                "options": [
+                        "Откуп за свободата",
+                        "Наказание",
+                        "Случайност",
+                        "Слабост"
+                ],
+                "correct": 0,
+                "explanation": "Саможертвата е висша ценност в неговата лирика."
+        },
+        {
+                "q": "Кой е лирическият герой в \"Борба\"?",
+                "options": [
+                        "Непреклонен революционер",
+                        "Влюбен юноша",
+                        "Богобоязлив монах",
+                        "Тихо страдащ"
+                ],
+                "correct": 0,
+                "explanation": "Героят е бунтар, отказващ се примири с тиранията."
+        },
+        {
+                "q": "Какъв е тонът на \"Борба\"?",
+                "options": [
+                        "Страстен и бунтарски",
+                        "Меланхоличен и тих",
+                        "Хумористичен",
+                        "Безличен"
+                ],
+                "correct": 0,
+                "explanation": "Страстта и гневът пронизват всеки стих."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

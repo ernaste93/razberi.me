@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Размножаване и развитие – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-reproduktsiya-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio10-reproduktsiya-quiz-2.html',
+      lessonUrl:   '/lessons/bio10-reproduktsiya.html',
+      lessonName:  'Размножаване и развитие',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Размножаване и развитие – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Митозата дава?",
+                "options": [
+                        "4 хаплоидни",
+                        "2 диплоидни дъщерни клетки (2n)",
+                        "2 хаплоидни",
+                        "4 диплоидни"
+                ],
+                "correct": 1,
+                "explanation": "Митоза: 1 диплоидна (2n) → 2 диплоидни (2n). Консервативна – запазва хромозомния набор."
+        },
+        {
+                "q": "Мейозата дава?",
+                "options": [
+                        "2 диплоидни",
+                        "4 хаплоидни клетки (n)",
+                        "2 хаплоидни",
+                        "1 клетка"
+                ],
+                "correct": 1,
+                "explanation": "Мейоза (I+II): 1 диплоидна (2n) → 4 хаплоидни (n). Намалява хромозомния набор наполовина."
+        },
+        {
+                "q": "Crossing-over се случва в?",
+                "options": [
+                        "Анафаза I",
+                        "Профаза I на мейозата",
+                        "Телофаза",
+                        "Митоза"
+                ],
+                "correct": 1,
+                "explanation": "Crossing-over: хомоложните хромозоми образуват хиазми и обменят сегменти → генетична рекомбинация."
+        },
+        {
+                "q": "Диплоидният набор на човека е?",
+                "options": [
+                        "23",
+                        "46",
+                        "48",
+                        "44"
+                ],
+                "correct": 1,
+                "explanation": "Хора: 2n=46 (23 двойки). Гаметите: n=23."
+        },
+        {
+                "q": "Оплождането дава?",
+                "options": [
+                        "Хаплоидна клетка",
+                        "Диплоидна зигота (спермий n + яйцеклетка n = 2n)",
+                        "4 клетки",
+                        "Само ДНК"
+                ],
+                "correct": 1,
+                "explanation": "Сперматозоид (n) + яйцеклетка (n) → зигота (2n). Възстановява диплоидния набор."
+        },
+        {
+                "q": "При оогенезата се образуват?",
+                "options": [
+                        "4 равни яйцеклетки",
+                        "1 яйцеклетка + 3 полярни тела",
+                        "4 сперматида",
+                        "2 яйцеклетки"
+                ],
+                "correct": 1,
+                "explanation": "Неравномерно делене: едната клетка получава почти цялата цитоплазма → 1 яйцеклетка + 3 малки полярни тела."
+        },
+        {
+                "q": "Трите зародишни листа са?",
+                "options": [
+                        "Морула, бластула, гаструла",
+                        "Ектодерм, мезодерм, ендодерм",
+                        "Кора, бял, сив",
+                        "Зигота, ембрион, фетус"
+                ],
+                "correct": 1,
+                "explanation": "Гаструлацията формира 3 листа: ектодерм (кожа, нерви), мезодерм (мускули, кости, кръв), ендодерм (ГИТ, бели дробове)."
+        },
+        {
+                "q": "Соматичните клетки се делят чрез?",
+                "options": [
+                        "Мейоза",
+                        "Митоза",
+                        "Бинарно делене",
+                        "Конюгация"
+                ],
+                "correct": 1,
+                "explanation": "Митоза: растеж, регенерация, замяна на клетки. Мейозата е само за полови клетки."
+        },
+        {
+                "q": "Стволовите клетки са?",
+                "options": [
+                        "Само в тестисите",
+                        "Недиференцирани клетки, способни да се самообновяват и диференцират",
+                        "Само в мозъка",
+                        "Само ембрионални"
+                ],
+                "correct": 1,
+                "explanation": "Стволови клетки: тотипотентни (зигота) → плурипотентни (ембрионални) → мултипотентни (тъканно-специфични). Регенеративна медицина."
+        },
+        {
+                "q": "Менструалният цикъл е ~?",
+                "options": [
+                        "7 дни",
+                        "14 дни",
+                        "28 дни",
+                        "60 дни"
+                ],
+                "correct": 2,
+                "explanation": "~28 дни: фоликулна фаза (фоликул зрее) → овулация (~ден 14) → лутеална фаза (жълто тяло) → менструация."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

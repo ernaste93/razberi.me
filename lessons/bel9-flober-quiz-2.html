@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 - Гюстав Флобер – Мадам Бовари · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-flober-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bel9-flober-quiz-3.html",
+    lessonUrl:"/lessons/bel9-flober.html",
+    lessonName:"Гюстав Флобер – Мадам Бовари",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 2 - Гюстав Флобер – Мадам Бовари",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е ролята на четенето за Ема?",
+    "options": [
+      "Романите вграждат нереалистични очаквания за живота",
+      "Само забавление",
+      "Образование",
+      "Без роля"
+    ],
+    "correct": 0,
+    "explanation": "Романтичните романи са причина за буваризма на Ема."
+  },
+  {
+    "q": "Кой е Лере?",
+    "options": [
+      "Лихварят, натрупал дълговете на Ема",
+      "Любовник на Ема",
+      "Приятел на Шарл",
+      "Лекар"
+    ],
+    "correct": 0,
+    "explanation": "Лере е втори Гобсек - символ на унищожителната сила на дълга."
+  },
+  {
+    "q": "Каква е ролята на Омаис?",
+    "options": [
+      "Провинциален аптекар, буржоазна посредственост, комична фигура",
+      "Злодей",
+      "Приятел на Ема",
+      "Лекар"
+    ],
+    "correct": 0,
+    "explanation": "Омаис е карикатура на буржоазното самодоволство."
+  },
+  {
+    "q": "Как Флобер постига обективност?",
+    "options": [
+      "Авторът остава невидим - показва, не осъжда директно",
+      "Чрез ирония",
+      "Чрез морализиране",
+      "Не постига"
+    ],
+    "correct": 0,
+    "explanation": "Флобер изнамира безстрастния хирургичен стил."
+  },
+  {
+    "q": "Каква е символиката на сватбата?",
+    "options": [
+      "Дългото пищно описание е ирония - посредствена сватба за посредствен живот",
+      "Романтична сцена",
+      "Без символика",
+      "Щастлив начин"
+    ],
+    "correct": 0,
+    "explanation": "Флобер иронизира сватбата с детайлното й описание."
+  },
+  {
+    "q": "Каква е темата за парите?",
+    "options": [
+      "Дълговете символизират цената на илюзиите",
+      "Само практически",
+      "Без тема",
+      "Пари = щастие"
+    ],
+    "correct": 0,
+    "explanation": "Финансовата катастрофа е метафора за моралния банкрут."
+  },
+  {
+    "q": "Как Флобер се различава от Балзак?",
+    "options": [
+      "Флобер: психологизъм и стил; Балзак: широки социални панорами",
+      "Те са еднакви",
+      "Балзак е по-психологически",
+      "Флобер е по-социален"
+    ],
+    "correct": 0,
+    "explanation": "И двамата са реалисти, но с различен акцент."
+  },
+  {
+    "q": "Каква е функцията на операцията на Иполит?",
+    "options": [
+      "Символизира некомпетентността и самоизмамата на Шарл",
+      "Само сюжетна бариера",
+      "Без функция",
+      "Медицински факт"
+    ],
+    "correct": 0,
+    "explanation": "Провалената операция е ключова сцена за характера на Шарл."
+  },
+  {
+    "q": "Какво е безмилостен реализъм?",
+    "options": [
+      "Авторът не романтизира - показва грозотата на реалността",
+      "Жесток стил",
+      "Без психология",
+      "Само факти"
+    ],
+    "correct": 0,
+    "explanation": "Флобер е майстор на безмилостното художествено огледало."
+  },
+  {
+    "q": "Каква е ролята на Бертата (дъщеря на Ема)?",
+    "options": [
+      "Символизира последиците - след смъртта на Ема работи на фабрика",
+      "Без роля",
+      "Спасява Ема",
+      "Наследница"
+    ],
+    "correct": 0,
+    "explanation": "Бертата е жертва на майчиния буваризъм."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

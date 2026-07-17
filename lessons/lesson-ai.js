@@ -1,4 +1,4 @@
-// Маркира урока като посетен — отключва Тест/Съчинение в urotsi.html
+// Маркира урока като посетен – отключва Тест/Съчинение в urotsi.html
 (function () {
   const key = location.pathname.split('/').pop().replace('.html', '');
   if (key) localStorage.setItem('lesson_visited_' + key, '1');
@@ -7,7 +7,7 @@
   if (gradeMatch && !window.LESSON_GRADE) window.LESSON_GRADE = gradeMatch[1];
 })();
 
-// Знайко AI assistant — shared across all lesson pages
+// Знайко AI assistant – shared across all lesson pages
 // Requires on the page:
 //   window.LESSON_TITLE = '...'
 //   #lesson-content, #ai-panel, #ai-output, #ai-panel-close,
@@ -26,6 +26,8 @@
   let aiHistory  = [];
   let lastSelected = '';
   let controlsEverShown = false;
+
+  const isMobile = () => window.innerWidth <= 768 || 'ontouchstart' in window;
 
   // ── Helpers ──────────────────────────────────────────────
   function getLessonText() {
@@ -57,11 +59,17 @@
   function hidePanel() {
     aiPanel.style.animation = 'none';
     void aiPanel.offsetWidth;
-    aiPanel.style.transition = 'opacity 0.26s ease, transform 0.26s cubic-bezier(0.4,0,1,1), width 0.32s ease 0.1s, padding 0.32s ease 0.1s';
-    aiPanel.style.opacity = '0';
-    aiPanel.style.transform = 'translateX(56px)';
-    aiPanel.style.width = '0';
-    aiPanel.style.padding = '0';
+    if (isMobile()) {
+      aiPanel.style.transition = 'transform 0.28s cubic-bezier(0.4,0,1,1), opacity 0.28s ease';
+      aiPanel.style.transform = 'translateY(100%)';
+      aiPanel.style.opacity = '0';
+    } else {
+      aiPanel.style.transition = 'opacity 0.26s ease, transform 0.26s cubic-bezier(0.4,0,1,1), width 0.32s ease 0.1s, padding 0.32s ease 0.1s';
+      aiPanel.style.opacity = '0';
+      aiPanel.style.transform = 'translateX(56px)';
+      aiPanel.style.width = '0';
+      aiPanel.style.padding = '0';
+    }
     aiPanel.style.pointerEvents = 'none';
     setTimeout(() => {
       aiPanel.style.cssText = '';
@@ -150,6 +158,7 @@
           selectedText:  text,
           mode,
           chatHistory:   aiHistory.slice(-8),
+          lessonSlug:    window.location.pathname.split('/').pop().replace('.html', ''),
         }),
       });
       const data = await res.json();
@@ -164,27 +173,123 @@
     }
   }
 
+  // ── Мобилен CSS (tooltip + bottom-sheet панел) ───────────
+  (function injectMobileCSS() {
+    const s = document.createElement('style');
+    s.textContent = `
+      @keyframes ai-slide-up {
+        from { transform: translateY(100%); opacity: 0; }
+        to   { transform: translateY(0);   opacity: 1; }
+      }
+      @media (max-width: 768px), (pointer: coarse) {
+        /* Tooltip */
+        #selection-tooltip { position: fixed !important; }
+        #explain-selection::after { display: none !important; }
+        #explain-selection { font-size: 15px !important; padding: 12px 22px !important; }
+
+        /* Знайко панел – bottom sheet */
+        .ai-panel {
+          position: fixed !important;
+          bottom: 0 !important; left: 0 !important; right: 0 !important;
+          top: auto !important;
+          width: 100% !important; max-width: 100% !important;
+          max-height: 70vh !important;
+          border-radius: 24px 24px 0 0 !important;
+          z-index: 8000 !important;
+          padding: 0 !important;
+          box-shadow: 0 -8px 40px rgba(0,0,0,0.18) !important;
+          overflow: hidden !important;
+        }
+        .ai-panel.visible {
+          width: 100% !important;
+          padding: 0 !important;
+          animation: ai-slide-up 0.34s cubic-bezier(0.25,0.46,0.45,0.94) both !important;
+        }
+        .ai-header {
+          border-radius: 24px 24px 0 0;
+          margin: 0 0 16px 0 !important;
+          padding: 14px 16px !important;
+        }
+        .ai-header::before {
+          content: '';
+          display: block;
+          width: 40px; height: 4px;
+          background: rgba(255,255,255,0.4);
+          border-radius: 99px;
+          margin: 0 auto 10px;
+        }
+        #ai-output {
+          padding: 0 16px !important;
+          max-height: calc(70vh - 160px) !important;
+          overflow-y: auto !important;
+        }
+        #ai-free-form, #feedback-row {
+          padding: 0 16px 16px !important;
+        }
+      }
+    `;
+    document.head.appendChild(s);
+  })();
+
   // ── Floating selection tooltip ────────────────────────────
   function hideTooltip() { tooltip?.classList.remove('show'); }
 
+  function positionTooltip(rect) {
+    if (!tooltip) return;
+    if (isMobile()) {
+      // На мобилен – долу в центъра, над fixed бутоните
+      tooltip.style.left = '50%';
+      tooltip.style.top = 'auto';
+      tooltip.style.bottom = '90px';
+      tooltip.style.transform = 'translateX(-50%)';
+      // Скрий стрелката на tooltip-а (тя сочи нагоре, но бутонът е долу)
+      const arrow = tooltip.querySelector('#explain-selection');
+      if (arrow) arrow.style.setProperty('--arrow-display', 'none');
+    } else {
+      tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+      tooltip.style.top  = (rect.top - 48) + 'px';
+      tooltip.style.bottom = '';
+      tooltip.style.transform = 'translateX(-50%)';
+    }
+    tooltip.classList.add('show');
+  }
+
+  // Desktop: mouseup
   document.addEventListener('mouseup', () => {
+    if (isMobile()) return;
     setTimeout(() => {
       const sel = window.getSelection();
       const text = sel?.toString().trim();
       if (!text || !lessonEl?.contains(sel.anchorNode)) { hideTooltip(); return; }
       const range = sel.getRangeAt(0);
-      const rect  = range.getBoundingClientRect();
-      if (tooltip) {
-        tooltip.style.left = (rect.left + rect.width / 2) + 'px';
-        tooltip.style.top  = (rect.top - 48) + 'px';
-        tooltip.classList.add('show');
-      }
+      positionTooltip(range.getBoundingClientRect());
     }, 10);
+  });
+
+  // Мобилен: selectionchange с debounce – показва бутона след като потребителят
+  // вдигне пръста и селекцията е стабилна
+  let selDebounce = null;
+  document.addEventListener('selectionchange', () => {
+    if (!isMobile()) return;
+    clearTimeout(selDebounce);
+    selDebounce = setTimeout(() => {
+      const sel = window.getSelection();
+      const text = sel?.toString().trim();
+      if (!text || !lessonEl?.contains(sel.anchorNode)) { hideTooltip(); return; }
+      positionTooltip(null);
+    }, 200);
   });
 
   document.addEventListener('mousedown', e => {
     if (tooltip && !tooltip.contains(e.target)) hideTooltip();
   });
+
+  // Скриване при touch извън tooltip-а и урока
+  document.addEventListener('touchstart', e => {
+    if (tooltip && !tooltip.contains(e.target) && !lessonEl?.contains(e.target)) {
+      hideTooltip();
+    }
+  }, { passive: true });
 
   document.getElementById('explain-selection')?.addEventListener('click', () => {
     const sel = window.getSelection().toString().trim();
@@ -201,16 +306,16 @@
   document.getElementById('ai-panel-close')?.addEventListener('click', hidePanel);
 
   document.getElementById('btn-ask-znaiko')?.addEventListener('click', () => {
-    aiOutput.innerHTML = '<p>Здравей! Имаш въпрос по урока? Питай смело — тук съм.</p>';
+    aiOutput.innerHTML = '<p>Здравей! Имаш въпрос по урока? Питай смело – тук съм.</p>';
     aiHistory = [];
     showPanel();
-    // само свободен текст — бутоните нямат смисъл без предшестващо обяснение
+    // само свободен текст – бутоните нямат смисъл без предшестващо обяснение
     feedbackRow.style.display = 'none';
     freeForm.style.display = 'flex';
     freeForm.style.opacity = '1';
     document.getElementById('ai-free-input').disabled = false;
     freeForm.querySelector('button[type=submit]').disabled = false;
-    controlsEverShown = false; // reset — бутоните ще се появят след първи AI отговор
+    controlsEverShown = false; // reset – бутоните ще се появят след първи AI отговор
   });
 
   document.getElementById('understood')?.addEventListener('click', () => {
@@ -223,7 +328,7 @@
     setAiControls('disabled');
     addBubble('Обясни пак', true);
     aiHistory.push({ role: 'user', content: 'Не разбрах. Обясни по различен начин.' });
-    setTimeout(() => askAI({ text: `Ученикът не разбра. Обясни "${lastSelected || 'темата'}" по напълно различен начин — друга аналогия, друг пример.`, mode: 'chat' }), 300);
+    setTimeout(() => askAI({ text: `Ученикът не разбра. Обясни "${lastSelected || 'темата'}" по напълно различен начин – друга аналогия, друг пример.`, mode: 'chat' }), 300);
   });
 
   document.getElementById('ai-free-form')?.addEventListener('submit', e => {
@@ -256,7 +361,7 @@
     const div = document.createElement('div');
     div.style.cssText = 'margin-top:18px;padding-top:18px;border-top:1px solid var(--line);';
     div.innerHTML = `
-      <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:4px;">Практика на писане — НВО</div>
+      <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:4px;">Практика на писане – НВО</div>
       <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Преразказ · Творческо писане · AI оценяване по НВО критерии</div>
       <a href="/lessons/pishi7.html?key=${key}" style="display:block;text-align:center;padding:12px 16px;background:var(--accent);color:#fff;border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s;"
         onmouseover="this.style.background='#2d5a9e'" onmouseout="this.style.background='var(--accent)'">

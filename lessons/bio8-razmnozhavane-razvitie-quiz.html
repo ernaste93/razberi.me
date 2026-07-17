@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 – Размножаване, растеж и развитие · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bio8-razmnozhavane-razvitie-q1",
+    quizNum:1,
+    nextQuizUrl:"/lessons/bio8-razmnozhavane-razvitie-quiz-2.html",
+    lessonUrl:"/lessons/bio8-razmnozhavane-razvitie.html",
+    lessonName:"Размножаване, растеж и развитие",
+    eyebrow:"Биология · 8 клас · Анатомия",
+    title:"Тест 1 – Размножаване, растеж и развитие",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какво е оплождане?",
+    "options": [
+      "Сливане на сперматозоид и яйцеклетка за образуване на зигота",
+      "Делене на клетките",
+      "Раждането",
+      "Менструацията"
+    ],
+    "correct": 0,
+    "explanation": "Оплождането е началото на новия живот."
+  },
+  {
+    "q": "Къде се произвеждат сперматозоидите?",
+    "options": [
+      "В тестисите",
+      "В яйчниците",
+      "В матката",
+      "В простатата"
+    ],
+    "correct": 0,
+    "explanation": "Тестисите произвеждат сперматозоиди и тестостерон."
+  },
+  {
+    "q": "Каква е функцията на яйчниците?",
+    "options": [
+      "Произвеждат яйцеклетки и хормони (естроген, прогестерон)",
+      "Само хормони",
+      "Само яйцеклетки",
+      "Пренасят яйцеклетките"
+    ],
+    "correct": 0,
+    "explanation": "Яйчниците са женските полови жлези."
+  },
+  {
+    "q": "Какво е овулация?",
+    "options": [
+      "Освобождаване на яйцеклетка от яйчника",
+      "Началото на менструацията",
+      "Оплождането",
+      "Раждането"
+    ],
+    "correct": 0,
+    "explanation": "Овулацията настъпва около ден 14 от менструалния цикъл."
+  },
+  {
+    "q": "Колко дни трае менструалният цикъл?",
+    "options": [
+      "~28 дни",
+      "~14 дни",
+      "~7 дни",
+      "~42 дни"
+    ],
+    "correct": 0,
+    "explanation": "Нормалният цикъл е около 28 дни, но варира."
+  },
+  {
+    "q": "Какво е зигота?",
+    "options": [
+      "Оплодена яйцеклетка – началната клетка на новия организъм",
+      "Вид хормон",
+      "Тип клетка в яйчника",
+      "Неоплодена яйцеклетка"
+    ],
+    "correct": 0,
+    "explanation": "Зиготата е диплоидна клетка с 46 хромозоми."
+  },
+  {
+    "q": "Колко триместъра има бременността?",
+    "options": [
+      "3",
+      "2",
+      "4",
+      "9"
+    ],
+    "correct": 0,
+    "explanation": "Бременността е разделена на три триместъра по около 3 месеца."
+  },
+  {
+    "q": "Кога настъпва овулацията?",
+    "options": [
+      "Около ден 14 от цикъла",
+      "Ден 1",
+      "Ден 28",
+      "Ден 7"
+    ],
+    "correct": 0,
+    "explanation": "Овулацията е средата на менструалния цикъл."
+  },
+  {
+    "q": "Какъв хормон произвеждат тестисите?",
+    "options": [
+      "Тестостерон",
+      "Естроген",
+      "Прогестерон",
+      "Адреналин"
+    ],
+    "correct": 0,
+    "explanation": "Тестостеронът е мъжкият полов хормон."
+  },
+  {
+    "q": "Какво е менструация?",
+    "options": [
+      "Отхвърляне на маточната лигавица при неоплождане",
+      "Овулацията",
+      "Оплождането",
+      "Бременността"
+    ],
+    "correct": 0,
+    "explanation": "Менструацията настъпва при липса на оплождане."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

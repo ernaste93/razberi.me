@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 – Размножаване, растеж и развитие · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bio8-razmnozhavane-razvitie-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bio8-razmnozhavane-razvitie.html",
+    lessonName:"Размножаване, растеж и развитие",
+    eyebrow:"Биология · 8 клас · Анатомия",
+    title:"Тест 3 – Размножаване, растеж и развитие",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е разликата митоза/мейоза?",
+    "options": [
+      "Митозата дава 2 идентични клетки; мейозата – 4 хаплоидни (полови клетки)",
+      "Мейозата е за растеж",
+      "Митозата е само в репродукцията",
+      "Те са едни и същи"
+    ],
+    "correct": 0,
+    "explanation": "Мейозата редуцира хромозомите наполовина за половите клетки."
+  },
+  {
+    "q": "Какво е хромозомен кариотип?",
+    "options": [
+      "Пълният набор от хромозоми на индивида",
+      "Вид хормон",
+      "Тип клетка",
+      "Орган"
+    ],
+    "correct": 0,
+    "explanation": "Човекът има 46 хромозоми – 23 двойки."
+  },
+  {
+    "q": "Какво определя пола на детето?",
+    "options": [
+      "Хромозомата от сперматозоида – X (момиче) или Y (момче)",
+      "Хромозомата от яйцеклетката",
+      "Хормоните на майката",
+      "Случайно"
+    ],
+    "correct": 0,
+    "explanation": "Всички яйцеклетки носят X; сперматозоидите – X или Y."
+  },
+  {
+    "q": "Какво е ектопична бременност?",
+    "options": [
+      "Плодът се развива извън матката – обикновено в тръбата",
+      "Нормална бременност",
+      "Двойна бременност",
+      "Преждевременно раждане"
+    ],
+    "correct": 0,
+    "explanation": "Ектопичната бременност е медицинска спешност."
+  },
+  {
+    "q": "Какво е период на кърмене?",
+    "options": [
+      "Период след раждането, когато майката произвежда мляко",
+      "Бременността",
+      "Пубертетът",
+      "Менструалният цикъл"
+    ],
+    "correct": 0,
+    "explanation": "Кърменето осигурява хранителни вещества и антитела на новороденото."
+  },
+  {
+    "q": "Каква е ролята на прогестерона?",
+    "options": [
+      "Поддържа бременността и подготвя матката",
+      "Предизвиква овулацията",
+      "Произвежда се само при мъжете",
+      "Регулира метаболизма"
+    ],
+    "correct": 0,
+    "explanation": "Прогестеронът е хормонът на бременността."
+  },
+  {
+    "q": "Какво е хормонална контрацепция?",
+    "options": [
+      "Използва хормони за предотвратяване на овулация и бременност",
+      "Вид операция",
+      "Тип ваксина",
+      "Натурален метод"
+    ],
+    "correct": 0,
+    "explanation": "Оралните контрацептиви потискат овулацията с хормони."
+  },
+  {
+    "q": "Каква е ролята на ФСХ?",
+    "options": [
+      "Стимулира узряването на фоликулите в яйчника и сперматогенезата",
+      "Предизвиква раждането",
+      "Регулира кръвното налягане",
+      "Произвежда се в яйчника"
+    ],
+    "correct": 0,
+    "explanation": "ФСХ (фоликулостимулиращ хормон) се произвежда от хипофизата."
+  },
+  {
+    "q": "Какво е онтогенеза?",
+    "options": [
+      "Индивидуалното развитие на организма от зигота до смърт",
+      "Еволюцията на вида",
+      "Генетичното наследяване",
+      "Клетъчното делене"
+    ],
+    "correct": 0,
+    "explanation": "Онтогенезата е цялостното развитие на индивида."
+  },
+  {
+    "q": "Защо размножаването е фундаментална функция?",
+    "options": [
+      "Осигурява продължаване на вида",
+      "Само за индивидуалното оцеляване",
+      "Само биологичен механизъм",
+      "Без значение"
+    ],
+    "correct": 0,
+    "explanation": "Без размножаване видът би изчезнал."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

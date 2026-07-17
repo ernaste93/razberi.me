@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 - Джонатан Суифт – Пътешествията на Гъливер · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-svift-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bel9-svift.html",
+    lessonName:"Джонатан Суифт – Пътешествията на Гъливер",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 3 - Джонатан Суифт – Пътешествията на Гъливер",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е алегоричната функция на Yahoo?",
+    "options": [
+      "Символ на деградацията на homo sapiens без морал",
+      "Просто животни",
+      "Враговете на Гъливер",
+      "Символ на природата"
+    ],
+    "correct": 0,
+    "explanation": "Yahoo са хора, изродени до животинско ниво – най-мрачна алегория."
+  },
+  {
+    "q": "Как Суифт критикува колонализма?",
+    "options": [
+      "Чрез Гъливер, претендиращ за нови земи – пародия на Колумб",
+      "Директно в есе",
+      "Само чрез Лилипутия",
+      "Не критикува"
+    ],
+    "correct": 0,
+    "explanation": "Гъливер пародира европейския колониален наратив."
+  },
+  {
+    "q": "Каква е разликата Суифт/Дефо в жанра на пътеписа?",
+    "options": [
+      "Дефо: реалистичен приключенски; Суифт: сатирично-философски",
+      "Те са еднакви",
+      "Суифт е реалистичен",
+      "Дефо е сатиричен"
+    ],
+    "correct": 0,
+    "explanation": "И двамата ползват пътеписа, но за коренно различни цели."
+  },
+  {
+    "q": "Каква е функцията на миниатюризацията (Лилипутия) и гигантизацията (Бробдингнаг)?",
+    "options": [
+      "Смяна на перспективата – нищожност и величие са относителни",
+      "Просто фантастичен ефект",
+      "Без функция",
+      "Реалистичен похват"
+    ],
+    "correct": 0,
+    "explanation": "Относителността на мащаба е метафора за относителността на ценностите."
+  },
+  {
+    "q": "Кой е прототипът на политическите дрязги в Лилипутия?",
+    "options": [
+      "Английската политика от началото на 18 в.",
+      "Французите",
+      "Ирландия",
+      "Рим"
+    ],
+    "correct": 0,
+    "explanation": "Лилипутия директно алюзира английската политика от времето на Суифт."
+  },
+  {
+    "q": "Каква е ролята на иронията в творбата?",
+    "options": [
+      "Основен художествен похват – Гъливер разказва сериозно, но читателят вижда абсурда",
+      "Без ирония",
+      "Само в заглавието",
+      "В края"
+    ],
+    "correct": 0,
+    "explanation": "Наивният разказвач и иронията на автора са в постоянно напрежение."
+  },
+  {
+    "q": "Каква е темата за езика в Лапута?",
+    "options": [
+      "Учените искат да премахнат думите и говорят само с предмети – абсурдно",
+      "Езикът е красив",
+      "Без тема за езика",
+      "Езикът е опасен"
+    ],
+    "correct": 0,
+    "explanation": "Проектът за облагородяване на езика е пик на абсурда в Лапута."
+  },
+  {
+    "q": "Кое произведение вдъхновява Пътешествията?",
+    "options": [
+      "Пародира Робинзон Крузо и жанра на пътеписа",
+      "Хамлет",
+      "Одисея",
+      "Фауст"
+    ],
+    "correct": 0,
+    "explanation": "Суифт пародира Дефо и популярните пътеписи на времето."
+  },
+  {
+    "q": "Каква е ролята на мъдростта при Хуинхнмите?",
+    "options": [
+      "Разумен и морален живот без страсти – утопия, но недостижима за хората",
+      "Сляпа покора",
+      "Насилие",
+      "Безразличие"
+    ],
+    "correct": 0,
+    "explanation": "Хуинхнмите са идеал, но и критика – прекалено студен разум без чувства."
+  },
+  {
+    "q": "Как Суифт разбира прогреса?",
+    "options": [
+      "Скептично – прогресът без морал води до деградация",
+      "Оптимистично",
+      "Неутрално",
+      "Го приветства"
+    ],
+    "correct": 0,
+    "explanation": "Суифт е контрапункт на просвещенски оптимизъм."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

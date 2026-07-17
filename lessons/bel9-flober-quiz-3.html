@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 - Гюстав Флобер – Мадам Бовари · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-flober-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bel9-flober.html",
+    lessonName:"Гюстав Флобер – Мадам Бовари",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 3 - Гюстав Флобер – Мадам Бовари",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е разликата Ема/Анна Каренина (Толстой)?",
+    "options": [
+      "И двете са нещастни в брака и имат афери; Анна - по-сложна психология, по-дълбоко общество",
+      "Те са еднакви",
+      "Ема е по-дълбока",
+      "Анна е само романтична"
+    ],
+    "correct": 0,
+    "explanation": "Двете героини са централни фигури на реалистичния роман."
+  },
+  {
+    "q": "Как Флобер е повлиян от романтизма?",
+    "options": [
+      "Познава романтизма, но го отхвърля - Ема е жертва на романтичните илюзии",
+      "Изцяло е романтик",
+      "Без влияние",
+      "Само тематично"
+    ],
+    "correct": 0,
+    "explanation": "Романтизмът присъства в романа като разрушителна илюзия."
+  },
+  {
+    "q": "Каква е темата за жената в 19 в.?",
+    "options": [
+      "Ограничена от обществото, Ема търси себеизраз чрез любовта - единствено достъпно поле",
+      "Ема е свободна",
+      "Без тема",
+      "Само романтична"
+    ],
+    "correct": 0,
+    "explanation": "Флобер критикува общество, позволило на жените само романи и мечти."
+  },
+  {
+    "q": "Как е структуриран романът?",
+    "options": [
+      "Три части - младост, първа афера, втора афера и катастрофа",
+      "Хронологично",
+      "Ретроспективно",
+      "Без структура"
+    ],
+    "correct": 0,
+    "explanation": "Трите части следват разрушаването на трите илюзии на Ема."
+  },
+  {
+    "q": "Каква е ролята на описанията на природата?",
+    "options": [
+      "Огледало на вътрешното на Ема - романтизмът на природата срещу сивата провинция",
+      "Само естетически",
+      "Без роля",
+      "Реалистична топография"
+    ],
+    "correct": 0,
+    "explanation": "Пейзажът функционира като лирически коментар."
+  },
+  {
+    "q": "Какво е значението на провинциалния панаир?",
+    "options": [
+      "Флобер иронизира провинциалната посредственост - реч за торовете срещу любовна сцена",
+      "Само сюжетна случка",
+      "Без значение",
+      "Романтична сцена"
+    ],
+    "correct": 0,
+    "explanation": "Монтажът на две сцени е брилянтен ироничен похват."
+  },
+  {
+    "q": "Каква е позицията на Флобер към буржоазията?",
+    "options": [
+      "Дълбоко критична - ненавиди посредствеността (фр. betise)",
+      "Положителна",
+      "Неутрална",
+      "Одобрителна"
+    ],
+    "correct": 0,
+    "explanation": "Флобер е един от най-безмилостните критици на буржоазията."
+  },
+  {
+    "q": "Как романът е повлиял на по-нататъшната литература?",
+    "options": [
+      "Огромно - Пруст, Джойс, Зола са под негово влияние",
+      "Малко влияние",
+      "Само на французката",
+      "Само на реализма"
+    ],
+    "correct": 0,
+    "explanation": "Флобер е практически основател на модерния роман."
+  },
+  {
+    "q": "Каква е темата за образованието?",
+    "options": [
+      "Образованието е самоилюзия за Ема - романите не я учат да живее",
+      "Образованието е полезно",
+      "Без тема",
+      "Само практическо"
+    ],
+    "correct": 0,
+    "explanation": "Критиката на типа образование (романтични романи) е подтема."
+  },
+  {
+    "q": "Защо романът предизвиква съдебен процес?",
+    "options": [
+      "Обвинен в неморалност - показва прелюбодейство без осъждане",
+      "Заради политика",
+      "Заради религия",
+      "Заради стил"
+    ],
+    "correct": 0,
+    "explanation": "Флобер е оправдан, но скандалът му донася известност."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

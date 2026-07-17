@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 - Библия – Евангелие от Матей · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel8-bibliya-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bel8-bibliya-quiz-3.html",
+    lessonUrl:"/lessons/bel8-bibliya.html",
+    lessonName:"Библия – Евангелие от Матей",
+    eyebrow:"БЕЛ · 8 клас · Средновековна литература",
+    title:"Тест 2 - Библия – Евангелие от Матей",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е моралната поука на Притчата за блудния син?",
+    "options": [
+      "Прошката е безусловна – Бог прощава на всеки, който се покае",
+      "Парите са важни",
+      "Синовете са равни",
+      "Без морал"
+    ],
+    "correct": 0,
+    "explanation": "Бащата вижда сина отдалеч и тича – безусловна любов."
+  },
+  {
+    "q": "Каква е моралната поука на Добрия самарянин?",
+    "options": [
+      "Ближният е всеки човек, нуждаещ се от помощ – независимо от произход",
+      "Само хората от същия народ",
+      "Само евреите",
+      "Само богатите"
+    ],
+    "correct": 0,
+    "explanation": "Исус разширява понятието ближен отвъд племенните граници."
+  },
+  {
+    "q": "Кое е Златното правило в Нагорната проповед?",
+    "options": [
+      "Каквото искате да ви правят другите, правете и вие тям",
+      "Обичайте враговете си",
+      "Блажени кротките",
+      "Не убивай"
+    ],
+    "correct": 0,
+    "explanation": "Мат. 7:12 – основата на универсалната етика."
+  },
+  {
+    "q": "Каква е разликата Стар/Нов завет?",
+    "options": [
+      "Стар: Закон на Мойсей; Нов: учението на Исус – любов и прошка",
+      "Те са еднакви",
+      "Стар е по-малък",
+      "Нов е по-стар"
+    ],
+    "correct": 0,
+    "explanation": "Новият завет не отменя, а допълва и задълбочава Стария."
+  },
+  {
+    "q": "Каква е функцията на иносказанието (алегорията) в притчите?",
+    "options": [
+      "По-лесно разбиране на духовни истини чрез конкретни истории",
+      "Само украса",
+      "Без функция",
+      "Скриване на истината"
+    ],
+    "correct": 0,
+    "explanation": "Исус използва конкретното, за да изрази абстрактното."
+  },
+  {
+    "q": "Какво е Библията по жанр?",
+    "options": [
+      "Антология от различни жанрове: поезия, закон, история, притчи, пророчество",
+      "Само история",
+      "Само религиозна поезия",
+      "Само закон"
+    ],
+    "correct": 0,
+    "explanation": "Библията е сборник от много различни жанрове и епохи."
+  },
+  {
+    "q": "Как Библията влияе на литературата?",
+    "options": [
+      "Директно – теми, образи, сюжети са основа на западната литература",
+      "Без влияние",
+      "Само религиозна литература",
+      "Само Средновековие"
+    ],
+    "correct": 0,
+    "explanation": "От Данте до Толстой – Библията е неизбежна референция."
+  },
+  {
+    "q": "Кой е авторът на Евангелие от Матей?",
+    "options": [
+      "Матей – апостол и бивш митар (данъчен)",
+      "Марк",
+      "Лука",
+      "Йоан"
+    ],
+    "correct": 0,
+    "explanation": "Матей е бил данъчен събирач, призован от Исус."
+  },
+  {
+    "q": "Каква е темата за прошката в Библията?",
+    "options": [
+      "Основна – Бог прощава на покаялия се, хората трябва да правят същото",
+      "Прошката е слабост",
+      "Без тема",
+      "Само в Стария завет"
+    ],
+    "correct": 0,
+    "explanation": "Прошката е централна за новозаветната етика."
+  },
+  {
+    "q": "Кога са написани евангелията?",
+    "options": [
+      "Ок. 70–100 г. сл.н.е. – след разрушението на Йерусалим",
+      "По времето на Христос",
+      "Преди Христос",
+      "В Средновековието"
+    ],
+    "correct": 0,
+    "explanation": "Евангелията са написани 40-70 години след разпятието."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

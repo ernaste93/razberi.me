@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 – Софокъл – Антигона · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-sofokul-antigona-q1',
+    quizNum:1,
+    nextQuizUrl:"/lessons/bel8-sofokul-antigona-quiz-2.html",
+    lessonUrl:'/lessons/bel8-sofokul-antigona.html',
+    lessonName:"Софокъл – Антигона",
+    eyebrow:"БЕЛ · 8 клас · Антична литература",
+    title:"Тест 1 – Софокъл – Антигона",
+    passScore:8,
+    questions:[
+  {
+    "q": "Кой е авторът на Антигона?",
+    "options": [
+      "Софокъл",
+      "Есхил",
+      "Еврипид",
+      "Омир"
+    ],
+    "correct": 0,
+    "explanation": "Софокъл (496–406 пр. Хр.) е един от трите велики атински трагици."
+  },
+  {
+    "q": "Каква е централната тема?",
+    "options": [
+      "Закона на боговете срещу закона на хората",
+      "Войната между Тива и Атина",
+      "Любовта на Антигона",
+      "Произходът на света"
+    ],
+    "correct": 0,
+    "explanation": "Конфликтът между нравствения дълг и държавната власт е вечната тема."
+  },
+  {
+    "q": "Защо Антигона погребва Полиник?",
+    "options": [
+      "Защото е неин брат и боговете изискват погребение",
+      "За да се противопостави на Креон",
+      "Защото Хемон я молил",
+      "Защото хорът наредил"
+    ],
+    "correct": 0,
+    "explanation": "Антигона изпълнява религиозен дълг – непогребаният не може да влезе в отвъдното."
+  },
+  {
+    "q": "Кой е Креон?",
+    "options": [
+      "Царят на Тива, забранил погребението",
+      "Братът на Антигона",
+      "Жрецът на Зевс",
+      "Атинският цар"
+    ],
+    "correct": 0,
+    "explanation": "Креон е цар и издава закона, противопоставен на Антигона."
+  },
+  {
+    "q": "Каква е функцията на хора?",
+    "options": [
+      "Коментира действието, изразява мъдрост",
+      "Участва в битките",
+      "Е главният герой",
+      "Пише сценария"
+    ],
+    "correct": 0,
+    "explanation": "Хорът представлява колективния глас на обществото."
+  },
+  {
+    "q": "Какво е катарзис?",
+    "options": [
+      "Очистване на чувствата у зрителя чрез трагедията",
+      "Финалната битка",
+      "Речта на хора",
+      "Погребалният обред"
+    ],
+    "correct": 0,
+    "explanation": "Аристотел описва катарзиса като цел на трагедията."
+  },
+  {
+    "q": "Как завършва Антигона?",
+    "options": [
+      "Затворена жива в гробница, умира",
+      "Бяга от Тива",
+      "Прощава Креон",
+      "Омъжва се за Хемон"
+    ],
+    "correct": 0,
+    "explanation": "Антигона е осъдена да бъде затворена жива."
+  },
+  {
+    "q": "Кой е Хемон?",
+    "options": [
+      "Синът на Креон, годеникът на Антигона",
+      "Братът на Полиник",
+      "Жрецът",
+      "Гръцкият пратеник"
+    ],
+    "correct": 0,
+    "explanation": "Хемон се самоубива след смъртта на Антигона."
+  },
+  {
+    "q": "Кои са враждуващите братя в пролога?",
+    "options": [
+      "Етеокъл и Полиник",
+      "Хемон и Креон",
+      "Одисей и Ахил",
+      "Едип и Йокаста"
+    ],
+    "correct": 0,
+    "explanation": "Двамата братя загиват в битка за трона на Тива."
+  },
+  {
+    "q": "Кой пророк предупреждава Креон?",
+    "options": [
+      "Тирезий",
+      "Хемон",
+      "Хорът",
+      "Зевс"
+    ],
+    "correct": 0,
+    "explanation": "Слепият пророк Тирезий предупреждава Креон, но той не слуша."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

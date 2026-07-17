@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Неметали – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem9-nemetali-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem9-nemetali.html',
+      lessonName:  'Неметали',
+      eyebrow:     'Химия · 9 клас · Неорганична химия',
+      title:       'Куиз – Неметали – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Как сярата се използва в промишлеността?",
+                "options": [
+                        "Производство на H₂SO₄ (сярна киселина) – най-произвежданата химикалия",
+                        "Само за опожаряване",
+                        "Само за лекарства",
+                        "Само за горива"
+                ],
+                "correct": 0,
+                "explanation": "H₂SO₄ е ключова за торове, батерии, боядисване."
+        },
+        {
+                "q": "Какво е кислороден дефицит?",
+                "options": [
+                        "Ниска концентрация на O₂ – опасна за дишане",
+                        "Излишък от O₂",
+                        "Нормална концентрация",
+                        "Реакция с кислород"
+                ],
+                "correct": 0,
+                "explanation": "Под 16% O₂ е опасно; под 6% – смъртоносно."
+        },
+        {
+                "q": "Каква е разликата между CO и CO₂ по токсичност?",
+                "options": [
+                        "CO е много токсичен (блокира хемоглобина); CO₂ е нетоксичен в малки количества",
+                        "Нямат разлика",
+                        "CO₂ е по-токсичен",
+                        "И двата са нетоксични"
+                ],
+                "correct": 0,
+                "explanation": "CO се свързва необратимо с хемоглобина."
+        },
+        {
+                "q": "Как хлорът дезинфекцира вода?",
+                "options": [
+                        "Убива микроорганизми чрез окислително действие",
+                        "Утаява замърсители",
+                        "Неутрализира киселини",
+                        "Намалява твърдостта"
+                ],
+                "correct": 0,
+                "explanation": "Cl₂ или хлорамини окисляват клетъчните компоненти на микробите."
+        },
+        {
+                "q": "Каква е ролята на азота в живите организми?",
+                "options": [
+                        "Съставна на аминокиселини, ДНК и РНК – ключов биоелемент",
+                        "Само дишане",
+                        "Само горене",
+                        "Без биологично значение"
+                ],
+                "correct": 0,
+                "explanation": "N е в белтъците и нуклеиновите киселини."
+        },
+        {
+                "q": "Какво е бяло фосфорно горене?",
+                "options": [
+                        "P₄ се самозапалва на въздуха → P₄O₁₀ (силно токсично)",
+                        "Безвредно",
+                        "Бавна реакция",
+                        "Само при нагряване"
+                ],
+                "correct": 0,
+                "explanation": "Белият фосфор е изключително опасен."
+        },
+        {
+                "q": "Каква е реакцията N₂ + O₂ при гръмотевица?",
+                "options": [
+                        "N₂ + O₂ → 2NO (азотен оксид)",
+                        "N₂ + O₂ → NO₂",
+                        "Нямат реакция",
+                        "N₂ + 2O₂ → 2NO₂"
+                ],
+                "correct": 0,
+                "explanation": "Мълнията активира азота – NO се образува."
+        },
+        {
+                "q": "Защо азотът е инертен при стайна температура?",
+                "options": [
+                        "N≡N е тройна връзка – много стабилна, трудна за разкъсване",
+                        "Голям атомен размер",
+                        "Ниска електроотрицателност",
+                        "Малко неутрони"
+                ],
+                "correct": 0,
+                "explanation": "Енергията за разкъсване на N≡N е 945 kJ/mol."
+        },
+        {
+                "q": "Какво е H₂SO₄ като киселина?",
+                "options": [
+                        "Силна дипротонна киселина – напълно се дисоциира",
+                        "Слаба",
+                        "Монопротонна",
+                        "Основа"
+                ],
+                "correct": 0,
+                "explanation": "H₂SO₄ дава 2 протона – реагира в 2 стъпки."
+        },
+        {
+                "q": "Каква е отровността на Cl₂?",
+                "options": [
+                        "Силно токсичен газ – дразни дихателните пътища",
+                        "Безвреден",
+                        "Само за растения",
+                        "Само при висока концентрация"
+                ],
+                "correct": 0,
+                "explanation": "Използван като химическо оръжие в WWI."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

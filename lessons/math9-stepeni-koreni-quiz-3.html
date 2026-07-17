@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Степени и корени – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math9-stepeni-koreni-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/math9-stepeni-koreni.html',
+      lessonName:  'Степени и корени',
+      eyebrow:     'Математика · 9 клас · Алгебра',
+      title:       'Куиз – Степени и корени – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Докажете: (√a + √b)(√a − √b) = a − b",
+                "options": [
+                        "Вярно: разлика на квадрати",
+                        "Невярно",
+                        "Вярно само за a > b",
+                        "Невярно за b > a"
+                ],
+                "correct": 0,
+                "explanation": "(A+B)(A−B) = A² − B²; A=√a → a; B=√b → b."
+        },
+        {
+                "q": "Намерете x: 4ˣ = 2^(2x+1)",
+                "options": [
+                        "Всички x удовлетворяват 4ˣ = 2^(2x): нужно 2^2x = 2^(2x+1) – неможe",
+                        "x = 0",
+                        "x = 1",
+                        "x = −1"
+                ],
+                "correct": 0,
+                "explanation": "4ˣ = 2^(2x); 2^(2x) ≠ 2^(2x+1) → никое решение (или грешна условие)."
+        },
+        {
+                "q": "Кое е вярно: √(a + b) = √a + √b?",
+                "options": [
+                        "Невярно в общия случай",
+                        "Вярно",
+                        "Вярно само при a=b",
+                        "Вярно само при a=0"
+                ],
+                "correct": 0,
+                "explanation": "√(4+9) = √13 ≠ 2+3 = 5. Грешна формула."
+        },
+        {
+                "q": "Намерете x: x^(1/2) = 5",
+                "options": [
+                        "x = 25",
+                        "x = 5",
+                        "x = √5",
+                        "x = 10"
+                ],
+                "correct": 0,
+                "explanation": "x^(1/2) = 5 → x = 5² = 25."
+        },
+        {
+                "q": "Намерете x: 2^(2x) − 3 · 2ˣ + 2 = 0 (замяна t = 2ˣ)",
+                "options": [
+                        "x = 0 или x = 1",
+                        "x = 2 или x = 3",
+                        "x = 1 или x = 2",
+                        "x = −1 или x = 0"
+                ],
+                "correct": 0,
+                "explanation": "t² − 3t + 2 = 0 → t=1 (x=0) или t=2 (x=1)."
+        },
+        {
+                "q": "Опростете √(50) − √(18)",
+                "options": [
+                        "2√2",
+                        "4√2",
+                        "√32",
+                        "√8"
+                ],
+                "correct": 0,
+                "explanation": "5√2 − 3√2 = 2√2."
+        },
+        {
+                "q": "Намерете n: (1/3)ⁿ = 27",
+                "options": [
+                        "n = −3",
+                        "n = 3",
+                        "n = 1/3",
+                        "n = 9"
+                ],
+                "correct": 0,
+                "explanation": "3^(−n) = 3³ → n = −3."
+        },
+        {
+                "q": "Вярно ли: a^(m+n) = aᵐ · aⁿ?",
+                "options": [
+                        "Да",
+                        "Не",
+                        "Само за цели m, n",
+                        "Само при a > 0"
+                ],
+                "correct": 0,
+                "explanation": "Основно свойство на степените."
+        },
+        {
+                "q": "Пресметнете 10^(−2) + 10⁰",
+                "options": [
+                        "1.01",
+                        "1",
+                        "1.1",
+                        "2"
+                ],
+                "correct": 0,
+                "explanation": "0.01 + 1 = 1.01."
+        },
+        {
+                "q": "Опростете ⁴√(a⁸)",
+                "options": [
+                        "a²",
+                        "a⁴",
+                        "a⁸",
+                        "a⁰ˢ⁵"
+                ],
+                "correct": 0,
+                "explanation": "⁴√(a⁸) = a^(8/4) = a²."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

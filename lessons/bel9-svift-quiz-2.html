@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 - Джонатан Суифт – Пътешествията на Гъливер · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-svift-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bel9-svift-quiz-3.html",
+    lessonUrl:"/lessons/bel9-svift.html",
+    lessonName:"Джонатан Суифт – Пътешествията на Гъливер",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 2 - Джонатан Суифт – Пътешествията на Гъливер",
+    passScore:8,
+    questions:[
+  {
+    "q": "С кой политически конфликт е свързана Лилипутия?",
+    "options": [
+      "Войната на токоносателите срещу тъпоносателите – пародия на Вигове и Тори",
+      "Войната на Франция с Англия",
+      "Американската революция",
+      "Религиозните войни"
+    ],
+    "correct": 0,
+    "explanation": "Яйцата и токовете са пародия на политическото парти противопоставяне."
+  },
+  {
+    "q": "Каква роля играе Гъливер в Лилипутия?",
+    "options": [
+      "Великан, помагащ на джуджетата, после осъден от тях",
+      "Затворник",
+      "Крал",
+      "Учен"
+    ],
+    "correct": 0,
+    "explanation": "Гъливер спасява флота им, но после е осъден заради накърнен дворцов стандарт."
+  },
+  {
+    "q": "Каква е реакцията на краля на Бробдингнаг към европейската история?",
+    "options": [
+      "Ужас и отвращение от войните и жестокостта",
+      "Възхищение",
+      "Безразличие",
+      "Желание да ги подражава"
+    ],
+    "correct": 0,
+    "explanation": "Мъдрият великански крал е моралният стандарт в творбата."
+  },
+  {
+    "q": "Какво символизира Гъливер сред Хуинхнмите?",
+    "options": [
+      "Yahoo с малко разум – трагична граничност",
+      "Идеален разум",
+      "Победа на морала",
+      "Герой"
+    ],
+    "correct": 0,
+    "explanation": "Гъливер е нито Yahoo, нито Хуинхнм – трагична междинна фигура."
+  },
+  {
+    "q": "Каква е ролята на Просвещението за Суифт?",
+    "options": [
+      "Критична – разумът без морал е опасен",
+      "Положителна – разумът спасява",
+      "Неутрална",
+      "Без значение за творбата"
+    ],
+    "correct": 0,
+    "explanation": "Суифт се разграничава от оптимизма на Просвещението."
+  },
+  {
+    "q": "Какъв е нарратив похватът в Пътешествията на Гъливер?",
+    "options": [
+      "Разказ от първо лице – иронично разстояние между Гъливер и автора",
+      "Трето лице",
+      "Диалог",
+      "Поетична форма"
+    ],
+    "correct": 0,
+    "explanation": "Ироничният разказвач е основен художествен похват."
+  },
+  {
+    "q": "Каква е критиката към науката в Лапута?",
+    "options": [
+      "Науката без практическо приложение е абсурдна",
+      "Науката е полезна",
+      "Учените са герои",
+      "Лапута е утопия"
+    ],
+    "correct": 0,
+    "explanation": "Учените в Лапута правят нелепи опити без практическа стойност."
+  },
+  {
+    "q": "Каква е разликата Гъливер в Лилипутия/Бробдингнаг?",
+    "options": [
+      "В Лилипутия е великан, в Бробдингнаг – джудже – различни перспективи",
+      "В двете е с еднакъв ръст",
+      "Само в Лилипутия е промяна",
+      "В Бробдингнаг е великан"
+    ],
+    "correct": 0,
+    "explanation": "Смяната на перспективата е ключов художествен похват."
+  },
+  {
+    "q": "Какъв е краят на Гъливер?",
+    "options": [
+      "Завръща се у дома, но не може да понася хората – Yahoo",
+      "Щастлив завой",
+      "Остава при Хуинхнмите",
+      "Умира"
+    ],
+    "correct": 0,
+    "explanation": "Финалното отчуждение е кулминация на песимизма на Суифт."
+  },
+  {
+    "q": "Кое Просвещенско понятие е оспорено в творбата?",
+    "options": [
+      "Вярата, че разумът естествено води до добро",
+      "Съществуването на Бог",
+      "Монархията",
+      "Науката изобщо"
+    ],
+    "correct": 0,
+    "explanation": "Суифт показва, че разумни коне са по-морални от хората."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

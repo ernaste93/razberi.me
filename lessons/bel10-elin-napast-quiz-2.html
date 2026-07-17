@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Елин Пелин – „Напаст Божия" – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-elin-napast-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel10-elin-napast-quiz-3.html',
+      lessonUrl:   '/lessons/bel10-elin-napast.html',
+      lessonName:  'Елин Пелин – „Напаст Божия"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Елин Пелин – „Напаст Божия" – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Пиянството в разказа е показано?",
+                "options": [
+                        "Като ужасен порок",
+                        "Като човешка слабост, разбираема и дори симпатична",
+                        "Като болест",
+                        "Като доблест"
+                ],
+                "correct": 1,
+                "explanation": "Пиянството е слабост – но авторът не осъжда, а разбира."
+        },
+        {
+                "q": "Реализмът се различава от романтизма по?",
+                "options": [
+                        "Без разлика",
+                        "Реализмът описва действителността точно; романтизмът – идеализира или преувеличава",
+                        "Романтизмът е по-точен",
+                        "Реализмът е по-красив"
+                ],
+                "correct": 1,
+                "explanation": "Реализъм: обективно, точно описание. Романтизъм: идеализация, преувеличение на чувствата."
+        },
+        {
+                "q": "Конкретните детайли в разказите на Елин Пелин?",
+                "options": [
+                        "Пречат",
+                        "Правят разказа жив и убедителен",
+                        "Са излишни",
+                        "Са само декор"
+                ],
+                "correct": 1,
+                "explanation": "Конкретните детайли = реалистичен подпис на Елин Пелин."
+        },
+        {
+                "q": "Двойственият образ на Лазар (слабост + симпатичен) е?",
+                "options": [
+                        "Противоречие",
+                        "Реалистично изображение на сложния човек",
+                        "Грешка",
+                        "Романтичен идеализъм"
+                ],
+                "correct": 1,
+                "explanation": "Реалистичните герои са сложни – имат слабости и добродетели едновременно."
+        },
+        {
+                "q": "„Малкият човек\" в литературата е?",
+                "options": [
+                        "Физически малък",
+                        "Обикновеният човек от народа – без власт, богатство, образование",
+                        "Само деца",
+                        "Само бедни"
+                ],
+                "correct": 1,
+                "explanation": "„Малкият човек\" = обикновен гражданин, без влияние – обект на съчувствие в реализма."
+        },
+        {
+                "q": "Диалогът в разказите на Елин Пелин?",
+                "options": [
+                        "Отсъства",
+                        "Е жив и народен – предава характерите директно",
+                        "Е книжовен",
+                        "Е дълъг и философски"
+                ],
+                "correct": 1,
+                "explanation": "Живият диалог характеризира персонажите и предава народния дух."
+        },
+        {
+                "q": "Елин Пелин пише за?",
+                "options": [
+                        "Само за бедни",
+                        "Всички слоеве на народния живот – земеделци, занаятчии, попове",
+                        "Само за богати",
+                        "Само за политиците"
+                ],
+                "correct": 1,
+                "explanation": "Народният бит в цялото му многообразие е темата на Елин Пелин."
+        },
+        {
+                "q": "Морализаторството в разказите на Елин Пелин е?",
+                "options": [
+                        "Силно",
+                        "Отсъства – авторът не осъжда, само описва",
+                        "Умерено",
+                        "Религиозно"
+                ],
+                "correct": 1,
+                "explanation": "Елин Пелин избягва морализаторството – разбира, не осъжда."
+        },
+        {
+                "q": "Селото в разказите на Елин Пелин е?",
+                "options": [
+                        "Идеализирано",
+                        "Реалистично показано – с радости и страдания, без идеализация",
+                        "Мрачно само",
+                        "Критикувано"
+                ],
+                "correct": 1,
+                "explanation": "Реалистично, не идеализирано – истинският живот с всичките му нюанси."
+        },
+        {
+                "q": "Елин Пелин принадлежи към?",
+                "options": [
+                        "Символизма",
+                        "Реализма (нач. XX в.)",
+                        "Романтизма",
+                        "Просвещението"
+                ],
+                "correct": 1,
+                "explanation": "Елин Пелин е реалист, пише в нач. XX в."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

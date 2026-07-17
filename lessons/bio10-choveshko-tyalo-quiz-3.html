@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Организъм на човека – органи и системи – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-choveshko-tyalo-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bio10-choveshko-tyalo.html',
+      lessonName:  'Организъм на човека – органи и системи',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Организъм на човека – органи и системи – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Невронът е?",
+                "options": [
+                        "Само тяло",
+                        "Специализирана нервна клетка с дендрити, тяло, аксон",
+                        "Само синапс",
+                        "Тъкан"
+                ],
+                "correct": 1,
+                "explanation": "Невронът = нервна клетка. Дендрити (приемат сигнали) → тяло → аксон (предава сигнали на синапса)."
+        },
+        {
+                "q": "Кръвната захар се регулира от?",
+                "options": [
+                        "Само инсулин",
+                        "Инсулин (понижава) + глюкагон (повишава) в отрицателна обратна връзка",
+                        "Само глюкагон",
+                        "Само адреналин"
+                ],
+                "correct": 1,
+                "explanation": "При висока кръвна захар → инсулин. При ниска → глюкагон. Класически пример за хомеостаза."
+        },
+        {
+                "q": "Диастола vs систола?",
+                "options": [
+                        "Систола = отпускане",
+                        "Систола = свиване (изхвърляне кръв); диастола = отпускане (пълнене)",
+                        "Еднакви",
+                        "Само в белите дробове"
+                ],
+                "correct": 1,
+                "explanation": "Систола: вентрикулите се свиват → кръв в аортата и белодробната артерия. Диастола: отпускане и пълнене."
+        },
+        {
+                "q": "Тестостеронът се произвежда в?",
+                "options": [
+                        "Надбъбреци",
+                        "Тестисите (клетки на Лайдиг) + малко в надбъбреците",
+                        "Хипофиза",
+                        "Черен дроб"
+                ],
+                "correct": 1,
+                "explanation": "Клетките на Лайдиг в тестисите са основен производител на тестостерон."
+        },
+        {
+                "q": "Сфинктерът Одди?",
+                "options": [
+                        "В сърцето",
+                        "При жлъчния канал и панкреатичния канал → дуоденума",
+                        "В стомаха",
+                        "В нефрона"
+                ],
+                "correct": 1,
+                "explanation": "Сфинктер на Одди = мускулен клапан, регулиращ потока жлъчка и панкреатичен сок в дванадесетопръстника."
+        },
+        {
+                "q": "Лимфоцитите са?",
+                "options": [
+                        "Червени кръвни клетки",
+                        "Бели кръвни клетки – В и Т клетки (адаптивен имунитет)",
+                        "Тромбоцити",
+                        "Моноцити"
+                ],
+                "correct": 1,
+                "explanation": "В-лимфоцити → антитела (хуморален имунитет). Т-лимфоцити → клетъчен имунитет (Т-хелпери, цитотоксични Т)."
+        },
+        {
+                "q": "Коя структура в мозъка регулира дишането?",
+                "options": [
+                        "Мозъчна кора",
+                        "Мозъчен ствол (медула облонгата)",
+                        "Хипоталамус",
+                        "Малък мозък"
+                ],
+                "correct": 1,
+                "explanation": "Медула облонгата в мозъчния ствол съдържа дихателния център – регулира ритъма на дишане."
+        },
+        {
+                "q": "Жлъчката се произвежда в и се съхранява в?",
+                "options": [
+                        "Панкреас/панкреас",
+                        "Черен дроб/жлъчен мехур",
+                        "Стомах/стомах",
+                        "Дебело черво/ректум"
+                ],
+                "correct": 1,
+                "explanation": "Черен дроб произвежда жлъчка; жлъчният мехур я съхранява и освобождава при хранене."
+        },
+        {
+                "q": "Хемоглобинът се разгражда в?",
+                "options": [
+                        "Бели дробове",
+                        "Черен дроб и далак",
+                        "Бъбреци",
+                        "Костен мозък"
+                ],
+                "correct": 1,
+                "explanation": "Стари еритроцити се разграждат в далака и черния дроб → хемоглобин → билирубин → жлъчка."
+        },
+        {
+                "q": "Функция на панкреаса е?",
+                "options": [
+                        "Само ендокринна",
+                        "Ендокринна (инсулин, глюкагон) + екзокринна (храносмилателни ензими)",
+                        "Само ензими",
+                        "Само съхранение"
+                ],
+                "correct": 1,
+                "explanation": "Панкреасът е смесена жлеза: β-клетки (инсулин), α-клетки (глюкагон) + ацинарни клетки (липаза, амилаза, протеази)."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

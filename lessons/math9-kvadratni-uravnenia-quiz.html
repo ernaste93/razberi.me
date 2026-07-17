@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Квадратни уравнения – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math9-kvadratni-uravnenia-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/math9-kvadratni-uravnenia-quiz-2.html',
+      lessonUrl:   '/lessons/math9-kvadratni-uravnenia.html',
+      lessonName:  'Квадратни уравнения',
+      eyebrow:     'Математика · 9 клас · Алгебра',
+      title:       'Куиз – Квадратни уравнения – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Какъв е видът на квадратното уравнение?",
+                "options": [
+                        "ax² + bx + c = 0, a ≠ 0",
+                        "ax + b = 0",
+                        "ax³ + bx² = 0",
+                        "a/x + b = 0"
+                ],
+                "correct": 0,
+                "explanation": "Квадратното уравнение има максимална степен 2."
+        },
+        {
+                "q": "Как се изчислява дискриминантата?",
+                "options": [
+                        "D = b² − 4ac",
+                        "D = b² + 4ac",
+                        "D = b − 4ac",
+                        "D = b² / 4ac"
+                ],
+                "correct": 0,
+                "explanation": "Формулата на дискриминантата е D = b² − 4ac."
+        },
+        {
+                "q": "Колко реални корена има уравнение с D > 0?",
+                "options": [
+                        "Два различни реални корена",
+                        "Един корен",
+                        "Няма корени",
+                        "Три корена"
+                ],
+                "correct": 0,
+                "explanation": "Положителната дискриминанта дава два корена."
+        },
+        {
+                "q": "Какво означава D = 0?",
+                "options": [
+                        "Един двоен корен",
+                        "Два корена",
+                        "Няма корени",
+                        "Комплексни корени"
+                ],
+                "correct": 0,
+                "explanation": "При D = 0 двата корена съвпадат."
+        },
+        {
+                "q": "Каква е формулата за корените?",
+                "options": [
+                        "x = (−b ± √D) / 2a",
+                        "x = (b ± √D) / 2a",
+                        "x = (−b ± √D) / a",
+                        "x = b / 2a"
+                ],
+                "correct": 0,
+                "explanation": "Стандартната формула включва знака минус пред b."
+        },
+        {
+                "q": "Каква е сумата на корените по Виет?",
+                "options": [
+                        "x₁ + x₂ = −b/a",
+                        "x₁ + x₂ = b/a",
+                        "x₁ + x₂ = c/a",
+                        "x₁ + x₂ = −c/a"
+                ],
+                "correct": 0,
+                "explanation": "Теоремата на Виет за сумата."
+        },
+        {
+                "q": "Каква е произведението на корените по Виет?",
+                "options": [
+                        "x₁ · x₂ = c/a",
+                        "x₁ · x₂ = −c/a",
+                        "x₁ · x₂ = b/a",
+                        "x₁ · x₂ = −b/a"
+                ],
+                "correct": 0,
+                "explanation": "Теоремата на Виет за произведението."
+        },
+        {
+                "q": "Решете: x² − 5x + 6 = 0. Корените са:",
+                "options": [
+                        "x₁ = 3, x₂ = 2",
+                        "x₁ = 5, x₂ = 1",
+                        "x₁ = −3, x₂ = −2",
+                        "x₁ = 6, x₂ = −1"
+                ],
+                "correct": 0,
+                "explanation": "D = 25 − 24 = 1; x = (5 ± 1)/2 → 3 и 2."
+        },
+        {
+                "q": "При D < 0 уравнението:",
+                "options": [
+                        "Няма реални корени",
+                        "Има два корена",
+                        "Има един корен",
+                        "Има три корена"
+                ],
+                "correct": 0,
+                "explanation": "Отрицателна дискриминанта → без реални решения."
+        },
+        {
+                "q": "Кой е двойният корен на x² − 4x + 4 = 0?",
+                "options": [
+                        "x = 2",
+                        "x = 4",
+                        "x = −2",
+                        "x = 1"
+                ],
+                "correct": 0,
+                "explanation": "D = 16 − 16 = 0; x = 4/2 = 2."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

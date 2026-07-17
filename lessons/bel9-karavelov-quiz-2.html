@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Любен Каравелов – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel9-karavelov-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel9-karavelov-quiz-3.html',
+      lessonUrl:   '/lessons/bel9-karavelov.html',
+      lessonName:  'Любен Каравелов',
+      eyebrow:     'БЕЛ · 9 клас · Реализъм',
+      title:       'Куиз – Любен Каравелов – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Каква е идейната насока на революционната журналистика на Каравелов?",
+                "options": [
+                        "Борба за национална свобода",
+                        "Лоялност към Османската власт",
+                        "Религиозна пропаганда",
+                        "Литературна критика"
+                ],
+                "correct": 0,
+                "explanation": "Вестниците му агитират за въстание и независимост."
+        },
+        {
+                "q": "Каква обществена група критикува Каравелов?",
+                "options": [
+                        "Новата буржоазия и чорбаджиите",
+                        "Хайдутите",
+                        "Духовниците",
+                        "Занаятчиите"
+                ],
+                "correct": 0,
+                "explanation": "Чорбаджийството и алчната буржоазия са мишена на критиката."
+        },
+        {
+                "q": "Как завършва \"Хаджи Ничо\"?",
+                "options": [
+                        "Скъперникът бива разобличен и осмян",
+                        "Ничо триумфира",
+                        "Ничо умира героично",
+                        "Всички помиряват"
+                ],
+                "correct": 0,
+                "explanation": "Разказът завършва с морална присъда срещу алчността."
+        },
+        {
+                "q": "Каква е националността на Каравелов по произход?",
+                "options": [
+                        "Български",
+                        "Сръбски",
+                        "Руски",
+                        "Румънски"
+                ],
+                "correct": 0,
+                "explanation": "Роден е в Копривщица, България."
+        },
+        {
+                "q": "Какви са \"Маминото детенце\" и \"Хаджи Ничо\" по жанр?",
+                "options": [
+                        "Реалистични разкази",
+                        "Поеми",
+                        "Исторически романи",
+                        "Драми"
+                ],
+                "correct": 0,
+                "explanation": "Кратката проза е жанрът, в който Каравелов блести."
+        },
+        {
+                "q": "С кого е тясно свързан Каравелов в революционното движение?",
+                "options": [
+                        "Христо Ботев",
+                        "Иван Вазов",
+                        "Петко Рачев Славейков",
+                        "Любен Петков"
+                ],
+                "correct": 0,
+                "explanation": "Каравелов и Ботев са близки другари в БРЦК."
+        },
+        {
+                "q": "Кое е общото между Паисий, Каравелов и Ботев?",
+                "options": [
+                        "Борба за народна свобода и просвета",
+                        "Само литературни цели",
+                        "Само религиозни цели",
+                        "Само образователни цели"
+                ],
+                "correct": 0,
+                "explanation": "И тримата служат на идеята за национално освобождение."
+        },
+        {
+                "q": "Как се отнася Каравелов към народния говор в творбите си?",
+                "options": [
+                        "Включва народен говор и фразеология",
+                        "Пише само на книжовен език",
+                        "Пише само на руски",
+                        "Избягва диалекти"
+                ],
+                "correct": 0,
+                "explanation": "Народният елемент придава автентичност и хумор."
+        },
+        {
+                "q": "Кое НЕ е характерно за реализма на Каравелов?",
+                "options": [
+                        "Романтична идеализация на героите",
+                        "Ирония",
+                        "Типични персонажи",
+                        "Критика на общество"
+                ],
+                "correct": 0,
+                "explanation": "Романтичната идеализация е противоположна на реализма."
+        },
+        {
+                "q": "В кой град действа БРЦК на Каравелов?",
+                "options": [
+                        "Букурещ",
+                        "София",
+                        "Пловдив",
+                        "Търново"
+                ],
+                "correct": 0,
+                "explanation": "Централата е в Букурещ – в Дунавските княжества."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

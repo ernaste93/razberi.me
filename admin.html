@@ -393,15 +393,15 @@
         <div class="admin-stats">
           <div class="stat-card">
             <div class="stat-label">Общо потребители</div>
-            <div class="stat-value" id="stat-total">—</div>
+            <div class="stat-value" id="stat-total">–</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Активни абонаменти</div>
-            <div class="stat-value" id="stat-paid" style="color:#16a34a;">—</div>
+            <div class="stat-value" id="stat-paid" style="color:#16a34a;">–</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Безплатен план</div>
-            <div class="stat-value" id="stat-free" style="color:var(--muted);">—</div>
+            <div class="stat-value" id="stat-free" style="color:var(--muted);">–</div>
           </div>
         </div>
         <div class="users-card">
@@ -484,29 +484,29 @@
         <div class="fin-grid">
           <div class="fin-card">
             <div class="fin-label">Брутен приход</div>
-            <div class="fin-value" id="fin-mrr">—</div>
+            <div class="fin-value" id="fin-mrr">–</div>
             <div class="fin-sub" id="fin-mrr-sub">от абонаменти</div>
           </div>
           <div class="fin-card">
             <div class="fin-label">Общи разходи</div>
-            <div class="fin-value" id="fin-costs">—</div>
+            <div class="fin-value" id="fin-costs">–</div>
             <div class="fin-sub">фиксирани + API + Stripe</div>
           </div>
           <div class="fin-card" id="fin-profit-card">
             <div class="fin-label">Чиста печалба / Загуба</div>
-            <div class="fin-value" id="fin-profit">—</div>
+            <div class="fin-value" id="fin-profit">–</div>
             <div class="fin-sub" id="fin-profit-sub">приход − разходи</div>
           </div>
         </div>
         <div class="fin-grid-2">
           <div class="fin-card">
-            <div class="fin-label">Anthropic API — месечен разход</div>
-            <div class="fin-value" id="fin-api-real">—</div>
+            <div class="fin-label">Anthropic API – месечен разход</div>
+            <div class="fin-value" id="fin-api-real">–</div>
             <div class="fin-sub" id="fin-api-real-sub">от api_usage таблицата</div>
           </div>
           <div class="fin-card">
             <div class="fin-label">Stripe такси (ест.)</div>
-            <div class="fin-value" id="fin-stripe-fees">—</div>
+            <div class="fin-value" id="fin-stripe-fees">–</div>
             <div class="fin-sub" id="fin-stripe-fees-sub">1.5% + €0.25/транзакция</div>
           </div>
         </div>
@@ -517,16 +517,16 @@
 
           <div class="pl-section-title">Приходи</div>
           <div class="pl-row">
-            <span class="pl-row-label">Абонаменти — брутен приход</span>
-            <span class="pl-amt green" id="pl-gross">—</span>
+            <span class="pl-row-label">Абонаменти – брутен приход</span>
+            <span class="pl-amt green" id="pl-gross">–</span>
           </div>
           <div class="pl-row">
             <span class="pl-row-label indent">− Stripe такси (1.5% + €0.25/тр.)</span>
-            <span class="pl-amt red" id="pl-stripe">—</span>
+            <span class="pl-amt red" id="pl-stripe">–</span>
           </div>
           <div class="pl-row subtotal">
             <span class="pl-row-label">= Нетен приход</span>
-            <span class="pl-amt" id="pl-net">—</span>
+            <span class="pl-amt" id="pl-net">–</span>
           </div>
 
           <hr class="pl-divider">
@@ -534,42 +534,42 @@
           <div class="pl-section-title">Разходи</div>
           <div class="pl-row">
             <span class="pl-row-label indent">Anthropic API (реален)</span>
-            <span class="pl-amt red" id="pl-api">—</span>
+            <span class="pl-amt red" id="pl-api">–</span>
           </div>
           <div class="pl-row">
             <span class="pl-row-label indent">Хостинг (Render)</span>
-            <span class="pl-amt red" id="pl-hosting">—</span>
+            <span class="pl-amt red" id="pl-hosting">–</span>
           </div>
           <div class="pl-row">
             <span class="pl-row-label indent">Supabase</span>
-            <span class="pl-amt red" id="pl-supabase">—</span>
+            <span class="pl-amt red" id="pl-supabase">–</span>
           </div>
           <div class="pl-row">
             <span class="pl-row-label indent">Учители</span>
-            <span class="pl-amt red" id="pl-teachers">—</span>
+            <span class="pl-amt red" id="pl-teachers">–</span>
           </div>
           <div class="pl-row">
             <span class="pl-row-label indent">Друго</span>
-            <span class="pl-amt red" id="pl-other">—</span>
+            <span class="pl-amt red" id="pl-other">–</span>
           </div>
           <div class="pl-row subtotal">
             <span class="pl-row-label">= Общо разходи</span>
-            <span class="pl-amt red" id="pl-total-costs">—</span>
+            <span class="pl-amt red" id="pl-total-costs">–</span>
           </div>
 
           <hr class="pl-divider">
 
           <div class="pl-row total" id="pl-result-row">
             <span class="pl-row-label" id="pl-result-label">Оперативна печалба (преди ДДС)</span>
-            <span class="pl-amt" id="pl-result">—</span>
+            <span class="pl-amt" id="pl-result">–</span>
           </div>
           <div class="pl-row" style="opacity:0.7;" id="pl-vat-row">
             <span class="pl-row-label">− ДДС задължение (20%, ако регистриран)</span>
-            <span class="pl-amt red" id="pl-vat-deduct">—</span>
+            <span class="pl-amt red" id="pl-vat-deduct">–</span>
           </div>
           <div class="pl-row" style="border-top:2px solid var(--line);margin-top:4px;padding-top:8px;">
             <span class="pl-row-label" style="font-weight:800;">= Реална печалба след ДДС</span>
-            <span class="pl-amt" style="font-weight:800;" id="pl-result-after-vat">—</span>
+            <span class="pl-amt" style="font-weight:800;" id="pl-result-after-vat">–</span>
           </div>
           <div style="margin-top:8px;font-size:12px;color:var(--muted);">* Anthropic разходите са в USD, конвертирани в EUR по живия курс на ЕЦБ. Stripe таксите са изчислени от броя нови абонаменти за месеца.</div>
         </div>
@@ -577,12 +577,12 @@
         <!-- VAT estimate -->
         <div class="vat-card">
           <h3>🧾 ДДС / VAT</h3>
-          <div class="vat-row"><span>Брутен приход за месеца</span><span id="vat-gross">—</span></div>
-          <div class="vat-row"><span>ДДС 20% (ако е приложимо)</span><span id="vat-amount">—</span></div>
-          <div class="vat-row"><span>Натрупан приход от началото на годината</span><span id="vat-ytd">—</span></div>
+          <div class="vat-row"><span>Брутен приход за месеца</span><span id="vat-gross">–</span></div>
+          <div class="vat-row"><span>ДДС 20% (ако е приложимо)</span><span id="vat-amount">–</span></div>
+          <div class="vat-row"><span>Натрупан приход от началото на годината</span><span id="vat-ytd">–</span></div>
           <div style="margin-top:10px;font-size:12px;color:#92400e;line-height:1.6;">
             ⚠ При надвишаване на <strong>€10,000</strong> годишен приход от ЕС клиенти трябва OSS регистрация.
-            При надвишаване на <strong>50,000 лв</strong> в България — задължителна ДДС регистрация.
+            При надвишаване на <strong>50,000 лв</strong> в България – задължителна ДДС регистрация.
           </div>
         </div>
 
@@ -628,7 +628,7 @@
 
         <!-- Per-user API usage -->
         <div class="costs-card">
-          <h2>🤖 Anthropic API — разход по потребители</h2>
+          <h2>🤖 Anthropic API – разход по потребители</h2>
           <div id="api-usage-table" style="color:var(--muted);font-size:14px;">Зарежда…</div>
         </div>
 
@@ -682,7 +682,7 @@
     </div>
 
     <div class="udp-section">
-      <div class="udp-section-title">Знайко — API използване</div>
+      <div class="udp-section-title">Знайко – API използване</div>
       <div id="udp-api"></div>
     </div>
   </div>
@@ -801,13 +801,13 @@
               <div class="user-info">
                 <div class="user-avatar-sm">${initials}</div>
                 <div>
-                  <div class="user-name">${u.full_name || '—'}</div>
+                  <div class="user-name">${u.full_name || '–'}</div>
                   <div class="user-email">${u.email || ''}</div>
                 </div>
               </div>
             </td>
             <td><span class="role-badge ${u.role}">${u.role === 'student' ? 'Ученик' : 'Родител'}</span></td>
-            <td>${u.grade ? u.grade + ' кл.' : '—'}</td>
+            <td>${u.grade ? u.grade + ' кл.' : '–'}</td>
             <td style="color:var(--muted);font-size:13px;">${date}</td>
             <td style="font-size:13px;color:var(--muted);">${months} м.</td>
             <td>
@@ -830,7 +830,7 @@
       if (error) { alert('Грешка: ' + error.message); btns.forEach(b => b.disabled = false); return; }
 
       if (plan === 'active') {
-        // New subscription — get price from settings
+        // New subscription – get price from settings
         const { data: ps } = await sb.from('settings').select('value').eq('key','price_student').maybeSingle();
         const price = parseFloat(ps?.value) || 30;
         await sb.from('subscriptions').insert({ user_id: userId, plan: 'student', price_eur: price, status: 'active' });
@@ -864,14 +864,14 @@
 
       const initials = getInitials(u.full_name, u.email);
       document.getElementById('udp-avatar').textContent = initials;
-      document.getElementById('udp-name').textContent   = u.full_name || '—';
+      document.getElementById('udp-name').textContent   = u.full_name || '–';
       document.getElementById('udp-email').textContent  = u.email || '';
 
-      const fmtDate = d => d ? new Date(d).toLocaleDateString('bg-BG', { day:'numeric', month:'long', year:'numeric' }) : '—';
+      const fmtDate = d => d ? new Date(d).toLocaleDateString('bg-BG', { day:'numeric', month:'long', year:'numeric' }) : '–';
 
       document.getElementById('udp-profile-rows').innerHTML = `
         <div class="udp-row"><span class="udp-row-label">Роля</span><span class="udp-row-val">${u.role === 'student' ? 'Ученик' : 'Родител'}</span></div>
-        <div class="udp-row"><span class="udp-row-label">Клас</span><span class="udp-row-val">${u.grade ? u.grade + ' клас' : '—'}</span></div>
+        <div class="udp-row"><span class="udp-row-label">Клас</span><span class="udp-row-val">${u.grade ? u.grade + ' клас' : '–'}</span></div>
         <div class="udp-row"><span class="udp-row-label">Абонамент</span><span class="udp-row-val">${u.plan === 'active' ? '<span style="color:#16a34a;">Активен</span>' : 'Безплатен'}</span></div>
         <div class="udp-row"><span class="udp-row-label">Регистриран</span><span class="udp-row-val">${fmtDate(u.created_at)}</span></div>
         <div class="udp-row"><span class="udp-row-label">Активен</span><span class="udp-row-val">${monthsAgo(u.created_at)} месеца</span></div>

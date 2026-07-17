@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 – Черноризец Храбър – О писменех · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-chernorizec-q2',
+    quizNum:2,
+    nextQuizUrl:"/lessons/bel8-chernorizec-quiz-3.html",
+    lessonUrl:'/lessons/bel8-chernorizec.html',
+    lessonName:"Черноризец Храбър – О писменех",
+    eyebrow:"БЕЛ · 8 клас · Средновековие",
+    title:"Тест 2 – Черноризец Храбър – О писменех",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е разликата Преславска/Охридска школа?",
+    "options": [
+      "Преславска – по-близо до гръцки образци; Охридска – Климент, по-близо до народния език",
+      "Преславска е по-стара с 200 г.",
+      "Охридска е в Преслав",
+      "Няма разлика"
+    ],
+    "correct": 0,
+    "explanation": "Климент Охридски работи с народния език; Преслав превежда гръцки текстове."
+  },
+  {
+    "q": "Кой е Климент Охридски?",
+    "options": [
+      "Ученик на Методий, основател на Охридската школа",
+      "Гръцки архиепископ",
+      "Цар на България",
+      "Автор на О писменех"
+    ],
+    "correct": 0,
+    "explanation": "Климент (840–916) е водач на Охридската школа."
+  },
+  {
+    "q": "Какво е апологията като жанр?",
+    "options": [
+      "Аргументирана защита на идея или личност",
+      "Молитва",
+      "Хроника",
+      "Биография"
+    ],
+    "correct": 0,
+    "explanation": "Апологията е жанр на защитна реч – от гръцки apologia = защита."
+  },
+  {
+    "q": "Какъв период е Симеоновият Златен век?",
+    "options": [
+      "893–927 г. – разцвет на старобългарската литература",
+      "681–701 г.",
+      "1018–1187 г.",
+      "1762–1878 г."
+    ],
+    "correct": 0,
+    "explanation": "Симеоновата епоха е пиков момент на старобългарската книжнина."
+  },
+  {
+    "q": "Колко букви има кирилицата според Храбър?",
+    "options": [
+      "38",
+      "24",
+      "33",
+      "26"
+    ],
+    "correct": 0,
+    "explanation": "Храбър посочва 38 букви – точно толкова, колкото са нужни за славянската реч."
+  },
+  {
+    "q": "Какво е черноризец?",
+    "options": [
+      "Монах (черна монашеска дреха)",
+      "Военен командир",
+      "Книжар",
+      "Цар"
+    ],
+    "correct": 0,
+    "explanation": "Черноризец е монах, облечен в черна дреха."
+  },
+  {
+    "q": "Какъв е приносът на Кирил и Методий?",
+    "options": [
+      "Дали азбука и богослужение на собствен език",
+      "Обединили ги политически",
+      "Написали О писменех",
+      "Организирали армия"
+    ],
+    "correct": 0,
+    "explanation": "Кирило-Методиевото дело осигурява духовна независимост на славяните."
+  },
+  {
+    "q": "Как Храбър доказва историчността на кирилицата?",
+    "options": [
+      "Дава точни дати и имена – Кирил, 38 букви",
+      "Цитира гръцки автори",
+      "Разказва митове",
+      "Описва природата"
+    ],
+    "correct": 0,
+    "explanation": "За разлика от гръцката азбука, Храбър посочва конкретни създатели."
+  },
+  {
+    "q": "Кой цар покровителства Преславската школа?",
+    "options": [
+      "Симеон Велики",
+      "Борис I",
+      "Асен I",
+      "Калоян"
+    ],
+    "correct": 0,
+    "explanation": "Цар Симеон (893–927) прави Преслав център на книжнина."
+  },
+  {
+    "q": "Каква е актуалността на О писменех?",
+    "options": [
+      "Борбата за съхранение на езика и идентичността е вечна",
+      "Текстът е само исторически",
+      "Апологиите са остарели",
+      "Думата е по-слаба от меча"
+    ],
+    "correct": 0,
+    "explanation": "Езикът е идентичност – О писменех напомня това с нова сила."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

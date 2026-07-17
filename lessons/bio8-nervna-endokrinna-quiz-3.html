@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 – Нервна и ендокринна система · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bio8-nervna-endokrinna-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bio8-nervna-endokrinna.html",
+    lessonName:"Нервна и ендокринна система",
+    eyebrow:"Биология · 8 клас · Анатомия",
+    title:"Тест 3 – Нервна и ендокринна система",
+    passScore:8,
+    questions:[
+  {
+    "q": "Защо двете системи работят заедно?",
+    "options": [
+      "Нервната е бърза за спешни реакции; ендокринната – за дългосрочна регулация",
+      "Само ендокринната е важна",
+      "Те работят независимо",
+      "Само нервната е важна"
+    ],
+    "correct": 0,
+    "explanation": "Координацията им е в основата на хомеостазата."
+  },
+  {
+    "q": "Какво е стресова реакция?",
+    "options": [
+      "Адреналин → повишен пулс, разширени зеници, повишена захар",
+      "Намален пулс",
+      "Спокойствие",
+      "Намалена захар"
+    ],
+    "correct": 0,
+    "explanation": "Бий-се-или-бягай е еволюционна защитна реакция."
+  },
+  {
+    "q": "Каква е ролята на хипоталамуса?",
+    "options": [
+      "Свързва нервната и ендокринната система; контролира хипофизата",
+      "Само мислене",
+      "Само сетива",
+      "Само рефлекси"
+    ],
+    "correct": 0,
+    "explanation": "Хипоталамусът е мостът между двете системи."
+  },
+  {
+    "q": "Какво е множествена склероза?",
+    "options": [
+      "Заболяване, при което имунната система уврежда миелиновите обвивки",
+      "Диабет",
+      "Артрит",
+      "Остеопороза"
+    ],
+    "correct": 0,
+    "explanation": "МС нарушава провеждането на нервните импулси."
+  },
+  {
+    "q": "Какво е миелин?",
+    "options": [
+      "Обвивка на аксона, ускоряваща провеждането на импулса",
+      "Вид невротрансмитер",
+      "Тип хормон",
+      "Нервна клетка"
+    ],
+    "correct": 0,
+    "explanation": "Миелинизираните влакна провеждат импулси много по-бързо."
+  },
+  {
+    "q": "Каква е ролята на сетивните органи?",
+    "options": [
+      "Рецептори, преобразуващи стимули в нервни импулси",
+      "Произвеждат хормони",
+      "Свиват мускули",
+      "Нямат роля в нервната система"
+    ],
+    "correct": 0,
+    "explanation": "Очите, ушите, кожата са рецептори за сетивна информация."
+  },
+  {
+    "q": "Какво е глюкагон?",
+    "options": [
+      "Хормон на панкреаса, повишаващ кръвната захар",
+      "Понижава кръвната захар",
+      "Произвеждан от щитовидната",
+      "Вид инсулин"
+    ],
+    "correct": 0,
+    "explanation": "Глюкагонът е антагонист на инсулина."
+  },
+  {
+    "q": "Каква е разликата рефлекс/съзнателно движение?",
+    "options": [
+      "Рефлексът е автоматичен и по-бърз; съзнателното минава през мозъка",
+      "Рефлексът е по-бавен",
+      "Те са едни и същи",
+      "Съзнателното е по-бързо"
+    ],
+    "correct": 0,
+    "explanation": "Рефлексите заобикалят мозъка за по-бърз отговор."
+  },
+  {
+    "q": "Какво е Паркинсон?",
+    "options": [
+      "Заболяване от дефицит на допамин, засягащо движението",
+      "Вид диабет",
+      "Заболяване на щитовидната",
+      "Мускулна болест"
+    ],
+    "correct": 0,
+    "explanation": "Паркинсон е невродегенеративно заболяване."
+  },
+  {
+    "q": "Как стресът засяга ендокринната система?",
+    "options": [
+      "Активира надбъбречните жлези да отделят адреналин и кортизол",
+      "Само нервната система реагира",
+      "Спира хормоналната секреция",
+      "Не влияе"
+    ],
+    "correct": 0,
+    "explanation": "Хроничният стрес може да наруши хормоналния баланс."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

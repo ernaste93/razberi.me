@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Карбоксилни киселини и естери – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem10-karboksilni-esteri-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/chem10-karboksilni-esteri-quiz-3.html',
+      lessonUrl:   '/lessons/chem10-karboksilni-esteri.html',
+      lessonName:  'Карбоксилни киселини и естери',
+      eyebrow:     'ХИМИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Карбоксилни киселини и естери – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Оцетът е?",
+                "options": [
+                        "Чиста CH₃COOH",
+                        "~5% разтвор на CH₃COOH",
+                        "Мравчена к-на",
+                        "Пропанова к-на"
+                ],
+                "correct": 1,
+                "explanation": "Хранителен оцет = ~5% CH₃COOH."
+        },
+        {
+                "q": "Наситена vs ненаситена мастна к-на?",
+                "options": [
+                        "Наситена има C=C",
+                        "Ненаситена има ≥1 C=C; наситена няма",
+                        "Разлика само в маса",
+                        "Ненаситените са по-твърди"
+                ],
+                "correct": 1,
+                "explanation": "Ненаситени: ≥1 C=C → течни масла. Наситени: без C=C → твърди."
+        },
+        {
+                "q": "Катализатор при естерификация?",
+                "options": [
+                        "NaOH",
+                        "Ni",
+                        "H₂SO₄ (конц.)",
+                        "FeBr₃"
+                ],
+                "correct": 2,
+                "explanation": "H₂SO₄ катализира и отнема H₂O."
+        },
+        {
+                "q": "Хидрогениране на ненаситена мазнина?",
+                "options": [
+                        "Наситена мазнина (маргарин)",
+                        "Глицерол",
+                        "Сапун",
+                        "Органична к-на"
+                ],
+                "correct": 0,
+                "explanation": "C=C+H₂ → C–C. Масло → маргарин."
+        },
+        {
+                "q": "Олеинова к-на C₁₇H₃₃COOH е?",
+                "options": [
+                        "Наситена",
+                        "Ненаситена с 1 C=C",
+                        "Ненаситена с 2 C=C",
+                        "Ароматна"
+                ],
+                "correct": 1,
+                "explanation": "C₁₇H₃₃ = 1 двойна C=C. В маслиново масло."
+        },
+        {
+                "q": "RCOOR' е?",
+                "options": [
+                        "Карбоксилна к-на",
+                        "Алдехид",
+                        "Естер",
+                        "Кетон"
+                ],
+                "correct": 2,
+                "explanation": "Естер. Функционална група –COO–."
+        },
+        {
+                "q": "Мравчена к-на е уникална защото?",
+                "options": [
+                        "2C",
+                        "HCOOH – 1C, H на C=O → редуцираща",
+                        "Не е к-на",
+                        "Твърдо"
+                ],
+                "correct": 1,
+                "explanation": "HCOOH = 1C с H директно на карбоксилния C → редуцираща."
+        },
+        {
+                "q": "Стеаринова к-на е?",
+                "options": [
+                        "Наситена мастна к-на",
+                        "Ненаситена",
+                        "Ароматна",
+                        "Аминокиселина"
+                ],
+                "correct": 0,
+                "explanation": "C₁₇H₃₅COOH без C=C → наситена. Твърда мазнина."
+        },
+        {
+                "q": "Осапунването е?",
+                "options": [
+                        "Синтез на мазнини",
+                        "Алкална хидролиза → сапун+глицерол",
+                        "Хидрогениране",
+                        "Естерификация"
+                ],
+                "correct": 1,
+                "explanation": "Триглицерид+3NaOH → 3RCOONa+глицерол."
+        },
+        {
+                "q": "Плодовите аромати са?",
+                "options": [
+                        "Алкани",
+                        "Алкохоли",
+                        "Естери",
+                        "Алдехиди"
+                ],
+                "correct": 2,
+                "explanation": "Изоамилацетат (банан), бутилацетат (ябълка) – естери."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

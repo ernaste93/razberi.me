@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Електролити и електролиза – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem9-elektroliti-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/chem9-elektroliti.html',
+      lessonName:  'Електролити и електролиза',
+      eyebrow:     'Химия · 9 клас · Електрохимия',
+      title:       'Куиз – Електролити и електролиза – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Задача: При ток 2 А за 30 мин, колко г Cu се отлага (Cu²⁺ + 2e⁻ → Cu)?",
+                "options": [
+                        "~1.19 г",
+                        "2 г",
+                        "0.5 г",
+                        "3 г"
+                ],
+                "correct": 0,
+                "explanation": "Q = 2×1800 = 3600 C; mol е⁻ = 3600/96485 = 0.0373; mol Cu = 0.0187; m = 0.0187×63.5 ≈ 1.19 г."
+        },
+        {
+                "q": "Защо сярна киселина е по-добра от солна за серни акумулатори?",
+                "options": [
+                        "H₂SO₄ участва директно в реакцията на акумулатора (Pb + H₂SO₄ → PbSO₄)",
+                        "По-евтина",
+                        "По-безопасна",
+                        "По-течна"
+                ],
+                "correct": 0,
+                "explanation": "Оловният акумулатор използва H₂SO₄ като електролит и реагент."
+        },
+        {
+                "q": "Как pH-буферите поддържат pH при добавяне на киселина?",
+                "options": [
+                        "Основата в буфера неутрализира добавената киселина",
+                        "Буферът е кисел вече",
+                        "Разреждат",
+                        "Само при основа"
+                ],
+                "correct": 0,
+                "explanation": "Буферите имат запас от к-на и основа за неутрализация."
+        },
+        {
+                "q": "Какво е солев мост в галванична клетка?",
+                "options": [
+                        "Тръбичка с инертен електролит (KNO₃), поддържаща електрически контакт без смесване",
+                        "Мост от сол",
+                        "Вид катализатор",
+                        "Само декорация"
+                ],
+                "correct": 0,
+                "explanation": "Соленият мост балансира зарядите между двете полуклетки."
+        },
+        {
+                "q": "Как електроотрицателността влияе на полярността на молекула?",
+                "options": [
+                        "По-електроотрицателен атом привлича е⁻ → частичен отрицателен заряд (δ⁻)",
+                        "Без ефект",
+                        "Само за йонни",
+                        "Само за метали"
+                ],
+                "correct": 0,
+                "explanation": "Разликата в електроотрицателност определя полярността на връзката."
+        },
+        {
+                "q": "Задача: Колко мл 0.1 M HCl са нужни за 20 мл 0.05 M NaOH?",
+                "options": [
+                        "10 мл",
+                        "20 мл",
+                        "5 мл",
+                        "40 мл"
+                ],
+                "correct": 0,
+                "explanation": "mol NaOH = 0.02×0.05 = 0.001; mol HCl = 0.001; V = 0.001/0.1 = 0.01 л = 10 мл."
+        },
+        {
+                "q": "Каква е реакцията при оловен акумулатор при разреждане (анод)?",
+                "options": [
+                        "Pb + SO₄²⁻ → PbSO₄ + 2e⁻ (окисление)",
+                        "Pb²⁺ + 2e⁻ → Pb",
+                        "H₂ → 2H⁺",
+                        "PbO₂ → Pb"
+                ],
+                "correct": 0,
+                "explanation": "Анодът се окислява при разреждане на акумулатора."
+        },
+        {
+                "q": "Как се пречиства Cu чрез електролиза?",
+                "options": [
+                        "Нечист Cu = анод → разтваря се; чист Cu = катод → отлага се",
+                        "Обратно",
+                        "Само катод",
+                        "Без разтваряне"
+                ],
+                "correct": 0,
+                "explanation": "Примесите падат на дъното; чистото Cu се отлага на катода."
+        },
+        {
+                "q": "Кой закон описва: концентрацията определя ОВ потенциала?",
+                "options": [
+                        "Уравнение на Нернст",
+                        "Закон на Фарадей",
+                        "Закон на Ом",
+                        "Хесов закон"
+                ],
+                "correct": 0,
+                "explanation": "Нернст: E = E° − (RT/nF)ln Q."
+        },
+        {
+                "q": "Какво се получава при електролиза на вода с H₂SO₄ като електролит?",
+                "options": [
+                        "Катод: 2H₂↑; Анод: O₂↑ (в съотношение 2:1)",
+                        "Катод: O₂; Анод: H₂",
+                        "Само H₂",
+                        "Само O₂"
+                ],
+                "correct": 0,
+                "explanation": "Разлагането на вода: 2H₂O → 2H₂ + O₂."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

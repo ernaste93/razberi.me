@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Кръв и кръвообращение – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-krv-krvoobrashtenie-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio10-krv-krvoobrashtenie-quiz-3.html',
+      lessonUrl:   '/lessons/bio10-krv-krvoobrashtenie.html',
+      lessonName:  'Кръв и кръвообращение',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Кръв и кръвообращение – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Кръвна група AB означава?",
+                "options": [
+                        "Само А антиген",
+                        "A + B антигени, без антитела",
+                        "Нито А нито В",
+                        "Само В антиген"
+                ],
+                "correct": 1,
+                "explanation": "AB: еритроцитите имат и A, и B антигени; в плазмата – без анти-A и анти-B антитела."
+        },
+        {
+                "q": "Хематокрит е?",
+                "options": [
+                        "Брой левкоцити",
+                        "% от обема кръв, зает от еритроцити (~45%)",
+                        "Концентрация на Hb",
+                        "pH на кръвта"
+                ],
+                "correct": 1,
+                "explanation": "Хематокрит (Hct) ~45% при мъже, ~40% при жени. При анемия намалява; при полицитемия нараства."
+        },
+        {
+                "q": "Сфера на действие на малкото кръгообращение?",
+                "options": [
+                        "Тяло",
+                        "Бели дробове – газообмен",
+                        "Само мозък",
+                        "Само черен дроб"
+                ],
+                "correct": 1,
+                "explanation": "Малко (белодробно) кръгообращение: дясно сърце → бели дробове (CO₂ излиза, O₂ влиза) → ляво сърце."
+        },
+        {
+                "q": "Анемията е?",
+                "options": [
+                        "Много левкоцити",
+                        "Намален брой еритроцити или Hb",
+                        "Много тромбоцити",
+                        "Висока кръвна захар"
+                ],
+                "correct": 1,
+                "explanation": "Анемия: недостиг на еритроцити или хемоглобин → намален пренос на O₂ → умора, бледост, задух."
+        },
+        {
+                "q": "ЕКГ P-вълната отговаря на?",
+                "options": [
+                        "Камерна деполаризация",
+                        "Предсърдна деполаризация (свиване на предсърдия)",
+                        "Реполаризация на камерите",
+                        "Диастола"
+                ],
+                "correct": 1,
+                "explanation": "P-вълна = деполаризация на предсърдията. QRS = камерна деполаризация. T = камерна реполаризация."
+        },
+        {
+                "q": "Функция на аортата?",
+                "options": [
+                        "Пренос на кръв от тялото към сърцето",
+                        "Главна артерия от лявото сърце към тялото",
+                        "Само в белите дробове",
+                        "Само пренос на CO₂"
+                ],
+                "correct": 1,
+                "explanation": "Аортата е най-голямата артерия – изпраща оксигенирана кръв от лявата камера към системното кръгообращение."
+        },
+        {
+                "q": "При хипертония (>140/90) основен риск е?",
+                "options": [
+                        "Диабет",
+                        "Инсулт, инфаркт, бъбречно увреждане",
+                        "Анемия",
+                        "Остеопороза"
+                ],
+                "correct": 1,
+                "explanation": "Хипертонията е водещ рисков фактор за ССЗ (инфаркт, инсулт) и бъбречно заболяване."
+        },
+        {
+                "q": "Кръвосъсирването (коагулацията) завършва с?",
+                "options": [
+                        "Фибриноген",
+                        "Фибрин (неразтворим) → тромб",
+                        "Тромбоцитна агрегация",
+                        "Хемоглобин"
+                ],
+                "correct": 1,
+                "explanation": "Каскадата: тромбоцити → активиране на коагулационни фактори → фибриноген → фибрин (неразтворим мрежест съсирек)."
+        },
+        {
+                "q": "Левокамерна хипертрофия е следствие от?",
+                "options": [
+                        "Анемия",
+                        "Хронична хипертония (сърцето работи срещу повишено налягане)",
+                        "Диабет",
+                        "Тромбоцитопения"
+                ],
+                "correct": 1,
+                "explanation": "Продължителното повишено артериално налягане кара лявата камера да работи по-тежко → мускулите й хипертрофират."
+        },
+        {
+                "q": "При кое кръводаряване е универсален донорът (плазма)?",
+                "options": [
+                        "0 (нула)",
+                        "AB (без антитела → подходяща за всеки)",
+                        "A",
+                        "B"
+                ],
+                "correct": 1,
+                "explanation": "AB плазмата е универсален донор за плазма (без анти-A и анти-B антитела). Универсален донор за еритроцити е 0."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css"/>
   <style>
-    .ur-wrap { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+    .ur-wrap { max-width: 1100px; margin: 0 auto; padding: 32px var(--gutter) 80px; }
 
     /* Header */
     .ur-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:22px; gap:16px; flex-wrap:wrap; }
@@ -218,7 +218,7 @@
     <div class="ur-header">
       <div>
         <h1 class="ur-title">Уроци</h1>
-        <p class="ur-sub">Избери предмет и клас — прочети урока, после реши тестовете.</p>
+        <p class="ur-sub">Избери предмет и клас – прочети урока, после реши тестовете.</p>
       </div>
       <div class="ur-search">
         <svg class="ur-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -241,6 +241,8 @@
             <option value="all">Всички класове</option>
             <option value="12">12 клас</option>
             <option value="11">11 клас</option>
+            <option value="10">10 клас</option>
+            <option value="9">9 клас</option>
             <option value="7">7 клас</option>
           </select>
           <svg class="ur-grade-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -263,7 +265,7 @@
       <div class="ur-exam-icon">📚</div>
       <div class="ur-exam-text">
         <div class="ur-exam-title">Режим „За преговор"</div>
-        <div class="ur-exam-sub" id="ur-exam-sub">Уроци с резултат под 80% — повтори ги преди матурата.</div>
+        <div class="ur-exam-sub" id="ur-exam-sub">Уроци с резултат под 80% – повтори ги преди матурата.</div>
       </div>
       <div class="ur-exam-count" id="ur-exam-count"></div>
     </div>
@@ -279,53 +281,63 @@ const SUBJECTS = [
   { id:'bel', label:'БЕЛ', searchPlaceholder:'Търси автор или произведение…',
     grades:{
       12:[
-        { title:'Димчо Дебелянов — „Аз искам да те помня все така"', slug:'bel12-debelyanov-lyubov',            meta:'Символизъм · Лирика',              time:'~8 мин',  group:'Любовта' },
-        { title:'Христо Фотев — „Колко си хубава!"',                 slug:'bel12-fotev-lyubov',                meta:'Модернизъм · Лирика',              time:'~7 мин',  group:'Любовта' },
-        { title:'Петя Дубарова — „Посвещение"',                      slug:'bel12-dubarova-posveshenie',        meta:'Лирика',                           time:'~6 мин',  group:'Любовта' },
-        { title:'Никола Вапцаров — „Вяра"',                          slug:'bel12-vaptsarov-vyara',             meta:'Авангард · Лирика',                time:'~8 мин',  group:'Вярата и надеждата' },
-        { title:'Атанас Далчев — „Молитва"',                         slug:'bel12-dalchev-molitva',             meta:'Предметизъм · Лирика',             time:'~7 мин',  group:'Вярата и надеждата' },
-        { title:'Елин Пелин — „Спасова могила"',                     slug:'bel12-elin-pelin-spasova-mogila',   meta:'Критически реализъм · Разказ',     time:'~8 мин',  group:'Вярата и надеждата' },
-        { title:'Елин Пелин — „Ветрената мелница"',                  slug:'bel12-elin-pelin-vetrena-melnitsa', meta:'Критически реализъм · Разказ',     time:'~8 мин',  group:'Трудът и творчеството' },
-        { title:'Йордан Йовков — „Песента на колелетата"',           slug:'bel12-yovkov-pesenta-na-koleletata',meta:'Реализъм · Разказ',                time:'~8 мин',  group:'Трудът и творчеството' },
-        { title:'Виктор Пасков — „Балада за Георг Хених"',           slug:'bel12-paskov-balada',               meta:'Автобиографична проза',            time:'~9 мин',  group:'Трудът и творчеството' },
-        { title:'Пейо Яворов — „Две души"',                          slug:'bel12-yavorov-dve-dushi',           meta:'Символизъм · Лирика',              time:'~8 мин',  group:'Изборът и раздвоението' },
-        { title:'Елисавета Багряна — „Потомка"',                     slug:'bel12-bagryana-potomka',            meta:'Модернизъм · Лирика',              time:'~7 мин',  group:'Изборът и раздвоението' },
-        { title:'Борис Христов — „Честен кръст"',                    slug:'bel12-hristov-chesten-krast',       meta:'Съвременна лирика',                time:'~6 мин',  group:'Изборът и раздвоението' },
+        { title:'Димчо Дебелянов – „Аз искам да те помня все така"', slug:'bel12-debelyanov-lyubov',            meta:'Символизъм · Лирика',              time:'~8 мин',  group:'Любовта' },
+        { title:'Христо Фотев – „Колко си хубава!"',                 slug:'bel12-fotev-lyubov',                meta:'Модернизъм · Лирика',              time:'~7 мин',  group:'Любовта' },
+        { title:'Петя Дубарова – „Посвещение"',                      slug:'bel12-dubarova-posveshenie',        meta:'Лирика',                           time:'~6 мин',  group:'Любовта' },
+        { title:'Никола Вапцаров – „Вяра"',                          slug:'bel12-vaptsarov-vyara',             meta:'Авангард · Лирика',                time:'~8 мин',  group:'Вярата и надеждата' },
+        { title:'Атанас Далчев – „Молитва"',                         slug:'bel12-dalchev-molitva',             meta:'Предметизъм · Лирика',             time:'~7 мин',  group:'Вярата и надеждата' },
+        { title:'Елин Пелин – „Спасова могила"',                     slug:'bel12-elin-pelin-spasova-mogila',   meta:'Критически реализъм · Разказ',     time:'~8 мин',  group:'Вярата и надеждата' },
+        { title:'Елин Пелин – „Ветрената мелница"',                  slug:'bel12-elin-pelin-vetrena-melnitsa', meta:'Критически реализъм · Разказ',     time:'~8 мин',  group:'Трудът и творчеството' },
+        { title:'Йордан Йовков – „Песента на колелетата"',           slug:'bel12-yovkov-pesenta-na-koleletata',meta:'Реализъм · Разказ',                time:'~8 мин',  group:'Трудът и творчеството' },
+        { title:'Виктор Пасков – „Балада за Георг Хених"',           slug:'bel12-paskov-balada',               meta:'Автобиографична проза',            time:'~9 мин',  group:'Трудът и творчеството' },
+        { title:'Пейо Яворов – „Две души"',                          slug:'bel12-yavorov-dve-dushi',           meta:'Символизъм · Лирика',              time:'~8 мин',  group:'Изборът и раздвоението' },
+        { title:'Елисавета Багряна – „Потомка"',                     slug:'bel12-bagryana-potomka',            meta:'Модернизъм · Лирика',              time:'~7 мин',  group:'Изборът и раздвоението' },
+        { title:'Борис Христов – „Честен кръст"',                    slug:'bel12-hristov-chesten-krast',       meta:'Съвременна лирика',                time:'~6 мин',  group:'Изборът и раздвоението' },
         { title:'Правописна норма',                                   slug:'bel12-pravopis',                    meta:'Членуване · Слято/разделно',       time:'~7 мин',  group:'Езикова култура' },
         { title:'Пунктуационна норма',                                slug:'bel12-punktuatsiya',                meta:'Запетая · Тире · Двоеточие',       time:'~7 мин',  group:'Езикова култура' },
         { title:'Граматична норма',                                   slug:'bel12-gramatika',                   meta:'Части на речта · Съгласуване',     time:'~7 мин',  group:'Езикова култура' },
         { title:'Лексикална норма',                                   slug:'bel12-leksika',                     meta:'Синоними · Пароними · Фразеологизми',time:'~7 мин', group:'Езикова култура' },
       ],
       11:[
-        { title:'Димитър Талев — „Железният светилник"',             slug:'bel11-talev-zhelezniyat-svetilnik', meta:'Роман · Национална идентичност',   time:'~10 мин', group:'Родното и чуждото' },
-        { title:'Станислав Стратиев — „Сако от велур"',              slug:'bel11-stratiev-sako',               meta:'Разказ · Сатира',                  time:'~8 мин',  group:'Родното и чуждото' },
-        { title:'Алеко Константинов — „Бай Ганьо"',                  slug:'bel11-aleko-bay-ganyo',             meta:'Пътеписи · Сатира',                time:'~8 мин',  group:'Родното и чуждото' },
-        { title:'Христо Ботев — „Хаджи Димитър"',                    slug:'bel11-botev-hadzhi-dimityr',        meta:'Поема · Патриотизъм',              time:'~8 мин',  group:'Обществото и властта' },
-        { title:'Христо Смирненски — „Йохан"',                       slug:'bel11-smirnanski-yohan',            meta:'Поема · Социален протест',         time:'~8 мин',  group:'Обществото и властта' },
-        { title:'Елин Пелин — „Андрешко"',                           slug:'bel11-elin-pelin-andreshko',        meta:'Разказ · Хумор',                   time:'~7 мин',  group:'Обществото и властта' },
-        { title:'Никола Вапцаров — „История"',                       slug:'bel11-vaptsarov-istoriya',          meta:'Лирика · Памет',                   time:'~7 мин',  group:'Миналото и паметта' },
-        { title:'Йордан Радичков — „Нежната спирала"',               slug:'bel11-radichkov-nezhnata-spirala',  meta:'Разказ · Памет',                   time:'~8 мин',  group:'Миналото и паметта' },
-        { title:'Иван Вазов — „Паисий"',                             slug:'bel11-vazov-paisiy',                meta:'Поема · Национална памет',         time:'~7 мин',  group:'Миналото и паметта' },
-        { title:'Христо Ботев — „Обесването на Васил Левски"',       slug:'bel11-botev-obesa',                 meta:'Елегия · Патриотизъм',             time:'~7 мин',  group:'Животът и смъртта' },
-        { title:'Емилиян Станев — „Крадецът на праскови"',           slug:'bel11-stanev-kradetsat',            meta:'Повест · Хуманизъм',               time:'~9 мин',  group:'Животът и смъртта' },
-        { title:'Иван Вазов — „Опълченците на Шипка"',               slug:'bel11-vazov-opalchentsite',         meta:'Поема · Героизъм',                 time:'~8 мин',  group:'Животът и смъртта' },
-        { title:'Пейо Яворов — „Градушка"',                          slug:'bel11-yavorov-gradushka',           meta:'Лирика · Природа',                 time:'~7 мин',  group:'Природата' },
-        { title:'Иван Вазов — „Тих бял Дунав"',                      slug:'bel11-vazov-tih-byal-dunav',        meta:'Лирика · Природа',                 time:'~7 мин',  group:'Природата' },
-        { title:'Пенчо Славейков — „Cis moll"',                      slug:'bel11-slaveykov-cis-moll',          meta:'Символизъм · Любовна лирика',      time:'~7 мин',  group:'Природата' },
-        { title:'Иван Вазов — „Епопея на забравените"',              slug:'bel11-vazov-epopea',                meta:'Цикъл оди · Национални герои',     time:'~9 мин',  group:'Иван Вазов — Епопея' },
-        { title:'Иван Вазов — „Под игото"',                          slug:'bel11-vazov-pod-igoto',             meta:'Роман · Освобождение',             time:'~10 мин', group:'Иван Вазов — Епопея' },
+        { title:'Димитър Талев – „Железният светилник"',             slug:'bel11-talev-zhelezniyat-svetilnik', meta:'Роман · Национална идентичност',   time:'~10 мин', group:'Родното и чуждото' },
+        { title:'Станислав Стратиев – „Сако от велур"',              slug:'bel11-stratiev-sako',               meta:'Разказ · Сатира',                  time:'~8 мин',  group:'Родното и чуждото' },
+        { title:'Алеко Константинов – „Бай Ганьо"',                  slug:'bel11-aleko-bay-ganyo',             meta:'Пътеписи · Сатира',                time:'~8 мин',  group:'Родното и чуждото' },
+        { title:'Христо Ботев – „Хаджи Димитър"',                    slug:'bel11-botev-hadzhi-dimityr',        meta:'Поема · Патриотизъм',              time:'~8 мин',  group:'Обществото и властта' },
+        { title:'Христо Смирненски – „Йохан"',                       slug:'bel11-smirnanski-yohan',            meta:'Поема · Социален протест',         time:'~8 мин',  group:'Обществото и властта' },
+        { title:'Елин Пелин – „Андрешко"',                           slug:'bel11-elin-pelin-andreshko',        meta:'Разказ · Хумор',                   time:'~7 мин',  group:'Обществото и властта' },
+        { title:'Никола Вапцаров – „История"',                       slug:'bel11-vaptsarov-istoriya',          meta:'Лирика · Памет',                   time:'~7 мин',  group:'Миналото и паметта' },
+        { title:'Йордан Радичков – „Нежната спирала"',               slug:'bel11-radichkov-nezhnata-spirala',  meta:'Разказ · Памет',                   time:'~8 мин',  group:'Миналото и паметта' },
+        { title:'Иван Вазов – „Паисий"',                             slug:'bel11-vazov-paisiy',                meta:'Поема · Национална памет',         time:'~7 мин',  group:'Миналото и паметта' },
+        { title:'Христо Ботев – „Обесването на Васил Левски"',       slug:'bel11-botev-obesa',                 meta:'Елегия · Патриотизъм',             time:'~7 мин',  group:'Животът и смъртта' },
+        { title:'Емилиян Станев – „Крадецът на праскови"',           slug:'bel11-stanev-kradetsat',            meta:'Повест · Хуманизъм',               time:'~9 мин',  group:'Животът и смъртта' },
+        { title:'Иван Вазов – „Опълченците на Шипка"',               slug:'bel11-vazov-opalchentsite',         meta:'Поема · Героизъм',                 time:'~8 мин',  group:'Животът и смъртта' },
+        { title:'Пейо Яворов – „Градушка"',                          slug:'bel11-yavorov-gradushka',           meta:'Лирика · Природа',                 time:'~7 мин',  group:'Природата' },
+        { title:'Иван Вазов – „Тих бял Дунав"',                      slug:'bel11-vazov-tih-byal-dunav',        meta:'Лирика · Природа',                 time:'~7 мин',  group:'Природата' },
+        { title:'Пенчо Славейков – „Cis moll"',                      slug:'bel11-slaveykov-cis-moll',          meta:'Символизъм · Любовна лирика',      time:'~7 мин',  group:'Природата' },
+        { title:'Иван Вазов – „Епопея на забравените"',              slug:'bel11-vazov-epopea',                meta:'Цикъл оди · Национални герои',     time:'~9 мин',  group:'Иван Вазов – Епопея' },
+        { title:'Иван Вазов – „Под игото"',                          slug:'bel11-vazov-pod-igoto',             meta:'Роман · Освобождение',             time:'~10 мин', group:'Иван Вазов – Епопея' },
+      ],
+      9:[
+        { title:'Паисий Хилендарски – „История славянобългарска"', slug:'bel9-paisiy',                meta:'Просвещение · Национално пробуждане',  time:'~8 мин',  group:'Ранно Възраждане' },
+        { title:'Софроний Врачански – „Житие и страдание"',        slug:'bel9-sofroniy',              meta:'Автобиография · Изповедност',          time:'~8 мин',  group:'Ранно Възраждане' },
+        { title:'Любен Каравелов – „Хаджи Ничо" и разкази',        slug:'bel9-karavelov',             meta:'Реализъм · Сатира · Обществена критика', time:'~8 мин', group:'Реализъм и революция' },
+        { title:'Христо Ботев – „Борба"',                           slug:'bel9-botev-borba',           meta:'Романтизъм · Гражданска лирика',       time:'~8 мин',  group:'Реализъм и революция' },
+        { title:'Христо Ботев – „На прощаване"',                    slug:'bel9-botev-na-proshchavane', meta:'Романтизъм · Саможертва',              time:'~8 мин',  group:'Реализъм и революция' },
+        { title:'Иван Вазов – „Родина"',                            slug:'bel9-vazov-rodina',          meta:'Ода · Патриотизъм · Епопея',           time:'~8 мин',  group:'Следосвобожденска лирика' },
+        { title:'Синтаксис – основи',                               slug:'bel9-sintaksis',             meta:'Членове на изречение · Видове изречения', time:'~8 мин', group:'Езикознание' },
+        { title:'Речникова работа и тропи',                         slug:'bel9-rechnikova',            meta:'Синоними · Метафора · Стилистика',    time:'~8 мин',  group:'Езикознание' },
       ],
       7:[
-        { title:'Народно творчество — митове, легенди, приказки',    slug:'bel7-narodno-tvorchestvo',          meta:'Народна литература · Устно творчество', time:'~7 мин',  group:'Народна литература' },
-        { title:'Иван Вазов — „Опълченците на Шипка"',               slug:'bel7-vazov-opalchentsite',          meta:'Поема · Героизъм · НВО',           time:'~8 мин',  group:'Иван Вазов' },
-        { title:'Иван Вазов — „Под игото" (откъс)',                  slug:'bel7-vazov-pod-igoto',              meta:'Роман · Априлско въстание · НВО',  time:'~8 мин',  group:'Иван Вазов' },
-        { title:'Христо Ботев — „Майце си"',                         slug:'bel7-botev-maytse-si',              meta:'Лирика · Носталгия · НВО',         time:'~6 мин',  group:'Христо Ботев' },
-        { title:'Христо Ботев — „Хаджи Димитър"',                   slug:'bel7-botev-hadzhi-dimityr',         meta:'Поема · Патриотизъм · НВО',        time:'~8 мин',  group:'Христо Ботев' },
-        { title:'Алеко Константинов — „Бай Ганьо"',                 slug:'bel7-aleko-bay-ganyo',              meta:'Сатира · Фейлетон · НВО',          time:'~7 мин',  group:'Алеко и Йовков' },
-        { title:'Йордан Йовков — „Индже"',                           slug:'bel7-yovkov-indzhe',                meta:'Разказ · Нравствена промяна · НВО', time:'~7 мин', group:'Алеко и Йовков' },
-        { title:'Елин Пелин — „Задушница"',                          slug:'bel7-elin-pelin-zadusha',           meta:'Разказ · Хуманизъм · НВО',         time:'~6 мин',  group:'Елин Пелин' },
-        { title:'Морфология — части на речта',                       slug:'bel7-morfologia',                   meta:'Глагол · Съществително · Прилагателно', time:'~8 мин', group:'Езикова компетентност' },
-        { title:'Синтаксис — изречения и части',                     slug:'bel7-sintaksis',                    meta:'Подлог · Сказуемо · Сложни изречения', time:'~8 мин', group:'Езикова компетентност' },
+        { title:'Народно творчество – митове, легенди, приказки',    slug:'bel7-narodno-tvorchestvo',          meta:'Народна литература · Устно творчество', time:'~7 мин',  group:'Народна литература' },
+        { title:'Иван Вазов – „Опълченците на Шипка"',               slug:'bel7-vazov-opalchentsite',          meta:'Поема · Героизъм · НВО',           time:'~8 мин',  group:'Иван Вазов' },
+        { title:'Иван Вазов – „Под игото" (откъс)',                  slug:'bel7-vazov-pod-igoto',              meta:'Роман · Априлско въстание · НВО',  time:'~8 мин',  group:'Иван Вазов' },
+        { title:'Христо Ботев – „Майце си"',                         slug:'bel7-botev-maytse-si',              meta:'Лирика · Носталгия · НВО',         time:'~6 мин',  group:'Христо Ботев' },
+        { title:'Христо Ботев – „Хаджи Димитър"',                   slug:'bel7-botev-hadzhi-dimityr',         meta:'Поема · Патриотизъм · НВО',        time:'~8 мин',  group:'Христо Ботев' },
+        { title:'Алеко Константинов – „Бай Ганьо"',                 slug:'bel7-aleko-bay-ganyo',              meta:'Сатира · Фейлетон · НВО',          time:'~7 мин',  group:'Алеко и Йовков' },
+        { title:'Йордан Йовков – „Индже"',                           slug:'bel7-yovkov-indzhe',                meta:'Разказ · Нравствена промяна · НВО', time:'~7 мин', group:'Алеко и Йовков' },
+        { title:'Елин Пелин – „Задушница"',                          slug:'bel7-elin-pelin-zadusha',           meta:'Разказ · Хуманизъм · НВО',         time:'~6 мин',  group:'Елин Пелин' },
+        { title:'Морфология – части на речта',                       slug:'bel7-morfologia',                   meta:'Глагол · Съществително · Прилагателно', time:'~8 мин', group:'Езикова компетентност' },
+        { title:'Синтаксис – изречения и части',                     slug:'bel7-sintaksis',                    meta:'Подлог · Сказуемо · Сложни изречения', time:'~8 мин', group:'Езикова компетентност' },
         { title:'Правопис и пунктуация за НВО',                      slug:'bel7-pravopis',                     meta:'Членуване · Запетая · Слято писане', time:'~7 мин', group:'Езикова компетентност' },
       ]
     }
@@ -341,7 +353,7 @@ const SUBJECTS = [
         { title:'Производна и приложения',                  slug:'math12-proizvodna',                meta:'Диференциране · Екстремуми',          time:'~10 мин', group:'Анализ' },
         { title:'Комбинаторика',                            slug:'math12-kombinatorika',             meta:'Пермутации · Комбинации · Вариации',  time:'~8 мин',  group:'Вероятности' },
         { title:'Вероятности и статистика',                 slug:'math12-veroyatnosti',              meta:'Класическа вероятност · Статистика',  time:'~8 мин',  group:'Вероятности' },
-        { title:'Геометрия — преговор',                     slug:'math12-geometriya',                meta:'Лице · Обем · Теореми',               time:'~9 мин',  group:'Геометрия' },
+        { title:'Геометрия – преговор',                     slug:'math12-geometriya',                meta:'Лице · Обем · Теореми',               time:'~9 мин',  group:'Геометрия' },
       ],
       11:[
         { title:'Тригонометрични функции',                  slug:'math11-trigonometriya',            meta:'sin, cos, tan · Графики · Формули',   time:'~9 мин',  group:'Функции и графики' },
@@ -350,13 +362,29 @@ const SUBJECTS = [
         { title:'Аритметична и геометрична прогресия',      slug:'math11-progresii',                 meta:'Редици · Суми · Формули',             time:'~8 мин',  group:'Редици и геометрия' },
         { title:'Планиметрия',                              slug:'math11-planimeriya',               meta:'Триъгълник · Четириъгълник · Окръжност',time:'~9 мин',group:'Редици и геометрия' },
       ],
+      9:[
+        { title:'Квадратни уравнения',          slug:'math9-kvadratni-uravnenia',    meta:'Дискриминанта · Виета · Корени',       time:'~8 мин',  group:'Алгебра' },
+        { title:'Квадратна функция',            slug:'math9-kvadratna-funkciya',     meta:'Парабола · Връх · Екстремум',          time:'~8 мин',  group:'Алгебра' },
+        { title:'Квадратни неравенства',        slug:'math9-kvadratni-neravenstva',  meta:'Знак на тричлен · Интервали',          time:'~8 мин',  group:'Алгебра' },
+        { title:'Подобни триъгълници',          slug:'math9-podobni-triagalnitsi',   meta:'АА · СЪС · ССС · Коефициент',         time:'~8 мин',  group:'Геометрия' },
+        { title:'Тригонометрия – основи',       slug:'math9-trigonometriya',         meta:'sin, cos, tan · Таблица стойности',    time:'~9 мин',  group:'Тригонометрия' },
+        { title:'Степени и корени',             slug:'math9-stepeni-koreni',         meta:'Свойства · Дробен показател · √',      time:'~8 мин',  group:'Алгебра' },
+      ],
+      10:[
+        { title:'Тригонометрия – основни функции',         slug:'math10-trigonometriya-osnovi',     meta:'sin · cos · tan · Единична окръжност',  time:'~9 мин',  group:'Тригонометрия' },
+        { title:'Тригонометрични уравнения',               slug:'math10-trigonometriya-uravnenia',  meta:'arcsin · arccos · arctan · Решения',    time:'~8 мин',  group:'Тригонометрия' },
+        { title:'Вектори в равнината',                     slug:'math10-vektori',                   meta:'Сбор · Произведение · Ъгъл',            time:'~8 мин',  group:'Аналитична геометрия' },
+        { title:'Координатна система и права',             slug:'math10-koordinati-prava',          meta:'Разстояние · Уравнение на права · Ъгъл', time:'~8 мин', group:'Аналитична геометрия' },
+        { title:'Уравнение на окръжност',                  slug:'math10-kragat',                    meta:'(x−a)²+(y−b)²=r² · Взаимно положение',  time:'~8 мин',  group:'Аналитична геометрия' },
+        { title:'Производна – въведение и приложения',    slug:'math10-proizvodna-osnovi',          meta:'Дефиниция · Правила · Монотонност',      time:'~9 мин',  group:'Анализ' },
+      ],
       7:[
         { title:'Рационални числа и действия',              slug:'math7-ratsionalni-chisla',         meta:'Дроби · Модул · Числова ос',          time:'~7 мин',  group:'Числа и изрази' },
         { title:'Степени с естествен показател',            slug:'math7-stepeni',                    meta:'aⁿ · Правила · Стандартен запис',     time:'~7 мин',  group:'Числа и изрази' },
         { title:'Линейни уравнения с едно неизвестно',      slug:'math7-linearni-uravnenia',         meta:'ax+b=0 · Алгоритъм · Текстови задачи', time:'~8 мин', group:'Уравнения и функции' },
         { title:'Системи линейни уравнения',                slug:'math7-sistemi-uravnenia',          meta:'Заместване · Събиране · Графичен метод', time:'~8 мин', group:'Уравнения и функции' },
         { title:'Линейна функция y=kx+b',                   slug:'math7-lineyna-funkciya',           meta:'Наклон · Графика · Права пропорционалност', time:'~8 мин', group:'Уравнения и функции' },
-        { title:'Триъгълник — видове и теореми',            slug:'math7-triagalnik',                 meta:'Ъгли · Медиана · Лице',               time:'~8 мин',  group:'Геометрия' },
+        { title:'Триъгълник – видове и теореми',            slug:'math7-triagalnik',                 meta:'Ъгли · Медиана · Лице',               time:'~8 мин',  group:'Геометрия' },
         { title:'Теорема на Питагор',                       slug:'math7-pitagorova-teorema',         meta:'a²+b²=c² · Питагорови тройки',        time:'~7 мин',  group:'Геометрия' },
         { title:'Четириъгълници',                           slug:'math7-chetiriagalnitsi',           meta:'Успоредник · Ромб · Трапец · Лице',   time:'~8 мин',  group:'Геометрия' },
         { title:'Окръжност и кръг',                         slug:'math7-okrazhnost',                 meta:'Радиус · C=2πr · S=πr²',             time:'~7 мин',  group:'Геометрия' },
@@ -367,12 +395,28 @@ const SUBJECTS = [
   { id:'bio', label:'Биология', searchPlaceholder:'Търси тема или термин…',
     grades:{
       12:[
-        { title:'Молекулярна биология — ДНК и РНК',         slug:'bio12-dnk-rnk',          meta:'Репликация · Транскрипция · Транслация', time:'~9 мин',  group:'Молекулярна биология' },
-        { title:'Генетика — Менделови закони',               slug:'bio12-genetika-mendel',   meta:'Кръстосване · Доминантност · Генотип',  time:'~9 мин',  group:'Генетика' },
+        { title:'Молекулярна биология – ДНК и РНК',         slug:'bio12-dnk-rnk',          meta:'Репликация · Транскрипция · Транслация', time:'~9 мин',  group:'Молекулярна биология' },
+        { title:'Генетика – Менделови закони',               slug:'bio12-genetika-mendel',   meta:'Кръстосване · Доминантност · Генотип',  time:'~9 мин',  group:'Генетика' },
         { title:'Мутации и популационна генетика',           slug:'bio12-mutatsii',          meta:'Генни · Хромозомни · Геномни мутации',  time:'~8 мин',  group:'Генетика' },
         { title:'Размножаване, растеж и развитие',           slug:'bio12-razmnozhavane',     meta:'Митоза · Мейоза · Оплождане',           time:'~8 мин',  group:'Физиология' },
         { title:'Еволюция',                                  slug:'bio12-evolyutsiya',       meta:'Дарвин · Естествен отбор · Видообразуване',time:'~9 мин',group:'Физиология' },
         { title:'Многоклетъчна организация',                 slug:'bio12-mnogokletchna',     meta:'Тъкани · Органи · Хомеостаза',          time:'~9 мин',  group:'Физиология' },
+      ],
+      9:[
+        { title:'Клетката',          slug:'bio9-kletkata',         meta:'Органели · Митоза · Мейоза',          time:'~8 мин',  group:'Цитология' },
+        { title:'Растения',          slug:'bio9-rastenia',         meta:'Фотосинтеза · Транспирация · Флоем',  time:'~8 мин',  group:'Ботаника' },
+        { title:'Животни – основи',  slug:'bio9-zhivotni-osnovi',  meta:'Гръбначни · Безгръбначни · Адаптации', time:'~8 мин', group:'Зоология' },
+        { title:'Гъби и бактерии',   slug:'bio9-gabi-bakterii',    meta:'Прокариоти · Хитин · Антибиотици',   time:'~8 мин',  group:'Микробиология' },
+        { title:'Екосистеми',        slug:'bio9-ekosistemi',       meta:'Продуценти · Кръговрати · Енергия',   time:'~8 мин',  group:'Екология' },
+        { title:'Еволюция',          slug:'bio9-evolyutsiya',      meta:'Дарвин · Естествен отбор · Видове',   time:'~8 мин',  group:'Еволюционна биология' },
+      ],
+      10:[
+        { title:'Биоразнообразие и систематика',           slug:'bio10-bioraznoobrazie',    meta:'Царства · Видове · Класификация',        time:'~8 мин',  group:'Биоразнообразие' },
+        { title:'Екология – популации и биоценоза',       slug:'bio10-ekologia',           meta:'Екосистема · Хранителна верига · Биом',  time:'~8 мин',  group:'Екология' },
+        { title:'Човешкото тяло – органни системи',        slug:'bio10-choveshko-tyalo',    meta:'Опорно-двигателна · Храносмилателна',   time:'~8 мин',  group:'Човешка физиология' },
+        { title:'Кръв и кръвообращение',                   slug:'bio10-krv-krvoobrashtenie', meta:'Кръвни групи · Сърце · Артерии · Вени', time:'~8 мин',  group:'Човешка физиология' },
+        { title:'Имунна система',                          slug:'bio10-imunitet',           meta:'Антитела · Ваксини · Т- и В-клетки',    time:'~8 мин',  group:'Човешка физиология' },
+        { title:'Полово размножаване и развитие',         slug:'bio10-reproduktsiya',       meta:'Гаметогенеза · Ембрион · Развитие',     time:'~8 мин',  group:'Размножаване' },
       ],
       11:[
         { title:'Строеж и функции на клетката',              slug:'bio11-kletkata',          meta:'Органели · Мембрана · Ядро',            time:'~8 мин',  group:'Клетка и метаболизъм' },
@@ -387,12 +431,28 @@ const SUBJECTS = [
   { id:'chem', label:'Химия', searchPlaceholder:'Търси тема или вещество…',
     grades:{
       12:[
-        { title:'Органична химия — въглеводороди',           slug:'chem12-vaglevodorodi',           meta:'Алкани · Алкени · Алкини · Арени',    time:'~9 мин',  group:'Органична химия' },
-        { title:'Органична химия — кислородни съединения',   slug:'chem12-kislorodmi-saedinenia',   meta:'Алкохоли · Киселини · Естери',        time:'~8 мин',  group:'Органична химия' },
+        { title:'Органична химия – въглеводороди',           slug:'chem12-vaglevodorodi',           meta:'Алкани · Алкени · Алкини · Арени',    time:'~9 мин',  group:'Органична химия' },
+        { title:'Органична химия – кислородни съединения',   slug:'chem12-kislorodmi-saedinenia',   meta:'Алкохоли · Киселини · Естери',        time:'~8 мин',  group:'Органична химия' },
         { title:'Биохимия',                                  slug:'chem12-biohimiya',               meta:'Въглехидрати · Мазнини · Белтъци',    time:'~8 мин',  group:'Органична химия' },
         { title:'Лекарства, горива и полимери',              slug:'chem12-lekarstva-goriva',        meta:'Горива · Полимери · Лекарства',       time:'~8 мин',  group:'Приложна химия' },
         { title:'Анализ на веществата',                      slug:'chem12-analiz',                  meta:'Качествен анализ · pH · Индикатори',  time:'~8 мин',  group:'Приложна химия' },
         { title:'Опазване на околната среда',                slug:'chem12-okolna-sreda',            meta:'Парников ефект · Замърсяване',        time:'~7 мин',  group:'Приложна химия' },
+      ],
+      9:[
+        { title:'Периодична система',        slug:'chem9-periodi-sistema',     meta:'Менделеев · Периоди · Групи',         time:'~8 мин',  group:'Обща химия' },
+        { title:'Неметали',                  slug:'chem9-nemetali',            meta:'O₂ · N₂ · S · Cl · Свойства',        time:'~8 мин',  group:'Неорганична химия' },
+        { title:'Метали',                    slug:'chem9-metali',              meta:'Fe · Al · Na · Реактивна редица',     time:'~8 мин',  group:'Неорганична химия' },
+        { title:'Киселини, основи и соли',   slug:'chem9-kiseli-osnovi-soli',  meta:'pH · Неутрализация · Индикатори',    time:'~8 мин',  group:'Неорганична химия' },
+        { title:'Химични реакции',           slug:'chem9-himichni-reakcii',    meta:'Синтез · Разлагане · Скорост',       time:'~8 мин',  group:'Обща химия' },
+        { title:'Електролити и електролиза', slug:'chem9-elektroliti',         meta:'Дисоциация · Анод · Катод · Фарадей', time:'~8 мин', group:'Електрохимия' },
+      ],
+      10:[
+        { title:'Алкани – наситени въглеводороди',         slug:'chem10-alkani',            meta:'CH₄ · Хомологичен ред · Реакции',        time:'~8 мин',  group:'Органична химия' },
+        { title:'Алкени и алкини',                         slug:'chem10-alkeni-alkini',     meta:'CH₂=CH₂ · Присъединяване · Полимери',   time:'~8 мин',  group:'Органична химия' },
+        { title:'Аренови съединения – бензол',             slug:'chem10-aromatni',          meta:'Бензолен пръстен · Заместване · Толуол', time:'~8 мин',  group:'Органична химия' },
+        { title:'Алкохоли и феноли',                       slug:'chem10-alkoholi-fenoli',   meta:'–OH · Етанол · Глицерол · Феноли',       time:'~8 мин',  group:'Кислородни съединения' },
+        { title:'Алдехиди и кетони',                       slug:'chem10-aldehidi-ketoni',   meta:'–CHO · C=O · Сребърно огледало',         time:'~8 мин',  group:'Кислородни съединения' },
+        { title:'Карбоксилни киселини и естери',           slug:'chem10-karboksilni-esteri', meta:'–COOH · Естерификация · Мазнини',        time:'~8 мин',  group:'Кислородни съединения' },
       ],
       11:[
         { title:'Строеж на атома и периодична система',      slug:'chem11-stroezh-atoma',           meta:'Електрони · Орбитали · Периодичност', time:'~8 мин',  group:'Строеж и връзки' },
@@ -416,7 +476,7 @@ let progressMap   = {};
 function renderPanels() {
   document.getElementById('ur-panels').innerHTML = SUBJECTS.map(s => `
     <div class="ur-panel${s.id === currentTab ? ' active' : ''}" id="tab-${s.id}">
-      ${[12, 11, 7].filter(g => s.grades[g]).map(g => {
+      ${[12, 11, 10, 7].filter(g => s.grades[g]).map(g => {
         const byCat = {};
         s.grades[g].forEach(t => { if (!byCat[t.group]) byCat[t.group] = []; byCat[t.group].push(t); });
         return `
@@ -518,13 +578,13 @@ function updateReviewButton() {
     const subEl   = document.getElementById('ur-exam-sub');
     if (countEl) countEl.textContent = reviewCount + ' урока';
     if (subEl)   subEl.textContent   = reviewCount > 0
-      ? 'Уроци с резултат под 80% — повтори ги преди матурата.'
-      : 'Отличен резултат — всичко е усвоено над 80%!';
+      ? 'Уроци с резултат под 80% – повтори ги преди матурата.'
+      : 'Отличен резултат – всичко е усвоено над 80%!';
   } else {
     const needed = Math.ceil(0.8 * (() => {
       const s = SUBJECTS.find(x => x.id === currentTab);
       let t = 0;
-      [12,11].forEach(g => { if (s.grades[g] && (currentGrade === 'all' || currentGrade === String(g))) t += s.grades[g].length; });
+      [12,11,10].forEach(g => { if (s.grades[g] && (currentGrade === 'all' || currentGrade === String(g))) t += s.grades[g].length; });
       return t;
     })());
     btn.setAttribute('data-tip', `Достъпно след ${needed} завършени урока (≥80%)`);
@@ -762,7 +822,7 @@ loadProgress();
       const trialLessons = profile?.trial_lessons_opened || [];
       const quizDone = (profile?.trial_quizzes_done || []).length;
       document.getElementById('trial-banner-text').innerHTML =
-        `Безплатна версия — <strong>${Math.min(trialLessons.length,3)}/3 урока</strong> · <strong>${Math.min(quizDone,3)}/3 теста</strong> · остават <strong>${daysLeft} дни</strong>. <a href="/index.html#pricing" style="color:#fde68a;font-weight:700;text-decoration:underline;">Виж плановете →</a>`;
+        `Безплатна версия – <strong>${Math.min(trialLessons.length,3)}/3 урока</strong> · <strong>${Math.min(quizDone,3)}/3 теста</strong> · остават <strong>${daysLeft} дни</strong>. <a href="/index.html#pricing" style="color:#fde68a;font-weight:700;text-decoration:underline;">Виж плановете →</a>`;
     }
 
     function lockCard(card) {

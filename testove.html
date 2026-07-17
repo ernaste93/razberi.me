@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css"/>
   <style>
-    .tv-wrap { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+    .tv-wrap { max-width: 1100px; margin: 0 auto; padding: 32px var(--gutter) 80px; }
 
     /* ── Header ── */
     .tv-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; gap: 16px; flex-wrap: wrap; }
@@ -43,7 +43,7 @@
     .tv-filter-label { font-size: 10px; font-weight: 700; color: #c0c9d8; text-transform: uppercase; letter-spacing: .07em; white-space: nowrap; }
     .tv-filter-sep { width: 1px; height: 24px; background: #dde4ef; }
 
-    /* Grade — styled select (light blue accent when changed) */
+    /* Grade – styled select (light blue accent when changed) */
     .tv-grade-wrap { position: relative; display: inline-flex; align-items: center; }
     .tv-grade-select {
       appearance: none; -webkit-appearance: none;
@@ -145,13 +145,13 @@
     }
     .tv-btn:hover { transform: translateY(-1px); }
     @media (max-width: 560px) { .tv-btns { flex-direction: column; } .tv-btn { padding: 8px; } }
-    /* Лесен — most prominent */
+    /* Лесен – most prominent */
     .tv-btn-1 { background: #dbeafe; color: #1d4ed8; }
     .tv-btn-1:hover { background: #1d4ed8; color: #fff; }
-    /* Среден — medium */
+    /* Среден – medium */
     .tv-btn-2 { background: #fff7ed; color: #c2410c; }
     .tv-btn-2:hover { background: #E8A020; color: #fff; }
-    /* Напреднал — slightly muted to signal progression */
+    /* Напреднал – slightly muted to signal progression */
     .tv-btn-3 { background: #f5f3ff; color: #7c3aed; opacity: .8; }
     .tv-btn-3:hover { background: #7c3aed; color: #fff; opacity: 1; }
 
@@ -169,7 +169,7 @@
     <div class="tv-header">
       <div>
         <h1 class="tv-title">Тестове</h1>
-        <p class="tv-sub">Избери предмет и клас — три нива на трудност за всяка тема.</p>
+        <p class="tv-sub">Избери предмет и клас – три нива на трудност за всяка тема.</p>
       </div>
       <div class="tv-search">
         <svg class="tv-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -195,6 +195,10 @@
             <option value="all">Всички класове</option>
             <option value="12">12 клас</option>
             <option value="11">11 клас</option>
+            <option value="10">10 клас</option>
+            <option value="9">9 клас</option>
+            <option value="8">8 клас</option>
+            <option value="7">7 клас</option>
           </select>
           <svg class="tv-grade-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
@@ -227,41 +231,70 @@ const SUBJECTS = [
     searchPlaceholder: 'Търси автор, произведение или тема…',
     grades: {
       12: [
-        { name: 'Яворов — Две души',              slug: 'bel12-yavorov-dve-dushi',            cat: 'Литература' },
-        { name: 'Дебелянов — Миг',                slug: 'bel12-debelyanov-lyubov',            cat: 'Литература' },
-        { name: 'Вапцаров — Вяра',                slug: 'bel12-vaptsarov-vyara',              cat: 'Литература' },
-        { name: 'Багряна — Потомка',              slug: 'bel12-bagryana-potomka',             cat: 'Литература' },
-        { name: 'Далчев — Молитва',               slug: 'bel12-dalchev-molitva',              cat: 'Литература' },
-        { name: 'Дударова — Посвещение',          slug: 'bel12-dubarova-posveshenie',         cat: 'Литература' },
-        { name: 'Фотев — Любов',                  slug: 'bel12-fotev-lyubov',                cat: 'Литература' },
-        { name: 'Христов — Честен кръст',         slug: 'bel12-hristov-chesten-krast',       cat: 'Литература' },
-        { name: 'Елин Пелин — Спасова могила',    slug: 'bel12-elin-pelin-spasova-mogila',   cat: 'Литература' },
-        { name: 'Елин Пелин — Ветрена мелница',   slug: 'bel12-elin-pelin-vetrena-melnitsa', cat: 'Литература' },
-        { name: 'Йовков — Песента на колелетата', slug: 'bel12-yovkov-pesenta-na-koleletata',cat: 'Литература' },
-        { name: 'Пасков — Балада за Георг Хених', slug: 'bel12-paskov-balada',               cat: 'Литература' },
+        { name: 'Яворов – Две души',              slug: 'bel12-yavorov-dve-dushi',            cat: 'Литература' },
+        { name: 'Дебелянов – Миг',                slug: 'bel12-debelyanov-lyubov',            cat: 'Литература' },
+        { name: 'Вапцаров – Вяра',                slug: 'bel12-vaptsarov-vyara',              cat: 'Литература' },
+        { name: 'Багряна – Потомка',              slug: 'bel12-bagryana-potomka',             cat: 'Литература' },
+        { name: 'Далчев – Молитва',               slug: 'bel12-dalchev-molitva',              cat: 'Литература' },
+        { name: 'Дударова – Посвещение',          slug: 'bel12-dubarova-posveshenie',         cat: 'Литература' },
+        { name: 'Фотев – Любов',                  slug: 'bel12-fotev-lyubov',                cat: 'Литература' },
+        { name: 'Христов – Честен кръст',         slug: 'bel12-hristov-chesten-krast',       cat: 'Литература' },
+        { name: 'Елин Пелин – Спасова могила',    slug: 'bel12-elin-pelin-spasova-mogila',   cat: 'Литература' },
+        { name: 'Елин Пелин – Ветрена мелница',   slug: 'bel12-elin-pelin-vetrena-melnitsa', cat: 'Литература' },
+        { name: 'Йовков – Песента на колелетата', slug: 'bel12-yovkov-pesenta-na-koleletata',cat: 'Литература' },
+        { name: 'Пасков – Балада за Георг Хених', slug: 'bel12-paskov-balada',               cat: 'Литература' },
         { name: 'Правопис',  slug: 'bel12-pravopis',     cat: 'Езикова култура' },
         { name: 'Пунктуация',slug: 'bel12-punktuatsiya', cat: 'Езикова култура' },
         { name: 'Лексика',   slug: 'bel12-leksika',      cat: 'Езикова култура' },
         { name: 'Граматика', slug: 'bel12-gramatika',    cat: 'Езикова култура' },
       ],
+      9: [
+        { name: 'Паисий Хилендарски',          slug: 'bel9-paisiy',                cat: 'Литература' },
+        { name: 'Софроний Врачански',          slug: 'bel9-sofroniy',              cat: 'Литература' },
+        { name: 'Любен Каравелов',             slug: 'bel9-karavelov',             cat: 'Литература' },
+        { name: 'Христо Ботев – Борба',        slug: 'bel9-botev-borba',           cat: 'Литература' },
+        { name: 'Христо Ботев – На прощаване', slug: 'bel9-botev-na-proshchavane', cat: 'Литература' },
+        { name: 'Иван Вазов – Родина',         slug: 'bel9-vazov-rodina',          cat: 'Литература' },
+        { name: 'Суифт – Пътешествията на Гъливер',      slug: 'bel9-svift',           cat: 'Световна литература' },
+        { name: 'Дефо – Робинзон Крузо',               slug: 'bel9-defo',            cat: 'Световна литература' },
+        { name: 'Байрон – Как искам пак да съм дете',  slug: 'bel9-bairon-don-juan', cat: 'Световна литература' },
+        { name: 'Пушкин – Евгений Онегин',             slug: 'bel9-pushkin',         cat: 'Световна литература' },
+        { name: 'Балзак – Дядо Горио',                 slug: 'bel9-balzak',          cat: 'Световна литература' },
+        { name: 'Флобер – Мадам Бовари',               slug: 'bel9-flober',          cat: 'Световна литература' },
+        { name: 'Бодлер – Сплин (Цветя на злото)',     slug: 'bel9-bodler',          cat: 'Световна литература' },
+        { name: 'Верлен – Есенна песен',               slug: 'bel9-verlen',          cat: 'Световна литература' },
+        { name: 'Синтаксис – основи',          slug: 'bel9-sintaksis',             cat: 'Езикознание' },
+        { name: 'Речникова работа',            slug: 'bel9-rechnikova',            cat: 'Езикознание' },
+      ],
+      8: [
+        { name: 'Омир – Илиада',                slug: 'bel8-anticna-mitologia',     cat: 'Литература' },
+        { name: 'Сафо – Любов',                slug: 'bel8-safo',                  cat: 'Литература' },
+        { name: 'Софокъл – Антигона',          slug: 'bel8-sofokul-antigona',      cat: 'Литература' },
+        { name: 'Библия – Евангелие',          slug: 'bel8-bibliya',               cat: 'Литература' },
+        { name: 'Черноризец Храбър',            slug: 'bel8-chernorizec',           cat: 'Литература' },
+        { name: 'Константин Преславски',       slug: 'bel8-konstantin-preslavski', cat: 'Литература' },
+        { name: 'Бокачо – Декамерон',          slug: 'bel8-bokachо',               cat: 'Литература' },
+        { name: 'Сервантес – Дон Кихот',       slug: 'bel8-servantes-don-kihot',   cat: 'Литература' },
+        { name: 'Шекспир – Хамлет',            slug: 'bel8-shekspir-hamlet',       cat: 'Литература' },
+      ],
       11: [
-        { name: 'Вазов — Под игото',                     slug: 'bel11-vazov-pod-igoto',             cat: 'Литература' },
-        { name: 'Вазов — Епопея на забравените',         slug: 'bel11-vazov-epopea',                cat: 'Литература' },
-        { name: 'Вазов — Опълченците на Шипка',          slug: 'bel11-vazov-opalchentsite',         cat: 'Литература' },
-        { name: 'Вазов — Паисий',                        slug: 'bel11-vazov-paisiy',                cat: 'Литература' },
-        { name: 'Вазов — Тих бял Дунав',                 slug: 'bel11-vazov-tih-byal-dunav',        cat: 'Литература' },
-        { name: 'Ботев — Хаджи Димитър',                 slug: 'bel11-botev-hadzhi-dimityr',        cat: 'Литература' },
-        { name: 'Ботев — Обесването на Васил Левски',    slug: 'bel11-botev-obesa',                 cat: 'Литература' },
-        { name: 'Яворов — Градушка',                     slug: 'bel11-yavorov-gradushka',           cat: 'Литература' },
-        { name: 'Алеко Константинов — Бай Ганьо',        slug: 'bel11-aleko-bay-ganyo',             cat: 'Литература' },
-        { name: 'Елин Пелин — Андрешко',                 slug: 'bel11-elin-pelin-andreshko',        cat: 'Литература' },
-        { name: 'Пенчо Славейков — Cis moll',            slug: 'bel11-slaveykov-cis-moll',          cat: 'Литература' },
-        { name: 'Смирненски — Йохан',                    slug: 'bel11-smirnanski-yohan',            cat: 'Литература' },
-        { name: 'Емилиян Станев — Крадецът на праскови', slug: 'bel11-stanev-kradetsat',            cat: 'Литература' },
-        { name: 'Станислав Стратиев — Сакото',           slug: 'bel11-stratiev-sako',               cat: 'Литература' },
-        { name: 'Димитър Талев — Железният светилник',   slug: 'bel11-talev-zhelezniyat-svetilnik', cat: 'Литература' },
-        { name: 'Вапцаров — История',                    slug: 'bel11-vaptsarov-istoriya',          cat: 'Литература' },
-        { name: 'Радичков — Нежната спирала',            slug: 'bel11-radichkov-nezhnata-spirala',  cat: 'Литература' },
+        { name: 'Вазов – Под игото',                     slug: 'bel11-vazov-pod-igoto',             cat: 'Литература' },
+        { name: 'Вазов – Епопея на забравените',         slug: 'bel11-vazov-epopea',                cat: 'Литература' },
+        { name: 'Вазов – Опълченците на Шипка',          slug: 'bel11-vazov-opalchentsite',         cat: 'Литература' },
+        { name: 'Вазов – Паисий',                        slug: 'bel11-vazov-paisiy',                cat: 'Литература' },
+        { name: 'Вазов – Тих бял Дунав',                 slug: 'bel11-vazov-tih-byal-dunav',        cat: 'Литература' },
+        { name: 'Ботев – Хаджи Димитър',                 slug: 'bel11-botev-hadzhi-dimityr',        cat: 'Литература' },
+        { name: 'Ботев – Обесването на Васил Левски',    slug: 'bel11-botev-obesa',                 cat: 'Литература' },
+        { name: 'Яворов – Градушка',                     slug: 'bel11-yavorov-gradushka',           cat: 'Литература' },
+        { name: 'Алеко Константинов – Бай Ганьо',        slug: 'bel11-aleko-bay-ganyo',             cat: 'Литература' },
+        { name: 'Елин Пелин – Андрешко',                 slug: 'bel11-elin-pelin-andreshko',        cat: 'Литература' },
+        { name: 'Пенчо Славейков – Cis moll',            slug: 'bel11-slaveykov-cis-moll',          cat: 'Литература' },
+        { name: 'Смирненски – Йохан',                    slug: 'bel11-smirnanski-yohan',            cat: 'Литература' },
+        { name: 'Емилиян Станев – Крадецът на праскови', slug: 'bel11-stanev-kradetsat',            cat: 'Литература' },
+        { name: 'Станислав Стратиев – Сакото',           slug: 'bel11-stratiev-sako',               cat: 'Литература' },
+        { name: 'Димитър Талев – Железният светилник',   slug: 'bel11-talev-zhelezniyat-svetilnik', cat: 'Литература' },
+        { name: 'Вапцаров – История',                    slug: 'bel11-vaptsarov-istoriya',          cat: 'Литература' },
+        { name: 'Радичков – Нежната спирала',            slug: 'bel11-radichkov-nezhnata-spirala',  cat: 'Литература' },
       ]
     }
   },
@@ -279,6 +312,18 @@ const SUBJECTS = [
         { name: 'Комбинаторика',                      slug: 'math12-kombinatorika',             cat: 'Алгебра' },
         { name: 'Вероятности и статистика',           slug: 'math12-veroyatnosti',              cat: 'Алгебра' },
       ],
+      9: [
+        { name: 'Тригонометрия',          slug: 'math9-trigonometria',      cat: 'Тригонометрия' },
+        { name: 'Функции и свойства',     slug: 'math9-funkcii-svojstva',   cat: 'Алгебра' },
+        { name: 'Системи уравнения',      slug: 'math9-sistemi-uravnenia',  cat: 'Алгебра' },
+      ],
+      8: [
+        { name: 'Квадратен корен',               slug: 'math8-kvadraten-koren',      cat: 'Алгебра' },
+        { name: 'Квадратни уравнения',            slug: 'math8-kvadratni-uravnenia',  cat: 'Алгебра' },
+        { name: 'Квадратна функция',              slug: 'math8-kvadratna-funkciya',   cat: 'Алгебра' },
+        { name: 'Подобност на триъгълници',       slug: 'math8-podobnost',            cat: 'Геометрия' },
+        { name: 'Тригонометрия – основи',         slug: 'math8-trigonometria-osnovi', cat: 'Тригонометрия' },
+      ],
       11: [
         { name: 'Квадратни неравенства',              slug: 'math11-kvadratni-neravenstva',     cat: 'Алгебра' },
         { name: 'Планиметрия',                        slug: 'math11-planimeriya',               cat: 'Геометрия' },
@@ -293,11 +338,23 @@ const SUBJECTS = [
     grades: {
       12: [
         { name: 'ДНК и РНК',              slug: 'bio12-dnk-rnk',        cat: 'Молекулярна биология' },
-        { name: 'Генетика — Мендел',      slug: 'bio12-genetika-mendel', cat: 'Генетика' },
+        { name: 'Генетика – Мендел',      slug: 'bio12-genetika-mendel', cat: 'Генетика' },
         { name: 'Мутации',                slug: 'bio12-mutatsii',        cat: 'Генетика' },
         { name: 'Еволюция',               slug: 'bio12-evolyutsiya',     cat: 'Еволюция' },
         { name: 'Многоклетъчни организми',slug: 'bio12-mnogokletchna',   cat: 'Анатомия' },
         { name: 'Размножаване',           slug: 'bio12-razmnozhavane',   cat: 'Физиология' },
+      ],
+      9: [
+        { name: 'Вируси и бактерии',       slug: 'bio9-virusi-bakterii',     cat: 'Микробиология' },
+        { name: 'Ботаника',               slug: 'bio9-botanika',            cat: 'Ботаника' },
+        { name: 'Животинско царство',     slug: 'bio9-zhivotni-sistematika',cat: 'Зоология' },
+      ],
+      8: [
+        { name: 'Структура на човешкото тяло',    slug: 'bio8-stroezh-organizum',       cat: 'Анатомия' },
+        { name: 'Обмяна на веществата',          slug: 'bio8-obmen-veshtestva',        cat: 'Анатомия' },
+        { name: 'Движение и опора',              slug: 'bio8-dvijenie-opora',          cat: 'Анатомия' },
+        { name: 'Нервна и ендокринна система',   slug: 'bio8-nervna-endokrinna',       cat: 'Анатомия' },
+        { name: 'Размножаване и развитие',       slug: 'bio8-razmnozhavane-razvitie',  cat: 'Анатомия' },
       ],
       11: [
         { name: 'Клетката',           slug: 'bio11-kletkata',          cat: 'Цитология' },
@@ -319,6 +376,17 @@ const SUBJECTS = [
         { name: 'Лекарства и горива',    slug: 'chem12-lekarstva-goriva',      cat: 'Приложна химия' },
         { name: 'Качествен анализ',      slug: 'chem12-analiz',                cat: 'Аналитична химия' },
         { name: 'Околна среда',          slug: 'chem12-okolna-sreda',          cat: 'Приложна химия' },
+      ],
+      9: [
+        { name: 'Метали',                slug: 'chem9-metali',      cat: 'Неорганична химия' },
+        { name: 'Неметали',              slug: 'chem9-nemetali',    cat: 'Неорганична химия' },
+        { name: 'Разтвори и рН',         slug: 'chem9-rastvori-ph', cat: 'Обща химия' },
+      ],
+      8: [
+        { name: 'Строеж на атома',             slug: 'chem8-stroezh-atoma',        cat: 'Обща химия' },
+        { name: 'Периодична система',          slug: 'chem8-periodichna-sistema',  cat: 'Обща химия' },
+        { name: 'Химична връзка',              slug: 'chem8-himichna-vrazka',      cat: 'Обща химия' },
+        { name: 'Неорганични съединения',      slug: 'chem8-neorganichni-klasi',   cat: 'Неорганична химия' },
       ],
       11: [
         { name: 'Строеж на атома',        slug: 'chem11-stroezh-atoma',           cat: 'Обща химия' },
@@ -342,7 +410,7 @@ let progressMap   = {};
 function renderPanels() {
   document.getElementById('tv-panels').innerHTML = SUBJECTS.map(s => `
     <div class="tv-panel${s.id === currentTab ? ' active' : ''}" id="tab-${s.id}">
-      ${[12, 11].filter(g => s.grades[g]).map(g => {
+      ${[12, 11, 10, 9, 8, 7].filter(g => s.grades[g]).map(g => {
         // Group topics by category, preserving insertion order
         const byCat = {};
         s.grades[g].forEach(t => {

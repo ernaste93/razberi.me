@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 – Движение и опора – скелет и мускули · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bio8-dvijenie-opora-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bio8-dvijenie-opora-quiz-3.html",
+    lessonUrl:"/lessons/bio8-dvijenie-opora.html",
+    lessonName:"Движение и опора – скелет и мускули",
+    eyebrow:"Биология · 8 клас · Анатомия",
+    title:"Тест 2 – Движение и опора – скелет и мускули",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е ролята на хрущяла в ставата?",
+    "options": [
+      "Намалява триенето и амортизира удари",
+      "Произвежда кръвни клетки",
+      "Свива се",
+      "Проводи нерви"
+    ],
+    "correct": 0,
+    "explanation": "Хрущялът е гладка, еластична тъкан, покриваща ставните повърхности."
+  },
+  {
+    "q": "Какъв е желтият костен мозък?",
+    "options": [
+      "Мастна тъкан – енергиен резерв",
+      "Произвежда кръвни клетки",
+      "Вид хрущял",
+      "Тип мускул"
+    ],
+    "correct": 0,
+    "explanation": "Жълтият костен мозък в дългите кости е мастен резерв."
+  },
+  {
+    "q": "Каква е разликата между гладки и напречно набраздени мускули?",
+    "options": [
+      "Гладките са недоброволни (органи); напречно набразд. – доброволни (скелетни)",
+      "Гладките са по-силни",
+      "Напречно набразд. са в органите",
+      "Те са едни и същи"
+    ],
+    "correct": 0,
+    "explanation": "Гладките мускули са под контрол на вегетативната нервна система."
+  },
+  {
+    "q": "Какво е остеопороза?",
+    "options": [
+      "Намалена костна плътност и повишен риск от фрактури",
+      "Мускулно заболяване",
+      "Ставно заболяване",
+      "Вид рак"
+    ],
+    "correct": 0,
+    "explanation": "Остеопорозата е чест проблем при по-възрастните хора."
+  },
+  {
+    "q": "Каква е ролята на калция за мускулното свиване?",
+    "options": [
+      "Ca²⁺ освобождава актин-миозиновото взаимодействие",
+      "Произвежда АТФ",
+      "Изгражда костите",
+      "Осигурява нервния импулс"
+    ],
+    "correct": 0,
+    "explanation": "Без калций мускулното свиване е невъзможно."
+  },
+  {
+    "q": "Какво е диафраздена кост?",
+    "options": [
+      "Централната тръбеста част на дългата кост",
+      "Вид става",
+      "Тип хрущял",
+      "Мускулна тъкан"
+    ],
+    "correct": 0,
+    "explanation": "Диафизата е централният цилиндричен участък на дългата кост."
+  },
+  {
+    "q": "Каква е разликата става/сухожилие?",
+    "options": [
+      "Ставата свързва кости; сухожилието свързва мускул с кост",
+      "Те са едно и само",
+      "Ставата е по-малка",
+      "Сухожилието е в ставата"
+    ],
+    "correct": 0,
+    "explanation": "Различни структури с различни функции в опорно-двигателната система."
+  },
+  {
+    "q": "Какво се случва при мускулна умора?",
+    "options": [
+      "Натрупване на млечна киселина и изчерпване на АТФ",
+      "Мускулът расте",
+      "Повече Ca²⁺ се освобождава",
+      "Нищо"
+    ],
+    "correct": 0,
+    "explanation": "Умората е следствие от анаеробна гликолиза."
+  },
+  {
+    "q": "Какво е периост?",
+    "options": [
+      "Обвивката на костта, съдържаща нерви и съдове",
+      "Вид хрущял",
+      "Тип мускул",
+      "Вид става"
+    ],
+    "correct": 0,
+    "explanation": "Периостът осигурява хранене и иннервация на костта."
+  },
+  {
+    "q": "Каква е ролята на АТФ в мускулното свиване?",
+    "options": [
+      "Енергия за актин-миозиновото взаимодействие",
+      "Предава нервни сигнали",
+      "Изгражда мускула",
+      "Разгражда хрущяла"
+    ],
+    "correct": 0,
+    "explanation": "АТФ е директният енергиен източник за всяко мускулно свиване."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

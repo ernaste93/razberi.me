@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 – Сервантес – Дон Кихот · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-servantes-don-kihot-q1',
+    quizNum:1,
+    nextQuizUrl:"/lessons/bel8-servantes-don-kihot-quiz-2.html",
+    lessonUrl:'/lessons/bel8-servantes-don-kihot.html',
+    lessonName:"Сервантес – Дон Кихот",
+    eyebrow:"БЕЛ · 8 клас · Ренесанс",
+    title:"Тест 1 – Сервантес – Дон Кихот",
+    passScore:8,
+    questions:[
+  {
+    "q": "Кой е авторът на Дон Кихот?",
+    "options": [
+      "Мигел де Сервантес",
+      "Шекспир",
+      "Молиер",
+      "Байрон"
+    ],
+    "correct": 0,
+    "explanation": "Мигел де Сервантес Сааведра (1547–1616) е испански писател."
+  },
+  {
+    "q": "Какво символизират вятърните мелници?",
+    "options": [
+      "Въображаемите врагове, с които идеалистът се бори",
+      "Реалните турски войни",
+      "Смъртта",
+      "Богатството"
+    ],
+    "correct": 0,
+    "explanation": "Дон Кихот вижда мелниците като великани – символ на борба с нереалното."
+  },
+  {
+    "q": "Каква е двойката герои?",
+    "options": [
+      "Дон Кихот (идеалист) и Санчо Панса (реалист)",
+      "Дон Кихот и Дулсинея",
+      "Сервантес и Санчо",
+      "Дон Кихот и Кихот"
+    ],
+    "correct": 0,
+    "explanation": "Антиподите Кихот и Санчо олицетворяват двата погледа към света."
+  },
+  {
+    "q": "Какъв жанр е Дон Кихот?",
+    "options": [
+      "Роман (пародия на рицарски роман)",
+      "Трагедия",
+      "Лирическа поема",
+      "Хроника"
+    ],
+    "correct": 0,
+    "explanation": "Романът се ражда като пародия, но израства в нещо много по-дълбоко."
+  },
+  {
+    "q": "Кой е Санчо Панса?",
+    "options": [
+      "Реалистичният оръженосец на Дон Кихот",
+      "Злодеят",
+      "Любимата",
+      "Рицарят"
+    ],
+    "correct": 0,
+    "explanation": "Санчо е земен, практичен – контрастът на идеалиста Кихот."
+  },
+  {
+    "q": "Кой е Дулсинея?",
+    "options": [
+      "Идеализираният любовен образ на Дон Кихот",
+      "Реална принцеса",
+      "Вещица",
+      "Мелница"
+    ],
+    "correct": 0,
+    "explanation": "Дулсинея дел Тобосо е обикновена жена, превърната от Кихот в идеал."
+  },
+  {
+    "q": "Кога са написани двете части на Дон Кихот?",
+    "options": [
+      "1605 и 1615",
+      "1605 и 1620",
+      "1600 и 1650",
+      "1550 и 1600"
+    ],
+    "correct": 0,
+    "explanation": "Първа част – 1605 г., втора – 1615 г., малко преди смъртта на Сервантес."
+  },
+  {
+    "q": "Как завършва романът?",
+    "options": [
+      "Дон Кихот оздравява, осъзнава лудостта си и умира",
+      "Победил всички рицари",
+      "Санчо станал цар",
+      "Дулсинея се омъжила"
+    ],
+    "correct": 0,
+    "explanation": "Горчивият финал: Кихот оздравява и умира разочарован."
+  },
+  {
+    "q": "В кой период е написан Дон Кихот?",
+    "options": [
+      "Ренесанс/ранен Барок – XVII в. Испания",
+      "Средновековие",
+      "Просвещение",
+      "Романтизъм"
+    ],
+    "correct": 0,
+    "explanation": "Сервантес пише в епоха, когато рицарството е исторически анахронизъм."
+  },
+  {
+    "q": "Какво е трагикомедия?",
+    "options": [
+      "Жанр, смесващ смешното и тъжното",
+      "Само комедия",
+      "Само трагедия",
+      "Епически жанр"
+    ],
+    "correct": 0,
+    "explanation": "Дон Кихот е едновременно смешен и трагичен."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Тригонометрия – основи – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math10-trigonometriya-osnovi-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/math10-trigonometriya-osnovi-quiz-3.html',
+      lessonUrl:   '/lessons/math10-trigonometriya-osnovi.html',
+      lessonName:  'Тригонометрия – основи',
+      eyebrow:     'МАТЕМАТИКА · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Тригонометрия – основи – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "В III квадрант знаците са?",
+                "options": [
+                        "sin+, cos+",
+                        "sin−, cos+",
+                        "sin−, cos−",
+                        "sin+, cos−"
+                ],
+                "correct": 2,
+                "explanation": "III квадрант: x < 0 → cos−; y < 0 → sin−. Мнемоника: „Всички Студенти Трябва Да Четат\" (I, II, III, IV → All Students Take Chemistry)."
+        },
+        {
+                "q": "cot α = ?",
+                "options": [
+                        "sin α / cos α",
+                        "cos α / sin α",
+                        "1/tan α само",
+                        "tan α"
+                ],
+                "correct": 1,
+                "explanation": "cot α = cos α / sin α = 1/tan α."
+        },
+        {
+                "q": "sin 60° = ?",
+                "options": [
+                        "1/2",
+                        "√2/2",
+                        "√3/2",
+                        "1"
+                ],
+                "correct": 2,
+                "explanation": "sin 60° = √3/2 ≈ 0.866."
+        },
+        {
+                "q": "Колко е sin(π/2) = sin 90°?",
+                "options": [
+                        "0",
+                        "1/2",
+                        "√2/2",
+                        "1"
+                ],
+                "correct": 3,
+                "explanation": "sin 90° = 1. Точката P е (cos 90°, sin 90°) = (0, 1) в единичната окръжност."
+        },
+        {
+                "q": "cos 0° = ?",
+                "options": [
+                        "0",
+                        "1/2",
+                        "√2/2",
+                        "1"
+                ],
+                "correct": 3,
+                "explanation": "cos 0° = 1. Точка (1, 0) в единичната окръжност."
+        },
+        {
+                "q": "sin(π/2 − α) = ?",
+                "options": [
+                        "sin α",
+                        "−sin α",
+                        "cos α",
+                        "−cos α"
+                ],
+                "correct": 2,
+                "explanation": "sin(90° − α) = cos α. Допълнение: тригонометричните функции на допълнителни ъгли са разменени."
+        },
+        {
+                "q": "Ако sin α = 3/5 и α е в I квадрант, cos α = ?",
+                "options": [
+                        "4/5",
+                        "3/4",
+                        "5/3",
+                        "3/5"
+                ],
+                "correct": 0,
+                "explanation": "sin²α + cos²α = 1 → (3/5)² + cos²α = 1 → cos²α = 1 − 9/25 = 16/25 → cos α = 4/5 (I квадрант → +)."
+        },
+        {
+                "q": "tan 45° = ?",
+                "options": [
+                        "0",
+                        "1/2",
+                        "√3",
+                        "1"
+                ],
+                "correct": 3,
+                "explanation": "tan 45° = sin 45°/cos 45° = (√2/2)/(√2/2) = 1."
+        },
+        {
+                "q": "В IV квадрант cos е?",
+                "options": [
+                        "Отрицателен",
+                        "Положителен",
+                        "Нула",
+                        "Зависи"
+                ],
+                "correct": 1,
+                "explanation": "IV квадрант: x > 0 → cos α > 0. y < 0 → sin α < 0."
+        },
+        {
+                "q": "cos(π + α) = ?",
+                "options": [
+                        "cos α",
+                        "−cos α",
+                        "sin α",
+                        "−sin α"
+                ],
+                "correct": 1,
+                "explanation": "cos(π + α) = −cos α. Симетрия около центъра на окръжността."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

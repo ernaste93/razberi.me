@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Периодична система – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem9-periodi-sistema-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem9-periodi-sistema-quiz-2.html',
+      lessonUrl:   '/lessons/chem9-periodi-sistema.html',
+      lessonName:  'Периодична система',
+      eyebrow:     'Химия · 9 клас · Обща химия',
+      title:       'Куиз – Периодична система – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Какво означава атомният номер Z?",
+                "options": [
+                        "Брой протони в ядрото",
+                        "Брой неутрони",
+                        "Масово число",
+                        "Брой електрони само"
+                ],
+                "correct": 0,
+                "explanation": "Z е уникален за всеки елемент – определя го."
+        },
+        {
+                "q": "Как са наредени елементите в периодичната система?",
+                "options": [
+                        "По нарастващ атомен номер Z",
+                        "По маса",
+                        "По буква",
+                        "По дата на откритие"
+                ],
+                "correct": 0,
+                "explanation": "Менделеев наредил по маса, но съвременна система – по Z."
+        },
+        {
+                "q": "Какво е период?",
+                "options": [
+                        "Хоризонтален ред с еднакъв брой електронни слоеве",
+                        "Вертикална колона",
+                        "Група от метали",
+                        "Раздел от системата"
+                ],
+                "correct": 0,
+                "explanation": "Елементите в един период имат един и същи брой слоеве."
+        },
+        {
+                "q": "Колко периода има в периодичната система?",
+                "options": [
+                        "7",
+                        "8",
+                        "6",
+                        "9"
+                ],
+                "correct": 0,
+                "explanation": "Системата има 7 хоризонтални периода."
+        },
+        {
+                "q": "Какво обединява елементите в една група?",
+                "options": [
+                        "Еднакъв брой валентни електрони",
+                        "Еднакъв атомен номер",
+                        "Еднакъв брой неутрони",
+                        "Еднакъв период"
+                ],
+                "correct": 0,
+                "explanation": "Валентните електрони определят химичното поведение."
+        },
+        {
+                "q": "Какво е масово число A?",
+                "options": [
+                        "A = протони + неутрони",
+                        "A = протони + електрони",
+                        "A = само протони",
+                        "A = само неутрони"
+                ],
+                "correct": 0,
+                "explanation": "A е цялото число частици в ядрото."
+        },
+        {
+                "q": "Как се променя атомният радиус в период (→)?",
+                "options": [
+                        "Намалява (повече протони привличат е⁻)",
+                        "Нараства",
+                        "Остава същият",
+                        "Зависи от метала"
+                ],
+                "correct": 0,
+                "explanation": "Повече протони при същия брой слоеве → по-силно привличане."
+        },
+        {
+                "q": "Как се променя металното свойство в група (↓)?",
+                "options": [
+                        "Нараства (по-лесно отдаване на е⁻)",
+                        "Намалява",
+                        "Остава mismo",
+                        "Зависи от Z"
+                ],
+                "correct": 0,
+                "explanation": "По-голям атом → по-слабо задържани валентни е⁻ → по-силен метал."
+        },
+        {
+                "q": "Кои елементи са в дясната страна на системата?",
+                "options": [
+                        "Неметали и благородни газове",
+                        "Метали",
+                        "Металоиди",
+                        "Само водород"
+                ],
+                "correct": 0,
+                "explanation": "Неметалите заемат горния десен ъгъл."
+        },
+        {
+                "q": "Какво е електроотрицателност?",
+                "options": [
+                        "Способността на атома да привлича електрони в молекула",
+                        "Отдаване на електрони",
+                        "Брой валентни е⁻",
+                        "Масово число"
+                ],
+                "correct": 0,
+                "explanation": "Флуорът е с най-висока електроотрицателност."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

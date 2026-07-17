@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 - Библия – Евангелие от Матей · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel8-bibliya-q1",
+    quizNum:1,
+    nextQuizUrl:"/lessons/bel8-bibliya-quiz-2.html",
+    lessonUrl:"/lessons/bel8-bibliya.html",
+    lessonName:"Библия – Евангелие от Матей",
+    eyebrow:"БЕЛ · 8 клас · Средновековна литература",
+    title:"Тест 1 - Библия – Евангелие от Матей",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какво означава думата Евангелие?",
+    "options": [
+      "Благовестие – добра вест",
+      "Историческа книга",
+      "Закон",
+      "Поезия"
+    ],
+    "correct": 0,
+    "explanation": "Евангелие идва от гр. euangelion – добра новина."
+  },
+  {
+    "q": "Кои четири евангелия са в Новия завет?",
+    "options": [
+      "Матей, Марк, Лука, Йоан",
+      "Матей, Павел, Петър, Йоан",
+      "Лука, Йоан, Моисей, Авраам",
+      "Само Матей и Йоан"
+    ],
+    "correct": 0,
+    "explanation": "Четирите евангелия са написани от четирима различни автори."
+  },
+  {
+    "q": "Какво е Нагорната проповед?",
+    "options": [
+      "Основните морални поучения на Христос, дадени на планината (Мат. 5-7)",
+      "Притча за бедни",
+      "Исторически разказ",
+      "Молитва"
+    ],
+    "correct": 0,
+    "explanation": "Нагорната проповед е ядрото на християнската етика."
+  },
+  {
+    "q": "Какво означава \"Блажени кротките\"?",
+    "options": [
+      "Блаженствата обявяват щастливи онези, които следват Христовите ценности",
+      "Буквално превъзходство",
+      "Само за монаси",
+      "Без смисъл"
+    ],
+    "correct": 0,
+    "explanation": "Блаженствата обръщат традиционните ценности – силните не са щастливи, а кротките."
+  },
+  {
+    "q": "Каква е темата на Притчата за блудния син?",
+    "options": [
+      "Прошката, покаянието и бащината безусловна любов",
+      "Наследство",
+      "Война",
+      "Пътешествие"
+    ],
+    "correct": 0,
+    "explanation": "Блудният син се завръща и е простен – символ на Божията прошка."
+  },
+  {
+    "q": "Кой е добрият самарянин?",
+    "options": [
+      "Непознат от презирана народност, помогнал на наранен пътник",
+      "Свещеник",
+      "Левит",
+      "Войник"
+    ],
+    "correct": 0,
+    "explanation": "Самарянинът е парадоксалният герой – чужденецът е по-милосърден."
+  },
+  {
+    "q": "Какво е притча?",
+    "options": [
+      "Кратка иносказателна история с морален смисъл",
+      "Исторически разказ",
+      "Поема",
+      "Закон"
+    ],
+    "correct": 0,
+    "explanation": "Притчата е основна жанрова форма в евангелията."
+  },
+  {
+    "q": "Каква е функцията на Библията в западната цивилизация?",
+    "options": [
+      "Основополагащ текст – влияе на литературата, изкуството, морала и правото",
+      "Само религиозна книга",
+      "Само историческа",
+      "Само за евреи"
+    ],
+    "correct": 0,
+    "explanation": "Библията е неотделима от западната цивилизация."
+  },
+  {
+    "q": "За коя аудитория е написано Евангелие от Матей?",
+    "options": [
+      "Еврейска аудитория – Исус като обещания Месия",
+      "За римляните",
+      "За гърците",
+      "За самаряните"
+    ],
+    "correct": 0,
+    "explanation": "Матей цитира много Стария завет за да покаже изпълнението на пророчествата."
+  },
+  {
+    "q": "Какво е Новият завет?",
+    "options": [
+      "Втората част на Библията – за живота и ученията на Исус Христос",
+      "Цялата Библия",
+      "Само евангелията",
+      "Само посланията"
+    ],
+    "correct": 0,
+    "explanation": "Новият завет включва евангелия, Деяния, послания и Откровение."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

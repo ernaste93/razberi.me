@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Алкени и алкини · Химия 10 клас – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+    .lesson-page { max-width: 1200px; margin: 0 auto; padding: 12px 24px 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { opacity: .4; }
+    .lesson-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 4px 12px; border-radius: 99px; margin-bottom: 14px; }
+    .lesson-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .lesson-meta  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .lesson-divider { height: 1px; background: var(--line); margin: 22px 0; }
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 10px; }
+    .lesson-body { font-size: 14px; line-height: 1.8; color: var(--text); }
+    .lesson-body p { margin-bottom: 12px; }
+    .key-points { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .key-point { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; background: var(--soft); border-radius: 10px; }
+    .key-point-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .key-point-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .key-point-text strong { color: var(--accent); }
+    .info-box { background: var(--soft); border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; padding: 14px 18px; margin: 14px 0; font-size: 14px; line-height: 1.8; }
+    #btn-ask-znaiko { position: fixed; bottom: 28px; right: 32px; z-index: 999; display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--accent); color: #fff; border: none; border-radius: 99px; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 18px rgba(30,58,95,0.30); transition: opacity .15s, transform .15s; }
+    #btn-ask-znaiko:hover {{ opacity: .9; transform: translateY(-2px); }}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="lesson-page">
+      <div class="breadcrumb">
+        <a href="/urotsi.html">Уроци</a><span>/</span>
+        <a href="/urotsi.html">Химия · Преговор 10 клас</a><span>/</span>
+        <span>Алкени и алкини</span>
+      </div>
+      <div class="lesson-tag">ХИМИЯ · 10 КЛАС · ПРЕГОВОР</div>
+      <h1 class="lesson-title">Алкени и алкини</h1>
+      <div class="lesson-meta">CₙH₂ₙ · CₙH₂ₙ₋₂ · Присъединяване · Полимери · ~8 мин четене</div>
+      <div class="lesson-divider"></div>
+      <div class="lesson-divider"></div>
+      <div class="section-title">Алкени – двойна C=C</div>
+      <div class="lesson-body">
+        <p>Алкените имат <strong>двойна C=C връзка</strong> (1σ+1π). Обща формула: <strong>CₙH₂ₙ</strong>. π-връзката е реакционният център. sp²-хибридизация – планарна геометрия (120°). Цис/транс изомерия заради невъзможно въртене около C=C.</p>
+      </div>      <div class="key-points">
+        <div class="key-point">
+          <div class="key-point-icon">⚗️</div>
+          <div class="key-point-text"><strong>Етилен CH₂=CH₂:</strong> Суровина за PE, PVC.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">🏭</div>
+          <div class="key-point-text"><strong>Пропилен:</strong> Суровина за PP.</div>
+        </div>
+        <div class="key-point">
+          <div class="key-point-icon">🧴</div>
+          <div class="key-point-text"><strong>Изопрен:</strong> Диен; синтетичен каучук.</div>
+        </div>
+      </div>      <div class="lesson-divider"></div>
+      <div class="section-title">Реакции на алкените</div>
+      <div class="lesson-body">
+        <p><strong>Адиция (присъединяване):</strong> CH₂=CH₂ + Br₂ → CH₂Br–CH₂Br (обезцветява бромна вода).</p>
+        <p><strong>Правило на Марковников:</strong> HX → несиметричен алкен: H⁺ → C с повече H. CH₃–CH=CH₂ + HBr → CH₃–CHBr–CH₃.</p>
+      </div>      <div class="info-box"><strong>Полимеризация:</strong><br/>n(CH₂=CH₂) → PE · n(CH₂=CHCl) → PVC · n(CH₂=CHCH₃) → PP</div>      <div class="lesson-divider"></div>
+      <div class="section-title">Алкини – тройна C≡C</div>
+      <div class="lesson-body">
+        <p>Алкините имат <strong>тройна C≡C</strong> (1σ+2π). Формула: <strong>CₙH₂ₙ₋₂</strong>. sp-хибридизация – линейна (180°). Ацетиленът HC≡CH гори >3000°C → заваряване.</p>
+      </div>
+      <div class="lesson-divider"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <a href="/lessons/chem10-alkeni-alkini-quiz.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:#fff;border-radius:99px;font-weight:800;font-size:14px;text-decoration:none;">
+          Към тест 1 →
+        </a>
+        <a href="/urotsi.html" style="font-size:13px;color:var(--muted);text-decoration:none;">← Всички уроци</a>
+      </div>
+    </div>
+  </main>
+
+  <button id="btn-ask-znaiko" onclick="document.getElementById('znaiko-panel').style.display='flex'">
+    💡 Цъкни за помощ
+  </button>
+  <div id="znaiko-panel" style="display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.45);align-items:flex-end;justify-content:center;">
+    <div style="background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:680px;padding:24px;max-height:80vh;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <strong style="font-size:16px;">💡 Знайко</strong>
+        <button onclick="document.getElementById('znaiko-panel').style.display='none'" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);">✕</button>
+      </div>
+      <div id="chat-messages" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
+      <div style="display:flex;gap:8px;">
+        <input id="chat-input" type="text" placeholder="Задай въпрос..." style="flex:1;padding:10px 16px;border:1.5px solid var(--line);border-radius:99px;font-family:inherit;font-size:14px;outline:none;" />
+        <button id="chat-send" style="padding:10px 20px;background:var(--accent);color:#fff;border:none;border-radius:99px;font-family:inherit;font-weight:700;cursor:pointer;">Изпрати</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script src="/app.js"></script>
+</body>
+</html>

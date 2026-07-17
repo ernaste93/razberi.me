@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 – Обмяна на веществата · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bio8-obmen-veshtestva-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bio8-obmen-veshtestva-quiz-3.html",
+    lessonUrl:"/lessons/bio8-obmen-veshtestva.html",
+    lessonName:"Обмяна на веществата",
+    eyebrow:"Биология · 8 клас · Анатомия",
+    title:"Тест 2 – Обмяна на веществата",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какво е хемоглобин?",
+    "options": [
+      "Протеин в еритроцитите, свързващ кислород",
+      "Тип ензим",
+      "Вид хормон",
+      "Кръвна клетка"
+    ],
+    "correct": 0,
+    "explanation": "Хемоглобинът е желязосъдържащ протеин."
+  },
+  {
+    "q": "Каква е ролята на левкоцитите?",
+    "options": [
+      "Имунна защита – унищожават патогени",
+      "Пренасят кислород",
+      "Съсирват кръвта",
+      "Произвеждат хормони"
+    ],
+    "correct": 0,
+    "explanation": "Белите кръвни клетки са клетките на имунната система."
+  },
+  {
+    "q": "Какво са тромбоцитите?",
+    "options": [
+      "Кръвни клетки, участващи в съсирването",
+      "Клетки за пренос на O₂",
+      "Имунни клетки",
+      "Хормони"
+    ],
+    "correct": 0,
+    "explanation": "Тромбоцитите образуват тромб при наранявания."
+  },
+  {
+    "q": "Каква е функцията на трахеята?",
+    "options": [
+      "Пренася въздух от гърлото към бронхите",
+      "Производство на слуз",
+      "Газообмен",
+      "Пренася храна"
+    ],
+    "correct": 0,
+    "explanation": "Трахеята е дихателната тръба."
+  },
+  {
+    "q": "Каква е ролята на черния дроб в храносмилането?",
+    "options": [
+      "Произвежда жлъчка за разграждане на мазнини",
+      "Произвежда пепсин",
+      "Усвоява глюкоза",
+      "Само складира"
+    ],
+    "correct": 0,
+    "explanation": "Жлъчката от черния дроб емулгира мазнините."
+  },
+  {
+    "q": "Какъв е пътят на кислорода от въздуха до клетките?",
+    "options": [
+      "Нос → трахея → бронхи → алвеоли → кръв → клетки",
+      "Уста → стомах → кръв",
+      "Кожа → кръв",
+      "Нос → сърце → клетки"
+    ],
+    "correct": 0,
+    "explanation": "Кислородът следва дихателния и кръвоносния път."
+  },
+  {
+    "q": "Каква е функцията на панкреаса в храносмилането?",
+    "options": [
+      "Произвежда ензими и бикарбонат за тънкото черво",
+      "Само ендокринна",
+      "Само произвежда инсулин",
+      "Само складира жлъчка"
+    ],
+    "correct": 0,
+    "explanation": "Панкреасът е смесена жлеза – и ендокринна, и екзокринна."
+  },
+  {
+    "q": "Какво е перисталтика?",
+    "options": [
+      "Вълнообразни мускулни контракции, движещи храната",
+      "Вид ензим",
+      "Тип кръвна клетка",
+      "Дихателно движение"
+    ],
+    "correct": 0,
+    "explanation": "Перисталтиката придвижва хранителния болус по храносмилателния тракт."
+  },
+  {
+    "q": "Каква е разликата голям/малък кръг?",
+    "options": [
+      "Голям: сърце → тяло → сърце; малък: сърце → бели дробове → сърце",
+      "Голям е по-бърз",
+      "Малкият е по-важен",
+      "Те са едни и същи"
+    ],
+    "correct": 0,
+    "explanation": "Двата кръга обслужват различни органи."
+  },
+  {
+    "q": "Какво е АТФ?",
+    "options": [
+      "Молекула на енергията в клетката",
+      "Вид ензим",
+      "Тип протеин",
+      "Кръвна клетка"
+    ],
+    "correct": 0,
+    "explanation": "АТФ (аденозин трифосфат) е универсалният енергоносител."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

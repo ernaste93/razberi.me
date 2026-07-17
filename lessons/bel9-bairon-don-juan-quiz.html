@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 - Байрон – Как искам пак да съм дете · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-bairon-don-juan-q1",
+    quizNum:1,
+    nextQuizUrl:"/lessons/bel9-bairon-don-juan-quiz-2.html",
+    lessonUrl:"/lessons/bel9-bairon-don-juan.html",
+    lessonName:"Байрон – Как искам пак да съм дете",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 1 - Байрон – Как искам пак да съм дете",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е основната тема на стихотворението?",
+    "options": [
+      "Носталгия по детството и загуба на невинността при израстване",
+      "Любовта",
+      "Войната",
+      "Природата сама по себе си"
+    ],
+    "correct": 0,
+    "explanation": "Детството като изгубен рай е централната тема."
+  },
+  {
+    "q": "Какъв жанр е творбата?",
+    "options": [
+      "Лирическо стихотворение – изповед/елегия",
+      "Епическа поема",
+      "Балада",
+      "Сонет"
+    ],
+    "correct": 0,
+    "explanation": "Творбата е лирическа изповед на байроническия аз."
+  },
+  {
+    "q": "Как е изобразена природата в детството?",
+    "options": [
+      "Жива, близка, радостна – символ на изгубения рай",
+      "Страшна и чужда",
+      "Безразлична",
+      "Само фон"
+    ],
+    "correct": 0,
+    "explanation": "Природата в детството е противопоставена на студената зрялост."
+  },
+  {
+    "q": "Каква е разликата детство/зрялост в стихотворението?",
+    "options": [
+      "Детство: невинност и радост; зрялост: разочарование и скука",
+      "Те са еднакви",
+      "Зрялостта е по-добра",
+      "Детството е страшно"
+    ],
+    "correct": 0,
+    "explanation": "Тази антитеза е основата на романтичната носталгия."
+  },
+  {
+    "q": "Каква е националността на Байрон?",
+    "options": [
+      "Английска",
+      "Французка",
+      "Ирландска",
+      "Немска"
+    ],
+    "correct": 0,
+    "explanation": "Лорд Байрон е английски романтичен поет."
+  },
+  {
+    "q": "Кой е лирическият аз?",
+    "options": [
+      "Говори от 1 л. ед.ч. – лирически субект с байронически черти",
+      "Трето лице",
+      "Неизвестен",
+      "Детски персонаж"
+    ],
+    "correct": 0,
+    "explanation": "Пряката изповед от 1 л. ед.ч. е типична за байроническата лирика."
+  },
+  {
+    "q": "Какво означава думата \"елегия\"?",
+    "options": [
+      "Лирическо стихотворение с тъжно, носталгично настроение",
+      "Радостна песен",
+      "Епически разказ",
+      "Балада"
+    ],
+    "correct": 0,
+    "explanation": "Елегията изразява меланхолия и носталгия."
+  },
+  {
+    "q": "Кога живее Байрон?",
+    "options": [
+      "1788–1824",
+      "1750–1810",
+      "1800–1870",
+      "1830–1890"
+    ],
+    "correct": 0,
+    "explanation": "Байрон е представител на втората генерация английски романтизъм."
+  },
+  {
+    "q": "Каква емоция преобладава в стихотворението?",
+    "options": [
+      "Носталгия и меланхолия",
+      "Радост",
+      "Гняв",
+      "Безразличие"
+    ],
+    "correct": 0,
+    "explanation": "Носталгията е основното емоционално настроение."
+  },
+  {
+    "q": "Какво е байронически патос?",
+    "options": [
+      "Интензивна лирична страст, меланхолия, бунт",
+      "Спокойно описание",
+      "Хумор",
+      "Дидактичност"
+    ],
+    "correct": 0,
+    "explanation": "Байроническият патос е белег на романтическия стил."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

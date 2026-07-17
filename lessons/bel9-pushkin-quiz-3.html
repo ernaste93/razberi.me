@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 - Александър Пушкин – Евгений Онегин · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-pushkin-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bel9-pushkin.html",
+    lessonName:"Александър Пушкин – Евгений Онегин",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 3 - Александър Пушкин – Евгений Онегин",
+    passScore:8,
+    questions:[
+  {
+    "q": "Защо Евгений Онегин е наречен енциклопедия на руския живот?",
+    "options": [
+      "Обхваща всички аспекти на руското общество от 20-те г. на 19 в.",
+      "Защото е дълъг",
+      "Защото е реалистичен",
+      "Защото описва природата"
+    ],
+    "correct": 0,
+    "explanation": "Белински въвежда тази характеристика."
+  },
+  {
+    "q": "Каква е символиката на имената?",
+    "options": [
+      "Онегин = река Онега (студена, северна); Татяна = народно руско",
+      "Случайни",
+      "Байронически",
+      "Без символика"
+    ],
+    "correct": 0,
+    "explanation": "Пушкин избира имената внимателно."
+  },
+  {
+    "q": "Как е повлиял Пушкин на руската литература?",
+    "options": [
+      "Основоположник – слага началото на руската литературна традиция",
+      "Малко влияние",
+      "Само на поезията",
+      "Само на прозата"
+    ],
+    "correct": 0,
+    "explanation": "Пушкин е абсолютен авторитет в руската литература."
+  },
+  {
+    "q": "Каква е темата за свободата у Пушкин?",
+    "options": [
+      "Свободата е невъзможна без вътрешна нравственост",
+      "Свободата е абсолютна",
+      "Само политическа",
+      "Само любовна"
+    ],
+    "correct": 0,
+    "explanation": "Татяна е истински свободна, защото е морална."
+  },
+  {
+    "q": "Как Пушкин е повлиян от Байрон?",
+    "options": [
+      "Байроническият герой и романтичната ирония са видими, но Пушкин ги критикува",
+      "Изцяло го копира",
+      "Без влияние",
+      "Само в стиха"
+    ],
+    "correct": 0,
+    "explanation": "Онегин е руският Дон Жуан, но по-самокритично погледнат."
+  },
+  {
+    "q": "Каква е функцията на онегинската строфа?",
+    "options": [
+      "14-стишна строфа по специален ритъм – Пушкин я измисля за романа",
+      "Стандартна строфа",
+      "Байронова строфа",
+      "Без функция"
+    ],
+    "correct": 0,
+    "explanation": "Онегинската строфа е уникална за тази творба."
+  },
+  {
+    "q": "Каква е разликата Онегин/Печорин (Лермонтов)?",
+    "options": [
+      "И двамата са излишни хора; Печорин е по-жесток и съзнателен в злото",
+      "Те са еднакви",
+      "Печорин е по-добър",
+      "Онегин е по-жесток"
+    ],
+    "correct": 0,
+    "explanation": "Типът на излишния човек продължава при Лермонтов."
+  },
+  {
+    "q": "Как завършва животът на Пушкин?",
+    "options": [
+      "Убит на дуел на 37 години",
+      "Умира от болест",
+      "Живее до старост",
+      "Избягва в чужбина"
+    ],
+    "correct": 0,
+    "explanation": "Иронично – Пушкин умира на дуел, подобно на Ленски."
+  },
+  {
+    "q": "Каква е позицията на Пушкин към декабристите?",
+    "options": [
+      "Симпатизира им – пише оди за свободата, но е под надзор",
+      "Против тях",
+      "Неутрален",
+      "Участник"
+    ],
+    "correct": 0,
+    "explanation": "Пушкин е поет на свободата, но избягва политически риск."
+  },
+  {
+    "q": "Какво е значението на онегинската строфа за жанра?",
+    "options": [
+      "Правят романа едновременно лиричен и епичен",
+      "Само музикален ефект",
+      "Без значение",
+      "Правят го по-кратък"
+    ],
+    "correct": 0,
+    "explanation": "Строфата е инструментът за романтичната ирония."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

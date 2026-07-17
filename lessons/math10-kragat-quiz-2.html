@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Окръжност и крайни фигури – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'math10-kragat-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/math10-kragat-quiz-3.html',
+      lessonUrl:   '/lessons/math10-kragat.html',
+      lessonName:  'Окръжност и крайни фигури',
+      eyebrow:     'МАТЕМАТИКА · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Окръжност и крайни фигури – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Хорда с разстояние 3 от центъра, r=5, дължина хордата?",
+                "options": [
+                        "2",
+                        "4",
+                        "8",
+                        "6"
+                ],
+                "correct": 2,
+                "explanation": "Полухорда: √(r²−d²)=√(25−9)=√16=4. Хорда=2×4=8."
+        },
+        {
+                "q": "Окръжности x²+y²=1 и x²+y²=4 са?",
+                "options": [
+                        "Еднакви",
+                        "Концентрични (общ центъра O)",
+                        "Пресичащи се",
+                        "Допиращи"
+                ],
+                "correct": 1,
+                "explanation": "И двете с C(0,0), различни радиуси (1 и 2) → концентрични."
+        },
+        {
+                "q": "Допирателна от T до окръжност, t²=d²−r². Ако d=10, r=6?",
+                "options": [
+                        "t=4",
+                        "t=8",
+                        "t=16",
+                        "t=√164"
+                ],
+                "correct": 1,
+                "explanation": "t²=100−36=64 → t=8."
+        },
+        {
+                "q": "Периметър на окръжност с r=7?",
+                "options": [
+                        "14π",
+                        "7π",
+                        "49π",
+                        "7"
+                ],
+                "correct": 0,
+                "explanation": "P = 2πr = 2π·7 = 14π."
+        },
+        {
+                "q": "Лице на окръжност с r=7?",
+                "options": [
+                        "14π",
+                        "7π",
+                        "49π",
+                        "7π²"
+                ],
+                "correct": 2,
+                "explanation": "S = πr² = 49π."
+        },
+        {
+                "q": "Вписан ъгъл = 45°, дъгата = ?",
+                "options": [
+                        "45°",
+                        "90°",
+                        "180°",
+                        "22.5°"
+                ],
+                "correct": 1,
+                "explanation": "Дъгата = 2 × вписан ъгъл = 90°."
+        },
+        {
+                "q": "Ако два вписани ъгъла опират на еднаква дъга, те са?",
+                "options": [
+                        "Допълнителни",
+                        "Равни",
+                        "Двойно различни",
+                        "Независими"
+                ],
+                "correct": 1,
+                "explanation": "Вписани ъгли върху еднаква дъга са равни."
+        },
+        {
+                "q": "Ъгъл между допирателни от T до окръжност = 60°. Ъгъл TCA = ?",
+                "options": [
+                        "30°",
+                        "60°",
+                        "90°",
+                        "120°"
+                ],
+                "correct": 3,
+                "explanation": "Ъгълът между двете допирателни = 60°. Ъгъл между радиуса и допирателния отсек = 90°. Ъгъл TCA = 180°−60° = 120°."
+        },
+        {
+                "q": "Медианата на хорда AB (перпендикуляра) минава?",
+                "options": [
+                        "Успоредно на хордата",
+                        "Само през края",
+                        "През центъра на окръжността",
+                        "Независимо"
+                ],
+                "correct": 2,
+                "explanation": "Перпендикулярният биссектор на всяка хорда минава през центъра."
+        },
+        {
+                "q": "Права y=x+5 и окръжност x²+y²=9. Имат?",
+                "options": [
+                        "2 общи точки",
+                        "1 (допиращи)",
+                        "0 (не се пресичат)",
+                        "Зависи"
+                ],
+                "correct": 2,
+                "explanation": "Разстояние от O до правата y=x+5 (→ x−y+5=0): d=5/√2≈3.54>3=r → без общи точки."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

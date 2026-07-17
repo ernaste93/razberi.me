@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 – Шекспир – Хамлет · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-shekspir-hamlet-q3',
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:'/lessons/bel8-shekspir-hamlet.html',
+    lessonName:"Шекспир – Хамлет",
+    eyebrow:"БЕЛ · 8 клас · Ренесанс",
+    title:"Тест 3 – Шекспир – Хамлет",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какво е хамлетизъм?",
+    "options": [
+      "Прекомерна рефлексия, парализираща действието",
+      "Вид монолог",
+      "Шекспиров стил",
+      "Тип злодей"
+    ],
+    "correct": 0,
+    "explanation": "Хамлетизмът е термин за интелектуалното бездействие пред трудния нравствен избор."
+  },
+  {
+    "q": "Как Мишеловката доказва вината на Клавдий?",
+    "options": [
+      "Клавдий реагира с ужас на сцената, имитираща убийството",
+      "Призракът свидетелства",
+      "Гертруда признава",
+      "Лаерт казва"
+    ],
+    "correct": 0,
+    "explanation": "Реакцията на Клавдий е неволното признание."
+  },
+  {
+    "q": "Каква е темата за гниенето в Хамлет?",
+    "options": [
+      "Нещо е прогнило в Дания – моралното разложение на властта",
+      "Буквален мирис",
+      "Болест",
+      "Природна катастрофа"
+    ],
+    "correct": 0,
+    "explanation": "Дания като метафора за корумпирана държава е ключова тема."
+  },
+  {
+    "q": "Каква е съдбата на Гертруда?",
+    "options": [
+      "Умира, случайно изпивайки отровата за Хамлет",
+      "Оцелява",
+      "Убита от Хамлет",
+      "Избягала"
+    ],
+    "correct": 0,
+    "explanation": "Гертруда пие от отровената чаша случайно – финалната ирония."
+  },
+  {
+    "q": "Каква е разликата Хамлет/Антигона?",
+    "options": [
+      "Антигона действа веднага; Хамлет отлага и анализира",
+      "Хамлет е от Гърция",
+      "Антигона чака",
+      "Те са едни и същи"
+    ],
+    "correct": 0,
+    "explanation": "Антигона е решителна; Хамлет е рефлексивен – два полюса на реакцията."
+  },
+  {
+    "q": "Как Шекспир показва Клавдий?",
+    "options": [
+      "Благоприличен публично, но признава вината си в монолог",
+      "Явно лош",
+      "Убива пред всички",
+      "Глупав"
+    ],
+    "correct": 0,
+    "explanation": "Сцената с молитвата разкрива Клавдий – той знае, но не иска да се откаже от придобитото."
+  },
+  {
+    "q": "Каква е темата за смъртта в Хамлет?",
+    "options": [
+      "Смъртта е непознаваема – страхът от нея е парализиращ",
+      "Смъртта е рай",
+      "Смъртта е наказание",
+      "Само за злодеите"
+    ],
+    "correct": 0,
+    "explanation": "Хамлет медитира върху смъртта като непознато."
+  },
+  {
+    "q": "Защо Офелия е важен образ?",
+    "options": [
+      "Невинна жертва на политическите игри – показва цената за другите",
+      "Антагонист",
+      "Злодей",
+      "Втори главен герой"
+    ],
+    "correct": 0,
+    "explanation": "Офелия не участва в интригите, но е унищожена от тях."
+  },
+  {
+    "q": "Кое е наследството на Хамлет?",
+    "options": [
+      "Архетипният рефлексивен герой, вдъхновил безброй творби",
+      "Само за английската литература",
+      "Само за театъра",
+      "Само исторически интерес"
+    ],
+    "correct": 0,
+    "explanation": "Хамлет е може би най-изследваният литературен персонаж в историята."
+  },
+  {
+    "q": "Каква е разликата между ренесансова и антична трагедия?",
+    "options": [
+      "Ренесансовата се фокусира повече върху психологията на героя",
+      "Ренесансовата има хор",
+      "Античната е по-дълга",
+      "Те са идентични"
+    ],
+    "correct": 0,
+    "explanation": "Ренесансът добавя психологическа дълбочина към античния трагически модел."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

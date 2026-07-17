@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Размножаване и развитие – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-reproduktsiya-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio10-reproduktsiya-quiz-3.html',
+      lessonUrl:   '/lessons/bio10-reproduktsiya.html',
+      lessonName:  'Размножаване и развитие',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Размножаване и развитие – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Профаза I на мейозата е особена с?",
+                "options": [
+                        "Разделяне на хроматиди",
+                        "Синапса и crossing-over между хомоложни хромозоми",
+                        "Ядрена мембрана",
+                        "Само хромозоми"
+                ],
+                "correct": 1,
+                "explanation": "Профаза I: синаптонемален комплекс → хиазми (crossing-over). Тук се генерира разнообразие."
+        },
+        {
+                "q": "Акрозомата на сперматозоида?",
+                "options": [
+                        "Движение",
+                        "Съдържа хидролитични ензими за проникване в яйцеклетката",
+                        "Генетичен материал",
+                        "Само митохондрии"
+                ],
+                "correct": 1,
+                "explanation": "Акрозома = специализирана лизозома в главичката → ензими (акрозин, хиалуронидаза) разграждат zona pellucida."
+        },
+        {
+                "q": "Тератогените са?",
+                "options": [
+                        "Полезни",
+                        "Агенти (алкохол, талидомид, вируси), причиняващи вродени дефекти",
+                        "Хормони",
+                        "Стволови клетки"
+                ],
+                "correct": 1,
+                "explanation": "Тератогени нарушават органогенезата. Алкохол → фетален алкохолен синдром. Рубеола → сърдечни дефекти."
+        },
+        {
+                "q": "Нонднзюнкцията в мейозата?",
+                "options": [
+                        "Нормална рекомбинация",
+                        "Неправилно разделяне на хромозоми → анеуплоидия (напр. Трисомия 21)",
+                        "Ускорена митоза",
+                        "Само структурни дефекти"
+                ],
+                "correct": 1,
+                "explanation": "Nondysjunction: хромозоми не се разделят → гамети с n+1 или n-1 → след оплождане анеуплоидия (Трисомия 21 = Синдром на Даун)."
+        },
+        {
+                "q": "Жълтото тяло (corpus luteum)?",
+                "options": [
+                        "Яйцеклетка",
+                        "Временна ендокринна структура → прогестерон (поддържа ендометриума)",
+                        "Само структурна",
+                        "Само при бременност"
+                ],
+                "correct": 1,
+                "explanation": "Жълтото тяло = остатък от фоликула след овулация. Произвежда прогестерон → подготвя ендометриума. Ако няма бременност → деградира."
+        },
+        {
+                "q": "Кариотипът е?",
+                "options": [
+                        "Само ДНК",
+                        "Фотографски анализ на хромозомите на клетката",
+                        "Само гени",
+                        "Само фенотип"
+                ],
+                "correct": 1,
+                "explanation": "Кариотип = пълен хромозомен набор. Позволява диагностика на хромозомни аномалии (добавени/липсващи хромозоми)."
+        },
+        {
+                "q": "Имплантацията е?",
+                "options": [
+                        "Оплождане",
+                        "Прикрепване на бластоциста в ендометриума (~ден 6–10 след оплождане)",
+                        "Овулация",
+                        "Органогенеза"
+                ],
+                "correct": 1,
+                "explanation": "Бластоцистата → имплантира в ендометриума → трофобластът инвазира → плацента."
+        },
+        {
+                "q": "Полиплоидията е?",
+                "options": [
+                        "Загуба на ДНК",
+                        "Повече от 2 пълни хромозомни набора (3n, 4n…)",
+                        "Само при растения",
+                        "Само при животни"
+                ],
+                "correct": 1,
+                "explanation": "Полиплоидия: особено честа при растения (пшеница: 6n=42). При животни обикновено летална."
+        },
+        {
+                "q": "Регулацията на митозата е ключова заради?",
+                "options": [
+                        "Само растеж",
+                        "Загуба на регулация → ракова трансформация (неконтролируема пролиферация)",
+                        "Само регенерация",
+                        "Само ембрион"
+                ],
+                "correct": 1,
+                "explanation": "При рак контролните точки на клетъчния цикъл са нарушени (мутации в p53, Rb) → неограничена митоза."
+        },
+        {
+                "q": "Плацентата функционира за?",
+                "options": [
+                        "Само структура",
+                        "Газообмен, хранене, хормонална (hCG, прогестерон), отпадни продукти",
+                        "Само защита",
+                        "Само хормони"
+                ],
+                "correct": 1,
+                "explanation": "Плацентата: O₂ и хранителни в-ва от майката → плода; CO₂ и отпадни → майката. Произвежда hCG, прогестерон."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Алкани – наситени въглеводороди – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'chem10-alkani-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/chem10-alkani-quiz-2.html',
+      lessonUrl:   '/lessons/chem10-alkani.html',
+      lessonName:  'Алкани – наситени въглеводороди',
+      eyebrow:     'ХИМИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Алкани – наситени въглеводороди – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Обща формула на алканите?",
+                "options": [
+                        "CₙH₂ₙ",
+                        "CₙH₂ₙ₊₂",
+                        "CₙH₂ₙ₋₂",
+                        "CₙHₙ"
+                ],
+                "correct": 1,
+                "explanation": "CₙH₂ₙ₊₂ – наситени въглеводороди. n=1: CH₄; n=2: C₂H₆."
+        },
+        {
+                "q": "Характерната реакция на алканите е?",
+                "options": [
+                        "Присъединяване",
+                        "Заместване (SR)",
+                        "Елиминиране",
+                        "Полимеризация"
+                ],
+                "correct": 1,
+                "explanation": "Алканите нямат π-връзки → реагират по SR (заместване). На светлина с халоген."
+        },
+        {
+                "q": "При какви условия реагира CH₄ + Cl₂?",
+                "options": [
+                        "На тъмно",
+                        "UV светлина",
+                        "С вода",
+                        "Кат. Ni"
+                ],
+                "correct": 1,
+                "explanation": "SR с халоген: верижна радикална реакция, стартира от UV фотони."
+        },
+        {
+                "q": "Вторият член на хомологичния ред е?",
+                "options": [
+                        "Пропан",
+                        "Етан",
+                        "Бутан",
+                        "Пентан"
+                ],
+                "correct": 1,
+                "explanation": "Ред: метан(1)→етан(2)→пропан(3)→бутан(4)…"
+        },
+        {
+                "q": "Основен компонент на природния газ?",
+                "options": [
+                        "Пропан",
+                        "Октан",
+                        "Метан",
+                        "Бутан"
+                ],
+                "correct": 2,
+                "explanation": "Природен газ ≈ 90% метан (CH₄)."
+        },
+        {
+                "q": "Колко изомера има бутанът?",
+                "options": [
+                        "1",
+                        "2",
+                        "3",
+                        "4"
+                ],
+                "correct": 1,
+                "explanation": "н-бутан и изобутан (2-метилпропан) – 2 изомера."
+        },
+        {
+                "q": "Продукти при пълно горене на пропан?",
+                "options": [
+                        "CO+H₂O",
+                        "CO₂+H₂O",
+                        "C+H₂O",
+                        "CO₂+H₂"
+                ],
+                "correct": 1,
+                "explanation": "C₃H₈ + 5O₂ → 3CO₂ + 4H₂O."
+        },
+        {
+                "q": "Хибридизация на C в алканите?",
+                "options": [
+                        "sp",
+                        "sp²",
+                        "sp³",
+                        "dsp²"
+                ],
+                "correct": 2,
+                "explanation": "sp³ – 4 еднакви σ-връзки, ъгъл 109.5°, тетраедър."
+        },
+        {
+                "q": "Кое е алкан?",
+                "options": [
+                        "C₂H₂",
+                        "C₂H₄",
+                        "C₂H₆",
+                        "C₆H₆"
+                ],
+                "correct": 2,
+                "explanation": "C₂H₆ (етан) = CₙH₂ₙ₊₂, n=2."
+        },
+        {
+                "q": "Крекингът е?",
+                "options": [
+                        "Синтез на алкани",
+                        "Разцепване на дълги въглеводороди",
+                        "Хидрогениране",
+                        "Горене без O₂"
+                ],
+                "correct": 1,
+                "explanation": "Крекинг = разцепване на тежки фракции → бензин, газ."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

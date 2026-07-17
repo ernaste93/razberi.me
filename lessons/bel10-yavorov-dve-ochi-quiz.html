@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Пейо Яворов – „Две хубави очи" – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-yavorov-dve-ochi-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bel10-yavorov-dve-ochi-quiz-2.html',
+      lessonUrl:   '/lessons/bel10-yavorov-dve-ochi.html',
+      lessonName:  'Пейо Яворов – „Две хубави очи"',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Пейо Яворов – „Две хубави очи" – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "„Две хубави очи\" е от периода?",
+                "options": [
+                        "Ранния граждански",
+                        "Символистичния (след 1907)",
+                        "Детски стихове",
+                        "Последния"
+                ],
+                "correct": 1,
+                "explanation": "Символистичен период – зряла поезия за любов, болка, смърт."
+        },
+        {
+                "q": "Централният символ в стихотворението е?",
+                "options": [
+                        "Цветето",
+                        "Очите – символ на любовта и болката",
+                        "Звездата",
+                        "Нощта само"
+                ],
+                "correct": 1,
+                "explanation": "Очите = прозорец към душата, носители на любов и болка."
+        },
+        {
+                "q": "Дуализмът в стихотворението означава?",
+                "options": [
+                        "Два героя",
+                        "Любовта е едновременно радост и страдание",
+                        "Две строфи",
+                        "Два разказвача"
+                ],
+                "correct": 1,
+                "explanation": "Дуализъм: красотата носи болка; любовта е смесица от радост и страдание."
+        },
+        {
+                "q": "Символистичният стил в стихотворението се проявява в?",
+                "options": [
+                        "Конкретни описания",
+                        "Многозначни образи, музикален ритъм, вътрешно преживяване",
+                        "Документален разказ",
+                        "Народен стил"
+                ],
+                "correct": 1,
+                "explanation": "Многозначна образност, музикален ритъм, изразяване на вътрешното – типичен символизъм."
+        },
+        {
+                "q": "Лора Каравелова е?",
+                "options": [
+                        "Сестрата на Яворов",
+                        "Любовта на живота му, трагично загинала",
+                        "Негов редактор",
+                        "Историческа личност несвързана с него"
+                ],
+                "correct": 1,
+                "explanation": "Лора Каравелова е любовта на Яворов – нейната смърт води до неговото самоубийство."
+        },
+        {
+                "q": "Стихосбирката „Безсъници\" е от?",
+                "options": [
+                        "1901",
+                        "1907",
+                        "1914",
+                        "1910"
+                ],
+                "correct": 1,
+                "explanation": "„Безсъници\" – 1907, символистична стихосбирка."
+        },
+        {
+                "q": "Тъмнина и светлина в стихотворението символизират?",
+                "options": [
+                        "Ден и нощ буквално",
+                        "Страдание/надежда – символна противоположност",
+                        "Природата",
+                        "Цветовата игра"
+                ],
+                "correct": 1,
+                "explanation": "Тъмно = страдание, болка; светло = надежда, любов – символна опозиция."
+        },
+        {
+                "q": "Музикалният ритъм в символизма е?",
+                "options": [
+                        "Случаен",
+                        "Съзнателен похват – музикалността засилва емоцията",
+                        "Само за рима",
+                        "Народна традиция"
+                ],
+                "correct": 1,
+                "explanation": "Символизмът цени музикалността на езика – ритъмът носи допълнителна емоционална сила."
+        },
+        {
+                "q": "Какво означава „хубави\" в „Две хубави очи\"?",
+                "options": [
+                        "Само физическа красота",
+                        "Красиви и носещи болка – двойствена красота",
+                        "Обикновена характеристика",
+                        "Ирония"
+                ],
+                "correct": 1,
+                "explanation": "Красотата е неотделима от болката – ключова символистична идея."
+        },
+        {
+                "q": "Яворов се самоубива в?",
+                "options": [
+                        "1912",
+                        "1914",
+                        "1916",
+                        "1910"
+                ],
+                "correct": 1,
+                "explanation": "Яворов се самоубива 1914 г."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Имунна система – Тест 1 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-imunitet-q1',
+      quizNum:     1,
+      nextQuizUrl: '/lessons/bio10-imunitet-quiz-2.html',
+      lessonUrl:   '/lessons/bio10-imunitet.html',
+      lessonName:  'Имунна система',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Имунна система – Тест 1',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Кожата е?",
+                "options": [
+                        "Специфичен имунитет",
+                        "Физическа бариера – 1-ва линия на защита",
+                        "2-ра линия",
+                        "Антитяло"
+                ],
+                "correct": 1,
+                "explanation": "1-ва линия = физически и химически бариери (кожа, лигавица, слюнка). Предотвратяват навлизането на патогени."
+        },
+        {
+                "q": "Антигенът е?",
+                "options": [
+                        "Антитяло",
+                        "Молекула, предизвикваща имунен отговор",
+                        "Антибиотик",
+                        "Ваксина"
+                ],
+                "correct": 1,
+                "explanation": "Антиген = чужда молекула (белтък, полизахарид), спрямо която имунната система изгражда отговор."
+        },
+        {
+                "q": "В-лимфоцитите произвеждат?",
+                "options": [
+                        "Само фагоцити",
+                        "Антитела (имуноглобулини)",
+                        "Тромбоцити",
+                        "Еритроцити"
+                ],
+                "correct": 1,
+                "explanation": "В-клетките се диференцират в плазмени клетки → произвеждат антитела (специфични за антигена)."
+        },
+        {
+                "q": "Фагоцитозата е?",
+                "options": [
+                        "Хормонален отговор",
+                        "Поглъщане и унищожаване на патогени от макрофаги/неутрофили",
+                        "Синтез на антитела",
+                        "Ваксинация"
+                ],
+                "correct": 1,
+                "explanation": "Фагоцитоза: клетката обгръща и „изяжда\" чужди частици (лизозоми ги разграждат). Неспецифичен (вроден) имунитет."
+        },
+        {
+                "q": "Ваксините защитават чрез?",
+                "options": [
+                        "Директно убиване на патогена",
+                        "Изграждане на имунна памет без болест",
+                        "Само антибиотичен ефект",
+                        "Само алергичен отговор"
+                ],
+                "correct": 1,
+                "explanation": "Ваксина → стимулира имунен отговор → памет В и Т клетки → при реална инфекция → бърз специфичен отговор."
+        },
+        {
+                "q": "Адаптивният имунитет е?",
+                "options": [
+                        "Бърз, неспецифичен",
+                        "Специфичен, с памет, по-бавен",
+                        "Само при температура",
+                        "Само фагоцитоза"
+                ],
+                "correct": 1,
+                "explanation": "Адаптивен (придобит) имунитет: специфичен за антигена, развива памет. По-бавен от вродения, но много по-ефективен."
+        },
+        {
+                "q": "IgG антитялото?",
+                "options": [
+                        "Само в слюнка",
+                        "Основен клас, преминава плацентата → пасивен имунитет на бебето",
+                        "Само при алергии",
+                        "Само ранен отговор"
+                ],
+                "correct": 1,
+                "explanation": "IgG е доминантен клас антитела. Преминава плацентата → новороденото получава пасивна защита от майката."
+        },
+        {
+                "q": "Автоимунно заболяване е?",
+                "options": [
+                        "Инфекция",
+                        "Имунната система атакува собствените тъкани",
+                        "Само алергия",
+                        "Само вирусна инфекция"
+                ],
+                "correct": 1,
+                "explanation": "Автоимунни: диабет тип 1, ревматоиден артрит, лупус, множествена склероза – имунна реакция срещу самия организъм."
+        },
+        {
+                "q": "Интерфероните са?",
+                "options": [
+                        "Антитела",
+                        "Сигнални протеини, инхибиращи вирусна репликация в съседни клетки",
+                        "Ваксини",
+                        "Антигени"
+                ],
+                "correct": 1,
+                "explanation": "Интерферони (IFN-α, β, γ): клетки, заразени с вирус, ги отделят → предупреждават съседните клетки → антивирусен статус."
+        },
+        {
+                "q": "MHC (HLA) молекулите?",
+                "options": [
+                        "Антибиотици",
+                        "Представят антигенни пептиди на Т-лимфоцитите",
+                        "Антитела",
+                        "Хормони"
+                ],
+                "correct": 1,
+                "explanation": "MHC I (всички клетки) = представят вътреклетъчни пептиди на CD8+ Т-клетки. MHC II (APC) = на CD4+ Т-хелпери."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

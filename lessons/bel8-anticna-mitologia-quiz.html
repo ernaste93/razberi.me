@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 – Омир – Илиада · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-anticna-mitologia-q1',
+    quizNum:1,
+    nextQuizUrl:"/lessons/bel8-anticna-mitologia-quiz-2.html",
+    lessonUrl:'/lessons/bel8-anticna-mitologia.html',
+    lessonName:"Омир – Илиада",
+    eyebrow:"БЕЛ · 8 клас · Антична литература",
+    title:"Тест 1 – Омир – Илиада",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какъв е жанрът на Илиада?",
+    "options": [
+      "Героически епос",
+      "Трагедия",
+      "Комедия",
+      "Роман"
+    ],
+    "correct": 0,
+    "explanation": "Героическият епос прославя войнски подвизи на герои."
+  },
+  {
+    "q": "Коя е централната тема?",
+    "options": [
+      "Гневът на Ахил",
+      "Любовта на Парис и Елена",
+      "Падането на Троя",
+      "Завръщането на Одисей"
+    ],
+    "correct": 0,
+    "explanation": "Омир сам казва – гневът на Ахил е темата."
+  },
+  {
+    "q": "Кой поетичен размер използва Омир?",
+    "options": [
+      "Хекзаметър",
+      "Ямб",
+      "Александрин",
+      "Октава рима"
+    ],
+    "correct": 0,
+    "explanation": "Хекзаметърът е класическият размер на античния епос."
+  },
+  {
+    "q": "Защо Ахил отказва да воюва?",
+    "options": [
+      "Агамемнон му взел наложницата Брисеида",
+      "Страхувал се от Хектор",
+      "Бил болен",
+      "Боговете му забранили"
+    ],
+    "correct": 0,
+    "explanation": "Обидата от Агамемнон предизвиква гнева му."
+  },
+  {
+    "q": "Кой е Хектор?",
+    "options": [
+      "Троянски принц и главен воин",
+      "Гръцки пълководец",
+      "Бог на войната",
+      "Жрец в Троя"
+    ],
+    "correct": 0,
+    "explanation": "Хектор е синът на Приам, главният защитник на Троя."
+  },
+  {
+    "q": "Какво означава in medias res?",
+    "options": [
+      "Действието започва всред събитията",
+      "Краят е изненадващ",
+      "Има много герои",
+      "Текстът е прозаичен"
+    ],
+    "correct": 0,
+    "explanation": "In medias res – епосът не разказва от самото начало на войната."
+  },
+  {
+    "q": "Кой убива Хектор?",
+    "options": [
+      "Ахил",
+      "Одисей",
+      "Менелай",
+      "Аякс"
+    ],
+    "correct": 0,
+    "explanation": "Ахил убива Хектор, отмъщавайки за смъртта на Патрокъл."
+  },
+  {
+    "q": "Кой е Патрокъл?",
+    "options": [
+      "Приятелят и побратимът на Ахил",
+      "Гръцкият цар",
+      "Троянски шпионин",
+      "Жрец на Аполон"
+    ],
+    "correct": 0,
+    "explanation": "Смъртта на Патрокъл връща Ахил в битката."
+  },
+  {
+    "q": "Колко песни има Илиада?",
+    "options": [
+      "24",
+      "12",
+      "36",
+      "48"
+    ],
+    "correct": 0,
+    "explanation": "Илиада е разделена на 24 песни, съответстващи на буквите от гръцката азбука."
+  },
+  {
+    "q": "Каква е финалната сцена?",
+    "options": [
+      "Приам моли Ахил за тялото на Хектор",
+      "Падането на Троя",
+      "Смъртта на Ахил",
+      "Победата на гърците"
+    ],
+    "correct": 0,
+    "explanation": "Финалът е трогателна среща – двамата врагове плачат заедно."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

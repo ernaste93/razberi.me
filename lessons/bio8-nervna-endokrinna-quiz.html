@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 1 – Нервна и ендокринна система · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bio8-nervna-endokrinna-q1",
+    quizNum:1,
+    nextQuizUrl:"/lessons/bio8-nervna-endokrinna-quiz-2.html",
+    lessonUrl:"/lessons/bio8-nervna-endokrinna.html",
+    lessonName:"Нервна и ендокринна система",
+    eyebrow:"Биология · 8 клас · Анатомия",
+    title:"Тест 1 – Нервна и ендокринна система",
+    passScore:8,
+    questions:[
+  {
+    "q": "Каква е разликата нервна/ендокринна регулация?",
+    "options": [
+      "Нервна – бърза, електрически; ендокринна – бавна, химически (хормони)",
+      "Нервната е по-бавна",
+      "Ендокринната е електрическа",
+      "Те са едни и същи"
+    ],
+    "correct": 0,
+    "explanation": "Двете системи се допълват в регулацията на тялото."
+  },
+  {
+    "q": "Какво е неврон?",
+    "options": [
+      "Нервна клетка, предаваща електрически импулси",
+      "Вид хормон",
+      "Тип кръвна клетка",
+      "Орган"
+    ],
+    "correct": 0,
+    "explanation": "Невронът е основната структурна и функционална единица на нервната система."
+  },
+  {
+    "q": "Какви са частите на рефлексната дъга?",
+    "options": [
+      "Рецептор, аферентен нерв, нервен център, еферентен нерв, ефектор",
+      "Само нерви и мускули",
+      "Само мозък и мускул",
+      "Нерв и хормон"
+    ],
+    "correct": 0,
+    "explanation": "Рефлексната дъга осигурява автоматичен отговор без участие на мозъка."
+  },
+  {
+    "q": "Каква е функцията на хипофизата?",
+    "options": [
+      "Главна жлеза – контролира другите ендокринни жлези",
+      "Само произвежда адреналин",
+      "Само регулира кръвна захар",
+      "Само за растеж"
+    ],
+    "correct": 0,
+    "explanation": "Хипофизата е наречена дирижент на ендокринната система."
+  },
+  {
+    "q": "Какъв хормон произвеждат надбъбречните жлези?",
+    "options": [
+      "Адреналин (при стрес)",
+      "Инсулин",
+      "Тироксин",
+      "Естроген"
+    ],
+    "correct": 0,
+    "explanation": "Адреналинът подготвя тялото за реакция бий-се-или-бягай."
+  },
+  {
+    "q": "Каква е функцията на инсулина?",
+    "options": [
+      "Понижава кръвната захар",
+      "Повишава кръвната захар",
+      "Регулира метаболизма",
+      "Произвежда кръвни клетки"
+    ],
+    "correct": 0,
+    "explanation": "Инсулинът позволява на клетките да поемат глюкоза."
+  },
+  {
+    "q": "Какво е синапс?",
+    "options": [
+      "Връзката между два неврона или неврон и ефектор",
+      "Вид клетка",
+      "Тип нерв",
+      "Орган"
+    ],
+    "correct": 0,
+    "explanation": "Синапсът предава импулса чрез невротрансмитери."
+  },
+  {
+    "q": "Каква е функцията на аферентния нерв?",
+    "options": [
+      "Предава сигнал от рецептора към нервния център",
+      "От нервния център към ефектора",
+      "Само в мозъка",
+      "Произвежда хормони"
+    ],
+    "correct": 0,
+    "explanation": "Аферентните (сетивни) нерви носят информация КЪМ центъра."
+  },
+  {
+    "q": "Каква е функцията на главния мозък?",
+    "options": [
+      "Съзнание, мислене, реч, памет, координация",
+      "Само дишане",
+      "Само сърдечен ритъм",
+      "Само рефлекси"
+    ],
+    "correct": 0,
+    "explanation": "Главният мозък е централата на съзнателните функции."
+  },
+  {
+    "q": "Какво произвежда щитовидната жлеза?",
+    "options": [
+      "Тироксин – регулира метаболизма",
+      "Инсулин",
+      "Адреналин",
+      "Естроген"
+    ],
+    "correct": 0,
+    "explanation": "Тироксинът контролира скоростта на метаболизма."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

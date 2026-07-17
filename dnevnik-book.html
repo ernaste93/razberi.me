@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Бележник — Разбери.Ме</title>
+  <title>Бележник – Разбери.Ме</title>
   <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -190,13 +190,13 @@
   <div id="content" class="hidden">
     <div class="student-hdr">
       <div>
-        <div class="student-name" id="student-name">—</div>
+        <div class="student-name" id="student-name">–</div>
         <div class="student-year">Учебна година 2025 – 2026</div>
         <div class="student-meta" id="student-meta"></div>
       </div>
       <div class="overall-chip" id="overall-chip" style="display:none">
         <div class="overall-chip-lbl">Обща</div>
-        <div class="overall-chip-val" id="overall-val">—</div>
+        <div class="overall-chip-val" id="overall-val">–</div>
       </div>
     </div>
 
@@ -247,7 +247,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
   function pctToGrade(pct) { return 2 + pct / 100 * 4; }
   const BG_MONTHS = ['','януари','февруари','март','април','май','юни','юли','август','септември','октомври','ноември','декември'];
   function fixDate(s) {
-    if (!s || s === '—') return s;
+    if (!s || s === '–') return s;
     const m = s.match(/^(\d{1,2})\.(\d{1,2})\.?$/);
     if (m) return `${parseInt(m[1])} ${BG_MONTHS[parseInt(m[2])] || m[2]}`;
     return s;
@@ -262,58 +262,58 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
   }
 
   const LESSON_TITLES = {
-    'bel12-debelyanov-lyubov':            'Дебелянов — „Аз искам да те помня все така"',
-    'bel12-fotev-lyubov':                 'Фотев — „Колко си хубава!"',
-    'bel12-dubarova-posveshenie':         'Дубарова — „Посвещение"',
-    'bel12-vaptsarov-vyara':              'Вапцаров — „Вяра"',
-    'bel12-dalchev-molitva':             'Далчев — „Молитва"',
-    'bel12-elin-pelin-spasova-mogila':    'Елин Пелин — „Спасова могила"',
-    'bel12-elin-pelin-vetrena-melnitsa':  'Елин Пелин — „Ветрената мелница"',
-    'bel12-yovkov-pesenta-na-koleletata': 'Йовков — „Песента на колелетата"',
-    'bel12-paskov-balada':                'Пасков — „Балада за Георг Хених"',
-    'bel12-yavorov-dve-dushi':            'Яворов — „Две души"',
-    'bel12-bagryana-potomka':             'Багряна — „Потомка"',
-    'bel12-hristov-chesten-krast':        'Христов — „Честен кръст"',
-    'bel11-vazov-pod-igoto':             'Вазов — „Под игото"',
-    'bel11-vazov-epopea':                'Вазов — „Епопея на забравените"',
-    'bel11-vazov-opalchentsite':         'Вазов — „Опълченците на Шипка"',
-    'bel11-vazov-paisiy':                'Вазов — „Паисий"',
-    'bel11-vazov-tih-byal-dunav':        'Вазов — „Тих бял Дунав"',
-    'bel11-botev-hadzhi-dimityr':        'Ботев — „Хаджи Димитър"',
-    'bel11-botev-obesa':                 'Ботев — „Обесването на Васил Левски"',
-    'bel11-yavorov-gradushka':           'Яворов — „Градушка"',
-    'bel11-slaveykov-cis-moll':          'П. П. Славейков — „Cis moll"',
-    'bel11-aleko-bay-ganyo':             'Алеко Константинов — „Бай Ганьо"',
-    'bel11-elin-pelin-andreshko':        'Елин Пелин — „Андрешко"',
-    'bel11-talev-zhelezniyat-svetilnik': 'Талев — „Железният светилник"',
-    'bel11-stanev-kradetsat':            'Станев — „Крадецът на праскови"',
-    'bel11-stratiev-sako':               'Стратиев — „Сако от велур"',
-    'bel11-smirnanski-yohan':            'Смирненски — „Йохан"',
-    'bel11-vaptsarov-istoriya':          'Вапцаров — „История"',
-    'bel11-radichkov-nezhnata-spirala':  'Радичков — „Нежната спирала"',
-    'bel7-aleko-bay-ganyo':              'Алеко Константинов — „Бай Ганьо"',
-    'bel7-botev-hadzhi-dimityr':         'Ботев — „Хаджи Димитър"',
-    'bel7-botev-maytse-si':              'Ботев — „Майце си"',
-    'bel7-elin-pelin-zadusha':           'Елин Пелин — „Задушница"',
+    'bel12-debelyanov-lyubov':            'Дебелянов – „Аз искам да те помня все така"',
+    'bel12-fotev-lyubov':                 'Фотев – „Колко си хубава!"',
+    'bel12-dubarova-posveshenie':         'Дубарова – „Посвещение"',
+    'bel12-vaptsarov-vyara':              'Вапцаров – „Вяра"',
+    'bel12-dalchev-molitva':             'Далчев – „Молитва"',
+    'bel12-elin-pelin-spasova-mogila':    'Елин Пелин – „Спасова могила"',
+    'bel12-elin-pelin-vetrena-melnitsa':  'Елин Пелин – „Ветрената мелница"',
+    'bel12-yovkov-pesenta-na-koleletata': 'Йовков – „Песента на колелетата"',
+    'bel12-paskov-balada':                'Пасков – „Балада за Георг Хених"',
+    'bel12-yavorov-dve-dushi':            'Яворов – „Две души"',
+    'bel12-bagryana-potomka':             'Багряна – „Потомка"',
+    'bel12-hristov-chesten-krast':        'Христов – „Честен кръст"',
+    'bel11-vazov-pod-igoto':             'Вазов – „Под игото"',
+    'bel11-vazov-epopea':                'Вазов – „Епопея на забравените"',
+    'bel11-vazov-opalchentsite':         'Вазов – „Опълченците на Шипка"',
+    'bel11-vazov-paisiy':                'Вазов – „Паисий"',
+    'bel11-vazov-tih-byal-dunav':        'Вазов – „Тих бял Дунав"',
+    'bel11-botev-hadzhi-dimityr':        'Ботев – „Хаджи Димитър"',
+    'bel11-botev-obesa':                 'Ботев – „Обесването на Васил Левски"',
+    'bel11-yavorov-gradushka':           'Яворов – „Градушка"',
+    'bel11-slaveykov-cis-moll':          'П. П. Славейков – „Cis moll"',
+    'bel11-aleko-bay-ganyo':             'Алеко Константинов – „Бай Ганьо"',
+    'bel11-elin-pelin-andreshko':        'Елин Пелин – „Андрешко"',
+    'bel11-talev-zhelezniyat-svetilnik': 'Талев – „Железният светилник"',
+    'bel11-stanev-kradetsat':            'Станев – „Крадецът на праскови"',
+    'bel11-stratiev-sako':               'Стратиев – „Сако от велур"',
+    'bel11-smirnanski-yohan':            'Смирненски – „Йохан"',
+    'bel11-vaptsarov-istoriya':          'Вапцаров – „История"',
+    'bel11-radichkov-nezhnata-spirala':  'Радичков – „Нежната спирала"',
+    'bel7-aleko-bay-ganyo':              'Алеко Константинов – „Бай Ганьо"',
+    'bel7-botev-hadzhi-dimityr':         'Ботев – „Хаджи Димитър"',
+    'bel7-botev-maytse-si':              'Ботев – „Майце си"',
+    'bel7-elin-pelin-zadusha':           'Елин Пелин – „Задушница"',
     'bel7-morfologia':                   'Морфология',
     'bel7-narodno-tvorchestvo':          'Народно творчество',
-    'bel7-pravopis':                     'Правопис — 7 клас',
+    'bel7-pravopis':                     'Правопис – 7 клас',
     'bel7-sintaksis':                    'Синтаксис',
-    'bel7-vazov-opalchentsite':          'Вазов — „Опълченците на Шипка"',
-    'bel7-vazov-pod-igoto':              'Вазов — „Под игото"',
-    'bel7-yovkov-indzhe':                'Йовков — „Инджето"',
-    'bio11-kletkata':                    'Клетката — структура и органели',
+    'bel7-vazov-opalchentsite':          'Вазов – „Опълченците на Шипка"',
+    'bel7-vazov-pod-igoto':              'Вазов – „Под игото"',
+    'bel7-yovkov-indzhe':                'Йовков – „Инджето"',
+    'bio11-kletkata':                    'Клетката – структура и органели',
     'bio11-fotosinteza':                 'Фотосинтеза',
     'bio11-dishane':                     'Клетъчно дишане',
     'bio11-nervna-sistema':              'Нервна система',
     'bio11-endokrinna-sistema':          'Ендокринна система',
     'bio11-razmnozhavane':               'Размножаване',
     'bio12-evolyutsiya':                 'Еволюция',
-    'bio12-razmnozhavane':               'Размножаване — 12 клас',
+    'bio12-razmnozhavane':               'Размножаване – 12 клас',
     'bio12-mutatsii':                    'Мутации',
     'bio12-mnogokletchna':               'Многоклетъчни организми',
     'bio12-dnk-rnk':                     'ДНК и РНК',
-    'bio12-genetika-mendel':             'Генетика — закони на Мендел',
+    'bio12-genetika-mendel':             'Генетика – закони на Мендел',
     'chem11-stroezh-atoma':             'Строеж на атома',
     'chem11-himichna-vrazka':           'Химична връзка',
     'chem11-rastvori':                  'Разтвори и рН',
@@ -357,7 +357,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
   };
 
   function shortName(slug) {
-    if (!slug) return '—';
+    if (!slug) return '–';
     return LESSON_TITLES[slug] || slug.replace(/^(bel|math|bio|chem)\d*-/,'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
   }
   function relDate(s) {
@@ -393,7 +393,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
         if (attempts.length) {
           const best = attempts.reduce((a, b) => (b.total ?? 0) > (a.total ?? 0) ? b : a);
           if (!bySlug[slug]) bySlug[slug] = [];
-          bySlug[slug].push({ total: best.total ?? 0, date: best.date || '—', topicIdx: parseInt(m[2]) });
+          bySlug[slug].push({ total: best.total ?? 0, date: best.date || '–', topicIdx: parseInt(m[2]) });
         }
       } catch {}
     }
@@ -401,7 +401,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
   }
 
   // ── Render student header ──
-  const name = profile.full_name || session.user.email?.split('@')[0] || '—';
+  const name = profile.full_name || session.user.email?.split('@')[0] || '–';
   document.getElementById('student-name').textContent = name;
 
   // Знайко count (today only)
@@ -438,7 +438,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
       }
     });
 
-    // Per-lesson average pct (across all quiz_nums done for that lesson) — no rounding, keeps precision
+    // Per-lesson average pct (across all quiz_nums done for that lesson) – no rounding, keeps precision
     const lessonAvgs = Object.values(byLesson).map(qnMap => {
       const pcts = Object.values(qnMap).map(v => v.pct);
       return pcts.reduce((a, p) => a + p, 0) / pcts.length;
@@ -460,7 +460,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
       }
     }
 
-    // Combined grade — weighted by count (quiz lessons + essay items каунтват поравно)
+    // Combined grade – weighted by count (quiz lessons + essay items каунтват поравно)
     let avg = null;
     const qCount = lessonAvgs.length;
     const eCount = essayGradesList.length;
@@ -529,7 +529,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
       }
 
       const avg = s.avg;
-      const gNum = avg !== null ? fmtGrade(avg) : '—';
+      const gNum = avg !== null ? fmtGrade(avg) : '–';
       const pct  = s.avgPct !== null ? Math.round(s.avgPct) : 0;
 
       // Grade label breakdown (for BEL show quiz + essay separately if both)
@@ -542,7 +542,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
         s.essay && s.essayCount ? `<span class="stat-pill">✍️ <strong>${s.essayCount}</strong> ${s.essayCount === 1 ? 'съчинение' : 'съчинения'}</span>` : '',
       ].filter(Boolean).join('');
 
-      // Build quiz rows — one row per lesson per quiz_num, sorted by lesson then quiz_num
+      // Build quiz rows – one row per lesson per quiz_num, sorted by lesson then quiz_num
       const quizRows = Object.entries(s.byLesson).map(([slug, qnMap]) => {
         const qnsSorted = Object.entries(qnMap).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
         const pcts = qnsSorted.map(([,v]) => v.pct);
@@ -554,7 +554,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
           const delta = idx > 0 ? v.pct - pcts[idx - 1] : null;
           const deltaHtml = delta !== null
             ? `<span style="color:${delta >= 0 ? '#15803d' : '#dc2626'}">${delta >= 0 ? '↑' : '↓'} ${Math.abs(delta)}%</span>`
-            : '<span style="color:var(--muted)">—</span>';
+            : '<span style="color:var(--muted)">–</span>';
           const lessonLabel = idx === 0
             ? `${shortName(slug)}`
             : `<span style="color:var(--muted);padding-left:10px">↳ ${shortName(slug)}</span>`;
@@ -572,7 +572,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
       // Essay rows from Supabase
       const supabaseEssayRows = s.essay && s.eRows.length ? s.eRows.map(e => {
-        const g  = e.grade ?? e.score ?? '—';
+        const g  = e.grade ?? e.score ?? '–';
         const gc = typeof g === 'number' ? gradeColor(g) : '#64748b';
         return `<tr>
           <td>${shortName(e.lesson_slug)}</td>
@@ -592,7 +592,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
           return `<tr>
             <td>${shortName(slug)}</td>
             <td class="td-attempt" style="color:#7c3aed">Съчинение</td>
-            <td class="td-date">${fixDate(t.date) || '—'}</td>
+            <td class="td-date">${fixDate(t.date) || '–'}</td>
             <td><span class="badge" style="background:#7c3aed18;color:#7c3aed">${t.total}/24</span></td>
             <td></td>
             <td class="td-grade" style="color:${gc}">${gradeLabel(g)} <span style="font-size:11px;font-weight:700">${g.toFixed(2)}</span></td>

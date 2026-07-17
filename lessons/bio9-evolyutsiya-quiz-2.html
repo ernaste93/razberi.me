@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Еволюция – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio9-evolyutsiya-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio9-evolyutsiya-quiz-3.html',
+      lessonUrl:   '/lessons/bio9-evolyutsiya.html',
+      lessonName:  'Еволюция',
+      eyebrow:     'Биология · 9 клас · Еволюционна биология',
+      title:       'Куиз – Еволюция – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Как молекулярната биология подкрепя еволюцията?",
+                "options": [
+                        "Сходства в ДНК и белтъци отразяват еволюционна близост",
+                        "Нямат доказателствена стойност",
+                        "Само за бактерии",
+                        "Само за ДНК анализ"
+                ],
+                "correct": 0,
+                "explanation": "Хора и шимпанзета имат ~98% сходство в ДНК."
+        },
+        {
+                "q": "Какво е аналогни органи?",
+                "options": [
+                        "Органи с еднаква функция, но различен еволюционен произход",
+                        "Хомоложни органи",
+                        "Рудиментарни органи",
+                        "Органи при близки видове само"
+                ],
+                "correct": 0,
+                "explanation": "Напр. крилото на птица и крилото на пеперуда – конвергентна еволюция."
+        },
+        {
+                "q": "Какво е конвергентна еволюция?",
+                "options": [
+                        "Независимо развитие на сходни черти при несродни организми",
+                        "Обща предковост",
+                        "Дивергентна еволюция",
+                        "Хибридизация"
+                ],
+                "correct": 0,
+                "explanation": "Делфините и акулите имат сходна форма – конвергенция."
+        },
+        {
+                "q": "Каква е ролята на изолацията при видообразуването?",
+                "options": [
+                        "Предотвратява обмен на гени между популации → различно развитие",
+                        "Ускорява мутациите",
+                        "Увеличава генетичния дрейф",
+                        "Няма роля"
+                ],
+                "correct": 0,
+                "explanation": "Репродуктивната изолация е необходимо условие за видообразуване."
+        },
+        {
+                "q": "Какво е популационна генетика?",
+                "options": [
+                        "Изучаване на честотите на алелите в популации и тяхната промяна",
+                        "Само еволюция",
+                        "Само мутации",
+                        "Само клетъчна биология"
+                ],
+                "correct": 0,
+                "explanation": "Харди-Вайнберг уравнението описва генетичното равновесие."
+        },
+        {
+                "q": "Кои са рудиментарни органи?",
+                "options": [
+                        "Органи, загубили функцията си в еволюцията (напр. опашна кост при хора)",
+                        "Новоеволюирали органи",
+                        "Хомоложни органи",
+                        "Органи на ларви"
+                ],
+                "correct": 0,
+                "explanation": "Рудиментите са доказателство за еволюционна история."
+        },
+        {
+                "q": "Как геологичните процеси допринасят за алопатричното видообразуване?",
+                "options": [
+                        "Планини, реки, морета разделят популации физически",
+                        "Нямат ефект",
+                        "Само чрез климата",
+                        "Само в морето"
+                ],
+                "correct": 0,
+                "explanation": "Геологични бариери → изолация → независима еволюция."
+        },
+        {
+                "q": "Какво е нео-дарвинизъм?",
+                "options": [
+                        "Синтез на дарвинова теория с генетика – модерна еволюционна синтеза",
+                        "Само Дарвиновите идеи",
+                        "Ламаркова теория",
+                        "Изчезване на видове"
+                ],
+                "correct": 0,
+                "explanation": "Съвременната еволюционна синтеза интегрира генетиката."
+        },
+        {
+                "q": "Каква е ролята на сексуалния отбор?",
+                "options": [
+                        "Отбор, базиран на репродуктивен успех, а не само оцеляване (напр. перушина)",
+                        "Само за хора",
+                        "Идентичен с естествения",
+                        "Случаен"
+                ],
+                "correct": 0,
+                "explanation": "Сексуалният отбор обяснява черти, намаляващи оцеляването, но увеличаващи мате-атракцията."
+        },
+        {
+                "q": "Какво е генетично бутилчено гърло?",
+                "options": [
+                        "Рязко намаляване на популацията → загуба на генетично разнообразие",
+                        "Увеличаване на мутациите",
+                        "Нов вид",
+                        "Хибридизация"
+                ],
+                "correct": 0,
+                "explanation": "Бутилчен ефект е форма на генетичен дрейф."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

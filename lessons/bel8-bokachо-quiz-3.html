@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 - Бокачо – Декамерон · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel8-bokachо-q3",
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:"/lessons/bel8-bokachо.html",
+    lessonName:"Бокачо – Декамерон",
+    eyebrow:"БЕЛ · 8 клас · Ренесансова литература",
+    title:"Тест 3 - Бокачо – Декамерон",
+    passScore:8,
+    questions:[
+  {
+    "q": "Как Декамерон е повлиял на световната литература?",
+    "options": [
+      "Огромно – Чосър, Шекспир, Лафонтен заимстват сюжети",
+      "Малко",
+      "Само Италия",
+      "Само Ренесанс"
+    ],
+    "correct": 0,
+    "explanation": "Кентърберийски разкази на Чосър са директно повлияни от Декамерон."
+  },
+  {
+    "q": "Каква е темата за земния живот?",
+    "options": [
+      "Земният живот е ценен и достоен – не само предверие на рая",
+      "Земният живот е грешен",
+      "Без тема",
+      "Само небесният е важен"
+    ],
+    "correct": 0,
+    "explanation": "Ренесансовият хуманизъм открива красотата на земното."
+  },
+  {
+    "q": "Как Бокачо изобразява жените?",
+    "options": [
+      "По-сложно от Средновековието – умни, хитри, с желания и права",
+      "Само като грешни",
+      "Само послушни",
+      "Без роля"
+    ],
+    "correct": 0,
+    "explanation": "Декамерон съдържа силни женски образи – новаторско за 14 в."
+  },
+  {
+    "q": "Каква е темата за съдбата (Фортуна)?",
+    "options": [
+      "Съдбата е непредсказуема – хората трябва да бъдат умни и гъвкави",
+      "Съдбата е неизбежна",
+      "Бог контролира всичко",
+      "Без тема"
+    ],
+    "correct": 0,
+    "explanation": "Ingenio срещу Fortuna – умът срещу съдбата е ренесансова тема."
+  },
+  {
+    "q": "Как е свързан Декамерон с Черната чума исторически?",
+    "options": [
+      "Документира живота и психологията на хората по време на чума",
+      "Само измислена история",
+      "Без историческа стойност",
+      "Само за Флоренция"
+    ],
+    "correct": 0,
+    "explanation": "Декамерон е ценен исторически документ за 14 в."
+  },
+  {
+    "q": "Каква е разликата новела/разказ?",
+    "options": [
+      "Новелата (Бокачо) е по-структурирана с обрат; разказът е по-свободен",
+      "Те са еднакви",
+      "Новелата е по-кратка",
+      "Разказът е по-стар"
+    ],
+    "correct": 0,
+    "explanation": "Бокачо дефинира новелата като жанр."
+  },
+  {
+    "q": "Каква е позицията на Бокачо към Църквата?",
+    "options": [
+      "Критична – в много новели духовници са хитри и лицемерни",
+      "Напълно поддържа Църквата",
+      "Атеист",
+      "Неутрална"
+    ],
+    "correct": 0,
+    "explanation": "Бокачо критикува институцията, но не и вярата."
+  },
+  {
+    "q": "Как Декамерон е свързан с хуманизма?",
+    "options": [
+      "Поставя човека и земния живот в центъра – основа на ренесансовия хуманизъм",
+      "Без връзка",
+      "Само религиозен",
+      "Само за богатите"
+    ],
+    "correct": 0,
+    "explanation": "Декамерон е ранен манифест на хуманизма."
+  },
+  {
+    "q": "Каква е езиковата значимост на Декамерон?",
+    "options": [
+      "Написан на народен тоскански – основа на съвременния италиански",
+      "На латински",
+      "На гръцки",
+      "На провансалски"
+    ],
+    "correct": 0,
+    "explanation": "Бокачо, Данте и Петрарка установяват литературния италиански."
+  },
+  {
+    "q": "Защо Декамерон е в програмата?",
+    "options": [
+      "Основоположник на новелата, ренесансов хуманизъм, религиозна толерантност",
+      "Случайно",
+      "Само заради историята",
+      "Само заради жанра"
+    ],
+    "correct": 0,
+    "explanation": "Декамерон е ключов текст за разбирането на Ренесанса."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

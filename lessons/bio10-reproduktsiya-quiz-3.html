@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Размножаване и развитие – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-reproduktsiya-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bio10-reproduktsiya.html',
+      lessonName:  'Размножаване и развитие',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Размножаване и развитие – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Теломерите?",
+                "options": [
+                        "Центромери",
+                        "Защитни ДНК-протеинови шапки на хромозомните краища – скъсяват се при всяка митоза",
+                        "Само в стволови клетки",
+                        "Само в ядрото"
+                ],
+                "correct": 1,
+                "explanation": "Теломери се скъсяват при всяко деление → клетъчно стареене (Хейфлик). Теломеразата ги подновява в стволови и ракови клетки."
+        },
+        {
+                "q": "Апоптозата е?",
+                "options": [
+                        "Случайна смърт",
+                        "Програмирана клетъчна смърт (необходима за развитие, имунитет, хомеостаза)",
+                        "Само в тумори",
+                        "Само при инфекция"
+                ],
+                "correct": 1,
+                "explanation": "Апоптоза = „клетъчно самоубийство\" – активен, регулиран процес. Пример: пръстите (межупръстна апоптоза) при ембриона."
+        },
+        {
+                "q": "Сиамски близнаци се дължат на?",
+                "options": [
+                        "Двойно оплождане",
+                        "Непълно разцепване на зиготата (монозиготни близнаци)",
+                        "Мейозна грешка",
+                        "Имплантационна грешка"
+                ],
+                "correct": 1,
+                "explanation": "Монозиготни близнаци: зиготата се разделя → 2 ембриона. Непълно разцепване (ден >13) → сиамски."
+        },
+        {
+                "q": "Пол при хората се определя от?",
+                "options": [
+                        "Температура",
+                        "Полови хромозоми: XX = жена, XY = мъж",
+                        "Хормони само",
+                        "Само майката"
+                ],
+                "correct": 1,
+                "explanation": "Пол → хромозоми. Яйцеклетката винаги X; сперматозоидът X или Y. Сперматозоидът определя пола."
+        },
+        {
+                "q": "X-свързано рецесивно заболяване (хемофилия) при мъже е по-честно. Защо?",
+                "options": [
+                        "По-голямо X",
+                        "Мъжете имат само 1 X – нямат втори алел за компенсация",
+                        "Само при Y",
+                        "Само при мейоза"
+                ],
+                "correct": 1,
+                "explanation": "Хемизиготност: XY мъжете имат само 1 X → рецесивен алел на X се изразява. При XX жени – второто X може да компенсира."
+        },
+        {
+                "q": "Ообщата хромозомна аномалия Трисомия 21 е?",
+                "options": [
+                        "47,XX,+21 или 47,XY,+21 (Синдром на Даун)",
+                        "46,XX",
+                        "45,X",
+                        "47,XXY"
+                ],
+                "correct": 0,
+                "explanation": "Трисомия 21 (Синдром на Даун): допълнителна хромозома 21. Честота ~1/700. Нарушена интелектуална функция, сърдечни дефекти."
+        },
+        {
+                "q": "Стволовите клетки в медицината се използват за?",
+                "options": [
+                        "Само изследване",
+                        "Трансплантации, лечение на левкемия, регенеративна медицина",
+                        "Само ваксини",
+                        "Само диагностика"
+                ],
+                "correct": 1,
+                "explanation": "Хемопоетични стволови клетки → трансплантация при левкемия. Изследват се за лечение на диабет, болест на Паркинсон."
+        },
+        {
+                "q": "Какво е морула?",
+                "options": [
+                        "Бластоциста",
+                        "Ранна топка клетки (~16 клетки) след последователни деления на зиготата",
+                        "Гаструла",
+                        "Зигота"
+                ],
+                "correct": 1,
+                "explanation": "Морула (лат. малина) = ранна топка клетки от бласторми. Следва я кавитация → бластуляция → бластоциста."
+        },
+        {
+                "q": "Органогенезата се извършва основно в?",
+                "options": [
+                        "3-ти триместър",
+                        "1-ви триместър (ембрионален период) – критичен за тератогени",
+                        "2-ри триместър",
+                        "При раждане"
+                ],
+                "correct": 1,
+                "explanation": "Органогенеза: 3–8 седмица на бременността. Органите се формират тогава → най-уязвим период за тератогени."
+        },
+        {
+                "q": "При митозата в кои фази се разделят хроматидите?",
+                "options": [
+                        "Профаза",
+                        "Анафаза (центромерите се разделят, хроматидите → полюсите)",
+                        "Метафаза",
+                        "Телофаза"
+                ],
+                "correct": 1,
+                "explanation": "Анафаза на митозата: центромерите се разделят → сестринските хроматиди се теглят към противоположните полюси."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

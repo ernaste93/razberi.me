@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Гъби и бактерии – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio9-gabi-bakterii-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bio9-gabi-bakterii.html',
+      lessonName:  'Гъби и бактерии',
+      eyebrow:     'Биология · 9 клас · Микробиология',
+      title:       'Куиз – Гъби и бактерии – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Защо е важно разнообразието от чревни бактерии (микробиом)?",
+                "options": [
+                        "Помагат за храносмилане, имунитет и синтез на витамини",
+                        "Само вредят",
+                        "Без значение",
+                        "Само E. coli е важна"
+                ],
+                "correct": 0,
+                "explanation": "Микробиомът е ключов за здравето."
+        },
+        {
+                "q": "Как Penicillium убива бактерии?",
+                "options": [
+                        "Инхибира синтеза на клетъчна стена → бактериите се разпукват",
+                        "Разрушава ДНК им",
+                        "Блокира дишането",
+                        "Паразитира върху им"
+                ],
+                "correct": 0,
+                "explanation": "Пеницилинът блокира ензимите за синтез на пептидогликан."
+        },
+        {
+                "q": "Какво е прионна болест?",
+                "options": [
+                        "Болест от неправилно нагъната белтъчна молекула (прион) – без ДНК/РНК",
+                        "Болест от бактерии",
+                        "Болест от вируси",
+                        "Болест от гъби"
+                ],
+                "correct": 0,
+                "explanation": "Болест на Кройцфелд-Якоб е пример за прионна болест."
+        },
+        {
+                "q": "Как археите се различават от бактериите?",
+                "options": [
+                        "Различен състав на клетъчната стена и мембрани; живеят при екстремни условия",
+                        "Нямат разлика",
+                        "Археите са еукариоти",
+                        "Бактериите живеят в екстремни условия"
+                ],
+                "correct": 0,
+                "explanation": "Археите са отделен домейн – уникална биохимия."
+        },
+        {
+                "q": "Защо е опасно да се употребяват антибиотици без лекарско предписание?",
+                "options": [
+                        "Развива резистентност; убива полезни бактерии",
+                        "Защото са скъпи",
+                        "Защото са вредни за всички случаи",
+                        "Нямат странични ефекти"
+                ],
+                "correct": 0,
+                "explanation": "Злоупотребата е глобален здравен проблем."
+        },
+        {
+                "q": "Как цианобактериите допринасят за атмосферата?",
+                "options": [
+                        "Произвеждат O₂ чрез фотосинтеза – важна роля в ранната Земя",
+                        "Разграждат O₂",
+                        "Произвеждат CO₂",
+                        "Само фиксират азот"
+                ],
+                "correct": 0,
+                "explanation": "Цианобактериите са обогатили земната атмосфера с кислород."
+        },
+        {
+                "q": "Кое е примерен пример за мутуализъм между гъба и корен?",
+                "options": [
+                        "Микориза",
+                        "Паразитна гъба",
+                        "Лишей",
+                        "Дрожди"
+                ],
+                "correct": 0,
+                "explanation": "Мутуализмът е взаимноизгодна симбиоза."
+        },
+        {
+                "q": "Как спорите помагат на гъбите?",
+                "options": [
+                        "Разпространение на разстояние; устойчивост при неблагоприятни условия",
+                        "Само за размножаване",
+                        "За хранене",
+                        "За защита от хищници"
+                ],
+                "correct": 0,
+                "explanation": "Спорите са дребни, лёки и дълготрайни."
+        },
+        {
+                "q": "Какво е квасване (ферментация)?",
+                "options": [
+                        "Анаеробно разграждане на захари до алкохол или млечна киселина",
+                        "Аеробно дишане",
+                        "Фотосинтеза",
+                        "Разграждане на белтъци"
+                ],
+                "correct": 0,
+                "explanation": "Ферментацията е анаеробен метаболизъм."
+        },
+        {
+                "q": "Кои бактерии причиняват хранителни отравяния?",
+                "options": [
+                        "Salmonella, Clostridium botulinum, Staphylococcus aureus",
+                        "E. coli само",
+                        "Lactobacillus",
+                        "Rhizobium"
+                ],
+                "correct": 0,
+                "explanation": "Патогенните хранителни бактерии причиняват множество заболявания."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

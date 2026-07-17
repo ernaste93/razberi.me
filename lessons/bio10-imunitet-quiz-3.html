@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Имунна система – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-imunitet-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bio10-imunitet.html',
+      lessonName:  'Имунна система',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Имунна система – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "B-клетките зреят в?",
+                "options": [
+                        "Тимус",
+                        "Костен мозък (при хора)",
+                        "Далак",
+                        "Тимус и далак"
+                ],
+                "correct": 1,
+                "explanation": "В-клетките зреят в костния мозък. Т-клетките – в тимуса. (B = Bone marrow)."
+        },
+        {
+                "q": "Памет В-клетките?",
+                "options": [
+                        "Бавни при 2-ра среща",
+                        "Отговарят по-бързо и по-силно при 2-ра среща с антигена",
+                        "Само в кръвта",
+                        "Само при деца"
+                ],
+                "correct": 1,
+                "explanation": "Имунна памет: памет клетки живеят дълго → при 2-ра среща → бърз вторичен отговор (повече IgG, по-бързо)."
+        },
+        {
+                "q": "Клас имунен отговор срещу вътреклетъчни паразити (вируси)?",
+                "options": [
+                        "Само антитела",
+                        "Клетъчен (CD8+ цитотоксични Т-клетки)",
+                        "Само фагоцитоза",
+                        "Само комплемент"
+                ],
+                "correct": 1,
+                "explanation": "Вирусите се размножават вътреклетъчно → антителата не достигат. CD8+ Т клетки убиват заразените клетки."
+        },
+        {
+                "q": "Имунологична толерантност е?",
+                "options": [
+                        "Имунен отговор",
+                        "Неатакуване на собствените тъкани",
+                        "Само B-клетки",
+                        "Само антитела"
+                ],
+                "correct": 1,
+                "explanation": "Централна толерантност: клонална делеция в тимуса/костния мозък. Нарушаване → автоимунитет."
+        },
+        {
+                "q": "Неутрофилите са?",
+                "options": [
+                        "Лимфоцити",
+                        "Гранулоцити – бърза фагоцитоза на бактерии (1-ви при инфекция)",
+                        "Моноцити",
+                        "Тромбоцити"
+                ],
+                "correct": 1,
+                "explanation": "Неутрофилите са ~70% от левкоцитите. Бързо мигрират към инфекцията и фагоцитират бактерии."
+        },
+        {
+                "q": "Имуносупресията е опасна защото?",
+                "options": [
+                        "Само алергии",
+                        "Намален имунен отговор → инфекции с опортюнистични патогени",
+                        "Само автоимунно",
+                        "Само при деца"
+                ],
+                "correct": 1,
+                "explanation": "Имуносупресия (химиотерапия, кортикостероиди) намалява имунния отговор → пневмония, гъбични инфекции, CMV."
+        },
+        {
+                "q": "Хуморалният имунитет е?",
+                "options": [
+                        "Клетъчно убиване",
+                        "Медиран от антитела (В-клетки) в кръвта и секрети",
+                        "Само при автоимунни",
+                        "Само фагоцитоза"
+                ],
+                "correct": 1,
+                "explanation": "Хуморален = антитела в хуморите (кръв, секрети). Срещу извънклетъчни патогени и токсини."
+        },
+        {
+                "q": "ИнфлуенцAта се променя всяка година заради?",
+                "options": [
+                        "Размножаване",
+                        "Антигенен дрейф и шифт (мутации в повърхностните протеини)",
+                        "Само климат",
+                        "Само чистота"
+                ],
+                "correct": 1,
+                "explanation": "Антигенен дрейф: постепенни мутации. Антигенен шифт: рекомбинация → нов вирус. Затова ваксините се обновяват."
+        },
+        {
+                "q": "mRNA ваксините (COVID-19) действат чрез?",
+                "options": [
+                        "Вкарване на патогена",
+                        "Инструкция за производство на вирусен протеин → имунен отговор → памет",
+                        "Само антибиотик",
+                        "Само анти-бактерийни"
+                ],
+                "correct": 1,
+                "explanation": "mRNA кодира спайк-протеин → рибозомите го произвеждат → имунна система го разпознава → памет без живи вируси."
+        },
+        {
+                "q": "NK клетките (Natural Killer) убиват?",
+                "options": [
+                        "Само бактерии",
+                        "Клетки без MHC I – заразени вирус/туморни клетки",
+                        "Само паразити",
+                        "Само бактерии извън клетки"
+                ],
+                "correct": 1,
+                "explanation": "NK клетки = вроден имунитет срещу вирусно заразени и туморни клетки. Не изискват предварителна сенсибилизация."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

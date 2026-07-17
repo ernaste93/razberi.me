@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Биоразнообразие и систематика – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-bioraznoobrazie-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bio10-bioraznoobrazie-quiz-3.html',
+      lessonUrl:   '/lessons/bio10-bioraznoobrazie.html',
+      lessonName:  'Биоразнообразие и систематика',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Биоразнообразие и систематика – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Видовото разнообразие включва?",
+                "options": [
+                        "Само гени",
+                        "Гени, видове и екосистеми",
+                        "Само видове",
+                        "Само екосистеми"
+                ],
+                "correct": 1,
+                "explanation": "Биоразнообразие = генетично + видово + екосистемно разнообразие."
+        },
+        {
+                "q": "Инвазивен вид е?",
+                "options": [
+                        "Местен вид",
+                        "Внесен вид, конкурент на местните",
+                        "Изчезнал вид",
+                        "Хибрид"
+                ],
+                "correct": 1,
+                "explanation": "Инвазивни видове: внесени случайно или умишлено – конкурират/изместват местните. Пример: американска норка, борща на Сосновски."
+        },
+        {
+                "q": "Protista е?",
+                "options": [
+                        "Царство Fungi",
+                        "Разнородна група еукариоти (не животни/гъби/растения)",
+                        "Домен",
+                        "Вирус"
+                ],
+                "correct": 1,
+                "explanation": "Protista = полифилетична група едноклетъчни и прости многоклетъчни еукариоти: амеби, диатомеи, водорасли."
+        },
+        {
+                "q": "Fungi (гъбите) по хранене са?",
+                "options": [
+                        "Автотрофи",
+                        "Хетеротрофи – сапротрофи или паразити",
+                        "Хемосинтетични",
+                        "Фотосинтетични"
+                ],
+                "correct": 1,
+                "explanation": "Гъбите не правят фотосинтеза – усвояват органична материя чрез ензимна деградация (сапротрофия) или паразитизъм."
+        },
+        {
+                "q": "Ако два организма имат еднакъв „вид\" но различен „род\", те?",
+                "options": [
+                        "Са едни и същи",
+                        "Принадлежат към различни видове",
+                        "Могат да се кръстосват",
+                        "Са идентични генетично"
+                ],
+                "correct": 1,
+                "explanation": "Различен род = различни видове. Родът включва близко сродни видове."
+        },
+        {
+                "q": "Eукариотите се различават от прокариотите по?",
+                "options": [
+                        "По-малки",
+                        "Имат мембранно обвито ядро и органели",
+                        "Само едноклетъчни",
+                        "Нямат ДНК"
+                ],
+                "correct": 1,
+                "explanation": "Еукариоти: ядро, митохондрии, ER, Голджи апарат. Прокариоти: нищо от горното."
+        },
+        {
+                "q": "Класическата схема на 5 царства включва?",
+                "options": [
+                        "Bacteria, Archaea, Eukarya, Plantae, Animalia",
+                        "Monera, Protista, Fungi, Plantae, Animalia",
+                        "Bacteria, Fungi, Plantae, Animalia, Protista",
+                        "Вирус, Бактерия, Гъба, Растение, Животно"
+                ],
+                "correct": 1,
+                "explanation": "Монера (прокариоти), Протиста, Гъби, Растения, Животни – класическата схема на Уитакър."
+        },
+        {
+                "q": "Едновременна загуба на много видове = ?",
+                "options": [
+                        "Сукцесия",
+                        "Масово изчезване",
+                        "Еволюция",
+                        "Видообразуване"
+                ],
+                "correct": 1,
+                "explanation": "Масово изчезване = бърза загуба на голям дял видове. Познати 5 масови изчезвания; текущото (6-то) е причинено от хора."
+        },
+        {
+                "q": "Конвергентна еволюция е?",
+                "options": [
+                        "Сходен произход",
+                        "Независимо развитие на сходни черти",
+                        "Скорошно видообразуване",
+                        "Хибридизация"
+                ],
+                "correct": 1,
+                "explanation": "Конвергенция: различни линии развиват сходни форми при сходни условия (перки при риби и делфини)."
+        },
+        {
+                "q": "Основна цел на систематиката?",
+                "options": [
+                        "Опазване",
+                        "Класификация и наименование на организми",
+                        "Измерване на биомаса",
+                        "Генетично модифициране"
+                ],
+                "correct": 1,
+                "explanation": "Систематиката (таксономия) описва, класифицира и назовава организмите."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

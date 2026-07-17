@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 3 – Омир – Илиада · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:'bel8-anticna-mitologia-q3',
+    quizNum:3,
+    nextQuizUrl:null,
+    lessonUrl:'/lessons/bel8-anticna-mitologia.html',
+    lessonName:"Омир – Илиада",
+    eyebrow:"БЕЛ · 8 клас · Антична литература",
+    title:"Тест 3 – Омир – Илиада",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какво символизира гневът на Ахил?",
+    "options": [
+      "Лична чест над колективния дълг",
+      "Страхливост",
+      "Любов към Брисеида",
+      "Отказ от героизъм"
+    ],
+    "correct": 0,
+    "explanation": "Гневът показва как личната чест може да надделее над общото благо."
+  },
+  {
+    "q": "Каква е разликата Ахил/Хектор?",
+    "options": [
+      "Ахил е индивидуалист, Хектор е семеен и отговорен",
+      "Ахил е троянец",
+      "Ахил е старец",
+      "Ахил е роб"
+    ],
+    "correct": 0,
+    "explanation": "Двамата са контрастна двойка – централна за морала на епоса."
+  },
+  {
+    "q": "Какво е menis?",
+    "options": [
+      "Гняв – централната дума и тема на Илиада",
+      "Любов",
+      "Битка",
+      "Смърт"
+    ],
+    "correct": 0,
+    "explanation": "Menis е специфичен горд ожесточен гняв – не просто ядосване."
+  },
+  {
+    "q": "Каква е ролята на боговете?",
+    "options": [
+      "Активно се намесват в битките на страната на любимите си герои",
+      "Само наблюдават",
+      "Забраняват войната",
+      "Убиват всички герои"
+    ],
+    "correct": 0,
+    "explanation": "Боговете имат любимци и ги закрилят, влизат в сражения лично."
+  },
+  {
+    "q": "Как завършва Илиада?",
+    "options": [
+      "С погребението на Хектор",
+      "С падането на Троя",
+      "Със смъртта на Ахил",
+      "С победата на гърците"
+    ],
+    "correct": 0,
+    "explanation": "Епосът завършва с погребалните обреди за Хектор – не с края на войната."
+  },
+  {
+    "q": "Кой убива Патрокъл?",
+    "options": [
+      "Хектор",
+      "Парис",
+      "Агамемнон",
+      "Ахил"
+    ],
+    "correct": 0,
+    "explanation": "Хектор убива Патрокъл, след което Ахил се завръща в боя."
+  },
+  {
+    "q": "Каква е финалната сцена с Приам?",
+    "options": [
+      "Двамата врагове плачат заедно – Ахил за Патрокъл, Приам за Хектор",
+      "Ахил убива Приам",
+      "Приам атакува гърците",
+      "Приам откупва армията"
+    ],
+    "correct": 0,
+    "explanation": "Омир надхвърля омразата – финалът е за общата човешка скръб."
+  },
+  {
+    "q": "Защо Илиада е основа на западната литература?",
+    "options": [
+      "Сред първите епически творби, повлияла на всички следващи",
+      "Написана е на латински",
+      "Свещена книга",
+      "Описва реална история"
+    ],
+    "correct": 0,
+    "explanation": "Илиада и Одисея слагат основите на жанровете и темите на западната литература."
+  },
+  {
+    "q": "Как Патрокъл предизвиква трагедията?",
+    "options": [
+      "Облича доспехите на Ахил и загива – Ахил се завръща в боя",
+      "Предава гърците",
+      "Убива Хектор",
+      "Открадва Брисеида"
+    ],
+    "correct": 0,
+    "explanation": "Смъртта на Патрокъл е повратната точка на епоса."
+  },
+  {
+    "q": "Какво прави Ахил с тялото на Хектор?",
+    "options": [
+      "Влачи го около Троя три пъти",
+      "Погребва го с почести",
+      "Хвърля го в морето",
+      "Връща го веднага на Приам"
+    ],
+    "correct": 0,
+    "explanation": "Ахил е обезумял от скръб и злоба – поругава тялото."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

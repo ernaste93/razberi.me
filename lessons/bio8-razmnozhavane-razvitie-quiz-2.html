@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 – Размножаване, растеж и развитие · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bio8-razmnozhavane-razvitie-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bio8-razmnozhavane-razvitie-quiz-3.html",
+    lessonUrl:"/lessons/bio8-razmnozhavane-razvitie.html",
+    lessonName:"Размножаване, растеж и развитие",
+    eyebrow:"Биология · 8 клас · Анатомия",
+    title:"Тест 2 – Размножаване, растеж и развитие",
+    passScore:8,
+    questions:[
+  {
+    "q": "Какво е ембрион?",
+    "options": [
+      "Организъм от оплождането до 8-та седмица",
+      "От 8-та седм. до раждане",
+      "Неоплодена яйцеклетка",
+      "Сперматозоид"
+    ],
+    "correct": 0,
+    "explanation": "След 8-та седмица ембрионът се нарича плод."
+  },
+  {
+    "q": "Какво е плод?",
+    "options": [
+      "Организъм от 9-та седмица до раждане",
+      "От оплождането до 8-та седм.",
+      "Новороденото",
+      "Зиготата"
+    ],
+    "correct": 0,
+    "explanation": "Плодът има вече оформени органи."
+  },
+  {
+    "q": "Какъв хормон ръководи пубертета при момичетата?",
+    "options": [
+      "Естроген",
+      "Тестостерон",
+      "Прогестерон",
+      "Адреналин"
+    ],
+    "correct": 0,
+    "explanation": "Естрогенът предизвиква женските вторични полови белези."
+  },
+  {
+    "q": "Каква е функцията на плацентата?",
+    "options": [
+      "Обмен на вещества между майката и плода",
+      "Произвежда хормони само",
+      "Защищава плода само",
+      "Образува амниотичната течност само"
+    ],
+    "correct": 0,
+    "explanation": "Плацентата е органът на обмяна по време на бременността."
+  },
+  {
+    "q": "Какво са вторичните полови белези?",
+    "options": [
+      "Белези, развиващи се при пубертета, свързани с пола, но не с размножаването пряко",
+      "Репродуктивните органи",
+      "Хромозомите",
+      "Хормоните"
+    ],
+    "correct": 0,
+    "explanation": "Мъжки: гласова мутация, окосмяване. Женски: разширяване на таза, гърди."
+  },
+  {
+    "q": "Каква е функцията на матката?",
+    "options": [
+      "Орган, в който се развива плодът по време на бременността",
+      "Произвежда яйцеклетки",
+      "Произвежда хормони",
+      "Пренася яйцеклетки"
+    ],
+    "correct": 0,
+    "explanation": "Матката е мускулест орган, способен да се разширява многократно."
+  },
+  {
+    "q": "Какво са фалопиевите тръби?",
+    "options": [
+      "Пренасят яйцеклетката от яйчника към матката – тук обикновено е оплождането",
+      "Произвеждат яйцеклетки",
+      "Произвеждат хормони",
+      "Вид матка"
+    ],
+    "correct": 0,
+    "explanation": "Оплождането обикновено се случва във фалопиевите тръби."
+  },
+  {
+    "q": "Кога обикновено започва пубертетът при момчетата?",
+    "options": [
+      "11–14 години",
+      "7–9 години",
+      "15–18 години",
+      "5–7 години"
+    ],
+    "correct": 0,
+    "explanation": "Пубертетът при момчетата започва малко по-късно от при момичетата."
+  },
+  {
+    "q": "Какво е амниотичната течност?",
+    "options": [
+      "Течност в амниотичния сак, защищаваща плода",
+      "Кръв на майката",
+      "Хормон",
+      "Вид плацента"
+    ],
+    "correct": 0,
+    "explanation": "Амниотичната течност амортизира и защищава плода."
+  },
+  {
+    "q": "Какъв е приносът на хипофизата за пубертета?",
+    "options": [
+      "Отделя FSH и LH, стимулиращи половите жлези",
+      "Произвежда полови хормони директно",
+      "Не участва",
+      "Произвежда адреналин"
+    ],
+    "correct": 0,
+    "explanation": "ФСХ и ЛХ активират тестисите и яйчниците."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Биоразнообразие и систематика – Тест 3 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bio10-bioraznoobrazie-q3',
+      quizNum:     3,
+      nextQuizUrl: null,
+      lessonUrl:   '/lessons/bio10-bioraznoobrazie.html',
+      lessonName:  'Биоразнообразие и систематика',
+      eyebrow:     'БИОЛОГИЯ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Биоразнообразие и систематика – Тест 3',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Клонинг на застрашен вид може да помогне за?",
+                "options": [
+                        "Нищо",
+                        "Запазване на генофонда",
+                        "Само наука",
+                        "Само забава"
+                ],
+                "correct": 1,
+                "explanation": "Криоконсервация и клониране могат да запазят генетично разнообразие на застрашени видове."
+        },
+        {
+                "q": "Хемосинтезата е характерна за?",
+                "options": [
+                        "Растения",
+                        "Някои прокариоти (архебактерии, нитрифициращи бактерии)",
+                        "Гъби",
+                        "Животни"
+                ],
+                "correct": 1,
+                "explanation": "Хемосинтетичните прокариоти получават енергия от химични реакции (окисление на H₂S, NH₃) – не от светлина."
+        },
+        {
+                "q": "Дефиниция за биологичен вид (Майр)?",
+                "options": [
+                        "Организми с еднакъв вид",
+                        "Реално/потенциално кръстосващи се популации, репродуктивно изолирани",
+                        "Организми на едно място",
+                        "Еднакъв генотип"
+                ],
+                "correct": 1,
+                "explanation": "Биологичната концепция за вид (Майр): репродуктивна изолация от другите групи. Ограничение: не важи за безполови организми."
+        },
+        {
+                "q": "Архебактериите (Archaea) живеят в?",
+                "options": [
+                        "Само почва",
+                        "Екстремни условия – горещи извори, хиперсолени, киселинни",
+                        "Само морета",
+                        "Само организми"
+                ],
+                "correct": 1,
+                "explanation": "Екстремофили: термофили (>80°C), халофили (солено), ацидофили (pH<3)."
+        },
+        {
+                "q": "Ендемичен вид?",
+                "options": [
+                        "Намиращ се навсякъде",
+                        "Ограничен до конкретна географска зона",
+                        "Изчезнал",
+                        "Инвазивен"
+                ],
+                "correct": 1,
+                "explanation": "Ендемити: уникални за определена зона. Пример: Балканска дива коза, Галапагос костенурки."
+        },
+        {
+                "q": "Какво е таксон?",
+                "options": [
+                        "Единица за маса",
+                        "Група от организми на дадено таксономично ниво",
+                        "Ген",
+                        "Фенотип"
+                ],
+                "correct": 1,
+                "explanation": "Таксон = всяка формална група: вид, род, семейство… до домен."
+        },
+        {
+                "q": "Monera обхваща?",
+                "options": [
+                        "Еукариоти",
+                        "Прокариоти (Bacteria + Archaea)",
+                        "Само вируси",
+                        "Само гъби"
+                ],
+                "correct": 1,
+                "explanation": "Monera = прокариоти в класическата схема (преди разделянето на Bacteria и Archaea)."
+        },
+        {
+                "q": "Симбиоза?",
+                "options": [
+                        "Само хищничество",
+                        "Дълготрайна взаимодействие между два вида",
+                        "Само конкуренция",
+                        "Само паразитизъм"
+                ],
+                "correct": 1,
+                "explanation": "Симбиоза = всяко дълготрайно взаимодействие: мутуализъм (±), коменсализъм (+,0), паразитизъм (+,−)."
+        },
+        {
+                "q": "Заплаха за биоразнообразие НЕ е?",
+                "options": [
+                        "Обезлесяване",
+                        "Замърсяване",
+                        "Фотосинтеза",
+                        "Инвазивни видове"
+                ],
+                "correct": 2,
+                "explanation": "Фотосинтезата е основен процес на живота – не е заплаха. Заплахи: хабитат-загуба, замърсяване, инвазии, лов."
+        },
+        {
+                "q": "Митохондриите и хлоропластите вероятно са?",
+                "options": [
+                        "Синтезирани в ядрото",
+                        "Ендосимбиотични прокариоти (теория на Маргулис)",
+                        "Само структурни",
+                        "Без ДНК"
+                ],
+                "correct": 1,
+                "explanation": "Ендосимбиотична теория: митохондрии ← α-протеобактерии; хлоропласти ← цианобактерии. Имат собствено ДНК и рибозоми."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

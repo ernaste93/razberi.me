@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Куиз – Стилистика и езикови средства – Тест 2 – Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    body { background: var(--bg) url('/logos/background.png') center top / cover fixed; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-main">
+      <div class="brand">
+        <a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img" /></a>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+        <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+        <a href="/urotsi.html" class="nav-btn">Към уроците</a>
+        <div class="user-menu" id="user-menu">
+          <button class="user-chip" id="user-chip" aria-expanded="false">
+            <span class="user-avatar" id="user-avatar">?</span>
+            <script>(function(){{var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;}})();</script>
+            <span class="user-chevron">▾</span>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-email">
+              <div class="user-fullname" id="user-fullname-label"></div>
+              <div class="user-emailaddr" id="user-email-label"></div>
+            </div>
+            <a href="/settings.html">Настройки</a>
+            <a href="/dnevnik-book.html">Дневник</a>
+            <a href="/admin.html" id="btn-admin" style="display:none;">Админ панел</a>
+            <div class="dropdown-divider"></div>
+            <button id="btn-logout">Изход</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title"   id="quiz-title"></div>
+        <div class="quiz-sub"     id="quiz-sub"></div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <div id="quiz-area">
+          <div class="quiz-q-num"  id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row">
+            <button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button>
+          </div>
+        </div>
+        <div id="quiz-results" style="display:none;" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script>
+  <script src="/nav.js"></script>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb = createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/auth.html'; }
+  </script>
+  <script>
+    window.QUIZ_CONFIG = {
+      lessonKey:   'bel10-stilistika-q2',
+      quizNum:     2,
+      nextQuizUrl: '/lessons/bel10-stilistika-quiz-3.html',
+      lessonUrl:   '/lessons/bel10-stilistika.html',
+      lessonName:  'Стилистика и езикови средства',
+      eyebrow:     'БЕЛ · 10 КЛАС · ПРЕГОВОР',
+      title:       'Куиз – Стилистика и езикови средства – Тест 2',
+      passScore:   8,
+      questions: [
+        {
+                "q": "Синекдоха е?",
+                "options": [
+                        "Метафора",
+                        "Частта вместо цялото или обратно – „сто глави добитък\"",
+                        "Хипербола",
+                        "Ирония"
+                ],
+                "correct": 1,
+                "explanation": "Синекдоха: „сто глави\" вместо „сто животни\" – синекдоха чрез частта."
+        },
+        {
+                "q": "Литота е?",
+                "options": [
+                        "Преувеличение",
+                        "Умаляване – „не е лош\" = добър; обратна хипербола",
+                        "Ирония",
+                        "Сравнение"
+                ],
+                "correct": 1,
+                "explanation": "Литота = умаляване/подценяване за ефект – обратното на хиперболата."
+        },
+        {
+                "q": "Алитерацията е?",
+                "options": [
+                        "Повторение на думи",
+                        "Повторение на съгласни звуци – „шум, шепот, шепот\"",
+                        "Рима",
+                        "Анафора"
+                ],
+                "correct": 1,
+                "explanation": "Алитерация: повторение на начален съгласен звук – музикален ефект."
+        },
+        {
+                "q": "Инверсия в синтаксиса е?",
+                "options": [
+                        "Нормален словоред",
+                        "Обърнат словоред за ударение – „Плач го обзе\" вм. „Обзе го плач\"",
+                        "Пропуснат елемент",
+                        "Анафора"
+                ],
+                "correct": 1,
+                "explanation": "Инверсия = нетипичен словоред за подчертаване на важна дума."
+        },
+        {
+                "q": "Епифора е?",
+                "options": [
+                        "Повторение в началото",
+                        "Повторение в края на редовете",
+                        "Пропуснат елемент",
+                        "Хипербола"
+                ],
+                "correct": 1,
+                "explanation": "Епифора = повторение в края на редовете – противоположно на анафората."
+        },
+        {
+                "q": "Елипсисът е?",
+                "options": [
+                        "Повторение",
+                        "Пропускане на подразбиращ се елемент – „Аз – вкъщи; ти – там\"",
+                        "Преувеличение",
+                        "Обръщение"
+                ],
+                "correct": 1,
+                "explanation": "Елипсис: пропуснат, но подразбиращ се граматичен елемент."
+        },
+        {
+                "q": "Градацията е?",
+                "options": [
+                        "Противопоставяне",
+                        "Нарастващо (или намаляващо) изброение – от слабо към силно",
+                        "Повторение",
+                        "Ирония"
+                ],
+                "correct": 1,
+                "explanation": "Градация: нарастваща поредица – „дойде, видя, победи\"."
+        },
+        {
+                "q": "Асонансът е?",
+                "options": [
+                        "Повторение на съгласни",
+                        "Повторение на гласни звуци – „мъгла бяла\"",
+                        "Рима",
+                        "Алитерация"
+                ],
+                "correct": 1,
+                "explanation": "Асонанс = повторение на гласни звуци – създава музикалност."
+        },
+        {
+                "q": "Оксиморонът е?",
+                "options": [
+                        "Преувеличение",
+                        "Съчетаване на противоречиви понятия – „жива смърт\", „шумна тишина\"",
+                        "Сравнение",
+                        "Синекдоха"
+                ],
+                "correct": 1,
+                "explanation": "Оксиморон: привидно противоречие – „жива смърт\"."
+        },
+        {
+                "q": "Перифразата е?",
+                "options": [
+                        "Директно назоваване",
+                        "Описателна замяна – „Цар на джунглата\" вм. „лъв\"",
+                        "Метафора",
+                        "Хипербола"
+                ],
+                "correct": 1,
+                "explanation": "Перифраза: описание вместо директно название."
+        }
+]
+    };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тест 2 - Байрон – Как искам пак да съм дете · Разбери.Ме</title>
+  <link rel="icon" type="image/png" href="/logos/tab_transparent.png?v=2"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <style>body{background:var(--bg) url('/logos/background.png') center top/cover fixed}</style>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-main">
+    <div class="brand"><a href="/"><img src="/logos/transparent_logo.png" alt="Разбери.Ме" class="logo-img"/></a></div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+      <a href="/dnevnik-book.html" class="nav-btn">Дневник</a>
+      <a href="/urotsi.html" class="nav-btn">Уроци</a>
+      <div class="user-menu" id="user-menu">
+        <button class="user-chip" id="user-chip" aria-expanded="false">
+          <span class="user-avatar" id="user-avatar">?</span>
+          <script>(function(){var i=localStorage.getItem('userInitials');if(i)document.getElementById('user-avatar').textContent=i;})()</script>
+          <span class="user-chevron">▾</span>
+        </button>
+        <div class="user-dropdown" id="user-dropdown">
+          <div class="user-email"><div class="user-fullname" id="user-fullname-label"></div><div class="user-emailaddr" id="user-email-label"></div></div>
+          <a href="/settings.html">Настройки</a><a href="/dnevnik-book.html">Дневник</a>
+          <a href="/admin.html" id="btn-admin" style="display:none">Админ панел</a>
+          <div class="dropdown-divider"></div><button id="btn-logout">Изход</button>
+        </div>
+      </div>
+    </div>
+  </div></header>
+  <main>
+    <div class="quiz-page">
+      <div class="breadcrumb" id="quiz-breadcrumb"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-eyebrow" id="quiz-eyebrow"></div>
+        <div class="quiz-title" id="quiz-title"></div>
+        <div class="quiz-sub" id="quiz-sub"></div>
+        <div class="quiz-progress-wrap"><div class="quiz-progress-bar" id="quiz-progress" style="width:0%"></div></div>
+        <div id="quiz-area">
+          <div class="quiz-q-num" id="q-num"></div>
+          <div class="quiz-q-text" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-explanation" id="q-explanation"></div>
+          <div class="quiz-btn-row"><button class="quiz-next-btn" id="btn-next" disabled>Следващ →</button></div>
+        </div>
+        <div id="quiz-results" style="display:none" class="quiz-results"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/sidebar.js"></script><script src="/nav.js"></script>
+  <script type="module">
+    import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+    const sb=createClient('https://wbcppvfgtvkrsfmclmjp.supabase.co','sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l');
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)window.location.href='/auth.html';
+  </script>
+  <script>
+  window.QUIZ_CONFIG={
+    lessonKey:"bel9-bairon-don-juan-q2",
+    quizNum:2,
+    nextQuizUrl:"/lessons/bel9-bairon-don-juan-quiz-3.html",
+    lessonUrl:"/lessons/bel9-bairon-don-juan.html",
+    lessonName:"Байрон – Как искам пак да съм дете",
+    eyebrow:"БЕЛ · 9 клас · Световна литература",
+    title:"Тест 2 - Байрон – Как искам пак да съм дете",
+    passScore:8,
+    questions:[
+  {
+    "q": "Как е изобразено времето в стихотворението?",
+    "options": [
+      "Необратимо – детството е безвъзвратно загубено",
+      "Кръгово – може да се върнем",
+      "Без значение",
+      "Спира в детството"
+    ],
+    "correct": 0,
+    "explanation": "Необратимостта на времето е типична романтична тема."
+  },
+  {
+    "q": "Каква е функцията на природните образи?",
+    "options": [
+      "Символизират невинността и изгубения рай на детството",
+      "Само описание",
+      "Без функция",
+      "Реалистичен фон"
+    ],
+    "correct": 0,
+    "explanation": "Природата е носител на романтичния смисъл."
+  },
+  {
+    "q": "Каква е разликата романтизъм/просвещение?",
+    "options": [
+      "Романтизъм: чувство, природа, индивид; просвещение: разум, прогрес, общество",
+      "Те са еднакви",
+      "Просвещението е по-ново",
+      "Романтизмът е по-стар"
+    ],
+    "correct": 0,
+    "explanation": "Романтизмът е реакция срещу просвещенския рационализъм."
+  },
+  {
+    "q": "Какво означава \"изгубен рай\" като образ?",
+    "options": [
+      "Детството като Eden – невинно, но необратимо загубено",
+      "Религиозен образ",
+      "Място в природата",
+      "Без значение"
+    ],
+    "correct": 0,
+    "explanation": "Библейският образ на рая е секуларизиран в носталгия по детството."
+  },
+  {
+    "q": "Каква е връзката Байрон и романтизма?",
+    "options": [
+      "Байрон е символ на английския романтизъм – бунтар, страстен, меланхоличен",
+      "Не е романтик",
+      "Е реалист",
+      "Е символист"
+    ],
+    "correct": 0,
+    "explanation": "Байрон дава името на байроническия герой."
+  },
+  {
+    "q": "Какво е лирически аз?",
+    "options": [
+      "Поетическият субект, изразяващ чувствата – не задължително самият автор",
+      "Авторът",
+      "Герой в разказ",
+      "Разказвач"
+    ],
+    "correct": 0,
+    "explanation": "Лирическият аз е поетическата маска на автора."
+  },
+  {
+    "q": "Как стихотворението е свързано с романтичната философия?",
+    "options": [
+      "Копнежът по изгубената невинност е типично романтичен мотив",
+      "Без връзка",
+      "Е просвещенско",
+      "Е реалистично"
+    ],
+    "correct": 0,
+    "explanation": "Романтизмът идеализира природата и детството."
+  },
+  {
+    "q": "Каква е строфичната организация?",
+    "options": [
+      "Стихотворението е организирано в строфи с повтарящ се рефрен",
+      "Без строфи",
+      "Сонет",
+      "Терцини"
+    ],
+    "correct": 0,
+    "explanation": "Рефренът засилва носталгичния патос."
+  },
+  {
+    "q": "Каква е позицията на лирическия аз към зрелостта?",
+    "options": [
+      "Разочарован и меланхоличен – зрялостта е загуба",
+      "Доволен от зрелостта",
+      "Равнодушен",
+      "Горд"
+    ],
+    "correct": 0,
+    "explanation": "Разочарованието от зрелостта е байронически лайтмотив."
+  },
+  {
+    "q": "Как стихотворението се свързва с биографията на Байрон?",
+    "options": [
+      "Байрон е преживял трудно детство – автобиографичен елемент",
+      "Без биографична връзка",
+      "Само измислено",
+      "Байрон е щастлив"
+    ],
+    "correct": 0,
+    "explanation": "Байрон израства с крива стъпка и непознат баща – детството е болезнено."
+  }
+]
+  };
+  </script>
+  <script src="/lessons/quiz.js"></script>
+</body></html>
