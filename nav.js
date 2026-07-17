@@ -210,8 +210,8 @@
         }
 
         // Trial popup – веднъж на сесия след логин
-        if (isTrial && !expired && trialStarted && !sessionStorage.getItem('trial_popup_shown')) {
-          sessionStorage.setItem('trial_popup_shown', '1');
+        if (isTrial && !expired && trialStarted && !localStorage.getItem('trial_popup_shown')) {
+          localStorage.setItem('trial_popup_shown', '1');
           var daysLeft = Math.max(0, 3 - Math.floor((Date.now() - new Date(trialStarted)) / 86400000));
           var dayWord = daysLeft === 1 ? 'ден' : 'дни';
           var modal = document.createElement('div');
