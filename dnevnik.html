@@ -136,7 +136,14 @@
       background: #1e3a8a; color: #fff;
       box-shadow: 0 2px 6px rgba(30,58,138,0.25);
     }
-    .chart-canvas-wrap { height: 200px; position: relative; }
+    .chart-canvas-wrap { height: 220px; position: relative; display: flex; align-items: center; justify-content: center; }
+    .chart-donut-wrap { display: flex; align-items: center; gap: 28px; width: 100%; }
+    .chart-donut-canvas { width: 180px !important; height: 180px !important; flex-shrink: 0; }
+    .chart-donut-legend { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .chart-legend-item { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+    .chart-legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .chart-legend-label { color: var(--text); font-weight: 600; flex: 1; }
+    .chart-legend-pct { color: var(--muted); font-size: 13px; font-weight: 700; }
     .chart-empty-msg {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
@@ -488,7 +495,10 @@
               </div>
             </div>
             <div class="chart-canvas-wrap" id="chart-wrap">
-              <canvas id="activity-chart"></canvas>
+              <div class="chart-donut-wrap" id="chart-donut-wrap">
+                <canvas id="activity-chart" class="chart-donut-canvas"></canvas>
+                <div class="chart-donut-legend" id="chart-donut-legend"></div>
+              </div>
               <div class="chart-empty-msg" id="chart-empty" style="display:none;">
                 За този период няма активност.
               </div>
@@ -896,115 +906,84 @@
       grid.appendChild(card);
     });
 
-    // ── Chart ──
-    function buildChartData(period) {
-      const days = period === 'week' ? 7 : period === 'month' ? 30 : 365;
-      const labels = [], data = [];
-
-      function localDateStr(d) {
-        return d.getFullYear() + '-' +
-          String(d.getMonth() + 1).padStart(2, '0') + '-' +
-          String(d.getDate()).padStart(2, '0');
-      }
-      function localMonthStr(d) {
-        return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
-      }
-      function resultLocalDate(r) {
-        return new Date(r.created_at);
-      }
-
-      if (period !== 'year') {
-        for (let i = days - 1; i >= 0; i--) {
-          const d = new Date(now); d.setDate(now.getDate() - i);
-          const ds = localDateStr(d);
-          const rows = quizResults.filter(r => localDateStr(resultLocalDate(r)) === ds);
-          labels.push(d.toLocaleDateString('bg-BG', { day: 'numeric', month: 'short' }));
-          data.push(rows.length > 0
-            ? Math.round(rows.reduce((s, r) => s + r.pct, 0) / rows.length) : null);
-        }
-      } else {
-        for (let i = 11; i >= 0; i--) {
-          const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-          const ms = localMonthStr(d);
-          const rows = quizResults.filter(r => localMonthStr(resultLocalDate(r)) === ms);
-          labels.push(d.toLocaleDateString('bg-BG', { month: 'short' }));
-          data.push(rows.length > 0
-            ? Math.round(rows.reduce((s, r) => s + r.pct, 0) / rows.length) : null);
-        }
-      }
-      return { labels, data };
-    }
+    // ── Chart (donut по предмет) ──
+    const SUBJ_CHART = [
+      { key: 'bel',  label: 'Български',  color: '#3b5bdb' },
+      { key: 'math', label: 'Математика', color: '#7950f2' },
+      { key: 'bio',  label: '#22c55e',    color: '#22c55e', label2: 'Биология' },
+      { key: 'him',  label: 'Химия',      color: '#f59e0b' },
+    ];
+    const SUBJ_CHART_LIST = [
+      { key: 'bel',  label: 'Български',  color: '#3b5bdb' },
+      { key: 'math', label: 'Математика', color: '#7950f2' },
+      { key: 'bio',  label: 'Биология',   color: '#22c55e' },
+      { key: 'him',  label: 'Химия',      color: '#f59e0b' },
+    ];
 
     const ctx = document.getElementById('activity-chart').getContext('2d');
 
-    const dropLinesPlugin = {
-      id: 'dropLines',
-      afterDraw(chart) {
-        const { ctx: c, scales: { y } } = chart;
-        const meta = chart.getDatasetMeta(0);
-        const yBottom = y.getPixelForValue(0);
-        meta.data.forEach((point, index) => {
-          const value = chart.data.datasets[0].data[index];
-          if (value === null || value === undefined) return;
-          c.save();
-          c.beginPath();
-          c.setLineDash([3, 4]);
-          c.strokeStyle = 'rgba(30,64,175,0.25)';
-          c.lineWidth = 1.5;
-          c.moveTo(point.x, point.y + 5);
-          c.lineTo(point.x, yBottom);
-          c.stroke();
-          c.restore();
-        });
-      }
-    };
+    function buildDonutData(period) {
+      const days = period === 'week' ? 7 : period === 'month' ? 30 : 365;
+      const cutoff = new Date(now); cutoff.setDate(cutoff.getDate() - days);
+      const inPeriod = quizResults.filter(r => new Date(r.created_at) >= cutoff);
+      return SUBJ_CHART_LIST.map(s => ({
+        ...s,
+        count: inPeriod.filter(r => r.lesson_slug?.startsWith(s.key)).length,
+      }));
+    }
 
     function renderChart(period) {
-      const { labels, data } = buildChartData(period);
-      const hasData = data.some(v => v !== null);
+      const subjData = buildDonutData(period);
+      const total = subjData.reduce((s, d) => s + d.count, 0);
+      const hasData = total > 0;
+
       document.getElementById('chart-empty').style.display = hasData ? 'none' : 'flex';
-      document.getElementById('chart-wrap').style.display = '';
+      document.getElementById('chart-donut-wrap').style.display = hasData ? 'flex' : 'none';
+
       if (window._dashChart) window._dashChart.destroy();
+
+      if (!hasData) return;
+
       window._dashChart = new Chart(ctx, {
-        plugins: [dropLinesPlugin],
-        type: 'line',
+        type: 'doughnut',
         data: {
-          labels,
+          labels: subjData.map(s => s.label),
           datasets: [{
-            data,
-            borderColor: '#1e40af',
-            backgroundColor: 'rgba(30,64,175,0.07)',
-            borderWidth: 2.5,
-            pointBackgroundColor: '#fff',
-            pointBorderColor: '#1e40af',
-            pointBorderWidth: 2,
-            pointRadius: 4,
-            pointHoverRadius: 6,
-            fill: true,
-            tension: 0.35,
-            spanGaps: true,
+            data: subjData.map(s => s.count || 0.001),
+            backgroundColor: subjData.map(s => s.color),
+            borderWidth: 2,
+            borderColor: '#fff',
+            hoverOffset: 6,
           }]
         },
         options: {
-          responsive: true,
-          maintainAspectRatio: false,
+          responsive: false,
+          cutout: '68%',
           plugins: {
             legend: { display: false },
-            tooltip: { callbacks: { label: c => c.parsed.y !== null ? c.parsed.y + '% успеваемост' : '' } }
-          },
-          scales: {
-            y: {
-              min: 0, max: 100,
-              ticks: { callback: v => v + '%', font: { family: 'Nunito Sans', size: 11 }, color: '#94a3b8', stepSize: 25 },
-              grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false },
-            },
-            x: {
-              ticks: { font: { family: 'Nunito Sans', size: 11 }, color: '#94a3b8', maxTicksLimit: 8 },
-              grid: { display: false }, border: { display: false },
+            tooltip: {
+              callbacks: {
+                label: c => {
+                  const real = subjData[c.dataIndex].count;
+                  const pct = total > 0 ? Math.round(real / total * 100) : 0;
+                  return real + ' теста · ' + pct + '%';
+                }
+              }
             }
           }
         }
       });
+
+      // Легенда вдясно
+      const legend = document.getElementById('chart-donut-legend');
+      legend.innerHTML = subjData.map(s => {
+        const pct = total > 0 ? Math.round(s.count / total * 100) : 0;
+        return `<div class="chart-legend-item">
+          <div class="chart-legend-dot" style="background:${s.color}"></div>
+          <span class="chart-legend-label">${s.label}</span>
+          <span class="chart-legend-pct">${pct}%</span>
+        </div>`;
+      }).join('');
     }
 
     renderChart('month');
