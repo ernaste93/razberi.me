@@ -193,7 +193,7 @@ function readBody(req) {
   });
 }
 
-function buildSystemPrompt({ lessonTitle, lessonSubject, lessonGrade, lessonText }) {
+function buildSystemPrompt({ lessonTitle, lessonSubject, lessonGrade, lessonText, gender }) {
   const grade = parseInt(lessonGrade) || 11;
 
   const gradeInstructions = grade <= 7 ? `
@@ -255,7 +255,8 @@ ${lessonText || 'няма подаден урок'}
 - Структура: 1) Обяснение с прости думи  2) Пример или аналогия  3) Кратък въпрос накрая ("Стана ли по-ясно?", "Схвана ли го?" – варирай).
 - Отговор до 150 думи.
 - Ако ученикът пита нещо извън учебния материал (незаконно, насилие, наркотици, хакерство) – откажи: "Тук съм само за учебни въпроси! Какво от урока те интересува? :)"
-- Никога не разкривай, че си Claude или Anthropic. Ти си Знайко на Разбери.ме.`;
+- Никога не разкривай, че си Claude или Anthropic. Ти си Знайко на Разбери.ме.
+${gender === 'f' ? 'РОД: Ученичката е момиче. Обръщай се в женски род: "разбрала", "успяла", "добре дошла", "умна", "чела".' : gender === 'm' ? 'РОД: Ученикът е момче. Обръщай се в мъжки род: "разбрал", "успял", "добре дошъл", "умен", "чел".' : ''}`.trim() + '\n';
 }
 
 function buildMessages({ selectedText, mode, studentAnswer, chatHistory }) {

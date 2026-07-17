@@ -394,17 +394,41 @@ function slugToTitle(slug) {
   return slug.replace(/^(bel|bio|chem|math|ist)\d+[-_]?/, '').replace(/-/g, ' ');
 }
 
+const LABELS = ['А', 'Б', 'В', 'Г', 'Д'];
+
 function renderQuizBody(r) {
-  if (!r.details || !r.details.length) return '<p style="color:var(--muted)">Няма детайли.</p>';
-  const rows = r.details.map(q => {
+  if (!r.details || !r.details.length) return '<p style="color:var(--muted)">Направи нов тест — детайлите ще се запазват от сега нататък.</p>';
+  const id = 'qb-' + Math.random().toString(36).slice(2);
+  const rows = r.details.map((q, qi) => {
     const icon = q.is_correct ? '✅' : '❌';
-    let sub = '';
-    if (!q.is_correct) {
-      sub = `<div class="q-sub"><span class="q-correct">✓ ${q.correct_answer}</span>${q.chosen_answer ? ` &nbsp;·&nbsp; <span class="q-chosen">✗ ${q.chosen_answer}</span>` : ''}</div>`;
-    }
-    return `<div class="q-row"><span class="q-icon">${icon}</span><div class="q-text">${q.question || ''}${sub}</div></div>`;
+    const opts = q.opts || [];
+    const optRows = opts.map((opt, oi) => {
+      const isCorrect = oi === q.correct_index;
+      const isChosen  = oi === q.chosen_index;
+      let bg = 'transparent'; let color = 'var(--text)'; let indicator = '&nbsp;';
+      if (isCorrect && isChosen)  { bg = '#dcfce7'; color = 'var(--pass)'; indicator = '✓'; }
+      else if (isCorrect)         { bg = '#dcfce7'; color = 'var(--pass)'; indicator = '✓'; }
+      else if (isChosen)          { bg = '#fee2e2'; color = 'var(--fail)'; indicator = '✗'; }
+      return `<div style="display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:6px;background:${bg};color:${color};font-size:0.83rem;line-height:1.5;">
+        <span style="width:14px;text-align:center;flex-shrink:0;font-size:0.8rem;">${indicator}</span>
+        <span><strong>${LABELS[oi]}.</strong> ${opt.replace(/</g,'&lt;')}</span>
+      </div>`;
+    }).join('');
+    const qid = `${id}-${qi}`;
+    return `
+      <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+        <div onclick="var d=document.getElementById('${qid}');var open=d.style.display!=='none';d.style.display=open?'none':'flex';this.querySelector('.qchev').style.transform=open?'':'rotate(90deg)';"
+             style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;user-select:none;background:var(--surface);">
+          <span style="font-size:0.9rem;flex-shrink:0;">${icon}</span>
+          <span style="flex:1;font-size:0.88rem;font-weight:500;">В${qi+1}. ${(q.question||'').replace(/</g,'&lt;')}</span>
+          <span class="qchev" style="font-size:0.7rem;color:var(--muted);transition:transform 0.2s;">▶</span>
+        </div>
+        <div id="${qid}" style="display:none;flex-direction:column;gap:4px;padding:10px 12px;background:var(--bg);border-top:1px solid var(--border);">
+          ${optRows}
+        </div>
+      </div>`;
   });
-  return `<div class="quiz-questions">${rows.join('')}</div>`;
+  return `<div style="display:flex;flex-direction:column;gap:6px;">${rows.join('')}</div>`;
 }
 
 function renderEssayBody(r) {

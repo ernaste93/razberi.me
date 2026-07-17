@@ -87,17 +87,18 @@
   // ── Select answer ────────────────────────────────────────
   function selectAnswer(idx) {
     if (answered) return;
-    answered = true;
     userAnswers[cur] = idx;
     document.querySelectorAll('.quiz-option').forEach((btn, i) => {
-      btn.disabled = true;
-      if (i === idx) btn.classList.add('selected');
+      btn.classList.toggle('selected', i === idx);
     });
     document.getElementById('btn-next').disabled = false;
   }
 
   // ── Next button ──────────────────────────────────────────
   document.getElementById('btn-next').addEventListener('click', () => {
+    if (userAnswers[cur] === undefined) return;
+    answered = true;
+    document.querySelectorAll('.quiz-option').forEach(btn => { btn.disabled = true; });
     const area = document.getElementById('quiz-area');
     area.style.transition = 'opacity .15s, transform .15s';
     area.style.opacity    = '0';
@@ -232,7 +233,10 @@
           details: qs.map(function(q, i) {
             return {
               question: q.q,
+              opts: q.opts,
+              correct_index: q.correct,
               correct_answer: q.opts[q.correct],
+              chosen_index: userAnswers[i] !== undefined ? userAnswers[i] : null,
               chosen_answer: userAnswers[i] !== undefined ? q.opts[userAnswers[i]] : null,
               is_correct: userAnswers[i] === q.correct,
             };

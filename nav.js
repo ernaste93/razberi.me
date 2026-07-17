@@ -58,6 +58,13 @@
       var email = user.email;
       window.__supabaseToken = session.access_token;
 
+      // Зареди пола на потребителя за Знайко
+      fetch(SUPABASE_URL + '/rest/v1/profiles?id=eq.' + user.id + '&select=gender', {
+        headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + session.access_token }
+      }).then(function(r) { return r.json(); }).then(function(rows) {
+        if (rows && rows[0] && rows[0].gender) window.__userGender = rows[0].gender;
+      }).catch(function() {});
+
       // При смяна на акаунт – изчисти trial данните на предишния потребител
       var storedUserId = localStorage.getItem('current_user_id');
       if (storedUserId && storedUserId !== user.id) {
@@ -87,9 +94,37 @@
       document.getElementById('user-email-label') &&
         (document.getElementById('user-email-label').textContent = email);
 
-      sb.from('profiles').select('full_name, plan, trial_started_at, trial_quiz_count, trial_lessons_opened').eq('id', user.id).maybeSingle().then(function (r) {
+      sb.from('profiles').select('full_name, plan, trial_started_at, trial_quiz_count, trial_lessons_opened, grade, gender').eq('id', user.id).maybeSingle().then(function (r) {
         var fullName = (r.data && r.data.full_name) || '';
         var initials = getInitials(fullName, email);
+
+        // Google OAuth новi потребители — нямат клас, питаме ги веднъж
+        if (r.data && !r.data.grade && !sessionStorage.getItem('setup_shown')) {
+          sessionStorage.setItem('setup_shown', '1');
+          var setupModal = document.createElement('div');
+          setupModal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:10001;display:flex;align-items:center;justify-content:center;';
+          setupModal.innerHTML = '<div style="background:#fff;border-radius:20px;padding:36px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.25);">' +
+            '<h2 style="font-size:20px;font-weight:800;color:#0f172a;margin:0 0 6px;">Последна стъпка!</h2>' +
+            '<p style="font-size:14px;color:#475569;margin:0 0 20px;">Кажи ни в кой клас си, за да персонализираме съдържанието.</p>' +
+            '<label style="font-size:13px;font-weight:600;color:#64748b;display:block;margin-bottom:6px;">Клас</label>' +
+            '<select id="setup-grade" style="width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:15px;font-family:inherit;margin-bottom:14px;">' +
+            '<option value="7">7. клас</option><option value="8">8. клас</option><option value="9">9. клас</option>' +
+            '<option value="10">10. клас</option><option value="11">11. клас</option><option value="12" selected>12. клас</option>' +
+            '</select>' +
+            '<label style="font-size:13px;font-weight:600;color:#64748b;display:block;margin-bottom:6px;">Пол</label>' +
+            '<div style="display:flex;gap:10px;margin-bottom:20px;">' +
+            '<button id="setup-m" onclick="document.getElementById(\'setup-m\').style.background=\'#1d4ed8\';document.getElementById(\'setup-m\').style.color=\'#fff\';document.getElementById(\'setup-f\').style.background=\'#fff\';document.getElementById(\'setup-f\').style.color=\'#0f172a\';" style="flex:1;padding:10px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;background:#fff;color:#0f172a;font-family:inherit;">Момче</button>' +
+            '<button id="setup-f" onclick="document.getElementById(\'setup-f\').style.background=\'#1d4ed8\';document.getElementById(\'setup-f\').style.color=\'#fff\';document.getElementById(\'setup-m\').style.background=\'#fff\';document.getElementById(\'setup-m\').style.color=\'#0f172a\';" style="flex:1;padding:10px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;background:#fff;color:#0f172a;font-family:inherit;">Момиче</button>' +
+            '</div>' +
+            '<button onclick="(function(){' +
+              'var g=parseInt(document.getElementById(\'setup-grade\').value);' +
+              'var gnd=document.getElementById(\'setup-m\').style.background===\'rgb(29, 78, 216)\'?\'m\':document.getElementById(\'setup-f\').style.background===\'rgb(29, 78, 216)\'?\'f\':null;' +
+              'fetch(\'https://wbcppvfgtvkrsfmclmjp.supabase.co/rest/v1/profiles?id=eq.' + user.id + '\',{method:\'PATCH\',headers:{apikey:\'sb_publishable_7Z_7D7Zpl42erySzKs9FmQ_cB8vt-5l\',Authorization:\'Bearer ' + session.access_token + '\',\'Content-Type\':\'application/json\'},body:JSON.stringify({grade:g,gender:gnd,plan:\'trial\',trial_started_at:new Date().toISOString()})});' +
+              'document.body.removeChild(document.body.lastChild);' +
+            '})()" style="width:100%;padding:13px;border-radius:12px;border:0;background:#1d4ed8;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;">Запази</button>' +
+          '</div>';
+          document.body.appendChild(setupModal);
+        }
         localStorage.setItem('userInitials', initials);
         var av = document.getElementById('user-avatar');
         if (av) av.textContent = initials;

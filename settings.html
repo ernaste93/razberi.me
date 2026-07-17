@@ -593,6 +593,15 @@
                 <input type="email" id="s-email" disabled />
                 <span class="field-hint">Имейлът не може да се промени оттук.</span>
               </div>
+              <div class="field">
+                <label>Пол</label>
+                <select id="s-gender">
+                  <option value="">Не е зададен</option>
+                  <option value="m">Момче</option>
+                  <option value="f">Момиче</option>
+                </select>
+                <span class="field-hint">Знайко ще се обръща към теб в правилния род.</span>
+              </div>
             </div>
             <div class="btn-row">
               <button class="btn btn-primary" id="save-profile">Запази промените</button>
@@ -959,6 +968,7 @@
 
     const { data: prof } = await sb.from('profiles').select('*').eq('id', user.id).single();
     const fullName = prof?.full_name || '';
+    if (prof?.gender) document.getElementById('s-gender').value = prof.gender;
     document.getElementById('user-fullname-label').textContent = fullName || user.email.split('@')[0];
     // Обновяваме с истинското име и кешираме (освен ако е избран аватар)
     const initials = getInitials(fullName, user.email);
@@ -1033,7 +1043,8 @@
       btn.disabled = true;
       btn.textContent = 'Запазване...';
 
-      const { error } = await sb.from('profiles').update({ full_name: name }).eq('id', user.id);
+      const gender = document.getElementById('s-gender').value || null;
+      const { error } = await sb.from('profiles').update({ full_name: name, gender }).eq('id', user.id);
 
       btn.disabled = false;
       btn.textContent = 'Запази промените';

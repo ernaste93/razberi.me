@@ -159,6 +159,7 @@
           mode,
           chatHistory:   aiHistory.slice(-8),
           lessonSlug:    window.location.pathname.split('/').pop().replace('.html', ''),
+          gender:        window.__userGender || null,
         }),
       });
       const data = await res.json();
