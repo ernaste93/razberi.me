@@ -282,8 +282,8 @@
     .picker-no-results { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; font-weight: 600; }
 
     /* Picker filters */
-    .picker-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-    .picker-filter {
+    .picker-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+    .picker-tab {
       padding: 9px 22px;
       border-radius: 10px;
       border: 1.5px solid #e2e8f0;
@@ -295,8 +295,23 @@
       cursor: pointer;
       transition: border-color .15s, color .15s, background .15s;
     }
-    .picker-filter:hover { border-color: var(--accent); color: var(--accent); }
-    .picker-filter.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .picker-tab:hover { border-color: #1a2f5a; color: #1a2f5a; }
+    .picker-tab.active { background: #1a2f5a; color: #fff; border-color: #1a2f5a; }
+    .picker-grades { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+    .picker-grade {
+      padding: 6px 16px;
+      border-radius: 8px;
+      border: 1.5px solid #e2e8f0;
+      background: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .picker-grade:hover { border-color: var(--accent); color: var(--accent); }
+    .picker-grade.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
     /* Error */
     .error-wrap { text-align: center; padding: 40px 0; }
@@ -367,36 +382,23 @@
 
 <!-- Picker (показва се когато няма ?key=) -->
 <div id="picker" style="display:none; max-width:900px; margin:32px auto; padding:0 24px;">
-  <h2 style="font-size:20px;font-weight:800;color:#1e3a5f;margin-bottom:6px;">Избери урок</h2>
-  <p style="font-size:14px;color:#64748b;margin-bottom:20px;">Избери урок, за да видиш конспект, речник, въпроси за устен изпит и още.</p>
+  <div style="background:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 1px 4px rgba(0,0,0,0.06);margin-bottom:20px;">
+    <h2 style="font-size:20px;font-weight:800;color:#1e3a5f;margin:0 0 4px;">Избери урок</h2>
+    <p style="font-size:14px;color:#64748b;margin:0;">Избери урок, за да видиш конспект, речник, въпроси за устен изпит и още.</p>
+  </div>
   <div class="picker-search-wrap">
     <span class="picker-search-icon">
       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     </span>
     <input class="picker-search" id="picker-search" type="text" placeholder="Търси урок..." autocomplete="off" spellcheck="false" />
   </div>
-  <div class="picker-filters" id="picker-filters">
-    <button class="picker-filter active" data-filter="all">Всички</button>
-    <button class="picker-filter" data-filter="bel12">БЕЛ 12 кл.</button>
-    <button class="picker-filter" data-filter="bel11">БЕЛ 11 кл.</button>
-    <button class="picker-filter" data-filter="bel10">БЕЛ 10 кл.</button>
-    <button class="picker-filter" data-filter="bel9">БЕЛ 9 кл.</button>
-    <button class="picker-filter" data-filter="bel8">БЕЛ 8 кл.</button>
-    <button class="picker-filter" data-filter="bel7">БЕЛ 7 кл.</button>
-    <button class="picker-filter" data-filter="bio11">Биол. 11/12</button>
-    <button class="picker-filter" data-filter="bio10">Биол. 10 кл.</button>
-    <button class="picker-filter" data-filter="bio9">Биол. 9 кл.</button>
-    <button class="picker-filter" data-filter="bio8">Биол. 8 кл.</button>
-    <button class="picker-filter" data-filter="chem11">Хим. 11/12</button>
-    <button class="picker-filter" data-filter="chem10">Хим. 10 кл.</button>
-    <button class="picker-filter" data-filter="chem9">Хим. 9 кл.</button>
-    <button class="picker-filter" data-filter="chem8">Хим. 8 кл.</button>
-    <button class="picker-filter" data-filter="math1">Мат. 12/11</button>
-    <button class="picker-filter" data-filter="math10">Мат. 10 кл.</button>
-    <button class="picker-filter" data-filter="math9">Мат. 9 кл.</button>
-    <button class="picker-filter" data-filter="math8">Мат. 8 кл.</button>
-    <button class="picker-filter" data-filter="math7">Мат. 7 кл.</button>
+  <div class="picker-tabs" id="picker-tabs">
+    <button class="picker-tab active" data-subj="bel">БЕЛ</button>
+    <button class="picker-tab" data-subj="math">Математика</button>
+    <button class="picker-tab" data-subj="bio">Биология</button>
+    <button class="picker-tab" data-subj="chem">Химия</button>
   </div>
+  <div class="picker-grades" id="picker-grades"></div>
   <div class="picker-summary" id="picker-summary" style="display:none;">
     <span class="ps-num" id="ps-count">0</span><span class="ps-lbl">урока</span>
     <span class="ps-sep">·</span>
@@ -737,27 +739,66 @@ if (!lessonKey) {
     document.getElementById('ps-count').textContent = visible;
   }
 
-  document.getElementById('picker-filters').addEventListener('click', e => {
-    const btn = e.target.closest('.picker-filter');
-    if (!btn) return;
-    document.querySelectorAll('.picker-filter').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const f = btn.dataset.filter;
-    const searchEl = document.getElementById('picker-search');
-    if (searchEl) searchEl.value = '';
+  const SUBJ_GRADES = {
+    bel:  [['bel12','12 кл.'],['bel11','11 кл.'],['bel10','10 кл.'],['bel9','9 кл.'],['bel8','8 кл.'],['bel7','7 кл.']],
+    math: [['math1','12/11 кл.'],['math10','10 кл.'],['math9','9 кл.'],['math8','8 кл.'],['math7','7 кл.']],
+    bio:  [['bio11','11/12 кл.'],['bio10','10 кл.'],['bio9','9 кл.'],['bio8','8 кл.']],
+    chem: [['chem11','11/12 кл.'],['chem10','10 кл.'],['chem9','9 кл.'],['chem8','8 кл.']],
+  };
+
+  let activeSubj = 'bel';
+  let activeGrade = 'bel12';
+
+  function renderGrades(subj) {
+    const gradesEl = document.getElementById('picker-grades');
+    gradesEl.innerHTML = SUBJ_GRADES[subj].map(([key, label], i) =>
+      `<button class="picker-grade${i === 0 ? ' active' : ''}" data-grade="${key}">${label}</button>`
+    ).join('');
+  }
+
+  function applyFilter(prefix) {
     document.querySelectorAll('.picker-group').forEach(g => {
-      g.style.display = (f === 'all' || g.dataset.prefix === f) ? '' : 'none';
+      g.style.display = g.dataset.prefix === prefix ? '' : 'none';
     });
     document.querySelectorAll('.mat-picker-card').forEach(a => a.style.display = '');
     const noRes = document.getElementById('picker-no-results');
     if (noRes) noRes.remove();
     updateSummary();
+  }
+
+  // Subject tabs
+  document.getElementById('picker-tabs').addEventListener('click', e => {
+    const btn = e.target.closest('.picker-tab');
+    if (!btn) return;
+    document.querySelectorAll('.picker-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeSubj = btn.dataset.subj;
+    renderGrades(activeSubj);
+    // Auto-select first grade
+    activeGrade = SUBJ_GRADES[activeSubj][0][0];
+    if (document.getElementById('picker-search')) document.getElementById('picker-search').value = '';
+    applyFilter(activeGrade);
   });
+
+  // Grade buttons (delegated)
+  document.getElementById('picker-grades').addEventListener('click', e => {
+    const btn = e.target.closest('.picker-grade');
+    if (!btn) return;
+    document.querySelectorAll('.picker-grade').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeGrade = btn.dataset.grade;
+    if (document.getElementById('picker-search')) document.getElementById('picker-search').value = '';
+    applyFilter(activeGrade);
+  });
+
+  // Init
+  renderGrades('bel');
+  applyFilter('bel12');
 
   // ── Search ──
   document.getElementById('picker-search').addEventListener('input', function () {
     const q = this.value.trim().toLowerCase();
-    const activeFilter = (document.querySelector('.picker-filter.active') || {}).dataset?.filter || 'all';
+    const activeFilter = activeGrade || 'bel12';
     let totalVisible = 0;
 
     document.querySelectorAll('.picker-group').forEach(group => {
