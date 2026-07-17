@@ -906,21 +906,37 @@
       grid.appendChild(card);
     });
 
-    // ── Chart (donut по предмет) ──
-    const SUBJ_CHART = [
-      { key: 'bel',  label: 'Български',  color: '#3b5bdb' },
-      { key: 'math', label: 'Математика', color: '#7950f2' },
-      { key: 'bio',  label: '#22c55e',    color: '#22c55e', label2: 'Биология' },
-      { key: 'him',  label: 'Химия',      color: '#f59e0b' },
-    ];
+    // ── Chart (donut прогрес) ──
     const SUBJ_CHART_LIST = [
-      { key: 'bel',  label: 'Български',  color: '#3b5bdb' },
-      { key: 'math', label: 'Математика', color: '#7950f2' },
-      { key: 'bio',  label: 'Биология',   color: '#22c55e' },
-      { key: 'him',  label: 'Химия',      color: '#f59e0b' },
+      { key: 'bel',  label: 'Български',  color: '#2563eb' },
+      { key: 'math', label: 'Математика', color: '#f97316' },
+      { key: 'bio',  label: 'Биология',   color: '#16a34a' },
+      { key: 'him',  label: 'Химия',      color: '#dc2626' },
     ];
+    const CHART_CAPACITY = 60; // максимален брой тестове за пълен пръстен
 
     const ctx = document.getElementById('activity-chart').getContext('2d');
+
+    // Плъгин за текст в центъра
+    const centerTextPlugin = {
+      id: 'centerText',
+      afterDraw(chart) {
+        const { ctx: c, chartArea: { width, height, left, top } } = chart;
+        const total = chart.config._meta_total || 0;
+        const cx = left + width / 2;
+        const cy = top + height / 2;
+        c.save();
+        c.textAlign = 'center';
+        c.textBaseline = 'middle';
+        c.font = '700 28px Nunito Sans';
+        c.fillStyle = '#0f172a';
+        c.fillText(total, cx, cy - 10);
+        c.font = '500 12px Nunito Sans';
+        c.fillStyle = '#94a3b8';
+        c.fillText('теста', cx, cy + 14);
+        c.restore();
+      }
+    };
 
     function buildDonutData(period) {
       const days = period === 'week' ? 7 : period === 'month' ? 30 : 365;
@@ -935,55 +951,58 @@
     function renderChart(period) {
       const subjData = buildDonutData(period);
       const total = subjData.reduce((s, d) => s + d.count, 0);
-      const hasData = total > 0;
+      const remaining = Math.max(0, CHART_CAPACITY - total);
 
-      document.getElementById('chart-empty').style.display = hasData ? 'none' : 'flex';
-      document.getElementById('chart-donut-wrap').style.display = hasData ? 'flex' : 'none';
+      document.getElementById('chart-empty').style.display = 'none';
+      document.getElementById('chart-donut-wrap').style.display = 'flex';
 
       if (window._dashChart) window._dashChart.destroy();
 
-      if (!hasData) return;
+      const chartData = [...subjData.map(s => s.count), remaining];
+      const chartColors = [...subjData.map(s => s.color), '#e2e8f0'];
+      const chartLabels = [...subjData.map(s => s.label), 'Неизработено'];
 
       window._dashChart = new Chart(ctx, {
+        plugins: [centerTextPlugin],
         type: 'doughnut',
         data: {
-          labels: subjData.map(s => s.label),
+          labels: chartLabels,
           datasets: [{
-            data: subjData.map(s => s.count || 0.001),
-            backgroundColor: subjData.map(s => s.color),
-            borderWidth: 2,
+            data: chartData,
+            backgroundColor: chartColors,
+            borderWidth: chartData.map((v, i) => i < subjData.length && v > 0 ? 2 : 0),
             borderColor: '#fff',
-            hoverOffset: 6,
+            hoverOffset: 5,
           }]
         },
         options: {
           responsive: false,
-          cutout: '68%',
+          cutout: '70%',
           plugins: {
             legend: { display: false },
             tooltip: {
               callbacks: {
                 label: c => {
-                  const real = subjData[c.dataIndex].count;
-                  const pct = total > 0 ? Math.round(real / total * 100) : 0;
-                  return real + ' теста · ' + pct + '%';
+                  if (c.dataIndex === subjData.length) return 'Неизработено';
+                  const s = subjData[c.dataIndex];
+                  return s.count + ' теста';
                 }
-              }
+              },
+              filter: item => item.dataIndex < subjData.length && subjData[item.dataIndex].count > 0,
             }
           }
         }
       });
+      window._dashChart.config._meta_total = total;
 
-      // Легенда вдясно
+      // Легенда вдясно — само предмети с активност
       const legend = document.getElementById('chart-donut-legend');
-      legend.innerHTML = subjData.map(s => {
-        const pct = total > 0 ? Math.round(s.count / total * 100) : 0;
-        return `<div class="chart-legend-item">
-          <div class="chart-legend-dot" style="background:${s.color}"></div>
-          <span class="chart-legend-label">${s.label}</span>
-          <span class="chart-legend-pct">${pct}%</span>
-        </div>`;
-      }).join('');
+      legend.innerHTML = subjData.map(s => `
+        <div class="chart-legend-item">
+          <div class="chart-legend-dot" style="background:${s.color};opacity:${s.count > 0 ? 1 : 0.25}"></div>
+          <span class="chart-legend-label" style="opacity:${s.count > 0 ? 1 : 0.4}">${s.label}</span>
+          <span class="chart-legend-pct" style="opacity:${s.count > 0 ? 1 : 0.35}">${s.count > 0 ? s.count + ' теста' : '–'}</span>
+        </div>`).join('');
     }
 
     renderChart('month');
