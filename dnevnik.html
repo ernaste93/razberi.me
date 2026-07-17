@@ -913,11 +913,29 @@
       { key: 'bio',  label: 'Биология',   color: '#16a34a' },
       { key: 'him',  label: 'Химия',      color: '#dc2626' },
     ];
-    const CHART_CAPACITY = 60; // максимален брой тестове за пълен пръстен
+    const CHART_CAPACITY = 80;
 
     const ctx = document.getElementById('activity-chart').getContext('2d');
 
-    // Плъгин за текст в центъра
+    // Брой прочетени уроци от localStorage (без период — нямаме timestamp)
+    function countLessons() {
+      const counts = { bel: 0, math: 0, bio: 0, him: 0 };
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key || !key.startsWith('lp_')) continue;
+        try {
+          const data = JSON.parse(localStorage.getItem(key) || '{}');
+          if ((data.p || 0) < 50) continue;
+          const slug = key.slice(3);
+          if (slug.startsWith('bel'))                         counts.bel++;
+          else if (slug.startsWith('mat') || slug.startsWith('math')) counts.math++;
+          else if (slug.startsWith('bio'))                    counts.bio++;
+          else if (slug.startsWith('him') || slug.startsWith('chem')) counts.him++;
+        } catch(e) {}
+      }
+      return counts;
+    }
+
     const centerTextPlugin = {
       id: 'centerText',
       afterDraw(chart) {
@@ -933,7 +951,7 @@
         c.fillText(total, cx, cy - 10);
         c.font = '500 12px Nunito Sans';
         c.fillStyle = '#94a3b8';
-        c.fillText('теста', cx, cy + 14);
+        c.fillText('активности', cx, cy + 14);
         c.restore();
       }
     };
@@ -941,11 +959,13 @@
     function buildDonutData(period) {
       const days = period === 'week' ? 7 : period === 'month' ? 30 : 365;
       const cutoff = new Date(now); cutoff.setDate(cutoff.getDate() - days);
-      const inPeriod = quizResults.filter(r => new Date(r.created_at) >= cutoff);
-      return SUBJ_CHART_LIST.map(s => ({
-        ...s,
-        count: inPeriod.filter(r => r.lesson_slug?.startsWith(s.key)).length,
-      }));
+      const lessons = countLessons();
+      return SUBJ_CHART_LIST.map(s => {
+        const quizCount   = quizResults.filter(r => new Date(r.created_at) >= cutoff && r.lesson_slug?.startsWith(s.key)).length;
+        const essayCount  = essayResults.filter(e => new Date(e.created_at) >= cutoff && e.lesson_slug?.startsWith(s.key)).length;
+        const lessonCount = lessons[s.key] || 0;
+        return { ...s, quizCount, essayCount, lessonCount, count: quizCount + essayCount + lessonCount };
+      });
     }
 
     function renderChart(period) {
@@ -953,24 +973,18 @@
       const total = subjData.reduce((s, d) => s + d.count, 0);
       const remaining = Math.max(0, CHART_CAPACITY - total);
 
-      document.getElementById('chart-empty').style.display = 'none';
       document.getElementById('chart-donut-wrap').style.display = 'flex';
-
       if (window._dashChart) window._dashChart.destroy();
-
-      const chartData = [...subjData.map(s => s.count), remaining];
-      const chartColors = [...subjData.map(s => s.color), '#e2e8f0'];
-      const chartLabels = [...subjData.map(s => s.label), 'Неизработено'];
 
       window._dashChart = new Chart(ctx, {
         plugins: [centerTextPlugin],
         type: 'doughnut',
         data: {
-          labels: chartLabels,
+          labels: [...subjData.map(s => s.label), 'Неизработено'],
           datasets: [{
-            data: chartData,
-            backgroundColor: chartColors,
-            borderWidth: chartData.map((v, i) => i < subjData.length && v > 0 ? 2 : 0),
+            data: [...subjData.map(s => s.count), Math.max(remaining, total === 0 ? 1 : 0)],
+            backgroundColor: [...subjData.map(s => s.color), '#e2e8f0'],
+            borderWidth: [...subjData.map(s => s.count > 0 ? 2 : 0), 0],
             borderColor: '#fff',
             hoverOffset: 5,
           }]
@@ -983,9 +997,13 @@
             tooltip: {
               callbacks: {
                 label: c => {
-                  if (c.dataIndex === subjData.length) return 'Неизработено';
+                  if (c.dataIndex === subjData.length) return '';
                   const s = subjData[c.dataIndex];
-                  return s.count + ' теста';
+                  const parts = [];
+                  if (s.quizCount)  parts.push(s.quizCount + ' теста');
+                  if (s.essayCount) parts.push(s.essayCount + ' съчин.');
+                  if (s.lessonCount) parts.push(s.lessonCount + ' урока');
+                  return parts.join(' · ') || '–';
                 }
               },
               filter: item => item.dataIndex < subjData.length && subjData[item.dataIndex].count > 0,
@@ -995,13 +1013,12 @@
       });
       window._dashChart.config._meta_total = total;
 
-      // Легенда вдясно — само предмети с активност
       const legend = document.getElementById('chart-donut-legend');
       legend.innerHTML = subjData.map(s => `
         <div class="chart-legend-item">
           <div class="chart-legend-dot" style="background:${s.color};opacity:${s.count > 0 ? 1 : 0.25}"></div>
           <span class="chart-legend-label" style="opacity:${s.count > 0 ? 1 : 0.4}">${s.label}</span>
-          <span class="chart-legend-pct" style="opacity:${s.count > 0 ? 1 : 0.35}">${s.count > 0 ? s.count + ' теста' : '–'}</span>
+          <span class="chart-legend-pct" style="opacity:${s.count > 0 ? 1 : 0.35}">${s.count > 0 ? s.count + ' акт.' : '–'}</span>
         </div>`).join('');
     }
 
