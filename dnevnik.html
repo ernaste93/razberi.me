@@ -861,13 +861,13 @@
       let bodyHTML;
       if (sub.locked) {
         bodyHTML = `<div class="subj-locked">
-          <div style="font-size:24px;">🔒</div>
+          <div style="color:var(--muted);">${SVG_WRAP(`<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>`)}</div>
           <div>Заключено в безплатния план</div>
           <a href="/index.html#pricing">Отключи с абонамент →</a>
         </div>`;
       } else if (!sub.hasContent) {
         bodyHTML = `<div class="subj-locked">
-          <div style="font-size:22px;">🚧</div>
+          <div style="color:var(--muted);">${SVG_WRAP(`<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>`)}</div>
           <div>Уроци – очаквайте скоро</div>
         </div>`;
       } else {
@@ -1288,7 +1288,7 @@
         ? `${streak} <span>${streak === 1 ? 'ден' : 'дни'}</span>`
         : `<span style="color:#94a3b8;font-size:18px;">Няма</span>`;
       document.getElementById('eng-streak-sub').textContent =
-        streak >= 7 ? '🔥 Страхотна серия!' :
+        streak >= 7 ? 'Страхотна серия!' :
         streak >= 3 ? 'Продължавай така!' :
         streak === 1 ? 'Добро начало!' : 'Учи днес за серия';
 
