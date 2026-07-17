@@ -129,8 +129,14 @@
     .msg-assistant { background: #3b1f6e; }
   }
 
-  .empty-state { text-align: center; padding: 64px 20px; color: var(--muted); }
-  .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
+  .empty-state {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
 
   .loading { text-align: center; padding: 48px; color: var(--muted); }
   .error-msg { background: #fee2e2; color: var(--fail); border-radius: var(--radius); padding: 14px 18px; font-size: 0.9rem; }
@@ -457,7 +463,7 @@ function render() {
   const filtered = activeFilter === 'all' ? allEvents : allEvents.filter(e => e._type === activeFilter);
 
   if (!filtered.length) {
-    container.innerHTML = `<div class="empty-state"><div class="icon">📭</div><p>Няма записи${activeFilter !== 'all' ? ' от този тип' : ''}.</p></div>`;
+    container.innerHTML = `<div class="empty-state">Няма записи${activeFilter !== 'all' ? ' от този тип' : ''}.</div>`;
     return;
   }
 
