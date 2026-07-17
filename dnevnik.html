@@ -951,7 +951,7 @@
         c.fillText(total, cx, cy - 12);
         c.font = '600 14px Nunito Sans';
         c.fillStyle = '#94a3b8';
-        c.fillText('активности', cx, cy + 16);
+        c.fillText('точки', cx, cy + 16);
         c.restore();
       }
     };
@@ -1021,7 +1021,7 @@
         <div class="chart-legend-item">
           <div class="chart-legend-dot" style="background:${s.color};opacity:${s.count > 0 ? 1 : 0.25}"></div>
           <span class="chart-legend-label" style="opacity:${s.count > 0 ? 1 : 0.4}">${s.label}</span>
-          <span class="chart-legend-pct" style="opacity:${s.count > 0 ? 1 : 0.35}">${s.count > 0 ? s.count + ' акт.' : '–'}</span>
+          <span class="chart-legend-pct" style="opacity:${s.count > 0 ? 1 : 0.35}">${s.count > 0 ? s.count + ' т.' : '–'}</span>
         </div>`).join('');
     }
 
