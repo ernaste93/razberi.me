@@ -7,11 +7,11 @@
 <script src="/sidebar.js" defer></script>
 <style>
   :root {
-    --bg: #f8f7f4;
-    --surface: #fff;
-    --border: #e5e2db;
-    --text: #1a1917;
-    --muted: #6b6860;
+    --bg: #f4f6f9;
+    --surface: rgba(255,255,255,0.95);
+    --border: #dde2ea;
+    --text: #1a2540;
+    --muted: #6b7385;
     --accent: #2563eb;
     --pass: #16a34a;
     --fail: #dc2626;
@@ -19,19 +19,10 @@
     --essay: #b45309;
     --radius: 10px;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #111110;
-      --surface: #1c1b1a;
-      --border: #2e2d2b;
-      --text: #e8e6e1;
-      --muted: #8c8a84;
-    }
-  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg);
+    background: var(--bg) url('/logos/background.png') center top / cover fixed;
     color: var(--text);
     min-height: 100vh;
   }
@@ -210,9 +201,182 @@ function fmtDay(iso) {
   return d.toLocaleDateString('bg-BG', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
+const ALL_LESSON_NAMES = {
+  'bel12-debelyanov-lyubov':            'Дебелянов – „Аз искам да те помня все така"',
+  'bel12-fotev-lyubov':                 'Фотев – „Колко си хубава!"',
+  'bel12-dubarova-posveshenie':         'Дубарова – „Посвещение"',
+  'bel12-vaptsarov-vyara':              'Вапцаров – „Вяра"',
+  'bel12-dalchev-molitva':              'Далчев – „Молитва"',
+  'bel12-elin-pelin-spasova-mogila':    'Елин Пелин – „Спасова могила"',
+  'bel12-elin-pelin-vetrena-melnitsa':  'Елин Пелин – „Ветрена мелница"',
+  'bel12-yovkov-pesenta-na-koleletata': 'Йовков – „Песента на колелетата"',
+  'bel12-paskov-balada':                'Пасков – „Балада за Георг Хених"',
+  'bel12-yavorov-dve-dushi':            'Яворов – „Две души"',
+  'bel12-bagryana-potomka':             'Багряна – „Потомка"',
+  'bel12-hristov-chesten-krast':        'Христов – „Честен кръст"',
+  'bel12-pravopis':                     'Правопис',
+  'bel12-punktuatsiya':                 'Пунктуация',
+  'bel12-gramatika':                    'Граматика',
+  'bel12-leksika':                      'Лексика',
+  'bel11-vazov-pod-igoto':              'Вазов – „Под игото"',
+  'bel11-vazov-epopea':                 'Вазов – „Епопея на забравените"',
+  'bel11-vazov-opalchentsite':          'Вазов – „Опълченците на Шипка"',
+  'bel11-vazov-paisiy':                 'Вазов – „Паисий"',
+  'bel11-vazov-tih-byal-dunav':         'Вазов – „Тих бял Дунав"',
+  'bel11-botev-hadzhi-dimityr':         'Ботев – „Хаджи Димитър"',
+  'bel11-botev-obesa':                  'Ботев – „Обесването на Васил Левски"',
+  'bel11-yavorov-gradushka':            'Яворов – „Градушка"',
+  'bel11-slaveykov-cis-moll':           'Славейков – „Cis moll"',
+  'bel11-aleko-bay-ganyo':              'Алеко Константинов – „Бай Ганьо"',
+  'bel11-elin-pelin-andreshko':         'Елин Пелин – „Андрешко"',
+  'bel11-talev-zhelezniyat-svetilnik':  'Талев – „Железният светилник"',
+  'bel11-stanev-kradetsat':             'Станев – „Крадецът на праскови"',
+  'bel11-stratiev-sako':                'Стратиев – „Сако от велур"',
+  'bel11-smirnanski-yohan':             'Смирненски – „Йохан"',
+  'bel11-vaptsarov-istoriya':           'Вапцаров – „История"',
+  'bel11-radichkov-nezhnata-spirala':   'Радичков – „Нежната спирала"',
+  'bel7-aleko-bay-ganyo':               'Алеко Константинов – „Бай Ганьо"',
+  'bel7-botev-hadzhi-dimityr':          'Ботев – „Хаджи Димитър"',
+  'bel7-botev-maytse-si':               'Ботев – „Майце си"',
+  'bel7-elin-pelin-zadusha':            'Елин Пелин – „Задушница"',
+  'bel7-morfologia':                    'Морфология',
+  'bel7-narodno-tvorchestvo':           'Народно творчество',
+  'bel7-pravopis':                      'Правопис – 7 клас',
+  'bel7-sintaksis':                     'Синтаксис',
+  'bel7-vazov-opalchentsite':           'Вазов – „Опълченците на Шипка"',
+  'bel7-vazov-pod-igoto':               'Вазов – „Под игото"',
+  'bel7-yovkov-indzhe':                 'Йовков – „Инджето"',
+  'bel9-paisiy':                        'Паисий Хилендарски – „История славянобългарска"',
+  'bel9-sofroniy':                      'Софроний Врачански',
+  'bel9-karavelov':                     'Каравелов – „Българи от старо време"',
+  'bel9-botev-na-proshchavane':         'Ботев – „На прощаване"',
+  'bel9-botev-borba':                   'Ботев – „Борба"',
+  'bel9-vazov-rodina':                  'Вазов – „Родина"',
+  'bel9-defo':                          'Дефо – „Робинзон Крузо"',
+  'bel9-svift':                         'Суифт – „Пътешествията на Гъливер"',
+  'bel9-bairon-don-juan':               'Байрон – „Дон Жуан"',
+  'bel9-pushkin':                       'Пушкин',
+  'bel9-balzak':                        'Балзак',
+  'bel9-flober':                        'Флобер',
+  'bel9-bodler':                        'Бодлер',
+  'bel9-verlen':                        'Верлен',
+  'bel9-rechnikova':                    'Речникова култура – 9 клас',
+  'bel9-sintaksis':                     'Синтаксис – 9 клас',
+  'bel8-anticna-mitologia':             'Антична митология',
+  'bel8-bibliya':                       'Библия',
+  'bel8-safo':                          'Сафо',
+  'bel8-sofokul-antigona':              'Софокъл – „Антигона"',
+  'bel8-chernorizec':                   'Черноризец Храбър',
+  'bel8-konstantin-preslavski':         'Константин Преславски',
+  'bel8-servantes-don-kihot':           'Сервантес – „Дон Кихот"',
+  'bel8-shekspir-hamlet':               'Шекспир – „Хамлет"',
+  'bel10-aleko-do-chikago':             'Алеко – „До Чикаго и назад"',
+  'bel10-elin-napast':                  'Елин Пелин – „Напаст божия"',
+  'bel10-mihaylovski-satira':           'Михайловски – Сатири',
+  'bel10-slaveykov-lud-gidiya':         'Славейков – „Луд Гидия"',
+  'bel10-slaveykov-na-noshta':          'Славейков – „На нощта"',
+  'bel10-yavorov-dve-ochi':             'Яворов – „Две хубави очи"',
+  'bel10-yavorov-zatochtsi':            'Яворов – „Заточеници"',
+  'bel10-zahari-zapiski':               'Захари Стоянов – „Записки по българските въстания"',
+  'bel10-stilistika':                   'Стилистика',
+  'bel10-rechnikova':                   'Речникова култура – 10 клас',
+  'bio11-kletkata':                     'Клетката – структура и органели',
+  'bio11-fotosinteza':                  'Фотосинтеза',
+  'bio11-dishane':                      'Клетъчно дишане',
+  'bio11-nervna-sistema':               'Нервна система',
+  'bio11-endokrinna-sistema':           'Ендокринна система',
+  'bio11-razmnozhavane':                'Размножаване',
+  'bio12-evolyutsiya':                  'Еволюция',
+  'bio12-razmnozhavane':                'Размножаване – 12 клас',
+  'bio12-mutatsii':                     'Мутации',
+  'bio12-mnogokletchna':                'Многоклетъчни организми',
+  'bio12-dnk-rnk':                      'ДНК и РНК',
+  'bio12-genetika-mendel':              'Генетика – закони на Мендел',
+  'bio8-stroezh-organizum':             'Строеж на организма',
+  'bio8-dvijenie-opora':                'Движение и опора',
+  'bio8-nervna-endokrinna':             'Нервна и ендокринна система',
+  'bio8-obmen-veshtestva':              'Обмен на веществата',
+  'bio8-razmnozhavane-razvitie':        'Размножаване и развитие',
+  'bio9-kletkata':                      'Клетката – 9 клас',
+  'bio9-rastenia':                      'Растения',
+  'bio9-gabi-bakterii':                 'Гъби и бактерии',
+  'bio9-zhivotni-osnovi':               'Животни – основи',
+  'bio9-evolyutsiya':                   'Еволюция – 9 клас',
+  'bio9-ekosistemi':                    'Екосистеми',
+  'bio10-choveshko-tyalo':              'Човешко тяло',
+  'bio10-krv-krvoobrashtenie':          'Кръв и кръвообращение',
+  'bio10-imunitet':                     'Имунитет',
+  'bio10-reproduktsiya':                'Репродукция',
+  'bio10-ekologia':                     'Екология',
+  'bio10-bioraznoobrazie':              'Биоразнообразие',
+  'chem11-stroezh-atoma':               'Строеж на атома',
+  'chem11-himichna-vrazka':             'Химична връзка',
+  'chem11-rastvori':                    'Разтвори и рН',
+  'chem11-okislenie-redukciya':         'Окислително-редукционни реакции',
+  'chem11-neorganichni-saedinenia':     'Неорганични съединения',
+  'chem11-skorost-ravnovesie':          'Скорост и равновесие',
+  'chem12-analiz':                      'Качествен анализ',
+  'chem12-lekarstva-goriva':            'Лекарства и горива',
+  'chem12-biohimiya':                   'Биохимия',
+  'chem12-vaglevodorodi':               'Въглеводороди',
+  'chem12-kislorodmi-saedinenia':       'Кислородни органични съединения',
+  'chem12-okolna-sreda':                'Химия и околна среда',
+  'chem9-periodi-sistema':              'Периодична система',
+  'chem9-himichni-reakcii':             'Химични реакции',
+  'chem9-elektroliti':                  'Електролити',
+  'chem9-kiseli-osnovi-soli':           'Киселини, основи, соли',
+  'chem9-metali':                       'Метали',
+  'chem9-nemetali':                     'Неметали',
+  'chem10-alkani':                      'Алкани',
+  'chem10-alkeni-alkini':               'Алкени и алкини',
+  'chem10-aromatni':                    'Ароматни въглеводороди',
+  'chem10-alkoholi-fenoli':             'Алкохоли и феноли',
+  'chem10-aldehidi-ketoni':             'Алдехиди и кетони',
+  'chem10-karboksilni-esteri':          'Карбоксилни киселини и естери',
+  'math11-trigonometriya':              'Тригонометрия',
+  'math11-pokazatelna-logaritmichna':   'Показателна и логаритмична функция',
+  'math11-kvadratni-neravenstva':       'Квадратни неравенства',
+  'math11-progresii':                   'Прогресии',
+  'math11-planimeriya':                 'Планиметрия',
+  'math12-trigonometriya':              'Тригонометрични функции',
+  'math12-kvadratna-funkciya':          'Квадратна функция',
+  'math12-kvadratni-neravenstva':       'Квадратни неравенства',
+  'math12-proizvodna':                  'Производна',
+  'math12-geometriya':                  'Геометрия',
+  'math12-kombinatorika':               'Комбинаторика',
+  'math12-veroyatnosti':                'Вероятности',
+  'math12-pokazatelna-logaritmichna':   'Показателна и логаритмична функция',
+  'math12-progresii':                   'Прогресии',
+  'math7-ratsionalni-chisla':           'Рационални числа',
+  'math7-linearni-uravnenia':           'Линейни уравнения',
+  'math7-sistemi-uravnenia':            'Системи уравнения',
+  'math7-lineyna-funkciya':             'Линейна функция',
+  'math7-stepeni':                      'Степени с естествен показател',
+  'math7-triagalnik':                   'Триъгълник',
+  'math7-pitagorova-teorema':           'Питагорова теорема',
+  'math7-chetiriagalnitsi':             'Четириъгълници',
+  'math7-okrazhnost':                   'Окръжност и кръг',
+  'math7-statistika':                   'Статистика',
+  'math9-kvadratni-uravnenia':          'Квадратни уравнения',
+  'math9-kvadratna-funkciya':           'Квадратна функция',
+  'math9-kvadratni-neravenstva':        'Квадратни неравенства',
+  'math9-stepeni-koreni':               'Степени и корени',
+  'math9-podobni-triagalnitsi':         'Подобни триъгълници',
+  'math9-trigonometriya':               'Тригонометрия – 9 клас',
+  'math10-trigonometriya-osnovi':       'Тригонометрия – основи',
+  'math10-trigonometriya-uravnenia':    'Тригонометрични уравнения',
+  'math10-kvadratna-funkciya':          'Квадратна функция – 10 клас',
+  'math10-pokazatelna-logaritmichna':   'Показателна и логаритмична функция',
+  'math10-proizvodna-osnovi':           'Производна – основи',
+  'math10-koordinati-prava':            'Координати и права',
+  'math10-vektori':                     'Вектори',
+  'math10-kragat':                      'Кръгът',
+};
+
 function slugToTitle(slug) {
   if (!slug) return '—';
-  return slug.replace(/^(bel|bio|him|mat|ist)\d+[-_]?/, '').replace(/-/g, ' ');
+  if (ALL_LESSON_NAMES[slug]) return ALL_LESSON_NAMES[slug];
+  return slug.replace(/^(bel|bio|chem|math|ist)\d+[-_]?/, '').replace(/-/g, ' ');
 }
 
 function renderQuizBody(r) {
