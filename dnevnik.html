@@ -496,7 +496,7 @@
             </div>
             <div class="chart-canvas-wrap" id="chart-wrap">
               <div class="chart-donut-wrap" id="chart-donut-wrap">
-                <canvas id="activity-chart" class="chart-donut-canvas"></canvas>
+                <canvas id="activity-chart" class="chart-donut-canvas" width="180" height="180"></canvas>
                 <div class="chart-donut-legend" id="chart-donut-legend"></div>
               </div>
               <div class="chart-empty-msg" id="chart-empty" style="display:none;">
@@ -975,6 +975,9 @@
 
       document.getElementById('chart-donut-wrap').style.display = 'flex';
       if (window._dashChart) window._dashChart.destroy();
+      // Ресетни canvas размерите преди ново рендиране
+      const canvasEl = document.getElementById('activity-chart');
+      canvasEl.width = 180; canvasEl.height = 180;
 
       window._dashChart = new Chart(ctx, {
         plugins: [centerTextPlugin],
